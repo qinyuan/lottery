@@ -1,0 +1,51 @@
+* {
+  vertical-align: baseline;
+  font-weight: inherit; 
+  font-family: inherit; 
+  font-style: inherit;
+  font-size: 100%;
+  outline: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.shadow {
+    -moz-box-shadow: 1px 1px 10px rgb(213, 213, 213);
+    -webkit-box-shadow: 1px 1px 10px rgb(213, 213, 213);
+    box-shadow: 1px 1px 10px rgb(213, 213, 213);
+}
+
+a {
+    text-decoration: none;
+}
+
+div.page-width {
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+div.footer-poster {
+    text-align: center;
+    background-color: #F5F5F5;
+}
+
+div.footer-poster > div {
+    height: 400px;
+    line-height: 400px;
+}
+
+div.footer {
+    background-color: #262626;
+    color: #626262;
+    line-height: 80px;
+    height: 80px;
+    text-align: center;
+}
+
+img.link {
+    cursor: pointer;
+}

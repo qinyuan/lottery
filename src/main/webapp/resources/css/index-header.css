@@ -1,0 +1,65 @@
+div.header > div.top-back {
+    background-color: #434343;
+    width: 100%;
+    top: 0;
+    height: 36px;
+    position: absolute;
+}
+
+div.header > div.bottom-back {
+    background-color: #FFFFFF;
+    width: 100%;
+    height: 82px;
+    top: 36px;
+    position: absolute;
+}
+
+div.header > div.content {
+    top: 0;
+    height: 118px;
+}
+
+div.header > div.content > div.left-logo {
+    position: absolute;
+    left: 0;
+}
+
+div.header > div.content > div.navigation {
+    position: absolute;
+    left: 180px;
+    top: 65px;
+    color: #A0C4DC;
+}
+
+div.header > div.content > div.navigation a {
+    padding: 10px;
+    font-size: 13pt;
+    color: #0A0A0A;
+}
+
+div.header > div.content > div.right-logo {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+div.header > div.content > div.right-logo img{
+    vertical-align: top;
+}
+
+div.header > div.content > div.right-logo > a.text {
+    vertical-align: 16px;
+    padding: 7px 15px 17px;
+    font-size: 11pt;
+    line-height: 30px;
+    color: #ffffff;
+}
+
+div.header > div.content > div.right-logo > a.text.emphasize {
+    background-color: #917347;
+}
+
+div.header > div.content > div.slogan {
+    position: absolute;
+    right: 0;
+    top: 55px;
+}

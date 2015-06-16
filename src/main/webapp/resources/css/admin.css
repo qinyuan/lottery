@@ -1,0 +1,76 @@
+div.footer-poster {
+    display: none;
+}
+
+div.form {
+    padding: 20px;
+    background-color: #e0e0e0;
+}
+
+div.form > form {
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+div.form > form div.edit-unit div.title {
+    background-color: #262626;
+    color: #ffffff;
+    padding: 10px;
+}
+
+div.form > form div.edit-unit {
+    border: 1px solid #454545;
+}
+
+div.form > form div.edit-unit td {
+    padding: 5px 10px;
+    line-height: 20px;
+    vertical-align: top;
+    border-bottom: 1px solid #808080;
+}
+
+div.form > form div.edit-unit td.title {
+    width: 150px;
+    padding-top: 8px;
+    text-align: right;
+    font-weight: bold;
+}
+
+div.form > form div.edit-unit td.input {
+    width: 785px;
+}
+
+div.form > form div.edit-unit th {
+    padding: 5px 10px;
+    border-bottom: 2px solid #808080;
+    text-align: center;
+}
+
+div.form > form div.edit-unit td.input input {
+    height: 30px;
+}
+
+div.form > form div.submit {
+    text-align: center;
+    padding: 10px;
+}
+
+#submitButton {
+    width: 200px;
+}
+
+#linkTable td {
+    vertical-align: middle;
+}
+
+#linkTable col.text {
+    width: 150px;
+}
+
+#linkTable col.target {
+    width: 350px;
+}
+
+#linkTable col.action {
+    width: 80px;
+}

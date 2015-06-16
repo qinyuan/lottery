@@ -1,0 +1,22 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@include file="inc-taglib.jsp" %>
+<!DOCTYPE html>
+<html>
+<head lang="zh-ch">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <title>${title}</title>
+    <%--
+    <meta name="keywords" content="<%=seoKeyword==null?"":seoKeyword.getWord()%>">
+    <meta name="description" content="<%=seoKeyword==null?"":seoKeyword.getDescription()%>">
+    <link rel="icon" href="${appConfig.favicon}" type="image/x-icon" />
+    <link rel="shortcut icon" href="${appConfig.favicon}" type="image/x-icon" />
+    --%>
+    <%--<q:css href="resources/js/lib/bootstrap/css/bootstrap.min.css"/>--%>
+    <q:css href="common"/>
+    <c:forEach var="css" items="${moreCss}"><q:css href="${css.href}" version="${css.version}"/></c:forEach>
+    <c:forEach var="js" items="${headJs}"><q:js src="${js.href}" version="${js.version}"/></c:forEach>
+</head>
+<body class="ng-app:main" ng-app="main" id="ng-app">

@@ -1,0 +1,57 @@
+div.footer-poster {
+    display: none;
+}
+
+div.outer-login {
+    background-color: #eeeeee;
+    padding: 80px;
+}
+
+div.login {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+div.login > div.title {
+    padding: 15px;
+    text-align: center;
+    background-color: #E5F6FB;
+    color: #676767;
+}
+
+div.login > form {
+    background-color: #ffffff;
+    padding: 15px;
+    overflow: hidden;
+}
+
+div.login > form > div {
+    padding: 10px;
+}
+
+div.login > form div.title {
+    width: 120px;
+    float: left;
+    text-align: right;
+    vertical-align: middle;
+    line-height: 28px;
+}
+
+div.login > form div.input {
+    float: left;
+}
+
+div.login > form div.input input {
+    width: 250px;
+}
+
+div.login > form div.submit {
+    clear: both;
+    text-align: center;
+}
+
+div.login > form div.submit button {
+    margin-left: 20px;
+}
