@@ -20,5 +20,6 @@
 
         <mapping resource="com/qinyuan15/utils/security/User.hbm.xml"/>
         <mapping resource="com/qinyuan15/utils/config/AppConfig.hbm.xml"/>
+        <mapping resource="com/qinyuan15/lottery/mvc/dao/hibernate.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

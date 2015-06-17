@@ -236,3 +236,40 @@ jQuery.fn.focusOrSelect = function () {
         this.focus();
     }
 };
+
+jQuery.fn.getParentByTagName = function (tagName) {
+    if (!tagName) {
+        return null;
+    }
+
+    var parent = this.parent();
+    while (true) {
+        if (parent.size() == 0 || parent.is('body') || parent.is('html')) {
+            return null;
+        }
+        if (parent.is(tagName)) {
+            return parent;
+        }
+        parent = parent.parent();
+    }
+};
+
+/**
+ * move an element before its previous element
+ */
+jQuery.fn.moveToPrev = function () {
+    var $prev = this.prev();
+    if ($prev.size() > 0) {
+        this.insertBefore($prev);
+    }
+};
+
+/**
+ * move a element after its next element
+ */
+jQuery.fn.moveToNext = function () {
+    var $next = this.next();
+    if ($next.size() > 0) {
+        this.insertAfter($next);
+    }
+};

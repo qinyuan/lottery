@@ -7,10 +7,9 @@
             <a href="index.html"><img src="${indexHeaderLeftLogo}"/></a>
         </div>
         <div class="navigation">
-            <a href="index.html">首页</a> |
-            <a href="index.html">资讯</a> |
-            <a href="index.html">指南</a> |
-            <a href="index.html">图库</a>
+            <c:forEach var="indexHeaderLink" items="${indexHeaderLinks}" varStatus="status">
+               <c:if test="${status.index>0}">|</c:if> <a href="${indexHeaderLink.href}">${indexHeaderLink.title}</a>
+            </c:forEach>
         </div>
         <div class="right-logo">
             <security:authorize ifAnyGranted="ROLE_USER">

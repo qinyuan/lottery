@@ -22,19 +22,20 @@
         }
     });
     $('#addLink').click(function () {
-        var html = JSUtils.handlebars("link-template");
-        $('#linkTable').append(html).find('tr:last-child').find('input').eq(0).focus();
+        var $linkTable = $('#linkTable');
+        $linkTable.append(JSUtils.handlebars("link-template"));
+        $linkTable.find('tr:last').find('input:first').focus();
     });
 })();
 
 function rankUpLink(target) {
-    console.log(target);
+    $(target).getParentByTagName('tr').moveToPrev();
 }
 
 function rankDownLink(target) {
-    console.log(target);
+    $(target).getParentByTagName('tr').moveToNext();
 }
 
 function deleteLink(target) {
-    console.log(target);
+    $(target).getParentByTagName('tr').remove();
 }

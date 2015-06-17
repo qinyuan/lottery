@@ -54,8 +54,16 @@
                                     <th>操作</th>
                                 </tr>
                                 </thead>
+                                <tbody>
+                                <c:forEach var="indexHeaderLink" items="${indexHeaderLinks}">
+                                    <jsp:include page="admin-link-table-row.jsp">
+                                        <jsp:param name="title" value="${indexHeaderLink.title}"/>
+                                        <jsp:param name="href" value="${indexHeaderLink.href}"/>
+                                    </jsp:include>
+                                </c:forEach>
+                                </tbody>
                             </table>
-                            <img class="link" id="addLink" src="resources/css/images/add.png"/>
+                            <img class="link" title="添加" id="addLink" src="resources/css/images/add.png"/>
                         </td>
                     </tr>
                     </tbody>
@@ -68,14 +76,6 @@
     </q:multipart-form>
 </div>
 <q:handlebars-template id="link-template">
-    <tr>
-        <td><input type="type" name="headerLinkText" class="form-control"/></td>
-        <td><input type="type" name="headerLinkTarget" class="form-control"/></td>
-        <td>
-            <img onclick="return rankUpLink(this);" src="resources/css/images/arrow_up.png"/>
-            <img onclick="return rankDownLink(this);" src="resources/css/images/arrow_down.png"/>
-            <img onclick="return deleteLink(this);" src="resources/css/images/delete.png"/>
-        </td>
-    </tr>
+    <jsp:include page="admin-link-table-row.jsp"/>
 </q:handlebars-template>
 <%@include file="inc-footer.jsp" %>

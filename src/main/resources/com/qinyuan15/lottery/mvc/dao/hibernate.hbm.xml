@@ -4,12 +4,11 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.qinyuan15.lottery.mvc.dao">
-  <!--
-    <class name="com.qinyuan15.mall.core.dao.AppConfig" table="app_config">
+    <class name="NavigationLink" table="navigation_link">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
-        <property name="detailText" column="detail_text"/>
+        <property name="title"/>
+        <property name="href"/>
     </class>
-    -->
 </hibernate-mapping>

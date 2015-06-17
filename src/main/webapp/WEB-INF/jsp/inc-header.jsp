@@ -19,4 +19,11 @@
     <c:forEach var="css" items="${moreCss}"><q:css href="${css.href}" version="${css.version}"/></c:forEach>
     <c:forEach var="js" items="${headJs}"><q:js src="${js.href}" version="${js.version}"/></c:forEach>
 </head>
+<c:if test="${javascriptDatas != null}">
+<script>
+    <c:forEach var="entry" items="${javascriptDatas}">
+    var ${entry.key}=${entry.value};
+    </c:forEach>
+</script>
+</c:if>
 <body class="ng-app:main" ng-app="main" id="ng-app">
