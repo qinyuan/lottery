@@ -22,13 +22,12 @@ public class AdminController extends IndexHeaderController {
     public String index() {
         setHeaderParameters();
 
-        setTitle("用户管理");
+        setTitle("系统设置");
         addCss("resources/js/lib/bootstrap/css/bootstrap.min", false);
+        addCss("admin-form");
         addJs("resources/js/lib/handlebars.min-v1.3.0", false);
         addHeadJs("lib/image-adjust.js");
         addCssAndJs("admin");
-
-        //addJavaScriptData("indexHeaderLinks", new NavigationLinkDao().getInstances());
         return "admin";
     }
 

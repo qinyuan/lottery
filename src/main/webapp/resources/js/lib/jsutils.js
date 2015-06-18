@@ -189,6 +189,39 @@ var JSUtils = {
             data = {};
         }
         return template(data);
+    },
+    _getTransparentBackgroundDiv: function (zIndex) {
+        var $transparentBackground = $('#transparentBackground');
+        if ($transparentBackground.size() == 0) {
+            // if transparent background hasn't created, create it
+            var style = {
+                'position': 'fixed',
+                'width': '100%',
+                'height': '100%',
+                'top': 0,
+                'left': 0,
+                'display': 'none',
+                'background-color': '#000000',
+                opacity: 0.7,
+                filter: 'alpha(opacity=70)'
+            };
+            if (zIndex) {
+                style['z-index'] = zIndex;
+            }
+            return $('<div></div>').attr('id', 'transparentBackground').css(style).appendTo('body');
+        } else {
+            // if transparent background is already created, just return it
+            if (zIndex) {
+                $transparentBackground.css('z-index', zIndex);
+            }
+            return $transparentBackground;
+        }
+    },
+    showTransparentBackground: function (zIndex) {
+        this._getTransparentBackgroundDiv(zIndex).show();
+    },
+    hideTransparentBackground: function () {
+        this._getTransparentBackgroundDiv().hide();
     }
 };
 
@@ -214,6 +247,11 @@ jQuery.fn.dataOptions = function () {
         if (value == '') {
             value = null;
         }
+        value = $.trim(value);
+        if (value.match(/^\".*\"$/g)) {
+            value = value.substring(1, value.length - 1);
+        }
+
         dataOptions[keyValuePair[0]] = value;
     }
     return dataOptions;

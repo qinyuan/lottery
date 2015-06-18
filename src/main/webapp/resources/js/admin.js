@@ -26,6 +26,7 @@
         $linkTable.append(JSUtils.handlebars("link-template"));
         $linkTable.find('tr:last').find('input:first').focus();
     });
+    $('#systemEditLink').addClass('emphasize');
 })();
 
 function rankUpLink(target) {

@@ -1,0 +1,14 @@
+div.footer-poster {
+    display: none;
+}
+
+div.form {
+    padding: 20px;
+    background-color: #e0e0e0;
+}
+
+div.form > * {
+    background-color: #ffffff;
+    padding: 10px;
+    min-height: 400px;
+}

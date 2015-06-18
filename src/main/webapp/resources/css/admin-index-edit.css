@@ -1,0 +1,67 @@
+div.form div.image-row {
+    padding: 10px 0;
+    border-bottom: 1px solid #525252;
+    overflow: hidden;
+}
+
+div.form div.image-row div.image {
+    overflow: hidden;
+    width: auto;
+    border: 1px solid #a0a0a0;
+    padding: 10px;
+}
+
+div.form div.image-row div.image img {
+    display: block;
+    margin-bottom: 5px;
+}
+
+div.form div.image-row div.cycle {
+    padding: 30px 10px;
+}
+
+div.form div.image-row > div {
+    float: left;
+}
+
+#addImageForm {
+    z-index: 10;
+    background-color: #ffffff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 620px;
+    height: 180px;
+    margin-left: -310px;
+    margin-top: -90px;
+    border: 1px solid #525252;
+    padding: 20px;
+    display: none;
+    border-radius: 10px;
+}
+
+#addImageForm > div {
+    padding: 10px;
+    text-align: left;
+    line-height: 35px;
+    vertical-align: middle;
+    clear: both;
+}
+
+#addImageForm div.title {
+    float: left;
+    margin-right: 20px;
+}
+
+#addImageForm div.input {
+    float: left;
+    overflow: hidden;
+}
+
+#addImageForm div.buttonDiv {
+    text-align: center;
+}
+
+#addImageForm div.buttonDiv button {
+    margin: 0 20px;
+}

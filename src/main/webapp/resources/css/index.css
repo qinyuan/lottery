@@ -1,7 +1,12 @@
 div.posters > div.poster {
     text-align: center;
     width: 100%;
+    min-width: 1000px;
     overflow-y: hidden;
     background-repeat: no-repeat;
     background-position: top center;
+}
+
+div.posters > div.poster > div.image {
+    line-height: 0;
 }
