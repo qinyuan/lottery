@@ -9,6 +9,7 @@ public class IndexController extends IndexHeaderController {
     @RequestMapping("/index")
     public String index() {
         setHeaderParameters();
+        setIndexImageGroups();
 
         setTitle("首页");
         addCss("index");

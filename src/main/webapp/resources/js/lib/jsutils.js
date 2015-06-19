@@ -222,6 +222,13 @@ var JSUtils = {
     },
     hideTransparentBackground: function () {
         this._getTransparentBackgroundDiv().hide();
+    },
+    normalAjaxCallback: function (data) {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert(data.detail);
+        }
     }
 };
 
@@ -248,10 +255,6 @@ jQuery.fn.dataOptions = function () {
             value = null;
         }
         value = $.trim(value);
-        if (value.match(/^\".*\"$/g)) {
-            value = value.substring(1, value.length - 1);
-        }
-
         dataOptions[keyValuePair[0]] = value;
     }
     return dataOptions;

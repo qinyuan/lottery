@@ -9,6 +9,7 @@
                 <div class="image-row">
                     <c:forEach var="indexImage" items="${indexImageGroup.indexImages}">
                         <div class="image">
+                            <input type="hidden" value="${indexImage.backPath}"/>
                             <img src="${indexImage.path}" onload="adjustImageHeight(this, 100);"/>
                             <button type="button" data-options="id: ${indexImage.id}"
                                     class="btn btn-xs btn-primary edit-image">编辑图片
@@ -17,7 +18,7 @@
                                     class="btn btn-xs btn-primary edit-link">编辑链接
                             </button>
                             <button type="button" data-options="id: ${indexImage.id}"
-                                    class="btn btn-xs btn-danger delete">删除
+                                    class="btn btn-xs btn-danger delete-image">删除
                             </button>
                         </div>
                     </c:forEach>

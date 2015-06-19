@@ -1,7 +1,5 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.lottery.mvc.IndexImageGroup;
-import com.qinyuan15.lottery.mvc.dao.IndexImage;
 import com.qinyuan15.lottery.mvc.dao.IndexImageDao;
 import com.qinyuan15.utils.IntegerUtils;
 import org.slf4j.Logger;
@@ -12,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 @Controller
 public class AdminIndexEditController extends IndexHeaderController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminIndexEditController.class);
@@ -21,8 +17,7 @@ public class AdminIndexEditController extends IndexHeaderController {
     @RequestMapping("/admin-index-edit")
     public String index() {
         setHeaderParameters();
-
-        setAttribute("indexImageGroups", adapt(IndexImageGroup.build()));
+        setIndexImageGroups();
 
         setTitle("主页设置");
         addCss("resources/js/lib/bootstrap/css/bootstrap.min", false);
@@ -32,15 +27,6 @@ public class AdminIndexEditController extends IndexHeaderController {
         return "admin-index-edit";
     }
 
-    private List<IndexImageGroup> adapt(List<IndexImageGroup> indexImageGroups) {
-        for (IndexImageGroup indexImageGroup : indexImageGroups) {
-            for (IndexImage indexImage : indexImageGroup.getIndexImages()) {
-                indexImage.setPath(this.pathToUrl(indexImage.getPath()));
-                indexImage.setBackPath(this.pathToUrl(indexImage.getBackPath()));
-            }
-        }
-        return indexImageGroups;
-    }
 
     @RequestMapping("/admin-index-add-image")
     public String addImage(@RequestParam(value = "image", required = true) String image,

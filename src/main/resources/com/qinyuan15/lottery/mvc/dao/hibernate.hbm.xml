@@ -19,4 +19,16 @@
         <property name="backPath" column="back_path"/>
         <property name="rowIndex" column="row_index"/>
     </class>
+    <class name="IndexImageMap" table="index_image_map">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="imageId" column="image_id"/>
+        <property name="xStart" column="x_start"/>
+        <property name="yStart" column="y_start"/>
+        <property name="xEnd" column="x_end"/>
+        <property name="yEnd" column="y_end"/>
+        <property name="href"/>
+        <property name="comment"/>
+    </class>
 </hibernate-mapping>

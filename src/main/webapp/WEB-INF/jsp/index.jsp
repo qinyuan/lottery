@@ -2,11 +2,11 @@
 <%@include file="inc-header.jsp" %>
 <%@include file="index-header.jsp" %>
 <div class="posters">
-    <div class="poster" style='background-image: url("resources/css/images/poster-back1.png");'>
-        <div class="image page-width"><img src="resources/css/images/poster-front1.png"/></div>
-    </div>
-    <div class="poster">
-        <div class="image page-width"><img src="resources/css/images/index/middle-poster.png"/></div>
-    </div>
+    <c:forEach var="indexImageGroup" items="${indexImageGroups}">
+        <c:set var="indexImages" value="${indexImageGroup.indexImages}"/>
+        <div class="poster" style='background-image: url("${indexImages[0].backPath}");'>
+            <div class="image page-width"><img src="${indexImages[0].path}"/></div>
+        </div>
+    </c:forEach>
 </div>
 <%@include file="inc-footer.jsp" %>

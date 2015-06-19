@@ -14,12 +14,23 @@
     });
 
     $('div.form div.image-row div.image button.edit-image').click(function () {
-        showImageForm($(this).dataOptions()['id']);
+        var $this = $(this);
+        var id = $this.dataOptions()['id'];
+        var $div = $this.parent();
+        var image = $div.find('img').attr('src');
+        var backImage = $div.find('input[type=hidden]').val();
+        showImageForm(id, null, image, backImage);
     });
 
-    function showImageForm(id, rowId, image, backImage) {
+    $('div.form div.image-row div.image button.delete-image').click(function () {
+        $.post('admin-index-delete-image.json', {
+            id: $(this).dataOptions()['id']
+        }, JSUtils.normalAjaxCallback);
+    });
+
+    function showImageForm(id, rowIndex, image, backImage) {
         $addImageForm.find('input[name=id]').val(id);
-        $addImageForm.find('input[name=rowIndex]').val(rowId);
+        $addImageForm.find('input[name=rowIndex]').val(rowIndex);
         $addImageForm.find('#image').val(image);
         $addImageForm.find('#backImage').val(backImage);
         $addImageForm.find('div.input input[type=file]').val(null);

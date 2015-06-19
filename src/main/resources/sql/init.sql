@@ -12,3 +12,14 @@ CREATE TABLE `index_image` (
     `row_index` int not null,
     `back_path` varchar(800) not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `index_image_map` (
+    `id` int(11) primary key auto_increment,
+    `image_id` int(11) not null,
+    `x_start` int(11) not null,
+    `y_start` int(11) not null,
+    `x_end` int(11) not null,
+    `y_end` int(11) not null,
+    `href` varchar(800) not null,
+    `comment` char(200)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
