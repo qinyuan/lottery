@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc;
 
+import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.config.AppConfigDao;
 
 /**
@@ -29,13 +30,25 @@ public class AppConfig {
         dao.save(INDEX_HEADER_RIGHT_LOGO_KEY, indexHeaderRightLogo);
     }
 
-    private final static String INDEX_HEADER_SLOGAN = "indexHeaderSlogan";
+    private final static String INDEX_HEADER_SLOGAN_KEY = "indexHeaderSlogan";
 
     public static String getIndexHeaderSlogan() {
-        return dao.get(INDEX_HEADER_SLOGAN);
+        return dao.get(INDEX_HEADER_SLOGAN_KEY);
     }
 
     public static void updateIndexHeaderSlogan(String indexHeaderSlogan) {
-        dao.save(INDEX_HEADER_SLOGAN, indexHeaderSlogan);
+        dao.save(INDEX_HEADER_SLOGAN_KEY, indexHeaderSlogan);
+    }
+
+    private final static String INDEX_IMAGE_CYCLE_INTERVAL_KEY = "indexImageCycleInterval";
+    private final static int DEFAULT_INDEX_IMAGE_CYCLE_INTERVAL = 10;
+
+    public static int getIndexImageCycleInterval() {
+        String string = dao.get(INDEX_IMAGE_CYCLE_INTERVAL_KEY);
+        return IntegerUtils.isPositive(string) ? Integer.parseInt(string) : DEFAULT_INDEX_IMAGE_CYCLE_INTERVAL;
+    }
+
+    public static void updateIndexImageCycleInterval(int indexImageCycleInterval) {
+        dao.save(INDEX_IMAGE_CYCLE_INTERVAL_KEY, String.valueOf(indexImageCycleInterval));
     }
 }

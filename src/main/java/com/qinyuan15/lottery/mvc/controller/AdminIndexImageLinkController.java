@@ -2,13 +2,17 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan15.lottery.mvc.dao.IndexImage;
 import com.qinyuan15.lottery.mvc.dao.IndexImageDao;
+import com.qinyuan15.lottery.mvc.dao.IndexImageMap;
 import com.qinyuan15.lottery.mvc.dao.IndexImageMapDao;
 import com.qinyuan15.utils.IntegerUtils;
+import com.qinyuan15.utils.config.LinkAdapter;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 public class AdminIndexImageLinkController extends IndexHeaderController {
@@ -28,15 +32,45 @@ public class AdminIndexImageLinkController extends IndexHeaderController {
         indexImage.setPath(this.pathToUrl(indexImage.getPath()));
 
         setAttribute("indexImage", indexImage);
-        setAttribute("indexImageMaps", new IndexImageMapDao().getInstancesByImageId(imageId));
+        List<IndexImageMap> imageMaps = new IndexImageMapDao().getInstancesByImageId(imageId);
+        setAttribute("indexImageMaps", imageMaps);
+        this.addJavaScriptData("indexImageMaps", imageMaps);
 
         setTitle("编辑链接");
+        addCss("resources/js/lib/bootstrap/css/bootstrap.min", false);
         addCssAndJs("admin-index-image-link");
 
         return "admin-index-image-link";
     }
 
-    @RequestMapping("/admin-index-image-link-add")
+    @RequestMapping("/admin-index-image-link-edit.json")
+    @ResponseBody
+    public String edit(@RequestParam(value = "id", required = true) Integer id,
+                       @RequestParam(value = "href", required = true) String href,
+                       @RequestParam(value = "comment", required = true) String comment) {
+        if (!IntegerUtils.isPositive(id)) {
+            return fail("数据错误");
+        }
+
+        if (!StringUtils.hasText(href)) {
+            return fail("链接未填写");
+        }
+        href = new LinkAdapter().adjust(href);
+
+        if (!StringUtils.hasText(comment)) {
+            return fail("备注未填写");
+        }
+
+        try {
+            new IndexImageMapDao().update(id, href, comment);
+            return success();
+        } catch (Exception e) {
+            return fail("数据库操作失败");
+        }
+    }
+
+    @RequestMapping("/admin-index-image-link-add.json")
+    @ResponseBody
     public String add(@RequestParam(value = "imageId", required = true) Integer imageId,
                       @RequestParam(value = "xStart", required = true) Integer xStart,
                       @RequestParam(value = "yStart", required = true) Integer yStart,
@@ -44,27 +78,27 @@ public class AdminIndexImageLinkController extends IndexHeaderController {
                       @RequestParam(value = "yEnd", required = true) Integer yEnd,
                       @RequestParam(value = "href", required = true) String href,
                       @RequestParam(value = "comment", required = true) String comment) {
-        final String indexPage = "admin-index-image-link";
 
         if (!IntegerUtils.isPositive(imageId) || !IntegerUtils.isNotNegative(xStart)
                 || !IntegerUtils.isNotNegative(yStart) || !IntegerUtils.isNotNegative(xEnd)
                 || !IntegerUtils.isNotNegative(yEnd)) {
-            return redirect(indexPage, "数据错误");
+            return fail("数据错误");
         }
 
         if (!StringUtils.hasText(href)) {
-            return redirect(indexPage, "链接未填写");
+            return fail("链接未填写");
         }
+        href = new LinkAdapter().adjust(href);
 
         if (!StringUtils.hasText(comment)) {
-            return redirect(indexPage, "备注未填写");
+            return fail("备注未填写");
         }
 
         try {
             new IndexImageMapDao().add(imageId, xStart, yStart, xEnd, yEnd, href, comment);
-            return redirect(indexPage);
+            return success();
         } catch (Exception e) {
-            return redirect(indexPage, "数据库操作失败");
+            return fail("数据库操作失败");
         }
     }
 

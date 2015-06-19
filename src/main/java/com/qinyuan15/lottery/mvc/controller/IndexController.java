@@ -1,5 +1,7 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.dao.IndexImageMapDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -11,8 +13,11 @@ public class IndexController extends IndexHeaderController {
         setHeaderParameters();
         setIndexImageGroups();
 
+        setAttribute("indexImageMaps", new IndexImageMapDao().getInstancesAndGroupByImageId());
+        addJavaScriptData("cycleInterval", AppConfig.getIndexImageCycleInterval());
+
         setTitle("首页");
-        addCss("index");
+        addCssAndJs("index");
         return "index";
     }
 

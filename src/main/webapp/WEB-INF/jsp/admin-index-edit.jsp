@@ -10,6 +10,11 @@
                     <c:forEach var="indexImage" items="${indexImageGroup.indexImages}">
                         <div class="image">
                             <input type="hidden" value="${indexImage.backPath}"/>
+                                <%--
+                                <a href="${indexImage.path}" target="_blank" title="单击打开">
+                                    <img src="${indexImage.path}" onload="adjustImageHeight(this, 100);"/>
+                                </a>
+                                --%>
                             <img src="${indexImage.path}" onload="adjustImageHeight(this, 100);"/>
                             <button type="button" data-options="id: ${indexImage.id}"
                                     class="btn btn-xs btn-primary edit-image">编辑图片
@@ -30,8 +35,15 @@
                 </div>
             </c:forEach>
         </div>
-        <div style="padding: 10px 0">
+        <div style="padding: 10px 0;position: relative">
             <button type="button" id="addImage" class="btn btn-xs btn-success">添加图片</button>
+            <div class="cycle-interval">
+                <div>循环时间间隔(秒):</div>
+                <div>
+                    <input id="cycleIntervalInput" type="text" class="form-control" value="${cycleInterval}"/>
+                </div>
+                <div></div>
+            </div>
         </div>
     </div>
 </div>

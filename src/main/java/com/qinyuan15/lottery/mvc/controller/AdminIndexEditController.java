@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.IndexImageDao;
 import com.qinyuan15.utils.IntegerUtils;
 import org.slf4j.Logger;
@@ -18,6 +19,8 @@ public class AdminIndexEditController extends IndexHeaderController {
     public String index() {
         setHeaderParameters();
         setIndexImageGroups();
+
+        setAttribute("cycleInterval", AppConfig.getIndexImageCycleInterval());
 
         setTitle("主页设置");
         addCss("resources/js/lib/bootstrap/css/bootstrap.min", false);
@@ -64,6 +67,20 @@ public class AdminIndexEditController extends IndexHeaderController {
         }
 
         return redirect(page);
+    }
+
+    @RequestMapping("/admin-index-image-cycle-interval.json")
+    @ResponseBody
+    public String updateInterval(@RequestParam(value = "cycleInterval", required = true) Integer cycleInterval) {
+        if (!IntegerUtils.isPositive(cycleInterval)) {
+            return fail("必须输入一个整数");
+        }
+        try {
+            AppConfig.updateIndexImageCycleInterval(cycleInterval);
+            return success();
+        } catch (Exception e) {
+            return fail("数据库操作失败");
+        }
     }
 
     @RequestMapping("/admin-index-delete-image.json")

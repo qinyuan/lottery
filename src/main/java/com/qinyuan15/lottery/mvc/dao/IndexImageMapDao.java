@@ -2,7 +2,10 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Dao of IndexImageMap
@@ -21,6 +24,19 @@ public class IndexImageMapDao {
         return HibernateUtils.save(map);
     }
 
+    public IndexImageMap getInstance(Integer id) {
+        return HibernateUtils.get(IndexImageMap.class, id);
+    }
+
+    public void update(Integer id, String href, String comment) {
+        IndexImageMap map = getInstance(id);
+        if (map != null) {
+            map.setHref(href);
+            map.setComment(comment);
+            HibernateUtils.update(map);
+        }
+    }
+
     public void delete(Integer id) {
         HibernateUtils.delete(IndexImageMap.class, id);
     }
@@ -35,5 +51,17 @@ public class IndexImageMapDao {
 
     public List<IndexImageMap> getInstances() {
         return HibernateUtils.getList(IndexImageMap.class, "ORDER BY imageId ASC");
+    }
+
+    public Map<Integer, List<IndexImageMap>> getInstancesAndGroupByImageId() {
+        Map<Integer, List<IndexImageMap>> map = new HashMap<>();
+        for (IndexImageMap indexImageMap : getInstances()) {
+            Integer imageId = indexImageMap.getImageId();
+            if (!map.containsKey(imageId)) {
+                map.put(imageId, new ArrayList<IndexImageMap>());
+            }
+            map.get(imageId).add(indexImageMap);
+        }
+        return map;
     }
 }

@@ -28,6 +28,23 @@
         }, JSUtils.normalAjaxCallback);
     });
 
+    $('#cycleIntervalInput').blur(function () {
+        var $this = $(this);
+        var $infoDiv = $this.parent().next();
+        $.post('admin-index-image-cycle-interval.json', {
+            'cycleInterval': $this.val()
+        }, function (data) {
+            if (data.success) {
+                $infoDiv.text('时间间隔更新成功').css('color', '#61BB5E').show();
+                setTimeout(function () {
+                    $infoDiv.fadeOut(1000);
+                }, 1000);
+            } else {
+                $infoDiv.text(data.detail).css('color', '#ff0000');
+            }
+        });
+    });
+
     function showImageForm(id, rowIndex, image, backImage) {
         $addImageForm.find('input[name=id]').val(id);
         $addImageForm.find('input[name=rowIndex]').val(rowIndex);

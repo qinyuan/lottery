@@ -69,3 +69,20 @@ div.form div.image-row > div {
 #addImageForm div.buttonDiv button {
     margin: 0 20px;
 }
+
+div.cycle-interval {
+    position: absolute;
+    top: 10px;
+    left: 100px;
+}
+
+div.cycle-interval > div {
+    float: left;
+    padding-right: 10px;
+}
+
+div.cycle-interval input {
+    width: 60px;
+    font-size: 9pt;
+    height: 22px;
+}
