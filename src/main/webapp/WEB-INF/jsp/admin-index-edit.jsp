@@ -14,9 +14,9 @@
                             <button type="button" data-options="id: ${indexImage.id}"
                                     class="btn btn-xs btn-primary edit-image">编辑图片
                             </button>
-                            <button type="button" data-options="id: ${indexImage.id}"
-                                    class="btn btn-xs btn-primary edit-link">编辑链接
-                            </button>
+                            <a href="admin-index-image-link.html?imageId=${indexImage.id}" target="_blank">
+                                <button type="button" class="btn btn-xs btn-primary edit-link">编辑链接</button>
+                            </a>
                             <button type="button" data-options="id: ${indexImage.id}"
                                     class="btn btn-xs btn-danger delete-image">删除
                             </button>

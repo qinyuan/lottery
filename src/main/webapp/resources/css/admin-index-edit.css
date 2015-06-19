@@ -11,6 +11,10 @@ div.form div.image-row div.image {
     padding: 10px;
 }
 
+div.form div.image-row div.image a:hover {
+    text-decoration: none;
+}
+
 div.form div.image-row div.image img {
     display: block;
     margin-bottom: 5px;

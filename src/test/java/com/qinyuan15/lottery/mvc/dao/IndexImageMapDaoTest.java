@@ -11,6 +11,17 @@ public class IndexImageMapDaoTest {
 
     @Test
     public void testAdd() throws Exception {
-        dao.add(1, 1, 1, 2, 2, "href", "comment");
+        //dao.add(1, 1, 1, 2, 2, "href", "comment");
+    }
+
+    @Test
+    public void testGetInstances() {
+        System.out.println(dao.getInstances().size());
+    }
+
+    @Test
+    public void testGetInstancesByImageId() {
+        System.out.println(dao.getInstancesByImageId(null).size());
+        System.out.println(dao.getInstancesByImageId(1).size());
     }
 }

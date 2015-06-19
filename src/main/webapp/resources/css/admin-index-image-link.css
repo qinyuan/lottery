@@ -1,0 +1,49 @@
+div.footer-poster {
+    display: none;
+}
+
+div.main-body {
+    background-color: #e2e2e2;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+div.main-body span.comment {
+    color: #5A9527;
+    font-size: 9pt;
+}
+
+div.main-body div.link-list > div {
+    padding: 15px;
+    overflow: hidden;
+}
+
+div.main-body div.link-list div.content > div {
+    background-color: #ffffff;
+    overflow: hidden;
+    float: left;
+}
+
+div.main-body div.link-list div.content > div {
+    border: 1px solid #a0a0a0;
+}
+
+div.main-body div.link-list div.content div.comment:hover,
+div.main-body div.link-list div.content div.close-image:hover {
+    background-color: #e5e5e5;
+}
+
+div.main-body div.link-list div.content div.comment {
+    border-right: 1px solid #a0a0a0;
+    float: left;
+    padding: 5px;
+    cursor: pointer;
+}
+
+div.main-body div.link-list div.content div.close-image {
+    float: right;
+    padding: 6px 5px 2px 5px;
+    height: 100%;
+    vertical-align: bottom;
+    cursor: pointer;
+}
