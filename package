@@ -1,0 +1,22 @@
+#!/bin/bash
+
+mvn clean
+mvn package -Dmaven.test.skip=true
+if [ $? -ne 0 ]; then
+    exit 1
+fi
+
+cp target/lottery-mvc-1.0-SNAPSHOT.war target/lottery.war
+exit 0
+
+cp -r target/mall-mvc-1.0-SNAPSHOT target/mall
+mv target/mall/WEB-INF/lib/qinyuan*.jar target/mall/WEB-INF/
+mv target/mall/WEB-INF/lib/mall*.jar target/mall/WEB-INF/
+rm -rf target/mall/WEB-INF/lib/* target/mall/WEB-INF/classes/{hibernate*,spring*,log*}
+mv target/mall/WEB-INF/qinyuan*.jar target/mall/WEB-INF/lib/
+mv target/mall/WEB-INF/mall*.jar target/mall/WEB-INF/lib/
+cd target/mall
+tar -zcf mall.tar.gz *
+mv mall.tar.gz ../
+#cd ../
+#rm -rf  ./mall

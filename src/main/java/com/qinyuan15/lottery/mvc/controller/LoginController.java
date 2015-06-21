@@ -12,15 +12,12 @@ public class LoginController extends IndexHeaderController {
 
         setTitle("后台管理员登录");
         addCssAndJs("login");
+
+        if (getLocalAddress().equals("127.0.0.1")) {
+            addJs("auto-login");
+        }
+
         addCss("resources/js/lib/bootstrap/css/bootstrap.min.css", false);
         return "login";
     }
-
-    /*
-    @RequestMapping("/hello-world.json")
-    @ResponseBody
-    public String json(){
-        return success();
-    }
-    */
 }

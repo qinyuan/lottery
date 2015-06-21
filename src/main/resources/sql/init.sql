@@ -4,7 +4,7 @@ CREATE TABLE `navigation_link` (
     `title` char(50) NOT NULL,
     `href` varchar(800) NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `index_image` (
     `id` int(11) primary key auto_increment,
