@@ -70,6 +70,33 @@
                 </table>
             </div>
         </div>
+        <div class="edit-unit">
+            <div class="title">页尾设置</div>
+            <div class="content">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="title">页尾图片</td>
+                        <td class="input">
+                            <jsp:include page="widget-upload-image.jsp">
+                                <jsp:param name="id" value="footerPoster"/>
+                                <jsp:param name="value" value="${footerPoster}"/>
+                                <jsp:param name="snapshot" value="true"/>
+                            </jsp:include>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="title">页尾文字</td>
+                        <td class="input">
+                            <input type="text" class="form-control" name="footerText" value="${footerText}"
+                                   placeholder="在些输入页面底部的文字"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <div class="submit">
             <button id="submitButton" type="submit" class="btn btn-success">确定</button>
         </div>

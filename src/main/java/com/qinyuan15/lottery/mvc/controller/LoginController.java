@@ -1,14 +1,15 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class LoginController extends IndexHeaderController {
+public class LoginController extends ImageController {
 
     @RequestMapping("/login")
     public String index() {
-        setHeaderParameters();
+        IndexHeaderUtils.setHeaderParameters(this);
 
         setTitle("后台管理员登录");
         addCssAndJs("login");

@@ -3,6 +3,7 @@ package com.qinyuan15.lottery.mvc.controller;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.IndexImageDao;
 import com.qinyuan15.utils.IntegerUtils;
+import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -12,13 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class AdminIndexEditController extends IndexHeaderController {
+public class AdminIndexEditController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminIndexEditController.class);
 
     @RequestMapping("/admin-index-edit")
     public String index() {
-        setHeaderParameters();
-        setIndexImageGroups();
+        IndexHeaderUtils.setHeaderParameters(this);
+        IndexHeaderUtils.setIndexImageGroups(this);
 
         setAttribute("cycleInterval", AppConfig.getIndexImageCycleInterval());
 

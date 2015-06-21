@@ -2,16 +2,17 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.IndexImageMapDao;
+import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class IndexController extends IndexHeaderController {
+public class IndexController extends ImageController {
 
     @RequestMapping("/index")
     public String index() {
-        setHeaderParameters();
-        setIndexImageGroups();
+        IndexHeaderUtils.setHeaderParameters(this);
+        IndexHeaderUtils.setIndexImageGroups(this);
 
         setAttribute("indexImageMaps", new IndexImageMapDao().getInstancesAndGroupByImageId());
         addJavaScriptData("cycleInterval", AppConfig.getIndexImageCycleInterval());

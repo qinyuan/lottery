@@ -6,6 +6,7 @@ div.form > form div.edit-unit div.title {
 
 div.form > form div.edit-unit {
     border: 1px solid #454545;
+    margin: 10px 0;
 }
 
 div.form > form div.edit-unit td {

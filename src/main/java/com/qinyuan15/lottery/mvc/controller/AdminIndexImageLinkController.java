@@ -6,6 +6,7 @@ import com.qinyuan15.lottery.mvc.dao.IndexImageMap;
 import com.qinyuan15.lottery.mvc.dao.IndexImageMapDao;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.config.LinkAdapter;
+import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-public class AdminIndexImageLinkController extends IndexHeaderController {
+public class AdminIndexImageLinkController extends ImageController {
 
     @RequestMapping("/admin-index-image-link")
     public String index(@RequestParam(value = "imageId", required = true) Integer imageId) {
-        setHeaderParameters();
+        IndexHeaderUtils.setHeaderParameters(this);
 
         if (!IntegerUtils.isPositive(imageId)) {
             return BLANK_PAGE;

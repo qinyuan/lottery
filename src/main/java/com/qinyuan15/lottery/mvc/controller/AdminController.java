@@ -4,6 +4,7 @@ import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.NavigationLink;
 import com.qinyuan15.lottery.mvc.dao.NavigationLinkDao;
 import com.qinyuan15.utils.config.LinkAdapter;
+import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,12 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class AdminController extends IndexHeaderController {
+public class AdminController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
 
     @RequestMapping("/admin")
     public String index() {
-        setHeaderParameters();
+        IndexHeaderUtils.setHeaderParameters(this);
 
         setTitle("系统设置");
         addCss("resources/js/lib/bootstrap/css/bootstrap.min", false);
@@ -39,10 +40,14 @@ public class AdminController extends IndexHeaderController {
                          @RequestParam(value = "indexHeaderSlogan", required = true) String indexHeaderSlogan,
                          @RequestParam(value = "indexHeaderSloganFile", required = true) MultipartFile indexHeaderSloganFile,
                          @RequestParam(value = "headerLinkTitles", required = true) String[] headerLinkTitles,
-                         @RequestParam(value = "headerLinkHrefs", required = true) String[] headerLinkHrefs) {
+                         @RequestParam(value = "headerLinkHrefs", required = true) String[] headerLinkHrefs,
+                         @RequestParam(value = "footerPoster", required = true) String footerPoster,
+                         @RequestParam(value = "footerPosterFile", required = true) MultipartFile footerPosterFile,
+                         @RequestParam(value = "footerText", required = true) String footerText) {
         final String redirectPage = "admin";
 
-        String indexHeaderLeftLogoPath = null, indexHeaderRightLogoPath = null, indexHeaderSloganPath = null;
+        String indexHeaderLeftLogoPath = null, indexHeaderRightLogoPath = null,
+                indexHeaderSloganPath = null, footerPosterPath = null;
         try {
             indexHeaderLeftLogoPath = getSavePath(indexHeaderLeftLogo, indexHeaderLeftLogoFile);
         } catch (Exception e) {
@@ -62,9 +67,17 @@ public class AdminController extends IndexHeaderController {
             LOGGER.error("error in getting save path of indexHeaderSlogan: {}", e);
         }
 
+        try {
+            footerPosterPath = getSavePath(footerPoster, footerPosterFile);
+        } catch (Exception e) {
+            LOGGER.error("error in getting save path of footerPoster: {}", e);
+        }
+
         AppConfig.updateIndexHeaderLeftLogo(indexHeaderLeftLogoPath);
         AppConfig.updateIndexHeaderRightLogo(indexHeaderRightLogoPath);
         AppConfig.updateIndexHeaderSlogan(indexHeaderSloganPath);
+        AppConfig.updateFooterPoster(footerPosterPath);
+        AppConfig.updateFooterText(footerText);
 
         new NavigationLinkDao().clearAndSave(buildNavigationLinks(headerLinkTitles, headerLinkHrefs));
 
@@ -91,12 +104,4 @@ public class AdminController extends IndexHeaderController {
         }
         return navigationLinks;
     }
-
-    /*
-    @RequestMapping("/hello-world.json")
-    @ResponseBody
-    public String json(){
-        return success();
-    }
-    */
 }

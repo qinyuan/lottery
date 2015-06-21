@@ -51,4 +51,24 @@ public class AppConfig {
     public static void updateIndexImageCycleInterval(int indexImageCycleInterval) {
         dao.save(INDEX_IMAGE_CYCLE_INTERVAL_KEY, String.valueOf(indexImageCycleInterval));
     }
+
+    private final static String FOOTER_POSTER_KEY = "footerPoster";
+
+    public static String getFooterPoster() {
+        return dao.get(FOOTER_POSTER_KEY);
+    }
+
+    public static void updateFooterPoster(String footerPoster) {
+        dao.save(FOOTER_POSTER_KEY, footerPoster);
+    }
+
+    private final static String FOOTER_TEXT_KEY = "footerText";
+
+    public static String getFooterText() {
+        return dao.get(FOOTER_TEXT_KEY);
+    }
+
+    public static void updateFooterText(String footerText) {
+        dao.save(FOOTER_TEXT_KEY, footerText);
+    }
 }
