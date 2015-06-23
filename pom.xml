@@ -237,7 +237,7 @@
                 <configuration>
                     <reload>automatic</reload>
                     <scanIntervalSeconds>3</scanIntervalSeconds>
-                    <contextPath>/</contextPath>
+                    <contextPath>/lottery_test</contextPath>
                     <connectors>
                         <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
                             <port>8080</port>

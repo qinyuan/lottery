@@ -4,6 +4,25 @@
 <div class="page-width form">
     <q:multipart-form action="admin-submit">
         <div class="edit-unit">
+            <div class="title">网站设置</div>
+            <div class="content">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="title">网站图标</td>
+                        <td class="input">
+                            <jsp:include page="widget-upload-image.jsp">
+                                <jsp:param name="id" value="favicon"/>
+                                <jsp:param name="value" value="${favicon}"/>
+                                <jsp:param name="snapshot" value="true"/>
+                            </jsp:include>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="edit-unit">
             <div class="title">主页页头设置</div>
             <div class="content">
                 <table>
@@ -71,6 +90,25 @@
             </div>
         </div>
         <div class="edit-unit">
+            <div class="title">商品页页头设置</div>
+            <div class="content">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="title">左图标</td>
+                        <td class="input">
+                            <jsp:include page="widget-upload-image.jsp">
+                                <jsp:param name="id" value="commodityHeaderLeftLogo"/>
+                                <jsp:param name="value" value="${commodityHeaderLeftLogo}"/>
+                                <jsp:param name="snapshot" value="true"/>
+                            </jsp:include>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="edit-unit">
             <div class="title">页尾设置</div>
             <div class="content">
                 <table>
@@ -96,7 +134,6 @@
                 </table>
             </div>
         </div>
-
         <div class="submit">
             <button id="submitButton" type="submit" class="btn btn-success">确定</button>
         </div>

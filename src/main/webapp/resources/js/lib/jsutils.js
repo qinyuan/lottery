@@ -79,6 +79,13 @@ var JSUtils = {
     isNumber: function (arg) {
         return (typeof arg) == 'number';
     },
+    isNumberString: function (arg) {
+        if (!this.isString(arg)) {
+            return false;
+        }
+
+        return arg.match(/^\d+(\.\d+)?$/) != null;
+    },
     getUserAgent: function () {
         return navigator['userAgent'];
     },
@@ -229,6 +236,24 @@ var JSUtils = {
         } else {
             alert(data.detail);
         }
+    },
+    /**
+     * validate is upload file is set
+     * @param id the id of upload file
+     * @param errorInfo information to show if upload file is not set
+     * @returns {boolean} if upload file is set, return true, otherwise return false
+     */
+    validateUploadFile: function (id, errorInfo) {
+        var $url = $('form input[name=' + id + ']');
+        var $file = $('form input[name=' + id + 'File]');
+
+        if ($url.trimVal() == '' && $file.trimVal() == '') {
+            alert(errorInfo);
+            $url.focusOrSelect();
+            return false;
+        } else {
+            return true;
+        }
     }
 };
 
@@ -313,4 +338,8 @@ jQuery.fn.moveToNext = function () {
     if ($next.size() > 0) {
         this.insertAfter($next);
     }
+};
+
+jQuery.fn.trimVal = function () {
+    return $.trim(this.val());
 };

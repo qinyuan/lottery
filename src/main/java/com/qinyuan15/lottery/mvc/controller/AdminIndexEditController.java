@@ -7,6 +7,7 @@ import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -51,11 +52,15 @@ public class AdminIndexEditController extends ImageController {
         }
 
         String backImagePath;
-        try {
-            backImagePath = getSavePath(backImage, backImageFile);
-        } catch (Exception e) {
-            LOGGER.error("Fail to deal with backImage: {}", e);
-            return redirect(page, "背景图片处理失败");
+        if (isUploadFileEmpty(backImageFile) && !StringUtils.hasText(backImage)) {
+            backImagePath = "";
+        } else {
+            try {
+                backImagePath = getSavePath(backImage, backImageFile);
+            } catch (Exception e) {
+                LOGGER.error("Fail to deal with backImage: {}", e);
+                return redirect(page, "背景图片处理失败");
+            }
         }
 
         IndexImageDao dao = new IndexImageDao();

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div class="footer-poster">
-    <div class="page-width"><img src="resources/css/images/bottom-image.png"/></div>
+    <div class="page-width" style="background-image: url('${footerPoster}');"></div>
 </div>
 <div class="footer">
     <span>奇酷网@2013-2014 深圳奇虎健安智能科技有限公司版权所有 | 粤ICP备14094849号-1</span>
@@ -8,8 +8,6 @@
 </body>
 <q:js src="lib/jquery-1.11.1.min"/>
 <q:js src="lib/jquery.url"/>
-<%--<q:js src="lib/bootstrap/js/bootstrap.min"/>--%>
-<%--<q:js src="lib/angular/angular.min"/>--%>
 <q:js src="lib/underscore-min"/>
 <q:js src="lib/jsutils"/>
 <q:js src="common"/>

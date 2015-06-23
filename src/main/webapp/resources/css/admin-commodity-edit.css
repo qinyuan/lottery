@@ -1,0 +1,35 @@
+div.form form {
+    padding: 10px 20px;
+    background-color: #D8F7E9;
+}
+
+div.form form label {
+    margin-right: 10px;
+}
+
+div.form form div.inline {
+    display: inline-block;
+    margin-right: 80px;
+}
+
+div.form form span.split {
+    width: 100px;
+}
+
+div.form form input[type=text] {
+    display: inline-block;
+    width: 200px;
+}
+
+div.form form td {
+    padding-bottom: 15px;
+}
+
+div.form form td.title {
+    vertical-align: middle;
+    padding-right: 5px;
+}
+
+div.form form button {
+    margin-right: 30px;
+}

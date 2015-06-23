@@ -1,0 +1,75 @@
+package com.qinyuan15.lottery.mvc.dao;
+
+import com.qinyuan15.utils.hibernate.HibernateUtils;
+import com.qinyuan15.utils.mvc.PaginationItemFactory;
+
+import java.util.List;
+
+/**
+ * Dao class of commodity
+ * Created by qinyuan on 15-6-22.
+ */
+public class CommodityDao {
+
+    public static class Factory implements PaginationItemFactory<Commodity> {
+        @Override
+        public long getCount() {
+            return HibernateUtils.getCount(Commodity.class);
+        }
+
+        @Override
+        public List<Commodity> getInstances(int firstResult, int maxResults) {
+            return HibernateUtils.getList(Commodity.class, "", firstResult, maxResults);
+        }
+    }
+
+    public static Factory factory(){
+        return new Factory();
+    }
+
+    public Integer add(String name, Double price, Boolean own, String snapshot, String detailImage) {
+        Commodity commodity = new Commodity();
+        commodity.setPrice(price);
+        commodity.setName(name);
+        commodity.setOwn(own);
+        commodity.setSnapshot(snapshot);
+        commodity.setDetailImage(detailImage);
+
+        // set default field
+        commodity.setInLottery(false);
+
+        return HibernateUtils.save(commodity);
+    }
+
+    public void delete(Integer id) {
+        HibernateUtils.delete(Commodity.class, id);
+    }
+
+    public void update(Integer id, String name, Double price, Boolean own, String snapshot, String detailImage) {
+        Commodity commodity = getInstance(id);
+        commodity.setPrice(price);
+        commodity.setName(name);
+        commodity.setOwn(own);
+        commodity.setSnapshot(snapshot);
+        commodity.setDetailImage(detailImage);
+        HibernateUtils.update(commodity);
+    }
+
+    public Commodity getInstance(Integer id) {
+        return HibernateUtils.get(Commodity.class, id);
+    }
+
+    private void changeLottery(Integer commodityId, Boolean inLottery) {
+        Commodity commodity = getInstance(commodityId);
+        commodity.setInLottery(inLottery);
+        HibernateUtils.update(commodity);
+    }
+
+    public void startLottery(Integer commodityId) {
+        changeLottery(commodityId, true);
+    }
+
+    public void endLottery(Integer commodityId) {
+        changeLottery(commodityId, false);
+    }
+}

@@ -1,0 +1,38 @@
+div.header > div.back {
+    background-color: #E0E0E0;
+    width: 100%;
+    position: absolute;
+}
+
+div.header > div.content,
+div.header > div.back {
+    top: 0;
+    height: 76px;
+}
+
+div.header > div.content > div.left-logo {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+div.header > div.content > div.right-navigation {
+    position: absolute;
+    top: 25px;
+    right: 0;
+}
+
+div.header > div.content > div.right-navigation > a {
+    vertical-align: middle;
+    padding: 0 10px;
+    font-size: 11pt;
+    border-right: #B1B1B1 1px solid;
+    color: #606060;
+}
+div.header > div.content > div.right-navigation > a:last-child {
+    border-right-width: 0;
+}
+
+div.header > div.content > div.right-navigation > a.text.emphasize {
+    color: #87BE4C;
+}

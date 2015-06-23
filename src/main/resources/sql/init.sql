@@ -23,3 +23,13 @@ CREATE TABLE `index_image_map` (
     `href` varchar(800) not null,
     `comment` char(200)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table commodity (
+    id int primary key auto_increment,
+    name char(200) not null,
+    price double not null,
+    in_lottery boolean not null,
+    own boolean not null,
+    snapshot varchar(800) not null,
+    detail_image varchar(800) not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

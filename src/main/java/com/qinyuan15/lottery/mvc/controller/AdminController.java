@@ -22,6 +22,7 @@ public class AdminController extends ImageController {
     @RequestMapping("/admin")
     public String index() {
         IndexHeaderUtils.setHeaderParameters(this);
+        CommodityHeaderUtils.setHeaderParameters(this);
 
         setTitle("系统设置");
         addCss("resources/js/lib/bootstrap/css/bootstrap.min", false);
@@ -43,34 +44,56 @@ public class AdminController extends ImageController {
                          @RequestParam(value = "headerLinkHrefs", required = true) String[] headerLinkHrefs,
                          @RequestParam(value = "footerPoster", required = true) String footerPoster,
                          @RequestParam(value = "footerPosterFile", required = true) MultipartFile footerPosterFile,
-                         @RequestParam(value = "footerText", required = true) String footerText) {
+                         @RequestParam(value = "footerText", required = true) String footerText,
+                         @RequestParam(value = "commodityHeaderLeftLogo", required = true) String commodityHeaderLeftLogo,
+                         @RequestParam(value = "commodityHeaderLeftLogoFile", required = true) MultipartFile commodityHeaderLeftLogoFile,
+                         @RequestParam(value = "favicon", required = true) String favicon,
+                         @RequestParam(value = "faviconFile", required = true) MultipartFile faviconFile) {
         final String redirectPage = "admin";
 
         String indexHeaderLeftLogoPath = null, indexHeaderRightLogoPath = null,
-                indexHeaderSloganPath = null, footerPosterPath = null;
+                indexHeaderSloganPath = null, footerPosterPath = null,
+                commodityHeaderLeftLogoPath = null, faviconPath = null;
         try {
             indexHeaderLeftLogoPath = getSavePath(indexHeaderLeftLogo, indexHeaderLeftLogoFile);
         } catch (Exception e) {
             LOGGER.error("error in getting save path of indexHeaderLeftLogo: {}", e);
-            redirect(redirectPage, "左图标处理失败!");
+            redirect(redirectPage, "主页页头左图标处理失败！");
         }
 
         try {
             indexHeaderRightLogoPath = getSavePath(indexHeaderRightLogo, indexHeaderRightLogoFile);
         } catch (Exception e) {
             LOGGER.error("error in getting save path of indexHeaderRightLogo: {}", e);
+            redirect(redirectPage, "主页页头右图标处理失败！");
         }
 
         try {
             indexHeaderSloganPath = getSavePath(indexHeaderSlogan, indexHeaderSloganFile);
         } catch (Exception e) {
             LOGGER.error("error in getting save path of indexHeaderSlogan: {}", e);
+            redirect(redirectPage, "主页页头右侧宣传图片处理失败！");
         }
 
         try {
             footerPosterPath = getSavePath(footerPoster, footerPosterFile);
         } catch (Exception e) {
             LOGGER.error("error in getting save path of footerPoster: {}", e);
+            redirect(redirectPage, "主页页尾图片处理失败！");
+        }
+
+        try {
+            commodityHeaderLeftLogoPath = getSavePath(commodityHeaderLeftLogo, commodityHeaderLeftLogoFile);
+        } catch (Exception e) {
+            LOGGER.error("error in getting save path of commodityHeaderLeftLogo");
+            redirect(redirectPage, "商品页页头左图标处理失败！");
+        }
+
+        try {
+            faviconPath = getSavePath(favicon, faviconFile);
+        } catch (Exception e) {
+            LOGGER.error("error in getting save path of favicon");
+            redirect(redirectPage, "网站图标处理失败！");
         }
 
         AppConfig.updateIndexHeaderLeftLogo(indexHeaderLeftLogoPath);
@@ -78,6 +101,8 @@ public class AdminController extends ImageController {
         AppConfig.updateIndexHeaderSlogan(indexHeaderSloganPath);
         AppConfig.updateFooterPoster(footerPosterPath);
         AppConfig.updateFooterText(footerText);
+        AppConfig.updateCommodityHeaderLeftLogo(commodityHeaderLeftLogoPath);
+        AppConfig.updateFavicon(faviconPath);
 
         new NavigationLinkDao().clearAndSave(buildNavigationLinks(headerLinkTitles, headerLinkHrefs));
 

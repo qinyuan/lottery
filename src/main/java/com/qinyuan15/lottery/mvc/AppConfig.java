@@ -71,4 +71,24 @@ public class AppConfig {
     public static void updateFooterText(String footerText) {
         dao.save(FOOTER_TEXT_KEY, footerText);
     }
+
+    private final static String COMMODITY_HEADER_LEFT_LOGO_KEY = "commodityHeaderLeftLogo";
+
+    public static String getCommodityHeaderLeftLogo() {
+        return dao.get(COMMODITY_HEADER_LEFT_LOGO_KEY);
+    }
+
+    public static void updateCommodityHeaderLeftLogo(String commodityHeaderLeftLogo) {
+        dao.save(COMMODITY_HEADER_LEFT_LOGO_KEY, commodityHeaderLeftLogo);
+    }
+
+    private final static String FAVICON_KEY = "favicon";
+
+    public static String getFavicon() {
+        return dao.get(FAVICON_KEY);
+    }
+
+    public static void updateFavicon(String favicon) {
+        dao.save(FAVICON_KEY, favicon);
+    }
 }

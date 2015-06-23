@@ -11,10 +11,11 @@
     <%--
     <meta name="keywords" content="<%=seoKeyword==null?"":seoKeyword.getWord()%>">
     <meta name="description" content="<%=seoKeyword==null?"":seoKeyword.getDescription()%>">
-    <link rel="icon" href="${appConfig.favicon}" type="image/x-icon" />
-    <link rel="shortcut icon" href="${appConfig.favicon}" type="image/x-icon" />
     --%>
-    <%--<q:css href="resources/js/lib/bootstrap/css/bootstrap.min.css"/>--%>
+    <c:if test="${favicon != null}">
+        <link rel="icon" href="${favicon}" type="image/x-icon"/>
+        <link rel="shortcut icon" href="${favicon}" type="image/x-icon"/>
+    </c:if>
     <q:css href="common"/>
     <c:forEach var="css" items="${moreCss}"><q:css href="${css.href}" version="${css.version}"/></c:forEach>
     <c:forEach var="js" items="${headJs}"><q:js src="${js.href}" version="${js.version}"/></c:forEach>
