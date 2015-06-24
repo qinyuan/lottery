@@ -1,9 +1,9 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.lottery.mvc.dao.IndexImage;
-import com.qinyuan15.lottery.mvc.dao.IndexImageDao;
-import com.qinyuan15.lottery.mvc.dao.IndexImageMap;
-import com.qinyuan15.lottery.mvc.dao.IndexImageMapDao;
+import com.qinyuan15.lottery.mvc.dao.Commodity;
+import com.qinyuan15.lottery.mvc.dao.CommodityDao;
+import com.qinyuan15.lottery.mvc.dao.CommodityMap;
+import com.qinyuan15.lottery.mvc.dao.CommodityMapDao;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.config.LinkAdapter;
 import com.qinyuan15.utils.mvc.controller.ImageController;
@@ -16,35 +16,34 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-public class AdminIndexImageLinkController extends ImageController {
+public class AdminCommodityLinkController extends ImageController {
 
-    @RequestMapping("/admin-index-image-link")
-    public String index(@RequestParam(value = "imageId", required = true) Integer imageId) {
+    @RequestMapping("/admin-commodity-link")
+    public String index(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
         IndexHeaderUtils.setHeaderParameters(this);
 
-        if (!IntegerUtils.isPositive(imageId)) {
+        if (!IntegerUtils.isPositive(commodityId)) {
             return BLANK_PAGE;
         }
 
-        IndexImage indexImage = new IndexImageDao().getInstance(imageId);
-        if (indexImage == null) {
+        Commodity commodity = new CommodityDao().getInstance(commodityId);
+        if (commodity == null) {
             return BLANK_PAGE;
         }
-        indexImage.setPath(this.pathToUrl(indexImage.getPath()));
+        new CommodityUrlAdapter(this).adapt(commodity);
 
-        setAttribute("indexImage", indexImage);
-        List<IndexImageMap> imageMaps = new IndexImageMapDao().getInstancesByImageId(imageId);
-        setAttribute("indexImageMaps", imageMaps);
-        this.addJavaScriptData("indexImageMaps", imageMaps);
+        setAttribute("commodity", commodity);
+        List<CommodityMap> commodityMaps = new CommodityMapDao().getInstancesByCommodityId(commodityId);
+        setAttribute("commodityMaps", commodityMaps);
+        addJavaScriptData("commodityMaps", commodityMaps);
 
-        setTitle("编辑主页图片链接");
+        setTitle("编辑商品图片链接");
         addCss("resources/js/lib/bootstrap/css/bootstrap.min", false);
-        addCssAndJs("admin-index-image-link");
-
-        return "admin-index-image-link";
+        addCssAndJs("admin-commodity-link");
+        return "admin-commodity-link";
     }
 
-    @RequestMapping("/admin-index-image-link-edit.json")
+    @RequestMapping("/admin-commodity-link-edit.json")
     @ResponseBody
     public String edit(@RequestParam(value = "id", required = true) Integer id,
                        @RequestParam(value = "href", required = true) String href,
@@ -63,16 +62,16 @@ public class AdminIndexImageLinkController extends ImageController {
         }
 
         try {
-            new IndexImageMapDao().update(id, href, comment);
+            new CommodityMapDao().update(id, href, comment);
             return success();
         } catch (Exception e) {
             return fail("数据库操作失败");
         }
     }
 
-    @RequestMapping("/admin-index-image-link-add.json")
+    @RequestMapping("/admin-commodity-link-add.json")
     @ResponseBody
-    public String add(@RequestParam(value = "imageId", required = true) Integer imageId,
+    public String add(@RequestParam(value = "commodityId", required = true) Integer commodityId,
                       @RequestParam(value = "xStart", required = true) Integer xStart,
                       @RequestParam(value = "yStart", required = true) Integer yStart,
                       @RequestParam(value = "xEnd", required = true) Integer xEnd,
@@ -80,7 +79,7 @@ public class AdminIndexImageLinkController extends ImageController {
                       @RequestParam(value = "href", required = true) String href,
                       @RequestParam(value = "comment", required = true) String comment) {
 
-        if (!IntegerUtils.isPositive(imageId) || !IntegerUtils.isNotNegative(xStart)
+        if (!IntegerUtils.isPositive(commodityId) || !IntegerUtils.isNotNegative(xStart)
                 || !IntegerUtils.isNotNegative(yStart) || !IntegerUtils.isNotNegative(xEnd)
                 || !IntegerUtils.isNotNegative(yEnd)) {
             return fail("数据错误");
@@ -96,18 +95,18 @@ public class AdminIndexImageLinkController extends ImageController {
         }
 
         try {
-            new IndexImageMapDao().add(imageId, xStart, yStart, xEnd, yEnd, href, comment);
+            new CommodityMapDao().add(commodityId, xStart, yStart, xEnd, yEnd, href, comment);
             return success();
         } catch (Exception e) {
             return fail("数据库操作失败");
         }
     }
 
-    @RequestMapping("/admin-index-image-link-delete.json")
+    @RequestMapping("/admin-commodity-link-delete.json")
     @ResponseBody
     public String json(@RequestParam(value = "id", required = true) Integer id) {
         try {
-            new IndexImageMapDao().delete(id);
+            new CommodityMapDao().delete(id);
             return success();
         } catch (Exception e) {
             return fail("数据库操作失败");

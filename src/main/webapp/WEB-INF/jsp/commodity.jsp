@@ -13,6 +13,7 @@
 </div>
 <div class="body page-width">
     <div class="snapshots">
+        <div class="prev lightTransparent"></div>
         <c:forEach var="snapshot" items="${snapshots}">
             <div class="snapshot" title="单击切换到该商品" data-options="id:${snapshot.id}">
                 <div class="image" style="background-image: url('${snapshot.snapshot}')"></div>
@@ -20,9 +21,17 @@
                 <div class="price">${snapshot.price}元</div>
             </div>
         </c:forEach>
+        <div class="next lightTransparent"></div>
     </div>
     <div class="detail">
-        <img src="${commodity.detailImage}"/>
+        <img src="${commodity.detailImage}" usemap="#commodityMap"/>
     </div>
 </div>
+<map name="commodityMap" id="commodityMap"></map>
+<q:handlebars-template id="mapTemplate">
+    {{#each commodityMaps}}
+    <area shape="rect" coords="{{xStart}},{{yStart}},{{xEnd}},{{yEnd}}" href="{{href}}" alt="{{comment}}"
+          target="_blank"/>
+    {{/each}}
+</q:handlebars-template>
 <%@include file="inc-footer.jsp" %>

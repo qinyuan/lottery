@@ -69,7 +69,11 @@
                         <img src="${commodity.snapshot}" onload="adjustImage(this, 100, 100);"/></a></td>
                     <td class="detailImage"><a href="${commodity.detailImage}" target="_blank" title="单击打开">
                         <img src="${commodity.detailImage}" onload="adjustImage(this, 100, 100);"/></a></td>
-                    <td>
+                    <td class="action">
+                        <a href="commodity.html?id=${commodity.id}" target="_blank"><img
+                                title="预览" src="resources/css/images/preview.gif"/></a>
+                        <a href="admin-commodity-link.html?commodityId=${commodity.id}" target="_blank"><img
+                                title="编辑图片上的链接" src="resources/css/images/link.png"/></a>
                         <jsp:include page="widget-edit-delete.jsp"/>
                     </td>
                 </tr>

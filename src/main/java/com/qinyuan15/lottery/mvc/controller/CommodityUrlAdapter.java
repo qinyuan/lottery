@@ -17,12 +17,20 @@ public class CommodityUrlAdapter {
     }
 
     public Commodity adapt(Commodity commodity) {
+        if (commodity == null) {
+            return null;
+        }
+
         commodity.setSnapshot(controller.pathToUrl(commodity.getSnapshot()));
         commodity.setDetailImage(controller.pathToUrl(commodity.getDetailImage()));
         return commodity;
     }
 
     public List<Commodity> adapt(List<Commodity> commodities) {
+        if (commodities == null) {
+            return null;
+        }
+
         for (Commodity commodity : commodities) {
             adapt(commodity);
         }

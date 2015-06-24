@@ -2,6 +2,8 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
+import com.qinyuan15.lottery.mvc.dao.CommodityMap;
+import com.qinyuan15.lottery.mvc.dao.CommodityMapDao;
 import com.qinyuan15.utils.DoubleUtils;
 import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.springframework.stereotype.Controller;
@@ -35,10 +37,12 @@ public class CommodityController extends ImageController {
             }
             setAttribute("commodity", getUrlAdapter().adapt(commodity));
             addJavaScriptData("selectedCommodityId", commodity.getId());
+            addJavaScriptData("commodityMaps", new CommodityMapDao().getInstancesByCommodityId(commodity.getId()));
         }
 
         setAttribute("snapshots", build());
 
+        addJs("resources/js/lib/handlebars.min-v1.3.0", false);
         addCssAndJs("commodity");
         return "commodity";
     }
@@ -86,10 +90,24 @@ public class CommodityController extends ImageController {
         return snapshots;
     }
 
+
     @RequestMapping("/commodity-info.json")
     @ResponseBody
     public String json(@RequestParam(value = "id", required = true) Integer id) {
-        Commodity commodity = new CommodityDao().getInstance(id);
-        return toJson(getUrlAdapter().adapt(commodity));
+        CommodityInfo commodityInfo = new CommodityInfo(
+                getUrlAdapter().adapt(new CommodityDao().getInstance(id)),
+                new CommodityMapDao().getInstancesByCommodityId(id)
+        );
+        return toJson(commodityInfo);
+    }
+
+    private static class CommodityInfo {
+        Commodity commodity;
+        List<CommodityMap> commodityMaps;
+
+        private CommodityInfo(Commodity commodity, List<CommodityMap> commodityMaps) {
+            this.commodity = commodity;
+            this.commodityMaps = commodityMaps;
+        }
     }
 }

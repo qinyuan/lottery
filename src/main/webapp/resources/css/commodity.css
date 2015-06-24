@@ -44,6 +44,7 @@ div.body div.snapshots {
     overflow: hidden;
     padding: 0 40px;
     min-height: 172px;
+    position: relative;
 }
 
 div.body div.snapshots div.snapshot {
@@ -77,6 +78,33 @@ div.body div.snapshots div.snapshot div.image {
     background-position: center center;
     background-repeat: no-repeat;
     overflow: hidden;
+}
+
+div.body div.snapshots div.prev,
+div.body div.snapshots div.next {
+    position: absolute;
+    width: 35px;
+    height: 110px;
+    bottom: 32px;
+    background: no-repeat url("images/commodity/prev-or-next.png");
+    cursor: pointer;
+    display: none;
+}
+
+div.body div.snapshots div.prev:hover,
+div.body div.snapshots div.next:hover {
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+
+div.body div.snapshots div.prev {
+    background-position: 0 0;
+    left: 0;
+}
+
+div.body div.snapshots div.next {
+    background-position: -35px 0;
+    right: 5px;
 }
 
 div.body div.detail {
