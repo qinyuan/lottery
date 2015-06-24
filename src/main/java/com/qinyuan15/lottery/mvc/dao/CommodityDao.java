@@ -23,7 +23,7 @@ public class CommodityDao {
         }
     }
 
-    public static Factory factory(){
+    public static Factory factory() {
         return new Factory();
     }
 
@@ -57,6 +57,14 @@ public class CommodityDao {
 
     public Commodity getInstance(Integer id) {
         return HibernateUtils.get(Commodity.class, id);
+    }
+
+    public Commodity getFirstInstance() {
+        return HibernateUtils.getFirstItem(Commodity.class);
+    }
+
+    public List<Commodity> getInstances() {
+        return HibernateUtils.getList(Commodity.class);
     }
 
     private void changeLottery(Integer commodityId, Boolean inLottery) {
