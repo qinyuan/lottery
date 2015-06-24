@@ -32,10 +32,7 @@ public class AdminCommodityEditController extends ImageController {
 
         @SuppressWarnings("unchecked")
         List<Commodity> commodities = (List) request.getAttribute(keyName);
-        for (Commodity commodity : commodities) {
-            commodity.setSnapshot(pathToUrl(commodity.getSnapshot()));
-            commodity.setDetailImage(pathToUrl(commodity.getDetailImage()));
-        }
+        new CommodityUrlAdapter(this).adapt(commodities);
 
         setTitle("编辑商品");
 

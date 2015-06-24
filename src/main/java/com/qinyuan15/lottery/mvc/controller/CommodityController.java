@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -19,44 +20,68 @@ public class CommodityController extends ImageController {
 
         CommodityDao dao = new CommodityDao();
         Commodity commodity = dao.getInstance(id);
-        if (commodity != null) {
+        if (commodity == null) {
             commodity = dao.getFirstInstance();
         }
 
         if (commodity == null) {
             setTitle("未找到相关商品");
         } else {
-            if (DoubleUtils.is)
-            setAttribute("commodity", commodity);
+            if (DoubleUtils.isPositive(commodity.getPrice())) {
+                setTitle("商品详细信息");
+            } else {
+                setTitle("参与抽奖");
+            }
+            setAttribute("commodity", getUrlAdapter().adapt(commodity));
         }
 
-        setTitle("商品详细信息");
+        setAttribute("snapshots", build());
+
         addCssAndJs("commodity");
         return "commodity";
     }
 
-    public static class CommoditySnapshot {
+    private CommodityUrlAdapter getUrlAdapter() {
+        return new CommodityUrlAdapter(this);
+    }
+
+    public class CommoditySnapshot {
         private Integer id;
         private String name;
         private Double price;
+        private String snapshot;
 
-        public void setId(Integer id) {
-            this.id = id;
+        public Integer getId() {
+            return id;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public String getName() {
+            return name;
         }
 
-        public void setPrice(Double price) {
-            this.price = price;
+        public Double getPrice() {
+            return price;
         }
 
-        static List<CommoditySnapshot> build() {
-            for (Commodity commodity : new CommodityDao().getInstances()) {
-
-            }
+        public String getSnapshot() {
+            return snapshot;
         }
+    }
+
+    private List<CommoditySnapshot> build() {
+        List<CommoditySnapshot> snapshots = new ArrayList<>();
+        for (Commodity commodity : new CommodityDao().getInstances()) {
+            getUrlAdapter().adapt(commodity);
+
+            CommoditySnapshot snapshot = new CommoditySnapshot();
+            snapshot.id = commodity.getId();
+            snapshot.name = commodity.getName();
+            snapshot.price = commodity.getPrice();
+            snapshot.snapshot = commodity.getSnapshot();
+
+            snapshots.add(snapshot);
+        }
+        return snapshots;
     }
 
     /*

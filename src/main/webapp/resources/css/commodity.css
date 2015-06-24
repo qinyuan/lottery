@@ -29,10 +29,49 @@ div.header > div.content > div.right-navigation > a {
     border-right: #B1B1B1 1px solid;
     color: #606060;
 }
+
 div.header > div.content > div.right-navigation > a:last-child {
     border-right-width: 0;
 }
 
 div.header > div.content > div.right-navigation > a.text.emphasize {
     color: #87BE4C;
+}
+
+div.body div.snapshots {
+    margin-top: 30px;
+    border-bottom: 1px solid #DBDBDB;
+    overflow: hidden;
+    padding: 0 40px;
+}
+
+div.body div.snapshots div.snapshot {
+    width: 112px;
+    height: 170px;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+}
+
+div.body div.snapshots div.snapshot:hover {
+    border-bottom-color: #79B834;
+}
+
+div.body div.snapshots div.snapshot {
+    color: #696969;
+    font-size: 9pt;
+    margin: 0 20px;
+}
+
+div.body div.snapshots div.snapshot > div.price {
+    margin: 5px 0;
+}
+
+div.body div.snapshots div.snapshot div.image {
+    width: 112px;
+    height: 112px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    overflow: hidden;
 }
