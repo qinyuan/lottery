@@ -3,7 +3,7 @@
     <div class="page-width" style="background-image: url('${footerPoster}');"></div>
 </div>
 <div class="footer">
-    <span>奇酷网@2013-2014 深圳奇虎健安智能科技有限公司版权所有 | 粤ICP备14094849号-1</span>
+    <span>${footerText}</span>
 </div>
 </body>
 <q:js src="lib/jquery-1.11.1.min"/>

@@ -7,16 +7,15 @@ if [ $? -ne 0 ]; then
 fi
 
 cp target/lottery-mvc-1.0-SNAPSHOT.war target/lottery.war
-exit 0
 
-cp -r target/mall-mvc-1.0-SNAPSHOT target/mall
-mv target/mall/WEB-INF/lib/qinyuan*.jar target/mall/WEB-INF/
-mv target/mall/WEB-INF/lib/mall*.jar target/mall/WEB-INF/
-rm -rf target/mall/WEB-INF/lib/* target/mall/WEB-INF/classes/{hibernate*,spring*,log*}
-mv target/mall/WEB-INF/qinyuan*.jar target/mall/WEB-INF/lib/
-mv target/mall/WEB-INF/mall*.jar target/mall/WEB-INF/lib/
-cd target/mall
-tar -zcf mall.tar.gz *
-mv mall.tar.gz ../
+cp -r target/lottery-mvc-1.0-SNAPSHOT target/lottery
+mv target/lottery/WEB-INF/lib/qinyuan*.jar target/lottery/WEB-INF/
+#mv target/lottery/WEB-INF/lib/lottery*.jar target/lottery/WEB-INF/
+rm -rf target/lottery/WEB-INF/lib/* target/lottery/WEB-INF/classes/{hibernate*,spring*,log*}
+mv target/lottery/WEB-INF/qinyuan*.jar target/lottery/WEB-INF/lib/
+#mv target/lottery/WEB-INF/lottery*.jar target/lottery/WEB-INF/lib/
+cd target/lottery
+tar -zcf lottery.tar.gz *
+mv lottery.tar.gz ../
 #cd ../
-#rm -rf  ./mall
+#rm -rf  ./lottery
