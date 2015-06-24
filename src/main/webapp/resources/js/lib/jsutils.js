@@ -343,3 +343,24 @@ jQuery.fn.moveToNext = function () {
 jQuery.fn.trimVal = function () {
     return $.trim(this.val());
 };
+
+jQuery.fn.trimText = function () {
+    return $.trim(this.text());
+};
+
+jQuery.fn.setInputValue = function (inputName, inputValue) {
+    var $target = this.find('input[name=' + inputName + ']');
+    var type = $target.attr('type');
+    if (type == 'text' || type == 'password' || type == 'hidden') {
+        $target.val(inputValue);
+    } else if (type == 'checkbox' || type == 'radio') {
+        $target.each(function () {
+            this.checked = inputValue;
+        });
+    }
+};
+
+jQuery.fn.focusFirstTextInput = function () {
+    this.find('input[type=text]:first').focusOrSelect();
+    return this;
+};

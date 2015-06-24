@@ -3,7 +3,7 @@
 <%@include file="index-header.jsp" %>
 <div class="page-width form">
     <div>
-        <q:multipart-form action="admin-commodity-edit-submit">
+        <q:multipart-form id="commodityForm" action="admin-commodity-edit-submit">
             <input type="hidden" name="id"/>
 
             <div class="form-group">
@@ -43,17 +43,34 @@
                 </tbody>
             </table>
             <div>
-                <button type="submit" name="ok" class="btn btn-primary">添加</button>
-                <button style="display:none;" type="button" name="cancel" class="btn btn-cancel">取消</button>
+                <button type="submit" name="ok" class="btn btn-primary">添加商品</button>
+                <button style="display:none;" type="button" name="cancel" class="btn btn-cancel">放弃修改</button>
             </div>
         </q:multipart-form>
         <table class="normal">
+            <thead>
+            <th>序号</th>
+            <th>名称</th>
+            <th>价格</th>
+            <th>自有商品</th>
+            <th>商品缩略图</th>
+            <th>商品详细图</th>
+            <th></th>
+            </thead>
             <tbody>
             <c:forEach var="commodity" items="${commodities}" varStatus="status">
-                <tr>
+                <tr data-options="id:${commodity.id}">
                     <td class="index">${status.index + rowStartIndex}</td>
                     <td class="name">${commodity.name}</td>
                     <td class="price">${commodity.price}</td>
+                    <td class="own">${commodity.own ? '是':'否'}</td>
+                    <td class="snapshot"><a href="${commodity.snapshot}" target="_blank" title="单击打开">
+                        <img src="${commodity.snapshot}" onload="adjustImage(this, 100, 100);"/></a></td>
+                    <td class="detailImage"><a href="${commodity.detailImage}" target="_blank" title="单击打开">
+                        <img src="${commodity.detailImage}" onload="adjustImage(this, 100, 100);"/></a></td>
+                    <td>
+                        <jsp:include page="widget-edit-delete.jsp"/>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>

@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan15.lottery.mvc.dao.Commodity;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
 import com.qinyuan15.utils.DoubleUtils;
 import com.qinyuan15.utils.IntegerUtils;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Controller
 public class AdminCommodityEditController extends ImageController {
 
@@ -23,8 +26,16 @@ public class AdminCommodityEditController extends ImageController {
     public String index() {
         IndexHeaderUtils.setHeaderParameters(this);
 
+        final String keyName = "commodities";
         CommodityDao.Factory factory = CommodityDao.factory();
-        new PaginationAttributeAdder(factory, request).setRowItemsName("commodities").add();
+        new PaginationAttributeAdder(factory, request).setRowItemsName(keyName).setPageSize(5).add();
+
+        @SuppressWarnings("unchecked")
+        List<Commodity> commodities = (List) request.getAttribute(keyName);
+        for (Commodity commodity : commodities) {
+            commodity.setSnapshot(pathToUrl(commodity.getSnapshot()));
+            commodity.setDetailImage(pathToUrl(commodity.getDetailImage()));
+        }
 
         setTitle("编辑商品");
 
@@ -39,11 +50,16 @@ public class AdminCommodityEditController extends ImageController {
     public String submit(@RequestParam(value = "id", required = true) Integer id,
                          @RequestParam(value = "name", required = true) String name,
                          @RequestParam(value = "price", required = true) Double price,
-                         @RequestParam(value = "own", required = true) Boolean own,
+                         @RequestParam(value = "own", required = false) Boolean own,
                          @RequestParam(value = "snapshot", required = true) String snapshot,
                          @RequestParam(value = "snapshotFile", required = true) MultipartFile snapshotFile,
                          @RequestParam(value = "detailImage", required = true) String detailImage,
                          @RequestParam(value = "detailImageFile", required = true) MultipartFile detailImageFile) {
+        // adjust own parameter
+        if (own == null) {
+            own = false;
+        }
+
         final String indexPage = "admin-commodity-edit";
 
         if (!StringUtils.hasText(name)) {
