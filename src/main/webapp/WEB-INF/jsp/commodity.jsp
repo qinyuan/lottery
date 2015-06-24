@@ -25,6 +25,4 @@
         <img src="${commodity.detailImage}"/>
     </div>
 </div>
-
-
 <%@include file="inc-footer.jsp" %>

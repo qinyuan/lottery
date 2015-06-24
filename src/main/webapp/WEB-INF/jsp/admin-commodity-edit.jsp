@@ -5,6 +5,7 @@
     <div>
         <q:multipart-form id="commodityForm" action="admin-commodity-edit-submit">
             <input type="hidden" name="id"/>
+            <input type="hidden" name="pageNumber"/>
 
             <div class="form-group">
                 <div class="inline">

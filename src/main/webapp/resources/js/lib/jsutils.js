@@ -239,6 +239,7 @@ var JSUtils = {
     },
     /**
      * validate is upload file is set
+     *
      * @param id the id of upload file
      * @param errorInfo information to show if upload file is not set
      * @returns {boolean} if upload file is set, return true, otherwise return false
@@ -253,6 +254,20 @@ var JSUtils = {
             return false;
         } else {
             return true;
+        }
+    },
+    /**
+     * scroll certain element to top,
+     *
+     * if no element is given, scroll all screen to top
+     * @param $targetElement element to scroll to top
+     */
+    scrollTop: function ($targetElement) {
+        var offset = $targetElement ? $targetElement.offset().top : 0;
+        if (JSUtils.isFirefox() || JSUtils.isIE()) {
+            document.documentElement.scrollTop = offset;
+        } else {
+            $('body').animate({scrollTop: offset}, 250);
         }
     }
 };
@@ -358,6 +373,11 @@ jQuery.fn.setInputValue = function (inputName, inputValue) {
             this.checked = inputValue;
         });
     }
+};
+
+jQuery.fn.scrollToTop = function () {
+    JSUtils.scrollTop(this);
+    return this;
 };
 
 jQuery.fn.focusFirstTextInput = function () {

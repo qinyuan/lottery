@@ -43,6 +43,7 @@ div.body div.snapshots {
     border-bottom: 1px solid #DBDBDB;
     overflow: hidden;
     padding: 0 40px;
+    min-height: 172px;
 }
 
 div.body div.snapshots div.snapshot {
@@ -52,8 +53,10 @@ div.body div.snapshots div.snapshot {
     text-align: center;
     cursor: pointer;
     border-bottom: 2px solid transparent;
+    display: none;
 }
 
+div.body div.snapshots div.snapshot.selected,
 div.body div.snapshots div.snapshot:hover {
     border-bottom-color: #79B834;
 }
@@ -74,4 +77,9 @@ div.body div.snapshots div.snapshot div.image {
     background-position: center center;
     background-repeat: no-repeat;
     overflow: hidden;
+}
+
+div.body div.detail {
+    margin: 70px 0;
+    text-align: center;
 }

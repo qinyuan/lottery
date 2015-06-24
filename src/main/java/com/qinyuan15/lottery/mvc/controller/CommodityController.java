@@ -7,6 +7,7 @@ import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class CommodityController extends ImageController {
                 setTitle("参与抽奖");
             }
             setAttribute("commodity", getUrlAdapter().adapt(commodity));
+            addJavaScriptData("selectedCommodityId", commodity.getId());
         }
 
         setAttribute("snapshots", build());
@@ -84,11 +86,10 @@ public class CommodityController extends ImageController {
         return snapshots;
     }
 
-    /*
-    @RequestMapping("/hello-world.json")
+    @RequestMapping("/commodity-info.json")
     @ResponseBody
-    public String json(){
-        return success();
+    public String json(@RequestParam(value = "id", required = true) Integer id) {
+        Commodity commodity = new CommodityDao().getInstance(id);
+        return toJson(getUrlAdapter().adapt(commodity));
     }
-    */
 }

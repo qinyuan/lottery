@@ -51,13 +51,17 @@ public class AdminCommodityEditController extends ImageController {
                          @RequestParam(value = "snapshot", required = true) String snapshot,
                          @RequestParam(value = "snapshotFile", required = true) MultipartFile snapshotFile,
                          @RequestParam(value = "detailImage", required = true) String detailImage,
-                         @RequestParam(value = "detailImageFile", required = true) MultipartFile detailImageFile) {
+                         @RequestParam(value = "detailImageFile", required = true) MultipartFile detailImageFile,
+                         @RequestParam(value = "pageNumber", required = false) Integer pageNumber) {
         // adjust own parameter
         if (own == null) {
             own = false;
         }
 
-        final String indexPage = "admin-commodity-edit";
+        String indexPage = "admin-commodity-edit";
+        if (IntegerUtils.isPositive(pageNumber)) {
+            indexPage = indexPage + "?pageNumber=" + pageNumber;
+        }
 
         if (!StringUtils.hasText(name)) {
             return redirect(indexPage, "名称未填写");

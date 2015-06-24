@@ -58,14 +58,18 @@
         $form.setInputValue('snapshotFile', null);
         $form.setInputValue('detailImage', detailImage);
         $form.setInputValue('detailImageFile', null);
+        if ($.url.param('pageNumber')) {
+            $form.setInputValue('pageNumber', $.url.param('pageNumber'));
+        }
 
         $okButton.addClass('btn-success').removeClass('btn-primary').text('提交修改');
         $cancelButton.show();
-        $form.focusFirstTextInput();
+        $form.focusFirstTextInput().scrollToTop();
     });
     $cancelButton.click(function () {
         $okButton.addClass('btn-primary').removeClass('btn-success').text('添加商品');
         $form.setInputValue('id', null);
+        $form.setInputValue('pageNumber', null);
         $cancelButton.hide();
         $form.focusFirstTextInput();
     });
