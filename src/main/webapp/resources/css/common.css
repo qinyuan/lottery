@@ -95,5 +95,42 @@ div.footer {
     position: fixed;
     top: 50%;
     left: 50%;
+    margin-left: -230px;
+    margin-top: -182px;
+}
 
+#springLoginForm div.title,
+#springLoginForm div.body {
+    width: 460px;
+    position: relative;
+}
+
+#springLoginForm div.title {
+    background: #ffffff url('images/login-title-back.png') repeat-x;
+    height: 53px;
+    border-bottom: #E5E5E5 solid 1px;
+}
+
+#springLoginForm div.title > div {
+    position: absolute;
+}
+
+#springLoginForm div.title div.text {
+    left: 120px;
+    bottom: 12px;
+    color: #7E8081;
+}
+
+#springLoginForm div.title div.close-icon {
+    right: 14px;
+    top: 17px;
+    width: 14px;
+    height: 14px;
+    background: url('images/login-close.png') center center no-repeat;
+    cursor: pointer;
+}
+
+#springLoginForm div.body {
+    background-color: #ffffff;
+    height: 210px;
 }

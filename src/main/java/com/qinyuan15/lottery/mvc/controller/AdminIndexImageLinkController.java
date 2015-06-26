@@ -33,7 +33,6 @@ public class AdminIndexImageLinkController extends ImageController {
         setAttributeAndJavaScriptData("indexImageMaps", new IndexImageMapDao().getInstancesByImageId(imageId));
 
         setTitle("编辑主页图片链接");
-        addCss("resources/js/lib/bootstrap/css/bootstrap.min", false);
         addCssAndJs("admin-index-image-link");
 
         return "admin-index-image-link";

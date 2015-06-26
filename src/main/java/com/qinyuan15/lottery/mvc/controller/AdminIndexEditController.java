@@ -25,7 +25,6 @@ public class AdminIndexEditController extends ImageController {
         setAttribute("cycleInterval", AppConfig.getIndexImageCycleInterval());
 
         setTitle("主页设置");
-        addCss("resources/js/lib/bootstrap/css/bootstrap.min", false);
         addCss("admin-form");
         addHeadJs("lib/image-adjust.js");
         addCssAndJs("admin-index-edit");

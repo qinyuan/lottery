@@ -36,7 +36,6 @@ public class AdminCommodityEditController extends ImageController {
 
         setTitle("编辑商品");
 
-        addCss("resources/js/lib/bootstrap/css/bootstrap.min", false);
         addHeadJs("lib/image-adjust.js");
         addCss("admin-form");
         addCssAndJs("admin-commodity-edit");

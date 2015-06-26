@@ -18,7 +18,6 @@ public class LoginController extends ImageController {
             addJs("auto-login");
         }
 
-        addCss("resources/js/lib/bootstrap/css/bootstrap.min.css", false);
         return "login";
     }
 }

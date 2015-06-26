@@ -33,7 +33,6 @@ public class AdminCommodityLinkController extends ImageController {
         setAttributeAndJavaScriptData("commodityMaps", new CommodityMapDao().getInstancesByCommodityId(commodityId));
 
         setTitle("编辑商品图片链接");
-        addCss("resources/js/lib/bootstrap/css/bootstrap.min", false);
         addCssAndJs("admin-commodity-link");
         return "admin-commodity-link";
     }

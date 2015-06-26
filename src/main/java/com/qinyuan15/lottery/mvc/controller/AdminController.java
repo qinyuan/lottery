@@ -25,7 +25,6 @@ public class AdminController extends ImageController {
         CommodityHeaderUtils.setHeaderParameters(this);
 
         setTitle("系统设置");
-        addCss("resources/js/lib/bootstrap/css/bootstrap.min", false);
         addCss("admin-form");
         addJs("resources/js/lib/handlebars.min-v1.3.0", false);
         addHeadJs("lib/image-adjust.js");
