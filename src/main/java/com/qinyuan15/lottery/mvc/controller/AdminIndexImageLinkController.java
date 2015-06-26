@@ -1,10 +1,11 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan15.lottery.mvc.ImageMapType;
 import com.qinyuan15.lottery.mvc.dao.IndexImage;
 import com.qinyuan15.lottery.mvc.dao.IndexImageDao;
-import com.qinyuan15.lottery.mvc.dao.IndexImageMapDao;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.config.LinkAdapter;
+import com.qinyuan15.utils.image.ImageMapDao;
 import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class AdminIndexImageLinkController extends ImageController {
+    private ImageMapDao dao = new ImageMapDao(ImageMapType.INDEX);
 
     @RequestMapping("/admin-index-image-link")
     public String index(@RequestParam(value = "imageId", required = true) Integer imageId) {
@@ -30,7 +32,7 @@ public class AdminIndexImageLinkController extends ImageController {
         indexImage.setPath(this.pathToUrl(indexImage.getPath()));
 
         setAttribute("indexImage", indexImage);
-        setAttributeAndJavaScriptData("indexImageMaps", new IndexImageMapDao().getInstancesByImageId(imageId));
+        setAttributeAndJavaScriptData("indexImageMaps", dao.getInstancesByRelateId(imageId));
 
         setTitle("编辑主页图片链接");
         addCssAndJs("admin-index-image-link");
@@ -57,7 +59,7 @@ public class AdminIndexImageLinkController extends ImageController {
         }
 
         try {
-            new IndexImageMapDao().update(id, href, comment);
+            dao.update(id, href, comment);
             return success();
         } catch (Exception e) {
             return fail("数据库操作失败");
@@ -90,7 +92,7 @@ public class AdminIndexImageLinkController extends ImageController {
         }
 
         try {
-            new IndexImageMapDao().add(imageId, xStart, yStart, xEnd, yEnd, href, comment);
+            dao.add(imageId, xStart, yStart, xEnd, yEnd, href, comment);
             return success();
         } catch (Exception e) {
             return fail("数据库操作失败");
@@ -101,7 +103,7 @@ public class AdminIndexImageLinkController extends ImageController {
     @ResponseBody
     public String json(@RequestParam(value = "id", required = true) Integer id) {
         try {
-            new IndexImageMapDao().delete(id);
+            dao.delete(id);
             return success();
         } catch (Exception e) {
             return fail("数据库操作失败");

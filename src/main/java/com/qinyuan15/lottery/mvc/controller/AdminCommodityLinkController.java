@@ -1,10 +1,11 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan15.lottery.mvc.ImageMapType;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
-import com.qinyuan15.lottery.mvc.dao.CommodityMapDao;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.config.LinkAdapter;
+import com.qinyuan15.utils.image.ImageMapDao;
 import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class AdminCommodityLinkController extends ImageController {
+
+    private ImageMapDao dao = new ImageMapDao(ImageMapType.COMMODITY);
 
     @RequestMapping("/admin-commodity-link")
     public String index(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
@@ -30,7 +33,7 @@ public class AdminCommodityLinkController extends ImageController {
         new CommodityUrlAdapter(this).adapt(commodity);
 
         setAttribute("commodity", commodity);
-        setAttributeAndJavaScriptData("commodityMaps", new CommodityMapDao().getInstancesByCommodityId(commodityId));
+        setAttributeAndJavaScriptData("commodityMaps", dao.getInstancesByRelateId(commodityId));
 
         setTitle("编辑商品图片链接");
         addCssAndJs("admin-commodity-link");
@@ -56,7 +59,7 @@ public class AdminCommodityLinkController extends ImageController {
         }
 
         try {
-            new CommodityMapDao().update(id, href, comment);
+            dao.update(id, href, comment);
             return success();
         } catch (Exception e) {
             return fail("数据库操作失败");
@@ -89,7 +92,7 @@ public class AdminCommodityLinkController extends ImageController {
         }
 
         try {
-            new CommodityMapDao().add(commodityId, xStart, yStart, xEnd, yEnd, href, comment);
+            dao.add(commodityId, xStart, yStart, xEnd, yEnd, href, comment);
             return success();
         } catch (Exception e) {
             return fail("数据库操作失败");
@@ -100,7 +103,7 @@ public class AdminCommodityLinkController extends ImageController {
     @ResponseBody
     public String json(@RequestParam(value = "id", required = true) Integer id) {
         try {
-            new CommodityMapDao().delete(id);
+            dao.delete(id);
             return success();
         } catch (Exception e) {
             return fail("数据库操作失败");

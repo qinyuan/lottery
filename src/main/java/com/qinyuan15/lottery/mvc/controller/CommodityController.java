@@ -1,10 +1,11 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan15.lottery.mvc.ImageMapType;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
-import com.qinyuan15.lottery.mvc.dao.CommodityMap;
-import com.qinyuan15.lottery.mvc.dao.CommodityMapDao;
 import com.qinyuan15.utils.DoubleUtils;
+import com.qinyuan15.utils.image.ImageMap;
+import com.qinyuan15.utils.image.ImageMapDao;
 import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Controller
 public class CommodityController extends ImageController {
+    private ImageMapDao mapDao = new ImageMapDao(ImageMapType.COMMODITY);
 
     @RequestMapping("/commodity")
     public String index(@RequestParam(value = "id", required = false) Integer id) {
@@ -37,7 +39,7 @@ public class CommodityController extends ImageController {
             }
             setAttribute("commodity", getUrlAdapter().adapt(commodity));
             addJavaScriptData("selectedCommodityId", commodity.getId());
-            addJavaScriptData("commodityMaps", new CommodityMapDao().getInstancesByCommodityId(commodity.getId()));
+            addJavaScriptData("commodityMaps", mapDao.getInstancesByRelateId(commodity.getId()));
         }
 
         setAttribute("snapshots", build());
@@ -96,16 +98,16 @@ public class CommodityController extends ImageController {
     public String json(@RequestParam(value = "id", required = true) Integer id) {
         CommodityInfo commodityInfo = new CommodityInfo(
                 getUrlAdapter().adapt(new CommodityDao().getInstance(id)),
-                new CommodityMapDao().getInstancesByCommodityId(id)
+                mapDao.getInstancesByRelateId(id)
         );
         return toJson(commodityInfo);
     }
 
     private static class CommodityInfo {
         Commodity commodity;
-        List<CommodityMap> commodityMaps;
+        List<ImageMap> commodityMaps;
 
-        private CommodityInfo(Commodity commodity, List<CommodityMap> commodityMaps) {
+        private CommodityInfo(Commodity commodity, List<ImageMap> commodityMaps) {
             this.commodity = commodity;
             this.commodityMaps = commodityMaps;
         }

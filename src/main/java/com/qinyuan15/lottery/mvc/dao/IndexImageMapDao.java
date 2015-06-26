@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Dao of IndexImageMap
  * Created by qinyuan on 15-6-19.
- */
+ *//*
 public class IndexImageMapDao {
     public Integer add(Integer imageId, Integer xStart, Integer yStart, Integer xEnd, Integer yEnd, String href, String comment) {
         IndexImageMap map = new IndexImageMap();
@@ -64,4 +64,4 @@ public class IndexImageMapDao {
         }
         return map;
     }
-}
+}*/

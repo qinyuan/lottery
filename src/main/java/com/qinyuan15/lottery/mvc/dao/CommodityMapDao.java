@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Dao of CommodityMap
  * Created by qinyuan on 15-6-19.
- */
+ *//*
 public class CommodityMapDao {
     public Integer add(Integer commodityId, Integer xStart, Integer yStart, Integer xEnd, Integer yEnd, String href, String comment) {
         CommodityMap map = new CommodityMap();
@@ -64,4 +64,4 @@ public class CommodityMapDao {
         }
         return map;
     }
-}
+}*/

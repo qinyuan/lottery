@@ -5,7 +5,7 @@ import com.qinyuan15.utils.hibernate.PersistObject;
 /**
  * map of index image
  * Created by qinyuan on 15-6-19.
- */
+ *//*
 public class CommodityMap extends PersistObject {
     private Integer commodityId;
     private Integer xStart;
@@ -70,4 +70,4 @@ public class CommodityMap extends PersistObject {
     public void setComment(String comment) {
         this.comment = comment;
     }
-}
+}*/
