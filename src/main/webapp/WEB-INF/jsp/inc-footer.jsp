@@ -1,10 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@include file="inc-taglib.jsp" %>
 <div class="footer-poster">
     <div class="page-width" style="background-image: url('${footerPoster}');"></div>
 </div>
 <div class="footer">
     <span>${footerText}</span>
 </div>
+<q:spring-login-form id="springLoginForm">
+    <div class="title">
+    </div>
+    <div class="body">
+        <div class="input">
+            <label>账号</label>
+            <input type="text" class="form-control" name="j_username" placeholder="手机号/用户名/邮箱"/>
+        </div>
+        <div class="input">
+            <label>密码</label>
+            <input type="text" class="form-control" name="j_password" placeholder="请输入您的密码"/>
+        </div>
+        <div class="rememberLogin">
+            <q:spring-remember-login/>
+        </div>
+        <div class="submit">
+            <button type="submit" name="loginSubmit">立即登录</button>
+        </div>
+    </div>
+
+</q:spring-login-form>
 </body>
 <q:js src="lib/jquery-1.11.1.min"/>
 <q:js src="lib/jquery.url"/>

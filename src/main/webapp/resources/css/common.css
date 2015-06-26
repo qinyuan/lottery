@@ -90,3 +90,10 @@ div.footer {
     height: 80px;
     text-align: center;
 }
+
+#springLoginForm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+}

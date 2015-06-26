@@ -2,7 +2,6 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan15.lottery.mvc.dao.IndexImage;
 import com.qinyuan15.lottery.mvc.dao.IndexImageDao;
-import com.qinyuan15.lottery.mvc.dao.IndexImageMap;
 import com.qinyuan15.lottery.mvc.dao.IndexImageMapDao;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.config.LinkAdapter;
@@ -12,8 +11,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
 
 @Controller
 public class AdminIndexImageLinkController extends ImageController {
@@ -33,9 +30,7 @@ public class AdminIndexImageLinkController extends ImageController {
         indexImage.setPath(this.pathToUrl(indexImage.getPath()));
 
         setAttribute("indexImage", indexImage);
-        List<IndexImageMap> imageMaps = new IndexImageMapDao().getInstancesByImageId(imageId);
-        setAttribute("indexImageMaps", imageMaps);
-        this.addJavaScriptData("indexImageMaps", imageMaps);
+        setAttributeAndJavaScriptData("indexImageMaps", new IndexImageMapDao().getInstancesByImageId(imageId));
 
         setTitle("编辑主页图片链接");
         addCss("resources/js/lib/bootstrap/css/bootstrap.min", false);
