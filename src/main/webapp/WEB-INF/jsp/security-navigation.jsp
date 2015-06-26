@@ -15,6 +15,6 @@
     <a id="systemEditLink" class="text" href="admin.html">系统设置</a>
 </security:authorize>
 <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
-    <a class="text emphasize" href="javascript:void(0)">登录</a>
-    <a class="text" href="javascript:void(0)">注册</a>
+    <a class="text emphasize" id="loginNavigationLink" href="javascript:void(0)">登录</a>
+    <a class="text" id="registerNavigationLink" href="javascript:void(0)">注册</a>
 </security:authorize>

@@ -91,12 +91,18 @@ div.footer {
     text-align: center;
 }
 
+input.form-control {
+    display: inline-block;
+}
+
 #springLoginForm {
     position: fixed;
     top: 50%;
     left: 50%;
     margin-left: -230px;
     margin-top: -182px;
+    display: none;
+    z-index: 10;
 }
 
 #springLoginForm div.title,
@@ -113,6 +119,11 @@ div.footer {
 
 #springLoginForm div.title > div {
     position: absolute;
+}
+
+#springLoginForm div.title div.image {
+    bottom: 0;
+    left: 22px;
 }
 
 #springLoginForm div.title div.text {
@@ -133,4 +144,48 @@ div.footer {
 #springLoginForm div.body {
     background-color: #ffffff;
     height: 210px;
+    padding-top: 30px;
+}
+
+#springLoginForm div.body div.input {
+    padding: 7px 0 7px 60px;
+}
+
+#springLoginForm div.body div.input label {
+    margin-right: 12px;
+}
+
+#springLoginForm div.body div.input input {
+    width: 260px;
+}
+
+#springLoginForm div.body div.rememberLogin,
+#springLoginForm div.body div.submit {
+    padding-left: 102px;
+    margin-bottom: 7px;
+}
+
+#springLoginForm div.body div.rememberLogin span {
+    cursor: pointer;
+    margin-right: 112px;
+}
+
+#springLoginForm div.body div.rememberLogin span,
+#springLoginForm div.body div.rememberLogin a {
+    font-size: 9pt;
+    line-height: 20px;
+    vertical-align: top;
+}
+
+#springLoginForm div.body div.submit button {
+    background: url('images/login-button-back.png') repeat-x;
+    color: #ffffff;
+    height: 38px;
+    width: 260px;
+    border-radius: 5px;
+    font-size: 12pt;
+}
+
+#springLoginForm div.body div.submit a {
+    font-size: 9pt;
 }

@@ -9,7 +9,7 @@
 <div class="shadow" id="springLoginForm">
     <q:spring-login-form>
         <div class="title">
-            <div class="image"></div>
+            <div class="image"><img src="resources/css/images/login-title-image.png"/></div>
             <div class="text">欢迎登录</div>
             <div class="close-icon"></div>
         </div>
@@ -23,10 +23,12 @@
                 <input type="text" class="form-control" name="j_password" placeholder="请输入您的密码"/>
             </div>
             <div class="rememberLogin">
-                <q:spring-remember-login/>
+                <q:spring-remember-login/><span>下次自动登录</span>
+                <a href="forget-password">忘记密码?</a>
             </div>
             <div class="submit">
                 <button type="submit" name="loginSubmit">立即登录</button>
+                <a href="javascript:void(0)">注册新帐号</a>
             </div>
         </div>
     </q:spring-login-form>

@@ -25,4 +25,18 @@ var angularUtils = {
     if (errorInfo) {
         alert(errorInfo);
     }
+    var $springLoginForm = $('#springLoginForm');
+    $('#springLoginForm div.body div.rememberLogin span').click(function () {
+        var checkBox = $(this).parent().find('input[type=checkbox]').get(0);
+        checkBox.checked = !checkBox.checked;
+    });
+    $('#springLoginForm div.title div.close-icon').click(function () {
+        $springLoginForm.hide();
+        JSUtils.hideTransparentBackground();
+    });
+    $('#loginNavigationLink').click(function () {
+        JSUtils.showTransparentBackground();
+        $springLoginForm.fadeIn(500).focusFirstTextInput();
+    });
+
 })();
