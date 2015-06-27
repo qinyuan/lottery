@@ -139,7 +139,7 @@
         }
     };
 
-    var $linkInputDiv = $('#linkInputDiv');
+    var $linkInputDiv = $('#linkInputDiv').setDefaultButton('addSubmit');
 
     function showLinkInput(id, href, comment) {
         JSUtils.showTransparentBackground(5);

@@ -375,6 +375,15 @@ jQuery.fn.setInputValue = function (inputName, inputValue) {
     }
 };
 
+jQuery.fn.setDefaultButton = function (elementId) {
+    this.find('input[type=text]').keydown(function (e) {
+        if (e.keyCode == 13) {
+            $('#' + elementId).trigger('click');
+        }
+    });
+    return this;
+};
+
 jQuery.fn.scrollToTop = function () {
     JSUtils.scrollTop(this);
     return this;

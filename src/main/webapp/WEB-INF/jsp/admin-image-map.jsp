@@ -34,8 +34,8 @@
         <input type="text" id="mapComment" class="form-control" value="新建链接"/>
     </div>
     <div>
-        <button class="btn btn-primary" id="addSubmit">确定</button>
-        <button class="btn btn-default" id="addCancel">取消</button>
+        <button type="button" class="btn btn-primary" id="addSubmit">确定</button>
+        <button type="button" class="btn btn-default" id="addCancel">取消</button>
     </div>
 </div>
 <%@include file="inc-footer.jsp" %>
