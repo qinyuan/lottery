@@ -1,5 +1,5 @@
 (function(){
     $('#username').val('admin');
     $('#password').val('admin');
-    $('form').submit();
+    $('div.outer-login div.login form').submit();
 })();

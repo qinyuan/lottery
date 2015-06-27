@@ -6,7 +6,7 @@
         <div class="title">
             <span>后台管理员登录</span>
         </div>
-        <form action="j_spring_security_check" method="post">
+        <q:spring-login-form>
             <div class="title">
                 <label>用户名</label>
             </div>
@@ -21,11 +21,11 @@
                 <input type="text" id="password" name="j_password" class="form-control" placeholder="在此输入密码"/>
             </div>
             <div class="submit">
-                <input type="checkbox" id="rememberMe" name="_spring_security_remember_me"/>
+                <q:spring-remember-login/>
                 <span id="rememberMeLabel">记住我</span>
                 <button type="submit" class="btn btn-primary" id="loginSubmit">登录</button>
             </div>
-        </form>
+        </q:spring-login-form>
     </div>
 </div>
 <%@include file="inc-footer.jsp" %>
