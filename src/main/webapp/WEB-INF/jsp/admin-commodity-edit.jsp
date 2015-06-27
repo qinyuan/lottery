@@ -72,7 +72,7 @@
                     <td class="action">
                         <a href="commodity.html?id=${commodity.id}" target="_blank"><img
                                 title="预览" src="resources/css/images/preview.gif"/></a>
-                        <a href="admin-commodity-link.html?commodityId=${commodity.id}" target="_blank"><img
+                        <a href="admin-commodity-link.html?id=${commodity.id}" target="_blank"><img
                                 title="编辑图片上的链接" src="resources/css/images/link.png"/></a>
                         <jsp:include page="widget-edit-delete.jsp"/>
                     </td>

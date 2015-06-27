@@ -1,8 +1,9 @@
 ;
 (function () {
     $('div.main-body div.link-list div.content div.close-image').click(function () {
-        $.post('admin-index-image-link-delete.json', {
-            id: $(this).parent().dataOptions()['id']
+        $.post('admin-image-map-delete.json', {
+            id: $(this).parent().dataOptions()['id'],
+            relateType: window['relateType']
         }, JSUtils.normalAjaxCallback);
     });
     $('div.main-body div.link-list div.content div.edit-image').click(function () {
@@ -20,7 +21,7 @@
             $this.removeClass('selected');
             demoRectangle.hide(id);
         } else {
-            var maps = window['indexImageMaps'];
+            var maps = window['imageMaps'];
             for (var i = 0, len = maps.length; i < len; i++) {
                 var map = maps[i];
                 if (map['id'] == id) {
@@ -195,23 +196,39 @@
 
         var id = $('#mapId').val();
         if (id) {
-            $.post('admin-index-image-link-edit.json', {
+            $.post('admin-image-map-edit.json', {
                 'id': id,
                 'href': href,
-                'comment': comment
+                'comment': comment,
+                'relateType': window['relateType']
             }, JSUtils.normalAjaxCallback);
         } else {
-            var imageId = $.url.param('imageId');
+            var relateId = $.url.param('id');
             var coordinate = rectangle.getCoordinate();
-            $.post('admin-index-image-link-add.json', {
-                'imageId': imageId,
+            $.post('admin-image-map-add.json', {
+                'relateId': relateId,
                 'xStart': coordinate.x1,
                 'yStart': coordinate.y1,
                 'xEnd': coordinate.x2,
                 'yEnd': coordinate.y2,
                 'href': href,
-                'comment': comment
+                'comment': comment,
+                'relateType': window['relateType']
             }, JSUtils.normalAjaxCallback);
         }
     });
+
+    /*
+     * adjust image-cover
+     */
+    setTimeout(function () {
+        var imageWidth = JSUtils.getImageWidth($('div.main-body div.image img'));
+        if (imageWidth < 1000) {
+            $('div.main-body div.image').css({
+                'width': imageWidth,
+                'margin-left': 'auto',
+                'margin-right': 'auto'
+            })
+        }
+    }, 1000);
 })();

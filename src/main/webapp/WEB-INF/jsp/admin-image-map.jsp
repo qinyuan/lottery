@@ -5,18 +5,18 @@
     <div class="link-list">
         <div class="title">已添加链接<span class="comment">(注：在图中拖动鼠标画出矩形区域，即可添加新链接。单击已添加链接，图中会显示该链接的位置)</span></div>
         <div class="content">
-            <c:forEach var="commodityMap" items="${commodityMaps}">
-                <div data-options="id: ${commodityMap.id}">
-                    <div class="comment" title="单击可显示链接对应的区域">${commodityMap.comment}</div>
+            <c:forEach var="imageMap" items="${imageMaps}">
+                <div data-options="id: ${imageMap.id}">
+                    <div class="comment" title="单击可显示链接对应的区域">${imageMap.comment}</div>
                     <div class="edit-image" title="编辑链接"><img class="link" src="resources/css/images/pencil.png"/></div>
                     <div class="close-image" title="删除"><img class="link" src="resources/css/images/close.gif"/></div>
-                    <input type="hidden" name="href" value="${commodityMap.href}"/>
+                    <input type="hidden" name="href" value="${imageMap.href}"/>
                 </div>
             </c:forEach>
         </div>
     </div>
     <div class="image">
-        <img src="${commodity.detailImage}"/>
+        <img src="${image}"/>
 
         <div class="image-cover"></div>
         <div id="rectangle"></div>

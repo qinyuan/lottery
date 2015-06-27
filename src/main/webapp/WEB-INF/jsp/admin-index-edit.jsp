@@ -9,16 +9,13 @@
                     <c:forEach var="indexImage" items="${indexImageGroup.indexImages}">
                         <div class="image">
                             <input type="hidden" value="${indexImage.backPath}"/>
-                                <%--
                                 <a href="${indexImage.path}" target="_blank" title="单击打开">
                                     <img src="${indexImage.path}" onload="adjustImageHeight(this, 100);"/>
                                 </a>
-                                --%>
-                            <img src="${indexImage.path}" onload="adjustImageHeight(this, 100);"/>
                             <button type="button" data-options="id: ${indexImage.id}"
                                     class="btn btn-xs btn-primary edit-image">编辑图片
                             </button>
-                            <a href="admin-index-image-link.html?imageId=${indexImage.id}" target="_blank">
+                            <a href="admin-index-image-link.html?id=${indexImage.id}" target="_blank">
                                 <button type="button" class="btn btn-xs btn-primary edit-link">编辑链接</button>
                             </a>
                             <button type="button" data-options="id: ${indexImage.id}"
