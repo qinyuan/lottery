@@ -19,7 +19,7 @@
         <security:authentication-provider user-service-ref="customUserDetailsService"/>
     </security:authentication-manager>
 
-    <bean id="userDao" class="com.qinyuan15.utils.security.SimpleUserDao"/>
+    <bean id="userDao" class="com.qinyuan15.lottery.mvc.dao.UserDao"/>
     <bean id="customUserDetailsService" class="com.qinyuan15.utils.security.CustomUserDetailsService">
         <constructor-arg ref="userDao"/>
     </bean>

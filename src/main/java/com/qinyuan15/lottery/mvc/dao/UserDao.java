@@ -4,6 +4,7 @@ import com.qinyuan15.utils.hibernate.HibernateDeleter;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 import com.qinyuan15.utils.security.SimpleUserDao;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class UserDao extends SimpleUserDao {
         user.setUsername(username);
         user.setPassword(password);
         user.setRole(role);
-        user.setEmail(email);
+        user.setEmail(adjustEmail(email));
         user.setTel(tel);
         return HibernateUtils.save(user);
     }
@@ -30,8 +31,38 @@ public class UserDao extends SimpleUserDao {
         return getInstanceByEmail(email) != null;
     }
 
+    @Override
+    public com.qinyuan15.utils.security.User getInstanceByName(String usernameFromLoginForm) {
+        com.qinyuan15.utils.security.User user = super.getInstanceByName(usernameFromLoginForm);
+        if (user != null) {
+            return user;
+        }
+
+        user = getInstanceByEmail(usernameFromLoginForm);
+        if (user != null) {
+            return user;
+        }
+
+        return getInstanceByTel(usernameFromLoginForm);
+    }
+
+    private String adjustEmail(String email) {
+        if (StringUtils.hasText(email)) {
+            return email.toLowerCase();
+        } else {
+            return email;
+        }
+    }
+
     public User getInstanceByEmail(String email) {
-        return new HibernateListBuilder().addFilter("email=:email").addArgument("email", email)
+        return new HibernateListBuilder().addFilter("email=:email")
+                .addArgument("email", adjustEmail(email))
+                .getFirstItem(User.class);
+    }
+
+    public User getInstanceByTel(String tel) {
+        return new HibernateListBuilder().addFilter("tel=:tel")
+                .addArgument("tel", adjustEmail(tel))
                 .getFirstItem(User.class);
     }
 
