@@ -36,7 +36,8 @@ public class RegisterController extends BaseController {
                          @RequestParam(value = "password", required = true) String password,
                          @RequestParam(value = "password2", required = true) String password2,
                          @RequestParam(value = "identityCode", required = true) String identityCode) {
-        if (!validate(identityCode)) {
+
+        if (!validateIdentityCode(identityCode)) {
             return fail("验证码输入错误！");
         }
 
@@ -82,7 +83,7 @@ public class RegisterController extends BaseController {
         }
     }
 
-    private boolean validate(String identityCode) {
+    private boolean validateIdentityCode(String identityCode) {
         if (!StringUtils.hasText(identityCode)) {
             return false;
         }
@@ -91,5 +92,39 @@ public class RegisterController extends BaseController {
 
         return StringUtils.hasText(identityCodeInSession) &&
                 identityCode.toLowerCase().equals(identityCodeInSession.toLowerCase());
+    }
+
+
+    private final static String TO_LOGIN_HTML = "<a href='javascript:void(0)' onclick='switchToLogin()'>立即登录</a>";
+
+    @RequestMapping(value = "validate-email.json", method = RequestMethod.GET)
+    @ResponseBody
+    public String validateEmail(@RequestParam(value = "email", required = true) String email) {
+        if (!new MailAddressValidator().validate(email)) {
+            return fail("请输入有效的邮箱格式");
+        }
+
+        if (userDao.hasEmail(email)) {
+            return fail("邮箱已被注册，" + TO_LOGIN_HTML);
+        } else {
+            return success();
+        }
+    }
+
+    @RequestMapping(value = "validate-username.json", method = RequestMethod.GET)
+    @ResponseBody
+    public String validateUsername(@RequestParam(value = "username", required = true) String username) {
+        if (!StringUtils.hasText(username)) {
+            return fail("请输入您的用户名");
+        }
+        if (username.length() < 2) {
+            return fail("用户名至少使用2个字符");
+        }
+
+        if (userDao.hasUsername(username)) {
+            return fail("用户名已经被使用，" + TO_LOGIN_HTML);
+        } else {
+            return success();
+        }
     }
 }

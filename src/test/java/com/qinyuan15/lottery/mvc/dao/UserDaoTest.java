@@ -26,10 +26,11 @@ public class UserDaoTest {
     }
 
     @Test
-    public void testHasUser() {
+    public void testHasUsername() {
         System.out.println(userDao.hasUsername("username"));
         System.out.println(userDao.hasUsername("username2"));
         System.out.println(userDao.hasUsername("username3"));
+        System.out.println(userDao.hasUsername("testMe"));
     }
 
     @Test

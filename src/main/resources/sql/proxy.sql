@@ -8,7 +8,7 @@ CREATE TABLE `proxy` (
     `speed_update_time` datetime DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `host` (`host`,`port`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 
 CREATE TABLE `proxy_rejection` (
@@ -20,4 +20,4 @@ CREATE TABLE `proxy_rejection` (
     `speed` int(11) DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `proxy_id` (`proxy_id`,`url`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
