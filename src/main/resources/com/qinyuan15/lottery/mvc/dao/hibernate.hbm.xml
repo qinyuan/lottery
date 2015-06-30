@@ -19,18 +19,6 @@
         <property name="backPath" column="back_path"/>
         <property name="rowIndex" column="row_index"/>
     </class>
-    <!--<class name="IndexImageMap" table="index_image_map">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="imageId" column="image_id"/>
-        <property name="xStart" column="x_start"/>
-        <property name="yStart" column="y_start"/>
-        <property name="xEnd" column="x_end"/>
-        <property name="yEnd" column="y_end"/>
-        <property name="href"/>
-        <property name="comment"/>
-    </class>-->
     <class name="Commodity" table="commodity">
         <id name="id" column="id">
             <generator class="identity"/>
@@ -42,16 +30,14 @@
         <property name="snapshot"/>
         <property name="detailImage" column="detail_image"/>
     </class>
-    <!--<class name="CommodityMap" table="commodity_map">
+    <class name="User" table="user">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
-        <property name="commodityId" column="commodity_id"/>
-        <property name="xStart" column="x_start"/>
-        <property name="yStart" column="y_start"/>
-        <property name="xEnd" column="x_end"/>
-        <property name="yEnd" column="y_end"/>
-        <property name="href"/>
-        <property name="comment"/>
-    </class>-->
+        <property name="username"/>
+        <property name="password"/>
+        <property name="role"/>
+        <property name="email"/>
+        <property name="tel"/>
+    </class>
 </hibernate-mapping>

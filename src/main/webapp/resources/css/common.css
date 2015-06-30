@@ -95,14 +95,39 @@ input.form-control {
     display: inline-block;
 }
 
-#springLoginForm {
+#springLoginForm, #registerForm, #registerSuccess {
     position: fixed;
     top: 50%;
     left: 50%;
-    margin-left: -230px;
-    margin-top: -182px;
     display: none;
     z-index: 10;
+}
+
+#springLoginForm div.title, #registerForm div.title, #registerSuccess div.title {
+    border-bottom: #E5E5E5 solid 1px;
+}
+
+#springLoginForm div.title > div, #registerForm div.title > div, #registerSuccess div.title > div {
+    position: absolute;
+}
+
+#springLoginForm div.title div.close-icon, #registerForm div.title div.close-icon,
+#registerSuccess div.title div.close-icon {
+    right: 14px;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    background: url('images/register-image.png') no-repeat -212px -5px;
+}
+
+#springLoginForm div.title div.close-icon:hover, #registerForm div.title div.close-icon:hover,
+#registerSuccess div.title div.close-icon:hover {
+    background-position: -212px -31px;
+}
+
+#springLoginForm {
+    margin-left: -230px;
+    margin-top: -182px;
 }
 
 #springLoginForm div.title,
@@ -114,11 +139,6 @@ input.form-control {
 #springLoginForm div.title {
     background: #ffffff url('images/login-title-back.png') repeat-x;
     height: 53px;
-    border-bottom: #E5E5E5 solid 1px;
-}
-
-#springLoginForm div.title > div {
-    position: absolute;
 }
 
 #springLoginForm div.title div.image {
@@ -133,12 +153,7 @@ input.form-control {
 }
 
 #springLoginForm div.title div.close-icon {
-    right: 14px;
     top: 17px;
-    width: 14px;
-    height: 14px;
-    background: url('images/login-close.png') center center no-repeat;
-    cursor: pointer;
 }
 
 #springLoginForm div.body {
@@ -177,6 +192,7 @@ input.form-control {
     vertical-align: top;
 }
 
+#registerForm div.body div.submit button,
 #springLoginForm div.body div.submit button {
     background: url('images/login-button-back.png') repeat-x;
     color: #ffffff;
@@ -188,4 +204,188 @@ input.form-control {
 
 #springLoginForm div.body div.submit a {
     font-size: 9pt;
+}
+
+#registerForm {
+    margin-left: -265px;
+    margin-top: -250px;
+}
+
+#registerForm div.title,
+#registerForm div.body {
+    width: 530px;
+    position: relative;
+}
+
+#registerForm div.title {
+    background-color: #F8FBFB;
+    height: 44px;
+    color: #727373;
+    font-size: 12pt;
+}
+
+#registerForm div.title div.text {
+    left: 26px;
+    top: 10px;
+}
+
+#registerForm div.title div.close-icon {
+    top: 14px;
+}
+
+#registerForm div.body {
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+#registerForm div.body div.right {
+    padding-top: 34px;
+    border-left: 1px solid #E5E5E5;
+    height: 456px;
+    width: 386px;
+    float: right;
+}
+
+#registerForm div.body div.right div.input {
+    position: relative;
+}
+
+#registerForm div.body div.right div.input input[type=text],
+#registerForm div.body div.right div.input input[type=password] {
+    width: 260px;
+}
+
+#registerForm div.body div.right div.input span.validate {
+    padding: 1px 10px;
+}
+
+#registerForm div.body div.right div.input span.validate.success {
+    background: url("images/register-image.png") -187px -5px;
+}
+
+#registerForm div.body div.right div.input span.validate.fail {
+    background: url("images/register-image.png") -187px -31px;
+}
+
+#registerForm div.body div.right label {
+    width: 88px;
+    text-align: right;
+    font-weight: normal;
+    padding-right: 10px;
+}
+
+#registerForm div.body div.right div.comment {
+    padding-left: 92px;
+    font-size: 9pt;
+    line-height: 27px;
+    vertical-align: middle;
+    color: #9C9C9C;
+}
+
+#registerForm div.body div.right div.comment span.error {
+    color: #FFA457;
+}
+
+#registerForm div.body div.right div.submit {
+    margin-top: 16px;
+    padding-left: 92px;
+}
+
+#registerForm div.body div.right div.input.identity-code {
+    font-size: 9pt;
+}
+
+#registerForm div.body div.right div.input.identity-code input {
+    width: 110px;
+}
+
+#registerForm div.body div.right div.input.identity-code img {
+    height: 34px;
+    width: 98px;
+    margin-bottom: 3px;
+}
+
+#registerForm div.body div.right div.input.identity-code a {
+    margin-right: 14px;
+}
+
+#registerForm div.body div.email-icon {
+    position: absolute;
+    left: 0;
+    top: 20px;
+    width: 156px;
+    line-height: 52px;
+    vertical-align: middle;
+    color: #ffffff;
+    font-size: 12pt;
+    padding-left: 20px;
+    background: url('images/register-image.png') no-repeat 0 0;
+}
+
+#registerForm div.body div.email-icon span.icon {
+    width: 0;
+    background: url('images/register-image.png') no-repeat -158px -7px;
+    padding-left: 27px;
+}
+
+#registerForm div.body div.switch-login {
+    position: absolute;
+    left: 10px;
+    bottom: 36px;
+    color: #707070;
+}
+
+#registerSuccess {
+    margin-left: -204px;
+    margin-top: -119px;
+}
+
+#registerSuccess div.title,
+#registerSuccess div.body {
+    width: 408px;
+    position: relative;
+}
+
+#registerSuccess div.title {
+    height: 46px;
+    background-color: #F8FBFB;
+    color: #727373;
+    font-size: 12pt;
+}
+
+#registerSuccess div.title div.text {
+    left: 26px;
+    top: 12px;
+}
+
+#registerSuccess div.body {
+    height: 192px;
+    background-color: #ffffff;
+    color: #626363;
+    font-size: 9pt;
+    padding: 20px 0 0 38px;
+}
+
+#registerSuccess div.body > div {
+    line-height: 21px;
+}
+
+#registerSuccess div.body span.email,
+#registerSuccess div.body span.resend-success,
+#registerSuccess div.body span.resend-fail {
+    color: #FFA457;
+}
+
+#registerSuccess div.body span.no-reply {
+    font-weight: bold;
+}
+
+#registerSuccess div.title div.close-icon {
+    top: 15px;
+}
+
+#registerSuccess div.body span.resend-success,
+#registerSuccess div.body span.resend-fail {
+    margin-left: 15px;
+    display: none;
 }

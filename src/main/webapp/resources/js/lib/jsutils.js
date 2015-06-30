@@ -189,6 +189,10 @@ var JSUtils = {
         }
         return str;
     },
+    validateEmail: function (email) {
+        var pattern = /^([a-zA-Z0-9_\\-\\.])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+$/;
+        return email && email.match(pattern) != null;
+    },
     handlebars: function (templateId, data) {
         var source = $("#" + templateId).html();
         var template = Handlebars.compile(source);
@@ -392,4 +396,16 @@ jQuery.fn.scrollToTop = function () {
 jQuery.fn.focusFirstTextInput = function () {
     this.find('input[type=text]:first').focusOrSelect();
     return this;
+};
+
+/**
+ * show an element for several seconds, then hide it again
+ * @param milliSeconds how many milliSeconds to show element
+ */
+jQuery.fn.showForAWhile = function (milliSeconds) {
+    this.show();
+    var self = this;
+    setTimeout(function () {
+        self.fadeOut(500);
+    }, milliSeconds)
 };
