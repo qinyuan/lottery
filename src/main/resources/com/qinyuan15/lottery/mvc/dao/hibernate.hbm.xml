@@ -55,6 +55,7 @@
             <generator class="identity"/>
         </id>
         <property name="title"/>
+        <property name="icon"/>
         <property name="ranking"/>
     </class>
     <class name="HelpItem" table="help_item">

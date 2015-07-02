@@ -38,12 +38,14 @@ create table activate_request (
 create table help_group (
   id int primary key auto_increment,
   title char(100) not null,
+  icon char(200),
   ranking int unique not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table help_item (
   id int primary key auto_increment,
   group_id int not null,
+  title char(200) not null,
   content text not null,
   ranking int unique not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

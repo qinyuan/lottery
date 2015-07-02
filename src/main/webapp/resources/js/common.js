@@ -89,6 +89,26 @@ var angularUtils = {
         $springLoginForm.hide();
         showRegisterForm();
     });
+    $springLoginForm.getSubmitButton = function () {
+        return $springLoginForm.find('button[name=loginSubmit]');
+    };
+    $springLoginForm.getSubmitButton().click(function (e) {
+        var $username = $springLoginForm.find('input[name=j_username]');
+        if ($username.trimVal() == '') {
+            alert('帐号未填写');
+            $username.focusOrSelect();
+            e.preventDefault();
+            return false;
+        }
+        var $password = $springLoginForm.find('input[name=j_password]');
+        if ($password.trimVal() == '') {
+            alert('密码未填写');
+            $password.focusOrSelect();
+            e.preventDefault();
+            return false;
+        }
+        return true;
+    });
 
     // actions of registerForm
     var $registerForm = $('#registerForm');

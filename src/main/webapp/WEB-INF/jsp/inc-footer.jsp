@@ -7,7 +7,9 @@
     <span>${footerText}</span>
 </div>
 <div class="shadow" id="springLoginForm">
-    <q:spring-login-form>
+    <%--
+    <q:spring-login-form>--%>
+        <form method="post" action="j_spring_security_check">
         <div class="title">
             <div class="image"><img src="resources/css/images/login-title-image.png"/></div>
             <div class="text">欢迎登录</div>
@@ -15,7 +17,7 @@
         </div>
         <div class="body">
             <div class="input">
-                <label>账号</label>
+                <label>帐号</label>
                 <input type="text" class="form-control" name="j_username" placeholder="手机号/用户名/邮箱"/>
             </div>
             <div class="input">
@@ -31,7 +33,9 @@
                 <a href="javascript:void(0)" id="switchToRegister">注册新帐号</a>
             </div>
         </div>
-    </q:spring-login-form>
+            </form>
+            <%--
+    </q:spring-login-form>--%>
 </div>
 <div class="shadow" id="registerForm">
     <form action="register-submit.json" method="post">
@@ -137,12 +141,12 @@
 </body>
 <q:js src="lib/jquery-1.11.1.min"/>
 <q:js src="lib/jquery.url"/>
+<q:js src="lib/jquery.cookie"/>
 <q:js src="lib/jquery-form-3.51.0"/>
 <q:js src="lib/underscore-min"/>
 <q:js src="lib/jsutils"/>
 <q:js src="common"/>
 <%---
-<script src="resources/js/lib/jquery.cookie.js"></script>
 <!--[if IE]>
 <script src="resources/js/lib/angular/html5shiv.js"></script>
 <script src="resources/js/lib/angular/json2.js"></script>

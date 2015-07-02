@@ -1,0 +1,106 @@
+div.main-body {
+    padding: 20px 0;
+    background-color: #F2F2F2;
+}
+
+div.main-body > div {
+    overflow: hidden;
+}
+
+div.main-body > div > div {
+    background-color: #ffffff;
+}
+
+div.main-body > div > div.left {
+    width: 190px;
+    float: left;
+}
+
+div.main-body > div > div.left > div.title {
+    color: #ffffff;
+    background-color: #82C92F;
+    font-size: 12pt;
+    font-weight: bold;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+
+div.main-body > div > div.left div.help-list {
+    padding: 2px 0 0 12px;
+}
+
+div.main-body > div > div.left div.help-list div.title {
+    color: #333;
+    font-size: 11pt;
+    font-weight: bold;
+}
+
+div.main-body > div > div.left div.help-list div.title span {
+    border: 6px #fff solid;
+    border-top-color: #82c92f;
+    float: left;
+    height: 0;
+    margin-top: 6px;
+    margin-right: 5px;
+    width: 0;
+}
+
+div.main-body > div > div.left div.help-list ul {
+    list-style: none;
+    padding-left: 18px;
+}
+
+div.main-body > div > div.left div.help-list ul li {
+    margin: 3px 0;
+}
+
+div.main-body > div > div.left div.help-list ul li a {
+    color: #666;
+    font-size: 9pt;
+}
+
+div.main-body > div > div.left div.help-list ul li.hover a {
+    color: #82c92f;
+}
+
+div.main-body > div > div.left div.help-list ul li.hover,
+div.main-body > div > div.left div.help-list ul li.selected {
+    margin-left: 4px;
+    padding-left: 3px;
+}
+
+div.main-body > div > div.left div.help-list ul li.selected {
+    border-radius: 4px 0 0 4px;
+    background-color: #82c92f;
+}
+
+div.main-body > div > div.left div.help-list ul li.selected a:hover {
+    text-decoration: none;
+}
+
+div.main-body > div > div.left div.help-list ul li.selected a {
+    color: #ffffff;
+}
+
+div.main-body > div > div.right {
+    width: 797px;
+    float: right;
+    padding: 0 14px 20px;
+}
+
+div.main-body > div > div.right > div.title {
+    border-bottom: 1px #e1e1e1 solid;
+}
+
+div.main-body > div > div.right div.item div.title {
+    font-size: 12pt;
+    padding: 15px 0;
+}
+
+div.main-body > div > div.right div.item div.content {
+    padding: 0 15px 20px;
+}
+
+div.main-body > div > div.right > div.title h3 {
+    font-size: 14pt;
+}
