@@ -38,6 +38,8 @@ public class UserDaoTest {
         System.out.println(userDao.hasEmail("qinyuan15@sina.com"));
         System.out.println(userDao.hasEmail("qinyuan150@sina.com"));
         System.out.println(userDao.hasEmail("qinyuan15@163.com"));
+        System.out.println(userDao.hasEmail("qinyuan15@qq.com"));
+        System.out.println(userDao.hasEmail("QINYUAN15@qq.com"));
     }
 
     @Test

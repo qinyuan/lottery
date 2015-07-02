@@ -39,5 +39,30 @@
         <property name="role"/>
         <property name="email"/>
         <property name="tel"/>
+        <property name="active"/>
+    </class>
+    <class name="ActivateRequest" table="activate_request">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="userId" column="user_id"/>
+        <property name="serialKey" column="serial_key"/>
+        <property name="sendTime" column="send_time"/>
+        <property name="responseTime" column="response_time"/>
+    </class>
+    <class name="HelpGroup" table="help_group">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="title"/>
+        <property name="ranking"/>
+    </class>
+    <class name="HelpItem" table="help_item">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="groupId" column="group_id"/>
+        <property name="content"/>
+        <property name="ranking"/>
     </class>
 </hibernate-mapping>

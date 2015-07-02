@@ -18,8 +18,9 @@ public class UserDao extends SimpleUserDao {
         user.setUsername(username);
         user.setPassword(password);
         user.setRole(role);
-        user.setEmail(adjustEmail(email));
+        user.setEmail(email);
         user.setTel(tel);
+        user.setActive(false);
         return HibernateUtils.save(user);
     }
 
@@ -46,28 +47,29 @@ public class UserDao extends SimpleUserDao {
         return getInstanceByTel(usernameFromLoginForm);
     }
 
-    private String adjustEmail(String email) {
-        if (StringUtils.hasText(email)) {
-            return email.toLowerCase();
-        } else {
-            return email;
-        }
-    }
-
     public User getInstanceByEmail(String email) {
-        return new HibernateListBuilder().addFilter("email=:email")
-                .addArgument("email", adjustEmail(email))
+        if(!StringUtils.hasText(email)) {
+            return null;
+        }
+        return new HibernateListBuilder().addFilter("LOWER(email)=:email")
+                .addArgument("email", email.toLowerCase())
                 .getFirstItem(User.class);
     }
 
     public User getInstanceByTel(String tel) {
         return new HibernateListBuilder().addFilter("tel=:tel")
-                .addArgument("tel", adjustEmail(tel))
+                .addArgument("tel", tel)
                 .getFirstItem(User.class);
     }
 
     public Integer addAdmin(String username, String password) {
         return add(username, password, User.ADMIN, null, null);
+    }
+
+    public void activate(Integer id) {
+        User user = getInstance(id);
+        user.setActive(true);
+        HibernateUtils.update(user);
     }
 
     public Integer addNormal(String username, String password, String email, String tel) {

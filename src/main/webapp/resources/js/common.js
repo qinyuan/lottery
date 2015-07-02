@@ -57,6 +57,14 @@ var angularUtils = {
         $registerSuccess.fadeIn(500);
     }
 
+    function showActivateRemind(email) {
+        JSUtils.showTransparentBackground();
+        $activateRemind.find('span.email').text(email);
+        var mailLoginPage = 'http://mail.' + email.replace(/^.*\@/, '');
+        $activateRemind.find('a.to-mail-page').attr('href', mailLoginPage);
+        $activateRemind.fadeIn(500);
+    }
+
     // actions of navigation link
     $('#loginNavigationLink').click(function () {
         JSUtils.showTransparentBackground();
@@ -143,16 +151,16 @@ var angularUtils = {
             $registerForm.valid = false;
             typeof(callback) == 'function' && callback();
         } else {
-            $.get('validate-username.json',{
-              'username' : username
-            }, function(data){
+            $.get('validate-username.json', {
+                'username': username
+            }, function (data) {
                 if (data.success) {
                     $registerForm.showValidationByInput($username);
                 } else {
                     $registerForm.showValidationByInput($username, data.detail);
                 }
                 typeof(callback) == 'function' && callback();
-            } );
+            });
         }
     };
     $registerForm.get$Username().blur($registerForm.validateUsername);
@@ -227,24 +235,21 @@ var angularUtils = {
             });
         });
         function registerSubmit() {
-            console.log('registerSubmit');
-            /*
-             $registerForm.find('form').ajaxSubmit({
-             success: function (data) {
-             alert($registerForm.get$Email().val());
-             if (data['success']) {
-             JSUtils.showTransparentBackground();
-             $registerForm.hide();
-             showRegisterSuccess($registerForm.get$Email().val());
-             $registerForm.find('form').get(0).reset();
-             } else {
-             alert(data['detail']);
-             $identityCodeImage.trigger('click');
-             }
-             },
-             resetForm: false,
-             dataType: 'json'
-             });*/
+            $registerForm.find('form').ajaxSubmit({
+                success: function (data) {
+                    if (data['success']) {
+                        JSUtils.showTransparentBackground();
+                        $registerForm.hide();
+                        showRegisterSuccess($registerForm.get$Email().val());
+                        $registerForm.find('form').get(0).reset();
+                    } else {
+                        alert(data['detail']);
+                        $identityCodeImage.trigger('click');
+                    }
+                },
+                resetForm: false,
+                dataType: 'json'
+            });
         }
     });
     $registerForm.find('form').submit(function () {
@@ -273,13 +278,31 @@ var angularUtils = {
         $registerSuccess.hide();
         JSUtils.hideTransparentBackground();
     });
-    $registerSuccess.find('div.body a.resend').click(function () {
-        // TODO need to implement resend function
-        $registerSuccess.find('div.body span.resend-success').showForAWhile(1500);
+
+    $('div.activate-remind div.body a.resend').click(function () {
+        var $body = $(this).parent();
+        if ($body.size() > 0 && !$body.hasClass('body')) {
+            $body = $body.parent();
+        }
+        var email = $body.find('span.email').text();
+        $.get('resend-activate-email.json', {
+            'email': email
+        }, function (data) {
+            if (data.success) {
+                $body.find('span.resend-success').showForAWhile(1500);
+            } else {
+                $body.find('span.resend-fail').text(data.detail + '！').showForAWhile(1500);
+            }
+        });
     });
 
-    // TODO remove this someday
-    showRegisterForm();
-    JSUtils.showTransparentBackground();
+    var $activateRemind = $('#activateRemind');
+    $activateRemind.find('div.title div.close-icon').click(function () {
+        $activateRemind.hide();
+        JSUtils.hideTransparentBackground();
+    });
+    if (window['unactivatedEmail']) {
+        showActivateRemind(window['unactivatedEmail']);
+    }
 })();
 var switchToLogin;

@@ -20,7 +20,7 @@
             </div>
             <div class="input">
                 <label>密码</label>
-                <input type="text" class="form-control" name="j_password" placeholder="请输入您的密码"/>
+                <input type="password" class="form-control" name="j_password" placeholder="请输入您的密码"/>
             </div>
             <div class="rememberLogin">
                 <q:spring-remember-login/><span>下次自动登录</span>
@@ -97,14 +97,14 @@
         </div>
     </form>
 </div>
-<div class="shadow" id="registerSuccess">
+<div class="shadow activate-remind" id="registerSuccess">
     <div class="title">
         <div class="text">消息提示</div>
         <div class="close-icon"></div>
     </div>
     <div class="body">
         <div>验证邮件已经发送到<span class="email"></span></div>
-        <div>你需要点击邮箱中的确认链接来完成</div>
+        <div>您需要点击邮箱中的确认链接来完成</div>
         <div><a class="to-mail-page" target="_blank" href="javascript:void(0)">立即进入邮箱</a></div>
         <div>&nbsp;</div>
         <div><span class="no-reply">没有收到确认链接怎么办？</span></div>
@@ -115,7 +115,25 @@
         </div>
     </div>
 </div>
-
+<div class="shadow activate-remind" id="activateRemind">
+    <div class="title">
+        <div class="text">消息提示</div>
+        <div class="close-icon"></div>
+    </div>
+    <div class="body">
+        <div>您的邮箱<span class="email"></span>尚未完成验证</div>
+        <div>您需要点击邮箱中的确认链接来完成</div>
+        <div><a class="to-mail-page" target="_blank" href="javascript:void(0)">立即进入邮箱</a></div>
+        <div>&nbsp;</div>
+        <div><span class="no-reply">没有收到确认链接怎么办？</span></div>
+        <div>1.看看是否在邮箱的回收站中，垃圾邮箱中</div>
+        <div>2.确认没有收到，<a class="resend" href="javascript:void(0)">点此重发一封</a>
+            <span class="resend-success">发送成功！</span>
+            <span class="resend-fail">发送失败！</span>
+        </div>
+    </div>
+</div>
+<c:if test="${unactivatedEmail != null}"><script>var unactivatedEmail = "${unactivatedEmail}";</script></c:if>
 </body>
 <q:js src="lib/jquery-1.11.1.min"/>
 <q:js src="lib/jquery.url"/>

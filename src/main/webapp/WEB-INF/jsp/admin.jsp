@@ -134,6 +134,57 @@
                 </table>
             </div>
         </div>
+        <div class="edit-unit">
+            <div class="title">新用户激活邮件设置</div>
+            <div class="content">
+                <table id="emailTable">
+                    <tbody>
+                    <tr>
+                        <td class="title">发件箱服务器地址</td>
+                        <td class="input">
+                            <input type="text" name="activateMailHost" class="form-control"
+                                   value="${activateMailAccount.host}" placeholder="在此输入发件箱服务器地址，如smtp.sina.com">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="title">发件箱用户名</td>
+                        <td class="input">
+                            <input type="text" name="activateMailUsername" class="form-control"
+                                   value="${activateMailAccount.username}"
+                                   placeholder="在此输入发件箱用户名，如test12345@sina.com"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="title">发件箱密码</td>
+                        <td class="input">
+                            <input type="password" name="activateMailPassword" class="form-control"
+                                   value="${activateMailAccount.password}" placeholder="在此输入发件箱密码"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="title">邮件标题</td>
+                        <td class="input">
+                            <input type="text" name="activateMailSubjectTemplate" class="form-control"
+                                   value="${activateMailSubjectTemplate}" placeholder="在此输入邮件的标题"/>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="title">邮件正文模板
+                            <div class="comment">
+                                注：<br/>
+                                {{user}}指代用户名；<br/>
+                                {{url}}指代激活链接。
+                            </div>
+                        </td>
+                        <td class="input">
+                            <textarea class="ckeditor" name="activateMailContentTemplate">${activateMailContentTemplate}</textarea>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div class="submit">
             <button id="submitButton" type="submit" class="btn btn-success">确定</button>
         </div>

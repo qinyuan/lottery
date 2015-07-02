@@ -61,3 +61,13 @@ div.form > form div.submit {
 #linkTable col.action {
     width: 80px;
 }
+
+#emailTable input {
+    width: 350px;
+}
+
+#emailTable div.comment {
+    margin-top: 20px;
+    color: #289923;
+    font-size: 9pt;
+}

@@ -1,5 +1,7 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan15.lottery.mvc.activate.ActivateMailSender;
+import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.utils.mail.MailAddressValidator;
 import com.qinyuan15.utils.mvc.controller.BaseController;
@@ -74,13 +76,23 @@ public class RegisterController extends BaseController {
         }
 
         try {
-            userDao.addNormal(username, password, email, "");
+            Integer userId = userDao.addNormal(username, password, email, null);
+            new ActivateMailSender(getActivateUrl()).send(userId);
             return success();
         } catch (Exception e) {
             LOGGER.error("fail to add user, username: {}, password: {}, email {}, info {}",
                     username, password, email, e);
             return fail("数据库操作失败！");
         }
+    }
+
+    private String getActivateUrl() {
+        StringBuffer url = request.getRequestURL();
+        String activateUrl = url.substring(0, url.length() - request.getServletPath().length());
+        if (!activateUrl.endsWith("/")) {
+            activateUrl += "/";
+        }
+        return activateUrl + "activate-account.html";
     }
 
     private boolean validateIdentityCode(String identityCode) {
@@ -94,6 +106,23 @@ public class RegisterController extends BaseController {
                 identityCode.toLowerCase().equals(identityCodeInSession.toLowerCase());
     }
 
+
+    @RequestMapping(value = "resend-activate-email.json", method = RequestMethod.GET)
+    @ResponseBody
+    public String resendValidateEmail(@RequestParam(value = "email", required = true) String email) {
+        User user = userDao.getInstanceByEmail(email);
+        if (user == null) {
+            return fail("用户不存在");
+        }
+
+        try {
+            new ActivateMailSender(getActivateUrl()).send(user.getId());
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("fail to resend email to {}, info: {}", email, e);
+            return fail("邮件发送失败");
+        }
+    }
 
     private final static String TO_LOGIN_HTML = "<a href='javascript:void(0)' onclick='switchToLogin()'>立即登录</a>";
 

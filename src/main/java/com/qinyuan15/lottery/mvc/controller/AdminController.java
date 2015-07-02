@@ -24,10 +24,15 @@ public class AdminController extends ImageController {
         IndexHeaderUtils.setHeaderParameters(this);
         CommodityHeaderUtils.setHeaderParameters(this);
 
+        setAttribute("activateMailAccount", AppConfig.getActivateMailAccount());
+        setAttribute("activateMailSubjectTemplate", AppConfig.getActivateMailSubjectTemplate());
+        setAttribute("activateMailContentTemplate", AppConfig.getActivateMailContentTemplate());
+
         setTitle("系统设置");
         addCss("admin-form");
         addJs("resources/js/lib/handlebars.min-v1.3.0", false);
         addHeadJs("lib/image-adjust.js");
+        addJs("lib/ckeditor/ckeditor");
         addCssAndJs("admin");
         return "admin";
     }
@@ -47,7 +52,13 @@ public class AdminController extends ImageController {
                          @RequestParam(value = "commodityHeaderLeftLogo", required = true) String commodityHeaderLeftLogo,
                          @RequestParam(value = "commodityHeaderLeftLogoFile", required = true) MultipartFile commodityHeaderLeftLogoFile,
                          @RequestParam(value = "favicon", required = true) String favicon,
-                         @RequestParam(value = "faviconFile", required = true) MultipartFile faviconFile) {
+                         @RequestParam(value = "faviconFile", required = true) MultipartFile faviconFile,
+                         @RequestParam(value = "activateMailHost", required = true) String activateMailHost,
+                         @RequestParam(value = "activateMailUsername", required = true) String activateMailUsername,
+                         @RequestParam(value = "activateMailPassword", required = true) String activateMailPassword,
+                         @RequestParam(value = "activateMailSubjectTemplate", required = true) String activateMailSubjectTemplate,
+                         @RequestParam(value = "activateMailContentTemplate", required = true) String activateMailContentTemplate) {
+
         final String redirectPage = "admin";
 
         String indexHeaderLeftLogoPath = null, indexHeaderRightLogoPath = null,
@@ -102,7 +113,9 @@ public class AdminController extends ImageController {
         AppConfig.updateFooterText(footerText);
         AppConfig.updateCommodityHeaderLeftLogo(commodityHeaderLeftLogoPath);
         AppConfig.updateFavicon(faviconPath);
-
+        AppConfig.updateActivateMailAccount(activateMailHost, activateMailUsername, activateMailPassword);
+        AppConfig.updateActivateMailSubjectTemplate(activateMailSubjectTemplate);
+        AppConfig.updateActivateMailContentTemplate(activateMailContentTemplate);
         new NavigationLinkDao().clearAndSave(buildNavigationLinks(headerLinkTitles, headerLinkHrefs));
 
         return redirect("admin");

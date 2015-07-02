@@ -23,12 +23,4 @@ public class IndexController extends ImageController {
         addCssAndJs("index");
         return "index";
     }
-
-    /*
-    @RequestMapping("/hello-world.json")
-    @ResponseBody
-    public String json(){
-        return success();
-    }
-    */
 }

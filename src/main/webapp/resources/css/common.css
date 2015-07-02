@@ -95,7 +95,7 @@ input.form-control {
     display: inline-block;
 }
 
-#springLoginForm, #registerForm, #registerSuccess {
+#springLoginForm, #registerForm, div.activate-remind {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -103,16 +103,16 @@ input.form-control {
     z-index: 10;
 }
 
-#springLoginForm div.title, #registerForm div.title, #registerSuccess div.title {
+#springLoginForm div.title, #registerForm div.title, div.activate-remind div.title {
     border-bottom: #E5E5E5 solid 1px;
 }
 
-#springLoginForm div.title > div, #registerForm div.title > div, #registerSuccess div.title > div {
+#springLoginForm div.title > div, #registerForm div.title > div, div.activate-remind div.title > div {
     position: absolute;
 }
 
 #springLoginForm div.title div.close-icon, #registerForm div.title div.close-icon,
-#registerSuccess div.title div.close-icon {
+div.activate-remind div.title div.close-icon {
     right: 14px;
     width: 14px;
     height: 14px;
@@ -121,7 +121,7 @@ input.form-control {
 }
 
 #springLoginForm div.title div.close-icon:hover, #registerForm div.title div.close-icon:hover,
-#registerSuccess div.title div.close-icon:hover {
+div.activate-remind div.title div.close-icon:hover {
     background-position: -212px -31px;
 }
 
@@ -335,30 +335,30 @@ input.form-control {
     color: #707070;
 }
 
-#registerSuccess {
+div.activate-remind {
     margin-left: -204px;
     margin-top: -119px;
 }
 
-#registerSuccess div.title,
-#registerSuccess div.body {
+div.activate-remind div.title,
+div.activate-remind div.body {
     width: 408px;
     position: relative;
 }
 
-#registerSuccess div.title {
+div.activate-remind div.title {
     height: 46px;
     background-color: #F8FBFB;
     color: #727373;
     font-size: 12pt;
 }
 
-#registerSuccess div.title div.text {
+div.activate-remind div.title div.text {
     left: 26px;
     top: 12px;
 }
 
-#registerSuccess div.body {
+div.activate-remind div.body {
     height: 192px;
     background-color: #ffffff;
     color: #626363;
@@ -366,26 +366,26 @@ input.form-control {
     padding: 20px 0 0 38px;
 }
 
-#registerSuccess div.body > div {
+div.activate-remind div.body > div {
     line-height: 21px;
 }
 
-#registerSuccess div.body span.email,
-#registerSuccess div.body span.resend-success,
-#registerSuccess div.body span.resend-fail {
+div.activate-remind div.body span.email,
+div.activate-remind div.body span.resend-success,
+div.activate-remind div.body span.resend-fail {
     color: #FFA457;
 }
 
-#registerSuccess div.body span.no-reply {
+div.activate-remind div.body span.no-reply {
     font-weight: bold;
 }
 
-#registerSuccess div.title div.close-icon {
+div.activate-remind div.title div.close-icon {
     top: 15px;
 }
 
-#registerSuccess div.body span.resend-success,
-#registerSuccess div.body span.resend-fail {
+div.activate-remind div.body span.resend-success,
+div.activate-remind div.body span.resend-fail {
     margin-left: 15px;
     display: none;
 }

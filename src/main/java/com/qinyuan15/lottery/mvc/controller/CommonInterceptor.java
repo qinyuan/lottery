@@ -1,8 +1,11 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.dao.User;
+import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.utils.config.ImageConfig;
 import com.qinyuan15.utils.mvc.controller.ImageUrlAdapter;
+import com.qinyuan15.utils.security.SecuritySearcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,6 +42,15 @@ public class CommonInterceptor implements HandlerInterceptor {
         httpServletRequest.setAttribute("footerPoster", imageUrlAdapter.pathToUrl(AppConfig.getFooterPoster()));
         httpServletRequest.setAttribute("footerText", AppConfig.getFooterText());
         httpServletRequest.setAttribute("favicon", imageUrlAdapter.pathToUrl(AppConfig.getFavicon()));
+
+        UserDao userDao = new UserDao();
+        SecuritySearcher searcher = new SecuritySearcher(userDao);
+        if (searcher.hasAuthority(User.NORMAL)) {
+            User user = userDao.getInstance(searcher.getUserId());
+            if (!user.getActive()) {
+                httpServletRequest.setAttribute("unactivatedEmail", user.getEmail());
+            }
+        }
     }
 
     @Override

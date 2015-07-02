@@ -1,0 +1,16 @@
+div.body {
+    font-size: 18pt;
+    color: #626363;
+    text-align: center;
+    background-color: #e5e5e5;
+    padding: 20px;
+}
+
+div.body > div {
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+div.body span.email {
+    color: #FFA457;
+}

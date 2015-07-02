@@ -91,4 +91,78 @@ public class AppConfig {
     public static void updateFavicon(String favicon) {
         dao.save(FAVICON_KEY, favicon);
     }
+
+    private final static String ACTIVATE_MAIL_SUBJECT_TEMPLATE_KEY = "activateMailSubjectTemplate";
+
+    public static String getActivateMailSubjectTemplate() {
+        return dao.get(ACTIVATE_MAIL_SUBJECT_TEMPLATE_KEY);
+    }
+
+    public static void updateActivateMailSubjectTemplate(String template) {
+        dao.save(ACTIVATE_MAIL_SUBJECT_TEMPLATE_KEY, template);
+    }
+
+    private final static String ACTIVATE_MAIL_CONTENT_TEMPLATE_KEY = "activateMailContentTemplate";
+
+    public static String getActivateMailContentTemplate() {
+        return dao.get(ACTIVATE_MAIL_CONTENT_TEMPLATE_KEY);
+    }
+
+    public static void updateActivateMailContentTemplate(String template) {
+        dao.save(ACTIVATE_MAIL_CONTENT_TEMPLATE_KEY, template);
+    }
+
+    private final static String ACTIVATE_MAIL_ACCOUNT_KEY = "activateMailAccount";
+    private final static String ACTIVATE_MAIL_ACCOUNT_SEPARATOR = ",,,";
+
+    public static ActivateMailAccount getActivateMailAccount() {
+        String value = dao.get(ACTIVATE_MAIL_ACCOUNT_KEY);
+        if (value == null) {
+            return null;
+        }
+        String[] values = dao.get(ACTIVATE_MAIL_ACCOUNT_KEY).split(ACTIVATE_MAIL_ACCOUNT_SEPARATOR);
+        if (values.length < 3) {
+            return null;
+        }
+
+        return new ActivateMailAccount(values[0], values[1], values[2]);
+    }
+
+    public static void updateActivateMailAccount(String host, String username, String password) {
+        if (host == null) {
+            host = "";
+        }
+        if (username == null) {
+            username = "";
+        }
+        if (password == null) {
+            password = "";
+        }
+        dao.save(ACTIVATE_MAIL_ACCOUNT_KEY, host + ACTIVATE_MAIL_ACCOUNT_SEPARATOR +
+                username + ACTIVATE_MAIL_ACCOUNT_SEPARATOR + password);
+    }
+
+    public static class ActivateMailAccount {
+        private final String host;
+        private final String username;
+        private final String password;
+
+        private ActivateMailAccount(String host, String username, String password) {
+            this.host = host;
+            this.username = username;
+            this.password = password;
+        }
+
+        public String getHost() {
+            return host;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+    }
 }
