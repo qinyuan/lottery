@@ -55,7 +55,6 @@
             <generator class="identity"/>
         </id>
         <property name="title"/>
-        <property name="icon"/>
         <property name="ranking"/>
     </class>
     <class name="HelpItem" table="help_item">
@@ -64,6 +63,8 @@
         </id>
         <property name="groupId" column="group_id"/>
         <property name="content"/>
+        <property name="title"/>
+        <property name="icon"/>
         <property name="ranking"/>
     </class>
 </hibernate-mapping>

@@ -320,6 +320,7 @@ jQuery.fn.focusOrSelect = function () {
     } else {
         this.focus();
     }
+    return this;
 };
 
 jQuery.fn.getParentByTagName = function (tagName) {
@@ -327,15 +328,28 @@ jQuery.fn.getParentByTagName = function (tagName) {
         return null;
     }
 
-    var parent = this.parent();
+    var $parent = this.parent();
     while (true) {
-        if (parent.size() == 0 || parent.is('body') || parent.is('html')) {
+        if ($parent.size() == 0 || $parent.is('body') || $parent.is('html')) {
             return null;
         }
-        if (parent.is(tagName)) {
-            return parent;
+        if ($parent.is(tagName)) {
+            return $parent;
         }
-        parent = parent.parent();
+        $parent = $parent.parent();
+    }
+};
+
+jQuery.fn.getParentByTagNameAndClass = function (tagName, style) {
+    var $parent = this.getParentByTagName(tagName);
+    while (true) {
+        if ($parent == null) {
+            return null;
+        }
+        if ($parent.hasClass(style)) {
+            return $parent;
+        }
+        $parent = $parent.getParentByTagName(tagName);
     }
 };
 
@@ -396,6 +410,16 @@ jQuery.fn.scrollToTop = function () {
 jQuery.fn.focusFirstTextInput = function () {
     this.find('input[type=text]:first').focusOrSelect();
     return this;
+};
+
+jQuery.fn.twinkle = function (times) {
+    if (times == null || times == undefined) {
+        times = 2;
+    }
+    this.show();
+    for (var i = 0; i < times; i++) {
+        this.fadeOut(100).fadeIn(100);
+    }
 };
 
 /**

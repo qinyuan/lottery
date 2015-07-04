@@ -7,9 +7,7 @@
     <span>${footerText}</span>
 </div>
 <div class="shadow" id="springLoginForm">
-    <%--
-    <q:spring-login-form>--%>
-        <form method="post" action="j_spring_security_check">
+    <form>
         <div class="title">
             <div class="image"><img src="resources/css/images/login-title-image.png"/></div>
             <div class="text">欢迎登录</div>
@@ -32,10 +30,9 @@
                 <button type="submit" name="loginSubmit">立即登录</button>
                 <a href="javascript:void(0)" id="switchToRegister">注册新帐号</a>
             </div>
+            <div class="error-info"><!--<img src="resources/css/images/login-error.png"/>-->帐号或密码错误</div>
         </div>
-            </form>
-            <%--
-    </q:spring-login-form>--%>
+    </form>
 </div>
 <div class="shadow" id="registerForm">
     <form action="register-submit.json" method="post">
@@ -137,7 +134,9 @@
         </div>
     </div>
 </div>
-<c:if test="${unactivatedEmail != null}"><script>var unactivatedEmail = "${unactivatedEmail}";</script></c:if>
+<c:if test="${unactivatedEmail != null}">
+    <script>var unactivatedEmail = "${unactivatedEmail}";</script>
+</c:if>
 </body>
 <q:js src="lib/jquery-1.11.1.min"/>
 <q:js src="lib/jquery.url"/>

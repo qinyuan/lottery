@@ -1,3 +1,3 @@
 (function(){
-    $('div.login input:first').focus();
+    $('div.login input:first').focusFirstTextInput();
 })();

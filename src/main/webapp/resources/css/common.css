@@ -206,6 +206,17 @@ div.activate-remind div.title div.close-icon:hover {
     font-size: 9pt;
 }
 
+#springLoginForm div.body div.error-info {
+    color: #D90000;
+    font-size: 12pt;
+    position: absolute;
+    left: 150px;
+    top: 10px;
+    padding-left: 20px;
+    background: url('images/login-error.png') no-repeat left 25%;
+    display: none;
+}
+
 #registerForm {
     margin-left: -265px;
     margin-top: -250px;

@@ -29,6 +29,7 @@ var angularUtils = {
 
     function showLoginForm() {
         $springLoginForm.find('form').get(0).reset();
+        $springLoginForm.get$ErrorInfo().hide();
         $springLoginForm.fadeIn(500).focusFirstTextInput();
     }
 
@@ -89,25 +90,36 @@ var angularUtils = {
         $springLoginForm.hide();
         showRegisterForm();
     });
-    $springLoginForm.getSubmitButton = function () {
+    $springLoginForm.get$SubmitButton = function () {
         return $springLoginForm.find('button[name=loginSubmit]');
     };
-    $springLoginForm.getSubmitButton().click(function (e) {
+    $springLoginForm.get$ErrorInfo = function () {
+        return $springLoginForm.find('div.error-info');
+    };
+    $springLoginForm.get$SubmitButton().click(function (e) {
+        e.preventDefault();
         var $username = $springLoginForm.find('input[name=j_username]');
         if ($username.trimVal() == '') {
             alert('帐号未填写');
             $username.focusOrSelect();
-            e.preventDefault();
             return false;
         }
         var $password = $springLoginForm.find('input[name=j_password]');
         if ($password.trimVal() == '') {
             alert('密码未填写');
             $password.focusOrSelect();
-            e.preventDefault();
             return false;
         }
-        return true;
+
+        var formData = $springLoginForm.find('form').serialize();
+        $.post('j_spring_security_ajax_check', formData, function (data) {
+            if (data.success) {
+                location.reload();
+            } else {
+                $springLoginForm.get$ErrorInfo().twinkle(3);
+            }
+        });
+        return false;
     });
 
     // actions of registerForm

@@ -7,6 +7,7 @@
         http://www.springframework.org/schema/security
         http://www.springframework.org/schema/security/spring-security.xsd">
 
+    <!--
     <security:http auto-config="true">
         <security:intercept-url pattern="/admin*" access="ROLE_SUPPER_ADMIN,ROLE_ADMIN"/>
         <security:form-login login-page="/login" default-target-url="/index"
@@ -14,8 +15,48 @@
         <security:logout logout-success-url="/index"/>
         <security:remember-me/>
     </security:http>
+    -->
+    <security:http auto-config="false" entry-point-ref="authenticationEntryPoint">
+        <security:intercept-url pattern="/admin*" access="ROLE_SUPPER_ADMIN,ROLE_ADMIN"/>
+        <security:custom-filter before="FORM_LOGIN_FILTER" ref="loginFilter"/>
+        <security:custom-filter position="FORM_LOGIN_FILTER" ref="ajaxLoginFilter"/>
+        <security:logout logout-success-url="/index"/>
+    </security:http>
 
-    <security:authentication-manager erase-credentials="false">
+    <bean id="authenticationEntryPoint"
+          class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+        <constructor-arg value="/login"/>
+    </bean>
+
+    <bean id="loginFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="authenticationFailureHandler" ref="failureHandler"/>
+        <property name="authenticationSuccessHandler" ref="successHandler"/>
+    </bean>
+    <bean id="failureHandler"
+          class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+        <property name="defaultFailureUrl" value="/login?login_error=1"/>
+    </bean>
+    <bean id="successHandler"
+          class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+        <property name="alwaysUseDefaultTargetUrl" value="false"/>
+        <property name="defaultTargetUrl" value="/admin"/>
+    </bean>
+
+    <bean id="ajaxLoginFilter"
+          class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="authenticationFailureHandler" ref="ajaxFailureHandler"/>
+        <property name="authenticationSuccessHandler" ref="ajaxSuccessHandler"/>
+        <property name="requiresAuthenticationRequestMatcher" ref="ajaxLoginRequestMatcher"/>
+    </bean>
+    <bean id="ajaxFailureHandler" class="com.qinyuan15.utils.security.AjaxAuthenticationFailureHandler"/>
+    <bean id="ajaxSuccessHandler" class="com.qinyuan15.utils.security.AjaxAuthenticationSuccessHandler"/>
+    <bean id="ajaxLoginRequestMatcher" class="com.qinyuan15.utils.security.ServletPathRequestMatcher">
+        <constructor-arg value="/j_spring_security_ajax_check"/>
+    </bean>
+
+    <security:authentication-manager alias="authenticationManager" erase-credentials="false">
         <security:authentication-provider user-service-ref="customUserDetailsService"/>
     </security:authentication-manager>
 

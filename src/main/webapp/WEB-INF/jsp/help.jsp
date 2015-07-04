@@ -6,7 +6,7 @@
         <div class="left shadow">
             <div class="title">帮助中心</div>
             <div class="help-list">
-                <div class="title"><span></span>厂商合作</div>
+                <div class="title"><span class="icon"></span><span class="content">厂商合作</span></div>
                 <ul>
                     <li><a href="#">什么是360商城</a></li>
                     <li class="selected"><a href="#">什么是360商城</a></li>
@@ -16,17 +16,14 @@
                     <li><a href="#">什么是360商城</a></li>
                 </ul>
             </div>
-            <div class="help-list">
-                <div class="title"><span></span>厂商合作</div>
-                <ul>
-                    <li><a href="#">什么是360商城</a></li>
-                    <li><a href="#">什么是360商城</a></li>
-                    <li><a href="#">什么是360商城</a></li>
-                    <li><a href="#">什么是360商城</a></li>
-                    <li><a href="#">什么是360商城</a></li>
-                    <li><a href="#">什么是360商城</a></li>
-                </ul>
-            </div>
+            <c:forEach var="helpGroup" items="${helpGroups}">
+                <%@include file="help-group-title.jsp" %>
+            </c:forEach>
+            <security:authorize ifAnyGranted="ROLE_ADMIN">
+                <div class="add-help-group">
+                    <img class="link" title="添加分组" src="resources/css/images/add.png"/>
+                </div>
+            </security:authorize>
         </div>
         <div class="right shadow">
             <div class="title"><h3>厂商合作</h3></div>
@@ -45,4 +42,7 @@
         </div>
     </div>
 </div>
+<q:handlebars-template id="help-group-template">
+    <%@include file="help-group-title.jsp" %>
+</q:handlebars-template>
 <%@include file="inc-footer.jsp" %>

@@ -18,7 +18,6 @@ public class RichHelpGroup extends HelpGroup {
     private RichHelpGroup(HelpGroup helpGroup, List<HelpItem> items) {
         this.setId(helpGroup.getId());
         this.setTitle(helpGroup.getTitle());
-        this.setIcon(helpGroup.getIcon());
         this.setRanking(helpGroup.getRanking());
         this.items = items;
     }
