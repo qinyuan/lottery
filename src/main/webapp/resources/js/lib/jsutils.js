@@ -273,35 +273,57 @@ var JSUtils = {
         } else {
             $('body').animate({scrollTop: offset}, 250);
         }
+    },
+    isEnterKeyCode: function (keyCode) {
+        return keyCode == 13;
     }
 };
 
 /**
  * query plugins
  */
-jQuery.fn.dataOptions = function () {
+jQuery.fn.dataOptions = function (key, newValue) {
     var dataOptions = {};
     var dataOptionsString = this.attr('data-options');
-    if (dataOptionsString == null) {
-        return dataOptions;
-    }
+    if (dataOptionsString != null) {
+        dataOptionsString = $.trim(dataOptionsString);
+        var dataOptionsArray = dataOptionsString.split(',');
+        for (var i = 0, len = dataOptionsArray.length; i < len; i++) {
+            var keyValuePair = dataOptionsArray[i].split(':');
+            if (keyValuePair.length == 1) {
+                continue;
+            }
 
-    dataOptionsString = $.trim(dataOptionsString);
-    var dataOptionsArray = dataOptionsString.split(',');
-    for (var i = 0, len = dataOptionsArray.length; i < len; i++) {
-        var keyValuePair = dataOptionsArray[i].split(':');
-        if (keyValuePair.length == 1) {
-            continue;
+            var value = keyValuePair[1];
+            if (value == '') {
+                value = null;
+            }
+            value = $.trim(value);
+            dataOptions[keyValuePair[0]] = value;
         }
-
-        var value = keyValuePair[1];
-        if (value == '') {
-            value = null;
-        }
-        value = $.trim(value);
-        dataOptions[keyValuePair[0]] = value;
     }
-    return dataOptions;
+    if (newValue == null) {
+        if (key == null) {
+            return dataOptions;
+        } else {
+            return dataOptions[key];
+        }
+    } else {
+        dataOptions[key] = newValue;
+        dataOptionsString = '';
+        for (var keyInOptions in dataOptions) {
+            if (!dataOptions.hasOwnProperty(keyInOptions)) {
+                continue;
+            }
+            if (dataOptionsString != null) {
+                dataOptionsString += ',';
+            }
+            dataOptionsString += keyInOptions + ':' + dataOptions[keyInOptions];
+        }
+        this.attr('data-options', dataOptionsString);
+        return this;
+    }
+    //return dataOptions;
 };
 
 jQuery.fn.parseIntegerInId = function () {
@@ -395,7 +417,7 @@ jQuery.fn.setInputValue = function (inputName, inputValue) {
 
 jQuery.fn.setDefaultButton = function (elementId) {
     this.find('input[type=text]').keydown(function (e) {
-        if (e.keyCode == 13) {
+        if (JSUtils.isEnterKeyCode(e.keyCode)) {
             $('#' + elementId).trigger('click');
         }
     });

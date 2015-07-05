@@ -5,6 +5,7 @@
     <div class="page-width">
         <div class="left shadow">
             <div class="title">帮助中心</div>
+            <!--
             <div class="help-list">
                 <div class="title"><span class="icon"></span><span class="content">厂商合作</span></div>
                 <ul>
@@ -16,6 +17,7 @@
                     <li><a href="#">什么是360商城</a></li>
                 </ul>
             </div>
+            -->
             <c:forEach var="helpGroup" items="${helpGroups}">
                 <%@include file="help-group-title.jsp" %>
             </c:forEach>
@@ -41,6 +43,39 @@
             </div>
         </div>
     </div>
+</div>
+<div id="groupItemFormDiv">
+    <q:multipart-form action="admin-add-help-item">
+        <input type="hidden" name="id"/>
+        <input type="hidden" name="groupId"/>
+        <table>
+            <col class="title"/>
+            <col class="content"/>
+            <tbody>
+            <tr>
+                <td>标题图标</td>
+                <td>
+                    <jsp:include page="widget-upload-image.jsp">
+                        <jsp:param name="id" value="icon"/>
+                    </jsp:include>
+                </td>
+            </tr>
+            <tr>
+                <td>标题</td>
+                <td>
+                    <input type="text" class="form-control" name="title"/>
+                </td>
+            </tr>
+            <tr>
+                <td>正文</td>
+                <td>
+                    <textarea class="ckeditor" name="title"></textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </q:multipart-form>
 </div>
 <q:handlebars-template id="help-group-template">
     <%@include file="help-group-title.jsp" %>

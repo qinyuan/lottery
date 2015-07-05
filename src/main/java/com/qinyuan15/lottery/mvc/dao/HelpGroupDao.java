@@ -7,11 +7,11 @@ import com.qinyuan15.utils.hibernate.RankingDao;
 import java.util.List;
 
 public class HelpGroupDao {
-    public void add(String title) {
+    public Integer add(String title) {
         HelpGroup helpGroup = new HelpGroup();
         helpGroup.setTitle(title);
 
-        new RankingDao().add(helpGroup);
+        return new RankingDao().add(helpGroup);
     }
 
     public List<HelpGroup> getInstances() {

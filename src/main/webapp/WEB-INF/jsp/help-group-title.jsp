@@ -6,10 +6,14 @@
         <span class="content">${helpGroup.title == null ? '{{helpGroupTitle}}' : helpGroup.title }</span>
         <security:authorize ifAnyGranted="ROLE_ADMIN">
             <div class="action">
-                <img class="link up" title="上移" src="resources/css/images/arrow_up.png"/>
-                <img class="link down" title="下移" src="resources/css/images/arrow_down.png"/>
-                <img class="link edit" title="编辑" src="resources/css/images/pencil.png"/>
-                <img class="link delete" title="删除" src="resources/css/images/delete.png"/>
+                <img class="link up" title="上移" onclick="rankUpHelpGroup(this);"
+                     src="resources/css/images/arrow_up.png"/>
+                <img class="link down" title="下移" onclick="rankDownHelpGroup(this);"
+                     src="resources/css/images/arrow_down.png"/>
+                <img class="link edit" title="编辑" onclick="editHelpGroup(this);"
+                     src="resources/css/images/pencil.png"/>
+                <img class="link delete" title="删除" onclick="deleteHelpGroup(this);"
+                     src="resources/css/images/delete.png"/>
             </div>
         </security:authorize>
     </div>

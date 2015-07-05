@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 public class AdminHelpController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminHelpController.class);
@@ -23,7 +26,8 @@ public class AdminHelpController extends ImageController {
 
         addJs("resources/js/lib/handlebars.min-v1.3.0", false);
         setTitle("编辑帮助中心");
-        addCssAndJs("help");
+        addCss("help");
+        addJs("admin-help");
         return "help";
     }
 
@@ -31,8 +35,8 @@ public class AdminHelpController extends ImageController {
     @ResponseBody
     public String addGroup(@RequestParam(value = "title", required = true) String title) {
         try {
-            new HelpGroupDao().add(title);
-            return success();
+            Integer id = new HelpGroupDao().add(title);
+            return success(String.valueOf(id));
         } catch (Exception e) {
             LOGGER.error("Fail to add help group, info {}", e);
             return fail("数据库操作失败");
@@ -48,7 +52,11 @@ public class AdminHelpController extends ImageController {
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to edit help group, info {}", e);
-            return fail("数据库操作失败");
+            Map<String, Object> result = new HashMap<>();
+            result.put("success", false);
+            result.put("detail", "数据库操作失败");
+            result.put("oldTitle", new HelpGroupDao().getInstance(id).getTitle());
+            return toJson(result);
         }
     }
 
@@ -64,7 +72,7 @@ public class AdminHelpController extends ImageController {
         }
     }
 
-    @RequestMapping("/admin-rank-up-help-group")
+    @RequestMapping("/admin-rank-up-help-group.json")
     @ResponseBody
     public String rankUpGroup(@RequestParam(value = "id", required = true) Integer id) {
         try {
@@ -76,7 +84,7 @@ public class AdminHelpController extends ImageController {
         }
     }
 
-    @RequestMapping("/admin-rank-down-help-group")
+    @RequestMapping("/admin-rank-down-help-group.json")
     @ResponseBody
     public String rankDownGroup(@RequestParam(value = "id", required = true) Integer id) {
         try {
@@ -88,43 +96,53 @@ public class AdminHelpController extends ImageController {
         }
     }
 
-    @RequestMapping("/admin-add-help-item.json")
-    @ResponseBody
+    @RequestMapping("/admin-add-help-item")
     public String addItem(@RequestParam(value = "groupId", required = true) Integer groupId,
                           @RequestParam(value = "icon", required = true) String icon,
                           @RequestParam(value = "iconFile", required = true) MultipartFile iconFile,
                           @RequestParam(value = "title", required = true) String title,
                           @RequestParam(value = "content", required = true) String content) {
+        final String index = "admin-help";
         String iconPath;
         try {
             iconPath = getSavePath(icon, iconFile);
         } catch (Exception e) {
             LOGGER.error("Fail to deal with icon, icon {}, iconFile{}, error info: {}", icon, iconFile, e);
-            return fail("图标文件处理失败");
+            return redirect(index, "图标文件处理失败");
         }
 
-        new HelpItemDao().add(groupId, iconPath, title, content);
-        return success();
+        try {
+            new HelpItemDao().add(groupId, iconPath, title, content);
+            return redirect(index);
+        } catch (Exception e) {
+            LOGGER.error("Fail to add help item, info: {}", e);
+            return redirect(index, "数据库操作失败");
+        }
     }
 
-    @RequestMapping("/admin-edit-help-item.json")
-    @ResponseBody
+    @RequestMapping("/admin-edit-help-item")
     public String editItem(@RequestParam(value = "id", required = true) Integer id,
                            @RequestParam(value = "groupId", required = true) Integer groupId,
                            @RequestParam(value = "icon", required = true) String icon,
                            @RequestParam(value = "iconFile", required = true) MultipartFile iconFile,
                            @RequestParam(value = "title", required = true) String title,
                            @RequestParam(value = "content", required = true) String content) {
+        final String index = "admin-help";
         String iconPath;
         try {
             iconPath = getSavePath(icon, iconFile);
         } catch (Exception e) {
             LOGGER.error("Fail to deal with icon, icon {}, iconFile{}, error info: {}", icon, iconFile, e);
-            return fail("图标文件处理失败");
+            return redirect(index, "图标文件处理失败");
         }
 
-        new HelpItemDao().update(id, groupId, iconPath, title, content);
-        return success();
+        try {
+            new HelpItemDao().update(id, groupId, iconPath, title, content);
+            return redirect(index);
+        } catch (Exception e) {
+            LOGGER.error("Fail to edit help item, info: {}", e);
+            return redirect(index, "数据库操作失败");
+        }
     }
 
     @RequestMapping("/admin-edit-help-item-content.json")
@@ -135,14 +153,14 @@ public class AdminHelpController extends ImageController {
         return success();
     }
 
-    @RequestMapping("/admin-rank-up-help-item")
+    @RequestMapping("/admin-rank-up-help-item.json")
     @ResponseBody
     public String rankUpItem(@RequestParam(value = "id", required = true) Integer id) {
         new HelpItemDao().rankUp(id);
         return success();
     }
 
-    @RequestMapping("/admin-rank-down-help-item")
+    @RequestMapping("/admin-rank-down-help-item.json")
     @ResponseBody
     public String rankDownItem(@RequestParam(value = "id", required = true) Integer id) {
         new HelpItemDao().rankDown(id);

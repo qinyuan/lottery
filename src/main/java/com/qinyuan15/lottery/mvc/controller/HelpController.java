@@ -11,11 +11,10 @@ public class HelpController extends ImageController {
     @RequestMapping("/help")
     public String index() {
         IndexHeaderUtils.setHeaderParameters(this);
-
         setAttribute("helpGroups", RichHelpGroup.getInstances());
 
         setTitle("帮助中心");
-        addCssAndJs("help");
+        addCss("help");
         return "help";
     }
 }
