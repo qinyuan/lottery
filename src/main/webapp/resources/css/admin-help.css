@@ -1,0 +1,49 @@
+div.main-body > div > div.left div.help-list div.action {
+    background-color: #e5e5e5;
+    border-radius: 5px;
+    width: 107px;
+    padding-left: 15px;
+    display: none;
+}
+
+div.main-body > div > div.left div.help-list div.title:hover div.action,
+div.main-body > div > div.left div.help-list li:hover div.action {
+    display: block;
+}
+
+#groupItemFormDiv {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -450px;
+    width: 900px;
+    background-color: #ffffff;
+    padding: 10px;
+    z-index: 5;
+    display: none;
+}
+
+#groupItemFormDiv table td.title {
+    vertical-align: top;
+    line-height: 30px;
+    text-align: right;
+    padding: 5px 10px 0 0;
+    width: 115px;
+}
+
+#groupItemFormDiv table td.content {
+    padding: 3px 0;
+}
+
+#groupItemFormDiv table input.title {
+    width: 280px;
+}
+
+#groupItemFormDiv div.submit {
+    text-align: center;
+    padding: 10px 0;
+}
+
+#groupItemFormDiv div.submit button {
+    margin: 0 20px;
+}

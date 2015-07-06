@@ -8,6 +8,26 @@
         return $helpGroupList.dataOptions('helpGroupId');
     }
 
+    function showGroupItemForm(groupId, id, icon, title, content) {
+        if (groupId == null) {
+            return;
+        }
+        var top = (JSUtils.getWindowHeight() - $groupItemFormDiv.height()) / 2;
+        if (top < 0) {
+            top = 0;
+        }
+        $groupItemFormDiv.css('top', top);
+
+        $groupItemFormDiv.find('input[name=groupId]').val(groupId);
+        $groupItemFormDiv.find('input[name=id]').val(id);
+        $groupItemFormDiv.find('input[name=icon]').val(icon);
+        $groupItemFormDiv.find('input[name=iconFile]').val(null);
+        $groupItemFormDiv.find('input[name=title]').val(title);
+        groupItemFormContentEditor.setData(content);
+        JSUtils.showTransparentBackground();
+        $groupItemFormDiv.fadeIn(300).focusFirstTextInput();
+    }
+
     function editHelpListTitle($titleDiv) {
         var $content = $titleDiv.find('span.content');
         var title = $.trim($titleDiv.text());
@@ -119,6 +139,98 @@
                 alert(data.detail);
             }
         });
-    }
+    };
+    var $groupItemFormDiv = $('#groupItemFormDiv');
+    var groupItemFormContentEditor = CKEDITOR.replace("helpItemContent");
+    $groupItemFormDiv.find('button[name=cancelButton]').click(function () {
+        $groupItemFormDiv.fadeOut(300, function () {
+            JSUtils.hideTransparentBackground();
+        });
+    });
+    $groupItemFormDiv.get$Title = function () {
+        return $groupItemFormDiv.find('input[name=title]');
+    };
+    $groupItemFormDiv.find('button[name=submitButton]').click(function (e) {
+        var $title = $groupItemFormDiv.get$Title();
+        if ($title.trimVal() == '') {
+            alert('标题不能为空');
+            $title.focusOrSelect();
+            e.preventDefault();
+            return false;
+        }
+
+        if ($.trim(groupItemFormContentEditor.getData()) == '') {
+            alert('正文不能为空');
+            groupItemFormContentEditor.focus();
+            e.preventDefault();
+            return false;
+        }
+        return true;
+    });
+
+    addHelpItem = function (target) {
+        var $helpList = get$HelpListBySubElement($(target));
+        var groupId = getIdByHelpGroupList($helpList);
+        showGroupItemForm(groupId);
+    };
+    editHelpItem = function (target) {
+        var $target = $(target);
+        var id = $target.getParentByTagName('li').dataOptions('helpItemId');
+        $.post('admin-query-help-item.json', {
+            'id': id
+        }, function (item) {
+            showGroupItemForm(item['groupId'], id, item['icon'], item['title'], item['content']);
+        });
+    };
+    rankUpHelpItem = function (target) {
+        var $li = $(target).getParentByTagName('li');
+        var $prev = $li.prev();
+        if (!($prev.is('li'))) {
+            return;
+        }
+
+        var helpItemId = $li.dataOptions('helpItemId');
+        $.post('admin-rank-up-help-item.json', {
+            'id': helpItemId
+        }, function (data) {
+            if (data.success) {
+                $li.moveToPrev();
+            } else {
+                alert(data.detail);
+            }
+        });
+    };
+    rankDownHelpItem = function (target) {
+        var $li = $(target).getParentByTagName('li');
+        var $next = $li.next();
+        if (!($next.is('li'))) {
+            return;
+        }
+
+        var helpItemId = $li.dataOptions('helpItemId');
+        $.post('admin-rank-down-help-item.json', {
+            'id': helpItemId
+        }, function (data) {
+            if (data.success) {
+                $li.moveToNext();
+            } else {
+                alert(data.detail);
+            }
+        });
+    };
+    deleteHelpItem = function (target) {
+        var $li = $(target).getParentByTagName('li');
+        var helpItemId = $li.dataOptions('helpItemId');
+        $.post('admin-delete-help-item.json', {
+            'id': helpItemId
+        }, function (data) {
+            if (data.success) {
+                $li.remove();
+            } else {
+                alert(data.detail);
+            }
+        });
+    };
 })();
-var deleteHelpGroup, editHelpGroup, rankUpHelpGroup, rankDownHelpGroup;
+var deleteHelpGroup, editHelpGroup, rankUpHelpGroup, rankDownHelpGroup,
+    addHelpItem, deleteHelpItem, editHelpItem, rankUpHelpItem, rankDownHelpItem;

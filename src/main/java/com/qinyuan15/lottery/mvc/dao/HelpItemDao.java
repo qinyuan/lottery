@@ -27,8 +27,12 @@ public class HelpItemDao {
         return HibernateUtils.get(HelpItem.class, id);
     }
 
+    public void delete(Integer id) {
+        HibernateDeleter.deleteById(HelpItem.class, id);
+    }
+
     public void deleteByGroupId(Integer groupId) {
-        new HibernateDeleter().addEqualFilter("groupId", groupId);
+        new HibernateDeleter().addEqualFilter("groupId", groupId).delete(HelpItem.class);
     }
 
     public void update(Integer id, Integer groupId, String icon, String title, String content) {

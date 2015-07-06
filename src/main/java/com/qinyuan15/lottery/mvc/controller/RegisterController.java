@@ -88,10 +88,12 @@ public class RegisterController extends BaseController {
 
     private String getActivateUrl() {
         StringBuffer url = request.getRequestURL();
-        String activateUrl = url.substring(0, url.length() - request.getServletPath().length());
+        int lastIndex = url.lastIndexOf("/");
+        String activateUrl = url.substring(0, lastIndex) + "/";
+        /*String activateUrl = url.substring(0, url.length() - request.getServletPath().length());
         if (!activateUrl.endsWith("/")) {
             activateUrl += "/";
-        }
+        }*/
         return activateUrl + "activate-account.html";
     }
 

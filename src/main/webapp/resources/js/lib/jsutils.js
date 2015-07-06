@@ -20,6 +20,9 @@ var JSUtils = {
         var day = parseInt(dateArr[2]);
         return new Date(year, month, day);
     },
+    getWindowHeight: function(){
+        return $(window).height();
+    },
     getImageHeight: function ($img) {
         var img = $img.get(0);
         if (img.height > 0) {

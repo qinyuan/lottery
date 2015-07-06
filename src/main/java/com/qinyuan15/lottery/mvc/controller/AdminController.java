@@ -32,7 +32,7 @@ public class AdminController extends ImageController {
         addCss("admin-form");
         addJs("resources/js/lib/handlebars.min-v1.3.0", false);
         addHeadJs("lib/image-adjust.js");
-        addJs("lib/ckeditor/ckeditor");
+        addJs("lib/ckeditor/ckeditor", false);
         addCssAndJs("admin");
         return "admin";
     }
