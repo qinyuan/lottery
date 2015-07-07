@@ -26,10 +26,17 @@ public class RichHelpGroup extends HelpGroup {
         return items;
     }
 
+    public static RichHelpGroup getInstance(HelpGroup group) {
+        if (group == null || group.getId() == null) {
+            return null;
+        }
+        return new RichHelpGroup(group, new HelpItemDao().getInstancesByGroupId(group.getId()));
+    }
+
     public static List<RichHelpGroup> getInstances() {
         List<RichHelpGroup> groups = new ArrayList<>();
         for (HelpGroup group : new HelpGroupDao().getInstances()) {
-            groups.add(new RichHelpGroup(group, new HelpItemDao().getInstancesByGroupId(group.getId())));
+            groups.add(getInstance(group));
         }
         return groups;
     }

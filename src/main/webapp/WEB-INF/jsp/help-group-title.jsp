@@ -20,7 +20,7 @@
     <ul>
         <c:forEach var="helpItem" items="${helpGroup.items}">
             <li data-options="helpItemId: ${helpItem.id}">
-                <a href="#${helpItem.id}">${helpItem.title}</a>
+                <a href="#d${helpItem.id}">${helpItem.title}</a>
                 <c:if test="${editMode}">
                     <div class="action">
                         <img class="link up" title="上移" onclick="rankUpHelpItem(this);"

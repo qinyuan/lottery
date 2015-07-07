@@ -95,17 +95,17 @@ div.main-body > div > div.left div.help-list ul li.selected {
     padding-left: 3px;
 }
 
-div.main-body > div > div.left div.help-list ul li.selected {
-    border-radius: 4px 0 0 4px;
+div.main-body > div > div.left div.help-list ul li.selected a {
+    color: #ffffff;
     background-color: #82c92f;
+    border-radius: 4px 0 0 4px;
+    padding: 2px 0 1px 2px;
+    display: block;
+    text-decoration: none;
 }
 
 div.main-body > div > div.left div.help-list ul li.selected a:hover {
     text-decoration: none;
-}
-
-div.main-body > div > div.left div.help-list ul li.selected a {
-    color: #ffffff;
 }
 
 div.main-body > div > div.right {

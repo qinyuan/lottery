@@ -8,6 +8,14 @@
         return $helpGroupList.dataOptions('helpGroupId');
     }
 
+    function showGroupItemByItemId(id) {
+        $.post('query-help-item.json', {
+            'id': id
+        }, function (item) {
+            showGroupItemForm(item['groupId'], id, item['icon'], item['title'], item['content']);
+        });
+    }
+
     function showGroupItemForm(groupId, id, icon, title, content) {
         if (groupId == null) {
             return;
@@ -16,6 +24,7 @@
         if (top < 0) {
             top = 0;
         }
+        top = top + $(window).scrollTop();
         $groupItemFormDiv.css('top', top);
 
         $groupItemFormDiv.find('input[name=groupId]').val(groupId);
@@ -168,6 +177,12 @@
         return true;
     });
 
+
+    editHelpItemByRightDiv = function (target) {
+        var $itemDiv = $(target).getParentByTagNameAndClass('div', 'item');
+        var id = $itemDiv.attr('id').replace(/\D/g, '');
+        showGroupItemByItemId(id);
+    };
     addHelpItem = function (target) {
         var $helpList = get$HelpListBySubElement($(target));
         var groupId = getIdByHelpGroupList($helpList);
@@ -176,11 +191,7 @@
     editHelpItem = function (target) {
         var $target = $(target);
         var id = $target.getParentByTagName('li').dataOptions('helpItemId');
-        $.post('admin-query-help-item.json', {
-            'id': id
-        }, function (item) {
-            showGroupItemForm(item['groupId'], id, item['icon'], item['title'], item['content']);
-        });
+        showGroupItemByItemId(id);
     };
     rankUpHelpItem = function (target) {
         var $li = $(target).getParentByTagName('li');
@@ -233,4 +244,5 @@
     };
 })();
 var deleteHelpGroup, editHelpGroup, rankUpHelpGroup, rankDownHelpGroup,
-    addHelpItem, deleteHelpItem, editHelpItem, rankUpHelpItem, rankDownHelpItem;
+    addHelpItem, deleteHelpItem, editHelpItem, rankUpHelpItem, rankDownHelpItem,
+    editHelpItemByRightDiv;

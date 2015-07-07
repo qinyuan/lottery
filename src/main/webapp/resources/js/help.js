@@ -1,5 +1,18 @@
 ;
 (function () {
+    function get$SelectedList() {
+        return  $('div.main-body div.left div.help-list li.selected');
+    }
+
+    function getGroupId() {
+        var $selectedList = get$SelectedList();
+        if ($selectedList.size() == 0) {
+            return null;
+        } else {
+            return $selectedList.getParentByTagNameAndClass('div', 'help-list').dataOptions('helpGroupId');
+        }
+    }
+
     var pageUrl = location.href.toString().replace(/\#.*$/, '');
     $('div.main-body div.left div.help-list li a').each(function () {
         var $this = $(this);
@@ -21,4 +34,22 @@
             $this.getParentByTagName('li').addClass('selected');
         }
     });
+    $.post('query-help-items.json', {
+        'id': getGroupId()
+    }, function (data) {
+        var html = JSUtils.handlebars('help-group-content-template', {
+            'groupTitle': data.title,
+            'helpItems': data.items
+        });
+        $('div.main-body > div > div.right').html(html);
+        if (location.hash != '') {
+            JSUtils.scrollTop($(location.hash), 0);
+        }
+    });
+    $('#loginNavigationLink').removeClass('emphasize');
+    if (location.pathname.indexOf('/admin') < 0) {
+        $('#helpNavigationLink').addClass('emphasize');
+    } else {
+        $('#helpNavigationLink').prev().addClass('emphasize');
+    }
 })();

@@ -22,6 +22,10 @@ public class HelpGroupDao {
         return HibernateUtils.get(HelpGroup.class, id);
     }
 
+    public HelpGroup getFirstInstance() {
+        return new RankingDao().getFirstInstance(HelpGroup.class);
+    }
+
     public void update(Integer id, String title) {
         HelpGroup helpGroup = getInstance(id);
         if (helpGroup != null) {

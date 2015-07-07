@@ -13,8 +13,10 @@
     <a id="commodityEditLink" class="text" href="admin-commodity-edit.html">编辑商品</a>
     <a id="indexEditLink" class="text" href="admin-index-edit.html">主页设置</a>
     <a id="systemEditLink" class="text" href="admin.html">系统设置</a>
+    <a class="text" href="admin-help.html">编辑帮助中心</a>
 </security:authorize>
 <security:authorize ifNotGranted="ROLE_NORMAL,ROLE_ADMIN">
     <a class="text emphasize" id="loginNavigationLink" href="javascript:void(0)">登录</a>
     <a class="text" id="registerNavigationLink" href="javascript:void(0)">注册</a>
 </security:authorize>
+<a class="text" id="helpNavigationLink" href="help.html">帮助中心</a>

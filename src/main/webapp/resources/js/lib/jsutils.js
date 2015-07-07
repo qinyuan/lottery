@@ -20,7 +20,7 @@ var JSUtils = {
         var day = parseInt(dateArr[2]);
         return new Date(year, month, day);
     },
-    getWindowHeight: function(){
+    getWindowHeight: function () {
         return $(window).height();
     },
     getImageHeight: function ($img) {
@@ -112,15 +112,15 @@ var JSUtils = {
         return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
     },
     recordScrollStatus: function () {
-        var $document = $(window);
+        var $window = $(window);
         var key = 'scroll-status-record_' + location.pathname.replace(/\..*$/g, '');
         var value = $.cookie(key);
         if (value) {
             document.documentElement.scrollTop = value;
-            $document.scrollTop(value);
+            $window.scrollTop(value);
         }
-        $document.scroll(function () {
-            $.cookie(key, $document.scrollTop());
+        $window.scroll(function () {
+            $.cookie(key, $window.scrollTop());
         });
     },
     /**
@@ -269,12 +269,15 @@ var JSUtils = {
      * if no element is given, scroll all screen to top
      * @param $targetElement element to scroll to top
      */
-    scrollTop: function ($targetElement) {
+    scrollTop: function ($targetElement, speed) {
+        if (speed == null) {
+            speed = 250;
+        }
         var offset = $targetElement ? $targetElement.offset().top : 0;
         if (JSUtils.isFirefox() || JSUtils.isIE()) {
             document.documentElement.scrollTop = offset;
         } else {
-            $('body').animate({scrollTop: offset}, 250);
+            $('body').animate({scrollTop: offset}, speed);
         }
     },
     isEnterKeyCode: function (keyCode) {

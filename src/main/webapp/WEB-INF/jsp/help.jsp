@@ -5,6 +5,7 @@
     <div class="page-width">
         <div class="left shadow">
             <div class="title">帮助中心</div>
+            <c:if test="${editMode}"><div class="action-prompt">注：将鼠标移动到对应项目即出现编辑按钮</div></c:if>
             <c:forEach var="helpGroup" items="${helpGroups}">
                 <%@include file="help-group-title.jsp" %>
             </c:forEach>
@@ -14,21 +15,23 @@
                 </div>
             </c:if>
         </div>
-        <div class="right shadow">
-            <div class="title"><h3>厂商合作</h3></div>
-            <div class="item">
-                <div class="title"><strong>什么是360商城</strong></div>
-                <div class="content">
-                    360商城是中国最大智能硬件体验平台。这里有免费试用智能硬件的机会、最真实的试用报告，以及全方位的专业评测。同时，用户还有机会预约和抢购并体验到最新最酷的智能产品。
+        <div class="right shadow"></div>
+        <q:handlebars-template id="help-group-content-template">
+            <div class="title"><h3>{{groupTitle}}</h3></div>
+            {{#each helpItems}}
+            <div class="item" id="d{{id}}">
+                <div class="title">
+                    {{#if icon}}<img src="{{icon}}"/>{{/if}}
+                    <strong>{{title}}</strong>
+                    <c:if test="${editMode}">
+                        <a class="link deepTransparent" onclick="editHelpItemByRightDiv(this);"
+                           href="javascript:void(0)">编辑</a>
+                    </c:if>
                 </div>
+                <div class="content">{{{content}}}</div>
             </div>
-            <div class="item">
-                <div class="title"><strong>什么是360商城</strong></div>
-                <div class="content">
-                    360商城是中国最大智能硬件体验平台。这里有免费试用智能硬件的机会、最真实的试用报告，以及全方位的专业评测。同时，用户还有机会预约和抢购并体验到最新最酷的智能产品。
-                </div>
-            </div>
-        </div>
+            {{/each}}
+        </q:handlebars-template>
     </div>
 </div>
 <c:if test="${editMode}">

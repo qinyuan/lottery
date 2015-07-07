@@ -1,3 +1,10 @@
+div.main-body > div > div.left div.action-prompt {
+    text-indent: -25px;
+    padding: 0 10px 0 35px;
+    color: #82c92f;
+    font-size: 9pt;
+}
+
 div.main-body > div > div.left div.help-list div.action {
     background-color: #e5e5e5;
     border-radius: 5px;
@@ -9,6 +16,16 @@ div.main-body > div > div.left div.help-list div.action {
 div.main-body > div > div.left div.help-list div.title:hover div.action,
 div.main-body > div > div.left div.help-list li:hover div.action {
     display: block;
+}
+
+div.main-body > div > div.right div.item div.title a.link {
+    margin-left: 10px;
+    font-size: 9pt;
+}
+
+div.main-body > div > div.right div.item div.title a.link:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=100);
 }
 
 #groupItemFormDiv {

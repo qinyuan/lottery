@@ -1,5 +1,7 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan15.lottery.mvc.RichHelpGroup;
+import com.qinyuan15.lottery.mvc.dao.HelpGroup;
 import com.qinyuan15.lottery.mvc.dao.HelpGroupDao;
 import com.qinyuan15.lottery.mvc.dao.HelpItemDao;
 import com.qinyuan15.lottery.mvc.dao.User;
@@ -32,7 +34,6 @@ public class AdminHelpController extends HelpController {
             setAttribute("editMode", true);
         }
 
-        addJs("resources/js/lib/handlebars.min-v1.3.0", false);
         addJs("lib/ckeditor/ckeditor", false);
         addCssAndJs("admin-help");
         setTitle("编辑帮助中心");
@@ -189,9 +190,25 @@ public class AdminHelpController extends HelpController {
         }
     }
 
-    @RequestMapping("/admin-query-help-item.json")
+    @RequestMapping("/query-help-item.json")
     @ResponseBody
-    public String query(@RequestParam(value = "id", required = true) Integer id) {
-        return toJson(new HelpItemDao().getInstance(id));
+    public String queryItem(@RequestParam(value = "id", required = true) Integer id) {
+        return toJson(adaptHelpItem(new HelpItemDao().getInstance(id)));
+    }
+
+    @RequestMapping("/query-help-items.json")
+    @ResponseBody
+    public String queryItems(@RequestParam(value = "id", required = false) Integer groupId) {
+        HelpGroup group;
+        HelpGroupDao dao = new HelpGroupDao();
+        if (IntegerUtils.isPositive(groupId)) {
+            group = dao.getInstance(groupId);
+        } else {
+            group = dao.getFirstInstance();
+        }
+        if (group == null) {
+            return null;
+        }
+        return toJson(adaptRichHelpGroup(RichHelpGroup.getInstance(group)));
     }
 }
