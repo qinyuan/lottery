@@ -11,6 +11,7 @@ public class User extends com.qinyuan15.utils.security.User {
     private String email;
     private String tel;
     private Boolean active;
+    private Integer liveness;
 
     public String getEmail() {
         return email;
@@ -24,6 +25,10 @@ public class User extends com.qinyuan15.utils.security.User {
         return active;
     }
 
+    public Integer getLiveness() {
+        return liveness;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -34,5 +39,9 @@ public class User extends com.qinyuan15.utils.security.User {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public void setLiveness(Integer liveness) {
+        this.liveness = liveness;
     }
 }

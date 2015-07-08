@@ -242,6 +242,7 @@
             }
         });
     };
+    $('#systemEditLink').addClass('emphasize');
 })();
 var deleteHelpGroup, editHelpGroup, rankUpHelpGroup, rankDownHelpGroup,
     addHelpItem, deleteHelpItem, editHelpItem, rankUpHelpItem, rankDownHelpItem,

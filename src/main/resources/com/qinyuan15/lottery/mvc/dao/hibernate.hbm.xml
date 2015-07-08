@@ -40,6 +40,7 @@
         <property name="email"/>
         <property name="tel"/>
         <property name="active"/>
+        <property name="liveness"/>
     </class>
     <class name="ActivateRequest" table="activate_request">
         <id name="id" column="id">
@@ -66,5 +67,31 @@
         <property name="title"/>
         <property name="icon"/>
         <property name="ranking"/>
+    </class>
+    <class name="LotteryActivity" table="lottery_activity">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="commodityId" column="commodity_id"/>
+        <property name="startTime" column="start_time"/>
+        <property name="expectEndTime" column="expect_end_time"/>
+        <property name="endTime" column="end_time"/>
+        <property name="announcement" column="announcement"/>
+    </class>
+    <class name="LotteryWinner" table="lottery_winner">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="activityId" column="activity_id"/>
+        <property name="userId" column="user_id"/>
+    </class>
+    <class name="LotteryLot" table="lottery_lot">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="activityId" column="activity_id"/>
+        <property name="userId" column="user_id"/>
+        <property name="lotTime" column="lot_time"/>
+        <property name="serialNumber" column="serial_number"/>
     </class>
 </hibernate-mapping>

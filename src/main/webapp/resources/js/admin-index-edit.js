@@ -1,7 +1,7 @@
 ;
 (function () {
     var $addImageForm = $('#addImageForm').addClass('shadow');
-    $('#indexEditLink').addClass('emphasize');
+    $('#systemEditLink').addClass('emphasize');
     $('#addImage').click(function () {
         showImageForm();
     });

@@ -26,6 +26,7 @@ create table commodity (
 alter table user add column email char(200) unique;
 alter table user add column tel char(50);
 alter table user add column active boolean not null default false;
+alter table user add column liveness int;
 
 create table activate_request (
   id int primary key auto_increment,
@@ -48,4 +49,28 @@ create table help_item (
   title char(200) not null,
   content text not null,
   ranking int unique not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table lottery_activity(
+  id int primary key auto_increment,
+  commodity_id int not null,
+  start_time datetime not null,
+  expect_end_time datetime,
+  end_time datetime,
+  announcement varchar(2000)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table lottery_winner (
+  id int primary key auto_increment,
+  activity_id int not null,
+  user_id int not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table lottery_lot (
+  id int primary key auto_increment,
+  activity_id int not null,
+  user_id int not null,
+  lot_time datetime not null,
+  serial_number int not null,
+  unique(activity_id, user_id, serial_number)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

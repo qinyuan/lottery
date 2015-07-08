@@ -64,6 +64,10 @@ img.link {
     filter: alpha(opacity=70);
 }
 
+input[type=image] {
+    cursor: default;
+}
+
 div.page-width {
     width: 1000px;
     margin-left: auto;

@@ -17,6 +17,7 @@ div.header > div.bottom-back {
 div.header > div.content {
     top: 0;
     height: 118px;
+    overflow: visible;
 }
 
 div.header > div.content > div.left-logo {
@@ -41,20 +42,49 @@ div.header > div.content > div.right-logo {
     position: absolute;
     top: 0;
     right: 0;
+    z-index: 1;
 }
-div.header > div.content > div.right-logo img{
+
+div.header > div.content > div.right-logo img {
     vertical-align: top;
 }
 
-div.header > div.content > div.right-logo > a.text {
-    vertical-align: 16px;
-    padding: 7px 15px 17px;
+div.header > div.content > div.right-logo > ul {
+    float: left;
+    margin-top: 5px;
+}
+
+div.header > div.content > div.right-logo > ul li {
+    float: left;
+    list-style-type: none;
+    position: relative;
+}
+
+div.header > div.content > div.right-logo > ul li a {
+    padding: 17px 15px;
     font-size: 11pt;
-    line-height: 30px;
     color: #ffffff;
 }
 
-div.header > div.content > div.right-logo > a.text.emphasize {
+div.header > div.content > div.right-logo > ul li ul {
+    width: 0;
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 145%;
+}
+
+div.header > div.content > div.right-logo > ul li li {
+    background-color: #434343;
+    width: 90px;
+    padding-top: 8px;
+}
+
+div.header > div.content > div.right-logo > ul li:hover ul {
+    display: block;
+}
+
+div.header > div.content > div.right-logo > ul li a.emphasize {
     background-color: #917347;
 }
 
