@@ -49,7 +49,7 @@ public class AdminHelpController extends HelpController {
             return success(String.valueOf(id));
         } catch (Exception e) {
             LOGGER.error("Fail to add help group, info {}", e);
-            return fail("数据库操作失败");
+            return failByDatabaseError();
         }
     }
 
@@ -86,7 +86,7 @@ public class AdminHelpController extends HelpController {
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to edit help group, info {}", e);
-            return fail("数据库操作失败");
+            return failByDatabaseError();
         }
     }
 
@@ -98,7 +98,7 @@ public class AdminHelpController extends HelpController {
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to rank up help group, info {}", e);
-            return fail("数据库操作失败");
+            return failByDatabaseError();
         }
     }
 
@@ -110,7 +110,7 @@ public class AdminHelpController extends HelpController {
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to rank down help group, info {}", e);
-            return fail("数据库操作失败");
+            return failByDatabaseError();
         }
     }
 
@@ -162,7 +162,7 @@ public class AdminHelpController extends HelpController {
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to rank up help item, info {}", e);
-            return fail("数据库操作失败");
+            return failByDatabaseError();
         }
     }
 
@@ -174,7 +174,7 @@ public class AdminHelpController extends HelpController {
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to rank down help item, info {}", e);
-            return fail("数据库操作失败");
+            return failByDatabaseError();
         }
     }
 
@@ -186,7 +186,7 @@ public class AdminHelpController extends HelpController {
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to edit help group, info {}", e);
-            return fail("数据库操作失败");
+            return failByDatabaseError();
         }
     }
 

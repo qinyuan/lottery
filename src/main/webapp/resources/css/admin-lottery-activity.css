@@ -1,0 +1,28 @@
+div.form form {
+    padding: 10px 20px;
+    background-color: #D8F7E9;
+    margin-bottom: 10px;
+}
+
+div.form form tr {
+    line-height: 40px;
+}
+
+div.form form td.title {
+    text-align: right;
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+div.form form td span.required {
+    padding-left: 3px;
+    color: #ff0000;
+}
+
+div.form form td.content {
+    width: 300px;
+}
+
+div.form form td.content input[type=text] {
+    width: 210px;
+}

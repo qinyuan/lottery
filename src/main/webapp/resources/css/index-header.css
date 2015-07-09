@@ -72,12 +72,22 @@ div.header > div.content > div.right-logo > ul li ul {
     position: absolute;
     left: 0;
     top: 145%;
+    z-index: 1;
 }
 
 div.header > div.content > div.right-logo > ul li li {
-    background-color: #434343;
-    width: 90px;
-    padding-top: 8px;
+    background-color: #5F5F5F;
+    width: 103px;
+}
+
+div.header > div.content > div.right-logo > ul li li.footer {
+    height: 8px;
+}
+
+div.header > div.content > div.right-logo > ul li li a {
+    padding: 4px 15px;
+    width: 100%;
+    display: block;
 }
 
 div.header > div.content > div.right-logo > ul li:hover ul {

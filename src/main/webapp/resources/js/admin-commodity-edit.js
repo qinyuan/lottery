@@ -1,5 +1,5 @@
 (function () {
-    $('#commodityEditLink').addClass('emphasize');
+    $('#commodityLotteryLink').addClass('emphasize');
 
     var $form = $('#commodityForm').focusFirstTextInput();
     var $okButton = $form.find('button[name=ok]');

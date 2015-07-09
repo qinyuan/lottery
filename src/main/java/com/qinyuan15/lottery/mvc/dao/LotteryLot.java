@@ -7,6 +7,7 @@ public class LotteryLot extends PersistObject {
     private Integer userId;
     private String lotTime;
     private Integer serialNumber;
+    private Boolean win;
 
     public Integer getActivityId() {
         return activityId;
@@ -38,5 +39,22 @@ public class LotteryLot extends PersistObject {
 
     public void setSerialNumber(Integer serialNumber) {
         this.serialNumber = serialNumber;
+    }
+
+    public Boolean getWin() {
+        return win;
+    }
+
+    public void setWin(Boolean win) {
+        this.win = win;
+    }
+
+    private User userCache;
+
+    public User getUser() {
+        if (userCache == null) {
+            userCache = new UserDao().getInstance(userId);
+        }
+        return userCache;
     }
 }

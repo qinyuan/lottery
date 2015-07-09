@@ -4,6 +4,8 @@ import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.config.LinkAdapter;
 import com.qinyuan15.utils.image.ImageMapDao;
 import com.qinyuan15.utils.mvc.controller.ImageController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class AdminImageMapController extends ImageController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(AdminImageMapController.class);
+
     @RequestMapping("/admin-image-map-edit.json")
     @ResponseBody
     public String edit(@RequestParam(value = "id", required = true) Integer id,
@@ -35,7 +39,8 @@ public class AdminImageMapController extends ImageController {
             new ImageMapDao(relateType).update(id, href, comment);
             return success();
         } catch (Exception e) {
-            return fail("数据库操作失败");
+            LOGGER.error("Fail to edit image map, info: {}", e);
+            return failByDatabaseError();
         }
     }
 
@@ -68,7 +73,8 @@ public class AdminImageMapController extends ImageController {
             new ImageMapDao(relateType).add(relateId, xStart, yStart, xEnd, yEnd, href, comment);
             return success();
         } catch (Exception e) {
-            return fail("数据库操作失败");
+            LOGGER.error("Fail to add image map, info: {}", e);
+            return failByDatabaseError();
         }
     }
 
@@ -80,7 +86,8 @@ public class AdminImageMapController extends ImageController {
             new ImageMapDao(relateType).delete(id);
             return success();
         } catch (Exception e) {
-            return fail("数据库操作失败");
+            LOGGER.error("Fail to delete image map, info: {}", e);
+            return failByDatabaseError();
         }
     }
 }

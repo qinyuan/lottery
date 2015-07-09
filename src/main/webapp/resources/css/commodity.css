@@ -52,12 +52,22 @@ div.header > div.content > div.right-navigation > ul li ul {
     position: absolute;
     left: 0;
     top: 100%;
+    z-index: 1;
 }
 
 div.header > div.content > div.right-navigation > ul li li {
     background-color: #E0E0E0;
-    width: 80px;
-    padding-top: 8px;
+    width: 90px;
+}
+
+div.header > div.content > div.right-navigation > ul li li.footer {
+    height: 8px;
+}
+
+div.header > div.content > div.right-navigation > ul li li a {
+    padding: 4px 10px;
+    width: 100%;
+    display: block;
 }
 
 div.header > div.content > div.right-navigation > ul li:hover ul {

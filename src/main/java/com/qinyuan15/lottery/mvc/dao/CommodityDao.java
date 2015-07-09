@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 import com.qinyuan15.utils.mvc.PaginationItemFactory;
 
@@ -14,12 +15,12 @@ public class CommodityDao {
     public static class Factory implements PaginationItemFactory<Commodity> {
         @Override
         public long getCount() {
-            return HibernateUtils.getCount(Commodity.class);
+            return new HibernateListBuilder().count(Commodity.class);
         }
 
         @Override
         public List<Commodity> getInstances(int firstResult, int maxResults) {
-            return HibernateUtils.getList(Commodity.class, "", firstResult, maxResults);
+            return new HibernateListBuilder().limit(firstResult, maxResults).build(Commodity.class);
         }
     }
 

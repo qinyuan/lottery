@@ -84,23 +84,23 @@ public class AdminIndexEditController extends ImageController {
             AppConfig.updateIndexImageCycleInterval(cycleInterval);
             return success();
         } catch (Exception e) {
-            return fail("数据库操作失败");
+            LOGGER.error("Fail to update image cycle interval, info: {}", e);
+            return failByDatabaseError();
         }
     }
 
     @RequestMapping("/admin-index-delete-image.json")
     @ResponseBody
     public String json(@RequestParam(value = "id", required = true) Integer id) {
-        if (IntegerUtils.isPositive(id)) {
-            try {
-                new IndexImageDao().delete(id);
-                return success();
-            } catch (Exception e) {
-                LOGGER.error("Fail to delete index image: {}", e);
-                return fail("数据库操作失败");
-            }
-        } else {
-            return fail("请求参数错误");
+        if (!IntegerUtils.isPositive(id)) {
+            return failByInvalidParam();
+        }
+        try {
+            new IndexImageDao().delete(id);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("Fail to delete index image: {}", e);
+            return failByDatabaseError();
         }
     }
 }

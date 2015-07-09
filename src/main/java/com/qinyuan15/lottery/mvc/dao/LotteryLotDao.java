@@ -2,6 +2,7 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan15.lottery.mvc.lottery.LotteryLotSerialGenerator;
 import com.qinyuan15.utils.DateUtils;
+import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 
@@ -17,14 +18,57 @@ public class LotteryLotDao {
         return HibernateUtils.save(lotteryLot);
     }
 
-    public List<LotteryLot> getInstances(Integer activityId, Integer userId) {
-        return new HibernateListBuilder().addEqualFilter("activityId", activityId).addEqualFilter("userId", userId)
-                .build(LotteryLot.class);
+
+    public static class Factory {
+        private Integer activityId;
+        private Integer userId;
+        private Integer serialNumber;
+        private Boolean win;
+
+        public Factory setActivityId(Integer activityId) {
+            this.activityId = activityId;
+            return this;
+        }
+
+        public Factory setUserId(Integer userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public Factory setSerialNumber(Integer serialNumber) {
+            this.serialNumber = serialNumber;
+            return this;
+        }
+
+        public Factory setWin(Boolean win) {
+            this.win = win;
+            return this;
+        }
+
+        private HibernateListBuilder createListBuilder() {
+            HibernateListBuilder listBuilder = new HibernateListBuilder();
+            if (IntegerUtils.isPositive(activityId)) {
+                listBuilder.addEqualFilter("activityId", activityId);
+            }
+            if (IntegerUtils.isPositive(userId)) {
+                listBuilder.addEqualFilter("userId", userId);
+            }
+            if (IntegerUtils.isPositive(serialNumber)) {
+                listBuilder.addEqualFilter("serialNumber", serialNumber);
+            }
+            if (win != null) {
+                listBuilder.addEqualFilter("win", win);
+            }
+            return listBuilder;
+        }
+
+        public List<LotteryLot> getInstances() {
+            return createListBuilder().build(LotteryLot.class);
+        }
     }
 
-    public LotteryLot getInstance(Integer activityId, Integer userId, Integer serialNumber) {
-        return new HibernateListBuilder().addEqualFilter("activityId", activityId).addEqualFilter("userId", userId)
-                .addEqualFilter("serialNumber", serialNumber).getFirstItem(LotteryLot.class);
+    public static Factory factory() {
+        return new Factory();
     }
 
     public int countBySerialNumberRange(Integer startSerialNumber, Integer endSerialNumber) {

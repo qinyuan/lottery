@@ -86,7 +86,6 @@ var JSUtils = {
         if (!this.isString(arg)) {
             return false;
         }
-
         return arg.match(/^\d+(\.\d+)?$/) != null;
     },
     getUserAgent: function () {
@@ -282,6 +281,17 @@ var JSUtils = {
     },
     isEnterKeyCode: function (keyCode) {
         return keyCode == 13;
+    },
+    isDateString: function (dateString) {
+        return dateString != null &&
+            dateString.match(/^\d{4}-\d{1,2}-\d{1,2}$/) != null;
+    },
+    isDateTimeString: function (dateTimeString) {
+        return dateTimeString != null &&
+            dateTimeString.match(/^\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}$/) != null;
+    },
+    isDateOrDateTimeString: function (str) {
+        return this.isDateString(str) || this.isDateTimeString(str);
     }
 };
 
@@ -409,8 +419,16 @@ jQuery.fn.trimText = function () {
     return $.trim(this.text());
 };
 
+jQuery.fn.getInputByName = function (name) {
+    return this.find('input[name=' + name + ']');
+};
+
+jQuery.fn.getButtonByName = function (name) {
+    return this.find('button[name=' + name + ']');
+};
+
 jQuery.fn.setInputValue = function (inputName, inputValue) {
-    var $target = this.find('input[name=' + inputName + ']');
+    var $target = this.getInputByName(inputName);
     var type = $target.attr('type');
     if (type == 'text' || type == 'password' || type == 'hidden') {
         $target.val(inputValue);

@@ -57,14 +57,11 @@ create table lottery_activity(
   start_time datetime not null,
   expect_end_time datetime,
   end_time datetime,
+  continuous_serial_limit int,
+  expire boolean not null,
+  expect_participant_count int,
   announcement varchar(2000)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-create table lottery_winner (
-  id int primary key auto_increment,
-  activity_id int not null,
-  user_id int not null
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table lottery_lot (
   id int primary key auto_increment,
@@ -72,5 +69,6 @@ create table lottery_lot (
   user_id int not null,
   lot_time datetime not null,
   serial_number int not null,
+  win boolean
   unique(activity_id, user_id, serial_number)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

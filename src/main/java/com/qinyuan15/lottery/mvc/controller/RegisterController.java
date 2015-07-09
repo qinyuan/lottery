@@ -82,7 +82,7 @@ public class RegisterController extends BaseController {
         } catch (Exception e) {
             LOGGER.error("fail to add user, username: {}, password: {}, email {}, info {}",
                     username, password, email, e);
-            return fail("数据库操作失败！");
+            return failByDatabaseError();
         }
     }
 

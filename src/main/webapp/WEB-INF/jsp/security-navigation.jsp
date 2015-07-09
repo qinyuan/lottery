@@ -13,13 +13,19 @@
         <li><a class="text" href="j_spring_security_logout">退出</a></li>
         <li><a id="systemEditLink" class="text" href="admin.html">系统设置</a>
             <ul>
-                <li><a iclass="text" href="admin.html">系统</a></li>
+                <li><a class="text" href="admin.html">系统</a></li>
                 <li><a class="text" href="admin-index-edit.html">主页</a></li>
                 <li><a class="text" href="admin-help.html">帮助中心</a></li>
-                <li></li>
+                <li class="footer"></li>
             </ul>
         </li>
-        <li><a id="commodityEditLink" class="text" href="admin-commodity-edit.html">编辑商品</a></li>
+        <li><a id="commodityLotteryLink" class="text" href="admin-commodity-edit.html">商品与抽奖</a>
+            <ul>
+                <li><a class="text" href="admin-commodity-edit.html">商品管理</a></li>
+                <li><a class="text" href="admin-lottery-activity.html">抽奖管理</a></li>
+                <li class="footer"></li>
+            </ul>
+        </li>
     </security:authorize>
     <security:authorize ifNotGranted="ROLE_NORMAL,ROLE_ADMIN">
         <li><a class="text emphasize" id="loginNavigationLink" href="javascript:void(0)">登录</a></li>
