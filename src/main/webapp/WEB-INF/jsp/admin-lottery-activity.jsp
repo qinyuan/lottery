@@ -4,11 +4,10 @@
 
 <div class="page-width form">
     <div>
-        <form id="lotteryActivityForm" action="admin-lottery-activity-add-edit" method="post">
+        <form id="lotteryActivityForm">
             <c:choose>
                 <c:when test="${fn:length(allCommodities)>0}">
                     <input type="hidden" name="id"/>
-                    <input type="hidden" name="pageNumber"/>
                     <table>
                         <tbody>
                         <tr>
@@ -62,6 +61,18 @@
             </c:choose>
         </form>
         <table class="normal">
+            <colgroup>
+                <col class="index"/>
+                <col class="commodity"/>
+                <col class="start-time"/>
+                <col class="expect-end-time"/>
+                <col class="continuous-serial-limit"/>
+                <col class="expect-participant-count"/>
+                <col class="end-time"/>
+                <col class="winners"/>
+                <col class="announcement"/>
+                <col class="action"/>
+            </colgroup>
             <thead>
             <th>序号</th>
             <th>奖品</th>
@@ -78,7 +89,8 @@
             <c:forEach var="activity" items="${activities}" varStatus="status">
                 <tr data-options="id:${activity.id}">
                     <td class="index">${status.index + rowStartIndex}</td>
-                    <td class="commodity">${activity.commodity.name}</td>
+                    <td class="commodity"
+                        data-options="commodityId: ${activity.commodity.id}">${activity.commodity.name}</td>
                     <td class="startTime">${activity.startTime}</td>
                     <td class="expectEndTime">${activity.expectEndTime}</td>
                     <td class="continuousSerialLimit">${activity.continuousSerialLimit}</td>
@@ -87,7 +99,15 @@
                     <td class="winners">${activity.winnerSerialNumbers}</td>
                     <td class="announcement">${activity.announcement}</td>
                     <td class="action">
-                        <jsp:include page="widget-edit-delete.jsp"/>
+                        <c:choose>
+                            <c:when test="${activity.expire}">
+                                <img class="link announce" title="编辑公告" src="resources/css/images/announcement.png"/>
+                            </c:when>
+                            <c:otherwise>
+                                <img class="link stop" title="强行结束" src="resources/css/images/stop.png"/>
+                                <jsp:include page="widget-edit-delete.jsp"/>
+                            </c:otherwise>
+                        </c:choose>
                     </td>
                 </tr>
             </c:forEach>
@@ -96,4 +116,27 @@
         <%@include file="widget-pagination.jsp" %>
     </div>
 </div>
+<form id="announceEditForm" class="shadow">
+    <input type="hidden" name="id"/>
+    <table>
+        <tbody>
+        <tr>
+            <td class="title">中奖号码</td>
+            <td class="content">
+                <input type="text" name="winners" class="form-control" placeholder="在此输入中奖号码，多个号码间用英文逗号分隔"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="title">中奖公告</td>
+            <td class="content">
+                <textarea name="announcement" class="form-control" cols="35" rows="5"></textarea>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="submit">
+        <button type="submit" name="ok" class="btn btn-primary">保存</button>
+        <button type="button" name="cancel" class="btn btn-default">取消</button>
+    </div>
+</form>
 <%@include file="inc-footer.jsp" %>

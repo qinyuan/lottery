@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.google.common.base.Joiner;
 import com.qinyuan15.lottery.mvc.lottery.LotteryLotSerialGenerator;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
@@ -18,6 +19,24 @@ public class LotteryLotDao {
         return HibernateUtils.save(lotteryLot);
     }
 
+    public void updateWinnerBySerialNumbers(Integer activityId, List<Integer> serialNumbers) {
+        if (!IntegerUtils.isPositive(activityId)) {
+            return;
+        }
+
+        String hql = "UPDATE LotteryLot SET win=null WHERE activityId=" + activityId;
+        HibernateUtils.executeUpdate(hql);
+
+        if (serialNumbers != null && serialNumbers.size() > 0) {
+            hql = "UPDATE LotteryLot SET win=true WHERE activityId=" + activityId;
+            hql += " AND serialNumber in (" + Joiner.on(",").join(serialNumbers) + ")";
+            HibernateUtils.executeUpdate(hql);
+        }
+    }
+
+    public boolean hasSerialNumber(Integer activityId, Integer serialNumber) {
+        return factory().setActivityId(activityId).setSerialNumber(serialNumber).getCount() > 0;
+    }
 
     public static class Factory {
         private Integer activityId;
@@ -64,6 +83,10 @@ public class LotteryLotDao {
 
         public List<LotteryLot> getInstances() {
             return createListBuilder().build(LotteryLot.class);
+        }
+
+        public int getCount() {
+            return createListBuilder().count(LotteryLot.class);
         }
     }
 

@@ -26,3 +26,63 @@ div.form form td.content {
 div.form form td.content input[type=text] {
     width: 210px;
 }
+
+div.form table.normal col.start-time,
+div.form table.normal col.expect-end-time,
+div.form table.normal col.end-time {
+    width: 80px;
+}
+
+div.form table.normal col.continuous-serial-limit {
+    width: 80px;
+}
+
+div.form table.normal col.commodity {
+    width: 150px;
+}
+
+div.form table.normal col.winners {
+    width: 70px;
+}
+
+div.form table.normal col.announcement {
+    width: 200px;
+}
+
+div.form table.normal col.action {
+    width: 70px;
+}
+
+div.form table.normal td {
+    vertical-align: middle;
+}
+
+#announceEditForm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 5;
+    background-color: #ffffff;
+    padding: 20px;
+    /*width: 428px;
+    height: 252px;*/
+    margin-top: -126px;
+    margin-left: -214px;
+    display: none;
+}
+
+#announceEditForm td {
+    vertical-align: top;
+}
+
+#announceEditForm td.title {
+    padding: 8px 10px 0 0;
+}
+
+#announceEditForm td.content {
+    padding-bottom: 15px;
+}
+
+#announceEditForm div.submit {
+    text-align: center;
+}

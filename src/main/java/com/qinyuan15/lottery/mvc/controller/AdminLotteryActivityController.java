@@ -2,6 +2,7 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
+import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mvc.PaginationAttributeAdder;
@@ -13,6 +14,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class AdminLotteryActivityController extends ImageController {
@@ -37,35 +41,30 @@ public class AdminLotteryActivityController extends ImageController {
     }
 
 
-    @RequestMapping("/admin-lottery-activity-add-edit")
+    @RequestMapping("/admin-lottery-activity-add-edit.json")
+    @ResponseBody
     public String addEdit(@RequestParam(value = "id", required = false) Integer id,
-                          @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
                           @RequestParam(value = "commodityId", required = true) Integer commodityId,
                           @RequestParam(value = "startTime", required = false) String startTime,
                           @RequestParam(value = "autoStartTime", required = false) String autoStartTime,
                           @RequestParam(value = "expectEndTime", required = true) String expectEndTime,
                           @RequestParam(value = "continuousSerialLimit", required = true) Integer continuousSerialLimit,
                           @RequestParam(value = "expectParticipantCount", required = true) Integer expectParticipantCount) {
-        String page = "admin-lottery-activity";
-        if (IntegerUtils.isPositive(pageNumber)) {
-            page = page + "?pageNumber=" + pageNumber;
-        }
-
         if (StringUtils.hasText(autoStartTime)) {
             startTime = DateUtils.nowString();
         } else {
             if (!DateUtils.isDateOrDateTime(startTime)) {
-                return redirect(page, "开始时间格式错误！");
+                return fail("开始时间格式错误！");
             }
         }
 
         if (!IntegerUtils.isPositive(commodityId)) {
-            return redirect(page, "商品未选择！");
+            return fail("商品未选择！");
         }
 
         if (StringUtils.hasText(expectEndTime)) {
             if (!DateUtils.isDateOrDateTime(expectEndTime)) {
-                return redirect(page, "预计结束时间格式错误！");
+                return fail("预计结束时间格式错误！");
             }
         } else {
             expectEndTime = null;
@@ -78,10 +77,10 @@ public class AdminLotteryActivityController extends ImageController {
             } else {
                 dao.add(commodityId, startTime, expectEndTime, continuousSerialLimit, expectParticipantCount);
             }
-            return redirect(page);
+            return success();
         } catch (Exception e) {
             LOGGER.error("Fail to add or update lottery activity, info: {}", e);
-            return redirect(page, "数据库操作失败");
+            return failByDatabaseError();
         }
     }
 
@@ -102,6 +101,51 @@ public class AdminLotteryActivityController extends ImageController {
             return success();
         } catch (Exception e) {
             LOGGER.error("fail to delete lottery activity, info: {}", e);
+            return failByDatabaseError();
+        }
+    }
+
+    @RequestMapping("/admin-lottery-activity-stop.json")
+    @ResponseBody
+    public String stop(@RequestParam(value = "id", required = true) Integer id) {
+        if (!IntegerUtils.isPositive(id)) {
+            return failByInvalidParam();
+        }
+
+        try {
+            new LotteryActivityDao().end(id);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("fail to stop lottery activity, info: {}", e);
+            return failByDatabaseError();
+        }
+    }
+
+    @RequestMapping("/admin-lottery-activity-update-announcement.json")
+    @ResponseBody
+    public String updateAnnouncement(@RequestParam(value = "id", required = true) Integer id,
+                                     @RequestParam(value = "winners", required = true) String winners,
+                                     @RequestParam(value = "announcement", required = true) String announcement) {
+        if (!IntegerUtils.isPositive(id)) {
+            return failByInvalidParam();
+        }
+
+        try {
+            List<Integer> serialNumbers = new ArrayList<>();
+            if (StringUtils.hasText(winners)) {
+                String[] winnerStringArray = winners.split(",");
+                for (String winner : winnerStringArray) {
+                    if (!IntegerUtils.isPositive(winner)) {
+                        return fail("'" + winner + "'不是有效的抽奖号");
+                    }
+                    serialNumbers.add(Integer.parseInt(winner));
+                }
+            }
+            new LotteryLotDao().updateWinnerBySerialNumbers(id, serialNumbers);
+            new LotteryActivityDao().updateAnnouncement(id, announcement);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("Fail to update announcement, info: {}", e);
             return failByDatabaseError();
         }
     }

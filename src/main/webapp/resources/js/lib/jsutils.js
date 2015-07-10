@@ -419,6 +419,10 @@ jQuery.fn.trimText = function () {
     return $.trim(this.text());
 };
 
+jQuery.fn.trimText = function () {
+    return $.trim(this.text());
+};
+
 jQuery.fn.getInputByName = function (name) {
     return this.find('input[name=' + name + ']');
 };
