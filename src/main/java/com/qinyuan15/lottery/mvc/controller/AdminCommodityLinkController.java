@@ -30,10 +30,11 @@ public class AdminCommodityLinkController extends ImageController {
         setAttributeAndJavaScriptData("imageMaps", new ImageMapDao(ImageMapType.COMMODITY)
                 .getInstancesByRelateId(commodityId));
         addJavaScriptData("relateType", ImageMapType.COMMODITY);
+        setAttribute("buildInHrefs", new AdminImageMapController.BuildInHrefBuilder()
+                .add("javascript:void(getLotteryLot())", "抽奖链接").build());
 
         setTitle("编辑商品图片链接");
-        addCss("admin-commodity-link");
-        addJs("admin-image-map");
+        addCssAndJs("admin-image-map");
         return "admin-image-map";
     }
 }

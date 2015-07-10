@@ -140,13 +140,52 @@
     };
 
     var $linkInputDiv = $('#linkInputDiv').setDefaultButton('addSubmit');
+    $linkInputDiv.get$Id = function () {
+        return $('#mapId');
+    };
+    $linkInputDiv.get$Href = function () {
+        return $('#mapHref');
+    };
+    $linkInputDiv.get$Comment = function () {
+        return $('#mapComment');
+    };
+    var $buildInHrefCheckboxes = $linkInputDiv.find('div.build-in-href input[type=checkbox]');
+    $buildInHrefCheckboxes.unCheckAll = function () {
+        $buildInHrefCheckboxes.each(function () {
+            this.checked = false;
+        });
+    };
+    $buildInHrefCheckboxes.getCheckedInstance = function () {
+        return $buildInHrefCheckboxes.filter(function () {
+            return this.checked;
+        });
+    };
+
+
+    $buildInHrefCheckboxes.click(function () {
+        if (this.checked) {
+            $buildInHrefCheckboxes.unCheckAll();
+            this.checked = true;
+            $linkInputDiv.get$Href().attr('disabled', true);
+        } else {
+            $linkInputDiv.get$Href().attr('disabled', false).focusOrSelect();
+        }
+    });
 
     function showLinkInput(id, href, comment) {
         JSUtils.showTransparentBackground(5);
-        $('#mapId').val(id);
-        $('#mapHref').val(href);
-        $('#mapComment').val(comment);
-        $linkInputDiv.fadeIn(250).find('input[type=text]').eq(0).focusOrSelect();
+        $buildInHrefCheckboxes.getCheckedInstance().trigger('click');
+        $linkInputDiv.get$Id().val(id);
+        $linkInputDiv.get$Comment().val(comment);
+        $linkInputDiv.get$Href().val(href);
+        $buildInHrefCheckboxes.each(function () {
+            if ($(this).prev().val() == href) {
+                $linkInputDiv.get$Href().val('');
+                $(this).trigger('click');
+                return false;
+            }
+        });
+        $linkInputDiv.fadeIn(250).focusFirstTextInput();
     }
 
     function hideLinkInput() {
@@ -178,23 +217,27 @@
         hideLinkInput();
     });
     $('#addSubmit').click(function () {
-        var $mapHref = $('#mapHref');
-        var href = $.trim($mapHref.val());
-        if (href == '') {
-            alert('目标链接不能为空');
-            $mapHref.focusOrSelect();
-            return;
+        var href;
+        if ($linkInputDiv.get$Href().attr('disabled')) {
+            var $checkedCheckbox = $buildInHrefCheckboxes.getCheckedInstance();
+            href = $checkedCheckbox.prev().val();
+        } else {
+            href = $linkInputDiv.get$Href().trimVal();
+            if (href == '') {
+                alert('目标链接不能为空');
+                $linkInputDiv.get$Href().focusOrSelect();
+                return;
+            }
         }
 
-        var $mapComment = $('#mapComment');
-        var comment = $.trim($mapComment.val());
+        var comment = $linkInputDiv.get$Comment().trimVal();
         if (comment == '') {
             alert('备注不能为空');
-            $mapComment.focusOrSelect();
+            $linkInputDiv.get$Comment().focusOrSelect();
             return;
         }
 
-        var id = $('#mapId').val();
+        var id = $linkInputDiv.get$Id().trimVal();
         if (id) {
             $.post('admin-image-map-edit.json', {
                 'id': id,

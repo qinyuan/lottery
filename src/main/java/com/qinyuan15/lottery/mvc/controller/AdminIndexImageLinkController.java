@@ -32,8 +32,7 @@ public class AdminIndexImageLinkController extends ImageController {
         addJavaScriptData("relateType", ImageMapType.INDEX);
 
         setTitle("编辑主页图片链接");
-        addCss("admin-index-image-link");
-        addJs("admin-image-map");
+        addCssAndJs("admin-image-map");
         return "admin-image-map";
     }
 }

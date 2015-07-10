@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class AdminImageMapController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminImageMapController.class);
@@ -88,6 +91,37 @@ public class AdminImageMapController extends ImageController {
         } catch (Exception e) {
             LOGGER.error("Fail to delete image map, info: {}", e);
             return failByDatabaseError();
+        }
+    }
+
+    public static class BuildInHref {
+        private String href;
+        private String comment;
+
+        private BuildInHref(String href, String comment) {
+            this.href = href;
+            this.comment = comment;
+        }
+
+        public String getHref() {
+            return href;
+        }
+
+        public String getComment() {
+            return comment;
+        }
+    }
+
+    static class BuildInHrefBuilder {
+        private List<BuildInHref> buildInHrefs = new ArrayList<>();
+
+        public BuildInHrefBuilder add(String href, String comment) {
+            buildInHrefs.add(new BuildInHref(href, comment));
+            return this;
+        }
+
+        public List<BuildInHref> build() {
+            return new ArrayList<>(this.buildInHrefs);
         }
     }
 }

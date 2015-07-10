@@ -27,11 +27,20 @@
 
     <div>
         <label>目标链接</label>
-        <input type="text" id="mapHref" class="form-control"/>
+        <input type="text" id="mapHref" class="form-control" placeholder="输入单链接之后打开的网址"/>
+
+        <c:if test="${buildInHrefs != null}">
+            <div class="build-in-href">
+                <c:forEach var="buildInHref" items="${buildInHrefs}">
+                    <span><input type="hidden"
+                                 value="${buildInHref.href}"/><input type="checkbox"/>${buildInHref.comment}</span>
+                </c:forEach>
+            </div>
+        </c:if>
     </div>
     <div>
         <label>备注</label>
-        <input type="text" id="mapComment" class="form-control" value="新建链接"/>
+        <input type="text" id="mapComment" class="form-control" value="新建链接" placeholder="备注用于标识，不在前台显示"/>
     </div>
     <div>
         <button type="button" class="btn btn-primary" id="addSubmit">确定</button>

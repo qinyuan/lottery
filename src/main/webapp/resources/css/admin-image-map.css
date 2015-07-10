@@ -92,10 +92,10 @@ div.main-body div.image div.demoRectangle {
     padding: 7px 15px;
     left: 50%;
     top: 50%;
-    width: 250px;
-    height: 230px;
-    margin-left: -125px;
-    margin-top: -115px;
+    width: 260px;
+    min-height: 230px;
+    margin-left: -130px;
+    margin-top: -100px;
     display: none;
 }
 
@@ -104,5 +104,9 @@ div.main-body div.image div.demoRectangle {
 }
 
 #linkInputDiv button {
+    margin-right: 10px;
+}
+
+#linkInputDiv div.build-in-href span{
     margin-right: 10px;
 }
