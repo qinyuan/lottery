@@ -160,13 +160,12 @@
             return this.checked;
         });
     };
-
-
     $buildInHrefCheckboxes.click(function () {
         if (this.checked) {
             $buildInHrefCheckboxes.unCheckAll();
             this.checked = true;
             $linkInputDiv.get$Href().attr('disabled', true);
+            $linkInputDiv.get$Comment().focusOrSelect();
         } else {
             $linkInputDiv.get$Href().attr('disabled', false).focusOrSelect();
         }

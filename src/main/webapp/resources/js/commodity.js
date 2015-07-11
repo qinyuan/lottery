@@ -81,7 +81,7 @@
     // show snapshot beside selected snapshot
     for (var i = 0; i < snapshotCount; i++) {
         var $snapshot = $snapshots.eq(i);
-        if ($snapshot.dataOptions()['id'] == selectedId) {
+        if ($snapshot.dataOptions('id') == selectedId) {
             $snapshot.addClass('selected');
             var startIndex = parseInt(i / snapshotDisplaySize) * snapshotDisplaySize;
             var endIndex = startIndex + 5;
@@ -99,7 +99,7 @@
         $snapshots.removeClass('selected');
         var $this = $(this);
         $this.addClass('selected');
-        var id = $this.dataOptions()['id'];
+        var id = $this.dataOptions('id');
         loadDetailImageById(id);
     });
 
@@ -107,7 +107,7 @@
 })();
 (function () {
     // code about lottery
-    function setFloatPanelUsernmae($floatPanel, username) {
+    function setFloatPanelUsername($floatPanel, username) {
         $floatPanel.find('div.title div.text span.username').text(username);
     }
 
@@ -145,6 +145,7 @@
 
         $.post('update-tel.json', $telInputForm.serialize(), function (data) {
             if (data.success) {
+                $telInputForm.hide();
                 getLotteryLot();
             } else {
                 alert(data.detail);
@@ -161,7 +162,7 @@
     });
     function showTelInputForm(username) {
         JSUtils.showTransparentBackground(1);
-        setFloatPanelUsernmae($telInputForm, username);
+        setFloatPanelUsername($telInputForm, username);
         $telInputForm.show().focusFirstTextInput();
     }
 
@@ -177,15 +178,32 @@
     });
     function showNoPrivilegeForm(username) {
         JSUtils.showTransparentBackground(1);
-        setFloatPanelUsernmae($noPrivilegePrompt, username);
+        setFloatPanelUsername($noPrivilegePrompt, username);
         $noPrivilegePrompt.show();
     }
 
+    var $lotteryExceptionPrompt = $('#lotteryExceptionPrompt');
+    setCloseIconEvent($lotteryExceptionPrompt, function () {
+        JSUtils.hideTransparentBackground();
+        $lotteryExceptionPrompt.hide();
+    });
+    function showLotteryExceptionPrompt(username, info) {
+        JSUtils.showTransparentBackground(1);
+        setFloatPanelUsername($lotteryExceptionPrompt, username);
+        $lotteryExceptionPrompt.show().find('div.body div.info').text(info);
+    }
+
     getLotteryLot = function () {
-        $.post('take-lottery.json', function (data) {
+        var $selectedSnapshot = $('div.body div.snapshots div.snapshot.selected');
+        var commodityId = $selectedSnapshot.dataOptions('id');
+        $.post('take-lottery.json', {
+            'commodityId': commodityId
+        }, function (data) {
             if (data.success) {
             } else {
-                if (data.detail == 'noLogin') {
+                if (data.detail == 'noLottery') {
+                    showLotteryExceptionPrompt(data.username, '本商品暂时没有抽奖，敬请关注其他商品的抽奖！');
+                } else if (data.detail == 'noLogin') {
                     JSUtils.showTransparentBackground(1);
                     showLoginForm(afterLoginSuccess);
                 } else if (data.detail == 'noPrivilege') {
@@ -193,7 +211,7 @@
                 } else if (data.detail == 'noTel') {
                     showTelInputForm(data.username);
                 } else if (data.detail == 'activityExpire') {
-
+                    showLotteryExceptionPrompt(data.username, '本期抽奖已结束，敬请关注下期抽奖！');
                 } else if (data.detail == 'alreadyAttended') {
 
                 } else {

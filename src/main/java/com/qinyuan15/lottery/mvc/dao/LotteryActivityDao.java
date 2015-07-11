@@ -1,29 +1,55 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan15.utils.DateUtils;
+import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.hibernate.HibernateDeleter;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
-import com.qinyuan15.utils.hibernate.PersistObjectUtils;
 import com.qinyuan15.utils.mvc.PaginationItemFactory;
 
 import java.util.List;
 
 public class LotteryActivityDao {
     public static class Factory implements PaginationItemFactory<LotteryActivity> {
+        private Integer commodityId;
+        private Boolean expire;
+
+        public Factory setCommodityId(Integer commodityId) {
+            this.commodityId = commodityId;
+            return this;
+        }
+
+        public Factory setExpire(Boolean expire) {
+            this.expire = expire;
+            return this;
+        }
+
+        private HibernateListBuilder getListBuilder() {
+            HibernateListBuilder listBuilder = new HibernateListBuilder()
+                    .addOrder("expire", true)
+                    .addOrder("endTime", false)
+                    .addOrder("startTime", false);
+            if (IntegerUtils.isPositive(this.commodityId)) {
+                listBuilder.addEqualFilter("commodityId", this.commodityId);
+            }
+            if (this.expire != null) {
+                listBuilder.addEqualFilter("expire", this.expire);
+            }
+            return listBuilder;
+        }
+
         @Override
         public long getCount() {
-            return new HibernateListBuilder().count(LotteryActivity.class);
+            return getListBuilder().count(LotteryActivity.class);
         }
 
         @Override
         public List<LotteryActivity> getInstances(int firstResult, int maxResults) {
-            return new HibernateListBuilder()
-                    .addOrder("expire", true)
-                    .addOrder("endTime", false)
-                    .addOrder("startTime", false)
-                    .limit(firstResult, maxResults)
-                    .build(LotteryActivity.class);
+            return getListBuilder().limit(firstResult, maxResults).build(LotteryActivity.class);
+        }
+
+        public List<LotteryActivity> getInstances() {
+            return getListBuilder().build(LotteryActivity.class);
         }
     }
 
@@ -35,13 +61,22 @@ public class LotteryActivityDao {
         return HibernateUtils.get(LotteryActivity.class, id);
     }
 
-    public List<LotteryActivity> getRunningInstances() {
+    public LotteryActivity getActiveInstanceByCommodityId(Integer commodityId) {
+        List<LotteryActivity> activities = LotteryActivityDao.factory().setCommodityId(commodityId).getInstances();
+        if (activities.size() == 0) {
+            return null;
+        } else {
+            return activities.get(0);
+        }
+    }
+
+    /*public List<LotteryActivity> getRunningInstances() {
         return new HibernateListBuilder().addFilter("endTime IS NULL").build(LotteryActivity.class);
     }
 
     public List<LotteryActivity> getExpireInstances() {
         return new HibernateListBuilder().addFilter("endTime IS NOT NULL").build(LotteryActivity.class);
-    }
+    }*/
 
     public Integer add(Integer commodityId, String startTime, String expectEndTime, Integer continuousSerialLimit,
                        Integer expectParticipantCount) {

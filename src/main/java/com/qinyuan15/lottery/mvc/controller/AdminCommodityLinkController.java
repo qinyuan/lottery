@@ -33,7 +33,7 @@ public class AdminCommodityLinkController extends ImageController {
         setAttribute("buildInHrefs", new AdminImageMapController.BuildInHrefBuilder()
                 .add("javascript:void(getLotteryLot())", "抽奖链接").build());
 
-        setTitle("编辑商品图片链接");
+        setTitle(commodity.getName() + "_编辑链接");
         addCssAndJs("admin-image-map");
         return "admin-image-map";
     }

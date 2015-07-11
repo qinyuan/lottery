@@ -1,7 +1,10 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
+import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
+import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mvc.controller.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +29,16 @@ public class LotteryController extends BaseController {
 
     @RequestMapping("/take-lottery.json")
     @ResponseBody
-    public String takeLottery() {
+    public String takeLottery(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
+        if (!IntegerUtils.isPositive(commodityId)) {
+            return failByInvalidParam();
+        }
+
+        LotteryActivity activity = new LotteryActivityDao().getActiveInstanceByCommodityId(commodityId);
+        if (activity == null) {
+            return fail("noLottery");
+        }
+
         if (securitySearcher.getUsername() == null) {
             return fail("noLogin");
         }

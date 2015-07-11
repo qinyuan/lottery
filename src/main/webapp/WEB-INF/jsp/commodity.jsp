@@ -81,4 +81,16 @@
         </div>
     </div>
 </div>
+<div class="float-panel" id="lotteryExceptionPrompt">
+    <jsp:include page="commodity-float-panel-title.jsp">
+        <jsp:param name="title" value="提示信息"/>
+    </jsp:include>
+    <div class="body">
+        <div class="info"></div>
+
+        <div class="links">
+            <a href="javascript:void(0)">查看我的抽奖历史</a>
+        </div>
+    </div>
+</div>
 <%@include file="inc-footer.jsp" %>

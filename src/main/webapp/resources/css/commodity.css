@@ -185,6 +185,11 @@ div.body div.detail {
     background-position: -212px -31px;
 }
 
+.float-panel > div {
+    position: relative;
+}
+
+#lotteryExceptionPrompt,
 #telInputForm {
     width: 484px;
     height: 350px;
@@ -243,4 +248,19 @@ div.body div.detail {
 
 #noPrivilegePrompt div.body > div {
     color: #838383;
+}
+
+#lotteryExceptionPrompt div.body div.info {
+    position: absolute;
+    top: 115px;
+    width: 100%;
+    text-align: center;
+    font-size: 12pt;
+}
+
+#lotteryExceptionPrompt div.body div.links {
+    position: absolute;
+    top: 180px;
+    left: 315px;
+    font-size: 10pt;
 }
