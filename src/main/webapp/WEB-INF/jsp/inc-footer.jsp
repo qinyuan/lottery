@@ -81,8 +81,9 @@
                 </div>
                 <div class="input identity-code">
                     <label>验证码</label>
-                    <input type="text" class="form-control" name="identityCode" maxlength="4" tabindex="5"/>
-                    <img class="link" src="identity-code" title="单击刷新"/><a href="javascript:void(0)">换一张</a>
+                    <jsp:include page="widget-identity-code.jsp">
+                        <jsp:param name="tabindex" value="5"/>
+                    </jsp:include>
                     <span class="validate"></span>
                 </div>
                 <div class="comment">

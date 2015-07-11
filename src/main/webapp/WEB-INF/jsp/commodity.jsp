@@ -34,4 +34,51 @@
           target="_blank"/>
     {{/each}}
 </q:handlebars-template>
+<form class="float-panel" id="telInputForm">
+    <jsp:include page="commodity-float-panel-title.jsp">
+        <jsp:param name="title" value="补全信息"/>
+    </jsp:include>
+    <div class="body">
+        <table>
+            <tbody>
+            <tr>
+                <td class="title">手机号码</td>
+                <td class="content">
+                    <input style="width: 260px;" name="tel" type="text" class="form-control"
+                           placeholder="在此输入11位数的手机号" maxlength="11"/>
+
+                    <div class="comment">请输入常用手机号码，用于中奖后联系使用！</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">验证码</td>
+                <td class="content">
+                    <jsp:include page="widget-identity-code.jsp">
+                        <jsp:param name="placeholder" value="输入验证码"/>
+                    </jsp:include>
+                    <div class="comment">请输入图中的字母或数字，不区分大小写</div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="submit">
+            <button type="submit" name="ok">参与抽奖</button>
+        </div>
+    </div>
+</form>
+<div class="float-panel" id="noPrivilegePrompt">
+    <jsp:include page="commodity-float-panel-title.jsp">
+        <jsp:param name="title" value="提示信息"/>
+    </jsp:include>
+    <div class="body">
+        <h4>对不起，您当前的帐户没有权限参与抽奖</h4>
+
+        <div>
+            您可以：
+            <a class="toLogin" href="javascript:void(0)">切换登录帐号</a>
+            或
+            <a href="j_spring_security_logout">直接退出</a>
+        </div>
+    </div>
+</div>
 <%@include file="inc-footer.jsp" %>

@@ -48,7 +48,7 @@ public class UserDao extends SimpleUserDao {
     }
 
     public User getInstanceByEmail(String email) {
-        if(!StringUtils.hasText(email)) {
+        if (!StringUtils.hasText(email)) {
             return null;
         }
         return new HibernateListBuilder().addFilter("LOWER(email)=:email")
@@ -74,6 +74,12 @@ public class UserDao extends SimpleUserDao {
 
     public Integer addNormal(String username, String password, String email, String tel) {
         return add(username, password, User.NORMAL, email, tel);
+    }
+
+    public void updateTel(Integer id, String tel) {
+        User user = getInstance(id);
+        user.setTel(tel);
+        HibernateUtils.update(user);
     }
 
     public void delete(Integer id) {

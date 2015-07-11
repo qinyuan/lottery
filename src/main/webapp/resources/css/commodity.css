@@ -151,3 +151,96 @@ div.body div.detail {
     margin: 70px 0;
     text-align: center;
 }
+
+.float-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    display: none;
+    z-index: 10;
+    background-color: #ffffff;
+}
+
+.float-panel div.title {
+    height: 46px;
+    background-color: #F5F9F9;
+    line-height: 46px;
+    vertical-align: middle;
+    font-size: 12pt;
+    padding-left: 18px;
+    border-bottom: #E5E5E5 solid 1px;
+}
+
+.float-panel div.title div.close-icon {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    background: url('images/register-image.png') no-repeat -212px -5px;
+}
+
+.float-panel div.title div.close-icon:hover {
+    background-position: -212px -31px;
+}
+
+#telInputForm {
+    width: 484px;
+    height: 350px;
+    margin-left: -242px;
+    margin-top: -175px;
+}
+
+#telInputForm div.body {
+    padding-top: 40px;
+}
+
+#telInputForm div.body td.title {
+    width: 130px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+#telInputForm div.body td.content div.comment {
+    color: #838383;
+    font-size: 9pt;
+    margin: 5px 0 20px;
+}
+
+#telInputForm div.body td.content input.identity-code {
+    width: 110px;
+}
+
+#telInputForm div.body div.submit {
+    padding: 17px 0 0 130px;
+}
+
+#telInputForm div.body div.submit button {
+    background: url('images/login-button-back.png') repeat-x;
+    color: #ffffff;
+    width: 260px;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 12pt;
+}
+
+#noPrivilegePrompt {
+    width: 450px;
+    height: 200px;
+    margin-left: -225px;
+    margin-top: -100px;
+}
+
+#noPrivilegePrompt div.body {
+    padding: 20px;
+    text-align: center;
+}
+
+#noPrivilegePrompt div.body h4 {
+    color: #F01866;
+}
+
+#noPrivilegePrompt div.body > div {
+    color: #838383;
+}

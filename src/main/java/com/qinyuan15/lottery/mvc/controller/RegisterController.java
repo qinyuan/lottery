@@ -5,18 +5,14 @@ import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.utils.mail.MailAddressValidator;
 import com.qinyuan15.utils.mvc.controller.BaseController;
-import com.qinyuan15.utils.mvc.controller.IdentityCodeController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * Controller about register
@@ -25,9 +21,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class RegisterController extends BaseController {
     private final static Logger LOGGER = LoggerFactory.getLogger(RegisterController.class);
-
-    @Autowired
-    private HttpSession session;
 
     private UserDao userDao = new UserDao();
 
@@ -96,18 +89,6 @@ public class RegisterController extends BaseController {
         }*/
         return activateUrl + "activate-account.html";
     }
-
-    private boolean validateIdentityCode(String identityCode) {
-        if (!StringUtils.hasText(identityCode)) {
-            return false;
-        }
-
-        String identityCodeInSession = (String) session.getAttribute(IdentityCodeController.IDENTITY_CODE_SESSION_KEY);
-
-        return StringUtils.hasText(identityCodeInSession) &&
-                identityCode.toLowerCase().equals(identityCodeInSession.toLowerCase());
-    }
-
 
     @RequestMapping(value = "resend-activate-email.json", method = RequestMethod.GET)
     @ResponseBody

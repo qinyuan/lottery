@@ -1,5 +1,6 @@
 ;
 (function () {
+    // code about commodity image
     var snapshotDisplaySize = 6;
     var $snapshots = $('div.body div.snapshots div.snapshot');
     var snapshotCount = $snapshots.size();
@@ -75,9 +76,9 @@
                 }
             }
         }).show();
-
     }
 
+    // show snapshot beside selected snapshot
     for (var i = 0; i < snapshotCount; i++) {
         var $snapshot = $snapshots.eq(i);
         if ($snapshot.dataOptions()['id'] == selectedId) {
@@ -104,3 +105,102 @@
 
     loadCommodityMap(window['commodityMaps']);
 })();
+(function () {
+    // code about lottery
+    function setFloatPanelUsernmae($floatPanel, username) {
+        $floatPanel.find('div.title div.text span.username').text(username);
+    }
+
+    function setCloseIconEvent($floatPanel, event) {
+        $floatPanel.find('div.title div.close-icon').click(event);
+    }
+
+    function afterLoginSuccess() {
+        hideLoginForm();
+        getLotteryLot();
+    }
+
+    var $telInputForm = $('#telInputForm');
+    $telInputForm.get$OkButton = function () {
+        return $telInputForm.find('button[name=ok]');
+    };
+    $telInputForm.get$OkButton().click(function (e) {
+        e.preventDefault();
+
+        var $tel = $telInputForm.getInputByName('tel');
+        var tel = $tel.val();
+        if (!tel.match(/^\d{11}$/)) {
+            alert('手机号码必须为11位数字');
+            $tel.focusOrSelect();
+            return false;
+        }
+
+        var $identityCode = $telInputForm.getInputByName('identityCode');
+        var identityCode = $identityCode.val();
+        if (!identityCode || identityCode.length != 4) {
+            alert('请填写4个字符的验证码');
+            $identityCode.focusOrSelect();
+            return false;
+        }
+
+        $.post('update-tel.json', $telInputForm.serialize(), function (data) {
+            if (data.success) {
+                getLotteryLot();
+            } else {
+                alert(data.detail);
+                $telInputForm.find('img.identity-code').trigger('click');
+            }
+        });
+
+        return false;
+    });
+    setCloseIconEvent($telInputForm, function () {
+        JSUtils.hideTransparentBackground();
+        $telInputForm.hide();
+        //location.reload();
+    });
+    function showTelInputForm(username) {
+        JSUtils.showTransparentBackground(1);
+        setFloatPanelUsernmae($telInputForm, username);
+        $telInputForm.show().focusFirstTextInput();
+    }
+
+    var $noPrivilegePrompt = $('#noPrivilegePrompt');
+    setCloseIconEvent($noPrivilegePrompt, function () {
+        JSUtils.hideTransparentBackground();
+        $noPrivilegePrompt.hide();
+        //location.reload();
+    });
+    $noPrivilegePrompt.find('a.toLogin').click(function () {
+        $noPrivilegePrompt.hide();
+        showLoginForm(afterLoginSuccess);
+    });
+    function showNoPrivilegeForm(username) {
+        JSUtils.showTransparentBackground(1);
+        setFloatPanelUsernmae($noPrivilegePrompt, username);
+        $noPrivilegePrompt.show();
+    }
+
+    getLotteryLot = function () {
+        $.post('take-lottery.json', function (data) {
+            if (data.success) {
+            } else {
+                if (data.detail == 'noLogin') {
+                    JSUtils.showTransparentBackground(1);
+                    showLoginForm(afterLoginSuccess);
+                } else if (data.detail == 'noPrivilege') {
+                    showNoPrivilegeForm(data.username);
+                } else if (data.detail == 'noTel') {
+                    showTelInputForm(data.username);
+                } else if (data.detail == 'activityExpire') {
+
+                } else if (data.detail == 'alreadyAttended') {
+
+                } else {
+                    alert(data.detail);
+                }
+            }
+        });
+    };
+})();
+var getLotteryLot;

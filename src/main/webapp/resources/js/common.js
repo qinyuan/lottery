@@ -27,12 +27,6 @@ var angularUtils = {
         alert(errorInfo);
     }
 
-    function showLoginForm() {
-        $springLoginForm.find('form').get(0).reset();
-        $springLoginForm.get$ErrorInfo().hide();
-        $springLoginForm.fadeIn(500).focusFirstTextInput();
-    }
-
     function showRegisterForm() {
         $registerForm.get$Inputs().each(function () {
             resetRegisterInput(this);
@@ -66,9 +60,21 @@ var angularUtils = {
         $activateRemind.fadeIn(500);
     }
 
+    showLoginForm = function (loginSuccessCallback) {
+        $springLoginForm.find('form').get(0).reset();
+        $springLoginForm.get$ErrorInfo().hide();
+        $springLoginForm.fadeIn(500).focusFirstTextInput();
+        $springLoginForm.loginSuccessCallback = loginSuccessCallback;
+    };
+
+    hideLoginForm = function () {
+        $springLoginForm.hide();
+        $springLoginForm.loginSuccessCallback = null;
+    };
+
     // actions of navigation link
     $('#loginNavigationLink').click(function () {
-        JSUtils.showTransparentBackground();
+        JSUtils.showTransparentBackground(1);
         showLoginForm();
     });
     $('#registerNavigationLink').click(function () {
@@ -83,11 +89,11 @@ var angularUtils = {
         checkBox.checked = !checkBox.checked;
     });
     $springLoginForm.find('div.title div.close-icon').click(function () {
-        $springLoginForm.hide();
+        hideLoginForm();
         JSUtils.hideTransparentBackground();
     });
     $springLoginForm.find('#switchToRegister').click(function () {
-        $springLoginForm.hide();
+        hideLoginForm();
         showRegisterForm();
     });
     $springLoginForm.get$SubmitButton = function () {
@@ -114,7 +120,11 @@ var angularUtils = {
         var formData = $springLoginForm.find('form').serialize();
         $.post('j_spring_security_ajax_check', formData, function (data) {
             if (data.success) {
-                location.reload();
+                if ($springLoginForm.loginSuccessCallback) {
+                    $springLoginForm.loginSuccessCallback();
+                } else {
+                    location.reload();
+                }
             } else {
                 $springLoginForm.get$ErrorInfo().twinkle(3);
             }
@@ -276,7 +286,7 @@ var angularUtils = {
                         $registerForm.find('form').get(0).reset();
                     } else {
                         alert(data['detail']);
-                        $identityCodeImage.trigger('click');
+                        $registerForm.find('div.body div.right div.input.identity-code img').trigger('click');
                     }
                 },
                 resetForm: false,
@@ -296,13 +306,6 @@ var angularUtils = {
         showLoginForm();
     };
     $registerForm.find('#switchToLogin').click(switchToLogin);
-    var $identityCodeImage = $registerForm.find('div.body div.right div.input.identity-code img').click(function () {
-        this.src = 'identity-code?id=' + new Date().getTime();
-        $registerForm.get$IdentityCode().val('').focus();
-    });
-    $registerForm.find('div.body div.right div.input.identity-code a').click(function () {
-        $identityCodeImage.trigger('click');
-    });
 
     // actions of registerSuccess
     var $registerSuccess = $('#registerSuccess');
@@ -311,6 +314,7 @@ var angularUtils = {
         JSUtils.hideTransparentBackground();
     });
 
+    // remind activation
     $('div.activate-remind div.body a.resend').click(function () {
         var $body = $(this).parent();
         if ($body.size() > 0 && !$body.hasClass('body')) {
@@ -336,5 +340,13 @@ var angularUtils = {
     if (window['unactivatedEmail']) {
         showActivateRemind(window['unactivatedEmail']);
     }
+
+    // refresh identity code
+    $('img.identity-code').click(function () {
+        this.src = 'identity-code?id=' + new Date().getTime();
+        $(this).prev().val('').focus();
+    }).next().click(function () {
+        $(this).prev().trigger('click');
+    });
 })();
-var switchToLogin;
+var switchToLogin, showLoginForm, hideLoginForm;
