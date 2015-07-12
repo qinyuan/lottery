@@ -1,11 +1,8 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.google.common.collect.Lists;
-import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
-import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
-import com.qinyuan15.lottery.mvc.dao.User;
-import com.qinyuan15.lottery.mvc.dao.UserDao;
+import com.qinyuan15.lottery.mvc.dao.*;
 import com.qinyuan15.lottery.mvc.lottery.LotteryLotCounter;
+import com.qinyuan15.lottery.mvc.lottery.LotteryLotCreator;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mvc.controller.BaseController;
@@ -17,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -68,24 +67,35 @@ public class LotteryController extends BaseController {
             return toJson(result);
         }
 
-        // TODO change the test data to real implement
         result.put("participantCount", new LotteryLotCounter().count(activity));
         result.put("liveness", user.getLiveness() == null ? 0 : user.getLiveness());
-        result.put("serialNumbers", Lists.newArrayList(101111, 201112));
         result.put("maxLiveness", Math.max(activity.getMaxSerialNumber(), user.getLiveness()));
         result.put("remainingSeconds", getRemainingSeconds(activity));
 
-        result.put(SUCCESS, false);
-        result.put(DETAIL, "alreadyAttended");
+        LotteryLotCreator.CreateResult lotteryLotCreateResult = new LotteryLotCreator(activity.getId(), user)
+                .create();
+
+        result.put("serialNumbers", getSerialNumbersFromLotteryLots(lotteryLotCreateResult.getLots()));
+        if (lotteryLotCreateResult.hasNewLot()) {
+            result.put(SUCCESS, true);
+        } else {
+            result.put(SUCCESS, false);
+            result.put(DETAIL, "alreadyAttended");
+        }
         return toJson(result);
-        /*
-        'participantCount': 25311,
-        'serialNumbers': [101111, 201112],
-        'liveness': 312,
-        'maxLiveness': 456,
-        'success': false,
-        'remainingSeconds': 123111
-         */
+    }
+
+    private List<Integer> getSerialNumbersFromLotteryLots(List<LotteryLot> lotteryLots) {
+        List<Integer> serialNumbers = new ArrayList<>();
+        if (lotteryLots == null) {
+            return serialNumbers;
+        }
+
+        for (LotteryLot lotteryLot : lotteryLots) {
+            serialNumbers.add(lotteryLot.getSerialNumber());
+        }
+
+        return serialNumbers;
     }
 
     private int getRemainingSeconds(LotteryActivity lotteryActivity) {
