@@ -8,12 +8,14 @@ import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mvc.controller.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +31,9 @@ public class LotteryController extends BaseController {
     private final static String SUCCESS = "success";
     private final static String DETAIL = "detail";
 
+    @Autowired
+    private DecimalFormat lotNumberFormat;
+
     @RequestMapping("/take-lottery.json")
     @ResponseBody
     public String takeLottery(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
@@ -36,45 +41,43 @@ public class LotteryController extends BaseController {
             return failByInvalidParam();
         }
 
+        // if current commodity has no lottery
         LotteryActivityDao lotteryActivityDao = new LotteryActivityDao();
         if (!lotteryActivityDao.hasLottery(commodityId)) {
             return fail("noLottery");
         }
 
+        // if all lotteries of current commodity are expired
         LotteryActivity activity = new LotteryActivityDao().getActiveInstanceByCommodityId(commodityId);
         if (activity == null) {
             return fail("activityExpire");
         }
 
+        // if visitor has not login
         if (securitySearcher.getUsername() == null) {
             return fail("noLogin");
         }
-
 
         Map<String, Object> result = new HashMap<>();
         User user = new UserDao().getInstance(securitySearcher.getUserId());
         result.put("username", user.getUsername());
 
+        // if no privilege to take lottery
         if (!securitySearcher.hasAuthority(User.NORMAL)) {
             result.put(SUCCESS, false);
             result.put(DETAIL, "noPrivilege");
             return toJson(result);
         }
 
+        // if tel has not been provided
         if (!StringUtils.hasText(user.getTel())) {
             result.put(SUCCESS, false);
             result.put(DETAIL, "noTel");
             return toJson(result);
         }
 
-        result.put("participantCount", new LotteryLotCounter().count(activity));
-        result.put("liveness", user.getLiveness() == null ? 0 : user.getLiveness());
-        result.put("maxLiveness", Math.max(activity.getMaxSerialNumber(), user.getLiveness()));
-        result.put("remainingSeconds", getRemainingSeconds(activity));
-
         LotteryLotCreator.CreateResult lotteryLotCreateResult = new LotteryLotCreator(activity.getId(), user)
                 .create();
-
         result.put("serialNumbers", getSerialNumbersFromLotteryLots(lotteryLotCreateResult.getLots()));
         if (lotteryLotCreateResult.hasNewLot()) {
             result.put(SUCCESS, true);
@@ -82,17 +85,31 @@ public class LotteryController extends BaseController {
             result.put(SUCCESS, false);
             result.put(DETAIL, "alreadyAttended");
         }
+
+        Integer liveness = user.getLiveness();
+        if (liveness == null) {
+            liveness = 0;
+        }
+        Integer virtualLiveness = activity.getVirtualLiveness();
+        if (virtualLiveness == null) {
+            virtualLiveness = 0;
+        }
+        result.put("liveness", liveness);
+        result.put("maxLiveness", Math.max(liveness, virtualLiveness));
+        result.put("participantCount", new LotteryLotCounter().count(activity));
+        result.put("remainingSeconds", getRemainingSeconds(activity));
+
         return toJson(result);
     }
 
-    private List<Integer> getSerialNumbersFromLotteryLots(List<LotteryLot> lotteryLots) {
-        List<Integer> serialNumbers = new ArrayList<>();
+    private List<String> getSerialNumbersFromLotteryLots(List<LotteryLot> lotteryLots) {
+        List<String> serialNumbers = new ArrayList<>();
         if (lotteryLots == null) {
             return serialNumbers;
         }
 
         for (LotteryLot lotteryLot : lotteryLots) {
-            serialNumbers.add(lotteryLot.getSerialNumber());
+            serialNumbers.add(lotNumberFormat.format(lotteryLot.getSerialNumber()));
         }
 
         return serialNumbers;
@@ -100,7 +117,7 @@ public class LotteryController extends BaseController {
 
     private int getRemainingSeconds(LotteryActivity lotteryActivity) {
         String expectEndTime = lotteryActivity.getExpectEndTime();
-        if (expectEndTime == null) {
+        if (!StringUtils.hasText(expectEndTime)) {
             return 0;
         }
         long remainingSeconds = DateUtils.newDate(expectEndTime).getTime() - System.currentTimeMillis();

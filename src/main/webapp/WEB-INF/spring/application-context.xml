@@ -11,5 +11,6 @@
     <context:property-placeholder location="classpath:spring.properties"/>
     <import resource="application-security.xml"/>
     <import resource="application-image.xml"/>
+    <import resource="application-lottery.xml"/>
 
 </beans>
