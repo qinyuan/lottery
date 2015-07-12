@@ -139,4 +139,9 @@ public class LotteryActivityDao {
         }
         HibernateDeleter.deleteById(LotteryActivity.class, id);
     }
+
+    public Integer getMaxSerialNumber(Integer activityId) {
+        return (Integer) new HibernateListBuilder().addEqualFilter("id", activityId)
+                .getFirstItem("SELECT maxSerialNumber FROM LotteryActivity");
+    }
 }

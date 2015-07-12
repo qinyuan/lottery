@@ -10,6 +10,10 @@ import com.qinyuan15.utils.hibernate.HibernateUtils;
 import java.util.List;
 
 public class LotteryLotDao {
+    public LotteryLot getInstance(Integer id) {
+        return HibernateUtils.get(LotteryLot.class, id);
+    }
+
     public Integer add(Integer activityId, Integer userId, LotteryLotSerialGenerator serialGenerator) {
         LotteryLot lotteryLot = new LotteryLot();
         lotteryLot.setActivityId(activityId);

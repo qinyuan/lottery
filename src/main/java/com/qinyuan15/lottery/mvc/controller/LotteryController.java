@@ -6,6 +6,7 @@ import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.lottery.mvc.lottery.LotteryLotCounter;
+import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mvc.controller.BaseController;
 import org.slf4j.Logger;
@@ -69,10 +70,10 @@ public class LotteryController extends BaseController {
 
         // TODO change the test data to real implement
         result.put("participantCount", new LotteryLotCounter().count(activity));
-        result.put("serialNumbers", Lists.newArrayList(101111, 201112));
         result.put("liveness", user.getLiveness() == null ? 0 : user.getLiveness());
-        result.put("maxLiveness", 456);
-        result.put("remainingSeconds", 123111);
+        result.put("serialNumbers", Lists.newArrayList(101111, 201112));
+        result.put("maxLiveness", Math.max(activity.getMaxSerialNumber(), user.getLiveness()));
+        result.put("remainingSeconds", getRemainingSeconds(activity));
 
         result.put(SUCCESS, false);
         result.put(DETAIL, "alreadyAttended");
@@ -85,6 +86,15 @@ public class LotteryController extends BaseController {
         'success': false,
         'remainingSeconds': 123111
          */
+    }
+
+    private int getRemainingSeconds(LotteryActivity lotteryActivity) {
+        String expectEndTime = lotteryActivity.getExpectEndTime();
+        if (expectEndTime == null) {
+            return 0;
+        }
+        long remainingSeconds = DateUtils.newDate(expectEndTime).getTime() - System.currentTimeMillis();
+        return remainingSeconds < 0 ? 0 : (int) (remainingSeconds / 1000);
     }
 
     @RequestMapping("/update-tel.json")

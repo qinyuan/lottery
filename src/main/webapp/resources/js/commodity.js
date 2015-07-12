@@ -224,6 +224,9 @@
 
         function updateHTML() {
             var seconds = remainingSeconds + parseInt((startTimestamp - new Date().getTime()) / 1000);
+            if (seconds <= 0) {
+                seconds = 0;
+            }
             var days = parseInt(seconds / secondsInDay);
             seconds -= days * secondsInDay;
             var hours = parseInt(seconds / 3600);
