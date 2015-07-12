@@ -278,6 +278,10 @@ div.body div.detail {
     color: #838383;
 }
 
+#lotteryResult div.body span.split {
+    padding: 0 8px;
+}
+
 #lotteryResult div.body div.activity-info {
     color: #838383;
     font-size: 10pt;
@@ -359,13 +363,16 @@ div.body div.detail {
     color: #838383;
 }
 
-#lotteryResult div.body div.lottery-again {
-    padding-left: 105px;
+#lotteryResult div.body div.prompt div.spread div.spread-method {
+    position: absolute;
+    right: 50px;
+    top: 1px;
     font-size: 9pt;
 }
 
-#lotteryResult div.body div.lottery-again span.split {
-    padding: 0 8px;
+#lotteryResult div.body div.lottery-again {
+    padding-left: 105px;
+    font-size: 9pt;
 }
 
 #lotteryResult div.body div.share {

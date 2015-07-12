@@ -197,9 +197,48 @@
     setCloseIconEvent($lotteryResult, function () {
         JSUtils.hideTransparentBackground();
         $lotteryResult.hide();
+        $lotteryResult.clearDeadlineUpdater();
     });
+    $lotteryResult.clearDeadlineUpdater = function () {
+        if ($lotteryResult.deadlineUpdaters) {
+            for (var i = 0, len = $lotteryResult.deadlineUpdaters.length; i < len; i++) {
+                clearInterval($lotteryResult.deadlineUpdaters[i]);
+            }
+        }
+        $lotteryResult.deadlineUpdaters = [];
+    };
+    $lotteryResult.updateDeadline = function (remainingSeconds) {
+        var startTimestamp = new Date().getTime();
+        var secondsInDay = 3600 * 24;
+        var $deadline = $lotteryResult.find('div.body div.activity-info div.deadline');
+        var $day = $deadline.find('span.day');
+        var $hour = $deadline.find('span.hour');
+        var $minute = $deadline.find('span.minute');
+        var $second = $deadline.find('span.second');
+
+        updateHTML();
+        $lotteryResult.clearDeadlineUpdater();
+        $lotteryResult.deadlineUpdaters.push(setInterval(function () {
+            updateHTML();
+        }, 1000));
+
+        function updateHTML() {
+            var seconds = remainingSeconds + parseInt((startTimestamp - new Date().getTime()) / 1000);
+            var days = parseInt(seconds / secondsInDay);
+            seconds -= days * secondsInDay;
+            var hours = parseInt(seconds / 3600);
+            seconds -= hours * 3600;
+            var minutes = parseInt(seconds / 60);
+            seconds -= minutes * 60;
+
+            $day.text(days);
+            $hour.text(hours);
+            $minute.text(minutes);
+            $second.text(seconds);
+        }
+    };
     function showLotteryResult(options) {
-        JSUtils.showTransparentBackground(1);
+        $lotteryResult.updateDeadline(options.remainingSeconds);
         setFloatPanelUsername($lotteryResult, options.username);
         $lotteryResult.find('div.body div.activity-info div.participant-count span')
             .text(options.participantCount);
@@ -221,18 +260,21 @@
             $lotteryResult.find('div.body div.prompt div.no-chance').show();
         }
 
+        JSUtils.showTransparentBackground(1);
         $lotteryResult.fadeIn(300)
     }
 
-    showLotteryResult({
-        'username': 'helloWorld',
-        'participantCount': 25311,
-        'serialNumbers': [101111, 201112],
-        'liveness': 312,
-        'maxLiveness': 456,
-        'success': false
-    });
-    //showLotteryResult("helloWorld", 25311, [101111, 201112], 312, 456, false);
+    /*
+     showLotteryResult({
+     'username': 'helloWorld',
+     'participantCount': 25311,
+     'serialNumbers': [101111, 201112],
+     'liveness': 312,
+     'maxLiveness': 456,
+     'success': false,
+     'remainingSeconds': 123111
+     });
+     */
 
     getLotteryLot = function () {
         var $selectedSnapshot = $('div.body div.snapshots div.snapshot.selected');
@@ -242,6 +284,7 @@
         }, function (data) {
             console.log(data);
             if (data.success) {
+                showLotteryResult(data);
             } else {
                 if (data.detail == 'noLottery') {
                     showLotteryExceptionPrompt(data.username, '本商品暂时没有抽奖，敬请关注其他商品的抽奖！');
@@ -255,7 +298,7 @@
                 } else if (data.detail == 'activityExpire') {
                     showLotteryExceptionPrompt(data.username, '本期抽奖已结束，敬请关注下期抽奖！');
                 } else if (data.detail == 'alreadyAttended') {
-
+                    showLotteryResult(data);
                 } else {
                     alert(data.detail);
                 }

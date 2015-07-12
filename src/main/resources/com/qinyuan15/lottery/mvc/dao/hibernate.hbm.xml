@@ -80,6 +80,10 @@
         <property name="expire" column="expire"/>
         <property name="expectParticipantCount" column="expect_participant_count"/>
         <property name="announcement" column="announcement"/>
+        <property name="virtualParticipants" column="virtual_participants"/>
+        <property name="virtualLiveness" column="virtual_liveness"/>
+        <property name="virtualLivenessUsers" column="virtual_liveness_users"/>
+        <property name="maxSerialNumber" column="max_serial_number"/>
     </class>
     <class name="LotteryLot" table="lottery_lot">
         <id name="id" column="id">

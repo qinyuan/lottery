@@ -60,7 +60,11 @@ create table lottery_activity(
   continuous_serial_limit int,
   expire boolean not null,
   expect_participant_count int,
-  announcement varchar(2000)
+  announcement varchar(2000),
+  virtual_participants int,
+  virtual_liveness int,
+  virtual_liveness_users char(200),
+  max_serial_number int
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table lottery_lot (

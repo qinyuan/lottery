@@ -1,9 +1,11 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.google.common.collect.Lists;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
+import com.qinyuan15.lottery.mvc.lottery.LotteryLotCounter;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mvc.controller.BaseController;
 import org.slf4j.Logger;
@@ -65,8 +67,24 @@ public class LotteryController extends BaseController {
             return toJson(result);
         }
 
-        result.put(SUCCESS, true);
+        // TODO change the test data to real implement
+        result.put("participantCount", new LotteryLotCounter().count(activity));
+        result.put("serialNumbers", Lists.newArrayList(101111, 201112));
+        result.put("liveness", user.getLiveness() == null ? 0 : user.getLiveness());
+        result.put("maxLiveness", 456);
+        result.put("remainingSeconds", 123111);
+
+        result.put(SUCCESS, false);
+        result.put(DETAIL, "alreadyAttended");
         return toJson(result);
+        /*
+        'participantCount': 25311,
+        'serialNumbers': [101111, 201112],
+        'liveness': 312,
+        'maxLiveness': 456,
+        'success': false,
+        'remainingSeconds': 123111
+         */
     }
 
     @RequestMapping("/update-tel.json")

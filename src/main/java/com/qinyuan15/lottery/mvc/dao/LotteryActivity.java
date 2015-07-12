@@ -14,6 +14,10 @@ public class LotteryActivity extends PersistObject {
     private Boolean expire;
     private Integer expectParticipantCount;
     private String announcement;
+    private Integer virtualParticipants;
+    private Integer virtualLiveness;
+    private String virtualLivenessUsers;
+    private Integer maxSerialNumber;
 
     public Integer getCommodityId() {
         return commodityId;
@@ -77,6 +81,38 @@ public class LotteryActivity extends PersistObject {
 
     public void setAnnouncement(String announcement) {
         this.announcement = announcement;
+    }
+
+    public Integer getVirtualParticipants() {
+        return virtualParticipants;
+    }
+
+    public void setVirtualParticipants(Integer virtualParticipants) {
+        this.virtualParticipants = virtualParticipants;
+    }
+
+    public Integer getVirtualLiveness() {
+        return virtualLiveness;
+    }
+
+    public void setVirtualLiveness(Integer virtualLiveness) {
+        this.virtualLiveness = virtualLiveness;
+    }
+
+    public String getVirtualLivenessUsers() {
+        return virtualLivenessUsers;
+    }
+
+    public void setVirtualLivenessUsers(String virtualLivenessUsers) {
+        this.virtualLivenessUsers = virtualLivenessUsers;
+    }
+
+    public Integer getMaxSerialNumber() {
+        return maxSerialNumber;
+    }
+
+    public void setMaxSerialNumber(Integer maxSerialNumber) {
+        this.maxSerialNumber = maxSerialNumber;
     }
 
     private List<LotteryLot> winnerCache;

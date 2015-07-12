@@ -103,10 +103,10 @@
             <div class="deadline">
                 <span class="icon"></span>
                 距活动结束还有：
-                <span class="day">3</span>天
-                <span class="hour">20</span>时
-                <span class="minute">25</span>分
-                <span class="second">32</span>秒
+                <span class="day">0</span>天
+                <span class="hour">0</span>时
+                <span class="minute">0</span>分
+                <span class="second">0</span>秒
             </div>
         </div>
         <div class="my-lottery">
@@ -129,6 +129,9 @@
             </div>
             <div class="spread">
                 您的爱心不足N，请努力传播！
+                <div class="spread-method">
+                    <a href="javascript:void(0)">如何提高爱心？</a>
+                </div>
             </div>
         </div>
         <div class="lottery-again">
