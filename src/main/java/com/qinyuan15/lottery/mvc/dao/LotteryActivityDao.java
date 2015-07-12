@@ -61,8 +61,12 @@ public class LotteryActivityDao {
         return HibernateUtils.get(LotteryActivity.class, id);
     }
 
+    public boolean hasLottery(Integer commodityId) {
+        return factory().setCommodityId(commodityId).getCount() > 0;
+    }
+
     public LotteryActivity getActiveInstanceByCommodityId(Integer commodityId) {
-        List<LotteryActivity> activities = LotteryActivityDao.factory().setCommodityId(commodityId).getInstances();
+        List<LotteryActivity> activities = factory().setCommodityId(commodityId).setExpire(false).getInstances();
         if (activities.size() == 0) {
             return null;
         } else {

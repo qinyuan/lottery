@@ -163,7 +163,7 @@
     function showTelInputForm(username) {
         JSUtils.showTransparentBackground(1);
         setFloatPanelUsername($telInputForm, username);
-        $telInputForm.show().focusFirstTextInput();
+        $telInputForm.fadeIn(300).focusFirstTextInput();
     }
 
     var $noPrivilegePrompt = $('#noPrivilegePrompt');
@@ -179,7 +179,7 @@
     function showNoPrivilegeForm(username) {
         JSUtils.showTransparentBackground(1);
         setFloatPanelUsername($noPrivilegePrompt, username);
-        $noPrivilegePrompt.show();
+        $noPrivilegePrompt.fadeIn(300);
     }
 
     var $lotteryExceptionPrompt = $('#lotteryExceptionPrompt');
@@ -190,8 +190,49 @@
     function showLotteryExceptionPrompt(username, info) {
         JSUtils.showTransparentBackground(1);
         setFloatPanelUsername($lotteryExceptionPrompt, username);
-        $lotteryExceptionPrompt.show().find('div.body div.info').text(info);
+        $lotteryExceptionPrompt.fadeIn(300).find('div.body div.info').text(info);
     }
+
+    var $lotteryResult = $('#lotteryResult');
+    setCloseIconEvent($lotteryResult, function () {
+        JSUtils.hideTransparentBackground();
+        $lotteryResult.hide();
+    });
+    function showLotteryResult(options) {
+        JSUtils.showTransparentBackground(1);
+        setFloatPanelUsername($lotteryResult, options.username);
+        $lotteryResult.find('div.body div.activity-info div.participant-count span')
+            .text(options.participantCount);
+
+        if (options.serialNumbers) {
+            var $numberList = $lotteryResult.find('div.body div.my-lottery div.number div.number-list').empty();
+            for (var i = 0, len = options.serialNumbers.length; i < len; i++) {
+                $numberList.append('<span>' + options.serialNumbers[i] + '</span>')
+            }
+        }
+        $lotteryResult.find('div.body div.my-lottery span.my-liveness').text(options.liveness);
+        if (options.maxLiveness < options.liveness) {
+            options.maxLiveness = options.liveness;
+        }
+        $lotteryResult.find('div.body div.my-lottery span.max-liveness').text(options.maxLiveness);
+        if (options.success) {
+            $lotteryResult.find('div.body div.prompt div.no-chance').hide();
+        } else {
+            $lotteryResult.find('div.body div.prompt div.no-chance').show();
+        }
+
+        $lotteryResult.fadeIn(300)
+    }
+
+    showLotteryResult({
+        'username': 'helloWorld',
+        'participantCount': 25311,
+        'serialNumbers': [101111, 201112],
+        'liveness': 312,
+        'maxLiveness': 456,
+        'success': false
+    });
+    //showLotteryResult("helloWorld", 25311, [101111, 201112], 312, 456, false);
 
     getLotteryLot = function () {
         var $selectedSnapshot = $('div.body div.snapshots div.snapshot.selected');
@@ -199,6 +240,7 @@
         $.post('take-lottery.json', {
             'commodityId': commodityId
         }, function (data) {
+            console.log(data);
             if (data.success) {
             } else {
                 if (data.detail == 'noLottery') {

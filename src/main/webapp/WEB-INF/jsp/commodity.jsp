@@ -62,7 +62,7 @@
             </tbody>
         </table>
         <div class="submit">
-            <button type="submit" name="ok">参与抽奖</button>
+            <button class="green-submit-button" type="submit" name="ok">参与抽奖</button>
         </div>
     </div>
 </form>
@@ -71,7 +71,7 @@
         <jsp:param name="title" value="提示信息"/>
     </jsp:include>
     <div class="body">
-        <h4>对不起，您当前的帐户没有权限参与抽奖</h4>
+        <h4>对不起，您当前的帐户没有权限参与抽奖！</h4>
 
         <div>
             您可以：
@@ -90,6 +90,56 @@
 
         <div class="links">
             <a href="javascript:void(0)">查看我的抽奖历史</a>
+        </div>
+    </div>
+</div>
+<div class="float-panel" id="lotteryResult">
+    <jsp:include page="commodity-float-panel-title.jsp">
+        <jsp:param name="title" value="抽奖结果"/>
+    </jsp:include>
+    <div class="body">
+        <div class="activity-info">
+            <div class="participant-count">参与人数：<span></span></div>
+            <div class="deadline">
+                <span class="icon"></span>
+                距活动结束还有：
+                <span class="day">3</span>天
+                <span class="hour">20</span>时
+                <span class="minute">25</span>分
+                <span class="second">32</span>秒
+            </div>
+        </div>
+        <div class="my-lottery">
+            <div class="number">
+                <div class="text">我的抽奖号：</div>
+                <div class="number-list"></div>
+            </div>
+            <div class="liveness">
+                <div class="mine">
+                    我的爱心<span class="icon"></span>：<span class="my-liveness"></span>
+                </div>
+                <div class="max">
+                    最高爱心：<span class="max-liveness"></span>
+                </div>
+            </div>
+        </div>
+        <div class="prompt">
+            <div class="no-chance">
+                您已抽过奖，需要通过积累爱心再次获取抽奖机会
+            </div>
+            <div class="spread">
+                您的爱心不足N，请努力传播！
+            </div>
+        </div>
+        <div class="lottery-again">
+            <button class="green-submit-button" id="takeLotteryAgain">再抽一次</button>
+            <span class="split"></span>
+            <a href="javascript:void(0)">抽奖规则</a>
+        </div>
+        <div class="share">
+            <a href="javascript:void(0)" class="sina"></a>
+            <a href="javascript:void(0)" class="qq"></a>
+            <a href="javascript:void(0)" class="qzone"></a>
         </div>
     </div>
 </div>

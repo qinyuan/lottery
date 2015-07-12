@@ -164,8 +164,14 @@
         if (this.checked) {
             $buildInHrefCheckboxes.unCheckAll();
             this.checked = true;
+
             $linkInputDiv.get$Href().attr('disabled', true);
-            $linkInputDiv.get$Comment().focusOrSelect();
+
+            var $comment = $linkInputDiv.get$Comment();
+            if ($comment.trimVal() == '') {
+                $comment.val($(this).parent().text());
+            }
+            $comment.focusOrSelect();
         } else {
             $linkInputDiv.get$Href().attr('disabled', false).focusOrSelect();
         }

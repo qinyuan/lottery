@@ -34,22 +34,30 @@ public class LotteryController extends BaseController {
             return failByInvalidParam();
         }
 
+        LotteryActivityDao lotteryActivityDao = new LotteryActivityDao();
+        if (!lotteryActivityDao.hasLottery(commodityId)) {
+            return fail("noLottery");
+        }
+
         LotteryActivity activity = new LotteryActivityDao().getActiveInstanceByCommodityId(commodityId);
         if (activity == null) {
-            return fail("noLottery");
+            return fail("activityExpire");
         }
 
         if (securitySearcher.getUsername() == null) {
             return fail("noLogin");
         }
 
-        if (!securitySearcher.hasAuthority(User.NORMAL)) {
-            return fail("noPrivilege");
-        }
 
         Map<String, Object> result = new HashMap<>();
         User user = new UserDao().getInstance(securitySearcher.getUserId());
         result.put("username", user.getUsername());
+
+        if (!securitySearcher.hasAuthority(User.NORMAL)) {
+            result.put(SUCCESS, false);
+            result.put(DETAIL, "noPrivilege");
+            return toJson(result);
+        }
 
         if (!StringUtils.hasText(user.getTel())) {
             result.put(SUCCESS, false);

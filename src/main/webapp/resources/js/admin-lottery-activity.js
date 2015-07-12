@@ -123,7 +123,7 @@
         JSUtils.scrollTop($form);
     });
     $stopImages.click(function () {
-        if (confirm('确定强行中止该抽奖活动？')) {
+        if (confirm('确定强行结束该抽奖活动？')) {
             var activityId = $(this).getParentByTagName('tr').dataOptions('id');
             $.post('admin-lottery-activity-stop.json', {
                 'id': activityId
