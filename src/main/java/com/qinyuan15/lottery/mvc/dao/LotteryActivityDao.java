@@ -96,13 +96,16 @@ public class LotteryActivityDao {
     }
 
     public void update(Integer id, Integer commodityId, String startTime, String expectEndTime,
-                       Integer continuousSerialLimit, Integer expectParticipantCount) {
+                       Integer continuousSerialLimit, Integer expectParticipantCount,
+                       Integer virutalLiveness, String virtualLivenessUsers) {
         LotteryActivity activity = getInstance(id);
         activity.setCommodityId(commodityId);
         activity.setStartTime(startTime);
         activity.setExpectEndTime(expectEndTime);
         activity.setContinuousSerialLimit(continuousSerialLimit);
         activity.setExpectParticipantCount(expectParticipantCount);
+        activity.setVirtualLiveness(virutalLiveness);
+        activity.setVirtualLivenessUsers(virtualLivenessUsers);
         HibernateUtils.update(activity);
     }
 

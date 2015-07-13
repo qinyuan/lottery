@@ -7,9 +7,23 @@
     var $expectEndTime = $form.getInputByName('expectEndTime');
     var $continuousSerialLimit = $form.getInputByName('continuousSerialLimit');
     var $expectParticipantCount = $form.getInputByName('expectParticipantCount');
+    var $virtualLiveness = $form.getInputByName('virtualLiveness');
     var $okButton = $form.getButtonByName('ok');
     var $cancelButton = $form.getButtonByName('cancel');
     var $editImages = $('table.normal img.edit');
+    var $addButton = $('#addLotteryActivityButton');
+    var $livenessRow = $form.find('tr.liveness');
+
+    function showForm(displayLivness) {
+        JSUtils.showTransparentBackground(1);
+
+        if (displayLivness) {
+            $livenessRow.show();
+        } else {
+            $livenessRow.hide();
+        }
+        $form.fadeIn(300);
+    }
 
     function validateInputForm() {
         if (!$autoStartTime.get(0).checked) {
@@ -34,6 +48,15 @@
             return false;
         }
 
+        if ($livenessRow.css('display') != 'none') {
+            var virtualLiveness = $virtualLiveness.val();
+            if (virtualLiveness != '' && !JSUtils.isNumberString(virtualLiveness)) {
+                alert('最大爱心数只能为数字格式！');
+                $virtualLiveness.focusOrSelect();
+                return false;
+            }
+        }
+
         var expectParticipantCount = $expectParticipantCount.val();
         if (expectParticipantCount != '' && !JSUtils.isNumberString(expectParticipantCount)) {
             alert('预期参数人数只能为数字格式！');
@@ -43,6 +66,10 @@
         return true;
     }
 
+    $addButton.click(function () {
+        showForm(false);
+        $form.getInputByName('expectEndTime').focusOrSelect();
+    });
     $autoStartTime.click(function () {
         var checked = this.checked;
         if (checked) {
@@ -62,8 +89,10 @@
                     alert(data.detail);
                 }
                 if ($form.getInputByName('id').val()) {
+                    // if edit, just reload
                     location.reload();
                 } else {
+                    // if add, go to first page
                     location.href = 'admin-lottery-activity.html';
                 }
             });
@@ -73,19 +102,22 @@
     });
     $cancelButton.click(function () {
         $form.getInputByName('id').val(null);
-        $okButton.text('添加抽奖');
-        $cancelButton.hide();
+        $form.hide();
+        JSUtils.hideTransparentBackground();
     });
 
     $editImages.click(function () {
+        showForm(true);
         var $tr = $(this).getParentByTagName('tr');
         $form.setInputValue('id', $tr.dataOptions('id'));
         $form.getInputByName('startTime').attr('disabled', false)
-            .val($tr.find('td.startTime').text()).focusOrSelect();
+            .val($tr.find('td.start-time').text()).focusOrSelect();
         $form.getInputByName('autoStartTime').get(0).checked = false;
-        $form.setInputValue('expectEndTime', $tr.find('td.expectEndTime').text());
-        $form.setInputValue('continuousSerialLimit', $tr.find('td.continuousSerialLimit').text());
-        $form.setInputValue('expectParticipantCount', $tr.find('td.expectParticipantCount').text());
+        $form.setInputValue('expectEndTime', $tr.find('td.expect-end-time').text());
+        $form.setInputValue('virtualLiveness', $tr.find('td.virtual-liveness').text());
+        $form.setInputValue('virtualLivenessUsers', $tr.find('td.virtual-liveness-users').text());
+        $form.setInputValue('continuousSerialLimit', $tr.find('td.continuous-serial-limit').text());
+        $form.setInputValue('expectParticipantCount', $tr.find('td.expect-participant-count').text());
 
         var commodityId = $tr.find('td.commodity').dataOptions('commodityId');
         $form.find('div.commodity-select li a').each(function () {
@@ -96,12 +128,8 @@
             }
             return true;
         });
-
-        $cancelButton.show();
-        $okButton.text("保存修改");
-        JSUtils.scrollTop($form);
     });
-});
+})();
 (function () {
     // codes about announcement edit form
     var $stopImages = $('table.normal img.stop');
@@ -164,5 +192,5 @@
             }, JSUtils.normalAjaxCallback);
         }
     });
-});
+})();
 $('#commodityLotteryLink').addClass('emphasize');

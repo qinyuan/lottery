@@ -1,35 +1,3 @@
-/****************** lottery activity add and edit form start *****************/
-div.form form {
-    padding: 10px 20px;
-    background-color: #D8F7E9;
-    margin-bottom: 10px;
-}
-
-div.form form tr {
-    line-height: 40px;
-}
-
-div.form form td.title {
-    text-align: right;
-    font-weight: bold;
-    padding-right: 10px;
-}
-
-div.form form td span.required {
-    padding-left: 3px;
-    color: #ff0000;
-}
-
-div.form form td.content {
-    width: 300px;
-}
-
-div.form form td.content input[type=text] {
-    width: 210px;
-}
-
-/********************* lottery activity add and edit form end *****************/
-
 /********************* lottery list table start ************************/
 div.form table.normal col.start-time,
 div.form table.normal col.expect-end-time,
@@ -58,12 +26,16 @@ div.form table.normal col.winners {
     width: 70px;
 }
 
-div.form table.normal col.announcement {
-    width: 200px;
+div.form table.normal col.virtual-liveness {
+    width: 70px;
 }
 
-div.form table.normal col.action {
-    /*width: 70px;*/
+div.form table.normal col.virtual-liveness-users {
+    width: 90px;
+}
+
+div.form table.normal col.announcement {
+    width: 200px;
 }
 
 div.form table.normal td {
@@ -71,7 +43,7 @@ div.form table.normal td {
 }
 
 div.form div.list-type {
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 /*********************** lottery list table end *********************/
@@ -79,8 +51,6 @@ div.form div.list-type {
 /*********************** announcement edit form start ***********************/
 #announceEditForm {
     padding: 20px;
-    /*width: 428px;
-    height: 252px;*/
     margin-top: -126px;
     margin-left: -214px;
 }
@@ -102,3 +72,43 @@ div.form div.list-type {
 }
 
 /******************* announcement edit form end ***************************/
+
+/****************** lottery activity add and edit form start *****************/
+#lotteryActivityForm {
+    padding: 15px;
+    margin-left: -425px;
+    top: 50px;
+}
+
+#lotteryActivityForm tr {
+    line-height: 40px;
+}
+
+#lotteryActivityForm td.title {
+    text-align: right;
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+#lotteryActivityForm span.required {
+    padding-left: 3px;
+    color: #ff0000;
+}
+
+#lotteryActivityForm td.content {
+    width: 250px;
+}
+
+#lotteryActivityForm td.content input[type=text] {
+    width: 210px;
+}
+
+#lotteryActivityForm div.submit {
+    padding-left: 300px;
+}
+
+#lotteryActivityForm div.submit button {
+    margin: 0 5px;
+}
+
+/********************* lottery activity add and edit form end *****************/

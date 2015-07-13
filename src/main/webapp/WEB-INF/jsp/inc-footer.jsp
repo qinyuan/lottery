@@ -117,7 +117,7 @@
         </div>
     </div>
 </div>
-<div class="shadow activate-remind" id="activateRemind">
+<div class="shadow float-panel activate-remind" id="activateRemind">
     <div class="title">
         <div class="text">消息提示</div>
         <div class="close-icon"></div>

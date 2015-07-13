@@ -52,7 +52,9 @@ public class AdminLotteryActivityController extends ImageController {
                           @RequestParam(value = "autoStartTime", required = false) String autoStartTime,
                           @RequestParam(value = "expectEndTime", required = true) String expectEndTime,
                           @RequestParam(value = "continuousSerialLimit", required = true) Integer continuousSerialLimit,
-                          @RequestParam(value = "expectParticipantCount", required = true) Integer expectParticipantCount) {
+                          @RequestParam(value = "expectParticipantCount", required = true) Integer expectParticipantCount,
+                          @RequestParam(value = "virtualLiveness", required = true) Integer virtualLiveness,
+                          @RequestParam(value = "virtualLivenessUsers", required = true) String virtualLivenessUsers) {
         if (StringUtils.hasText(autoStartTime)) {
             startTime = DateUtils.nowString();
         } else {
@@ -73,10 +75,19 @@ public class AdminLotteryActivityController extends ImageController {
             expectEndTime = null;
         }
 
+        if (!IntegerUtils.isPositive(virtualLiveness)) {
+            virtualLiveness = null;
+        }
+
+        if (!StringUtils.hasText(virtualLivenessUsers)) {
+            virtualLivenessUsers = null;
+        }
+
         try {
             LotteryActivityDao dao = new LotteryActivityDao();
             if (IntegerUtils.isPositive(id)) {
-                dao.update(id, commodityId, startTime, expectEndTime, continuousSerialLimit, expectParticipantCount);
+                dao.update(id, commodityId, startTime, expectEndTime, continuousSerialLimit,
+                        expectParticipantCount, virtualLiveness, virtualLivenessUsers);
             } else {
                 dao.add(commodityId, startTime, expectEndTime, continuousSerialLimit, expectParticipantCount);
             }

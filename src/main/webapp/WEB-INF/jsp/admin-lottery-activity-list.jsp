@@ -16,6 +16,8 @@
             </c:when>
             <c:otherwise>
                 <col class="continuous-serial-limit"/>
+                <col class="virtual-liveness"/>
+                <col class="virtual-liveness-users"/>
             </c:otherwise>
         </c:choose>
         <col class="action"/>
@@ -26,8 +28,8 @@
     <th>开始时间</th>
     <th>${listExpire ? '实际' : '预计'}结束时间</th>
     <th>预计参与人数</th>
-    <th>总参与人数(包含虚拟部分)</th>
-    <th>实际参与人数</th>
+    <th>总参与人数<br/><span style="font-size: 9pt;">(包含虚拟部分)</span></th>
+    <th>真实参与人数</th>
     <c:choose>
         <c:when test="${listExpire}">
             <th>中奖号</th>
@@ -35,6 +37,8 @@
         </c:when>
         <c:otherwise>
             <th>抽奖号码最大连续个数</th>
+            <th>最大爱心</th>
+            <th>最大爱心用户</th>
         </c:otherwise>
     </c:choose>
     <th></th>
@@ -43,10 +47,10 @@
     <c:forEach var="activity" items="${activities}" varStatus="status">
         <tr data-options="id:${activity.id}">
             <td>${status.index + rowStartIndex}</td>
-            <td data-options="commodityId: ${activity.commodity.id}">${activity.commodity.name}</td>
-            <td>${activity.startTime}</td>
-            <td>${listExpire ? activity.endTime : activity.expectEndTime}</td>
-            <td>${activity.expectParticipantCount}</td>
+            <td class="commodity" data-options="commodityId: ${activity.commodity.id}">${activity.commodity.name}</td>
+            <td class="start-time">${activity.startTime}</td>
+            <td class="${listExpire ? 'end-time' : 'expect-end-time'}">${listExpire ? activity.endTime : activity.expectEndTime}</td>
+            <td class="expect-participant-count">${activity.expectParticipantCount}</td>
             <td>${activity.participantCount}</td>
             <td>${activity.realParticipantCount}</td>
             <c:choose>
@@ -58,7 +62,9 @@
                     </td>
                 </c:when>
                 <c:otherwise>
-                    <td>${activity.continuousSerialLimit}</td>
+                    <td class="continuous-serial-limit">${activity.continuousSerialLimit}</td>
+                    <td class="virtual-liveness">${activity.virtualLiveness}</td>
+                    <td class="virtual-liveness-users">${activity.virtualLivenessUsers}</td>
                     <td>
                         <img class="link stop" title="强行结束" src="resources/css/images/stop.png"/>
                         <jsp:include page="widget-edit-delete.jsp"/>
