@@ -12,10 +12,12 @@ import java.util.List;
  */
 public class LotteryLotCreator {
     private final Integer activityId;
+    private final Integer continuousSerialLimit;
     private final User user;
 
-    public LotteryLotCreator(Integer activityId, User user) {
+    public LotteryLotCreator(Integer activityId, Integer continuousSerialLimit, User user) {
         this.activityId = activityId;
+        this.continuousSerialLimit = continuousSerialLimit;
         this.user = user;
     }
 
@@ -29,7 +31,8 @@ public class LotteryLotCreator {
         boolean newLot;
         if (lots.size() < getAvailableLotCount()) {
             LotteryLotDao lotDao = new LotteryLotDao();
-            Integer id = lotDao.add(activityId, user.getId(), new LotteryLotSerialGeneratorImpl(activityId));
+            Integer id = lotDao.add(activityId, user.getId(),
+                    new LotteryLotSerialGeneratorImpl(activityId, continuousSerialLimit));
             lots.add(lotDao.getInstance(id));
             newLot = true;
         } else {

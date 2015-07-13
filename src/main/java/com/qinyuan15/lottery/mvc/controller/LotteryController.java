@@ -77,8 +77,8 @@ public class LotteryController extends BaseController {
         }
 
         // get serial numbers
-        LotteryLotCreator.CreateResult lotteryLotCreateResult = new LotteryLotCreator(activity.getId(), user)
-                .create();
+        LotteryLotCreator.CreateResult lotteryLotCreateResult = new LotteryLotCreator(
+                activity.getId(), activity.getContinuousSerialLimit(), user).create();
         result.put("serialNumbers", getSerialNumbersFromLotteryLots(lotteryLotCreateResult.getLots()));
         if (lotteryLotCreateResult.hasNewLot()) {
             result.put(SUCCESS, true);

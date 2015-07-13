@@ -61,7 +61,7 @@ create table lottery_activity(
   expire boolean not null,
   expect_participant_count int,
   announcement varchar(2000),
-  virtual_participants int,
+  virtual_participants int not null default 0,
   virtual_liveness int,
   virtual_liveness_users char(200),
   max_serial_number int not null default 0;

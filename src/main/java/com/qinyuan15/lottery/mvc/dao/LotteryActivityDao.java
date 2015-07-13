@@ -82,10 +82,18 @@ public class LotteryActivityDao {
         activity.setExpectEndTime(expectEndTime);
         activity.setContinuousSerialLimit(continuousSerialLimit);
         activity.setExpectParticipantCount(expectParticipantCount);
+
+        // set default values
         activity.setMaxSerialNumber(0);
+        activity.setVirtualParticipants(0);
 
         activity.setExpire(false);
         return HibernateUtils.save(activity);
+    }
+
+    public void updateMaxSerialNumber(Integer id, int serialNumber) {
+        String hql = "UPDATE LotteryActivity SET maxSerialNumber=" + serialNumber + " WHERE id=" + id;
+        HibernateUtils.executeUpdate(hql);
     }
 
     public void increaseMaxSerialNumber(Integer id) {

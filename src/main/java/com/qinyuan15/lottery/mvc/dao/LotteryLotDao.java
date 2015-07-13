@@ -98,8 +98,9 @@ public class LotteryLotDao {
         return new Factory();
     }
 
-    public int countBySerialNumberRange(Integer startSerialNumber, Integer endSerialNumber) {
+    public int countBySerialNumberRange(int activityId, int startSerialNumber, int endSerialNumber) {
         return new HibernateListBuilder()
+                .addEqualFilter("activityId", activityId)
                 .addFilter("serialNumber BETWEEN :startSerialNumber AND :endSerialNumber")
                 .addArgument("startSerialNumber", startSerialNumber)
                 .addArgument("endSerialNumber", endSerialNumber)
