@@ -1,6 +1,6 @@
 ;
 (function () {
-    $('#commodityLotteryLink').addClass('emphasize');
+    // codes about lottery activity form
     var $form = $('#lotteryActivityForm');
     var $startTime = $form.getInputByName('startTime');
     var $autoStartTime = $form.getInputByName('autoStartTime');
@@ -9,21 +9,7 @@
     var $expectParticipantCount = $form.getInputByName('expectParticipantCount');
     var $okButton = $form.getButtonByName('ok');
     var $cancelButton = $form.getButtonByName('cancel');
-    var $deleteImages = $('table.normal img.delete');
     var $editImages = $('table.normal img.edit');
-    var $stopImages = $('table.normal img.stop');
-    var $announceImages = $('table.normal img.announce');
-    var $announceEditForm = $('#announceEditForm');
-    var $announceOkButton = $announceEditForm.getButtonByName('ok');
-    var $announceCancelButton = $announceEditForm.getButtonByName('cancel');
-
-    function showAnnounceEditForm(id, winners, announcement) {
-        JSUtils.showTransparentBackground();
-        $announceEditForm.setInputValue('id', id);
-        $announceEditForm.setInputValue('winners', winners);
-        $announceEditForm.find('textarea[name=announcement]').val(announcement);
-        $announceEditForm.fadeIn(500).focusFirstTextInput();
-    }
 
     function validateInputForm() {
         if (!$autoStartTime.get(0).checked) {
@@ -90,14 +76,7 @@
         $okButton.text('添加抽奖');
         $cancelButton.hide();
     });
-    $deleteImages.click(function () {
-        if (confirm('确定删除？')) {
-            var activityId = $(this).getParentByTagName('tr').dataOptions('id');
-            $.post('admin-lottery-activity-delete.json', {
-                'id': activityId
-            }, JSUtils.normalAjaxCallback);
-        }
-    });
+
     $editImages.click(function () {
         var $tr = $(this).getParentByTagName('tr');
         $form.setInputValue('id', $tr.dataOptions('id'));
@@ -122,6 +101,23 @@
         $okButton.text("保存修改");
         JSUtils.scrollTop($form);
     });
+});
+(function () {
+    // codes about announcement edit form
+    var $stopImages = $('table.normal img.stop');
+    var $announceImages = $('table.normal img.announce');
+    var $announceEditForm = $('#announceEditForm');
+    var $announceOkButton = $announceEditForm.getButtonByName('ok');
+    var $announceCancelButton = $announceEditForm.getButtonByName('cancel');
+
+    function showAnnounceEditForm(id, winners, announcement) {
+        JSUtils.showTransparentBackground();
+        $announceEditForm.setInputValue('id', id);
+        $announceEditForm.setInputValue('winners', winners);
+        $announceEditForm.find('textarea[name=announcement]').val(announcement);
+        $announceEditForm.fadeIn(500).focusFirstTextInput();
+    }
+
     $stopImages.click(function () {
         if (confirm('确定强行结束该抽奖活动？')) {
             var activityId = $(this).getParentByTagName('tr').dataOptions('id');
@@ -153,3 +149,20 @@
         return false;
     });
 })();
+(function () {
+    var $listType = $('div.list-type');
+
+    $listType.find('input[type=radio]').click(function () {
+        location.href = location.origin + location.pathname + '?listType=' + $(this).val();
+    });
+    var $deleteImages = $('table.normal img.delete');
+    $deleteImages.click(function () {
+        if (confirm('确定删除？')) {
+            var activityId = $(this).getParentByTagName('tr').dataOptions('id');
+            $.post('admin-lottery-activity-delete.json', {
+                'id': activityId
+            }, JSUtils.normalAjaxCallback);
+        }
+    });
+});
+$('#commodityLotteryLink').addClass('emphasize');

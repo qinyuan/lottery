@@ -68,6 +68,15 @@ input[type=image] {
     cursor: default;
 }
 
+.float-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    display: none;
+    z-index: 10;
+    background-color: #ffffff;
+}
+
 div.page-width {
     width: 1000px;
     margin-left: auto;
@@ -97,14 +106,6 @@ div.footer {
 
 input.form-control {
     display: inline-block;
-}
-
-#springLoginForm, #registerForm, div.activate-remind {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    display: none;
-    z-index: 10;
 }
 
 #springLoginForm div.title, #registerForm div.title, div.activate-remind div.title {

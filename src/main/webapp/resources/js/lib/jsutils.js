@@ -292,6 +292,31 @@ var JSUtils = {
     },
     isDateOrDateTimeString: function (str) {
         return this.isDateString(str) || this.isDateTimeString(str);
+    },
+    /**
+     * update certain parameter of current url, then return the new url
+     * @param paramKey key of parameter to update
+     * @param paramValue value of parameter to update
+     */
+    updateUrlParam: function (paramKey, paramValue) {
+        var url = location.href;
+        if (url.indexOf('?') < 0) {
+            return url + '?' + paramKey + '=' + paramValue;
+        }
+
+        var stringArray = url.split('?');
+        url = stringArray[0];
+        stringArray = stringArray[1].split('&');
+        for (var i = 0, len = stringArray.length; i < len; i++) {
+            if (stringArray[i].indexOf(paramKey + '=') == 0) {
+                stringArray[i] = paramKey + '=' + paramValue;
+                break;
+            }
+            if (i == len - 1) {
+                stringArray.push(paramKey + '=' + paramValue);
+            }
+        }
+        return url + '?' + stringArray.join('&');
     }
 };
 

@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan15.lottery.mvc.lottery.LotteryLotCounter;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.hibernate.PersistObject;
 
@@ -115,6 +116,8 @@ public class LotteryActivity extends PersistObject {
         this.maxSerialNumber = maxSerialNumber;
     }
 
+
+    //////////////////////////// derivative fields /////////////////////////////////
     private List<LotteryLot> winnerCache;
 
     public List<LotteryLot> getWinners() {
@@ -142,5 +145,19 @@ public class LotteryActivity extends PersistObject {
             commodityCache = new CommodityDao().getInstance(this.commodityId);
         }
         return commodityCache;
+    }
+
+    private Integer realParticipantCountCache;
+
+    public int getRealParticipantCount() {
+        if (realParticipantCountCache == null) {
+            realParticipantCountCache = new LotteryLotCounter().realCount(this.getId());
+        }
+        return realParticipantCountCache;
+    }
+
+    public int getParticipantCount() {
+        return virtualParticipants == null ? getRealParticipantCount() :
+                getRealParticipantCount() + virtualParticipants;
     }
 }

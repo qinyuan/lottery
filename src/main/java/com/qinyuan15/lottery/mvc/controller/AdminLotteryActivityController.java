@@ -23,10 +23,13 @@ public class AdminLotteryActivityController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminLotteryActivityController.class);
 
     @RequestMapping("/admin-lottery-activity")
-    public String index() {
+    public String index(@RequestParam(value = "listType", required = false) String listType) {
         IndexHeaderUtils.setHeaderParameters(this);
 
-        new PaginationAttributeAdder(LotteryActivityDao.factory(), request)
+        boolean listExpire = (listType != null && listType.equals("expire"));
+        setAttribute("listExpire", listExpire);
+
+        new PaginationAttributeAdder(LotteryActivityDao.factory().setExpire(listExpire), request)
                 .setRowItemsName("activities").setPageSize(10).add();
 
         // used by commodity select form

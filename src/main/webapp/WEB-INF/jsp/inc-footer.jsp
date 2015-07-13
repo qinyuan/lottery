@@ -6,7 +6,7 @@
 <div class="footer">
     <span>${footerText}</span>
 </div>
-<div class="shadow" id="springLoginForm">
+<div class="shadow float-panel" id="springLoginForm">
     <form>
         <div class="title">
             <div class="image"><img src="resources/css/images/login-title-image.png"/></div>
@@ -34,7 +34,7 @@
         </div>
     </form>
 </div>
-<div class="shadow" id="registerForm">
+<div class="shadow float-panel" id="registerForm">
     <form action="register-submit.json" method="post">
         <div class="title">
             <div class="text">欢迎注册</div>
@@ -99,7 +99,7 @@
         </div>
     </form>
 </div>
-<div class="shadow activate-remind" id="registerSuccess">
+<div class="shadow float-panel activate-remind" id="registerSuccess">
     <div class="title">
         <div class="text">消息提示</div>
         <div class="close-icon"></div>
