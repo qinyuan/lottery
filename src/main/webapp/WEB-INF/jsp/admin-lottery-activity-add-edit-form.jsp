@@ -20,7 +20,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="title">预计结束时间</td>
+                    <td class="title">预计结束时间<span class="required">*</span></td>
                     <td class="content">
                         <input type="text" name="expectEndTime" class="form-control"
                                placeholder="格式如'2015-03-03 19:00:00'"/>

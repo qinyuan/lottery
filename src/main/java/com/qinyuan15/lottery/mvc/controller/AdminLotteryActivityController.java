@@ -67,12 +67,11 @@ public class AdminLotteryActivityController extends ImageController {
             return fail("商品未选择！");
         }
 
-        if (StringUtils.hasText(expectEndTime)) {
-            if (!DateUtils.isDateOrDateTime(expectEndTime)) {
-                return fail("预计结束时间格式错误！");
-            }
-        } else {
-            expectEndTime = null;
+        if (!StringUtils.hasText(expectEndTime)) {
+            return fail("预计结束时间未填写！");
+        }
+        if (!DateUtils.isDateOrDateTime(expectEndTime)) {
+            return fail("预计结束时间格式错误！");
         }
 
         if (!IntegerUtils.isPositive(virtualLiveness)) {

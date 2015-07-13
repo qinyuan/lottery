@@ -74,14 +74,6 @@ public class LotteryActivityDao {
         }
     }
 
-    /*public List<LotteryActivity> getRunningInstances() {
-        return new HibernateListBuilder().addFilter("endTime IS NULL").build(LotteryActivity.class);
-    }
-
-    public List<LotteryActivity> getExpireInstances() {
-        return new HibernateListBuilder().addFilter("endTime IS NOT NULL").build(LotteryActivity.class);
-    }*/
-
     public Integer add(Integer commodityId, String startTime, String expectEndTime, Integer continuousSerialLimit,
                        Integer expectParticipantCount) {
         LotteryActivity activity = new LotteryActivity();
@@ -90,9 +82,19 @@ public class LotteryActivityDao {
         activity.setExpectEndTime(expectEndTime);
         activity.setContinuousSerialLimit(continuousSerialLimit);
         activity.setExpectParticipantCount(expectParticipantCount);
+        activity.setMaxSerialNumber(0);
 
         activity.setExpire(false);
         return HibernateUtils.save(activity);
+    }
+
+    public void increaseMaxSerialNumber(Integer id) {
+        increaseMaxSerialNumber(id, 1);
+    }
+
+    public void increaseMaxSerialNumber(Integer id, int n) {
+        String hql = "UPDATE LotteryActivity SET maxSerialNumber=maxSerialNumber+" + n + " WHERE id=" + id;
+        HibernateUtils.executeUpdate(hql);
     }
 
     public void update(Integer id, Integer commodityId, String startTime, String expectEndTime,

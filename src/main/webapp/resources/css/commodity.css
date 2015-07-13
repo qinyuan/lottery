@@ -286,7 +286,7 @@ div.body div.detail {
 }
 
 #lotteryResult div.body div.activity-info div.participant-count {
-    width: 160px;
+    width: 155px;
 }
 
 #lotteryResult div.body div.activity-info div.deadline span.icon {
@@ -345,6 +345,7 @@ div.body div.detail {
 
 #lotteryResult div.body div.prompt div.no-chance {
     color: #F01866;
+    display: none;
 }
 
 #lotteryResult div.body div.prompt div.spread {

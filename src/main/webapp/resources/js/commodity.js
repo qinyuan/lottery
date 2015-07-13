@@ -106,7 +106,7 @@
     loadCommodityMap(window['commodityMaps']);
 })();
 (function () {
-    // code about lottery
+    // codes about lottery
     function setFloatPanelUsername($floatPanel, username) {
         $floatPanel.find('div.title div.text span.username').text(username);
     }
@@ -234,50 +234,58 @@
             var minutes = parseInt(seconds / 60);
             seconds -= minutes * 60;
 
+            if (hours < 10) {
+                hours = '0' + hours;
+            }
+            if (minutes < 10) {
+                minutes = '0' + minutes;
+            }
+            if (seconds < 10) {
+                seconds = '0' + seconds;
+            }
+
             $day.text(days);
             $hour.text(hours);
             $minute.text(minutes);
             $second.text(seconds);
         }
     };
+    $lotteryResult.getSpreadDiv = function () {
+        return  $lotteryResult.find('div.body div.prompt div.spread');
+    };
+    $('#takeLotteryAgain').click(function () {
+        $lotteryResult.getSpreadDiv().twinkle(4);
+    });
     function showLotteryResult(options) {
-        $lotteryResult.updateDeadline(options.remainingSeconds);
+        $lotteryResult.updateDeadline(options['remainingSeconds']);
         setFloatPanelUsername($lotteryResult, options.username);
         $lotteryResult.find('div.body div.activity-info div.participant-count span')
-            .text(options.participantCount);
+            .text(options['participantCount']);
 
-        if (options.serialNumbers) {
+        var serialNumbers = options['serialNumbers'];
+        if (serialNumbers) {
             var $numberList = $lotteryResult.find('div.body div.my-lottery div.number div.number-list').empty();
-            for (var i = 0, len = options.serialNumbers.length; i < len; i++) {
-                $numberList.append('<span>' + options.serialNumbers[i] + '</span>')
+            for (var i = 0, len = serialNumbers.length; i < len; i++) {
+                $numberList.append('<span>' + serialNumbers[i] + '</span>')
             }
         }
-        $lotteryResult.find('div.body div.my-lottery span.my-liveness').text(options.liveness);
-        if (options.maxLiveness < options.liveness) {
-            options.maxLiveness = options.liveness;
-        }
-        $lotteryResult.find('div.body div.my-lottery span.max-liveness').text(options.maxLiveness);
-        if (options.success) {
-            $lotteryResult.find('div.body div.prompt div.no-chance').hide();
-        } else {
-            $lotteryResult.find('div.body div.prompt div.no-chance').show();
-        }
+        $lotteryResult.find('div.body div.my-lottery span.my-liveness').text(options['liveness']);
+        $lotteryResult.find('div.body div.my-lottery span.max-liveness').text(options['maxLiveness'])
+            .attr('title', options['maxLivenessUsers']);
+
+        //$lotteryResult.find('div.body div.prompt div.no-chance').hide();
 
         JSUtils.showTransparentBackground(1);
-        $lotteryResult.fadeIn(300)
+        if (options.success) {
+            $lotteryResult.getSpreadDiv().hide();
+            $lotteryResult.fadeIn(300);
+        } else {
+            $lotteryResult.getSpreadDiv().show();
+            $lotteryResult.fadeIn(300, function () {
+                $lotteryResult.getSpreadDiv().twinkle(4);
+            });
+        }
     }
-
-    /*
-     showLotteryResult({
-     'username': 'helloWorld',
-     'participantCount': 25311,
-     'serialNumbers': [101111, 201112],
-     'liveness': 312,
-     'maxLiveness': 456,
-     'success': false,
-     'remainingSeconds': 123111
-     });
-     */
 
     getLotteryLot = function () {
         var $selectedSnapshot = $('div.body div.snapshots div.snapshot.selected');
@@ -285,7 +293,6 @@
         $.post('take-lottery.json', {
             'commodityId': commodityId
         }, function (data) {
-            console.log(data);
             if (data.success) {
                 showLotteryResult(data);
             } else {

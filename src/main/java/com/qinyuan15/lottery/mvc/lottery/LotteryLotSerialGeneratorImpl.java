@@ -12,8 +12,10 @@ public class LotteryLotSerialGeneratorImpl implements LotteryLotSerialGenerator 
 
     @Override
     public synchronized int next() {
-        Integer maxSerialNumber = new LotteryActivityDao().getMaxSerialNumber(this.activityId);
+        LotteryActivityDao dao = new LotteryActivityDao();
+        Integer maxSerialNumber = dao.getMaxSerialNumber(this.activityId);
         if (IntegerUtils.isPositive(maxSerialNumber)) {
+            dao.increaseMaxSerialNumber(this.activityId);
             return maxSerialNumber;
         } else {
             return 1;

@@ -8,6 +8,7 @@
     var $continuousSerialLimit = $form.getInputByName('continuousSerialLimit');
     var $expectParticipantCount = $form.getInputByName('expectParticipantCount');
     var $virtualLiveness = $form.getInputByName('virtualLiveness');
+    var $virtualLivenessUsers = $form.getInputByName('virtualLivenessUsers');
     var $okButton = $form.getButtonByName('ok');
     var $cancelButton = $form.getButtonByName('cancel');
     var $editImages = $('table.normal img.edit');
@@ -27,15 +28,26 @@
 
     function validateInputForm() {
         if (!$autoStartTime.get(0).checked) {
-            if (!JSUtils.isDateOrDateTimeString($startTime.val())) {
+            var startTime = $startTime.trimVal();
+            if (startTime == '') {
+                alert('开始时间未填写！');
+                $startTime.focusOrSelect();
+                return false;
+            }
+            if (!JSUtils.isDateOrDateTimeString(startTime)) {
                 alert('开始时间格式错误！');
                 $startTime.focusOrSelect();
                 return false;
             }
         }
 
-        var expectEndTime = $expectEndTime.val();
-        if (expectEndTime != '' && !JSUtils.isDateOrDateTimeString(expectEndTime)) {
+        var expectEndTime = $expectEndTime.trimVal();
+        if (expectEndTime == '') {
+            alert("预期结束时间未填写！");
+            $expectEndTime.focusOrSelect();
+            return false;
+        }
+        if (!JSUtils.isDateOrDateTimeString(expectEndTime)) {
             alert("预期结束时间格式错误！");
             $expectEndTime.focusOrSelect();
             return false;
@@ -50,10 +62,18 @@
 
         if ($livenessRow.css('display') != 'none') {
             var virtualLiveness = $virtualLiveness.val();
-            if (virtualLiveness != '' && !JSUtils.isNumberString(virtualLiveness)) {
-                alert('最大爱心数只能为数字格式！');
-                $virtualLiveness.focusOrSelect();
-                return false;
+            if (virtualLiveness != '') {
+                if (!JSUtils.isNumberString(virtualLiveness)) {
+                    alert('最大爱心数只能为数字格式！');
+                    $virtualLiveness.focusOrSelect();
+                    return false;
+                }
+                var virtualLivenessUsers = $virtualLivenessUsers.trimVal();
+                if (virtualLivenessUsers == '') {
+                    alert('如果填写了最大爱心，则最大爱心用户必须填写！');
+                    $virtualLivenessUsers.focusOrSelect();
+                    return false;
+                }
             }
         }
 
