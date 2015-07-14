@@ -76,3 +76,12 @@ create table lottery_lot (
   win boolean
   unique(activity_id, user_id, serial_number)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table dual_colored_ball_record (
+  id int primary key auto_increment,
+  year int not null,
+  term int not null,
+  publish_date date not null,
+  result char(100),
+  unique(year, term)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

@@ -95,4 +95,13 @@
         <property name="serialNumber" column="serial_number"/>
         <property name="win" column="win"/>
     </class>
+    <class name="DualColoredBallRecord" table="dual_colored_ball_record">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="year" column="year"/>
+        <property name="term" column="term"/>
+        <property name="publishDate" column="publish_date"/>
+        <property name="result" column="result"/>
+    </class>
 </hibernate-mapping>
