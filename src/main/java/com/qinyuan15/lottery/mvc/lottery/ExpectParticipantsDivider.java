@@ -1,9 +1,42 @@
 package com.qinyuan15.lottery.mvc.lottery;
 
+import com.qinyuan15.utils.DateUtils;
+
+import java.sql.Date;
+
 /**
  * Class to divide participants in a period of time averagely
  * Created by qinyuan on 15-7-14.
  */
 public class ExpectParticipantsDivider {
-    // TODO wait for implement
+    private final Date startTime;
+    private final Date endTime;
+    private final int expectParticipantCount;
+
+    public ExpectParticipantsDivider(String startTime, String endTime, int expectParticipantCount) {
+        this.startTime = DateUtils.newDate(startTime);
+        this.endTime = DateUtils.newDate(endTime);
+        this.expectParticipantCount = expectParticipantCount;
+    }
+
+    public int getCurrentExpectValue() {
+        long startTimestamp = startTime.getTime();
+        long endTimestamp = endTime.getTime();
+
+        if (startTimestamp > endTimestamp) {
+            return 0;
+        }
+
+        long currentTimestamp = System.currentTimeMillis();
+        if (currentTimestamp < startTimestamp) {
+            return 0;
+        }
+        if (currentTimestamp > endTimestamp) {
+            return this.expectParticipantCount;
+        }
+
+        double currentExpectValue = 1.0 * expectParticipantCount * (currentTimestamp - startTimestamp)
+                / (endTimestamp - startTimestamp);
+        return (int) currentExpectValue;
+    }
 }

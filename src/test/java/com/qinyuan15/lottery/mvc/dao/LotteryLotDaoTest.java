@@ -6,9 +6,9 @@ import org.junit.Test;
 public class LotteryLotDaoTest {
     @Test
     public void testAdd() throws Exception {
-        LotteryLotDao dao = new LotteryLotDao();
+        /*LotteryLotDao dao = new LotteryLotDao();
         for (int i = 0; i < 20; i++) {
             dao.add(26, 2, new LotteryLotSerialGeneratorImpl(26, 5));
-        }
+        }*/
     }
 }
