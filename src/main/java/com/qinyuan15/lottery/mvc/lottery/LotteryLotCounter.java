@@ -9,7 +9,22 @@ import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
 public class LotteryLotCounter {
     public int count(LotteryActivity activity) {
         Integer count = activity.getVirtualParticipants();
-        return count == null ? realCount(activity.getId()) : count + realCount(activity.getId());
+        if (count == null) {
+            count = realCount(activity.getId());
+        } else {
+            count += realCount(activity.getId());
+        }
+
+        ExpectParticipantsDivider participantsDivider = new ExpectParticipantsDivider(
+                activity.getStartTime(), activity.getExpectEndTime(), activity.getExpectParticipantCount());
+        int currentExpectParticipantCount = participantsDivider.getCurrentExpectValue();
+        if (currentExpectParticipantCount > count) {
+            new VirtualParticipantCreator().create(activity.getId(),
+                    currentExpectParticipantCount - count);
+            return currentExpectParticipantCount;
+        } else {
+            return count;
+        }
     }
 
     public int realCount(Integer activityId) {

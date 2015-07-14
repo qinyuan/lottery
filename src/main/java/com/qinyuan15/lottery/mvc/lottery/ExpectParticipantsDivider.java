@@ -13,13 +13,17 @@ public class ExpectParticipantsDivider {
     private final Date endTime;
     private final int expectParticipantCount;
 
-    public ExpectParticipantsDivider(String startTime, String endTime, int expectParticipantCount) {
-        this.startTime = DateUtils.newDate(startTime);
-        this.endTime = DateUtils.newDate(endTime);
-        this.expectParticipantCount = expectParticipantCount;
+    public ExpectParticipantsDivider(String startTime, String endTime, Integer expectParticipantCount) {
+        this.startTime = startTime == null ? null : DateUtils.newDate(startTime);
+        this.endTime = endTime == null ? null : DateUtils.newDate(endTime);
+        this.expectParticipantCount = expectParticipantCount == null ? 0 : expectParticipantCount;
     }
 
     public int getCurrentExpectValue() {
+        if (startTime == null || endTime == null || expectParticipantCount == 0) {
+            return 0;
+        }
+
         long startTimestamp = startTime.getTime();
         long endTimestamp = endTime.getTime();
 
