@@ -19,4 +19,15 @@ public class DualColoredBallRecordDaoTest {
             System.out.println(record.getYear() + " " + record.getTerm() + " " + record.getPublishDate());
         }
     }
+
+    @Test
+    public void testGetLatestInstance() {
+        DualColoredBallRecord record = new DualColoredBallRecordDao().getLatestInstance();
+        if (record != null) {
+            System.out.println(record.getYear());
+            System.out.println(record.getTerm());
+            System.out.println(record.getPublishDate());
+            System.out.println(record.getResult());
+        }
+    }
 }

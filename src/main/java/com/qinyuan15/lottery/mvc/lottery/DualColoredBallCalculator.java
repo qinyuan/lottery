@@ -3,16 +3,53 @@ package com.qinyuan15.lottery.mvc.lottery;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecord;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
 import com.qinyuan15.utils.DateUtils;
+import com.qinyuan15.utils.file.ClasspathFileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Properties;
 
 /**
  * Class to calculate deadline of dual colored ball
  * Created by qinyuan on 15-7-14.
  */
 public class DualColoredBallCalculator {
+    private final static Logger LOGGER = LoggerFactory.getLogger(DualColoredBallCalculator.class);
+
+    public final static int PUBLISH_HOUR;
+    public final static int PUBLISH_MINUTE;
+    public final static int PUBLISH_SECOND;
+
+    static {
+        Properties props = new Properties();
+        int hour = 21;
+        int minute = 15;
+        int second = 0;
+        try {
+            props.load(ClasspathFileUtils.getInputStream("dual-colored-ball-publish.properties"));
+            hour = Integer.parseInt(props.getProperty("hour"));
+            minute = Integer.parseInt(props.getProperty("minute"));
+            second = Integer.parseInt(props.getProperty("second"));
+        } catch (Exception e) {
+            LOGGER.error("Fail to load dual colored ball publish configuration, info: {}", e);
+        }
+
+        PUBLISH_HOUR = hour;
+        PUBLISH_MINUTE = minute;
+        PUBLISH_SECOND = second;
+
+    }
+
+    public Date getDateTimeByTermNumber(int termNumber) {
+        Date date = getDateByTermNumber(termNumber);
+        long milliSecondsToAdd = (PUBLISH_HOUR * 3600 + PUBLISH_MINUTE * 60 + PUBLISH_SECOND) * 1000;
+        date.setTime(date.getTime() + milliSecondsToAdd);
+        return date;
+    }
+
     public Date getDateByTermNumber(int termNumber) {
         if (termNumber < 1900000 || termNumber > 3000000) {
             throw new RuntimeException("Invalid term number: " + termNumber);

@@ -3,6 +3,8 @@ package com.qinyuan15.lottery.mvc.dao;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.hibernate.PersistObject;
 
+import java.text.DecimalFormat;
+
 public class DualColoredBallRecord extends PersistObject {
     private Integer year;
     private Integer term;
@@ -39,5 +41,10 @@ public class DualColoredBallRecord extends PersistObject {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    //////////////////////////// derivative fields /////////////////////////////////
+    public String getFullTerm() {
+        return year + new DecimalFormat("000").format(term);
     }
 }

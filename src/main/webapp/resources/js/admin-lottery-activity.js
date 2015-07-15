@@ -9,6 +9,7 @@
     var $expectParticipantCount = $form.getInputByName('expectParticipantCount');
     var $virtualLiveness = $form.getInputByName('virtualLiveness');
     var $virtualLivenessUsers = $form.getInputByName('virtualLivenessUsers');
+    var $dualColoredBallTerm = $form.getInputByName(('dualColoredBallTerm'));
     var $okButton = $form.getButtonByName('ok');
     var $cancelButton = $form.getButtonByName('cancel');
     var $editImages = $('table.normal img.edit');
@@ -23,7 +24,24 @@
         } else {
             $livenessRow.hide();
         }
-        $form.fadeIn(300);
+        $form.fadeIn(300, function () {
+            if ($autoStartTime.get(0).checked) {
+                $dualColoredBallTerm.focusOrSelect();
+            } else {
+                $startTime.focusOrSelect();
+            }
+        });
+    }
+
+    function validateDualColoredBall() {
+        var dualColoredBallTerm = $dualColoredBallTerm.val();
+        if (dualColoredBallTerm.length != 7
+            || !(dualColoredBallTerm.match(/^20\d{5}$/) || dualColoredBallTerm.match(/^19\d{5}$/))) {
+            alert('双色球期数应为19或20开头的7位数字！');
+            $dualColoredBallTerm.focusOrSelect();
+            return false;
+        }
+        return true;
     }
 
     function validateInputForm() {
@@ -39,6 +57,10 @@
                 $startTime.focusOrSelect();
                 return false;
             }
+        }
+
+        if (!validateDualColoredBall()) {
+            return false;
         }
 
         var expectEndTime = $expectEndTime.trimVal();
@@ -88,7 +110,7 @@
 
     $addButton.click(function () {
         showForm(false);
-        $form.getInputByName('expectEndTime').focusOrSelect();
+        //$form.getInputByName('expectEndTime').focusOrSelect();
     });
     $autoStartTime.click(function () {
         var checked = this.checked;
@@ -125,7 +147,28 @@
         $form.hide();
         JSUtils.hideTransparentBackground();
     });
+    function updateExpectEndDateByDualColoredBallTerm() {
+        $.post('dual-colored-ball-query-date.json', {
+            'fullTermNumber': $dualColoredBallTerm.val()
+        }, function (data) {
+            if (data['date']) {
+                $expectEndTime.val(data['date']);
+            }
+        });
+    }
 
+    if ($dualColoredBallTerm.trimVal() != '') {
+        updateExpectEndDateByDualColoredBallTerm();
+    }
+    $dualColoredBallTerm.blur(function () {
+        if (validateDualColoredBall()) {
+            updateExpectEndDateByDualColoredBallTerm();
+        } else {
+            setTimeout(function () {
+                $dualColoredBallTerm.focusOrSelect();
+            }, 100);
+        }
+    });
     $editImages.click(function () {
         showForm(true);
         var $tr = $(this).getParentByTagName('tr');

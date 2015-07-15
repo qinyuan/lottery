@@ -65,6 +65,7 @@ create table lottery_activity(
   virtual_liveness int,
   virtual_liveness_users char(200),
   max_serial_number int not null default 0;
+  dual_colored_ball_term int not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table lottery_lot (

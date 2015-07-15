@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.lottery;
 
+import com.qinyuan15.utils.DateUtils;
 import org.junit.Test;
 
 import java.sql.Date;
@@ -7,6 +8,21 @@ import java.sql.Date;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DualColoredBallCalculatorTest {
+
+    @Test
+    public void testPublishConfiguration() {
+        assertThat(DualColoredBallCalculator.PUBLISH_HOUR).isEqualTo(21);
+        assertThat(DualColoredBallCalculator.PUBLISH_MINUTE).isEqualTo(15);
+        assertThat(DualColoredBallCalculator.PUBLISH_SECOND).isEqualTo(0);
+    }
+
+    @Test
+    public void testGetDateTimeByTermNumber() {
+        DualColoredBallCalculator calculator = new DualColoredBallCalculator();
+        assertThat(DateUtils.toLongString(calculator.getDateTimeByTermNumber(2015001)))
+                .isEqualTo("2015-01-01 21:15:00");
+    }
+
     @Test
     public void testGetDateByTermNumber() throws Exception {
         DualColoredBallCalculator calculator = new DualColoredBallCalculator();
@@ -34,8 +50,6 @@ public class DualColoredBallCalculatorTest {
         assertDate(calculator.getDateByTermNumber(2015006), "2015-01-13");
         assertDate(calculator.getDateByTermNumber(2015005), "2015-01-11");
         assertDate(calculator.getDateByTermNumber(2015004), "2015-01-08");
-
-        //assertDate(calculator.getDateByTermNumber(2015073), "2015-06-25");
     }
 
     private void assertDate(Date date, String dateString) {

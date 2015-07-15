@@ -28,4 +28,9 @@ public class DualColoredBallRecordDao {
                 .addFilter("term<=:term").addArgument("term", term)
                 .addOrder("term", false).getFirstItem(DualColoredBallRecord.class);
     }
+
+    public DualColoredBallRecord getLatestInstance() {
+        return new HibernateListBuilder().addFilter("result IS NOT NULL").addOrder("publishDate", false)
+                .getFirstItem(DualColoredBallRecord.class);
+    }
 }

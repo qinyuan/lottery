@@ -1,8 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.lottery.mvc.dao.CommodityDao;
-import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
-import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
+import com.qinyuan15.lottery.mvc.dao.*;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mvc.PaginationAttributeAdder;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +33,9 @@ public class AdminLotteryActivityController extends ImageController {
 
         // used by commodity select form
         setAttribute("allCommodities", new CommodityDao().getInstances());
+        DualColoredBallRecord latestRecord = new DualColoredBallRecordDao().getLatestInstance();
+        setAttribute("nextDualColoredBallTerm", latestRecord.getYear() +
+                new DecimalFormat("000").format(latestRecord.getTerm() + 1));
 
         setTitle("抽奖管理");
         addCss("admin-form");
