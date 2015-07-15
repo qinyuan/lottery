@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan15.lottery.mvc.dao.*;
+import com.qinyuan15.lottery.mvc.lottery.DualColoredBallTermValidator;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mvc.PaginationAttributeAdder;
@@ -56,7 +57,8 @@ public class AdminLotteryActivityController extends ImageController {
                           @RequestParam(value = "continuousSerialLimit", required = true) Integer continuousSerialLimit,
                           @RequestParam(value = "expectParticipantCount", required = true) Integer expectParticipantCount,
                           @RequestParam(value = "virtualLiveness", required = true) Integer virtualLiveness,
-                          @RequestParam(value = "virtualLivenessUsers", required = true) String virtualLivenessUsers) {
+                          @RequestParam(value = "virtualLivenessUsers", required = true) String virtualLivenessUsers,
+                          @RequestParam(value = "dualColoredBallTerm", required = true) Integer dualColoredBallTerm) {
         if (StringUtils.hasText(autoStartTime)) {
             startTime = DateUtils.nowString();
         } else {
@@ -67,6 +69,10 @@ public class AdminLotteryActivityController extends ImageController {
 
         if (!IntegerUtils.isPositive(commodityId)) {
             return fail("商品未选择！");
+        }
+
+        if (!new DualColoredBallTermValidator().validate(dualColoredBallTerm)) {
+            return fail("双色球期数应为19或20开头的7位数字！");
         }
 
         if (!StringUtils.hasText(expectEndTime)) {
@@ -88,9 +94,10 @@ public class AdminLotteryActivityController extends ImageController {
             LotteryActivityDao dao = new LotteryActivityDao();
             if (IntegerUtils.isPositive(id)) {
                 dao.update(id, commodityId, startTime, expectEndTime, continuousSerialLimit,
-                        expectParticipantCount, virtualLiveness, virtualLivenessUsers);
+                        expectParticipantCount, virtualLiveness, virtualLivenessUsers, dualColoredBallTerm);
             } else {
-                dao.add(commodityId, startTime, expectEndTime, continuousSerialLimit, expectParticipantCount);
+                dao.add(commodityId, startTime, expectEndTime, continuousSerialLimit,
+                        expectParticipantCount, dualColoredBallTerm);
             }
             return success();
         } catch (Exception e) {

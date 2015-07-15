@@ -75,13 +75,14 @@ public class LotteryActivityDao {
     }
 
     public Integer add(Integer commodityId, String startTime, String expectEndTime, Integer continuousSerialLimit,
-                       Integer expectParticipantCount) {
+                       Integer expectParticipantCount, Integer dualColoredBallTerm) {
         LotteryActivity activity = new LotteryActivity();
         activity.setCommodityId(commodityId);
         activity.setStartTime(startTime);
         activity.setExpectEndTime(expectEndTime);
         activity.setContinuousSerialLimit(continuousSerialLimit);
         activity.setExpectParticipantCount(expectParticipantCount);
+        activity.setDualColoredBallTerm(dualColoredBallTerm);
 
         // set default values
         activity.setMaxSerialNumber(0);
@@ -107,7 +108,7 @@ public class LotteryActivityDao {
 
     public void update(Integer id, Integer commodityId, String startTime, String expectEndTime,
                        Integer continuousSerialLimit, Integer expectParticipantCount,
-                       Integer virutalLiveness, String virtualLivenessUsers) {
+                       Integer virutalLiveness, String virtualLivenessUsers, Integer dualColoredBallTerm) {
         LotteryActivity activity = getInstance(id);
         activity.setCommodityId(commodityId);
         activity.setStartTime(startTime);
@@ -116,6 +117,7 @@ public class LotteryActivityDao {
         activity.setExpectParticipantCount(expectParticipantCount);
         activity.setVirtualLiveness(virutalLiveness);
         activity.setVirtualLivenessUsers(virtualLivenessUsers);
+        activity.setDualColoredBallTerm(dualColoredBallTerm);
         HibernateUtils.update(activity);
     }
 

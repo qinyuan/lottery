@@ -84,6 +84,7 @@
         <property name="virtualLiveness" column="virtual_liveness"/>
         <property name="virtualLivenessUsers" column="virtual_liveness_users"/>
         <property name="maxSerialNumber" column="max_serial_number"/>
+        <property name="dualColoredBallTerm" column="dual_colored_ball_term"/>
     </class>
     <class name="LotteryLot" table="lottery_lot">
         <id name="id" column="id">

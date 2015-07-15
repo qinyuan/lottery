@@ -24,12 +24,11 @@ public class DualColoredBallCalculator {
     public final static int PUBLISH_SECOND;
 
     static {
-        Properties props = new Properties();
         int hour = 21;
         int minute = 15;
         int second = 0;
         try {
-            props.load(ClasspathFileUtils.getInputStream("dual-colored-ball-publish.properties"));
+            Properties props = ClasspathFileUtils.getProperties("dual-colored-ball-publish.properties");
             hour = Integer.parseInt(props.getProperty("hour"));
             minute = Integer.parseInt(props.getProperty("minute"));
             second = Integer.parseInt(props.getProperty("second"));
@@ -40,7 +39,6 @@ public class DualColoredBallCalculator {
         PUBLISH_HOUR = hour;
         PUBLISH_MINUTE = minute;
         PUBLISH_SECOND = second;
-
     }
 
     public Date getDateTimeByTermNumber(int termNumber) {
@@ -51,7 +49,7 @@ public class DualColoredBallCalculator {
     }
 
     public Date getDateByTermNumber(int termNumber) {
-        if (termNumber < 1900000 || termNumber > 3000000) {
+        if (!new DualColoredBallTermValidator().validate(termNumber)) {
             throw new RuntimeException("Invalid term number: " + termNumber);
         }
 

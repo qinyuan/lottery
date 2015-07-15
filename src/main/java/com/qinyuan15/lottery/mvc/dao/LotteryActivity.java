@@ -19,6 +19,7 @@ public class LotteryActivity extends PersistObject {
     private Integer virtualLiveness;
     private String virtualLivenessUsers;
     private Integer maxSerialNumber;
+    private Integer dualColoredBallTerm;
 
     public Integer getCommodityId() {
         return commodityId;
@@ -116,6 +117,13 @@ public class LotteryActivity extends PersistObject {
         this.maxSerialNumber = maxSerialNumber;
     }
 
+    public Integer getDualColoredBallTerm() {
+        return dualColoredBallTerm;
+    }
+
+    public void setDualColoredBallTerm(Integer dualColoredBallTerm) {
+        this.dualColoredBallTerm = dualColoredBallTerm;
+    }
 
     //////////////////////////// derivative fields /////////////////////////////////
     private List<LotteryLot> winnerCache;
