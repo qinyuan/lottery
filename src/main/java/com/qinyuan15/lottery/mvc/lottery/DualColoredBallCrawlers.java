@@ -4,6 +4,8 @@ import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.concurrent.ThreadUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Date;
 import java.util.HashMap;
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DualColoredBallCrawlers {
+    private final static Logger LOGGER = LoggerFactory.getLogger(DualColoredBallCrawlers.class);
     private Map<Integer, CrawlThread> threads = new HashMap<>();
     private List<DualColoredBallCrawler> crawlers;
 
@@ -55,32 +58,43 @@ public class DualColoredBallCrawlers {
         @Override
         public void run() {
             while (true) {
+                if (!DateUtils.isDateOrDateTime(activity.getExpectEndTime())) {
+                    break;
+                }
+
                 Date expectEndTime = DateUtils.newDate(activity.getExpectEndTime());
                 Date now = DateUtils.now();
                 long timeDiff = Math.abs(expectEndTime.getTime() - now.getTime());
-                if (crawl()) {
-                    threads.remove(activity.getId());
-                    break;
+                try {
+                    Long result = getResult();
+                    if (result != null) {
+                        new LotteryActivityDao().end(activity.getId());
+                        new VirtualParticipantAdjuster().adjust(activity.getId(), result);
+                        threads.remove(activity.getId());
+                        break;
+                    }
+                } catch (Throwable e) {
+                    LOGGER.error("Fail to crawl activity whose id is {}, info: {}", activity.getId(), e);
                 }
                 ThreadUtils.sleep(((double) timeDiff) / 1000 / 3);
             }
         }
 
-        /**
-         * @return true if success else false
-         */
-        private boolean crawl() {
+        private Long getResult() {
             if (crawlers == null) {
-                return false;
+                return null;
             }
+            if (!new DualColoredBallTermValidator().validate(activity.getDualColoredBallTerm())) {
+                return null;
+            }
+
             for (DualColoredBallCrawler crawler : crawlers) {
                 String result = crawler.getResult(activity.getDualColoredBallTerm());
-                if (result != null) {
-                    // TODO adjust virtual participants here
-                    return true;
+                if (result != null && result.matches("^\\d{12}$")) {
+                    return Long.parseLong(result);
                 }
             }
-            return false;
+            return null;
         }
     }
 }

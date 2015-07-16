@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.lottery;
 
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
+import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
 
 /**
@@ -15,10 +16,14 @@ public class LotteryLotCounter {
             count += realCount(activity.getId());
         }
 
+        if (activity.getExpire()) {
+            return count;
+        }
+
         ExpectParticipantsDivider participantsDivider = new ExpectParticipantsDivider(
                 activity.getStartTime(), activity.getExpectEndTime(), activity.getExpectParticipantCount());
         int currentExpectParticipantCount = participantsDivider.getCurrentExpectValue();
-        if (currentExpectParticipantCount > count) {
+        if (currentExpectParticipantCount > count && !new LotteryActivityDao().isExpire(activity.getId())) {
             new VirtualParticipantCreator().create(activity.getId(),
                     currentExpectParticipantCount - count);
             return currentExpectParticipantCount;

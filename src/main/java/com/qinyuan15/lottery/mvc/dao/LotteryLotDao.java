@@ -106,4 +106,11 @@ public class LotteryLotDao {
                 .addArgument("endSerialNumber", endSerialNumber)
                 .count(LotteryLot.class);
     }
+
+    public List<Integer> getSerialNumbersByActivityId(Integer activityId) {
+        @SuppressWarnings("unchecked")
+        List<Integer> serialNumbers = (List) new HibernateListBuilder().addEqualFilter("activityId", activityId)
+                .build("SELECT serialNumber FROM LotteryLot");
+        return serialNumbers;
+    }
 }

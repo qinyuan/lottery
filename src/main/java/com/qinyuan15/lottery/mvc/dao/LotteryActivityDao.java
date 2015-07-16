@@ -141,11 +141,12 @@ public class LotteryActivityDao {
      * @return true is lottery activity can be found and is expired, otherwise false
      */
     public boolean isExpire(Integer id) {
-        LotteryActivity activity = getInstance(id);
-        if (activity == null) {
-            return false;
+        String hql = "SELECT expire FROM LotteryActivity WHERE id=" + id;
+        Boolean expire = (Boolean) new HibernateListBuilder().getFirstItem(hql);
+        if (expire == null) {
+            expire = false;
         }
-        return activity.getExpire();
+        return expire;
     }
 
     public void delete(Integer id) {

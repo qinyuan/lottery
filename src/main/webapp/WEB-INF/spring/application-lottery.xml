@@ -6,4 +6,11 @@
     <bean id="lotNumberFormat" class="java.text.DecimalFormat">
         <constructor-arg value="000000"/>
     </bean>
+    <bean class="com.qinyuan15.lottery.mvc.lottery.DualColoredBallCrawlers" init-method="init">
+        <property name="crawlers">
+            <list>
+                <bean class="com.qinyuan15.lottery.mvc.lottery.BaiduLecaiCrawler"/>
+            </list>
+        </property>
+    </bean>
 </beans>
