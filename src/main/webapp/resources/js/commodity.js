@@ -254,7 +254,7 @@
         return  $lotteryResult.find('div.body div.prompt div.spread');
     };
     $('#takeLotteryAgain').click(function () {
-        $lotteryResult.getSpreadDiv().twinkle(4);
+        getLotteryLot();
     });
     function showLotteryResult(options) {
         $lotteryResult.updateDeadline(options['remainingSeconds']);
@@ -285,6 +285,7 @@
                 $lotteryResult.getSpreadDiv().twinkle(4);
             });
         }
+        JSUtils.scrollToVerticalCenter($lotteryResult);
     }
 
     getLotteryLot = function () {

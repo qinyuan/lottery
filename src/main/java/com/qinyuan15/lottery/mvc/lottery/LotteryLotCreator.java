@@ -1,8 +1,10 @@
 package com.qinyuan15.lottery.mvc.lottery;
 
+import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryLot;
 import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
 import com.qinyuan15.lottery.mvc.dao.User;
+import com.qinyuan15.utils.IntegerUtils;
 
 import java.util.List;
 
@@ -22,7 +24,6 @@ public class LotteryLotCreator {
     }
 
     public CreateResult create() {
-        //LotteryLotDao dao = new Lottery
         List<LotteryLot> lots = LotteryLotDao.factory()
                 .setActivityId(activityId)
                 .setUserId(user.getId())
@@ -42,8 +43,19 @@ public class LotteryLotCreator {
     }
 
     private int getAvailableLotCount() {
-        // TODO take liveness into consideration
-        return 1;
+        int count = 1;
+
+        Integer newLotLivness = AppConfig.getNewLotLiveness();
+        if (!IntegerUtils.isPositive(newLotLivness)) {
+            return count;
+        }
+
+        Integer livenesss = user.getLiveness();
+        if (livenesss == null) {
+            return count;
+        }
+
+        return count + livenesss / newLotLivness;
     }
 
     public static class CreateResult {

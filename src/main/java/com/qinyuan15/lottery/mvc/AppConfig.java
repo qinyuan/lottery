@@ -92,6 +92,96 @@ public class AppConfig {
         dao.save(FAVICON_KEY, favicon);
     }
 
+    private final static String SINA_WEIBO_TITLE_KEY = "sinaWeiboTitle";
+
+    public static String getSinaWeiboTitle() {
+        return dao.get(SINA_WEIBO_TITLE_KEY);
+    }
+
+    public static void updateSinaWeiboTitle(String title) {
+        dao.save(SINA_WEIBO_TITLE_KEY, title);
+    }
+
+    private final static String SINA_WEIBO_INCLUDE_PICTURE_KEY = "sinaWeiboIncludePicture";
+
+    public static Boolean getSinaWeiboIncludePicture() {
+        return dao.getBoolean(SINA_WEIBO_INCLUDE_PICTURE_KEY);
+    }
+
+    public static void updateSinaWeiboIncludePicture(Boolean includePicture) {
+        dao.saveBoolean(SINA_WEIBO_INCLUDE_PICTURE_KEY, includePicture);
+    }
+
+    private final static String QQ_TITLE_KEY = "qqTitle";
+
+    public static String getQQTitle() {
+        return dao.get(QQ_TITLE_KEY);
+    }
+
+    public static void updateQQTitle(String title) {
+        dao.save(QQ_TITLE_KEY, title);
+    }
+
+    private final static String QQ_SUMMARY_KEY = "qqSummary";
+
+    public static String getQQSummary() {
+        return dao.get(QQ_SUMMARY_KEY);
+    }
+
+    public static void updateQQSummary(String summary) {
+        dao.save(QQ_SUMMARY_KEY, summary);
+    }
+
+    private final static String QQ_INCLUDE_PICTURE_KEY = "qqIncludePicture";
+
+    public static Boolean getQQIncludePicture() {
+        return dao.getBoolean(QQ_INCLUDE_PICTURE_KEY);
+    }
+
+    public static void updateQQIncludePicture(Boolean includePicture) {
+        dao.saveBoolean(QQ_INCLUDE_PICTURE_KEY, includePicture);
+    }
+
+    private final static String QZONE_TITLE_KEY = "qzoneTitle";
+
+    public static String getQZoneTitle() {
+        return dao.get(QZONE_TITLE_KEY);
+    }
+
+    public static void updateQzoneTitle(String title) {
+        dao.save(QZONE_TITLE_KEY, title);
+    }
+
+    private final static String QZONE_SUMMARY_KEY = "qzoneSummary";
+
+    public static String getQzoneSummary() {
+        return dao.get(QZONE_SUMMARY_KEY);
+    }
+
+    public static void updateQzoneSummary(String summary) {
+        dao.save(QZONE_SUMMARY_KEY, summary);
+    }
+
+    private final static String QZONE_INCLUDE_PICTURE_KEY = "qzoneIncludePicture";
+
+    public static Boolean getQzoneIncludePicture() {
+        return dao.getBoolean(QZONE_INCLUDE_PICTURE_KEY);
+    }
+
+    public static void updateQzoneIncludePicture(Boolean includePicture) {
+        dao.saveBoolean(QZONE_INCLUDE_PICTURE_KEY, includePicture);
+    }
+
+    private final static String NEW_LOT_LIVENESS_KEY = "newLotLiveness";
+
+    public static Integer getNewLotLiveness() {
+        return dao.getInteger(NEW_LOT_LIVENESS_KEY);
+    }
+
+    public static void updateNewLotLiveness(Integer newLotLiveness) {
+        dao.saveInteger(NEW_LOT_LIVENESS_KEY, newLotLiveness);
+    }
+
     private final static String ACTIVATE_MAIL_SUBJECT_TEMPLATE_KEY = "activateMailSubjectTemplate";
 
     public static String getActivateMailSubjectTemplate() {

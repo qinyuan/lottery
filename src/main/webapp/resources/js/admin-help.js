@@ -20,13 +20,7 @@
         if (groupId == null) {
             return;
         }
-        var top = (JSUtils.getWindowHeight() - $groupItemFormDiv.height()) / 2;
-        if (top < 0) {
-            top = 0;
-        }
-        top = top + $(window).scrollTop();
-        $groupItemFormDiv.css('top', top);
-
+        JSUtils.scrollToVerticalCenter($groupItemFormDiv);
         $groupItemFormDiv.find('input[name=groupId]').val(groupId);
         $groupItemFormDiv.find('input[name=id]').val(id);
         $groupItemFormDiv.find('input[name=icon]').val(icon);
@@ -176,7 +170,6 @@
         }
         return true;
     });
-
 
     editHelpItemByRightDiv = function (target) {
         var $itemDiv = $(target).getParentByTagNameAndClass('div', 'item');

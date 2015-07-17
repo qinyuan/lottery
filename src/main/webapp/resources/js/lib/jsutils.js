@@ -123,6 +123,18 @@ var JSUtils = {
         });
     },
     /**
+     * scroll certain html element to vertical center
+     * @param $element
+     */
+    scrollToVerticalCenter: function ($element) {
+        var top = (JSUtils.getWindowHeight() - $element.height()) / 2;
+        if (top < 0) {
+            top = 0;
+        }
+        top = top + $(window).scrollTop();
+        $element.css({'top': top, 'position': 'absolute', 'margin-top': 0});
+    },
+    /**
      * In firefox, offsetX and offsetY is undefined, so we use this function to
      * ensure compatibility to firefox
      * @param e event object

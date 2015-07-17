@@ -191,9 +191,16 @@ div.body div.detail {
 
 #lotteryExceptionPrompt, #telInputForm, #lotteryResult {
     width: 484px;
-    height: 350px;
     margin-left: -242px;
+}
+
+#lotteryExceptionPrompt, #telInputForm {
+    height: 350px;
     margin-top: -175px;
+}
+
+#lotteryResult {
+    min-height: 350px;
 }
 
 #telInputForm div.body {
@@ -262,6 +269,10 @@ div.body div.detail {
     top: 180px;
     left: 315px;
     font-size: 10pt;
+}
+
+#lotteryResult div.body {
+    padding-bottom: 5px;
 }
 
 #lotteryResult div.body span {

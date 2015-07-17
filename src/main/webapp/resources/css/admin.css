@@ -37,6 +37,15 @@ div.form > form div.edit-unit td.input input {
     height: 30px;
 }
 
+div.form > form div.edit-unit td.input.boolean input {
+    height: 17px;
+    vertical-align: -3px;
+}
+
+div.form > form div.edit-unit td.input.boolean span {
+    margin-right: 10px;
+}
+
 div.form > form div.submit {
     text-align: center;
     padding: 10px;

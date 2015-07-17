@@ -1,20 +1,9 @@
 ;
 (function () {
-    function validateUploadFile(id, name) {
-        var $textInput = $('#' + id);
-        if ($textInput.val().trim() == '' && $('#' + id + 'File').val().trim() == '') {
-            alert(name + '未设置');
-            $textInput.focusOrSelect();
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     $('#submitButton').click(function (e) {
-        if ((!validateUploadFile('indexHeaderLeftLogo', '左图标'))
-            || (!validateUploadFile('indexHeaderRightLogo', '右图标'))
-            || (!validateUploadFile('indexHeaderSlogan', '右侧宣传图片'))) {
+        if ((!JSUtils.validateUploadFile('indexHeaderLeftLogo', '左图标未设置'))
+            || (!JSUtils.validateUploadFile('indexHeaderRightLogo', '右图标未设置'))
+            || (!JSUtils.validateUploadFile('indexHeaderSlogan', '右侧宣传图片未设置'))) {
             e.preventDefault();
             return false;
         } else {

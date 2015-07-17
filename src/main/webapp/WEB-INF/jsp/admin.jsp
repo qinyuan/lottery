@@ -127,7 +127,7 @@
                         <td class="title">页尾文字</td>
                         <td class="input">
                             <input type="text" class="form-control" name="footerText" value="${footerText}"
-                                   placeholder="在些输入页面底部的文字"/>
+                                   placeholder="在此输入页面底部的文字"/>
                         </td>
                     </tr>
                     </tbody>
@@ -178,7 +178,8 @@
                             </div>
                         </td>
                         <td class="input">
-                            <textarea class="ckeditor" name="activateMailContentTemplate">${activateMailContentTemplate}</textarea>
+                            <textarea class="ckeditor"
+                                      name="activateMailContentTemplate">${activateMailContentTemplate}</textarea>
                         </td>
                     </tr>
                     </tbody>

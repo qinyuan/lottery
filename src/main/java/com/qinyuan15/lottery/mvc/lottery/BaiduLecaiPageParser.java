@@ -29,7 +29,7 @@ public class BaiduLecaiPageParser implements DualColoredBallPageParser {
             Map<String, Object> data = (Map) object.get("data");
             Map<String, Object> result = (Map) data.get("result");
             if (result == null) {
-                LOGGER.error("Dual colored ball haven's been drawn");
+                LOGGER.warn("Dual colored ball haven's been drawn");
                 return null;
             }
 
