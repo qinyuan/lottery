@@ -41,6 +41,9 @@
         <property name="tel"/>
         <property name="active"/>
         <property name="liveness"/>
+        <property name="serialKey" column="serial_key"/>
+        <property name="spreadUserId" column="spread_user_id"/>
+        <property name="spreadWay" column="spread_way"/>
     </class>
     <class name="ActivateRequest" table="activate_request">
         <id name="id" column="id">

@@ -28,10 +28,10 @@ public class DualColoredBallCalculator {
         int minute = 15;
         int second = 0;
         try {
-            Properties props = ClasspathFileUtils.getProperties("dual-colored-ball-publish.properties");
-            hour = Integer.parseInt(props.getProperty("hour"));
-            minute = Integer.parseInt(props.getProperty("minute"));
-            second = Integer.parseInt(props.getProperty("second"));
+            Properties props = ClasspathFileUtils.getProperties("global-config.properties");
+            hour = Integer.parseInt(props.getProperty("dualColoredBallPublishHour"));
+            minute = Integer.parseInt(props.getProperty("dualColoredBallPublishMinute"));
+            second = Integer.parseInt(props.getProperty("dualColoredBallPublishSecond"));
         } catch (Exception e) {
             LOGGER.error("Fail to load dual colored ball publish configuration, info: {}", e);
         }

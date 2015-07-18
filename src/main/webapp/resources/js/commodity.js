@@ -262,6 +262,7 @@
         $lotteryResult.find('div.body div.activity-info div.participant-count span')
             .text(options['participantCount']);
 
+        // serial number
         var serialNumbers = options['serialNumbers'];
         if (serialNumbers) {
             var $numberList = $lotteryResult.find('div.body div.my-lottery div.number div.number-list').empty();
@@ -269,12 +270,19 @@
                 $numberList.append('<span>' + serialNumbers[i] + '</span>')
             }
         }
+
+        // liveness
         $lotteryResult.find('div.body div.my-lottery span.my-liveness').text(options['liveness']);
         $lotteryResult.find('div.body div.my-lottery span.max-liveness').text(options['maxLiveness'])
             .attr('title', options['maxLivenessUsers']);
 
-        //$lotteryResult.find('div.body div.prompt div.no-chance').hide();
+        // share url
+        var $share = $lotteryResult.find('div.body div.share');
+        $share.find('a.sina').attr('href', options['sinaWeiboShareUrl']);
+        $share.find('a.qq').attr('href', options['qqShareUrl']);
+        $share.find('a.qzone').attr('href', options['qzoneShareUrl']);
 
+        // show float panel
         JSUtils.showTransparentBackground(1);
         if (options.success) {
             $lotteryResult.getSpreadDiv().hide();

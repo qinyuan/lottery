@@ -2,12 +2,21 @@ package com.qinyuan15.lottery.mvc;
 
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.config.AppConfigDao;
+import com.qinyuan15.utils.file.ClasspathFileUtils;
 
 /**
  * Application Configuration
  * Created by qinyuan on 15-6-16.
  */
 public class AppConfig {
+    public static String getAppHost() {
+        String appHost = ClasspathFileUtils.getProperties("global-config.properties").getProperty("appHost");
+        if (!appHost.endsWith("/")) {
+            appHost += "/";
+        }
+        return appHost;
+    }
+
     private final static AppConfigDao dao = new AppConfigDao();
 
     private final static String INDEX_HEADER_LEFT_LOGO_KEY = "indexHeaderLeftLogo";

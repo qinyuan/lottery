@@ -18,7 +18,7 @@ public class ActivateRequestDao {
         request.setUserId(userId);
 
         do {
-            request.setSerialKey(RandomStringUtils.randomAlphabetic(SERIAL_KEY_LENGTH));
+            request.setSerialKey(RandomStringUtils.randomAlphanumeric(SERIAL_KEY_LENGTH));
         } while (getInstanceBySerialKey(request.getSerialKey()) != null);
 
         request.setSendTime(DateUtils.nowString());

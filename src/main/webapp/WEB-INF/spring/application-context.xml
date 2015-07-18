@@ -8,7 +8,7 @@
             http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-    <context:property-placeholder location="classpath:spring.properties"/>
+    <context:property-placeholder location="classpath:global-config.properties"/>
     <import resource="application-security.xml"/>
     <import resource="application-image.xml"/>
     <import resource="application-lottery.xml"/>

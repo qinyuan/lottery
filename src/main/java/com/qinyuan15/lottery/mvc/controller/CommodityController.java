@@ -8,6 +8,7 @@ import com.qinyuan15.utils.image.ImageMap;
 import com.qinyuan15.utils.image.ImageMapDao;
 import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,8 +21,12 @@ public class CommodityController extends ImageController {
     private ImageMapDao mapDao = new ImageMapDao(ImageMapType.COMMODITY);
 
     @RequestMapping("/commodity")
-    public String index(@RequestParam(value = "id", required = false) Integer id) {
+    public String index(@RequestParam(value = "id", required = false) Integer id,
+                        @RequestParam(value = "fromUser", required = false) String userSerialKey,
+                        @RequestParam(value = "medium", required = false) String medium) {
         CommodityHeaderUtils.setHeaderParameters(this);
+
+        recordSpreader(userSerialKey, medium);
 
         CommodityDao dao = new CommodityDao();
         Commodity commodity = dao.getInstance(id);
@@ -47,6 +52,16 @@ public class CommodityController extends ImageController {
         addJs("resources/js/lib/handlebars.min-v1.3.0", false);
         addCssAndJs("commodity");
         return "commodity";
+    }
+
+    public final static String SPREAD_USER_SERIAL_KEY_SESSION_KEY = "spreadUserSerialKey";
+    public final static String SPREAD_MEDIUM_SESSION_KEY = "spreadMedium";
+
+    private void recordSpreader(String userSerialKey, String medium) {
+        if (StringUtils.hasText(userSerialKey) && StringUtils.hasText(medium)) {
+            session.setAttribute(SPREAD_USER_SERIAL_KEY_SESSION_KEY, userSerialKey);
+            session.setAttribute(SPREAD_MEDIUM_SESSION_KEY, medium);
+        }
     }
 
     private CommodityUrlAdapter getUrlAdapter() {

@@ -53,4 +53,10 @@ public class UserDaoTest {
     public void testGetInstances() {
         System.out.println(userDao.getInstances().size());
     }
+
+    @Test
+    public void testGetUserIdBySerialKey() {
+        System.out.println(userDao.getIdBySerialKey("adjfklsajfd"));
+        System.out.println(userDao.getIdBySerialKey("mIJGXjen64YICnzsfjMhP6vpe4V2kI83mIFTd4h7PyMqbmA8411VAu3fZlBoMJvzXjwSx0Y1L4QYIkUi3m9UDVNnFOt0EfmpdKyf"));
+    }
 }

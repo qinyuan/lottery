@@ -27,6 +27,9 @@ alter table user add column email char(200) unique;
 alter table user add column tel char(50);
 alter table user add column active boolean not null default false;
 alter table user add column liveness int;
+alter table user add column serial_key char(200) unique;
+alter table user add column spread_user_id int;
+alter table user add column spread_way char(50);
 
 create table activate_request (
   id int primary key auto_increment,

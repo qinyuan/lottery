@@ -520,3 +520,27 @@ jQuery.fn.showForAWhile = function (milliSeconds) {
         self.fadeOut(500);
     }, milliSeconds)
 };
+
+if (JSUtils.isFirefox()) {
+    /*
+     * Patch of bug of firefox.
+     * In firefox, if we use "javascript:void(XXX)" in map area,
+     * problem will happen
+     */
+    setTimeout(function () {
+        /*
+         * this code run by 1 seconds delay, ensure that all map area is loaded
+         * before this code run
+         */
+        $('map area').filter(function () {
+            return this.href != null && this.href.match(/^javascript:void\(/);
+        }).click(function (e) {
+            e.preventDefault();
+            var code = this.href.substring("javascript:void(".length, this.href.length - 1);
+            if (code.match(/\(\)$/)) {
+                code = code.replace(/\(\)$/, '');
+                window[code]();
+            }
+        });
+    }, 1000);
+}

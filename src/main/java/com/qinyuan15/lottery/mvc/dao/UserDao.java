@@ -4,6 +4,7 @@ import com.qinyuan15.utils.hibernate.HibernateDeleter;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 import com.qinyuan15.utils.security.SimpleUserDao;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -13,14 +14,22 @@ import java.util.List;
  * Created by qinyuan on 15-6-29.
  */
 public class UserDao extends SimpleUserDao {
-    private Integer add(String username, String password, String role, String email, String tel) {
+    public final static int SERIAL_KEY_LENGTH = 100;
+
+    private Integer add(String username, String password, String role, String email, String tel,
+                        Integer spreadUserId, String spreadWay) {
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
         user.setRole(role);
         user.setEmail(email);
         user.setTel(tel);
+        user.setSpreadUserId(spreadUserId);
+        user.setSpreadWay(spreadWay);
+
+        // set default value
         user.setActive(false);
+        user.setSerialKey(RandomStringUtils.randomAlphanumeric(SERIAL_KEY_LENGTH));
         return HibernateUtils.save(user);
     }
 
@@ -63,7 +72,7 @@ public class UserDao extends SimpleUserDao {
     }
 
     public Integer addAdmin(String username, String password) {
-        return add(username, password, User.ADMIN, null, null);
+        return add(username, password, User.ADMIN, null, null, null, null);
     }
 
     public void activate(Integer id) {
@@ -72,8 +81,12 @@ public class UserDao extends SimpleUserDao {
         HibernateUtils.update(user);
     }
 
-    public Integer addNormal(String username, String password, String email, String tel) {
-        return add(username, password, User.NORMAL, email, tel);
+    public Integer addNormal(String username, String password, String email) {
+        return addNormal(username, password, email, null, null);
+    }
+
+    public Integer addNormal(String username, String password, String email, Integer spreadUserId, String spreadWay) {
+        return add(username, password, User.NORMAL, email, null, spreadUserId, spreadWay);
     }
 
     public void updateTel(Integer id, String tel) {
@@ -92,5 +105,17 @@ public class UserDao extends SimpleUserDao {
 
     public List<User> getInstances() {
         return new HibernateListBuilder().build(User.class);
+    }
+
+    public Integer getIdBySerialKey(String serialKey) {
+        if (!StringUtils.hasText(serialKey)) {
+            return null;
+        }
+
+        @SuppressWarnings("unchecked")
+        Integer userId = (Integer) new HibernateListBuilder().addEqualFilter("serialKey", serialKey)
+                .getFirstItem("SELECT id FROM User");
+        return userId;
+
     }
 }

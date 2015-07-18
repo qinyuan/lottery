@@ -69,13 +69,31 @@ public class RegisterController extends BaseController {
         }
 
         try {
-            Integer userId = userDao.addNormal(username, password, email, null);
+            Integer userId = userDao.addNormal(username, password, email, getSpreadUserId(), getSpreadWay());
             new ActivateMailSender(getActivateUrl()).send(userId);
             return success();
         } catch (Exception e) {
             LOGGER.error("fail to add user, username: {}, password: {}, email {}, info {}",
                     username, password, email, e);
             return failByDatabaseError();
+        }
+    }
+
+    private String getSpreadWay() {
+        Object spreadWay = session.getAttribute(CommodityController.SPREAD_MEDIUM_SESSION_KEY);
+        if (spreadWay != null && spreadWay instanceof String) {
+            return (String) spreadWay;
+        } else {
+            return null;
+        }
+    }
+
+    private Integer getSpreadUserId() {
+        Object spreadUserSerialKey = session.getAttribute(CommodityController.SPREAD_USER_SERIAL_KEY_SESSION_KEY);
+        if (spreadUserSerialKey != null && spreadUserSerialKey instanceof String) {
+            return userDao.getIdBySerialKey((String) spreadUserSerialKey);
+        } else {
+            return null;
         }
     }
 

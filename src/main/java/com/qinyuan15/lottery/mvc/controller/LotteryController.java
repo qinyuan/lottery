@@ -1,11 +1,16 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.*;
+import com.qinyuan15.lottery.mvc.lottery.LivenessQuerier;
 import com.qinyuan15.lottery.mvc.lottery.LotteryLotCounter;
 import com.qinyuan15.lottery.mvc.lottery.LotteryLotCreator;
+import com.qinyuan15.lottery.mvc.lottery.ShareUrlBuilder;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.mvc.controller.BaseController;
+import com.qinyuan15.utils.hibernate.HibernateUtils;
+import com.qinyuan15.utils.mvc.controller.ImageController;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +31,7 @@ import java.util.Map;
  * Created by qinyuan on 15-7-10.
  */
 @Controller
-public class LotteryController extends BaseController {
+public class LotteryController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(LotteryController.class);
     private final static String SUCCESS = "success";
     private final static String DETAIL = "detail";
@@ -95,6 +100,7 @@ public class LotteryController extends BaseController {
         result.put("liveness", liveness);
 
         // maxLiveness parameter
+        /*
         Integer virtualLiveness = activity.getVirtualLiveness();
         if (virtualLiveness == null) {
             virtualLiveness = 0;
@@ -110,10 +116,26 @@ public class LotteryController extends BaseController {
         } else {
             result.put(MAX_LIVENESS, liveness);
             result.put(MAX_LIVENESS_USERS, user.getUsername());
-        }
+        }*/
+        LivenessQuerier.LivenessInfo maxLivnessInfo = new LivenessQuerier().queryMax(activity);
+        result.put("maxLiveness", maxLivnessInfo.liveness);
+        result.put("maxLivenessUsers", maxLivnessInfo.users);
 
+        // share urls
+        if (user.getSerialKey() == null) {
+            user.setSerialKey(RandomStringUtils.randomAlphanumeric(UserDao.SERIAL_KEY_LENGTH));
+            HibernateUtils.update(user);
+        }
+        ShareUrlBuilder shareUrlBuilder = new ShareUrlBuilder(user.getSerialKey(), AppConfig.getAppHost(),
+                new CommodityUrlAdapter(this).adapt(new CommodityDao().getInstance(commodityId)));
+        result.put("sinaWeiboShareUrl", shareUrlBuilder.getSinaShareUrl());
+        result.put("qqShareUrl", shareUrlBuilder.getQQShareUrl());
+        result.put("qzoneShareUrl", shareUrlBuilder.getQzoneShareUrl());
+
+        // participants data
         result.put("participantCount", new LotteryLotCounter().count(activity));
         result.put("remainingSeconds", getRemainingSeconds(activity));
+
 
         return toJson(result);
     }

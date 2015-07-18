@@ -124,9 +124,9 @@
             </div>
         </div>
         <div class="prompt">
-            <div class="no-chance">
+            <%--<div class="no-chance">
                 您已抽过奖，需要通过积累爱心再次获取抽奖机会
-            </div>
+            </div>--%>
             <div class="spread">
                 您的爱心不足N，请努力传播！
                 <div class="spread-method">
@@ -140,9 +140,9 @@
             <a href="javascript:void(0)">抽奖规则</a>
         </div>
         <div class="share">
-            <a href="javascript:void(0)" class="sina"></a>
-            <a href="javascript:void(0)" class="qq"></a>
-            <a href="javascript:void(0)" class="qzone"></a>
+            <a href="javascript:void(0)" target="_blank" class="sina"></a>
+            <a href="javascript:void(0)" target="_blank" class="qq"></a>
+            <a href="javascript:void(0)" target="_blank" class="qzone"></a>
         </div>
     </div>
 </div>
