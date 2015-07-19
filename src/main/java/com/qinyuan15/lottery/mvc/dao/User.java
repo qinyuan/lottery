@@ -11,7 +11,7 @@ public class User extends com.qinyuan15.utils.security.User {
     private String email;
     private String tel;
     private Boolean active;
-    private Integer liveness;
+    //private Integer liveness;
     private String serialKey;
     private Integer spreadUserId;
     private String spreadWay;
@@ -32,9 +32,9 @@ public class User extends com.qinyuan15.utils.security.User {
         return serialKey;
     }
 
-    public Integer getLiveness() {
+    /*public Integer getLiveness() {
         return liveness;
-    }
+    }*/
 
     public Integer getSpreadUserId() {
         return spreadUserId;
@@ -56,9 +56,9 @@ public class User extends com.qinyuan15.utils.security.User {
         this.active = active;
     }
 
-    public void setLiveness(Integer liveness) {
+    /*public void setLiveness(Integer liveness) {
         this.liveness = liveness;
-    }
+    }*/
 
     public void setSerialKey(String serialKey) {
         this.serialKey = serialKey;

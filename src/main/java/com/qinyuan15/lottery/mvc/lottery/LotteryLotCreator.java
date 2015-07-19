@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.lottery;
 
 import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryLot;
 import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
 import com.qinyuan15.lottery.mvc.dao.User;
@@ -50,11 +51,7 @@ public class LotteryLotCreator {
             return count;
         }
 
-        Integer livenesss = user.getLiveness();
-        if (livenesss == null) {
-            return count;
-        }
-
+        int livenesss = new LotteryLivenessDao().getLiveness(user.getId(), activityId);
         return count + livenesss / newLotLivness;
     }
 

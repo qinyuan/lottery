@@ -1,33 +1,22 @@
 package com.qinyuan15.lottery.mvc.lottery;
 
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
-import com.qinyuan15.lottery.mvc.dao.User;
-import com.qinyuan15.utils.hibernate.HibernateListBuilder;
-
-import java.util.List;
+import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class LivenessQuerier {
     public LivenessInfo queryMax(LotteryActivity activity) {
-        // liveness parameter
-        /*Integer liveness = user.getLiveness();
-        if (liveness == null) {
-            liveness = 0;
-        }
-        result.put("liveness", liveness);*/
-
-        // maxLiveness parameter
         Integer virtualLiveness = activity.getVirtualLiveness();
         if (virtualLiveness == null) {
             virtualLiveness = 0;
         }
 
-        List<User> maxLivenessUsers = new HibernateListBuilder()
-                .addFilter("liveness=(SELECT MAX(liveness) FROM User)").build(User.class);
-        Integer realMaxLiveness = maxLivenessUsers.size() == 0 ? null : maxLivenessUsers.get(0).getLiveness();
+        Pair<String, Integer> realMaxLivenessPair = new LotteryLivenessDao().getMaxLivenessUsernames(activity.getId());
+        Integer realMaxLiveness = realMaxLivenessPair == null ? 0 : realMaxLivenessPair.getRight();
         if (realMaxLiveness == null || realMaxLiveness < 0) {
             realMaxLiveness = 0;
         }
-        String realUsernames = getUsernames(maxLivenessUsers);
+        String realUsernames = realMaxLivenessPair == null ? "" : realMaxLivenessPair.getLeft();
 
         if (virtualLiveness == 0 && realMaxLiveness == 0) {
             return new LivenessInfo(0, "");
@@ -44,17 +33,6 @@ public class LivenessQuerier {
         } else {
             return new LivenessInfo(realMaxLiveness, realUsernames);
         }
-    }
-
-    private String getUsernames(List<User> users) {
-        String names = "";
-        for (User user : users) {
-            if (!names.isEmpty()) {
-                names += ",";
-            }
-            names += user.getUsername();
-        }
-        return names;
     }
 
     public static class LivenessInfo {

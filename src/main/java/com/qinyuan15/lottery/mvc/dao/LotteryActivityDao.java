@@ -35,6 +35,7 @@ public class LotteryActivityDao {
             if (this.expire != null) {
                 listBuilder.addEqualFilter("expire", this.expire);
             }
+            listBuilder.addOrder("id", false);
             return listBuilder;
         }
 
@@ -67,6 +68,15 @@ public class LotteryActivityDao {
 
     public LotteryActivity getActiveInstanceByCommodityId(Integer commodityId) {
         List<LotteryActivity> activities = factory().setCommodityId(commodityId).setExpire(false).getInstances();
+        if (activities.size() == 0) {
+            return null;
+        } else {
+            return activities.get(0);
+        }
+    }
+
+    public LotteryActivity getLastActiveInstance() {
+        List<LotteryActivity> activities = factory().setExpire(false).getInstances();
         if (activities.size() == 0) {
             return null;
         } else {

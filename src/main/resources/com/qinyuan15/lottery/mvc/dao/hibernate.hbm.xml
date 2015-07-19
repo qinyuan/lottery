@@ -40,7 +40,7 @@
         <property name="email"/>
         <property name="tel"/>
         <property name="active"/>
-        <property name="liveness"/>
+        <!--<property name="liveness"/>-->
         <property name="serialKey" column="serial_key"/>
         <property name="spreadUserId" column="spread_user_id"/>
         <property name="spreadWay" column="spread_way"/>
@@ -107,5 +107,16 @@
         <property name="term" column="term"/>
         <property name="publishDate" column="publish_date"/>
         <property name="result" column="result"/>
+    </class>
+    <class name="LotteryLiveness" table="lottery_liveness">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="activityId" column="activity_id"/>
+        <property name="spreadUserId" column="spread_user_id"/>
+        <property name="receiveUserId" column="receive_user_id"/>
+        <property name="liveness" column="liveness"/>
+        <property name="spreadWay" column="spread_way"/>
+        <property name="registerBefore" column="register_before"/>
     </class>
 </hibernate-mapping>

@@ -93,30 +93,7 @@ public class LotteryController extends ImageController {
         }
 
         // liveness parameter
-        Integer liveness = user.getLiveness();
-        if (liveness == null) {
-            liveness = 0;
-        }
-        result.put("liveness", liveness);
-
-        // maxLiveness parameter
-        /*
-        Integer virtualLiveness = activity.getVirtualLiveness();
-        if (virtualLiveness == null) {
-            virtualLiveness = 0;
-        }
-        final String MAX_LIVENESS = "maxLiveness";
-        final String MAX_LIVENESS_USERS = "maxLivenessUsers";
-        if (liveness < virtualLiveness) {
-            result.put(MAX_LIVENESS, virtualLiveness);
-            result.put(MAX_LIVENESS_USERS, activity.getVirtualLivenessUsers());
-        } else if (liveness.equals(virtualLiveness)) {
-            result.put(MAX_LIVENESS, virtualLiveness);
-            result.put(MAX_LIVENESS_USERS, user.getUsername() + "," + activity.getVirtualLivenessUsers());
-        } else {
-            result.put(MAX_LIVENESS, liveness);
-            result.put(MAX_LIVENESS_USERS, user.getUsername());
-        }*/
+        result.put("liveness", new LotteryLivenessDao().getLiveness(user.getId(), activity.getId()));
         LivenessQuerier.LivenessInfo maxLivnessInfo = new LivenessQuerier().queryMax(activity);
         result.put("maxLiveness", maxLivnessInfo.liveness);
         result.put("maxLivenessUsers", maxLivnessInfo.users);

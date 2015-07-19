@@ -191,6 +191,16 @@ public class AppConfig {
         dao.saveInteger(NEW_LOT_LIVENESS_KEY, newLotLiveness);
     }
 
+    private final static String SHARE_SUCCEED_LIVENESS_KEY = "shareSucceedLiveness";
+
+    public static Integer getShareSucceedLiveness() {
+        return dao.getInteger(SHARE_SUCCEED_LIVENESS_KEY);
+    }
+
+    public static void updateShareSucceedLiveness(Integer shareSucceedLiveness) {
+        dao.saveInteger(SHARE_SUCCEED_LIVENESS_KEY, shareSucceedLiveness);
+    }
+
     private final static String ACTIVATE_MAIL_SUBJECT_TEMPLATE_KEY = "activateMailSubjectTemplate";
 
     public static String getActivateMailSubjectTemplate() {

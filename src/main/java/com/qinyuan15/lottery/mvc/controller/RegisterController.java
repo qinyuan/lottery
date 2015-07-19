@@ -69,7 +69,10 @@ public class RegisterController extends BaseController {
         }
 
         try {
-            Integer userId = userDao.addNormal(username, password, email, getSpreadUserId(), getSpreadWay());
+            LivenessAdder livenessAdder = new LivenessAdder(session);
+            Integer userId = userDao.addNormal(username, password, email, livenessAdder.getSpreadUserId(),
+                    livenessAdder.getSpreadWay());
+            livenessAdder.addLiveness(userId, false);
             new ActivateMailSender(getActivateUrl()).send(userId);
             return success();
         } catch (Exception e) {
@@ -79,32 +82,10 @@ public class RegisterController extends BaseController {
         }
     }
 
-    private String getSpreadWay() {
-        Object spreadWay = session.getAttribute(CommodityController.SPREAD_MEDIUM_SESSION_KEY);
-        if (spreadWay != null && spreadWay instanceof String) {
-            return (String) spreadWay;
-        } else {
-            return null;
-        }
-    }
-
-    private Integer getSpreadUserId() {
-        Object spreadUserSerialKey = session.getAttribute(CommodityController.SPREAD_USER_SERIAL_KEY_SESSION_KEY);
-        if (spreadUserSerialKey != null && spreadUserSerialKey instanceof String) {
-            return userDao.getIdBySerialKey((String) spreadUserSerialKey);
-        } else {
-            return null;
-        }
-    }
-
     private String getActivateUrl() {
         StringBuffer url = request.getRequestURL();
         int lastIndex = url.lastIndexOf("/");
         String activateUrl = url.substring(0, lastIndex) + "/";
-        /*String activateUrl = url.substring(0, url.length() - request.getServletPath().length());
-        if (!activateUrl.endsWith("/")) {
-            activateUrl += "/";
-        }*/
         return activateUrl + "activate-account.html";
     }
 

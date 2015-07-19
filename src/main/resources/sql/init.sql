@@ -67,7 +67,7 @@ create table lottery_activity(
   virtual_participants int not null default 0,
   virtual_liveness int,
   virtual_liveness_users char(200),
-  max_serial_number int not null default 0;
+  max_serial_number int not null default 0,
   dual_colored_ball_term int not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -79,6 +79,17 @@ create table lottery_lot (
   serial_number int not null,
   win boolean
   unique(activity_id, user_id, serial_number)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table lottery_liveness (
+  id int primary key auto_increment,
+  activity_id int not null,
+  spread_user_id int not null,
+  receive_user_id int not null,
+  liveness int not null,
+  spread_way char(50) not null,
+  register_before boolean not null,
+  unique(activity_id, spread_user_id, receive_user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table dual_colored_ball_record (

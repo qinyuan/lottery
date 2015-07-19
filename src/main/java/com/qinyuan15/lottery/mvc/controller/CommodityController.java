@@ -8,7 +8,6 @@ import com.qinyuan15.utils.image.ImageMap;
 import com.qinyuan15.utils.image.ImageMapDao;
 import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,7 +25,6 @@ public class CommodityController extends ImageController {
                         @RequestParam(value = "medium", required = false) String medium) {
         CommodityHeaderUtils.setHeaderParameters(this);
 
-        recordSpreader(userSerialKey, medium);
 
         CommodityDao dao = new CommodityDao();
         Commodity commodity = dao.getInstance(id);
@@ -34,9 +32,12 @@ public class CommodityController extends ImageController {
             commodity = dao.getFirstInstance();
         }
 
+        LivenessAdder livenessAdder = new LivenessAdder(session);
         if (commodity == null) {
+            livenessAdder.recordSpreader(userSerialKey, medium, null);
             setTitle("未找到相关商品");
         } else {
+            livenessAdder.recordSpreader(userSerialKey, medium, commodity.getId());
             if (DoubleUtils.isPositive(commodity.getPrice())) {
                 setTitle("商品详细信息");
             } else {
@@ -54,15 +55,6 @@ public class CommodityController extends ImageController {
         return "commodity";
     }
 
-    public final static String SPREAD_USER_SERIAL_KEY_SESSION_KEY = "spreadUserSerialKey";
-    public final static String SPREAD_MEDIUM_SESSION_KEY = "spreadMedium";
-
-    private void recordSpreader(String userSerialKey, String medium) {
-        if (StringUtils.hasText(userSerialKey) && StringUtils.hasText(medium)) {
-            session.setAttribute(SPREAD_USER_SERIAL_KEY_SESSION_KEY, userSerialKey);
-            session.setAttribute(SPREAD_MEDIUM_SESSION_KEY, medium);
-        }
-    }
 
     private CommodityUrlAdapter getUrlAdapter() {
         return new CommodityUrlAdapter(this);

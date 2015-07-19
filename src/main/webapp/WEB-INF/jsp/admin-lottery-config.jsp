@@ -112,6 +112,23 @@
                 </table>
             </div>
         </div>
+        <div class="edit-unit">
+            <div class="title">分享给好友且好友注册或登录后增加的爱心数设置</div>
+            <div class="content">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="title">分享成功增加爱心</td>
+                        <td class="input">
+                            <input style="width: 280px;" type="text" class="form-control" name="shareSucceedLiveness"
+                                   value="${shareSucceedLiveness}" placeholder="在此输入每次新抽奖机会所需要的爱心数"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <div class="submit">
             <button id="submitButton" type="submit" class="btn btn-success">确定</button>
         </div>
