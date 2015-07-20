@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.lottery.mvc.activate.ActivateMailSender;
+import com.qinyuan15.lottery.mvc.account.ActivateMailSender;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.utils.mail.MailAddressValidator;
@@ -101,7 +101,8 @@ public class RegisterController extends BaseController {
             new ActivateMailSender(getActivateUrl()).send(user.getId());
             return success();
         } catch (Exception e) {
-            LOGGER.error("fail to resend email to {}, info: {}", email, e);
+            LOGGER.error("Fail to resend email to {}, info: {}", email, e);
+            e.printStackTrace();
             return fail("邮件发送失败");
         }
     }

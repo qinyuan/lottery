@@ -27,8 +27,8 @@
 
     <div>
         <label>目标链接</label>
-        <input type="text" id="mapHref" class="form-control" placeholder="输入单链接之后打开的网址"/>
-
+        <input type="text" id="mapHref" class="form-control" placeholder="输入单链接之后打开的网址"
+               tabindex="1"/>
         <c:if test="${buildInHrefs != null}">
             <div class="build-in-href">
                 <c:forEach var="buildInHref" items="${buildInHrefs}">
@@ -40,7 +40,8 @@
     </div>
     <div>
         <label>备注</label>
-        <input type="text" id="mapComment" class="form-control" value="新建链接" placeholder="备注用于标识，不在前台显示"/>
+        <input type="text" id="mapComment" class="form-control" value="新建链接"
+               placeholder="备注用于标识，不在前台显示" tabindex="2"/>
     </div>
     <div>
         <button type="button" class="btn btn-primary" id="addSubmit">确定</button>

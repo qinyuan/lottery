@@ -3,6 +3,7 @@ package com.qinyuan15.lottery.mvc.lottery;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.utils.DateUtils;
+import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.concurrent.ThreadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,9 +90,16 @@ public class DualColoredBallCrawlers {
             }
 
             for (DualColoredBallCrawler crawler : crawlers) {
-                String result = crawler.getResult(activity.getDualColoredBallTerm());
+                Integer dualColoredBallTerm = activity.getDualColoredBallTerm();
+                if (!IntegerUtils.isPositive(dualColoredBallTerm)) {
+                    continue;
+                }
+
+                String result = crawler.getResult(dualColoredBallTerm);
                 if (result != null && result.matches("^\\d{12}$")) {
                     return Long.parseLong(result);
+                } else {
+                    LOGGER.error("Fail to parse result of dualColoredBall {}", dualColoredBallTerm);
                 }
             }
             return null;

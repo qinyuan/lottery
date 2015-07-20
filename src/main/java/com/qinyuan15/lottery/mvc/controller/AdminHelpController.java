@@ -7,6 +7,7 @@ import com.qinyuan15.lottery.mvc.dao.HelpItemDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.security.SecuritySearcher;
+import com.qinyuan15.utils.security.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class AdminHelpController extends HelpController {
     @RequestMapping("/admin-help")
     @Override
     public String index() {
-        if (securitySearcher.hasAuthority(User.ADMIN)) {
+        if (SecurityUtils.hasAuthority(User.ADMIN)) {
             setAttribute("editMode", true);
         }
 

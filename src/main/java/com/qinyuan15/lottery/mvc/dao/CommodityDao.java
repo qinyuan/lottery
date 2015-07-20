@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan15.utils.hibernate.HibernateDeleter;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 import com.qinyuan15.utils.mvc.PaginationItemFactory;
@@ -43,7 +44,7 @@ public class CommodityDao {
     }
 
     public void delete(Integer id) {
-        HibernateUtils.delete(Commodity.class, id);
+        HibernateDeleter.deleteById(Commodity.class, id);
     }
 
     public void update(Integer id, String name, Double price, Boolean own, String snapshot, String detailImage) {
@@ -61,11 +62,11 @@ public class CommodityDao {
     }
 
     public Commodity getFirstInstance() {
-        return HibernateUtils.getFirstItem(Commodity.class);
+        return new HibernateListBuilder().getFirstItem(Commodity.class);
     }
 
     public List<Commodity> getInstances() {
-        return HibernateUtils.getList(Commodity.class);
+        return new HibernateListBuilder().build(Commodity.class);
     }
 
     private void changeLottery(Integer commodityId, Boolean inLottery) {

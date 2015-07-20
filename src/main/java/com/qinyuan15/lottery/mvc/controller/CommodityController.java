@@ -7,7 +7,9 @@ import com.qinyuan15.utils.DoubleUtils;
 import com.qinyuan15.utils.image.ImageMap;
 import com.qinyuan15.utils.image.ImageMapDao;
 import com.qinyuan15.utils.mvc.controller.ImageController;
+import com.qinyuan15.utils.security.SecurityUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,7 +26,6 @@ public class CommodityController extends ImageController {
                         @RequestParam(value = "fromUser", required = false) String userSerialKey,
                         @RequestParam(value = "medium", required = false) String medium) {
         CommodityHeaderUtils.setHeaderParameters(this);
-
 
         CommodityDao dao = new CommodityDao();
         Commodity commodity = dao.getInstance(id);
@@ -46,6 +47,10 @@ public class CommodityController extends ImageController {
             setAttribute("commodity", getUrlAdapter().adapt(commodity));
             addJavaScriptData("selectedCommodityId", commodity.getId());
             addJavaScriptData("commodityMaps", mapDao.getInstancesByRelateId(commodity.getId()));
+        }
+        if (StringUtils.hasText(userSerialKey) && StringUtils.hasText(medium)
+                && StringUtils.hasText(SecurityUtils.getUsername())) {
+            livenessAdder.addLiveness(true);
         }
 
         setAttribute("snapshots", build());

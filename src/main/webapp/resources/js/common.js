@@ -32,6 +32,7 @@ var angularUtils = {
             resetRegisterInput(this);
         });
         $registerForm.find('form').get(0).reset();
+        $registerForm.find('img.identity-code').trigger('click');
         $registerForm.fadeIn(500).focusFirstTextInput();
     }
 

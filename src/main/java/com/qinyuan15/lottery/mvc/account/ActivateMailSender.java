@@ -1,7 +1,7 @@
-package com.qinyuan15.lottery.mvc.activate;
+package com.qinyuan15.lottery.mvc.account;
 
 import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.lottery.mvc.dao.ActivateRequest;
+import com.qinyuan15.lottery.mvc.dao.MailSerialKey;
 import com.qinyuan15.lottery.mvc.dao.ActivateRequestDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
@@ -33,16 +33,16 @@ public class ActivateMailSender {
         }
 
         ActivateRequestDao requestDao = new ActivateRequestDao();
-        ActivateRequest activateRequest = requestDao.getInstanceByUserId(userId);
-        if (activateRequest == null) { // if request is not added, just add it
+        MailSerialKey mailSerialKey = requestDao.getInstanceByUserId(userId);
+        if (mailSerialKey == null) { // if request is not added, just add it
             Integer requestId = requestDao.add(userId);
-            activateRequest = requestDao.getInstance(requestId);
+            mailSerialKey = requestDao.getInstance(requestId);
         }
 
         AppConfig.ActivateMailAccount mailAccount = AppConfig.getActivateMailAccount();
         SimpleMailSender mailSender = new SimpleMailSender(mailAccount.getHost(), mailAccount.getUsername(), mailAccount.getPassword());
 
-        mailSender.send(user.getEmail(), getSubject(), getContent(user.getUsername(), activateRequest.getSerialKey()));
+        mailSender.send(user.getEmail(), getSubject(), getContent(user.getUsername(), mailSerialKey.getSerialKey()));
     }
 
     private String getSubject() {

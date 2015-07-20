@@ -176,7 +176,9 @@
         $form.getInputByName('startTime').attr('disabled', false)
             .val($tr.find('td.start-time').text()).focusOrSelect();
         $form.getInputByName('autoStartTime').get(0).checked = false;
-        $form.setInputValue('expectEndTime', $tr.find('td.expect-end-time').text());
+        var $expectEndTimeTd = $tr.find('td.expect-end-time');
+        $form.setInputValue('expectEndTime', $expectEndTimeTd.text());
+        $form.setInputValue('dualColoredBallTerm', $expectEndTimeTd.dataOptions('dualColoredBallTerm'));
         $form.setInputValue('virtualLiveness', $tr.find('td.virtual-liveness').text());
         $form.setInputValue('virtualLivenessUsers', $tr.find('td.virtual-liveness-users').text());
         $form.setInputValue('continuousSerialLimit', $tr.find('td.continuous-serial-limit').text());

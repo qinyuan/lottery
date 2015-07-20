@@ -49,7 +49,8 @@
             <td>${status.index + rowStartIndex}</td>
             <td class="commodity" data-options="commodityId: ${activity.commodity.id}">${activity.commodity.name}</td>
             <td class="start-time">${activity.startTime}</td>
-            <td class="${listExpire ? 'end-time' : 'expect-end-time'}">${listExpire ? activity.endTime : activity.expectEndTime}</td>
+            <td class="${listExpire ? 'end-time' : 'expect-end-time'}"
+                <c:if test="${!listExpire}">data-options="dualColoredBallTerm:${activity.dualColoredBallTerm}"</c:if>>${listExpire ? activity.endTime : activity.expectEndTime}</td>
             <td class="expect-participant-count">${activity.expectParticipantCount}</td>
             <td>${activity.participantCount}</td>
             <td>${activity.realParticipantCount}</td>

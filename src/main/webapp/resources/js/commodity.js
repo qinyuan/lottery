@@ -1,5 +1,23 @@
 ;
 (function () {
+    // code about participant count
+    function updateParticipantCount(commodityId) {
+        $.post('participant-count.json', {
+            commodityId: commodityId
+        }, function (data) {
+            if (data['participantCount']) {
+                var $participantCountDiv = $('div.body > div.detail > div.participant-count');
+                $participantCountDiv.find("span.participant-count").text(data['participantCount']);
+                $participantCountDiv.show();
+            }
+        });
+    }
+
+    updateParticipantCount(window['selectedCommodityId']);
+    setInterval(function () {
+        updateParticipantCount(getSelectedCommodityId());
+    }, 2000); // refresh each two seconds
+
     // code about commodity image
     var snapshotDisplaySize = 6;
     var $snapshots = $('div.body div.snapshots div.snapshot');
@@ -7,13 +25,16 @@
     var selectedId = window['selectedCommodityId'];
 
     function loadDetailImageById(id) {
+        $('div.body > div.detail > div.participant-count').hide();
         var $img = $('div.body div.detail img');
         $img.hide();
         $.post('commodity-info.json', {
             id: id
         }, function (data) {
             $img.attr('src', data['commodity']['detailImage']);
-            $img.fadeIn(500);
+            $img.fadeIn(500, function () {
+                updateParticipantCount(getSelectedCommodityId());
+            });
             loadCommodityMap(data['commodityMaps']);
         })
     }
@@ -163,6 +184,7 @@
     function showTelInputForm(username) {
         JSUtils.showTransparentBackground(1);
         setFloatPanelUsername($telInputForm, username);
+        $telInputForm.find('img.identity-code').trigger('click');
         $telInputForm.fadeIn(300).focusFirstTextInput();
     }
 
@@ -297,10 +319,10 @@
     }
 
     getLotteryLot = function () {
-        var $selectedSnapshot = $('div.body div.snapshots div.snapshot.selected');
-        var commodityId = $selectedSnapshot.dataOptions('id');
+        /*var $selectedSnapshot = $('div.body div.snapshots div.snapshot.selected');
+         var commodityId = $selectedSnapshot.dataOptions('id');*/
         $.post('take-lottery.json', {
-            'commodityId': commodityId
+            'commodityId': getSelectedCommodityId()
         }, function (data) {
             if (data.success) {
                 showLotteryResult(data);
@@ -326,3 +348,8 @@
     };
 })();
 var getLotteryLot;
+function getSelectedCommodityId() {
+    var $selectedSnapshot = $('div.body div.snapshots div.snapshot.selected');
+    var commodityId = $selectedSnapshot.dataOptions('id');
+    return commodityId;
+}

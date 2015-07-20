@@ -1,5 +1,7 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan15.utils.hibernate.HibernateDeleter;
+import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 
 import java.util.List;
@@ -11,11 +13,11 @@ import java.util.List;
 public class NavigationLinkDao {
 
     public List<NavigationLink> getInstances() {
-        return HibernateUtils.getList(NavigationLink.class);
+        return new HibernateListBuilder().build(NavigationLink.class);
     }
 
     public void clearAndSave(List<NavigationLink> links) {
-        HibernateUtils.deleteAll(NavigationLink.class);
+        HibernateDeleter.deleteAll(NavigationLink.class);
         HibernateUtils.batchSave(links);
     }
 }

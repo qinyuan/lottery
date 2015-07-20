@@ -37,11 +37,11 @@
           class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
         <property name="defaultFailureUrl" value="/login?login_error=1"/>
     </bean>
-    <bean id="successHandler"
-          class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+    <bean id="successHandler" class="com.qinyuan15.lottery.mvc.controller.LoginSuccessHandler">
         <property name="alwaysUseDefaultTargetUrl" value="false"/>
         <property name="defaultTargetUrl" value="/admin"/>
     </bean>
+
 
     <bean id="ajaxLoginFilter"
           class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
@@ -51,7 +51,7 @@
         <property name="requiresAuthenticationRequestMatcher" ref="ajaxLoginRequestMatcher"/>
     </bean>
     <bean id="ajaxFailureHandler" class="com.qinyuan15.utils.security.AjaxAuthenticationFailureHandler"/>
-    <bean id="ajaxSuccessHandler" class="com.qinyuan15.utils.security.AjaxAuthenticationSuccessHandler"/>
+    <bean id="ajaxSuccessHandler" class="com.qinyuan15.lottery.mvc.controller.AjaxLoginSuccessHandler"/>
     <bean id="ajaxLoginRequestMatcher" class="com.qinyuan15.utils.security.ServletPathRequestMatcher">
         <constructor-arg value="/j_spring_security_ajax_check"/>
     </bean>

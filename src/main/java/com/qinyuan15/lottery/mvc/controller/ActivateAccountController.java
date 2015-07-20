@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.lottery.mvc.dao.ActivateRequest;
+import com.qinyuan15.lottery.mvc.dao.MailSerialKey;
 import com.qinyuan15.lottery.mvc.dao.ActivateRequestDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
@@ -17,13 +17,13 @@ public class ActivateAccountController extends ImageController {
     public String index(@RequestParam(value = "serial", required = true) String serial) {
         if (StringUtils.hasText(serial)) {
             ActivateRequestDao requestDao = new ActivateRequestDao();
-            ActivateRequest activateRequest = requestDao.getInstanceBySerialKey(serial);
-            if (activateRequest != null) {
-                requestDao.response(activateRequest.getId());
+            MailSerialKey mailSerialKey = requestDao.getInstanceBySerialKey(serial);
+            if (mailSerialKey != null) {
+                requestDao.response(mailSerialKey.getId());
 
                 UserDao userDao = new UserDao();
-                userDao.activate(activateRequest.getUserId());
-                User user = userDao.getInstance(activateRequest.getUserId());
+                userDao.activate(mailSerialKey.getUserId());
+                User user = userDao.getInstance(mailSerialKey.getUserId());
                 setAttribute("email", user.getEmail());
             }
         }

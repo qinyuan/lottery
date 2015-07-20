@@ -6,6 +6,7 @@ import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.utils.IntegerUtils;
+import com.qinyuan15.utils.security.SecurityUtils;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
@@ -34,6 +35,11 @@ public class LivenessAdder {
         }
     }
 
+    void addLiveness(boolean registerBefore) {
+        Integer userId = new UserDao().getIdByName(SecurityUtils.getUsername());
+        addLiveness(userId, registerBefore);
+    }
+
     void addLiveness(Integer receiveUserId, boolean registerBefore) {
         if (!IntegerUtils.isPositive(receiveUserId)) {
             return;
@@ -41,6 +47,10 @@ public class LivenessAdder {
 
         Integer spreadUserId = getSpreadUserId();
         if (spreadUserId == null) {
+            return;
+        }
+
+        if (receiveUserId.equals(spreadUserId)) {
             return;
         }
 
@@ -58,7 +68,7 @@ public class LivenessAdder {
 
         LotteryLivenessDao dao = new LotteryLivenessDao();
         if (activityId != null) {
-            dao.add(getSpreadUserId(), activityId, receiveUserId, liveness, spreadWay, registerBefore);
+            dao.add(getSpreadUserId(), receiveUserId, liveness, spreadWay, registerBefore, activityId);
         } else {
             dao.add(getSpreadUserId(), receiveUserId, liveness, spreadWay, registerBefore);
         }

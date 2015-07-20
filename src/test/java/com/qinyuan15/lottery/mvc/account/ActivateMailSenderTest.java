@@ -1,4 +1,4 @@
-package com.qinyuan15.lottery.mvc.activate;
+package com.qinyuan15.lottery.mvc.account;
 
 import org.junit.Test;
 

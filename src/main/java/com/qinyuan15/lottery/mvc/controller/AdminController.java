@@ -1,15 +1,20 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.dao.MailAccountDao;
 import com.qinyuan15.lottery.mvc.dao.NavigationLink;
 import com.qinyuan15.lottery.mvc.dao.NavigationLinkDao;
+import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.config.LinkAdapter;
+import com.qinyuan15.utils.mail.MailAddressValidator;
 import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -27,6 +32,7 @@ public class AdminController extends ImageController {
         setAttribute("activateMailAccount", AppConfig.getActivateMailAccount());
         setAttribute("activateMailSubjectTemplate", AppConfig.getActivateMailSubjectTemplate());
         setAttribute("activateMailContentTemplate", AppConfig.getActivateMailContentTemplate());
+        setAttribute("mails", new MailAccountDao().getInstances());
 
         setTitle("系统设置");
         addCss("admin-form");
@@ -35,6 +41,50 @@ public class AdminController extends ImageController {
         addJs("lib/ckeditor/ckeditor", false);
         addCssAndJs("admin");
         return "admin";
+    }
+
+    @RequestMapping("/admin-add-edit-email.json")
+    @ResponseBody
+    public String addEditEmail(@RequestParam(value = "id", required = false) Integer id,
+                               @RequestParam(value = "mailHost", required = true) String host,
+                               @RequestParam(value = "mailUsername", required = true) String username,
+                               @RequestParam(value = "mailPassword", required = true) String password) {
+        if (!StringUtils.hasText(host)) {
+            return fail("发件箱服务器地址不能为空！");
+        }
+        if (!new MailAddressValidator().validate(username)) {
+            return fail("发件箱用户名必须为有效的邮件地址！");
+        }
+        if (!StringUtils.hasText(password)) {
+            return fail("发件箱密码不能为空！");
+        }
+
+        MailAccountDao dao = new MailAccountDao();
+        if (dao.hasUsername(username)) {
+            return fail("用户名'" + username + "'已经存在！");
+        }
+        try {
+            if (IntegerUtils.isPositive(id)) {
+                dao.update(id, host, username, password);
+            } else {
+                dao.add(host, username, password);
+            }
+            return success();
+        } catch (Exception e) {
+            return failByDatabaseError();
+        }
+    }
+
+    @RequestMapping("/admin-delete-mail.json")
+    @ResponseBody
+    public String deleteEmail(@RequestParam(value = "id", required = true) Integer id) {
+        try {
+            new MailAccountDao().delete(id);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("Fail to delete mail. id: {}, info: {}", id, e);
+            return failByDatabaseError();
+        }
     }
 
     @RequestMapping("/admin-submit")

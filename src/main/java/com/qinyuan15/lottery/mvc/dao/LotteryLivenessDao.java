@@ -49,18 +49,19 @@ public class LotteryLivenessDao {
                 .count(LotteryLiveness.class) > 0;
     }
 
-    public Integer add(Integer spreadUserId, Integer receiveUserId, int liveness, String spreadWay, boolean registerBefore) {
+    public Integer add(Integer spreadUserId, Integer receiveUserId, int liveness, String spreadWay,
+                       boolean registerBefore) {
         LotteryActivity activity = new LotteryActivityDao().getLastActiveInstance();
         if (activity != null) {
-            return add(spreadUserId, receiveUserId, activity.getId(), liveness, spreadWay, registerBefore);
+            return add(spreadUserId, receiveUserId, liveness, spreadWay, registerBefore, activity.getId());
         }
         return null;
     }
 
-    public Integer add(Integer spreadUserId, Integer receiveUserId, Integer activityId, int liveness,
-                       String spreadWay, boolean registerBefore) {
+    public Integer add(Integer spreadUserId, Integer receiveUserId, int liveness, String spreadWay,
+                       boolean registerBefore, Integer activityId) {
         if (!IntegerUtils.isPositive(spreadUserId) || !IntegerUtils.isPositive(receiveUserId)
-                || !IntegerUtils.isPositive(activityId)
+                || spreadUserId.equals(receiveUserId) || !IntegerUtils.isPositive(activityId)
                 || hasInstance(spreadUserId, receiveUserId, activityId)) {
             return null;
         }

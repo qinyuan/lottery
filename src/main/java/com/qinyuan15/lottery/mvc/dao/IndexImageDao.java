@@ -1,6 +1,8 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan15.utils.IntegerUtils;
+import com.qinyuan15.utils.hibernate.HibernateDeleter;
+import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 
 import java.util.List;
@@ -12,7 +14,8 @@ import java.util.List;
 public class IndexImageDao {
 
     public List<IndexImage> getInstances() {
-        return HibernateUtils.getList(IndexImage.class, "ORDER BY rowIndex ASC,id ASC");
+        return new HibernateListBuilder().addOrder("rowIndex", true).addOrder("id", true)
+                .build(IndexImage.class);
     }
 
     public IndexImage getInstance(Integer id) {
@@ -20,7 +23,8 @@ public class IndexImageDao {
     }
 
     public synchronized Integer add(String path, String backPath) {
-        Integer maxRowIndex = (Integer) HibernateUtils.getFirstItem("SELECT MAX(rowIndex) FROM IndexImage");
+        Integer maxRowIndex = (Integer) new HibernateListBuilder()
+                .getFirstItem("SELECT MAX(rowIndex) FROM IndexImage");
         if (!IntegerUtils.isPositive(maxRowIndex)) {
             maxRowIndex = 1;
         } else {
@@ -48,6 +52,6 @@ public class IndexImageDao {
     }
 
     public void delete(Integer id) {
-        HibernateUtils.delete(IndexImage.class, id);
+        HibernateDeleter.deleteById(IndexImage.class, id);
     }
 }

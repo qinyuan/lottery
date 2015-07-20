@@ -10,6 +10,7 @@ import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 import com.qinyuan15.utils.mvc.controller.ImageController;
+import com.qinyuan15.utils.security.SecurityUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +60,7 @@ public class LotteryController extends ImageController {
         }
 
         // if visitor has not login
-        if (securitySearcher.getUsername() == null) {
+        if (SecurityUtils.getUsername() == null) {
             return fail("noLogin");
         }
 
@@ -68,7 +69,7 @@ public class LotteryController extends ImageController {
         result.put("username", user.getUsername());
 
         // if no privilege to take lottery
-        if (!securitySearcher.hasAuthority(User.NORMAL)) {
+        if (!SecurityUtils.hasAuthority(User.NORMAL)) {
             result.put(SUCCESS, false);
             result.put(DETAIL, "noPrivilege");
             return toJson(result);
@@ -154,5 +155,17 @@ public class LotteryController extends ImageController {
             LOGGER.error("Fail to update tel");
             return failByDatabaseError();
         }
+    }
+
+    @RequestMapping("/participant-count.json")
+    @ResponseBody
+    public String participantCount(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
+        LotteryActivity activity = new LotteryActivityDao().getActiveInstanceByCommodityId(commodityId);
+        if (activity == null) {
+            return "{}";
+        }
+        Map<String, Integer> map = new HashMap<>();
+        map.put("participantCount", new LotteryLotCounter().count(activity));
+        return toJson(map);
     }
 }

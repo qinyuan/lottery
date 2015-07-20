@@ -204,7 +204,7 @@ var JSUtils = {
         return str;
     },
     validateEmail: function (email) {
-        var pattern = /^([a-zA-Z0-9_\\-\\.])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+$/;
+        var pattern = /^[a-zA-Z0-9_\\-\\.]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$/;
         return email && email.match(pattern) != null;
     },
     handlebars: function (templateId, data) {
@@ -478,10 +478,11 @@ jQuery.fn.setInputValue = function (inputName, inputValue) {
             this.checked = inputValue;
         });
     }
+    return this;
 };
 
 jQuery.fn.setDefaultButton = function (elementId) {
-    this.find('input[type=text]').keydown(function (e) {
+    this.find('input[type=text],input[type=password]').keydown(function (e) {
         if (JSUtils.isEnterKeyCode(e.keyCode)) {
             $('#' + elementId).trigger('click');
         }

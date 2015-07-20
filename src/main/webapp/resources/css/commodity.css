@@ -148,8 +148,18 @@ div.body div.snapshots div.next {
 }
 
 div.body div.detail {
+    position: relative;
     margin: 70px 0;
     text-align: center;
+}
+
+div.body > div.detail > div.participant-count {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    margin-left: 200px;
+    font-size: 12pt;
+    color: #909090;
 }
 
 .float-panel div.title {

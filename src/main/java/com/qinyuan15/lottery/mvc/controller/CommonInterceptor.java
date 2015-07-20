@@ -6,6 +6,7 @@ import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.utils.config.ImageConfig;
 import com.qinyuan15.utils.mvc.controller.ImageUrlAdapter;
 import com.qinyuan15.utils.security.SecuritySearcher;
+import com.qinyuan15.utils.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,7 +24,6 @@ public class CommonInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        System.out.println(httpServletRequest.getServletPath());
         return true;
     }
 
@@ -46,7 +46,7 @@ public class CommonInterceptor implements HandlerInterceptor {
 
         UserDao userDao = new UserDao();
         SecuritySearcher searcher = new SecuritySearcher(userDao);
-        if (searcher.hasAuthority(User.NORMAL)) {
+        if (SecurityUtils.hasAuthority(User.NORMAL)) {
             User user = userDao.getInstance(searcher.getUserId());
             if (!user.getActive()) {
                 httpServletRequest.setAttribute("unactivatedEmail", user.getEmail());

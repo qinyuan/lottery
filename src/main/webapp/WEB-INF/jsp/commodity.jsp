@@ -24,6 +24,7 @@
         <div class="next lightTransparent"></div>
     </div>
     <div class="detail">
+        <div class="participant-count"><span class="participant-count"></span>人抽奖</div>
         <img src="${commodity.detailImage}" usemap="#commodityMap"/>
     </div>
 </div>

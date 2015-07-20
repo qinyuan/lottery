@@ -71,6 +71,39 @@ div.form > form div.submit {
     width: 80px;
 }
 
+#emailList {
+    padding: 5px 20px;
+    overflow: hidden;
+}
+
+#emailList div.mail-item {
+    background-color: #efefef;
+    overflow: hidden;
+    float: left;
+    border: 1px solid #a0a0a0;
+    margin-right: 10px;
+    margin-bottom: 8px;
+}
+
+#emailList div.mail-item > div {
+    cursor: pointer;
+    height: 30px;
+    padding: 5px;
+    float: left;
+}
+
+#emailList div.mail-item div.username, #emailList div.mail-item div.edit-image {
+    border-right: 1px solid #a0a0a0;
+}
+
+#emailList div.mail-item > div:hover {
+    background-color: #a0a0a0;
+}
+
+#emailList div.button {
+    clear: both;
+}
+
 #emailTable input {
     width: 350px;
 }
@@ -79,4 +112,28 @@ div.form > form div.submit {
     margin-top: 20px;
     color: #289923;
     font-size: 9pt;
+}
+
+#emailAddEditForm {
+    margin-left: -227px;
+    margin-top: -98px;
+    padding: 10px;
+}
+
+#emailAddEditForm td {
+    text-align: right;
+    padding: 5px;
+}
+
+#emailAddEditForm input {
+    width: 300px;
+}
+
+#emailAddEditForm div.submit {
+    text-align: center;
+    padding: 5px;
+}
+
+#emailAddEditForm div.submit button {
+    margin: 0 10px;
 }

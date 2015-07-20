@@ -9,11 +9,12 @@ import com.qinyuan15.utils.hibernate.PersistObject;
  * </p>
  * Created by qinyuan on 15-7-1.
  */
-public class ActivateRequest extends PersistObject {
+public class MailSerialKey extends PersistObject {
     private Integer userId;
     private String serialKey;
     private String sendTime;
     private String responseTime;
+    private String mailType;
 
     public Integer getUserId() {
         return userId;
@@ -31,6 +32,10 @@ public class ActivateRequest extends PersistObject {
         return responseTime;
     }
 
+    public String getMailType() {
+        return mailType;
+    }
+
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
@@ -45,5 +50,9 @@ public class ActivateRequest extends PersistObject {
 
     public void setResponseTime(String responseTime) {
         this.responseTime = responseTime;
+    }
+
+    public void setMailType(String mailType) {
+        this.mailType = mailType;
     }
 }

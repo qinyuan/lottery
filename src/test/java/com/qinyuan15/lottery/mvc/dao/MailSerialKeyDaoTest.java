@@ -6,7 +6,7 @@ import org.junit.Test;
  * Test ActivateRequestDao
  * Created by qinyuan on 15-7-1.
  */
-public class ActivateRequestDaoTest {
+public class MailSerialKeyDaoTest {
     private ActivateRequestDao dao = new ActivateRequestDao();
 
     @Test
