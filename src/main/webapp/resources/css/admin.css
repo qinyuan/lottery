@@ -104,11 +104,7 @@ div.form > form div.submit {
     clear: both;
 }
 
-#emailTable input {
-    width: 350px;
-}
-
-#emailTable div.comment {
+table.email-template div.comment {
     margin-top: 20px;
     color: #289923;
     font-size: 9pt;

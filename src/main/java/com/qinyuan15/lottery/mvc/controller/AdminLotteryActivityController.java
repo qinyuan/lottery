@@ -40,8 +40,8 @@ public class AdminLotteryActivityController extends ImageController {
                 new DecimalFormat("000").format(latestRecord.getTerm() + 1));
 
         setTitle("抽奖管理");
+        addJs("lib/bootstrap/js/bootstrap.min", false);
         addCss("admin-form");
-        addJs("lib/bootstrap/js/bootstrap.min");
         addCssAndJs("admin-lottery-activity");
         return "admin-lottery-activity";
     }

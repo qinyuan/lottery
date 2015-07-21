@@ -10,6 +10,7 @@
                     <td class="input">
                         <c:set var="selectFormItems" value="${allCommodities}"/>
                         <c:set var="selectFormId" value="commodity-select"/>
+                        <c:set var="selectFormName" value="commodityId"/>
                         <%@include file="widget-select-form.jsp" %>
                     </td>
                     <td class="title">开始时间<span class="required">*</span></td>

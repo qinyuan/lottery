@@ -1,10 +1,7 @@
 package com.qinyuan15.lottery.mvc.account;
 
 import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.lottery.mvc.dao.MailSerialKey;
-import com.qinyuan15.lottery.mvc.dao.ActivateRequestDao;
-import com.qinyuan15.lottery.mvc.dao.User;
-import com.qinyuan15.lottery.mvc.dao.UserDao;
+import com.qinyuan15.lottery.mvc.dao.*;
 import com.qinyuan15.utils.mail.SimpleMailSender;
 
 /**
@@ -39,7 +36,10 @@ public class ActivateMailSender {
             mailSerialKey = requestDao.getInstance(requestId);
         }
 
-        AppConfig.ActivateMailAccount mailAccount = AppConfig.getActivateMailAccount();
+        MailAccount mailAccount = new MailAccountDao().getInstance(AppConfig.getActivateMailAccountId());
+        if (mailAccount == null) {
+            throw new RuntimeException("No activate mail account configured");
+        }
         SimpleMailSender mailSender = new SimpleMailSender(mailAccount.getHost(), mailAccount.getUsername(), mailAccount.getPassword());
 
         mailSender.send(user.getEmail(), getSubject(), getContent(user.getUsername(), mailSerialKey.getSerialKey()));

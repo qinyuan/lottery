@@ -76,8 +76,30 @@
     });
 })();
 (function () {
+    // codes about activate and reset mail account
+    if (window['currentActivateMailAccountId']) {
+        $('div.activate-mail-select li a').each(function () {
+            var $this = $(this);
+            if ($this.dataOptions('id') == window['currentActivateMailAccountId']) {
+                $this.trigger('click');
+                return false;
+            }
+            return true;
+        });
+    }
+    if (window['currentResetPasswordMailAccountId']) {
+        $('div.activate-mail-select li a').each(function () {
+            var $this = $(this);
+            if ($this.dataOptions('id') == window['currentResetPasswordMailAccountId']) {
+                $this.trigger('click');
+                return false;
+            }
+            return true;
+        });
+    }
+})();
+(function () {
     JSUtils.recordScrollStatus();
-
     $('#submitButton').click(function (e) {
         if ((!JSUtils.validateUploadFile('indexHeaderLeftLogo', '左图标未设置'))
             || (!JSUtils.validateUploadFile('indexHeaderRightLogo', '右图标未设置'))

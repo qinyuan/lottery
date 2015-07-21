@@ -221,57 +221,44 @@ public class AppConfig {
         dao.save(ACTIVATE_MAIL_CONTENT_TEMPLATE_KEY, template);
     }
 
-    private final static String ACTIVATE_MAIL_ACCOUNT_KEY = "activateMailAccount";
-    private final static String ACTIVATE_MAIL_ACCOUNT_SEPARATOR = ",,,";
+    private final static String ACTIVATE_MAIL_ACCOUNT_ID_KEY = "activateMailAccountId";
 
-    public static ActivateMailAccount getActivateMailAccount() {
-        String value = dao.get(ACTIVATE_MAIL_ACCOUNT_KEY);
-        if (value == null) {
-            return null;
-        }
-        String[] values = dao.get(ACTIVATE_MAIL_ACCOUNT_KEY).split(ACTIVATE_MAIL_ACCOUNT_SEPARATOR);
-        if (values.length < 3) {
-            return null;
-        }
-
-        return new ActivateMailAccount(values[0], values[1], values[2]);
+    public static Integer getActivateMailAccountId() {
+        return dao.getInteger(ACTIVATE_MAIL_ACCOUNT_ID_KEY);
     }
 
-    public static void updateActivateMailAccount(String host, String username, String password) {
-        if (host == null) {
-            host = "";
-        }
-        if (username == null) {
-            username = "";
-        }
-        if (password == null) {
-            password = "";
-        }
-        dao.save(ACTIVATE_MAIL_ACCOUNT_KEY, host + ACTIVATE_MAIL_ACCOUNT_SEPARATOR +
-                username + ACTIVATE_MAIL_ACCOUNT_SEPARATOR + password);
+    public static void updateActivateMailAccountId(Integer mailAccountId) {
+        dao.saveInteger(ACTIVATE_MAIL_ACCOUNT_ID_KEY, mailAccountId);
     }
 
-    public static class ActivateMailAccount {
-        private final String host;
-        private final String username;
-        private final String password;
 
-        private ActivateMailAccount(String host, String username, String password) {
-            this.host = host;
-            this.username = username;
-            this.password = password;
-        }
+    private final static String RESET_PASSWORD_MAIL_SUBJECT_TEMPLATE_KEY = "resetPasswordMailSubjectTemplate";
 
-        public String getHost() {
-            return host;
-        }
+    public static String getResetPasswordMailSubjectTemplate() {
+        return dao.get(RESET_PASSWORD_MAIL_SUBJECT_TEMPLATE_KEY);
+    }
 
-        public String getUsername() {
-            return username;
-        }
+    public static void updateResetPasswordMailSubjectTemplate(String template) {
+        dao.save(RESET_PASSWORD_MAIL_SUBJECT_TEMPLATE_KEY, template);
+    }
 
-        public String getPassword() {
-            return password;
-        }
+    private final static String RESET_PASSWORD_MAIL_CONTENT_TEMPLATE_KEY = "resetPasswordMailContentTemplate";
+
+    public static String getResetPasswordMailContentTemplate() {
+        return dao.get(RESET_PASSWORD_MAIL_CONTENT_TEMPLATE_KEY);
+    }
+
+    public static void updateResetPasswordMailContentTemplate(String template) {
+        dao.save(RESET_PASSWORD_MAIL_CONTENT_TEMPLATE_KEY, template);
+    }
+
+    private final static String RESET_PASSWORD_MAIL_ACCOUNT_ID_KEY = "resetPasswordMailAccountId";
+
+    public static Integer getResetPasswordMailAccountId() {
+        return dao.getInteger(RESET_PASSWORD_MAIL_ACCOUNT_ID_KEY);
+    }
+
+    public static void updateResetPasswordMailAccountId(Integer mailAccountId) {
+        dao.saveInteger(RESET_PASSWORD_MAIL_ACCOUNT_ID_KEY, mailAccountId);
     }
 }

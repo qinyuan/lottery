@@ -8,6 +8,7 @@ import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.config.LinkAdapter;
 import com.qinyuan15.utils.mail.MailAddressValidator;
 import com.qinyuan15.utils.mvc.controller.ImageController;
+import com.qinyuan15.utils.mvc.controller.SelectFormItemsBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -29,16 +30,21 @@ public class AdminController extends ImageController {
         IndexHeaderUtils.setHeaderParameters(this);
         CommodityHeaderUtils.setHeaderParameters(this);
 
-        setAttribute("activateMailAccount", AppConfig.getActivateMailAccount());
         setAttribute("activateMailSubjectTemplate", AppConfig.getActivateMailSubjectTemplate());
         setAttribute("activateMailContentTemplate", AppConfig.getActivateMailContentTemplate());
+        setAttribute("resetPasswordMailSubjectTemplate", AppConfig.getResetPasswordMailSubjectTemplate());
+        setAttribute("resetPasswordMailContentTemplate", AppConfig.getResetPasswordMailContentTemplate());
         setAttribute("mails", new MailAccountDao().getInstances());
+        setAttribute("mailSelectFormItems", new SelectFormItemsBuilder().build(
+                new MailAccountDao().getInstances(), "username"));
+        addJavaScriptData("currentActivateMailAccountId", AppConfig.getActivateMailAccountId());
 
         setTitle("系统设置");
         addCss("admin-form");
-        addJs("resources/js/lib/handlebars.min-v1.3.0", false);
-        addHeadJs("lib/image-adjust.js");
+        addJs("lib/handlebars.min-v1.3.0", false);
         addJs("lib/ckeditor/ckeditor", false);
+        addJs("lib/bootstrap/js/bootstrap.min", false);
+        addHeadJs("lib/image-adjust.js");
         addCssAndJs("admin");
         return "admin";
     }
@@ -103,11 +109,12 @@ public class AdminController extends ImageController {
                          @RequestParam(value = "commodityHeaderLeftLogoFile", required = true) MultipartFile commodityHeaderLeftLogoFile,
                          @RequestParam(value = "favicon", required = true) String favicon,
                          @RequestParam(value = "faviconFile", required = true) MultipartFile faviconFile,
-                         @RequestParam(value = "activateMailHost", required = true) String activateMailHost,
-                         @RequestParam(value = "activateMailUsername", required = true) String activateMailUsername,
-                         @RequestParam(value = "activateMailPassword", required = true) String activateMailPassword,
+                         @RequestParam(value = "activateMailAccountId", required = true) Integer activateMailAccountId,
                          @RequestParam(value = "activateMailSubjectTemplate", required = true) String activateMailSubjectTemplate,
-                         @RequestParam(value = "activateMailContentTemplate", required = true) String activateMailContentTemplate) {
+                         @RequestParam(value = "activateMailContentTemplate", required = true) String activateMailContentTemplate,
+                         @RequestParam(value = "resetPasswordMailAccountId", required = true) Integer resetPasswordMailAccountId,
+                         @RequestParam(value = "resetPasswordMailSubjectTemplate", required = true) String resetPasswordMailSubjectTemplate,
+                         @RequestParam(value = "resetPasswordMailContentTemplate", required = true) String resetPasswordMailContentTemplate) {
 
         final String redirectPage = "admin";
 
@@ -163,9 +170,14 @@ public class AdminController extends ImageController {
         AppConfig.updateFooterText(footerText);
         AppConfig.updateCommodityHeaderLeftLogo(commodityHeaderLeftLogoPath);
         AppConfig.updateFavicon(faviconPath);
-        AppConfig.updateActivateMailAccount(activateMailHost, activateMailUsername, activateMailPassword);
+
+        AppConfig.updateActivateMailAccountId(activateMailAccountId);
         AppConfig.updateActivateMailSubjectTemplate(activateMailSubjectTemplate);
         AppConfig.updateActivateMailContentTemplate(activateMailContentTemplate);
+        AppConfig.updateResetPasswordMailAccountId(resetPasswordMailAccountId);
+        AppConfig.updateResetPasswordMailSubjectTemplate(resetPasswordMailSubjectTemplate);
+        AppConfig.updateResetPasswordMailContentTemplate(resetPasswordMailContentTemplate);
+
         new NavigationLinkDao().clearAndSave(buildNavigationLinks(headerLinkTitles, headerLinkHrefs));
 
         return redirect("admin");
