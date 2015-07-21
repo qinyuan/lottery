@@ -6,7 +6,7 @@ import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 
-abstract class MailSerialKeyDao {
+public abstract class MailSerialKeyDao {
     private final static int SERIAL_KEY_LENGTH = 100;
 
     abstract protected String getMailType();

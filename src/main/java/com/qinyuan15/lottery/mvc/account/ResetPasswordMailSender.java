@@ -1,41 +1,41 @@
 package com.qinyuan15.lottery.mvc.account;
 
 import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.lottery.mvc.dao.ActivateRequestDao;
 import com.qinyuan15.lottery.mvc.dao.MailAccount;
 import com.qinyuan15.lottery.mvc.dao.MailAccountDao;
 import com.qinyuan15.lottery.mvc.dao.MailSerialKeyDao;
+import com.qinyuan15.lottery.mvc.dao.ResetPasswordRequestDao;
 
 /**
- * Class to send activate mail after registering
+ * Class to send reset passsword mail
  * Created by qinyuan on 15-7-1.
  */
-public class ActivateMailSender extends SerialKeyMailSender {
-    public ActivateMailSender(String activateUrl) {
-        super(activateUrl);
+public class ResetPasswordMailSender extends SerialKeyMailSender {
+    public ResetPasswordMailSender(String resetPasswordUrl) {
+        super(resetPasswordUrl);
     }
 
     @Override
     protected MailAccount getMailAccount() {
-        MailAccount mailAccount = new MailAccountDao().getInstance(AppConfig.getActivateMailAccountId());
+        MailAccount mailAccount = new MailAccountDao().getInstance(AppConfig.getResetPasswordMailAccountId());
         if (mailAccount == null) {
-            throw new RuntimeException("No activate mail account configured");
+            throw new RuntimeException("No reset password mail account configured");
         }
         return mailAccount;
     }
 
     @Override
     protected MailSerialKeyDao getMailSerialKeyDao() {
-        return new ActivateRequestDao();
+        return new ResetPasswordRequestDao();
     }
 
     @Override
     protected String getSubjectTemplate() {
-        return AppConfig.getActivateMailSubjectTemplate();
+        return AppConfig.getResetPasswordMailSubjectTemplate();
     }
 
     @Override
     protected String getContentTemplate() {
-        return AppConfig.getActivateMailContentTemplate();
+        return AppConfig.getResetPasswordMailContentTemplate();
     }
 }
