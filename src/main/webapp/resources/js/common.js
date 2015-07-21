@@ -19,14 +19,25 @@ var angularUtils = {
         return this;
     }
 };
-
 (function () {
     // to show error information
     var errorInfo = $.url.param('errorInfo');
     if (errorInfo) {
         alert(errorInfo);
     }
-
+})();
+(function () {
+    // actions about bootstrap style select form
+    var $div = $('div.dropdown');
+    $div.find('ul.dropdown-menu a').click(function () {
+        var $this = $(this);
+        var commodityId = $this.dataOptions('id');
+        var text = $this.text();
+        $div.find('button').html(text + ' <span class="caret"></span>');
+        $div.find('input[type=hidden]:first').val(commodityId);
+    });
+})();
+(function () {
     function showRegisterForm() {
         $registerForm.get$Inputs().each(function () {
             resetRegisterInput(this);

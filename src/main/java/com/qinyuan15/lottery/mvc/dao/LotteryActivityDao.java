@@ -5,7 +5,7 @@ import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.hibernate.HibernateDeleter;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
-import com.qinyuan15.utils.mvc.PaginationItemFactory;
+import com.qinyuan15.utils.mvc.controller.PaginationItemFactory;
 
 import java.util.List;
 

@@ -4,7 +4,7 @@ import com.qinyuan15.lottery.mvc.dao.Commodity;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
 import com.qinyuan15.utils.DoubleUtils;
 import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.mvc.PaginationAttributeAdder;
+import com.qinyuan15.utils.mvc.controller.PaginationAttributeAdder;
 import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -8,7 +8,9 @@
                 <tr>
                     <td class="title">奖品<span class="required">*</span></td>
                     <td class="input">
-                        <%@include file="commodity-select-form.jsp" %>
+                        <c:set var="selectFormItems" value="${allCommodities}"/>
+                        <c:set var="selectFormId" value="commodity-select"/>
+                        <%@include file="widget-select-form.jsp" %>
                     </td>
                     <td class="title">开始时间<span class="required">*</span></td>
                     <td class="content" style="width: 300px;">

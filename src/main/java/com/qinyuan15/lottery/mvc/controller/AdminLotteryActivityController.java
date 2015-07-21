@@ -4,8 +4,9 @@ import com.qinyuan15.lottery.mvc.dao.*;
 import com.qinyuan15.lottery.mvc.lottery.DualColoredBallTermValidator;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.mvc.PaginationAttributeAdder;
 import com.qinyuan15.utils.mvc.controller.ImageController;
+import com.qinyuan15.utils.mvc.controller.PaginationAttributeAdder;
+import com.qinyuan15.utils.mvc.controller.SelectFormItemsBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ public class AdminLotteryActivityController extends ImageController {
                 .setRowItemsName("activities").setPageSize(10).add();
 
         // used by commodity select form
-        setAttribute("allCommodities", new CommodityDao().getInstances());
+        setAttribute("allCommodities", new SelectFormItemsBuilder().build(new CommodityDao().getInstances(), "name"));
         DualColoredBallRecord latestRecord = new DualColoredBallRecordDao().getLatestInstance();
         setAttribute("nextDualColoredBallTerm", latestRecord.getYear() +
                 new DecimalFormat("000").format(latestRecord.getTerm() + 1));
@@ -41,7 +42,6 @@ public class AdminLotteryActivityController extends ImageController {
         setTitle("抽奖管理");
         addCss("admin-form");
         addJs("lib/bootstrap/js/bootstrap.min");
-        addJs("commodity-select-form");
         addCssAndJs("admin-lottery-activity");
         return "admin-lottery-activity";
     }
