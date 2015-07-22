@@ -40,7 +40,7 @@
                     return false;
                 }
                 if (self.get$Password().val() != self.get$Password2().val()) {
-                    alert('两次输入的密码不相等！');
+                    alert('两次输入的密码不一致！');
                     self.get$Password2().focusOrSelect();
                     return false;
                 }
