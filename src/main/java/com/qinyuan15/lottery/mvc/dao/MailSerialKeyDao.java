@@ -36,9 +36,14 @@ public abstract class MailSerialKeyDao {
     }
 
     public MailSerialKey getInstanceBySerialKey(String serialKey) {
-        MailSerialKey mailSerialKey = new HibernateListBuilder().addFilter("serialKey=:serialKey")
-                .addArgument("serialKey", serialKey).getFirstItem(MailSerialKey.class);
+        MailSerialKey mailSerialKey = new HibernateListBuilder().addEqualFilter("serialKey", serialKey)
+                .getFirstItem(MailSerialKey.class);
         return filterByMailType(mailSerialKey);
+    }
+
+    public boolean hasSerialKey(String serialKey) {
+        return new HibernateListBuilder().addEqualFilter("serialKey", serialKey)
+                .addEqualFilter("mailType", getMailType()).count(MailSerialKey.class) > 0;
     }
 
     public void response(Integer id) {

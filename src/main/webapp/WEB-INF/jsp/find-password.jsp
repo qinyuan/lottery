@@ -5,7 +5,7 @@
     <div class="page-width shadow">
         <h3>找回密码</h3>
 
-        <form method="post" id="usernameInputForm">
+        <form id="usernameInputForm">
             <table>
                 <tbody>
                 <tr>

@@ -11,8 +11,10 @@ import com.qinyuan15.lottery.mvc.dao.ResetPasswordRequestDao;
  * Created by qinyuan on 15-7-1.
  */
 public class ResetPasswordMailSender extends SerialKeyMailSender {
-    public ResetPasswordMailSender(String resetPasswordUrl) {
-        super(resetPasswordUrl);
+    private final static String SERIAL_KEY_URL = AppConfig.getAppHost() + "reset-password.html";
+
+    public ResetPasswordMailSender() {
+        super(SERIAL_KEY_URL);
     }
 
     @Override

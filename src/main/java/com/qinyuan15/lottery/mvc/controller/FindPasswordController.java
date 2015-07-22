@@ -1,6 +1,5 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.account.ResetPasswordMailSender;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
@@ -25,6 +24,7 @@ public class FindPasswordController extends ImageController {
         setTitle("找回密码");
         IndexHeaderUtils.setHeaderParameters(this);
         addCssAndJs("find-password");
+        setAttribute("noFooter", true);
         return "find-password";
     }
 
@@ -46,7 +46,7 @@ public class FindPasswordController extends ImageController {
         }
 
         try {
-            new ResetPasswordMailSender(getResetPasswordUrl()).send(user.getId());
+            new ResetPasswordMailSender().send(user.getId());
             Map<String, Object> result = new HashMap<>();
             result.put("success", true);
             result.put("mail", user.getEmail());
@@ -70,15 +70,11 @@ public class FindPasswordController extends ImageController {
         }
 
         try {
-            new ResetPasswordMailSender(getResetPasswordUrl()).send(user.getId());
+            new ResetPasswordMailSender().send(user.getId());
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to resend email to {}, info: {}", email, e);
             return fail("邮件发送失败！");
         }
-    }
-
-    private String getResetPasswordUrl() {
-        return AppConfig.getAppHost() + "new-password.html";
     }
 }

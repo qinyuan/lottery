@@ -11,6 +11,7 @@ public class LoginController extends ImageController {
     public String index() {
         IndexHeaderUtils.setHeaderParameters(this);
 
+        setAttribute("noFooter", true);
         setTitle("后台管理员登录");
         addCssAndJs("login");
 

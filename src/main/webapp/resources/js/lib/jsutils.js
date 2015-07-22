@@ -499,7 +499,9 @@ jQuery.fn.scrollToTop = function () {
 };
 
 jQuery.fn.focusFirstTextInput = function () {
-    this.find('input[type=text]:first').focusOrSelect();
+    this.find('input').filter(function(){
+        return this.type == 'text' || this.type== 'password';
+    }).first().focusOrSelect();
     return this;
 };
 

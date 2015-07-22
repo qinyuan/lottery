@@ -115,6 +115,14 @@ public class UserDao extends SimpleUserDao {
         return new HibernateListBuilder().build(User.class);
     }
 
+    public void updatePassword(Integer id, String password) {
+        User user = getInstance(id);
+        if (user != null) {
+            user.setPassword(password);
+            HibernateUtils.update(user);
+        }
+    }
+
     public Integer getIdBySerialKey(String serialKey) {
         if (!StringUtils.hasText(serialKey)) {
             return null;

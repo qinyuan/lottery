@@ -9,7 +9,7 @@ import org.junit.Test;
 public class ActivateMailSenderTest {
     @Test
     public void testSend() throws Exception {
-        ActivateMailSender sender = new ActivateMailSender("http://www.baidu.com");
+        ActivateMailSender sender = new ActivateMailSender();
         sender.send(2);
     }
 }

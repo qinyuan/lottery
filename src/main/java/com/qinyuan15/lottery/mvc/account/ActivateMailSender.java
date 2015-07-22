@@ -11,8 +11,10 @@ import com.qinyuan15.lottery.mvc.dao.MailSerialKeyDao;
  * Created by qinyuan on 15-7-1.
  */
 public class ActivateMailSender extends SerialKeyMailSender {
-    public ActivateMailSender(String activateUrl) {
-        super(activateUrl);
+    private final static String SERIAL_KEY_URL = AppConfig.getAppHost() + "activate-account.html";
+
+    public ActivateMailSender() {
+        super(SERIAL_KEY_URL);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.account.ActivateMailSender;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
@@ -74,7 +73,7 @@ public class RegisterController extends BaseController {
             Integer userId = userDao.addNormal(username, password, email, livenessAdder.getSpreadUserId(),
                     livenessAdder.getSpreadWay());
             livenessAdder.addLiveness(userId, false);
-            new ActivateMailSender(getActivateUrl()).send(userId);
+            new ActivateMailSender().send(userId);
             return success();
         } catch (Exception e) {
             LOGGER.error("fail to add user, username: {}, password: {}, email {}, info {}",
@@ -92,16 +91,12 @@ public class RegisterController extends BaseController {
         }
 
         try {
-            new ActivateMailSender(getActivateUrl()).send(user.getId());
+            new ActivateMailSender().send(user.getId());
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to resend email to {}, info: {}", email, e);
             return fail("邮件发送失败");
         }
-    }
-
-    private String getActivateUrl() {
-        return AppConfig.getAppHost() + "activate-account.html";
     }
 
     private final static String TO_LOGIN_HTML = "<a href='javascript:void(0)' onclick='switchToLogin()'>立即登录</a>";
