@@ -3,30 +3,32 @@
 <%@include file="index-header.jsp" %>
 <div class="main-body">
     <div class="page-width shadow">
-        <h3>找回密码</h3>
+        <div class="title">找回密码</div>
 
         <form id="usernameInputForm">
             <table>
                 <tbody>
                 <tr>
-                    <td>您的帐号：</td>
-                    <td>
-                        <input type="text" class="form-control" name="resetPasswordUsername"
+                    <td class="title">您的帐号：</td>
+                    <td class="input">
+                        <input type="text" class="form-control username" name="resetPasswordUsername"
                                placeholder="手机号/登录邮箱/用户名"/>
                     </td>
                 </tr>
                 <tr>
-                    <td>验证码：</td>
-                    <td>
+                    <td class="title">验证码：</td>
+                    <td class="input">
                         <jsp:include page="widget-identity-code.jsp">
                             <jsp:param name="loadImage" value="true"/>
-                            <jsp:param name="placeholder" value="输入图片中的数字或字母"/>
+                            <jsp:param name="placeholder" value="请输入图片中的数字或字母"/>
+                            <jsp:param name="refreshImage" value="true"/>
                         </jsp:include>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2" style="text-align: center;">
-                        <button type="button" class="btn btn-success" id="usernameInputSubmit">下一步</button>
+                    <td class="title"></td>
+                    <td class="input">
+                        <button type="button" class="btn btn-success btn-lg" id="usernameInputSubmit">下一步</button>
                     </td>
                 </tr>
                 </tbody>
