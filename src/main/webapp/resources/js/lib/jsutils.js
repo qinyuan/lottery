@@ -207,6 +207,9 @@ var JSUtils = {
         var pattern = /^[a-zA-Z0-9_\\-\\.]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$/;
         return email && email.match(pattern) != null;
     },
+    getEmailLoginPage: function (emailAccount) {
+        return 'http://mail.' + emailAccount.replace(/^.*\@/, '');
+    },
     handlebars: function (templateId, data) {
         var source = $("#" + templateId).html();
         var template = Handlebars.compile(source);

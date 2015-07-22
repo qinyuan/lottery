@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.account.ActivateMailSender;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
@@ -82,19 +83,12 @@ public class RegisterController extends BaseController {
         }
     }
 
-    private String getActivateUrl() {
-        StringBuffer url = request.getRequestURL();
-        int lastIndex = url.lastIndexOf("/");
-        String activateUrl = url.substring(0, lastIndex) + "/";
-        return activateUrl + "activate-account.html";
-    }
-
     @RequestMapping(value = "resend-activate-email.json", method = RequestMethod.GET)
     @ResponseBody
     public String resendValidateEmail(@RequestParam(value = "email", required = true) String email) {
         User user = userDao.getInstanceByEmail(email);
         if (user == null) {
-            return fail("用户不存在");
+            return fail("用户不存在！");
         }
 
         try {
@@ -102,9 +96,12 @@ public class RegisterController extends BaseController {
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to resend email to {}, info: {}", email, e);
-            e.printStackTrace();
             return fail("邮件发送失败");
         }
+    }
+
+    private String getActivateUrl() {
+        return AppConfig.getAppHost() + "activate-account.html";
     }
 
     private final static String TO_LOGIN_HTML = "<a href='javascript:void(0)' onclick='switchToLogin()'>立即登录</a>";

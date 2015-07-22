@@ -67,8 +67,7 @@ var angularUtils = {
     function showActivateRemind(email) {
         JSUtils.showTransparentBackground();
         $activateRemind.find('span.email').text(email);
-        var mailLoginPage = 'http://mail.' + email.replace(/^.*\@/, '');
-        $activateRemind.find('a.to-mail-page').attr('href', mailLoginPage);
+        $activateRemind.find('a.to-mail-page').attr('href', JSUtils.getEmailLoginPage(email));
         $activateRemind.fadeIn(500);
     }
 

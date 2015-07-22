@@ -42,8 +42,8 @@ public class UserDao extends SimpleUserDao {
     }
 
     @Override
-    public com.qinyuan15.utils.security.User getInstanceByName(String usernameFromLoginForm) {
-        com.qinyuan15.utils.security.User user = super.getInstanceByName(usernameFromLoginForm);
+    public User getInstanceByName(String usernameFromLoginForm) {
+        User user = getInstanceByUsername(usernameFromLoginForm);
         if (user != null) {
             return user;
         }
@@ -54,6 +54,14 @@ public class UserDao extends SimpleUserDao {
         }
 
         return getInstanceByTel(usernameFromLoginForm);
+    }
+
+    public User getInstanceByUsername(String username) {
+        if (!StringUtils.hasText(username)) {
+            return null;
+        }
+        return new HibernateListBuilder().addEqualFilter("username", username)
+                .getFirstItem(User.class);
     }
 
     public User getInstanceByEmail(String email) {
