@@ -27,6 +27,12 @@
                 <li class="footer"></li>
             </ul>
         </li>
+        <li><a id="statisticLink" class="text" href="admin-commodity-edit.html">统计分析</a>
+            <ul>
+                <li><a class="text" href="admin-user-list.html">用户列表</a></li>
+                <li class="footer"></li>
+            </ul>
+        </li>
     </security:authorize>
     <security:authorize ifNotGranted="ROLE_NORMAL,ROLE_ADMIN">
         <li><a class="text emphasize" id="loginNavigationLink" href="javascript:void(0)">登录</a></li>

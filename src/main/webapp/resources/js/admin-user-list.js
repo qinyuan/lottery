@@ -1,0 +1,4 @@
+;
+(function () {
+    $('#statisticLink').addClass('emphasize');
+})();
