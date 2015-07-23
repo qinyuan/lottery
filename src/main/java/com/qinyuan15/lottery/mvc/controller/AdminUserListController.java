@@ -41,14 +41,11 @@ public class AdminUserListController extends ImageController {
 
         tableName += " LEFT JOIN user AS iu ON u.spread_user_id=iu.id" ;
 
-
-
-
         DatabaseTable table = new DatabaseTable(tableName, "u.id", DatabaseTable.QueryType.SQL);
         table.addField("用户名", "u.username", "username");
         table.addField("邮箱", "u.email", "email");
         table.addField("活跃度", "l.sum_liveness", "liveness");
-        table.addField("最近一次抽奖", "lot.last_lot_time", "lot_time");
+        table.addField("最近一次抽奖", "DATE_FORMAT(lot.last_lot_time,'%Y-%m-%d %T')", "lot_time");
         table.addField("邀请了谁","idu.invited_users", "invited_users");
         table.addField("被请邀请", "iu.username", "invite_user");
         table.addEqualFilter("u.role", User.NORMAL);
