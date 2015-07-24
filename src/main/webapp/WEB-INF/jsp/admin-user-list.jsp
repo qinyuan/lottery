@@ -14,8 +14,8 @@
             <thead>
             <th>选择</th>
             <th>序号</th>
-            <c:forEach var="head" items="${userTable.heads}">
-                <th>${head}</th>
+            <c:forEach var="head" items="${userTable.heads}" varStatus="status">
+                <th class="${userTable.aliases[status.index]}">${head}<div title="排序筛选" class="filter-icon"><button class="filter-icon"></button></div></th>
             </c:forEach>
             </thead>
             <tbody>

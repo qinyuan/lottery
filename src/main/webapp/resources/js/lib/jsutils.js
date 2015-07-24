@@ -310,28 +310,41 @@ var JSUtils = {
     },
     /**
      * update certain parameter of current url, then return the new url
-     * @param paramKey key of parameter to update
-     * @param paramValue value of parameter to update
      */
-    updateUrlParam: function (paramKey, paramValue) {
-        var url = location.href;
-        if (url.indexOf('?') < 0) {
-            return url + '?' + paramKey + '=' + paramValue;
+    updateUrlParam: function (params) {
+        function updateParamByUrl(url, key, value) {
+            if (url.indexOf('?') < 0) {
+                return url + '?' + key + '=' + value;
+            }
+
+            var stringArray = url.split('?');
+            url = stringArray[0];
+            stringArray = stringArray[1].split('&');
+            for (var i = 0, len = stringArray.length; i < len; i++) {
+                if (stringArray[i].indexOf(key + '=') == 0) {
+                    stringArray[i] = key + '=' + value;
+                    break;
+                }
+                if (i == len - 1) {
+                    stringArray.push(key + '=' + value);
+                }
+            }
+            return url + '?' + stringArray.join('&');
         }
 
-        var stringArray = url.split('?');
-        url = stringArray[0];
-        stringArray = stringArray[1].split('&');
-        for (var i = 0, len = stringArray.length; i < len; i++) {
-            if (stringArray[i].indexOf(paramKey + '=') == 0) {
-                stringArray[i] = paramKey + '=' + paramValue;
-                break;
+        if (typeof(params) == 'string') {
+            return updateParamByUrl(location.href, params, arguments[1]);
+        } else if (typeof(params) == 'object') {
+            var href = location.href;
+            for (var key in params) {
+                if (params.hasOwnProperty(key)) {
+                    href = updateParamByUrl(href, key, params[key]);
+                }
             }
-            if (i == len - 1) {
-                stringArray.push(paramKey + '=' + paramValue);
-            }
+            return href;
+        } else {
+            return location.href;
         }
-        return url + '?' + stringArray.join('&');
     }
 };
 
@@ -499,8 +512,8 @@ jQuery.fn.scrollToTop = function () {
 };
 
 jQuery.fn.focusFirstTextInput = function () {
-    this.find('input').filter(function(){
-        return this.type == 'text' || this.type== 'password';
+    this.find('input').filter(function () {
+        return this.type == 'text' || this.type == 'password';
     }).first().focusOrSelect();
     return this;
 };

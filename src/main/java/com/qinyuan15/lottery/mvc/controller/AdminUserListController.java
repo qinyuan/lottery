@@ -5,18 +5,28 @@ import com.qinyuan15.utils.mvc.controller.DatabaseTable;
 import com.qinyuan15.utils.mvc.controller.ImageController;
 import com.qinyuan15.utils.mvc.controller.PaginationAttributeAdder;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AdminUserListController extends ImageController {
 
     @RequestMapping("/admin-user-list")
-    public String index() {
+    public String index(@RequestParam(value = "orderField", required = false) String orderField,
+                        @RequestParam(value = "orderType", required = false) String orderType) {
         IndexHeaderUtils.setHeaderParameters(this);
 
         DatabaseTable userTable = getUserTable();
-        new PaginationAttributeAdder(getUserTable(), request)
-                .setRowItemsName("users").setPageSize(10).add();
+        /*if (StringUtils.hasText(orderField)) {
+            if (orderType != null && orderType.toLowerCase().equals("desc")) {
+                userTable.addOrder(orderField, false);
+            } else {
+                userTable.addOrder(orderField, true);
+            }
+        }*/
+        userTable.addOrder("username", false);
+        new PaginationAttributeAdder(userTable, request).setRowItemsName("users").setPageSize(10).add();
         setAttribute("userTable", userTable);
 
         setTitle("用户列表");
@@ -39,14 +49,14 @@ public class AdminUserListController extends ImageController {
                 "FROM user AS u JOIN user AS u2 ON u.id=u2.spread_user_id GROUP BY u.id";
         tableName += " LEFT JOIN (" + invitedUserTable + ") AS idu ON u.id=idu.id";
 
-        tableName += " LEFT JOIN user AS iu ON u.spread_user_id=iu.id" ;
+        tableName += " LEFT JOIN user AS iu ON u.spread_user_id=iu.id";
 
         DatabaseTable table = new DatabaseTable(tableName, "u.id", DatabaseTable.QueryType.SQL);
         table.addField("用户名", "u.username", "username");
         table.addField("邮箱", "u.email", "email");
         table.addField("活跃度", "l.sum_liveness", "liveness");
         table.addField("最近一次抽奖", "DATE_FORMAT(lot.last_lot_time,'%Y-%m-%d %T')", "lot_time");
-        table.addField("邀请了谁","idu.invited_users", "invited_users");
+        table.addField("邀请了谁", "idu.invited_users", "invited_users");
         table.addField("被请邀请", "iu.username", "invite_user");
         table.addEqualFilter("u.role", User.NORMAL);
         return table;

@@ -1,0 +1,11 @@
+table div.filter-icon {
+    position: relative;
+    float: right;
+}
+
+table div.filter-icon button.filter-icon {
+    vertical-align: top;
+    padding: 9px 9px;
+    background: url("images/table-filter.png") no-repeat;
+    cursor: pointer;
+}
