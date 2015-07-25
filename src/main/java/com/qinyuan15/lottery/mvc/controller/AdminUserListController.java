@@ -7,7 +7,12 @@ import com.qinyuan15.utils.mvc.controller.PaginationAttributeAdder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class AdminUserListController extends ImageController {
@@ -32,6 +37,27 @@ public class AdminUserListController extends ImageController {
         addCss("admin-form");
         addCssAndJs("admin-user-list");
         return "admin-user-list";
+    }
+
+    @RequestMapping(value = "/admin-user-list-distinct-values.json", method = RequestMethod.GET)
+    @ResponseBody
+    public String json(@RequestParam(value = "alias", required = false) String alias) {
+        DatabaseTable userTable = getUserTable();
+        List<DistinctItem> items = new ArrayList<>();
+        for (Object value : userTable.getDistinctValues(alias)) {
+            items.add(new DistinctItem(value, true));
+        }
+        return toJson(items);
+    }
+
+    private static class DistinctItem {
+        public final Object text;
+        public final boolean checked;
+
+        DistinctItem(Object text, boolean checked) {
+            this.text = text;
+            this.checked = checked;
+        }
     }
 
     private DatabaseTable getUserTable() {
@@ -60,12 +86,4 @@ public class AdminUserListController extends ImageController {
         table.addEqualFilter("u.role", User.NORMAL);
         return table;
     }
-
-    /*
-    @RequestMapping("/hello-world.json")
-    @ResponseBody
-    public String json(){
-        return success();
-    }
-    */
 }
