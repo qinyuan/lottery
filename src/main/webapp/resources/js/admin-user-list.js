@@ -67,7 +67,7 @@
         }
     };
 
-    $('table div.filter-icon button.filter-icon').click(function () {
+    $('table div.filter button.filter').click(function () {
         filterPanel.build($(this).parent());
     }).blur(function () {
         var $parent = $(this).parent();

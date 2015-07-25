@@ -16,7 +16,8 @@ public class AdminUserListControllerTest {
         System.out.println(table.getInstances(0, 10).get(0).getCols()[0]);
         System.out.println(table.getInstances(0, 10).get(1).getCols()[0]);
         System.out.println(table.getCount());
-        //System.out.println(table.getRows(-1, -1).size());
-        //System.out.println(table.getCount());
+        System.out.println(table.getHeadStyles());
+
+        System.out.println(table.getDistinctValues("username"));
     }
 }

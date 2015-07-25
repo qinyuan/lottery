@@ -18,16 +18,15 @@ public class AdminUserListController extends ImageController {
         IndexHeaderUtils.setHeaderParameters(this);
 
         DatabaseTable userTable = getUserTable();
-        /*if (StringUtils.hasText(orderField)) {
+        if (StringUtils.hasText(orderField)) {
             if (orderType != null && orderType.toLowerCase().equals("desc")) {
                 userTable.addOrder(orderField, false);
             } else {
                 userTable.addOrder(orderField, true);
             }
-        }*/
-        userTable.addOrder("username", false);
-        new PaginationAttributeAdder(userTable, request).setRowItemsName("users").setPageSize(10).add();
+        }
         setAttribute("userTable", userTable);
+        new PaginationAttributeAdder(userTable, request).setRowItemsName("users").setPageSize(10).add();
 
         setTitle("用户列表");
         addCss("admin-form");
