@@ -17,3 +17,15 @@ table div.filter button.filter.asc {
 table div.filter button.filter.desc {
     background-position: -37px 0;
 }
+
+table div.filter button.filter.filtered {
+    background-position: -90px 0;
+}
+
+table div.filter button.filter.filtered.asc {
+    background-position: -72px 0;
+}
+
+table div.filter button.filter.filtered.desc {
+    background-position: -54px 0;
+}

@@ -141,12 +141,12 @@
             $.post('admin-user-list-filter-remove.json', {
                 filterField: filterField
             }, JSUtils.normalAjaxCallback);
+        } else {
+            JSUtils.postArrayParams('admin-user-list-filter.json', {
+                filterField: filterField,
+                filterValues: filterValues
+            }, JSUtils.normalAjaxCallback);
         }
-
-        JSUtils.postArrayParams('admin-user-list-filter.json', {
-            filterField: filterField,
-            filterValues: filterValues
-        }, JSUtils.normalAjaxCallback);
     };
 
     $('#statisticLink').addClass('emphasize');
