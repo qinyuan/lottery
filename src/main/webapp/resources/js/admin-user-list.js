@@ -12,28 +12,39 @@
             $parent.find('div').remove();
         },
         build: function ($parent) {
-            function setInsertHtmlCss($html) {
-                $html.find('>div >div').css({
+            function setSelectRowCss($html) {
+                $html.css({
                     'width': '100%',
-                    'cursor': 'pointer',
                     'padding': '4px'
-                }).hover(function () {
+                }).filter(function () {
+                    var $this = $(this);
+                    return $this.find('button').size() == 0 && $this.find('a').size() == 0;
+                }).css({'cursor': 'pointer'}).hover(function () {
                     $(this).css('background-color', '#cccccc');
                 }, function () {
                     $(this).css('background-color', '#ffffff');
                 });
             }
 
-            var html = '<div><div class="filter-menu">';
+            function adjustPanelWidth($filterDiv) {
+                var maxWidth = 0;
+                $filterDiv.find('>div >div').each(function () {
+                    maxWidth = Math.max(maxWidth, JSUtils.getChineseStringLength($(this).text()));
+                });
+                $filterDiv.css('width', 10 + maxWidth * 9);
+            }
+
+            var html = '<div class="filter-menu">';
             html += '<div class="rank"><div class="asc">升序</div><div class="desc">降序</div>';
-            html += '</div></div>';
+            html += '</div>';
             var $html = $(html).appendTo($parent);
             $html.css({
                 'position': 'absolute',
                 'background-color': '#ffffff',
                 'top': '100%',
                 'right': 0,
-                'width': '100px',
+                'min-width': '100px',
+                'width': 'auto',
                 'border': '1px solid #cccccc',
                 'cursor': 'default',
                 'text-align': 'left',
@@ -49,24 +60,44 @@
                     'orderType': $this.attr('class')
                 });
             });
-            setInsertHtmlCss($html.find('>div'));
+            setSelectRowCss($html.find('>div >div'));
 
             this.getDistinctItems($parent.getParentByTagName('th').attr('class'), function (distinctItems) {
                 var html = '<div class="filter-items">';
-                html += '<div><input type="checkbox" name="select-all"/>(全选)</div>';
 
+                // checkboxes
                 for (var i = 0, len = distinctItems.length; i < len; i++) {
                     var item = distinctItems[i];
-                    html += '<div><input type="checkbox" name="selectedItems" value="' + item['text'] + '"';
+                    //var text = item.hasOwnProperty('text') ? item['text'] : '(空白)';
+                    var text = item['text'];
+                    html += '<div><input type="checkbox" value="' + text + '"';
                     if (item.checked) {
                         html += ' checked';
                     }
-                    html += '/>' + item['text'] + '</div>'
+                    html += '/><span class="checkbox-label">' + text + '</span></div>'
                 }
+
+                // select or deselect all
+                html += '<div><a href="javascript:void(0)" onclick="return selectAllValues(this);">全选</a>';
+                html += '&nbsp;<a href="javascript:void(0)" onclick="return unSelectAllValues(this);">全不选</a></div>';
+
+                // submit or cancel
+                html += '<div><button type="button" class="btn btn-success btn-xs" onclick="return submitFilterValues(this);">确定</button>';
+                html += '&nbsp;<button type="button" class="btn btn-default btn-xs" onclick="return cancelFilterValues(this);">取消</button></div>';
+
                 html += '</div>';
+
                 var $html = $(html).appendTo($parent.find('>div'));
-                setInsertHtmlCss($html);
+                setSelectRowCss($html.find('>div'));
+                $html.click(function () {
+                    var $filterButton = $(this).getParentByTagNameAndClass('div', 'filter').find('>button');
+                    $filterButton.attr('prevent-blur', 'true');
+                });
                 $html.find('input').css({'vertical-align': '-10%', 'margin-right': '3px'});
+                $html.find('span.checkbox-label').click(function () {
+                    $(this).parent().find('input[type=checkbox]').trigger('click');
+                });
+                adjustPanelWidth($parent.find('>div'));
             });
         }
     };
@@ -78,12 +109,58 @@
         } else {
             filterPanel.build($parent);
         }
-    })/*.blur(function () {
-     var $parent = $(this).parent();
-     setTimeout(function () {
-     filterPanel.clear($parent);
-     }, 200);
-     })*/;
+    }).blur(function () {
+        var $this = $(this);
+        var $parent = $this.parent();
+        setTimeout(function () {
+            if ($this.attr('prevent-blur')) {
+                $this.attr('prevent-blur', null);
+                $this.focus();
+            } else {
+                filterPanel.clear($parent);
+            }
+        }, 200);
+    });
+    cancelFilterValues = function (target) {
+        $(target).getParentByTagNameAndClass('div', 'filter').find('>button').trigger('blur');
+    };
+    submitFilterValues = function (target) {
+        var $filter = $(target).getParentByTagNameAndClass('div', 'filter');
+        var filterField = $filter.parent().attr('class');
+        var filterValues = [];
+        var allChecked = true;
+        $filter.find('input[type=checkbox]').each(function () {
+            if (this.checked) {
+                filterValues.push($(this).val());
+            } else {
+                allChecked = false;
+            }
+        });
+
+        if (allChecked) {
+            $.post('admin-user-list-filter-remove.json', {
+                filterField: filterField
+            }, JSUtils.normalAjaxCallback);
+        }
+
+        JSUtils.postArrayParams('admin-user-list-filter.json', {
+            filterField: filterField,
+            filterValues: filterValues
+        }, JSUtils.normalAjaxCallback);
+    };
 
     $('#statisticLink').addClass('emphasize');
 })();
+function selectAllValues(target) {
+    $(target).parent().parent().find('input[type=checkbox]').each(function () {
+        this.checked = true;
+    });
+}
+
+function unSelectAllValues(target) {
+    $(target).parent().parent().find('input[type=checkbox]').each(function () {
+        this.checked = false;
+    });
+}
+
+var submitFilterValues, cancelFilterValues;

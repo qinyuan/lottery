@@ -258,6 +258,23 @@ var JSUtils = {
             alert(data.detail);
         }
     },
+    postArrayParams: function (url, param, callback) {
+        $.ajax({
+            url: url,
+            type: "post",
+            data: param,
+            async: false,
+            dataType: "json",
+            cache: false,
+            error: function (data) {
+            },
+            beforeSend: function (XMLHttpRequest) {
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            },
+            success: callback
+        });
+    },
     /**
      * validate is upload file is set
      *
