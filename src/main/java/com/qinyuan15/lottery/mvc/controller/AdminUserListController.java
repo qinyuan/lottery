@@ -162,9 +162,14 @@ public class AdminUserListController extends ImageController {
 
         tableName += " LEFT JOIN user AS iu ON u.spread_user_id=iu.id";
 
+        String loginRecordTable = "SELECT user_id,location FROM login_record WHERE id IN " +
+                "(SELECT MAX(id) FROM login_record GROUP BY user_id)";
+        tableName += " LEFT JOIN (" + loginRecordTable + ") AS lr ON u.id=lr.user_id";
+
         DatabaseTable table = new DatabaseTable(tableName, "u.id", DatabaseTable.QueryType.SQL);
         table.addField("用户名", "u.username", "username");
         table.addField("邮箱", "u.email", "email");
+        table.addField("地区", "lr.location", "location");
         table.addField("活跃度", "l.sum_liveness", "liveness");
         table.addField("最近一次抽奖", "DATE_FORMAT(lot.last_lot_time,'%Y-%m-%d %T')", "lot_time");
         table.addField("邀请了谁", "idu.invited_users", "invited_users");
