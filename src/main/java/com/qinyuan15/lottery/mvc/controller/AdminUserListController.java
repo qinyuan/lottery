@@ -43,6 +43,7 @@ public class AdminUserListController extends ImageController {
         setTitle("用户列表");
         addCss("admin-form");
         addCssAndJs("admin-user-list");
+        addJs("lib/ckeditor/ckeditor");
         return "admin-user-list";
     }
 

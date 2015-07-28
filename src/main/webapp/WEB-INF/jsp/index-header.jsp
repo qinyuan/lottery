@@ -13,7 +13,7 @@
         </div>
         <div class="right-logo">
             <%@include file="security-navigation.jsp" %>
-            <a class="image" href="index.html"><img src="${indexHeaderRightLogo}"/></a>
+            <div style="float: left;"><a class="image" href="index.html"><img src="${indexHeaderRightLogo}"/></a></div>
         </div>
         <div class="slogan">
             <img src="${indexHeaderSlogan}"/>

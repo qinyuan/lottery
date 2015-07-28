@@ -1,5 +1,44 @@
 ;
 (function () {
+    // codes about send email
+    function getSelectedUserCount() {
+        return $userSelectCheckboxes.filter(function () {
+            return this.checked;
+        }).size();
+    }
+
+    function updateButtonStatus() {
+        $('#openMailForm').attr('disabled', getSelectedUserCount() == 0);
+    }
+
+    function showMailForm() {
+        console.log('reach here');
+        JSUtils.showTransparentBackground(1);
+        $('#mainForm').fadeIn(200);
+    }
+    showMailForm();
+
+    var $userSelectCheckboxes = $('table input.select-user');
+    $userSelectCheckboxes.click(function () {
+        updateButtonStatus();
+        if (getSelectedUserCount() == 0) {
+            $selectAll.get(0).checked = false;
+        } else if (getSelectedUserCount() == $userSelectCheckboxes.size()) {
+            $selectAll.get(0).checked = true;
+        }
+    });
+
+    var $selectAll = $('table thead th > input.select-all');
+    $selectAll.click(function () {
+        var checked = this.checked;
+        $userSelectCheckboxes.each(function () {
+            this.checked = checked;
+        });
+        updateButtonStatus();
+    });
+})();
+(function () {
+    // codes about filter
     var filterPanel = {
         getDistinctItems: function (alias, callback) {
             var href = JSUtils.updateUrlParam('alias', alias);

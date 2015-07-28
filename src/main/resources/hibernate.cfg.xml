@@ -21,6 +21,9 @@
         <mapping resource="com/qinyuan15/utils/config/AppConfig.hbm.xml"/>
         <mapping resource="com/qinyuan15/utils/security/LoginRecord.hbm.xml"/>
         <mapping resource="com/qinyuan15/utils/ip/IpLocation.hbm.xml"/>
+        <mapping resource="com/qinyuan15/utils/mail/Email.hbm.xml"/>
+        <mapping resource="com/qinyuan15/utils/mail/MailAccount.hbm.xml"/>
+        <mapping resource="com/qinyuan15/utils/mail/MailSerialKey.hbm.xml"/>
         <mapping resource="com/qinyuan15/utils/image/ImageMap.hbm.xml"/>
         <mapping resource="com/qinyuan15/lottery/mvc/dao/hibernate.hbm.xml"/>
     </session-factory>

@@ -1,6 +1,10 @@
-package com.qinyuan15.lottery.mvc.account;
+package com.qinyuan15.lottery.mvc.mail;
 
-import com.qinyuan15.lottery.mvc.dao.*;
+import com.qinyuan15.lottery.mvc.dao.User;
+import com.qinyuan15.lottery.mvc.dao.UserDao;
+import com.qinyuan15.utils.mail.MailAccount;
+import com.qinyuan15.utils.mail.MailSerialKey;
+import com.qinyuan15.utils.mail.MailSerialKeyDao;
 import com.qinyuan15.utils.mail.SimpleMailSender;
 
 abstract class SerialKeyMailSender {

@@ -45,16 +45,6 @@
         <property name="spreadUserId" column="spread_user_id"/>
         <property name="spreadWay" column="spread_way"/>
     </class>
-    <class name="MailSerialKey" table="mail_serial_key">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="userId" column="user_id"/>
-        <property name="serialKey" column="serial_key"/>
-        <property name="sendTime" column="send_time"/>
-        <property name="responseTime" column="response_time"/>
-        <property name="mailType" column="mail_type"/>
-    </class>
     <class name="HelpGroup" table="help_group">
         <id name="id" column="id">
             <generator class="identity"/>
@@ -120,12 +110,13 @@
         <property name="spreadWay" column="spread_way"/>
         <property name="registerBefore" column="register_before"/>
     </class>
-    <class name="MailAccount" table="mail_account">
+    <class name="MailSendRecord" table="mail_send_record">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
-        <property name="host" column="host"/>
-        <property name="username" column="username"/>
-        <property name="password" column="password"/>
+        <property name="mailAccountId" column="mail_account_id"/>
+        <property name="userId" column="user_id"/>
+        <property name="mailId" column="mail_id"/>
+        <property name="sendTime" column="send_time"/>
     </class>
 </hibernate-mapping>

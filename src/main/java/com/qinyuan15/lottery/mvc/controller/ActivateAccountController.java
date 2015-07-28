@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.lottery.mvc.dao.MailSerialKey;
+import com.qinyuan15.utils.mail.MailSerialKey;
 import com.qinyuan15.lottery.mvc.dao.ActivateRequestDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;

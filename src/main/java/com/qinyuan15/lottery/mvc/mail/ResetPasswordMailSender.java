@@ -1,9 +1,9 @@
-package com.qinyuan15.lottery.mvc.account;
+package com.qinyuan15.lottery.mvc.mail;
 
 import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.lottery.mvc.dao.MailAccount;
-import com.qinyuan15.lottery.mvc.dao.MailAccountDao;
-import com.qinyuan15.lottery.mvc.dao.MailSerialKeyDao;
+import com.qinyuan15.utils.mail.MailAccount;
+import com.qinyuan15.utils.mail.MailAccountDao;
+import com.qinyuan15.utils.mail.MailSerialKeyDao;
 import com.qinyuan15.lottery.mvc.dao.ResetPasswordRequestDao;
 
 /**

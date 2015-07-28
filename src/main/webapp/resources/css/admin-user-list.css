@@ -1,3 +1,7 @@
+div.buttons {
+    margin-bottom: 5px;
+}
+
 table div.filter {
     position: relative;
     float: right;
