@@ -261,4 +261,14 @@ public class AppConfig {
     public static void updateResetPasswordMailAccountId(Integer mailAccountId) {
         dao.saveInteger(RESET_PASSWORD_MAIL_ACCOUNT_ID_KEY, mailAccountId);
     }
+
+    private final static String LOTTERY_RULE_KEY = "lotteryRule";
+
+    public static String getLotteryRule() {
+        return dao.get(LOTTERY_RULE_KEY);
+    }
+
+    public static void updateLotteryRule(String lotteryRule) {
+        dao.save(LOTTERY_RULE_KEY, lotteryRule);
+    }
 }

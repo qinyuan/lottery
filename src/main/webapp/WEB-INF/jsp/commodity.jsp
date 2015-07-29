@@ -131,14 +131,14 @@
             <div class="spread">
                 您的爱心不足N，请努力传播！
                 <div class="spread-method">
-                    <a href="javascript:void(0)">如何提高爱心？</a>
+                    <a href="javascript:void(showLotteryRule('lotteryResult'))">如何提高爱心？</a>
                 </div>
             </div>
         </div>
         <div class="lottery-again">
             <button class="green-submit-button" id="takeLotteryAgain">再抽一次</button>
             <span class="split"></span>
-            <a href="javascript:void(0)">抽奖规则</a>
+            <a href="javascript:void(showLotteryRule('lotteryResult'))">抽奖规则</a>
         </div>
         <div class="share">
             <a href="javascript:void(0)" target="_blank" class="sina"></a>
@@ -146,5 +146,10 @@
             <a href="javascript:void(0)" target="_blank" class="qzone"></a>
         </div>
     </div>
+</div>
+<div class="float-panel" id="lotteryRule">
+    <div class="title">抽奖规则<div class="close-icon"><span></span></div></div>
+    <div class="body">${lotteryRule}</div>
+    <div class="button"><button type="button">我已了解</button></div>
 </div>
 <%@include file="inc-footer.jsp" %>

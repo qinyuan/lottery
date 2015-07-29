@@ -97,38 +97,38 @@
             </div>
         </div>
         <div class="edit-unit">
-            <div class="title">每次新抽奖机会所需爱心数设置</div>
+            <div class="title">其他设置</div>
             <div class="content">
                 <table>
                     <tbody>
                     <tr>
-                        <td class="title">抽奖机会所需爱心</td>
-                        <td class="input">
-                            <input style="width: 280px;" type="text" class="form-control" name="newLotLiveness"
+                        <td class="wide title">获取一次新抽奖机会所需爱心</td>
+                        <td class="input narrow">
+                            <input type="text" class="form-control" name="newLotLiveness"
                                    value="${newLotLiveness}" placeholder="在此输入每次新抽奖机会所需要的爱心数"/>
                         </td>
                     </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="edit-unit">
-            <div class="title">分享给好友且好友注册或登录后增加的爱心数设置</div>
-            <div class="content">
-                <table>
-                    <tbody>
                     <tr>
-                        <td class="title">分享成功增加爱心</td>
-                        <td class="input">
-                            <input style="width: 280px;" type="text" class="form-control" name="shareSucceedLiveness"
+                        <td class="wide title">分享给好友且好友注册或登录后增加的爱心</td>
+                        <td class="input narrow">
+                            <input type="text" class="form-control" name="shareSucceedLiveness"
                                    value="${shareSucceedLiveness}" placeholder="在此输入每次新抽奖机会所需要的爱心数"/>
                         </td>
                     </tr>
                     </tbody>
                 </table>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="title">抽奖规则</td>
+                        <td class="input">
+                            <textarea class="ckeditor" name="lotteryRule">${lotteryRule}</textarea>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-
         <div class="submit">
             <button id="submitButton" type="submit" class="btn btn-success">确定</button>
         </div>

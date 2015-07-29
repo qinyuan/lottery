@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.ImageMapType;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
@@ -54,6 +55,7 @@ public class CommodityController extends ImageController {
         }
 
         setAttribute("snapshots", build());
+        setAttribute("lotteryRule", AppConfig.getLotteryRule());
 
         addJs("resources/js/lib/handlebars.min-v1.3.0", false);
         addCssAndJs("commodity");

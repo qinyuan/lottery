@@ -318,6 +318,43 @@
         JSUtils.scrollToVerticalCenter($lotteryResult);
     }
 
+    var lotteryRule = ({
+        $div: $('#lotteryRule'),
+        $parent: null,
+        show: function (parentId) {
+            JSUtils.showTransparentBackground(1);
+            this.$div.fadeIn(200);
+            JSUtils.scrollToVerticalCenter(this.$div);
+            if (parentId) {
+                this.$parent = $('#'+parentId);
+                this.$parent.hide();
+            }
+        },
+        hide: function () {
+            this.$div.hide();
+            if (this.$parent) {
+                this.$parent.show();
+                this.$parent = null;
+            } else {
+                JSUtils.hideTransparentBackground();
+            }
+        },
+        init: function () {
+            var self = this;
+            this.$div.find('div.close-icon').click(function () {
+                self.hide();
+            });
+            this.$div.find('div.button button').click(function () {
+                self.hide();
+            });
+            return this;
+        }
+    }).init();
+    showLotteryRule = function (parentId) {
+        lotteryRule.show(parentId);
+    };
+
+
     getLotteryLot = function () {
         /*var $selectedSnapshot = $('div.body div.snapshots div.snapshot.selected');
          var commodityId = $selectedSnapshot.dataOptions('id');*/
@@ -347,9 +384,8 @@
         });
     };
 })();
-var getLotteryLot;
+var getLotteryLot, showLotteryRule;
 function getSelectedCommodityId() {
     var $selectedSnapshot = $('div.body div.snapshots div.snapshot.selected');
-    var commodityId = $selectedSnapshot.dataOptions('id');
-    return commodityId;
+    return $selectedSnapshot.dataOptions('id');
 }

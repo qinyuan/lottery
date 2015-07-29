@@ -23,11 +23,13 @@ public class AdminLotteryConfigController extends ImageController {
         setAttribute("qzoneIncludePicture", AppConfig.getQzoneIncludePicture());
         setAttribute("newLotLiveness", AppConfig.getNewLotLiveness());
         setAttribute("shareSucceedLiveness", AppConfig.getShareSucceedLiveness());
+        setAttribute("lotteryRule", AppConfig.getLotteryRule());
 
         setTitle("抽奖配置");
         addCss("admin-form");
         addCss("admin");
-        addJs("admin-lottery-config");
+        addJs("lib/ckeditor/ckeditor");
+        addCssAndJs("admin-lottery-config");
         return "admin-lottery-config";
     }
 
@@ -41,7 +43,9 @@ public class AdminLotteryConfigController extends ImageController {
                          @RequestParam(value = "qzoneSummary", required = true) String qzoneSummary,
                          @RequestParam(value = "qzoneIncludePicture", required = true) Boolean qzoneIncludePicture,
                          @RequestParam(value = "newLotLiveness", required = true) Integer newLotLiveness,
-                         @RequestParam(value = "shareSucceedLiveness", required = true) Integer shareSucceedLiveness) {
+                         @RequestParam(value = "shareSucceedLiveness", required = true) Integer shareSucceedLiveness,
+                         @RequestParam(value = "lotteryRule", required = true) String lotteryRule) {
+
         AppConfig.updateSinaWeiboTitle(sinaWeiboTitle);
         AppConfig.updateSinaWeiboIncludePicture(sinaWeiboIncludePicture);
         AppConfig.updateQQTitle(qqTitle);
@@ -52,6 +56,7 @@ public class AdminLotteryConfigController extends ImageController {
         AppConfig.updateQzoneIncludePicture(qzoneIncludePicture);
         AppConfig.updateNewLotLiveness(newLotLiveness);
         AppConfig.updateShareSucceedLiveness(shareSucceedLiveness);
+        AppConfig.updateLotteryRule(lotteryRule);
         return redirect("admin-lottery-config");
     }
 }

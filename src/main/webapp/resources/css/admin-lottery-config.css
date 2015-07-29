@@ -1,0 +1,12 @@
+
+div.form > form div.edit-unit td.wide.title {
+    width: 300px;
+}
+
+div.form > form div.edit-unit td.input.narrow {
+    width: 635px;
+}
+
+div.form > form div.edit-unit td.input.narrow input {
+    width: 100px;
+}
