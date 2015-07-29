@@ -27,7 +27,7 @@
         $groupItemFormDiv.find('input[name=iconFile]').val(null);
         $groupItemFormDiv.find('input[name=title]').val(title);
         groupItemFormContentEditor.setData(content);
-        JSUtils.showTransparentBackground();
+        JSUtils.showTransparentBackground(1);
         $groupItemFormDiv.fadeIn(300).focusFirstTextInput();
     }
 

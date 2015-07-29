@@ -89,7 +89,7 @@ var angularUtils = {
         showLoginForm();
     });
     $('#registerNavigationLink').click(function () {
-        JSUtils.showTransparentBackground();
+        JSUtils.showTransparentBackground(1);
         showRegisterForm();
     });
 
@@ -101,7 +101,7 @@ var angularUtils = {
     });
     $springLoginForm.find('div.title div.close-icon').click(function () {
         hideLoginForm();
-        JSUtils.hideTransparentBackground();
+        JSUtils.hideTransparentBackground(1);
     });
     $springLoginForm.find('#switchToRegister').click(function () {
         hideLoginForm();
@@ -291,7 +291,7 @@ var angularUtils = {
             $registerForm.find('form').ajaxSubmit({
                 success: function (data) {
                     if (data['success']) {
-                        JSUtils.showTransparentBackground();
+                        JSUtils.showTransparentBackground(1);
                         $registerForm.hide();
                         showRegisterSuccess($registerForm.get$Email().val());
                         $registerForm.find('form').get(0).reset();

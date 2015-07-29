@@ -204,7 +204,7 @@
     var $announceCancelButton = $announceEditForm.getButtonByName('cancel');
 
     function showAnnounceEditForm(id, winners, announcement) {
-        JSUtils.showTransparentBackground();
+        JSUtils.showTransparentBackground(1);
         $announceEditForm.setInputValue('id', id);
         $announceEditForm.setInputValue('winners', winners);
         $announceEditForm.find('textarea[name=announcement]').val(announcement);

@@ -52,7 +52,7 @@
         $addImageForm.find('#backImage').val(backImage);
         $addImageForm.find('div.input input[type=file]').val(null);
 
-        JSUtils.showTransparentBackground();
+        JSUtils.showTransparentBackground(1);
         $addImageForm.fadeIn(300);
     }
 })();
