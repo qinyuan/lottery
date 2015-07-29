@@ -53,14 +53,12 @@ public class DualColoredBallCalculator {
             throw new RuntimeException("Invalid term number: " + termNumber);
         }
 
-        int year = termNumber / 1000;
-        int termNumberInYear = termNumber % 1000;
-
-        DualColoredBallRecord record = new DualColoredBallRecordDao().getNearestInstance(year, termNumberInYear);
+        DualColoredBallTerm term = new DualColoredBallTerm(termNumber);
+        DualColoredBallRecord record = new DualColoredBallRecordDao().getNearestInstance(term.year, term.term);
         if (record != null) {
-            return getDateWithRecord(termNumberInYear, record);
+            return getDateWithRecord(term.term, record);
         } else {
-            return getDateWithoutRecord(year, termNumberInYear);
+            return getDateWithoutRecord(term.year, term.term);
         }
     }
 

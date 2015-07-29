@@ -8,15 +8,115 @@
     }
 
     function updateButtonStatus() {
-        $('#openMailForm').attr('disabled', getSelectedUserCount() == 0);
+        $openMailForm.attr('disabled', getSelectedUserCount() == 0);
     }
 
-    function showMailForm() {
-        console.log('reach here');
-        JSUtils.showTransparentBackground(1);
-        $('#mainForm').fadeIn(200);
-    }
-    showMailForm();
+    var $openMailForm = $('#openMailForm');
+    $openMailForm.click(function () {
+        mailForm.show();
+    });
+
+    var mailForm = ({
+        $form: $('#mailForm'),
+        $cancelMail: $('#cancelMail'),
+        $submitMail: $('#submitMail'),
+        editor: CKEDITOR.replace('mailContent', {}),
+        hide: function () {
+            this.$form.hide();
+            JSUtils.hideTransparentBackground();
+        },
+        show: function () {
+            JSUtils.showTransparentBackground(1);
+            this.$form.fadeIn(200).focusFirstTextInput();
+            JSUtils.scrollToVerticalCenter(this.$form);
+            if (this.getSelectedMailAccountCount() == 0) {
+                this.get$MailAccounts().first().trigger('click');
+            }
+        },
+        get$Subject: function () {
+            return this.$form.getInputByName('subject');
+        },
+        get$MailAccounts: function () {
+            return this.$form.find('td.mail-account button');
+        },
+        get$SelectedMailAccounts: function () {
+            return this.$form.find('td.mail-account input[name=mailAccountIds]');
+        },
+        getSelectedMailAccountCount: function () {
+            return this.get$SelectedMailAccounts().size();
+        },
+        getContent: function () {
+            return    this.editor.getData();
+        },
+        validate: function () {
+            if (this.getSelectedMailAccountCount() == 0) {
+                alert('必须至少选择一个发件箱帐号');
+                return false;
+            }
+
+            if (this.get$Subject().trimVal() == '') {
+                alert('邮件标题不能为空');
+                this.get$Subject().focusOrSelect();
+                return false;
+            }
+            if ($.trim(this.getContent()) == '') {
+                alert('邮件正文不能为空');
+                this.editor.focus();
+                return false;
+            }
+            return true;
+        },
+        init: function () {
+            this.$form.setDefaultButton('submitMail');
+            var self = this;
+            this.$cancelMail.click(function () {
+                self.hide();
+            });
+            this.$submitMail.click(function () {
+                if (self.validate()) {
+                    var userIds = [];
+                    $userSelectCheckboxes.each(function () {
+                        if (this.checked) {
+                            userIds.push(parseInt(this.value));
+                        }
+                    });
+                    var mailAccountIds = [];
+                    self.get$SelectedMailAccounts().each(function () {
+                        mailAccountIds.push(parseInt(this.value));
+                    });
+
+                    self.$submitMail.text('邮件发送中...');
+                    JSUtils.postArrayParams('admin-user-list-send-mail.json', {
+                        'mailAccountIds': mailAccountIds,
+                        'userIds': userIds,
+                        'subject': self.get$Subject().val(),
+                        'content': self.getContent()
+                    }, function (data) {
+                        if (data.success) {
+                            location.reload();
+                        } else {
+                            self.$submitMail.text('确定');
+                            alert(data.detail);
+                        }
+                    });
+                }
+            });
+            this.get$MailAccounts().click(function () {
+                var $this = $(this);
+                if ($this.hasClass('selected')) {
+                    $this.removeClass('selected');
+                    while ($this.next().is('input')) {
+                        $this.next().remove();
+                    }
+                } else {
+                    $this.addClass('selected');
+                    var input = '<input type="hidden" name="mailAccountIds" value="' + $this.dataOptions('id') + '"/>';
+                    $this.after(input);
+                }
+            });
+            return this;
+        }
+    }).init();
 
     var $userSelectCheckboxes = $('table input.select-user');
     $userSelectCheckboxes.click(function () {

@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.lottery;
 
+import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.utils.DateUtils;
@@ -67,10 +68,12 @@ public class DualColoredBallCrawlers {
                 Date now = DateUtils.now();
                 long timeDiff = Math.abs(expectEndTime.getTime() - now.getTime());
                 try {
-                    Long result = getResult();
+                    DualColoredBallCrawler.Result result = getResult();
                     if (result != null) {
                         new LotteryActivityDao().end(activity.getId());
-                        new VirtualParticipantAdjuster().adjust(activity.getId(), result);
+                        new VirtualParticipantAdjuster().adjust(activity.getId(), Long.parseLong(result.result));
+                        new DualColoredBallRecordDao().add(activity.getDualColoredBallTerm(),
+                                result.drawTime, result.result);
                         threads.remove(activity.getId());
                         break;
                     }
@@ -81,7 +84,7 @@ public class DualColoredBallCrawlers {
             }
         }
 
-        private Long getResult() {
+        private DualColoredBallCrawler.Result getResult() {
             if (crawlers == null) {
                 return null;
             }
@@ -95,9 +98,9 @@ public class DualColoredBallCrawlers {
                     continue;
                 }
 
-                String result = crawler.getResult(dualColoredBallTerm);
-                if (result != null && result.matches("^\\d{12}$")) {
-                    return Long.parseLong(result);
+                DualColoredBallCrawler.Result result = crawler.getResult(dualColoredBallTerm);
+                if (result != null && result.result != null && result.result.matches("^\\d{12}$")) {
+                    return result;
                 } else {
                     LOGGER.error("Fail to parse result of dualColoredBall {}", dualColoredBallTerm);
                 }

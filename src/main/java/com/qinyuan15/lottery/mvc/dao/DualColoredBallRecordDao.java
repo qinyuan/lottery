@@ -1,17 +1,15 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan15.lottery.mvc.lottery.DualColoredBallTerm;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 
-public class DualColoredBallRecordDao {
-    public Integer add(int fullTerm, String publishDate) {
-        int year = fullTerm / 1000;
-        int term = fullTerm % 1000;
-        return add(year, term, publishDate);
-    }
+import java.util.List;
 
-    public Integer add(int year, int term, String publishDate) {
-        return add(year, term, publishDate, null);
+public class DualColoredBallRecordDao {
+    public Integer add(int fullTerm, String publishDate, String result) {
+        DualColoredBallTerm term = new DualColoredBallTerm(fullTerm);
+        return add(term.year, term.term, publishDate, result);
     }
 
     public Integer add(int year, int term, String publishDate, String result) {
@@ -32,5 +30,14 @@ public class DualColoredBallRecordDao {
     public DualColoredBallRecord getLatestInstance() {
         return new HibernateListBuilder().addFilter("result IS NOT NULL").addOrder("publishDate", false)
                 .getFirstItem(DualColoredBallRecord.class);
+    }
+
+    public List<DualColoredBallRecord> getInstancesByYear(int year) {
+        return new HibernateListBuilder().addEqualFilter("year", year).build(DualColoredBallRecord.class);
+    }
+
+    public boolean hasTerm(int year, int term) {
+        return new HibernateListBuilder().addEqualFilter("year", year)
+                .addEqualFilter("term", term).count(DualColoredBallRecord.class) > 0;
     }
 }

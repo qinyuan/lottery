@@ -33,3 +33,49 @@ table div.filter button.filter.filtered.asc {
 table div.filter button.filter.filtered.desc {
     background-position: -54px 0;
 }
+
+#mailForm {
+    width: 900px;
+    margin-left: -450px;
+    top: 10px;
+    padding: 10px;
+}
+
+#mailForm td {
+    padding: 5px;
+}
+
+#mailForm td.title {
+    width: 60px;
+    vertical-align: top;
+    padding-top: 10px;
+    text-align: right;
+}
+
+#mailForm td.mail-account {
+    padding-top: 1px;
+}
+
+#mailForm td.mail-account button {
+    background-color: #cdcdcd;
+    padding: 3px;
+    margin: 3px;
+    cursor: pointer;
+    border: 3px solid transparent;
+}
+
+#mailForm td.mail-account button.selected {
+    border-color: #FB499B;
+}
+
+#mailForm td.mail-account button:hover {
+    background-color: #aaaaaa;
+}
+
+#mailForm div.submit {
+    text-align: center;
+}
+
+#mailForm div.submit button {
+    margin: 0 10px;
+}

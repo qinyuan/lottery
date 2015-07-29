@@ -2,9 +2,13 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.google.common.collect.Lists;
 import com.qinyuan15.lottery.mvc.dao.User;
+import com.qinyuan15.lottery.mvc.mail.NormalMailSender;
+import com.qinyuan15.utils.mail.MailAccountDao;
 import com.qinyuan15.utils.mvc.controller.DatabaseTable;
 import com.qinyuan15.utils.mvc.controller.ImageController;
 import com.qinyuan15.utils.mvc.controller.PaginationAttributeAdder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +23,7 @@ import java.util.Map;
 
 @Controller
 public class AdminUserListController extends ImageController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(AdminUserListController.class);
 
     @RequestMapping("/admin-user-list")
     public String index(@RequestParam(value = "orderField", required = false) String orderField,
@@ -40,12 +45,49 @@ public class AdminUserListController extends ImageController {
         setAttribute("userTable", userTable);
         new PaginationAttributeAdder(userTable, request).setRowItemsName("users").setPageSize(10).add();
 
+        setAttribute("mailAccounts", new MailAccountDao().getInstances());
+
         setTitle("用户列表");
+        addJs("lib/ckeditor/ckeditor", false);
         addCss("admin-form");
         addCssAndJs("admin-user-list");
-        addJs("lib/ckeditor/ckeditor");
         return "admin-user-list";
     }
+
+    @RequestMapping(value = "/admin-user-list-send-mail.json", method = RequestMethod.POST)
+    @ResponseBody
+    public String sendMail(@RequestParam(value = "mailAccountIds[]", required = true) Integer[] mailAccountIds,
+                           @RequestParam(value = "userIds[]", required = true) Integer[] userIds,
+                           @RequestParam(value = "subject", required = true) String subject,
+                           @RequestParam(value = "content", required = true) String content) {
+        if (mailAccountIds == null || mailAccountIds.length == 0) {
+            return fail("发件箱帐户不能为空！");
+        }
+
+        if (userIds == null || userIds.length == 0) {
+            return fail("收件人不能为空！");
+        }
+
+        if (!StringUtils.hasText(subject)) {
+            return fail("邮件标题不能为空！");
+        }
+
+        if (!StringUtils.hasText(content)) {
+            return fail("邮件正文不能为空！");
+        }
+
+        List<Integer> mailAccountList = Lists.newArrayList(mailAccountIds);
+        List<Integer> userList = Lists.newArrayList(userIds);
+        try {
+            new NormalMailSender().send(mailAccountList, userList, subject, content);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("Fail to send normal email, mailAccounts: {}, users: {}, subject: {}, content: {}, info: {}",
+                    mailAccountIds, userIds, subject, content, e);
+            return fail("邮件发送失败！");
+        }
+    }
+
 
     private final static String NULL_STRING = "(空白)";
 
@@ -61,36 +103,6 @@ public class AdminUserListController extends ImageController {
             items.add(new DistinctItem(value, !isFiltered(alias, value)));
         }
         return toJson(items);
-    }
-
-    /**
-     * validate is certain value in certain field is filtered
-     *
-     * @param field field in database
-     * @param value value of given field
-     * @return true is value is filtered
-     */
-    private boolean isFiltered(String field, Object value) {
-        String[] values = getFilters().get(field);
-        if (values == null) {
-            return false;
-        }
-
-        if (value.equals(NULL_STRING)) {
-            for (String v : values) {
-                if (v == null) {
-                    return false;
-                }
-            }
-        } else {
-            String valueString = value.toString();
-            for (String v : values) {
-                if (v != null && v.equals(valueString)) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     @RequestMapping(value = "/admin-user-list-filter.json", method = RequestMethod.POST)
@@ -123,6 +135,36 @@ public class AdminUserListController extends ImageController {
 
         getFilters().remove(filterField);
         return success();
+    }
+
+    /**
+     * validate is certain value in certain field is filtered
+     *
+     * @param field field in database
+     * @param value value of given field
+     * @return true is value is filtered
+     */
+    private boolean isFiltered(String field, Object value) {
+        String[] values = getFilters().get(field);
+        if (values == null) {
+            return false;
+        }
+
+        if (value.equals(NULL_STRING)) {
+            for (String v : values) {
+                if (v == null) {
+                    return false;
+                }
+            }
+        } else {
+            String valueString = value.toString();
+            for (String v : values) {
+                if (v != null && v.equals(valueString)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private final static String FILTERS_KEY = "admin-user-list-filters";
@@ -167,11 +209,15 @@ public class AdminUserListController extends ImageController {
                 "(SELECT MAX(id) FROM login_record GROUP BY user_id)";
         tableName += " LEFT JOIN (" + loginRecordTable + ") AS lr ON u.id=lr.user_id";
 
+        String mailRecordTable = "SELECT MAX(send_time) AS last_send_time,user_id FROM mail_send_record GROUP BY user_id";
+        tableName += " LEFT JOIN (" + mailRecordTable + ") AS mr ON u.id=mr.user_id";
+
         DatabaseTable table = new DatabaseTable(tableName, "u.id", DatabaseTable.QueryType.SQL);
         table.addField("用户名", "u.username", "username");
         table.addField("邮箱", "u.email", "email");
         table.addField("地区", "lr.location", "location");
         table.addField("活跃度", "l.sum_liveness", "liveness");
+        table.addField("最后一封邮件时间", "DATE_FORMAT(mr.last_send_time,'%Y-%m-%d %T')", "last_send_time");
         table.addField("最近一次抽奖", "DATE_FORMAT(lot.last_lot_time,'%Y-%m-%d %T')", "lot_time");
         table.addField("邀请了谁", "idu.invited_users", "invited_users");
         table.addField("被请邀请", "iu.username", "invite_user");

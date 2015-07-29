@@ -18,4 +18,9 @@ public class BaiduLecaiPageParserTest {
     public void testGetResult() throws Exception {
         assertThat(pageParser.getResult()).isEqualTo("141725272830");
     }
+
+    @Test
+    public void testGetDrawTime(){
+        assertThat(pageParser.getDrawTime()).isEqualTo("2015-07-12 21:15:00");
+    }
 }

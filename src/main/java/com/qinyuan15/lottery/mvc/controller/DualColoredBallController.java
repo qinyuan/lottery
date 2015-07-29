@@ -1,6 +1,11 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecord;
+import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
+import com.qinyuan15.lottery.mvc.lottery.BaiduLecaiCrawler;
 import com.qinyuan15.lottery.mvc.lottery.DualColoredBallCalculator;
+import com.qinyuan15.lottery.mvc.lottery.DualColoredBallCrawler;
+import com.qinyuan15.lottery.mvc.lottery.DualColoredBallTerm;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.mvc.controller.BaseController;
 import org.springframework.stereotype.Controller;
@@ -10,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -21,5 +27,36 @@ public class DualColoredBallController extends BaseController {
         Map<String, String> map = new HashMap<>();
         map.put("date", DateUtils.toLongString(date));
         return toJson(map);
+    }
+
+    @RequestMapping("/dual-colored-ball-all-records.json")
+    @ResponseBody
+    public String queryAll(@RequestParam(value = "year", required = false) Integer year) {
+        if (year == null || year > 2100 || year < 2000) {
+            return "{}";
+        }
+
+        DualColoredBallRecordDao dao = new DualColoredBallRecordDao();
+        int term = 1;
+        while (dao.hasTerm(year, term) || downloadResult(year, term)) {
+            term++;
+        }
+
+
+        List<DualColoredBallRecord> records = dao.getInstancesByYear(year);
+        for (DualColoredBallRecord record : records) {
+            record.setId(null);
+        }
+        return toJson(records);
+    }
+
+    private boolean downloadResult(int year, int term) {
+        DualColoredBallCrawler.Result result = new BaiduLecaiCrawler().getResult(DualColoredBallTerm.toFullTerm(year, term));
+        if (result == null || result.result == null || result.drawTime == null) {
+            return false;
+        } else {
+            new DualColoredBallRecordDao().add(year, term, result.drawTime, result.result);
+            return true;
+        }
     }
 }

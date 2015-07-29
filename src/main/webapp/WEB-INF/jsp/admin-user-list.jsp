@@ -28,7 +28,7 @@
             <tbody>
             <c:forEach var="user" items="${users}" varStatus="status">
                 <tr data-options="id:${user.id}">
-                    <td><input type="checkbox" class="select-user" name="user_${user.id}"/></td>
+                    <td><input type="checkbox" class="select-user" name="userIds" value="${user.id}"/></td>
                     <td>${status.index + rowStartIndex}</td>
                     <c:forEach var="col" items="${user.cols}">
                         <td>${col}</td>
@@ -44,14 +44,26 @@
     <table>
         <tbody>
         <tr>
-            <td>标题</td>
+            <td class="title">发件箱</td>
+            <td class="mail-account">
+                <c:forEach var="mailAccount" items="${mailAccounts}">
+                    <button data-options="id:${mailAccount.id}" type="button">${mailAccount.username}</button>
+                </c:forEach>
+            </td>
+        </tr>
+        <tr>
+            <td class="title">标题</td>
             <td><input type="text" class="form-control" name="subject"/></td>
         </tr>
         <tr>
-            <td>正文</td>
-            <td><textarea class="ckeditor"/></td>
+            <td class="title">正文</td>
+            <td><textarea name="content" id="mailContent"></textarea></td>
         </tr>
         </tbody>
     </table>
+    <div class="submit">
+        <button type="button" id="submitMail" class="btn btn-success">确定</button>
+        <button type="button" id="cancelMail" class="btn btn-default">取消</button>
+    </div>
 </form>
 <%@include file="inc-footer.jsp" %>

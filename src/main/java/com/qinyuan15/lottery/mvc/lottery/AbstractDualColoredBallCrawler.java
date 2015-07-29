@@ -4,11 +4,12 @@ import com.qinyuan15.utils.http.HttpClient;
 
 abstract public class AbstractDualColoredBallCrawler implements DualColoredBallCrawler {
     @Override
-    public String getResult(int fullTermNumber) {
+    public Result getResult(int fullTermNumber) {
         HttpClient httpClient = new HttpClient();
         String pageContent = httpClient.getContent(getPageUrl(fullTermNumber));
         DualColoredBallPageParser pageParser = getPageParser(pageContent);
-        return pageParser.getResult();
+
+        return new Result(pageParser.getResult(), pageParser.getDrawTime());
     }
 
     protected abstract String getPageUrl(int fullTermNumber);
