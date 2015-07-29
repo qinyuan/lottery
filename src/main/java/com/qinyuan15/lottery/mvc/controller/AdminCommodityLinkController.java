@@ -31,7 +31,8 @@ public class AdminCommodityLinkController extends ImageController {
                 .getInstancesByRelateId(commodityId));
         addJavaScriptData("relateType", ImageMapType.COMMODITY);
         setAttribute("buildInHrefs", new AdminImageMapController.BuildInHrefBuilder()
-                .add("javascript:void(getLotteryLot())", "抽奖链接").build());
+                .add("javascript:void(getLotteryLot())", "抽奖链接")
+                .add("javascript:void(showLotteryRule())", "显示抽奖规则").build());
 
         setTitle(commodity.getName() + "_编辑链接");
         addCssAndJs("admin-image-map");
