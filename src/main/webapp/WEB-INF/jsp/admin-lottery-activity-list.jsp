@@ -56,7 +56,7 @@
             <td>${activity.realParticipantCount}</td>
             <c:choose>
                 <c:when test="${listExpire}">
-                    <td class="winners">${activity.winnerSerialNumbers}</td>
+                    <td class="winners">${activity.winners}</td>
                     <td class="announcement">${activity.announcement}</td>
                     <td>
                         <img class="link announce" title="编辑公告" src="resources/css/images/announcement.png"/>

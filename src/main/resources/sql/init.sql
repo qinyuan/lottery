@@ -20,7 +20,8 @@ create table commodity (
     in_lottery boolean not null,
     own boolean not null,
     snapshot varchar(800) not null,
-    detail_image varchar(800) not null
+    detail_image varchar(800) not null,
+    visible boolean not null default true
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 alter table user add column email char(200) unique;
@@ -60,7 +61,8 @@ create table lottery_activity(
   virtual_liveness int,
   virtual_liveness_users char(200),
   max_serial_number int not null default 0,
-  dual_colored_ball_term int not null
+  dual_colored_ball_term int not null,
+  winners char(100)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table lottery_lot (

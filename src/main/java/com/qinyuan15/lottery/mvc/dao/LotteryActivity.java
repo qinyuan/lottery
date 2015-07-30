@@ -20,6 +20,7 @@ public class LotteryActivity extends PersistObject {
     private String virtualLivenessUsers;
     private Integer maxSerialNumber;
     private Integer dualColoredBallTerm;
+    private String winners;
 
     public Integer getCommodityId() {
         return commodityId;
@@ -125,27 +126,15 @@ public class LotteryActivity extends PersistObject {
         this.dualColoredBallTerm = dualColoredBallTerm;
     }
 
+    public String getWinners() {
+        return winners;
+    }
+
+    public void setWinners(String winners) {
+        this.winners = winners;
+    }
+
     //////////////////////////// derivative fields /////////////////////////////////
-    private List<LotteryLot> winnerCache;
-
-    public List<LotteryLot> getWinners() {
-        if (winnerCache == null) {
-            winnerCache = LotteryLotDao.factory().setWin(true).setActivityId(getId()).getInstances();
-        }
-        return winnerCache;
-    }
-
-    public String getWinnerSerialNumbers() {
-        String serialNumbers = "";
-        for (LotteryLot winner : getWinners()) {
-            if (!serialNumbers.isEmpty()) {
-                serialNumbers += ",";
-            }
-            serialNumbers += winner.getSerialNumber();
-        }
-        return serialNumbers;
-    }
-
     private Commodity commodityCache;
 
     public Commodity getCommodity() {

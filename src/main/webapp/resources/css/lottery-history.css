@@ -1,0 +1,18 @@
+div.main-body {
+    padding: 20px;
+    background-color: #e0e0e0;
+}
+
+div.main-body > div {
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+
+div.main-body table.normal col.announcement {
+    width: 200px;
+}
+
+div.main-body tbody tr.expire {
+    color: #449359;
+}

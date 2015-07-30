@@ -13,6 +13,7 @@ public class Commodity extends PersistObject {
     private Boolean own;
     private String snapshot;
     private String detailImage;
+    private Boolean visible;
 
     public Double getPrice() {
         return price;
@@ -38,6 +39,10 @@ public class Commodity extends PersistObject {
         return detailImage;
     }
 
+    public Boolean getVisible() {
+        return visible;
+    }
+
     public void setPrice(Double price) {
         this.price = price;
     }
@@ -60,5 +65,9 @@ public class Commodity extends PersistObject {
 
     public void setDetailImage(String detailImage) {
         this.detailImage = detailImage;
+    }
+
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
     }
 }

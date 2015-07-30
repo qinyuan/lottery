@@ -56,6 +56,7 @@
             <th>自有商品</th>
             <th>商品缩略图</th>
             <th>商品详细图</th>
+            <th>是否显示</th>
             <th></th>
             </thead>
             <tbody>
@@ -69,6 +70,11 @@
                         <img src="${commodity.snapshot}" onload="adjustImage(this, 100, 100);"/></a></td>
                     <td class="detailImage"><a href="${commodity.detailImage}" target="_blank" title="单击打开">
                         <img src="${commodity.detailImage}" onload="adjustImage(this, 100, 100);"/></a></td>
+                    <td class="visible">
+                        <div class="switch switch-mini" data-on-label="是" data-off-label="否">
+                            <input type="checkbox"<c:if test="${commodity.visible}"> checked</c:if>/>
+                        </div>
+                    </td>
                     <td class="action">
                         <a href="commodity.html?id=${commodity.id}" target="_blank"><img
                                 title="预览" src="resources/css/images/preview.gif"/></a>

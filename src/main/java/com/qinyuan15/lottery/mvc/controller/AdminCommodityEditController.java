@@ -4,8 +4,8 @@ import com.qinyuan15.lottery.mvc.dao.Commodity;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
 import com.qinyuan15.utils.DoubleUtils;
 import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.mvc.controller.PaginationAttributeAdder;
 import com.qinyuan15.utils.mvc.controller.ImageController;
+import com.qinyuan15.utils.mvc.controller.PaginationAttributeAdder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -35,6 +35,10 @@ public class AdminCommodityEditController extends ImageController {
         new CommodityUrlAdapter(this).adapt(commodities);
 
         setTitle("编辑商品");
+
+        // bootstrap switch
+        addCss("resources/js/lib/bootstrap/css/bootstrap-switch.min", false);
+        addJs("lib/bootstrap/js/bootstrap-switch.min", false);
 
         addHeadJs("lib/image-adjust.js");
         addCss("admin-form");
@@ -101,14 +105,34 @@ public class AdminCommodityEditController extends ImageController {
         return redirect(indexPage);
     }
 
+    @RequestMapping("/admin-commodity-update-visible.json")
+    @ResponseBody
+    public String updateVisible(@RequestParam(value = "id", required = true) Integer id,
+                                @RequestParam(value = "visible", required = true) Boolean visible) {
+        if ((!IntegerUtils.isPositive(id)) || visible == null) {
+            return failByInvalidParam();
+        }
+        try {
+            new CommodityDao().updateVisible(id, visible);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("Fail to update commodity visible, id: {}, info: {}", id, e);
+            return failByDatabaseError();
+        }
+    }
+
     @RequestMapping("/admin-commodity-delete.json")
     @ResponseBody
     public String delete(@RequestParam(value = "id", required = true) Integer id) {
-        if (IntegerUtils.isPositive(id)) {
+        if (!IntegerUtils.isPositive(id)) {
+            return failByInvalidParam();
+        }
+        try {
             new CommodityDao().delete(id);
             return success();
-        } else {
-            return fail("数据出错！");
+        } catch (Exception e) {
+            LOGGER.error("Fail to delete commodity, id: {}, info: {}", id, e);
+            return failByDatabaseError();
         }
     }
 }

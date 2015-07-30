@@ -1,6 +1,9 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.lottery.mvc.dao.*;
+import com.qinyuan15.lottery.mvc.dao.CommodityDao;
+import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecord;
+import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
+import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.lottery.DualColoredBallTermValidator;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
@@ -16,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class AdminLotteryActivityController extends ImageController {
@@ -152,19 +153,16 @@ public class AdminLotteryActivityController extends ImageController {
             return failByInvalidParam();
         }
 
-        try {
-            List<Integer> serialNumbers = new ArrayList<>();
-            if (StringUtils.hasText(winners)) {
-                String[] winnerStringArray = winners.split(",");
-                for (String winner : winnerStringArray) {
-                    if (!IntegerUtils.isPositive(winner)) {
-                        return fail("'" + winner + "'不是有效的抽奖号");
-                    }
-                    serialNumbers.add(Integer.parseInt(winner));
+        if (StringUtils.hasText(winners)) {
+            for (String winner : winners.split(",")) {
+                if (!IntegerUtils.isPositive(winner)) {
+                    return fail("'" + winner + "'不是有效的抽奖号");
                 }
             }
-            new LotteryLotDao().updateWinnerBySerialNumbers(id, serialNumbers);
-            new LotteryActivityDao().updateAnnouncement(id, announcement);
+        }
+
+        try {
+            new LotteryActivityDao().updateResult(id, winners, announcement);
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to update announcement, info: {}", e);

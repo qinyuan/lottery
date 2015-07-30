@@ -12,7 +12,7 @@ public class LoginController extends ImageController {
         IndexHeaderUtils.setHeaderParameters(this);
 
         setAttribute("noFooter", true);
-        setTitle("后台管理员登录");
+        setTitle("用户登录");
         addCssAndJs("login");
 
         if (getLocalAddress().equals("127.0.0.1")) {

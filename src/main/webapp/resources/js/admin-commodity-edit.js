@@ -1,3 +1,20 @@
+;
+(function () {
+    // code to set commodity visibility
+    $('td.visible div.switch').on('switch-change', function (e, data) {
+        var visible = data.value;
+        var $this = $(this);
+        $.post('admin-commodity-update-visible.json', {
+            id: $this.getParentByTagName('tr').dataOptions('id'),
+            visible: visible
+        }, function (data) {
+            if (!data.success) {
+                alert('数据更新失败，错误原因：' + data.detail);
+                location.reload();
+            }
+        });
+    });
+})();
 (function () {
     $('#commodityLotteryLink').addClass('emphasize');
 

@@ -29,6 +29,7 @@
         <property name="inLottery" column="in_lottery"/>
         <property name="snapshot"/>
         <property name="detailImage" column="detail_image"/>
+        <property name="visible"/>
     </class>
     <class name="User" table="user">
         <id name="id" column="id">
@@ -79,6 +80,7 @@
         <property name="virtualLivenessUsers" column="virtual_liveness_users"/>
         <property name="maxSerialNumber" column="max_serial_number"/>
         <property name="dualColoredBallTerm" column="dual_colored_ball_term"/>
+        <property name="winners"/>
     </class>
     <class name="LotteryLot" table="lottery_lot">
         <id name="id" column="id">

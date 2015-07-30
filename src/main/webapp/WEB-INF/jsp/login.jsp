@@ -4,7 +4,7 @@
 <div class="page-width outer-login">
     <div class="login shadow">
         <div class="title">
-            <span>后台管理员登录</span>
+            <span>用户登录</span>
         </div>
         <q:spring-login-form>
             <div class="title">
@@ -18,7 +18,7 @@
                 <label>密码</label>
             </div>
             <div class="input">
-                <input type="text" id="password" name="j_password" class="form-control" placeholder="在此输入密码"/>
+                <input type="password" id="password" name="j_password" class="form-control" placeholder="在此输入密码"/>
             </div>
             <div class="submit">
                 <q:spring-remember-login/>

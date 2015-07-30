@@ -1,12 +1,15 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.google.common.base.Joiner;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.hibernate.HibernateDeleter;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 import com.qinyuan15.utils.mvc.controller.PaginationItemFactory;
+import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LotteryActivityDao {
@@ -138,8 +141,19 @@ public class LotteryActivityDao {
         HibernateUtils.update(activity);
     }
 
-    public void updateAnnouncement(Integer id, String announcement) {
+    public void updateResult(Integer id, String winners, String announcement) {
+        List<Integer> serialNumbers = new ArrayList<>();
+        if (StringUtils.hasText(winners)) {
+            for (String winner : winners.split(",")) {
+                if (IntegerUtils.isPositive(winner)) {
+                    serialNumbers.add(Integer.parseInt(winner));
+                }
+            }
+        }
+        new LotteryLotDao().updateWinnerBySerialNumbers(id, serialNumbers);
+
         LotteryActivity activity = getInstance(id);
+        activity.setWinners(Joiner.on(",").join(serialNumbers));
         activity.setAnnouncement(announcement);
         HibernateUtils.update(activity);
     }

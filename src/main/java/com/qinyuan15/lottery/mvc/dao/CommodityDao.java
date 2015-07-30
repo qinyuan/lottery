@@ -39,6 +39,7 @@ public class CommodityDao {
 
         // set default field
         commodity.setInLottery(false);
+        commodity.setVisible(true);
 
         return HibernateUtils.save(commodity);
     }
@@ -47,26 +48,40 @@ public class CommodityDao {
         HibernateDeleter.deleteById(Commodity.class, id);
     }
 
+    public void updateVisible(Integer id, boolean visible) {
+        Commodity commodity = getInstance(id);
+        if (commodity != null) {
+            commodity.setVisible(visible);
+            HibernateUtils.update(commodity);
+        }
+    }
+
     public void update(Integer id, String name, Double price, Boolean own, String snapshot, String detailImage) {
         Commodity commodity = getInstance(id);
-        commodity.setPrice(price);
-        commodity.setName(name);
-        commodity.setOwn(own);
-        commodity.setSnapshot(snapshot);
-        commodity.setDetailImage(detailImage);
-        HibernateUtils.update(commodity);
+        if (commodity != null) {
+            commodity.setPrice(price);
+            commodity.setName(name);
+            commodity.setOwn(own);
+            commodity.setSnapshot(snapshot);
+            commodity.setDetailImage(detailImage);
+            HibernateUtils.update(commodity);
+        }
     }
 
     public Commodity getInstance(Integer id) {
         return HibernateUtils.get(Commodity.class, id);
     }
 
-    public Commodity getFirstInstance() {
-        return new HibernateListBuilder().getFirstItem(Commodity.class);
+    public Commodity getFirstVisibleInstance() {
+        return new HibernateListBuilder().addEqualFilter("visible", true).getFirstItem(Commodity.class);
     }
 
     public List<Commodity> getInstances() {
         return new HibernateListBuilder().build(Commodity.class);
+    }
+
+    public List<Commodity> getVisibleInstances() {
+        return new HibernateListBuilder().addEqualFilter("visible", true).build(Commodity.class);
     }
 
     private void changeLottery(Integer commodityId, Boolean inLottery) {

@@ -30,8 +30,8 @@ public class CommodityController extends ImageController {
 
         CommodityDao dao = new CommodityDao();
         Commodity commodity = dao.getInstance(id);
-        if (commodity == null) {
-            commodity = dao.getFirstInstance();
+        if (commodity == null || !commodity.getVisible()) {
+            commodity = dao.getFirstVisibleInstance();
         }
 
         LivenessAdder livenessAdder = new LivenessAdder(session);
@@ -54,7 +54,7 @@ public class CommodityController extends ImageController {
             livenessAdder.addLiveness(true);
         }
 
-        setAttribute("snapshots", build());
+        setAttribute("snapshots", buildSnapshots());
         setAttribute("lotteryRule", AppConfig.getLotteryRule());
 
         addJs("resources/js/lib/handlebars.min-v1.3.0", false);
@@ -90,9 +90,9 @@ public class CommodityController extends ImageController {
         }
     }
 
-    private List<CommoditySnapshot> build() {
+    private List<CommoditySnapshot> buildSnapshots() {
         List<CommoditySnapshot> snapshots = new ArrayList<>();
-        for (Commodity commodity : new CommodityDao().getInstances()) {
+        for (Commodity commodity : new CommodityDao().getVisibleInstances()) {
             getUrlAdapter().adapt(commodity);
 
             CommoditySnapshot snapshot = new CommoditySnapshot();
