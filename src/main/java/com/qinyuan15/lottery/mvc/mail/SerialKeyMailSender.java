@@ -2,10 +2,9 @@ package com.qinyuan15.lottery.mvc.mail;
 
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
-import com.qinyuan15.utils.mail.MailAccount;
+import com.qinyuan15.utils.mail.MailSenderBuilder;
 import com.qinyuan15.utils.mail.MailSerialKey;
 import com.qinyuan15.utils.mail.MailSerialKeyDao;
-import com.qinyuan15.utils.mail.SimpleMailSender;
 
 abstract class SerialKeyMailSender {
     private final String serialKeyUrl;
@@ -35,27 +34,19 @@ abstract class SerialKeyMailSender {
             mailSerialKey = mailSerialKeyDao.getInstance(requestId);
         }
 
-        MailAccount mailAccount = getMailAccount();
-        SimpleMailSender mailSender = new SimpleMailSender(mailAccount.getHost(), mailAccount.getUsername(), mailAccount.getPassword());
+        SerialKeyMailPlaceholderConverter placeholderConverter = new SerialKeyMailPlaceholderConverter(
+                user.getUsername(), serialKeyUrl, mailSerialKey.getSerialKey());
+        String subject = placeholderConverter.convert(getSubjectTemplate());
+        String content = placeholderConverter.convert(getContentTemplate());
 
-        mailSender.send(user.getEmail(), getSubjectTemplate(), getContent(user.getUsername(), mailSerialKey.getSerialKey()));
+        new MailSenderBuilder().build(getMailAccountId()).send(user.getEmail(), subject, content);
     }
 
-    protected abstract MailAccount getMailAccount();
+    protected abstract int getMailAccountId();
 
     protected abstract MailSerialKeyDao getMailSerialKeyDao();
 
     protected abstract String getSubjectTemplate();
 
     protected abstract String getContentTemplate();
-
-    private String getContent(String username, String serialKey) {
-        String template = getContentTemplate();
-        template = template.replace("{{user}}", username);
-
-        String url = serialKeyUrl + "serial=" + serialKey;
-        url = "<a href='" + url + "' target='_blank'>" + url + "</a>";
-        template = template.replace("{{url}}", url);
-        return template;
-    }
 }

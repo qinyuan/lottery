@@ -30,8 +30,8 @@
                 <tr data-options="id:${user.id}">
                     <td><input type="checkbox" class="select-user" name="userIds" value="${user.id}"/></td>
                     <td>${status.index + rowStartIndex}</td>
-                    <c:forEach var="col" items="${user.cols}">
-                        <td>${col}</td>
+                    <c:forEach var="col" items="${user.cols}" varStatus="innerStatus">
+                        <td class="${userTable.aliases[innerStatus.index]}">${col}</td>
                     </c:forEach>
                 </tr>
             </c:forEach>
@@ -40,7 +40,7 @@
         <%@include file="widget-pagination.jsp" %>
     </div>
 </div>
-<form class="float-panel" id="mailForm">
+<form class="float-panel shadow" id="mailForm">
     <table>
         <tbody>
         <tr>
@@ -50,6 +50,10 @@
                     <button data-options="id:${mailAccount.id}" type="button">${mailAccount.username}</button>
                 </c:forEach>
             </td>
+        </tr>
+        <tr style="color:#418940;font-size:9pt;">
+            <td style="text-align:right;">(说明)</td>
+            <td style="">在邮件标题或正文中，可以用{{user}}指代收件人的用户名</td>
         </tr>
         <tr>
             <td class="title">标题</td>
@@ -62,8 +66,16 @@
         </tbody>
     </table>
     <div class="submit">
+        <button type="button" id="previewMailButton" class="btn btn-primary">预览</button>
         <button type="button" id="submitMail" class="btn btn-success">确定</button>
         <button type="button" id="cancelMail" class="btn btn-default">取消</button>
     </div>
 </form>
+<div class="float-panel shadow" id="mailPreview">
+    <div class="subject"></div>
+    <div class="content"></div>
+    <div class="button">
+        <button class="btn btn-primary" id="cancelPreview">返回</button>
+    </div>
+</div>
 <%@include file="inc-footer.jsp" %>

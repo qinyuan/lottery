@@ -1,10 +1,8 @@
 package com.qinyuan15.lottery.mvc.mail;
 
 import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.utils.mail.MailAccount;
-import com.qinyuan15.utils.mail.MailAccountDao;
-import com.qinyuan15.utils.mail.MailSerialKeyDao;
 import com.qinyuan15.lottery.mvc.dao.ResetPasswordRequestDao;
+import com.qinyuan15.utils.mail.MailSerialKeyDao;
 
 /**
  * Class to send reset passsword mail
@@ -18,12 +16,8 @@ public class ResetPasswordMailSender extends SerialKeyMailSender {
     }
 
     @Override
-    protected MailAccount getMailAccount() {
-        MailAccount mailAccount = new MailAccountDao().getInstance(AppConfig.getResetPasswordMailAccountId());
-        if (mailAccount == null) {
-            throw new RuntimeException("No reset password mail account configured");
-        }
-        return mailAccount;
+    protected int getMailAccountId() {
+        return AppConfig.getResetPasswordMailAccountId();
     }
 
     @Override

@@ -79,3 +79,24 @@ table div.filter button.filter.filtered.desc {
 #mailForm div.submit button {
     margin: 0 10px;
 }
+
+#mailPreview {
+    width: 830px;
+    margin-left: -415px;
+    padding: 10px;
+    background-color: #c5c5c5;
+}
+
+#mailPreview div.subject, #mailPreview div.content {
+    background-color: #ffffff;
+}
+
+#mailPreview div.subject {
+    font-weight: bold;
+    font-size: 12pt;
+    margin-bottom: 5px;
+}
+
+#mailPreview div.button {
+    text-align: center;
+}

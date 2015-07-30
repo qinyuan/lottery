@@ -2,8 +2,6 @@ package com.qinyuan15.lottery.mvc.mail;
 
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.ActivateRequestDao;
-import com.qinyuan15.utils.mail.MailAccount;
-import com.qinyuan15.utils.mail.MailAccountDao;
 import com.qinyuan15.utils.mail.MailSerialKeyDao;
 
 /**
@@ -18,12 +16,8 @@ public class ActivateMailSender extends SerialKeyMailSender {
     }
 
     @Override
-    protected MailAccount getMailAccount() {
-        MailAccount mailAccount = new MailAccountDao().getInstance(AppConfig.getActivateMailAccountId());
-        if (mailAccount == null) {
-            throw new RuntimeException("No activate mail account configured");
-        }
-        return mailAccount;
+    protected int getMailAccountId() {
+        return AppConfig.getActivateMailAccountId();
     }
 
     @Override

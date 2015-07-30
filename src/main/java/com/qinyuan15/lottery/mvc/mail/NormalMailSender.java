@@ -5,9 +5,7 @@ import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mail.EmailDao;
-import com.qinyuan15.utils.mail.MailAccount;
-import com.qinyuan15.utils.mail.MailAccountDao;
-import com.qinyuan15.utils.mail.SimpleMailSender;
+import com.qinyuan15.utils.mail.MailSenderBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,11 +46,12 @@ public class NormalMailSender {
     }
 
     private void send(int accountId, int userId, String subject, String content) {
-        MailAccount mailAccount = new MailAccountDao().getInstance(accountId);
         User user = new UserDao().getInstance(userId);
 
-        SimpleMailSender mailSender = new SimpleMailSender(
-                mailAccount.getHost(), mailAccount.getUsername(), mailAccount.getPassword());
-        mailSender.send(user.getEmail(), subject, content);
+        NormalMailPlaceholderConverter placeholderConverter = new NormalMailPlaceholderConverter(user.getUsername());
+        subject = placeholderConverter.convert(subject);
+        content = placeholderConverter.convert(content);
+
+        new MailSenderBuilder().build(accountId).send(user.getEmail(), subject, content);
     }
 }

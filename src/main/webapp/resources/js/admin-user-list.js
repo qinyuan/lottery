@@ -1,16 +1,6 @@
 ;
 (function () {
     // codes about send email
-    function getSelectedUserCount() {
-        return $userSelectCheckboxes.filter(function () {
-            return this.checked;
-        }).size();
-    }
-
-    function updateButtonStatus() {
-        $openMailForm.attr('disabled', getSelectedUserCount() == 0);
-    }
-
     var $openMailForm = $('#openMailForm');
     $openMailForm.click(function () {
         mailForm.show();
@@ -64,7 +54,7 @@
                 this.editor.focus();
                 return false;
             }
-            return true;
+            return confirm("确定发送？");
         },
         init: function () {
             this.$form.setDefaultButton('submitMail');
@@ -75,10 +65,8 @@
             this.$submitMail.click(function () {
                 if (self.validate()) {
                     var userIds = [];
-                    $userSelectCheckboxes.each(function () {
-                        if (this.checked) {
-                            userIds.push(parseInt(this.value));
-                        }
+                    users.get$SelectedCheckboxes().each(function () {
+                        userIds.push(parseInt(this.value));
                     });
                     var mailAccountIds = [];
                     self.get$SelectedMailAccounts().each(function () {
@@ -114,28 +102,85 @@
                     $this.after(input);
                 }
             });
+            $('#previewMailButton').click(function () {
+                var subject = self.get$Subject().val();
+                var content = self.getContent();
+                var username = users.getSelectedNames()[0];
+                mailPreview.show(username, subject, content);
+            });
             return this;
         }
     }).init();
 
-    var $userSelectCheckboxes = $('table input.select-user');
-    $userSelectCheckboxes.click(function () {
-        updateButtonStatus();
-        if (getSelectedUserCount() == 0) {
-            $selectAll.get(0).checked = false;
-        } else if (getSelectedUserCount() == $userSelectCheckboxes.size()) {
-            $selectAll.get(0).checked = true;
-        }
-    });
+    var users = ({
+        $checkboxes: $('table input.select-user'),
+        $selectAll: $('table thead th > input.select-all'),
+        get$SelectedCheckboxes: function () {
+            return  this.$checkboxes.filter(function () {
+                return this.checked;
+            });
+        },
+        getSelectedNames: function () {
+            var names = [];
+            this.get$SelectedCheckboxes().each(function () {
+                names.push($(this).getParentByTagName('tr').find('td.username').text());
+            });
+            return names;
+        },
+        getSelectedCount: function () {
+            return this.get$SelectedCheckboxes().size();
+        },
+        updateButtonStatus: function () {
+            $openMailForm.attr('disabled', this.getSelectedCount() == 0);
+        },
+        init: function () {
+            var self = this;
+            this.$checkboxes.click(function () {
+                self.updateButtonStatus();
+                if (self.getSelectedCount() == 0) {
+                    self.$selectAll.get(0).checked = false;
+                } else if (self.getSelectedCount() == self.$checkboxes.size()) {
+                    self.$selectAll.get(0).checked = true;
+                }
+            });
+            this.$selectAll.click(function () {
+                var checked = this.checked;
+                self.$checkboxes.each(function () {
+                    this.checked = checked;
+                });
+                self.updateButtonStatus();
+            });
 
-    var $selectAll = $('table thead th > input.select-all');
-    $selectAll.click(function () {
-        var checked = this.checked;
-        $userSelectCheckboxes.each(function () {
-            this.checked = checked;
-        });
-        updateButtonStatus();
-    });
+            return this;
+        }
+    }).init();
+
+    var mailPreview = ({
+        $div: $('#mailPreview'),
+        show: function (username, subject, content) {
+            // deal with placeholder
+            subject = subject.replace("{{user}}", username);
+            content = content.replace("{{user}}", username);
+
+            JSUtils.showTransparentBackground(1);
+            mailForm.$form.hide();
+            this.$div.find('div.subject').text(subject);
+            this.$div.find('div.content').html(content);
+            this.$div.fadeIn(200);
+            JSUtils.scrollToVerticalCenter(this.$div);
+        },
+        hide: function () {
+            this.$div.hide();
+            mailForm.$form.fadeIn(200);
+        },
+        init: function () {
+            var self = this;
+            $('#cancelPreview').click(function () {
+                self.hide();
+            });
+            return this;
+        }
+    }).init();
 })();
 (function () {
     // codes about filter
