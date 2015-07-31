@@ -90,7 +90,7 @@
         <div class="info"></div>
 
         <div class="links">
-            <a href="javascript:void(0)">查看我的抽奖历史</a>
+            <a target="_blank" href="lottery-history.html">查看我的抽奖历史</a>
         </div>
     </div>
 </div>

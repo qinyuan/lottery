@@ -6,11 +6,9 @@ import com.qinyuan15.lottery.mvc.dao.HelpGroupDao;
 import com.qinyuan15.lottery.mvc.dao.HelpItemDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.security.SecuritySearcher;
 import com.qinyuan15.utils.security.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +22,6 @@ import java.util.Map;
 @Controller
 public class AdminHelpController extends HelpController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminHelpController.class);
-
-    @Autowired
-    private SecuritySearcher securitySearcher;
 
     @RequestMapping("/admin-help")
     @Override

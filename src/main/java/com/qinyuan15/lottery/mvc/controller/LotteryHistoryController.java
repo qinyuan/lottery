@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan15.utils.mvc.controller.DatabaseTable;
+import com.qinyuan15.utils.mvc.controller.DatabaseTableColumnPostHandler;
 import com.qinyuan15.utils.mvc.controller.ImageController;
 import com.qinyuan15.utils.mvc.controller.PaginationAttributeAdder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,17 @@ public class LotteryHistoryController extends ImageController {
         table.addField("奖品", "c.name", "prize");
         table.addField("抽奖时间", "DATE_FORMAT(ll.lot_time,'%Y-%m-%d %T')", "lot_time");
 
-        int serialNumberLength = lotNumberFormat.toPattern().length() - 1;
-        String serialNumberField = "CASE WHEN ll.serial_number>=" + Math.pow(10, serialNumberLength);
-        serialNumberField += " THEN ll.serial_number ELSE LPAD(ll.serial_number," + serialNumberLength + ",'0') END";
-        table.addField("抽奖号", serialNumberField, "serial_number");
+        String serialNumberField = "ll.serial_number";
+        table.addField("抽奖号", serialNumberField, "serial_number", new DatabaseTableColumnPostHandler() {
+            @Override
+            public Object handle(Object targetValue) {
+                if (targetValue == null || lotNumberFormat == null) {
+                    return targetValue;
+                } else {
+                    return lotNumberFormat.format(targetValue);
+                }
+            }
+        });
 
         table.addField("开奖时间", "DATE_FORMAT(la.end_time,'%Y-%m-%d %T')", "end_time");
         table.addField("中奖号", "la.winners", "winners");

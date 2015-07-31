@@ -31,6 +31,11 @@ table.normal thead {
     border-bottom: 1px solid #000000;
 }
 
+table.normal thead th {
+    font-weight: bold;
+    text-align: center;
+}
+
 table.normal tbody tr {
     border-bottom: 1px dashed #cccccc;
 }

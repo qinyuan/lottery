@@ -1,11 +1,11 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.utils.mail.MailAccountDao;
 import com.qinyuan15.lottery.mvc.dao.NavigationLink;
 import com.qinyuan15.lottery.mvc.dao.NavigationLinkDao;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.config.LinkAdapter;
+import com.qinyuan15.utils.mail.MailAccountDao;
 import com.qinyuan15.utils.mail.MailAddressValidator;
 import com.qinyuan15.utils.mvc.controller.ImageController;
 import com.qinyuan15.utils.mvc.controller.SelectFormItemsBuilder;
@@ -34,6 +34,9 @@ public class AdminController extends ImageController {
         setAttribute("activateMailContentTemplate", AppConfig.getActivateMailContentTemplate());
         setAttribute("resetPasswordMailSubjectTemplate", AppConfig.getResetPasswordMailSubjectTemplate());
         setAttribute("resetPasswordMailContentTemplate", AppConfig.getResetPasswordMailContentTemplate());
+        setAttribute("resetEmailMailSubjectTemplate", AppConfig.getResetEmailMailSubjectTemplate());
+        setAttribute("resetEmailMailContentTemplate", AppConfig.getResetEmailMailContentTemplate());
+
         setAttribute("mails", new MailAccountDao().getInstances());
         setAttribute("mailSelectFormItems", new SelectFormItemsBuilder().build(
                 new MailAccountDao().getInstances(), "username"));
@@ -114,7 +117,10 @@ public class AdminController extends ImageController {
                          @RequestParam(value = "activateMailContentTemplate", required = true) String activateMailContentTemplate,
                          @RequestParam(value = "resetPasswordMailAccountId", required = true) Integer resetPasswordMailAccountId,
                          @RequestParam(value = "resetPasswordMailSubjectTemplate", required = true) String resetPasswordMailSubjectTemplate,
-                         @RequestParam(value = "resetPasswordMailContentTemplate", required = true) String resetPasswordMailContentTemplate) {
+                         @RequestParam(value = "resetPasswordMailContentTemplate", required = true) String resetPasswordMailContentTemplate,
+                         @RequestParam(value = "resetEmailMailAccountId", required = true) Integer resetEmailMailAccountId,
+                         @RequestParam(value = "resetEmailMailSubjectTemplate", required = true) String resetEmailMailSubjectTemplate,
+                         @RequestParam(value = "resetEmailMailContentTemplate", required = true) String resetEmailMailContentTemplate) {
 
         final String redirectPage = "admin";
 
@@ -177,6 +183,9 @@ public class AdminController extends ImageController {
         AppConfig.updateResetPasswordMailAccountId(resetPasswordMailAccountId);
         AppConfig.updateResetPasswordMailSubjectTemplate(resetPasswordMailSubjectTemplate);
         AppConfig.updateResetPasswordMailContentTemplate(resetPasswordMailContentTemplate);
+        AppConfig.updateResetEmailMailAccountId(resetEmailMailAccountId);
+        AppConfig.updateResetEmailMailSubjectTemplate(resetEmailMailSubjectTemplate);
+        AppConfig.updateResetEmailMailContentTemplate(resetEmailMailContentTemplate);
 
         new NavigationLinkDao().clearAndSave(buildNavigationLinks(headerLinkTitles, headerLinkHrefs));
 

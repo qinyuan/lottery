@@ -1,0 +1,144 @@
+div.gray-back {
+    background-color: #e0e0e0;
+    padding: 20px 0;
+}
+
+div.main-body {
+    overflow: hidden;
+}
+
+div.main-body > div {
+    padding: 10px;
+    background-color: #ffffff;
+}
+
+div.main-body div.left {
+    float: left;
+    width: 200px;
+    padding: 35px 0;
+}
+
+div.main-body div.left > div {
+    text-align: center;
+}
+
+div.main-body div.left div.image img {
+    padding: 2px;
+    border: 1px solid #cccccc;
+}
+
+div.main-body div.left div.link {
+    margin-top: 20px;
+}
+
+div.main-body div.left div.link a {
+    color: #4b4b4b;
+    margin: 0 10px;
+}
+
+div.main-body div.right {
+    float: right;
+    width: 780px;
+    padding: 10px;
+}
+
+div.main-body div.right {
+    padding: 35px 50px 50px;
+}
+
+div.main-body div.right table {
+    border-collapse: collapse;
+}
+
+div.main-body div.right table td {
+    position: relative;
+    width: 350px;
+    padding: 10px;
+    color: #4b4b4b;
+    font-size: 14pt;
+    border: 1px solid #dcdcdc;
+}
+
+div.main-body div.right table td:hover {
+    background-color: #e0e0e0;
+    padding-left: 15px;
+}
+
+div.main-body div.right table td span.password-icon,
+div.main-body div.right table td span.email-icon,
+div.main-body div.right table td span.tel-icon {
+    padding: 10px;
+    background: no-repeat url("images/personal-center.png");
+}
+
+div.main-body div.right table td span.password-icon {
+    background-position: 0 5px;
+}
+
+div.main-body div.right table td span.email-icon {
+    background-position: 0 -93px;
+}
+
+div.main-body div.right table td span.tel-icon {
+    background-position: 0 -43px;
+}
+
+div.main-body div.right table td span.liveness-icon {
+    padding: 10px;
+    background: no-repeat url("images/heart.png") 0 11px;
+}
+
+div.main-body div.right table td span.user-icon {
+    padding: 10px;
+    background: no-repeat url("images/face.png") 0 11px;
+}
+
+#changeEmail, #changeTel {
+    display: block;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 10pt;
+}
+
+div.main-body div.right table tr.temporary td:hover {
+    background-color: transparent;
+    padding-left: 10px;
+}
+
+div.main-body div.right table tr.temporary form > div {
+    padding: 5px 0;
+    overflow: hidden;
+    font-size: 10pt;
+    line-height: 30px;
+}
+
+div.main-body div.right table tr.temporary div.title {
+    float: left;
+    width: 200px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+div.main-body div.right table tr.temporary div.input {
+    float: left;
+    width: 300px;
+}
+
+div.main-body div.right table tr.temporary div.input input {
+    font-size: 10pt;
+}
+
+div.main-body div.right table tr.temporary div.submit {
+    clear: both;
+    text-align: center;
+}
+
+div.main-body div.right table tr.temporary div.submit button {
+    margin: 0 10px;
+}
+
+div.main-body div.right table tr.temporary h3 {
+    text-align: center;
+    color: #378A36;
+}

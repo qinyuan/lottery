@@ -59,7 +59,7 @@ var angularUtils = {
 
     function showRegisterSuccess(email) {
         $registerSuccess.find('span.email').text(email);
-        var mailLoginPage = 'http://mail.' + email.replace(/^.*\@/, '');
+        var mailLoginPage = JSUtils.getEmailLoginPage(email);
         $registerSuccess.find('a.to-mail-page').attr('href', mailLoginPage);
         $registerSuccess.fadeIn(500);
     }

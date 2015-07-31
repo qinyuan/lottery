@@ -8,8 +8,10 @@ import com.qinyuan15.utils.mail.MailSerialKeyDao;
 
 abstract class SerialKeyMailSender {
     private final String serialKeyUrl;
+    private final String serialKeyPrefix;
 
-    public SerialKeyMailSender(String serialKeyUrl) {
+    public SerialKeyMailSender(String serialKeyUrl, String serialKeyPrefix) {
+        this.serialKeyPrefix = serialKeyPrefix;
         if (serialKeyUrl.contains("?")) {
             if (serialKeyUrl.endsWith("?")) {
                 this.serialKeyUrl = serialKeyUrl;
@@ -21,6 +23,10 @@ abstract class SerialKeyMailSender {
         }
     }
 
+    public SerialKeyMailSender(String serialKeyUrl) {
+        this(serialKeyUrl, "");
+    }
+
     public void send(Integer userId) {
         User user = new UserDao().getInstance(userId);
         if (user == null) {
@@ -30,7 +36,7 @@ abstract class SerialKeyMailSender {
         MailSerialKeyDao mailSerialKeyDao = getMailSerialKeyDao();
         MailSerialKey mailSerialKey = mailSerialKeyDao.getInstanceByUserId(userId);
         if (mailSerialKey == null) { // if request is not added, just add it
-            Integer requestId = mailSerialKeyDao.add(userId);
+            Integer requestId = mailSerialKeyDao.add(userId, serialKeyPrefix);
             mailSerialKey = mailSerialKeyDao.getInstance(requestId);
         }
 
@@ -39,7 +45,11 @@ abstract class SerialKeyMailSender {
         String subject = placeholderConverter.convert(getSubjectTemplate());
         String content = placeholderConverter.convert(getContentTemplate());
 
-        new MailSenderBuilder().build(getMailAccountId()).send(user.getEmail(), subject, content);
+        new MailSenderBuilder().build(getMailAccountId()).send(getEmail(user), subject, content);
+    }
+
+    protected String getEmail(User user) {
+        return user.getEmail();
     }
 
     protected abstract int getMailAccountId();

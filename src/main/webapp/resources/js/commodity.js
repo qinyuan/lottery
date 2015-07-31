@@ -149,8 +149,7 @@
         e.preventDefault();
 
         var $tel = $telInputForm.getInputByName('tel');
-        var tel = $tel.val();
-        if (!tel.match(/^\d{11}$/)) {
+        if (!JSUtils.validateTel($tel.val())) {
             alert('手机号码必须为11位数字');
             $tel.focusOrSelect();
             return false;

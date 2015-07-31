@@ -262,6 +262,36 @@ public class AppConfig {
         dao.saveInteger(RESET_PASSWORD_MAIL_ACCOUNT_ID_KEY, mailAccountId);
     }
 
+    private final static String RESET_EMAIL_MAIL_SUBJECT_TEMPLATE_KEY = "resetEmailMailSubjectTemplate";
+
+    public static String getResetEmailMailSubjectTemplate() {
+        return dao.get(RESET_EMAIL_MAIL_SUBJECT_TEMPLATE_KEY);
+    }
+
+    public static void updateResetEmailMailSubjectTemplate(String template) {
+        dao.save(RESET_EMAIL_MAIL_SUBJECT_TEMPLATE_KEY, template);
+    }
+
+    private final static String RESET_EMAIL_MAIL_CONTENT_TEMPLATE_KEY = "resetEmailMailContentTemplate";
+
+    public static String getResetEmailMailContentTemplate() {
+        return dao.get(RESET_EMAIL_MAIL_CONTENT_TEMPLATE_KEY);
+    }
+
+    public static void updateResetEmailMailContentTemplate(String template) {
+        dao.save(RESET_EMAIL_MAIL_CONTENT_TEMPLATE_KEY, template);
+    }
+
+    private final static String RESET_EMAIL_MAIL_ACCOUNT_ID_KEY = "resetEmailMailAccountId";
+
+    public static Integer getResetEmailMailAccountId() {
+        return dao.getInteger(RESET_EMAIL_MAIL_ACCOUNT_ID_KEY);
+    }
+
+    public static void updateResetEmailMailAccountId(Integer mailAccountId) {
+        dao.saveInteger(RESET_EMAIL_MAIL_ACCOUNT_ID_KEY, mailAccountId);
+    }
+
     private final static String LOTTERY_RULE_KEY = "lotteryRule";
 
     public static String getLotteryRule() {

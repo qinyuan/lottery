@@ -19,6 +19,7 @@
     <security:http auto-config="false" entry-point-ref="authenticationEntryPoint">
         <security:intercept-url pattern="/admin*" access="ROLE_SUPPER_ADMIN,ROLE_ADMIN"/>
         <security:intercept-url pattern="/lottery-history*" access="ROLE_NORMAL"/>
+        <security:intercept-url pattern="/personal-center*" access="ROLE_NORMAL"/>
         <security:custom-filter before="FORM_LOGIN_FILTER" ref="loginFilter"/>
         <security:custom-filter position="FORM_LOGIN_FILTER" ref="ajaxLoginFilter"/>
         <security:logout logout-success-url="/index"/>

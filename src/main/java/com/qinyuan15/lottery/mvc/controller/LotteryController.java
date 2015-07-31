@@ -11,6 +11,7 @@ import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 import com.qinyuan15.utils.mvc.controller.ImageController;
 import com.qinyuan15.utils.security.SecurityUtils;
+import com.qinyuan15.utils.tel.TelValidator;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -146,6 +147,14 @@ public class LotteryController extends ImageController {
                             @RequestParam(value = "identityCode", required = true) String identityCode) {
         if (!validateIdentityCode(identityCode)) {
             return fail("验证码输入错误！");
+        }
+
+        if (!StringUtils.hasText(tel)) {
+            return fail("电话号码不能为空！");
+        }
+
+        if (!new TelValidator().validate(tel)) {
+            return fail("电话号码必须为11为数字");
         }
 
         try {

@@ -28,10 +28,12 @@ public class LotteryActivityDao {
         }
 
         private HibernateListBuilder getListBuilder() {
+            // order by expire desc, end time desc, start time desc
             HibernateListBuilder listBuilder = new HibernateListBuilder()
-                    .addOrder("expire", true)
+                    .addOrder("expire", false)
                     .addOrder("endTime", false)
                     .addOrder("startTime", false);
+
             if (IntegerUtils.isPositive(this.commodityId)) {
                 listBuilder.addEqualFilter("commodityId", this.commodityId);
             }
@@ -78,13 +80,14 @@ public class LotteryActivityDao {
         }
     }
 
+    public LotteryActivity getLastInstance() {
+        List<LotteryActivity> activities = factory().getInstances();
+        return activities.size() == 0 ? null : activities.get(0);
+    }
+
     public LotteryActivity getLastActiveInstance() {
         List<LotteryActivity> activities = factory().setExpire(false).getInstances();
-        if (activities.size() == 0) {
-            return null;
-        } else {
-            return activities.get(0);
-        }
+        return activities.size() == 0 ? null : activities.get(0);
     }
 
     public Integer add(Integer commodityId, String startTime, String expectEndTime, Integer continuousSerialLimit,

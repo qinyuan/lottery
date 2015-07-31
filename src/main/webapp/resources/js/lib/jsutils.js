@@ -207,6 +207,10 @@ var JSUtils = {
         var pattern = /^[a-zA-Z0-9_\\-\\.]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$/;
         return email && email.match(pattern) != null;
     },
+    validateTel : function(tel) {
+        var pattern = /^\d{11}$/;
+        return tel && tel.match(pattern) != null;
+    },
     getEmailLoginPage: function (emailAccount) {
         return 'http://mail.' + emailAccount.replace(/^.*\@/, '');
     },

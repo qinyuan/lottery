@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="inc-header.jsp" %>
 <%@include file="index-header.jsp" %>
-<div class="page-width main-body">
-    <div>
+<div class="gray-back">
+    <div class="page-width main-body">
         <table class="normal">
             <colgroup>
                 <col class="index"/>
@@ -13,11 +13,7 @@
             <thead>
             <th>序号</th>
             <c:forEach var="head" items="${lotteryHistoryTable.heads}" varStatus="status">
-                <th class="${lotteryHistoryTable.aliases[status.index]}">${head}
-                    <div title="排序筛选" class="filter">
-                        <button class="${lotteryHistoryTable.headStyles[status.index]}"></button>
-                    </div>
-                </th>
+                <th class="${lotteryHistoryTable.aliases[status.index]}">${head}</th>
             </c:forEach>
             </thead>
             <tbody>

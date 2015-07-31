@@ -229,6 +229,44 @@
         </table>
     </div>
 </div>
+<div class="edit-unit">
+    <div class="title">用户修改绑定邮箱的邮件设置</div>
+    <div class="content">
+        <table class="email-template">
+            <tbody>
+            <tr>
+                <td class="title">发件箱</td>
+                <td class="input">
+                    <c:set var="selectFormItems" value="${mailSelectFormItems}"/>
+                    <c:set var="selectFormId" value="reset-email-mail-select"/>
+                    <c:set var="selectFormName" value="resetEmailMailAccountId"/>
+                    <%@include file="widget-select-form.jsp" %>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">邮件标题</td>
+                <td class="input">
+                    <input type="text" name="resetEmailMailSubjectTemplate" class="form-control"
+                           value="${resetEmailMailSubjectTemplate}" placeholder="在此输入邮件的标题"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">邮件正文模板
+                    <div class="comment">
+                        注：<br/>
+                        {{user}}指代用户名；<br/>
+                        {{url}}指代重置链接。
+                    </div>
+                </td>
+                <td class="input">
+                    <textarea name="resetEmailMailContentTemplate"
+                              class="ckeditor">${resetEmailMailContentTemplate}</textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 <div class="submit">
     <button id="submitButton" type="submit" class="btn btn-success">确定</button>
 </div>
