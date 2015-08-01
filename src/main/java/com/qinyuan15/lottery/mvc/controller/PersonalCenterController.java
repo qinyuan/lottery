@@ -7,6 +7,8 @@ import com.qinyuan15.lottery.mvc.mail.ResetEmailMailSender;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 import com.qinyuan15.utils.mail.MailAddressValidator;
 import com.qinyuan15.utils.mvc.controller.ImageController;
+import com.qinyuan15.utils.security.LoginRecord;
+import com.qinyuan15.utils.security.LoginRecordDao;
 import com.qinyuan15.utils.security.SecuritySearcher;
 import com.qinyuan15.utils.tel.TelValidator;
 import org.slf4j.Logger;
@@ -18,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 public class PersonalCenterController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(PersonalCenterController.class);
+    private final static int LOGIN_RECORD_SIZE = 20;
 
     @Autowired
     private SecuritySearcher securitySearcher;
@@ -32,6 +37,13 @@ public class PersonalCenterController extends ImageController {
         User user = getUser();
         setAttribute("user", user);
         setAttribute("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
+
+        List<LoginRecord> loginRecords = LoginRecordDao.factory().setUserId(user.getId())
+                .setLimitSize(LOGIN_RECORD_SIZE).getInstances();
+        for (LoginRecord loginRecord : loginRecords) {
+            loginRecord.setIp(loginRecord.getIp().replaceAll("\\d+\\.\\d+$", "*.*"));
+        }
+        setAttribute("loginRecords", loginRecords);
 
         setTitle("个人中心");
         addJs("lib/handlebars.min-v1.3.0");

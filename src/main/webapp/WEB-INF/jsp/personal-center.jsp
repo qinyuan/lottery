@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="right">
-            <table>
+            <table class="user-info">
                 <tbody>
                 <tr>
                     <td><span class="user-icon">&nbsp;</span>用户昵称：${user.username}</td>
@@ -43,6 +43,34 @@
                 </tr>
                 </tbody>
             </table>
+            <div class="login-history">
+                <h4>登录历史</h4>
+
+                <div style="font-size: 10pt;color:#999;">
+                    以下为您最近20次登录记录，若存在异常情况，请在核实后尽快
+                    <a id="changePassword2" href="javascript:void(0)">修改密码</a>
+                </div>
+                <table class="normal">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>登录时间</th>
+                        <th>登录地点</th>
+                        <th>IP</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="loginRecord" items="${loginRecords}" varStatus="status">
+                        <tr>
+                            <td>${status.index + 1}</td>
+                            <td>${loginRecord.loginTime}</td>
+                            <td>${loginRecord.location}</td>
+                            <td>${loginRecord.ip}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

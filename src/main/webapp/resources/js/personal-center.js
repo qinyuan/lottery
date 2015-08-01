@@ -1,7 +1,8 @@
 ;
 (function () {
     // codes about changing password
-    $('#changePassword').click(function () {
+    var $changePassword = $('#changePassword');
+    $changePassword.click(function () {
         var $tr = $(this).getParentByTagName('tr');
         if ($tr.next().hasClass('change-password')) {
             $tr.next().focusFirstTextInput();
@@ -56,6 +57,10 @@
             hideAndClear($html);
         });
         $html.setDefaultButton('changePasswordSubmit');
+    });
+    $('#changePassword2').click(function () {
+        $changePassword.trigger('click');
+        JSUtils.scrollTop($changePassword);
     });
 })();
 (function () {

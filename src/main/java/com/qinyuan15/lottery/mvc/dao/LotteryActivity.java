@@ -31,7 +31,7 @@ public class LotteryActivity extends PersistObject {
     }
 
     public String getStartTime() {
-        return DateUtils.adjustDateStringFromDB(startTime);
+        return DateUtils.trimMilliSecond(startTime);
     }
 
     public void setStartTime(String startTime) {
@@ -39,7 +39,7 @@ public class LotteryActivity extends PersistObject {
     }
 
     public String getExpectEndTime() {
-        return DateUtils.adjustDateStringFromDB(expectEndTime);
+        return DateUtils.trimMilliSecond(expectEndTime);
     }
 
     public void setExpectEndTime(String expectEndTime) {
@@ -47,7 +47,7 @@ public class LotteryActivity extends PersistObject {
     }
 
     public String getEndTime() {
-        return DateUtils.adjustDateStringFromDB(endTime);
+        return DateUtils.trimMilliSecond(endTime);
     }
 
     public void setEndTime(String endTime) {

@@ -41,7 +41,7 @@
     </bean>
     <bean id="successHandler" class="com.qinyuan15.lottery.mvc.controller.LoginSuccessHandler">
         <property name="alwaysUseDefaultTargetUrl" value="false"/>
-        <property name="defaultTargetUrl" value="/admin"/>
+        <property name="defaultTargetUrl" value="/index.html"/>
     </bean>
 
     <bean id="ajaxLoginFilter"

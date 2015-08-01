@@ -28,7 +28,7 @@ public class DualColoredBallRecord extends PersistObject {
     }
 
     public String getPublishDate() {
-        return DateUtils.adjustDateStringFromDB(publishDate);
+        return DateUtils.trimMilliSecond(publishDate);
     }
 
     public void setPublishDate(String publishDate) {

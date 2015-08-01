@@ -34,6 +34,7 @@ table.normal thead {
 table.normal thead th {
     font-weight: bold;
     text-align: center;
+    background-color: #F3F3F3;
 }
 
 table.normal tbody tr {
