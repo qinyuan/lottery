@@ -39,7 +39,7 @@
                                 <tr>
                                     <td>${status.index + 1}</td>
                                     <td>${liveness.receiveUsername}</td>
-                                    <td>${liveness.spreadWay}</td>
+                                    <td>${liveness.chineseSpreadWay}</td>
                                     <td>${liveness.registerBefore ? '好友通过传播链接登录了网站' : '好友通过链接注册新帐号'}</td>
                                     <td>${liveness.liveness}</td>
                                 </tr>

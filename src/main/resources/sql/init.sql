@@ -95,10 +95,16 @@ create table dual_colored_ball_record (
   unique(year, term)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-create table mail_send_record(
+create table mail_send_record (
   id int primary key auto_increment,
   mail_account_id int not null,
   user_id int not null,
   mail_id int not null,
   send_time datetime not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table system_info (
+  id int primary key auto_increment,
+  build_time datetime not null,
+  content text not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan15.lottery.mvc.lottery.ShareMedium;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.hibernate.PersistObject;
 
@@ -85,5 +86,9 @@ public class LotteryLiveness extends PersistObject {
             receiveUsernameCache = new UserDao().getNameById(receiveUserId);
         }
         return receiveUsernameCache;
+    }
+
+    public String getChineseSpreadWay(){
+        return ShareMedium.getCnByEn(spreadWay);
     }
 }
