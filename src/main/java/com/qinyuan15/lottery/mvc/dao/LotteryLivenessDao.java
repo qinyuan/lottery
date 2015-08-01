@@ -12,6 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LotteryLivenessDao {
+    public List<LotteryLiveness> getInstances(Integer userId) {
+        LotteryActivity activity = getLastLotteryActivity();
+        return new HibernateListBuilder().addEqualFilter("spreadUserId", userId)
+                .addEqualFilter("activityId", activity.getId()).build(LotteryLiveness.class);
+    }
+
     /**
      * Get liveness of certain user in his/her last lottery activity
      *
@@ -19,12 +25,14 @@ public class LotteryLivenessDao {
      * @return liveness of last lottery activity
      */
     public int getLiveness(Integer userId) {
+        LotteryActivity activity = getLastLotteryActivity();
+        return activity == null ? 0 : getLiveness(userId, activity.getId());
+    }
+
+    private LotteryActivity getLastLotteryActivity() {
         LotteryActivityDao activityDao = new LotteryActivityDao();
         LotteryActivity activity = activityDao.getLastActiveInstance();
-        if (activity == null) {
-            activity = activityDao.getLastInstance();
-        }
-        return activity == null ? 0 : getLiveness(userId, activity.getId());
+        return activity == null ? activityDao.getLastInstance() : activity;
     }
 
     public int getLiveness(Integer spreadUserId, Integer activityId) {

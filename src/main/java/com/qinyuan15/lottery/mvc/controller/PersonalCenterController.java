@@ -47,6 +47,7 @@ public class PersonalCenterController extends ImageController {
 
         setTitle("个人中心");
         addJs("lib/handlebars.min-v1.3.0");
+        addCss("personal-center-frame");
         addCssAndJs("personal-center");
         return "personal-center";
     }

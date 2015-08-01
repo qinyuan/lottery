@@ -5,7 +5,7 @@
         <li><a class="text" href="personal-center.html"><security:authentication property="name"/></a></li>
         <li><a class="text" href="j_spring_security_logout">退出</a></li>
         <li><a class="text" href="personal-center.html">个人中心</a></li>
-        <li><a class="text" href="index">系统消息</a></li>
+        <li><a class="text" href="system-info.html">系统消息</a></li>
         <li><a class="text" href="lottery-history.html">抽奖历史</a></li>
     </security:authorize>
     <security:authorize ifAnyGranted="ROLE_ADMIN">

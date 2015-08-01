@@ -1,51 +1,3 @@
-div.gray-back {
-    background-color: #e0e0e0;
-    padding: 20px 0;
-}
-
-div.main-body {
-    overflow: hidden;
-}
-
-div.main-body > div {
-    padding: 10px;
-    background-color: #ffffff;
-}
-
-div.main-body div.left {
-    float: left;
-    width: 200px;
-    padding: 35px 0;
-}
-
-div.main-body div.left > div {
-    text-align: center;
-}
-
-div.main-body div.left div.image img {
-    padding: 2px;
-    border: 1px solid #cccccc;
-}
-
-div.main-body div.left div.link {
-    margin-top: 20px;
-}
-
-div.main-body div.left div.link a {
-    color: #4b4b4b;
-    margin: 0 10px;
-}
-
-div.main-body div.right {
-    float: right;
-    width: 780px;
-    padding: 10px;
-}
-
-div.main-body div.right {
-    padding: 35px 50px 50px;
-}
-
 div.main-body div.right table.user-info {
     border-collapse: collapse;
 }
@@ -125,20 +77,20 @@ div.main-body div.right table.user-info tr.temporary div.input {
     width: 300px;
 }
 
-div.main-body div.right table.user-info  tr.temporary div.input input {
+div.main-body div.right table.user-info tr.temporary div.input input {
     font-size: 10pt;
 }
 
-div.main-body div.right table.user-info  tr.temporary div.submit {
+div.main-body div.right table.user-info tr.temporary div.submit {
     clear: both;
     text-align: center;
 }
 
-div.main-body div.right table.user-info  tr.temporary div.submit button {
+div.main-body div.right table.user-info tr.temporary div.submit button {
     margin: 0 10px;
 }
 
-div.main-body div.right table.user-info  tr.temporary h3 {
+div.main-body div.right table.user-info tr.temporary h3 {
     text-align: center;
     color: #378A36;
 }
@@ -149,7 +101,8 @@ div.main-body div.login-history {
     border-top: 1px dashed #dfdfdf;
 }
 
-div.main-body div.login-history td {
+div.main-body div.login-history td,
+div.main-body div.login-history th {
     font-size: 12pt;
     padding: 5px 25px;
 }

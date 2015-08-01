@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.hibernate.PersistObject;
 
 public class LotteryLiveness extends PersistObject {
@@ -56,5 +57,33 @@ public class LotteryLiveness extends PersistObject {
 
     public void setRegisterBefore(Boolean registerBefore) {
         this.registerBefore = registerBefore;
+    }
+
+
+    // derive fields
+    private String spreadUsernameCache;
+
+    public String getSpreadUsername() {
+        if (!IntegerUtils.isPositive(spreadUserId)) {
+            return null;
+        }
+
+        if (spreadUsernameCache == null) {
+            spreadUsernameCache = new UserDao().getNameById(spreadUserId);
+        }
+        return spreadUsernameCache;
+    }
+
+    private String receiveUsernameCache;
+
+    public String getReceiveUsername() {
+        if (!IntegerUtils.isPositive(receiveUserId)) {
+            return null;
+        }
+
+        if (receiveUsernameCache == null) {
+            receiveUsernameCache = new UserDao().getNameById(receiveUserId);
+        }
+        return receiveUsernameCache;
     }
 }

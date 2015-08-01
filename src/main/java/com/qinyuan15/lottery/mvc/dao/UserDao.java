@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.hibernate.HibernateDeleter;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
@@ -121,6 +122,15 @@ public class UserDao extends SimpleUserDao {
             user.setPassword(password);
             HibernateUtils.update(user);
         }
+    }
+
+    public String getNameById(Integer id) {
+        if (!IntegerUtils.isPositive(id)) {
+            return null;
+        }
+
+        User user = getInstance(id);
+        return user == null ? null : user.getUsername();
     }
 
     public Integer getIdBySerialKey(String serialKey) {

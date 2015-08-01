@@ -1,0 +1,43 @@
+div.gray-back {
+    background-color: #e0e0e0;
+    padding: 20px 0;
+}
+
+div.main-body {
+    overflow: hidden;
+}
+
+div.main-body > div {
+    padding: 10px;
+    background-color: #ffffff;
+}
+
+div.main-body div.left {
+    float: left;
+    width: 200px;
+    padding: 35px 0;
+}
+
+div.main-body div.left > div {
+    text-align: center;
+}
+
+div.main-body div.left div.image img {
+    padding: 2px;
+    border: 1px solid #cccccc;
+}
+
+div.main-body div.left div.link {
+    margin-top: 20px;
+}
+
+div.main-body div.left div.link a {
+    color: #4b4b4b;
+    margin: 0 10px;
+}
+
+div.main-body div.right {
+    float: right;
+    width: 780px;
+    padding: 35px 50px 50px;
+}
