@@ -121,4 +121,11 @@
         <property name="mailId" column="mail_id"/>
         <property name="sendTime" column="send_time"/>
     </class>
+    <class name="SystemInfo" table="system_info">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="buildTime" column="build_time"/>
+        <property name="content" column="content"/>
+    </class>
 </hibernate-mapping>
