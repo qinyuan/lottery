@@ -34,11 +34,24 @@ table div.filter button.filter.filtered.desc {
     background-position: -54px 0;
 }
 
-#mailForm {
+form .comment {
+    color: #418940;
+    font-size: 9pt;
+}
+
+form.edit-form {
     width: 900px;
     margin-left: -450px;
     top: 10px;
     padding: 10px;
+}
+
+form.edit-form div.submit {
+    text-align: center;
+}
+
+form.edit-form div.submit button {
+    margin: 0 10px;
 }
 
 #mailForm td {
@@ -70,14 +83,6 @@ table div.filter button.filter.filtered.desc {
 
 #mailForm td.mail-account button:hover {
     background-color: #aaaaaa;
-}
-
-#mailForm div.submit {
-    text-align: center;
-}
-
-#mailForm div.submit button {
-    margin: 0 10px;
 }
 
 #mailPreview {

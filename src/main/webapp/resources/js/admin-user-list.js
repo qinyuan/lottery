@@ -1,9 +1,14 @@
 ;
 (function () {
-    // codes about send email
+    // codes about send email or system info
     var $openMailForm = $('#openMailForm');
     $openMailForm.click(function () {
         mailForm.show();
+    });
+
+    var $openSystemInfoForm = $('#openSystemInfoForm');
+    $openSystemInfoForm.click(function () {
+        systemInfoForm.show();
     });
 
     var mailForm = ({
@@ -64,10 +69,6 @@
             });
             this.$submitMail.click(function () {
                 if (self.validate()) {
-                    var userIds = [];
-                    users.get$SelectedCheckboxes().each(function () {
-                        userIds.push(parseInt(this.value));
-                    });
                     var mailAccountIds = [];
                     self.get$SelectedMailAccounts().each(function () {
                         mailAccountIds.push(parseInt(this.value));
@@ -76,7 +77,7 @@
                     self.$submitMail.text('邮件发送中...');
                     JSUtils.postArrayParams('admin-user-list-send-mail.json', {
                         'mailAccountIds': mailAccountIds,
-                        'userIds': userIds,
+                        'userIds': users.getIds(),
                         'subject': self.get$Subject().val(),
                         'content': self.getContent()
                     }, function (data) {
@@ -112,6 +113,118 @@
         }
     }).init();
 
+    var systemInfoForm = ({
+        $form: $('#systemInfoForm'),
+        $cancelSystemInfo: $('#cancelSystemInfo'),
+        $submitSystemInfo: $('#submitSystemInfo'),
+        editor: CKEDITOR.replace('systemInfoContent', {}),
+        hide: function () {
+            this.$form.hide();
+            JSUtils.hideTransparentBackground();
+        },
+        show: function () {
+            JSUtils.showTransparentBackground(1);
+            this.$form.fadeIn(200).focusFirstTextInput();
+            JSUtils.scrollToVerticalCenter(this.$form);
+            /*if (this.getSelectedMailAccountCount() == 0) {
+             this.get$MailAccounts().first().trigger('click');
+             }*/
+        },
+        /*get$Subject: function () {
+         return this.$form.getInputByName('subject');
+         },
+         get$MailAccounts: function () {
+         return this.$form.find('td.mail-account button');
+         },
+         get$SelectedMailAccounts: function () {
+         return this.$form.find('td.mail-account input[name=mailAccountIds]');
+         },
+         getSelectedMailAccountCount: function () {
+         return this.get$SelectedMailAccounts().size();
+         },*/
+        getContent: function () {
+            return    this.editor.getData();
+        },
+        validate: function () {
+            /*if (this.getSelectedMailAccountCount() == 0) {
+             alert('必须至少选择一个发件箱帐号');
+             return false;
+             }
+
+             if (this.get$Subject().trimVal() == '') {
+             alert('邮件标题不能为空');
+             this.get$Subject().focusOrSelect();
+             return false;
+             }
+             if ($.trim(this.getContent()) == '') {
+             alert('邮件正文不能为空');
+             this.editor.focus();
+             return false;
+             }*/
+            if ($.trim(this.getContent()) == '') {
+                alert('消息正文不能为空');
+                this.editor.focus();
+                return false;
+            }
+            return confirm("确定发送？");
+        },
+        init: function () {
+            this.$form.setDefaultButton('submitSystemInfo');
+            var self = this;
+            this.$cancelSystemInfo.click(function () {
+                self.hide();
+            });
+            this.$submitSystemInfo.click(function () {
+                if (self.validate()) {
+                    /*var userIds = [];
+                    users.get$SelectedCheckboxes().each(function () {
+                        userIds.push(parseInt(this.value));
+                    });*/
+                    console.log(self.getContent());
+                    /*var mailAccountIds = [];
+                     self.get$SelectedMailAccounts().each(function () {
+                     mailAccountIds.push(parseInt(this.value));
+                     });
+
+                     self.$submitMail.text('邮件发送中...');
+                     JSUtils.postArrayParams('admin-user-list-send-mail.json', {
+                     'mailAccountIds': mailAccountIds,
+                     'userIds': userIds,
+                     'subject': self.get$Subject().val(),
+                     'content': self.getContent()
+                     }, function (data) {
+                     if (data.success) {
+                     location.reload();
+                     } else {
+                     self.$submitMail.text('确定');
+                     alert(data.detail);
+                     }
+                     });*/
+                }
+            });
+            /*this.get$MailAccounts().click(function () {
+             var $this = $(this);
+             if ($this.hasClass('selected')) {
+             $this.removeClass('selected');
+             while ($this.next().is('input')) {
+             $this.next().remove();
+             }
+             } else {
+             $this.addClass('selected');
+             var input = '<input type="hidden" name="mailAccountIds" value="' + $this.dataOptions('id') + '"/>';
+             $this.after(input);
+             }
+             });
+             $('#previewMailButton').click(function () {
+             var subject = self.get$Subject().val();
+             var content = self.getContent();
+             var username = users.getSelectedNames()[0];
+             mailPreview.show(username, subject, content);
+             });*/
+            return this;
+        }
+    }).init();
+
     var users = ({
         $checkboxes: $('table input.select-user'),
         $selectAll: $('table thead th > input.select-all'),
@@ -119,6 +232,13 @@
             return  this.$checkboxes.filter(function () {
                 return this.checked;
             });
+        },
+        getIds: function () {
+            var userIds = [];
+            this.get$SelectedCheckboxes().each(function () {
+                userIds.push(parseInt(this.value));
+            });
+            return userIds;
         },
         getSelectedNames: function () {
             var names = [];
@@ -132,6 +252,7 @@
         },
         updateButtonStatus: function () {
             $openMailForm.attr('disabled', this.getSelectedCount() == 0);
+            $openSystemInfoForm.attr('disabled', this.getSelectedCount() == 0);
         },
         init: function () {
             var self = this;

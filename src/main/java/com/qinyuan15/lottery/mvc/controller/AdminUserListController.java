@@ -191,7 +191,7 @@ public class AdminUserListController extends ImageController {
 
     private DatabaseTable getUserTable() {
         String livenessTable = "SELECT spread_user_id,SUM(liveness) AS sum_liveness FROM lottery_liveness " +
-                "WHERE activity_id=(SELECT MAX(activity_id) FROM lottery_activity WHERE expire=false)";
+                "WHERE activity_id=(SELECT MAX(id) FROM lottery_activity WHERE expire=false) GROUP BY spread_user_id";
         String tableName = "user AS u LEFT JOIN (" + livenessTable + ") AS l ON u.id=l.spread_user_id";
 
         String lotTable = "SELECT user_id,MAX(lot_time) AS last_lot_time FROM lottery_lot GROUP BY user_id";
