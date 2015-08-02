@@ -10,6 +10,16 @@ public class SystemInfoSendRecordDao {
         return HibernateUtils.get(SystemInfoSendRecord.class, id);
     }
 
+    public void add(List<Integer> userIds, String infoContent) {
+        if (userIds == null || userIds.size() == 0) {
+            return;
+        }
+        Integer infoId = new SystemInfoDao().add(infoContent);
+        for (Integer userId : userIds) {
+            add(userId, infoId);
+        }
+    }
+
     public Integer add(Integer userId, Integer infoId) {
         SystemInfoSendRecord record = new SystemInfoSendRecord();
         record.setUserId(userId);

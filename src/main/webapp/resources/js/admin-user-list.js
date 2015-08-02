@@ -41,7 +41,7 @@
             return this.get$SelectedMailAccounts().size();
         },
         getContent: function () {
-            return    this.editor.getData();
+            return this.editor.getData();
         },
         validate: function () {
             if (this.getSelectedMailAccountCount() == 0) {
@@ -124,43 +124,14 @@
         },
         show: function () {
             JSUtils.showTransparentBackground(1);
-            this.$form.fadeIn(200).focusFirstTextInput();
+            this.$form.fadeIn(200);
+            this.editor.focus();
             JSUtils.scrollToVerticalCenter(this.$form);
-            /*if (this.getSelectedMailAccountCount() == 0) {
-             this.get$MailAccounts().first().trigger('click');
-             }*/
         },
-        /*get$Subject: function () {
-         return this.$form.getInputByName('subject');
-         },
-         get$MailAccounts: function () {
-         return this.$form.find('td.mail-account button');
-         },
-         get$SelectedMailAccounts: function () {
-         return this.$form.find('td.mail-account input[name=mailAccountIds]');
-         },
-         getSelectedMailAccountCount: function () {
-         return this.get$SelectedMailAccounts().size();
-         },*/
         getContent: function () {
-            return    this.editor.getData();
+            return this.editor.getData();
         },
         validate: function () {
-            /*if (this.getSelectedMailAccountCount() == 0) {
-             alert('必须至少选择一个发件箱帐号');
-             return false;
-             }
-
-             if (this.get$Subject().trimVal() == '') {
-             alert('邮件标题不能为空');
-             this.get$Subject().focusOrSelect();
-             return false;
-             }
-             if ($.trim(this.getContent()) == '') {
-             alert('邮件正文不能为空');
-             this.editor.focus();
-             return false;
-             }*/
             if ($.trim(this.getContent()) == '') {
                 alert('消息正文不能为空');
                 this.editor.focus();
@@ -176,51 +147,25 @@
             });
             this.$submitSystemInfo.click(function () {
                 if (self.validate()) {
-                    /*var userIds = [];
-                    users.get$SelectedCheckboxes().each(function () {
-                        userIds.push(parseInt(this.value));
-                    });*/
-                    console.log(self.getContent());
-                    /*var mailAccountIds = [];
-                     self.get$SelectedMailAccounts().each(function () {
-                     mailAccountIds.push(parseInt(this.value));
-                     });
-
-                     self.$submitMail.text('邮件发送中...');
-                     JSUtils.postArrayParams('admin-user-list-send-mail.json', {
-                     'mailAccountIds': mailAccountIds,
-                     'userIds': userIds,
-                     'subject': self.get$Subject().val(),
-                     'content': self.getContent()
-                     }, function (data) {
-                     if (data.success) {
-                     location.reload();
-                     } else {
-                     self.$submitMail.text('确定');
-                     alert(data.detail);
-                     }
-                     });*/
+                    self.$submitSystemInfo.text('邮件发送中...');
+                    JSUtils.postArrayParams('admin-user-list-send-system-info.json', {
+                        'userIds': users.getIds(),
+                        'content': self.getContent()
+                    }, function (data) {
+                        if (data.success) {
+                            location.reload();
+                        } else {
+                            self.$submitSystemInfo.text('确定');
+                            alert(data.detail);
+                        }
+                    });
                 }
             });
-            /*this.get$MailAccounts().click(function () {
-             var $this = $(this);
-             if ($this.hasClass('selected')) {
-             $this.removeClass('selected');
-             while ($this.next().is('input')) {
-             $this.next().remove();
-             }
-             } else {
-             $this.addClass('selected');
-             var input = '<input type="hidden" name="mailAccountIds" value="' + $this.dataOptions('id') + '"/>';
-             $this.after(input);
-             }
-             });
-             $('#previewMailButton').click(function () {
-             var subject = self.get$Subject().val();
-             var content = self.getContent();
-             var username = users.getSelectedNames()[0];
-             mailPreview.show(username, subject, content);
-             });*/
+            $('#previewSystemInfoButton').click(function () {
+                var content = self.getContent();
+                var username = users.getSelectedNames()[0];
+                systemInfoPreview.show(username, content);
+            });
             return this;
         }
     }).init();
@@ -296,7 +241,32 @@
         },
         init: function () {
             var self = this;
-            $('#cancelPreview').click(function () {
+            $('#cancelMailPreview').click(function () {
+                self.hide();
+            });
+            return this;
+        }
+    }).init();
+
+    var systemInfoPreview = ({
+        $div: $('#systemInfoPreview'),
+        show: function (username, content) {
+            // deal with placeholder
+            content = content.replace("{{user}}", username);
+
+            JSUtils.showTransparentBackground(1);
+            systemInfoForm.$form.hide();
+            this.$div.find('div.content').html(content);
+            this.$div.fadeIn(200);
+            JSUtils.scrollToVerticalCenter(this.$div);
+        },
+        hide: function () {
+            this.$div.hide();
+            systemInfoForm.$form.fadeIn(200);
+        },
+        init: function () {
+            var self = this;
+            $('#cancelSystemInfoPreview').click(function () {
                 self.hide();
             });
             return this;

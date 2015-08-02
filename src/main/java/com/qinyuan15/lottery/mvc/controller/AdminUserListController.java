@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.google.common.collect.Lists;
+import com.qinyuan15.lottery.mvc.dao.SystemInfoSendRecordDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.mail.NormalMailSender;
 import com.qinyuan15.utils.mail.MailAccountDao;
@@ -83,8 +84,31 @@ public class AdminUserListController extends ImageController {
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to send normal email, mailAccounts: {}, users: {}, subject: {}, content: {}, info: {}",
-                    mailAccountIds, userIds, subject, content, e);
+                    mailAccountIds, userList, subject, content, e);
             return fail("邮件发送失败！");
+        }
+    }
+
+    @RequestMapping(value = "/admin-user-list-send-system-info.json", method = RequestMethod.POST)
+    @ResponseBody
+    public String sendSystemInfo(@RequestParam(value = "userIds[]", required = true) Integer[] userIds,
+                                 @RequestParam(value = "content", required = true) String content) {
+        if (userIds == null || userIds.length == 0) {
+            return fail("接受者不能为空！");
+        }
+
+        if (!StringUtils.hasText(content)) {
+            return fail("消息内容不能为空！");
+        }
+
+        List<Integer> userList = Lists.newArrayList(userIds);
+        try {
+            new SystemInfoSendRecordDao().add(userList, content);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("Fail to send system information, users: {}, content: {}, info: {}",
+                    userList, content, e);
+            return fail("系统消息发送失败！");
         }
     }
 
@@ -93,7 +117,7 @@ public class AdminUserListController extends ImageController {
 
     @RequestMapping(value = "/admin-user-list-distinct-values.json", method = RequestMethod.GET)
     @ResponseBody
-    public String json(@RequestParam(value = "alias", required = false) String alias) {
+    public String getDistinctValues(@RequestParam(value = "alias", required = false) String alias) {
         DatabaseTable userTable = getUserTable();
         List<DistinctItem> items = new ArrayList<>();
         for (Object value : userTable.getDistinctValues(alias)) {

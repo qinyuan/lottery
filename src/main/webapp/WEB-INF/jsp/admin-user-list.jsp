@@ -74,45 +74,28 @@
 </form>
 
 <form class="float-panel shadow edit-form" id="systemInfoForm">
-    <%--<table>
-        <tbody>
-        <tr>
-            <td class="title">发件箱</td>
-            <td class="mail-account">
-                <c:forEach var="mailAccount" items="${mailAccounts}">
-                    <button data-options="id:${mailAccount.id}" type="button">${mailAccount.username}</button>
-                </c:forEach>
-            </td>
-        </tr>
-        <tr style="color:#418940;font-size:9pt;">
-            <td style="text-align:right;">(说明)</td>
-            <td style="">在邮件标题或正文中，可以用{{user}}指代收件人的用户名</td>
-        </tr>
-        <tr>
-            <td class="title">标题</td>
-            <td><input type="text" class="form-control" name="subject"/></td>
-        </tr>
-        <tr>
-            <td class="title">正文</td>
-            <td><textarea name="content" id="mailContent"></textarea></td>
-        </tr>
-        </tbody>
-    </table>--%>
-    <div>
+    <div style="margin-bottom: 10px;">
         <div class="comment">在邮件标题或正文中，可以用{{user}}指代收件人的用户名</div>
         <textarea name="content" id="systemInfoContent"></textarea>
     </div>
     <div class="submit">
+        <button type="button" id="previewSystemInfoButton" class="btn btn-primary">预览</button>
         <button type="button" id="submitSystemInfo" class="btn btn-success">确定</button>
         <button type="button" id="cancelSystemInfo" class="btn btn-default">取消</button>
     </div>
 </form>
 
-<div class="float-panel shadow" id="mailPreview">
+<div class="float-panel shadow preview-panel" id="mailPreview">
     <div class="subject"></div>
     <div class="content"></div>
     <div class="button">
-        <button class="btn btn-primary" id="cancelPreview">返回</button>
+        <button class="btn btn-primary" id="cancelMailPreview">返回</button>
+    </div>
+</div>
+<div class="float-panel shadow preview-panel" id="systemInfoPreview">
+    <div class="content"></div>
+    <div class="button">
+        <button class="btn btn-primary" id="cancelSystemInfoPreview">返回</button>
     </div>
 </div>
 <%@include file="inc-footer.jsp" %>

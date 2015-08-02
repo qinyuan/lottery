@@ -85,14 +85,18 @@ form.edit-form div.submit button {
     background-color: #aaaaaa;
 }
 
-#mailPreview {
+div.preview-panel {
     width: 830px;
     margin-left: -415px;
     padding: 10px;
     background-color: #c5c5c5;
 }
 
-#mailPreview div.subject, #mailPreview div.content {
+div.preview-panel div.button {
+    text-align: center;
+}
+
+#mailPreview div.subject, div.preview-panel div.content {
     background-color: #ffffff;
 }
 
@@ -100,8 +104,4 @@ form.edit-form div.submit button {
     font-weight: bold;
     font-size: 12pt;
     margin-bottom: 5px;
-}
-
-#mailPreview div.button {
-    text-align: center;
 }

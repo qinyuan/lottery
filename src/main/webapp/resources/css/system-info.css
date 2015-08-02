@@ -4,3 +4,9 @@ div.main-body div.right table.liveness th {
     font-size: 12pt;
     padding: 5px 10px;
 }
+
+div.main-body div.right div.system-info {
+    border-top: 1px dashed #dfdfdf;
+    margin-top: 30px;
+    padding-top: 15px;
+}
