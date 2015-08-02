@@ -14,23 +14,15 @@
     });
 
     function loadInfoItems($parent, items) {
-        var $html = $(JSUtils.handlebars('infoItemTemplate', items));
+        var $html = $(JSUtils.handlebars('infoItemTemplate', {'items': items}));
+        $html.find('a.mark-as-read').click(function () {
+            var $infoItem = $(this).getParentByTagNameAndClass('div', 'info-item');
+            var id = $infoItem.dataOptions('id');
+            $.post('system-info-mark-as-read.json', {id: id}, JSUtils.normalAjaxCallback);
+        });
         $html.appendTo($parent);
     }
 
-    loadInfoItems($unreadItems, {'items': [
-        {
-            id: 1,
-            content: 'AAAAAAAAAAAAAAAa',
-            buildTime: '2012-12-12 15:15:15',
-            unread: true
-        },
-        {
-
-            id: 2,
-            content: 'BBBBBBBBBBBBBBBBB',
-            buildTime: '2012-12-13 15:15:15',
-            unread: true
-        }
-    ]});
+    loadInfoItems($unreadItems, window['unreadSystemInfoItems']);
+    loadInfoItems($readItems, window['readSystemInfoItems']);
 })();

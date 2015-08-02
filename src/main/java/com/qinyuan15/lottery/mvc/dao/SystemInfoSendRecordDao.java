@@ -35,8 +35,8 @@ public class SystemInfoSendRecordDao {
         HibernateUtils.update(record);
     }
 
-    public List<SystemInfoSendRecord> getInstancesByUserId(Integer userId) {
-        return new HibernateListBuilder().addEqualFilter("userId", userId).build(SystemInfoSendRecord.class);
+    public static Factory factory() {
+        return new Factory();
     }
 
     public static class Factory {

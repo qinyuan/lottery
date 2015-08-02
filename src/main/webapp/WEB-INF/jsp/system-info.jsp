@@ -61,38 +61,8 @@
                         <input type="checkbox" checked/>
                     </div>
                 </div>
-                <div class="unread info">
-                    <%--<div class="info-item" data-options="id:10">
-                        <div class="content">AAAAAAAAAAAAAAAAAAAAAAA</div>
-                        <div class="foot">
-                            <span class="time">2014-12-12 15:00:00</span>
-                            <a href="javascript:void(0)">标记为已读</a>
-                        </div>
-                    </div>
-                    <div class="info-item" data-options="id:10">
-                        <div class="content">AAAAAAAAAAAAAAAAAAAAAAA</div>
-                        <div class="foot">
-                            <span class="time">2014-12-12 15:00:00</span>
-                            <a href="javascript:void(0)">标记为已读</a>
-                        </div>
-                    </div>--%>
-                </div>
-                <div class="read info">
-                    <%--<div class="info-item" data-options="id:10">
-                        <div class="content">BBBBBBBBBBBBBBB</div>
-                        <div class="foot">
-                            <span class="time">2014-12-12 15:00:00</span>
-                            <a href="javascript:void(0)">标记为已读</a>
-                        </div>
-                    </div>
-                    <div class="info-item" data-options="id:10">
-                        <div class="content">BBBBBBBBBBBBBBBBB</div>
-                        <div class="foot">
-                            <span class="time">2014-12-12 15:00:00</span>
-                            <a href="javascript:void(0)">标记为已读</a>
-                        </div>
-                    </div>--%>
-                </div>
+                <div class="unread info"></div>
+                <div class="read info"></div>
             </div>
         </div>
     </div>
@@ -100,10 +70,10 @@
 <q:handlebars-template id="infoItemTemplate">
     {{#each items}}
     <div class="info-item" data-options="id:{{id}}">
-        <div class="content">{{content}}</div>
+        <div class="content">{{{content}}}</div>
         <div class="foot">
             <span class="time">{{buildTime}}</span>
-            {{#if unread}}<a href="javascript:void(0)">标记为已读</a>{{/if}}
+            {{#if unread}}<a href="javascript:void(0)" class="mark-as-read">标记为已读</a>{{/if}}
         </div>
     </div>
     {{/each}}

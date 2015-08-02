@@ -30,4 +30,24 @@ public class SystemInfoSendRecord extends PersistObject {
     public void setUnread(Boolean unread) {
         this.unread = unread;
     }
+
+    // derived fields
+    private SystemInfo infoCache;
+
+    private SystemInfo getSystemInfo() {
+        if (infoCache == null) {
+            infoCache = new SystemInfoDao().getInstance(infoId);
+        }
+        return infoCache;
+    }
+
+    public String getContent() {
+        SystemInfo info = getSystemInfo();
+        return info == null ? null : info.getContent();
+    }
+
+    public String getBuildTime() {
+        SystemInfo info = getSystemInfo();
+        return info == null ? null : info.getBuildTime();
+    }
 }

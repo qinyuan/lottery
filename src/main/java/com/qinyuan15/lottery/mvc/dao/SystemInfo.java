@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.hibernate.PersistObject;
 
 public class SystemInfo extends PersistObject {
@@ -7,7 +8,7 @@ public class SystemInfo extends PersistObject {
     private String content;
 
     public String getBuildTime() {
-        return buildTime;
+        return DateUtils.trimMilliSecond(buildTime);
     }
 
     public void setBuildTime(String buildTime) {
