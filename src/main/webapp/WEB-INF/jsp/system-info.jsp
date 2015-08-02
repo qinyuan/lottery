@@ -55,8 +55,57 @@
             </div>
             <div class="system-info">
                 <h4>系统消息</h4>
+
+                <div class="filter">
+                    <div id="infoTypeSelector" class="switch switch-mini" data-on-label="未读" data-off-label="已读">
+                        <input type="checkbox" checked/>
+                    </div>
+                </div>
+                <div class="unread info">
+                    <%--<div class="info-item" data-options="id:10">
+                        <div class="content">AAAAAAAAAAAAAAAAAAAAAAA</div>
+                        <div class="foot">
+                            <span class="time">2014-12-12 15:00:00</span>
+                            <a href="javascript:void(0)">标记为已读</a>
+                        </div>
+                    </div>
+                    <div class="info-item" data-options="id:10">
+                        <div class="content">AAAAAAAAAAAAAAAAAAAAAAA</div>
+                        <div class="foot">
+                            <span class="time">2014-12-12 15:00:00</span>
+                            <a href="javascript:void(0)">标记为已读</a>
+                        </div>
+                    </div>--%>
+                </div>
+                <div class="read info">
+                    <%--<div class="info-item" data-options="id:10">
+                        <div class="content">BBBBBBBBBBBBBBB</div>
+                        <div class="foot">
+                            <span class="time">2014-12-12 15:00:00</span>
+                            <a href="javascript:void(0)">标记为已读</a>
+                        </div>
+                    </div>
+                    <div class="info-item" data-options="id:10">
+                        <div class="content">BBBBBBBBBBBBBBBBB</div>
+                        <div class="foot">
+                            <span class="time">2014-12-12 15:00:00</span>
+                            <a href="javascript:void(0)">标记为已读</a>
+                        </div>
+                    </div>--%>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<q:handlebars-template id="infoItemTemplate">
+    {{#each items}}
+    <div class="info-item" data-options="id:{{id}}">
+        <div class="content">{{content}}</div>
+        <div class="foot">
+            <span class="time">{{buildTime}}</span>
+            {{#if unread}}<a href="javascript:void(0)">标记为已读</a>{{/if}}
+        </div>
+    </div>
+    {{/each}}
+</q:handlebars-template>
 <%@include file="inc-footer.jsp" %>

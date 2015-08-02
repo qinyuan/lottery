@@ -10,3 +10,42 @@ div.main-body div.right div.system-info {
     margin-top: 30px;
     padding-top: 15px;
 }
+
+div.main-body div.right div.system-info h4,
+div.main-body div.right div.system-info div.filter {
+    float: left;
+}
+
+div.main-body div.right div.system-info div.filter {
+    padding: 10px 0 0 30px;
+}
+
+div.main-body div.right div.system-info div.info {
+    clear: both;
+}
+
+div.main-body div.right div.system-info div.info.read {
+    display: none;
+}
+
+div.main-body div.right div.system-info div.info div.info-item {
+    background-color: #DCDCDC;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+div.main-body div.right div.system-info div.info div.info-item div.foot {
+    margin-top: 10px;
+    text-align: right;
+    font-size: 9pt;
+}
+
+div.main-body div.right div.system-info div.info div.info-item div.foot span.time {
+    color: #0E691E;
+    font-style: italic;
+}
+
+div.main-body div.right div.system-info div.info div.info-item div.foot a {
+    margin-left: 10px;
+}

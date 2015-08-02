@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 
@@ -36,5 +37,33 @@ public class SystemInfoSendRecordDao {
 
     public List<SystemInfoSendRecord> getInstancesByUserId(Integer userId) {
         return new HibernateListBuilder().addEqualFilter("userId", userId).build(SystemInfoSendRecord.class);
+    }
+
+    public static class Factory {
+        private Integer userId;
+        private Boolean unread;
+
+        public Factory setUserId(Integer userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public Factory setUnread(Boolean unread) {
+            this.unread = unread;
+            return this;
+        }
+
+        public List<SystemInfoSendRecord> getInstances() {
+            HibernateListBuilder listBuilder = new HibernateListBuilder();
+            if (IntegerUtils.isPositive(userId)) {
+                listBuilder.addEqualFilter("userId", userId);
+            }
+
+            if (unread != null) {
+                listBuilder.addEqualFilter("unread", unread);
+            }
+
+            return listBuilder.build(SystemInfoSendRecord.class);
+        }
     }
 }

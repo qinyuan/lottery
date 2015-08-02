@@ -21,7 +21,12 @@ public class SystemInfoController extends ImageController {
         setAttribute("livenesses", dao.getInstances(userId));
         setAttribute("livenessCount", dao.getLiveness(userId));
 
+        // bootstrap switch
+        addCss("resources/js/lib/bootstrap/css/bootstrap-switch.min", false);
+        addJs("lib/bootstrap/js/bootstrap-switch.min", false);
+
         setTitle("系统消息");
+        addJs("lib/handlebars.min-v1.3.0");
         addCss("personal-center-frame");
         addCssAndJs("system-info");
         return "system-info";
