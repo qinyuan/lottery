@@ -112,6 +112,6 @@ create table system_info (
 create table system_info_send_record (
   id int primary key auto_increment,
   user_id int not null,
-  system_info_id int not null,
+  info_id int not null,
   unread boolean not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

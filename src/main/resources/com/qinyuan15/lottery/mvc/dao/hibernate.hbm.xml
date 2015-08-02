@@ -128,4 +128,12 @@
         <property name="buildTime" column="build_time"/>
         <property name="content" column="content"/>
     </class>
+    <class name="SystemInfoSendRecord" table="system_info_send_record">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="userId" column="user_id"/>
+        <property name="infoId" column="info_id"/>
+        <property name="unread" column="unread"/>
+    </class>
 </hibernate-mapping>
