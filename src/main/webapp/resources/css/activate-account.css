@@ -14,3 +14,7 @@ div.main-body > div {
 div.main-body span.email {
     color: #FFA457;
 }
+
+div.main-body span.invalid {
+    color: #FF1A29;
+}

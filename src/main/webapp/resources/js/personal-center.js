@@ -138,26 +138,35 @@
                 return false;
             }
 
-            var oldEmail = $(this).getParentByTagName('table').find('span.email').text();
+            var $this = $(this);
+            var oldEmail = $this.getParentByTagName('table').find('span.email').text();
             if (oldEmail.toLowerCase() == email.toLowerCase()) {
                 alert('新邮箱不能与原邮箱相同！');
                 $email.focusOrSelect();
                 return false;
             }
 
-            $.post('personal-center-update-email.json', $html.find('form').serialize(), function (data) {
+            $this.text('正在处理...');
+            var url = 'personal-center-update-email.json';
+            $.post(url, $html.find('form').serialize(), function (data) {
                 if (data.success) {
                     var loginPage = JSUtils.getEmailLoginPage(email);
-
-                    var info = '<div style="font-size: 10pt;padding-left:50px;">';
-                    info += '验证邮件已经发送至新邮箱：';
-                    info += '<a target="_blank" href="' + loginPage + '">' + email + '</a>';
-                    info += '<br/>您还需要通过该邮箱完成完成邮箱修改，';
-                    info += '<a target="_blank" href="' + loginPage + '">单击此处登录新邮箱</a></div>';
-
-                    $html.find('td').html(info);
+                    var info = JSUtils.handlebars('changeEmailResultTemplate', {
+                        loginPage: loginPage,
+                        email: email
+                    });
+                    $html.find('td').html(info).find('a.resend').click(function () {
+                        $.post(url, {email: email}, function (data) {
+                            if (data.success) {
+                                $html.find('span.resend-success').showForAWhile(3000);
+                            } else {
+                                $html.find('span.resend-fail').text(data.detail).showForAWhile(3000);
+                            }
+                        });
+                    });
                 } else {
                     alert(data.detail);
+                    $this.text('确定');
                 }
             });
             return false;

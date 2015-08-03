@@ -135,4 +135,14 @@
         </td>
     </tr>
 </q:handlebars-template>
+<q:handlebars-template id="changeEmailResultTemplate">
+    <div class="change-email-result">
+        验证邮件已经发送至新邮箱：
+        <a target="_blank" href="{{loginPage}}">{{email}}</a>
+        <br/>您还需要通过该邮箱完成完成邮箱修改，
+        <a target="_blank" href="{{loginPage}}">单击此处登录新邮箱</a>
+        <br/><br/>未收到邮件？ <a href="javascript:void(0)" class="resend">点此重发一封</a>
+        <span class="resend-success">发送成功！</span><span class="resend-fail"></span>
+    </div>
+</q:handlebars-template>
 <%@include file="inc-footer.jsp" %>

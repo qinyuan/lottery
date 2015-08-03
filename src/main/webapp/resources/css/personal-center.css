@@ -95,6 +95,17 @@ div.main-body div.right table.user-info tr.temporary h3 {
     color: #378A36;
 }
 
+div.main-body div.right table.user-info div.change-email-result {
+    font-size: 10pt;
+    padding-left: 50px;
+}
+
+div.main-body div.right table.user-info div.change-email-result span.resend-success,
+div.main-body div.right table.user-info div.change-email-result span.resend-fail {
+    color: #FFA457;
+    display: none;
+}
+
 div.main-body div.login-history {
     margin-top: 30px;
     padding-top: 15px;
@@ -106,3 +117,4 @@ div.main-body div.login-history th {
     font-size: 12pt;
     padding: 5px 25px;
 }
+

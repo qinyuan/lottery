@@ -39,7 +39,6 @@ public class ResetEmailController extends ImageController {
         IndexHeaderUtils.setHeaderParameters(this);
         setTitle("邮箱修改成功");
         addCss("activate-account");
-        //addCssAndJs("reset-email");
         return "reset-email";
     }
 

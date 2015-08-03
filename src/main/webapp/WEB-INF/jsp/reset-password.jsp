@@ -2,13 +2,12 @@
 <%@include file="inc-header.jsp" %>
 <%@include file="index-header.jsp" %>
 <div class="main-body">
-
     <div class="shadow page-width">
         <h3>重置密码</h3>
         <c:choose>
-            <c:when test="${urlExpire}">
+            <c:when test="${serialKey == null}">
                 <div class="url-expire">
-                    <h1>链接已过期！</h1>
+                    <h1>链接已失效！</h1>
                     <a href="find-password.html"><span id="remainingRelocateSeconds">5</span>秒后自动跳转至找回密码页面</a>
                 </div>
             </c:when>
@@ -40,8 +39,6 @@
                 </div>
             </c:otherwise>
         </c:choose>
-
-
     </div>
 </div>
 <%@include file="inc-footer.jsp" %>

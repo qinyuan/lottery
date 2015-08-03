@@ -1,8 +1,8 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.utils.mail.MailSerialKey;
 import com.qinyuan15.lottery.mvc.dao.ResetPasswordRequestDao;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
+import com.qinyuan15.utils.mail.MailSerialKey;
 import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,12 +19,9 @@ public class ResetPasswordController extends ImageController {
     @RequestMapping("/reset-password")
     public String index(@RequestParam(value = "serial", required = true) String serial) {
         if (StringUtils.hasText(serial) && new ResetPasswordRequestDao().hasSerialKey(serial)) {
-            setAttribute("urlExpire", false);
-        } else {
-            setAttribute("urlExpire", true);
+            setAttribute("serialKey", serial);
         }
 
-        setAttribute("serialKey", serial);
         setAttribute("noFooter", true);
         IndexHeaderUtils.setHeaderParameters(this);
         setTitle("输入新密码");
