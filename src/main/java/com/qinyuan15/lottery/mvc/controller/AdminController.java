@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.dao.MailAccountReferenceValidator;
 import com.qinyuan15.lottery.mvc.dao.NavigationLink;
 import com.qinyuan15.lottery.mvc.dao.NavigationLinkDao;
 import com.qinyuan15.utils.IntegerUtils;
@@ -56,25 +57,32 @@ public class AdminController extends ImageController {
     @ResponseBody
     public String addEditEmail(@RequestParam(value = "id", required = false) Integer id,
                                @RequestParam(value = "mailHost", required = true) String host,
-                               @RequestParam(value = "mailUsername", required = true) String username,
+                               @RequestParam(value = "mailUsername", required = false) String username,
                                @RequestParam(value = "mailPassword", required = true) String password) {
         if (!StringUtils.hasText(host)) {
             return fail("发件箱服务器地址不能为空！");
         }
-        if (!new MailAddressValidator().validate(username)) {
-            return fail("发件箱用户名必须为有效的邮件地址！");
+
+        MailAccountDao dao = new MailAccountDao();
+
+        // if add mail account, validate username
+        if (!IntegerUtils.isPositive(id)) {
+            if (!StringUtils.hasText(username)) {
+                return fail("发件箱用户名不能为空！");
+            } else if (!new MailAddressValidator().validate(username)) {
+                return fail("发件箱用户名必须为有效的邮件地址！");
+            } else if (dao.hasUsername(username)) {
+                return fail("用户名'" + username + "'已经存在！");
+            }
         }
+
         if (!StringUtils.hasText(password)) {
             return fail("发件箱密码不能为空！");
         }
 
-        MailAccountDao dao = new MailAccountDao();
-        if (dao.hasUsername(username)) {
-            return fail("用户名'" + username + "'已经存在！");
-        }
         try {
             if (IntegerUtils.isPositive(id)) {
-                dao.update(id, host, username, password);
+                dao.update(id, host, password);
             } else {
                 dao.add(host, username, password);
             }
@@ -88,6 +96,9 @@ public class AdminController extends ImageController {
     @ResponseBody
     public String deleteEmail(@RequestParam(value = "id", required = true) Integer id) {
         try {
+            if (new MailAccountReferenceValidator().isUsed(id)) {
+                return fail("该邮箱账户已经发过邮件，不能将其删除！");
+            }
             new MailAccountDao().delete(id);
             return success();
         } catch (Exception e) {

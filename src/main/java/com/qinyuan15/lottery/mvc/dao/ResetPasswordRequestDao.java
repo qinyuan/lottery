@@ -7,4 +7,9 @@ public class ResetPasswordRequestDao extends MailSerialKeyDao {
     protected String getMailType() {
         return "resetPassword";
     }
+
+    @Override
+    protected int getExpireSeconds() {
+        return 30 * 60;// 30 minutes
+    }
 }

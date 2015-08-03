@@ -51,3 +51,8 @@ div.login > form div.submit {
 div.login > form div.submit button {
     margin-left: 20px;
 }
+
+div.login > form div.error-info {
+    text-align: center;
+    color: #FF3448;
+}

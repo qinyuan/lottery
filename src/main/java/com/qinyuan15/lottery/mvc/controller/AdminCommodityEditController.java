@@ -128,7 +128,11 @@ public class AdminCommodityEditController extends ImageController {
             return failByInvalidParam();
         }
         try {
-            new CommodityDao().delete(id);
+            CommodityDao dao = new CommodityDao();
+            if (dao.isUsed(id)) {
+                return fail("该商品已经参与过抽奖，不能将其删除！");
+            }
+            dao.delete(id);
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to delete commodity, id: {}, info: {}", id, e);

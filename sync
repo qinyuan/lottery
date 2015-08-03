@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./package && scp target/lottery.tar.gz root@aliyun:~/

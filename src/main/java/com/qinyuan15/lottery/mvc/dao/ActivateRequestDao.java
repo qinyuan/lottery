@@ -7,4 +7,9 @@ public class ActivateRequestDao extends MailSerialKeyDao {
     protected String getMailType() {
         return "activateAccount";
     }
+
+    @Override
+    protected int getExpireSeconds() {
+        return 24 * 3600; // 24 hours
+    }
 }

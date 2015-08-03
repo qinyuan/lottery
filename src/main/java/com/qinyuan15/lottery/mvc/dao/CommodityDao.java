@@ -3,6 +3,7 @@ package com.qinyuan15.lottery.mvc.dao;
 import com.qinyuan15.utils.hibernate.HibernateDeleter;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
+import com.qinyuan15.utils.hibernate.ReferenceValidator;
 import com.qinyuan15.utils.mvc.controller.PaginationItemFactory;
 
 import java.util.List;
@@ -44,8 +45,14 @@ public class CommodityDao {
         return HibernateUtils.save(commodity);
     }
 
+    public boolean isUsed(Integer id) {
+        return new ReferenceValidator().add(LotteryActivity.class, "commodityId").isUsed(id);
+    }
+
     public void delete(Integer id) {
-        HibernateDeleter.deleteById(Commodity.class, id);
+        if (!isUsed(id)) {
+            HibernateDeleter.deleteById(Commodity.class, id);
+        }
     }
 
     public void updateVisible(Integer id, boolean visible) {

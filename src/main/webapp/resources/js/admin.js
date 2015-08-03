@@ -18,6 +18,11 @@
                 .setInputValue('mailHost', host)
                 .setInputValue('mailUsername', username)
                 .setInputValue('mailPassword', password);
+            if (username) {
+                this.$form.getInputByName('mailUsername').attr('disabled', true);
+            } else {
+                this.$form.getInputByName('mailUsername').attr('disabled', false);
+            }
             this.$form.show().focusFirstTextInput();
         },
         hide: function () {

@@ -7,6 +7,7 @@
             <span>用户登录</span>
         </div>
         <q:spring-login-form>
+            <div class="error-info">用户名或密码错误</div>
             <div class="title">
                 <label>用户名</label>
             </div>

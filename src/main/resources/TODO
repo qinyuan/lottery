@@ -1,27 +1,19 @@
-将系统消息模块补充完整
 admin.jsp提交的内容不完整时出错
 抽奖页中查看我的抽奖历史的功能还需要完善
 当爱心足够多并增加抽奖机会时，给用户发送邮件
-删除商品时判断该商品是否被使用
 邮箱验证成功之后，自动关掉提示激活邮箱的对话框
 给user表添加索引
 HibernateListBuilder.getFirstItem需要优化
 补充自动完成中奖结果以及中奖公告的功能
 补充自动发送中奖结果的功能
 
-在login.html页中，当登录出错时，显示错误提示
-
 检查commodity的inLottery属性有什么用
 
 admin.jsp中，邮箱帐户未选择时，应该提示为未选择
 
-reset-email.html和activate-account.html页面的登录框显示有问题
-
 修改绑定邮箱的功能应该补充“再次发送”
 
 检查AdminUserListController中的SQL
-
-邮箱账户中的发件箱最好是不能更改
 
 在邮件列表中增加筛选和预览功能
 
