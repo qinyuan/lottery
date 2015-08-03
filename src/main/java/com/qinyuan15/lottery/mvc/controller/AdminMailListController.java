@@ -14,16 +14,15 @@ public class AdminMailListController extends ImageController {
     public String index() {
         IndexHeaderUtils.setHeaderParameters(this);
 
-        setTitle("邮件列表");
         DatabaseTable table = getTable();
         setAttribute("mailTable", table);
         new PaginationAttributeAdder(table, request).setRowItemsName("mailRecords").setPageSize(10).add();
 
+        setTitle("邮件列表");
         addCss("admin-form");
         addCssAndJs("admin-mail-list");
         return "admin-mail-list";
     }
-
 
     private DatabaseTable getTable() {
         String tableName = "mail_send_record AS r LEFT JOIN email AS m ON r.mail_id=m.id";
