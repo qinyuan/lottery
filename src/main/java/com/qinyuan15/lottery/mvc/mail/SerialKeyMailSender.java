@@ -29,10 +29,10 @@ abstract class SerialKeyMailSender {
         this(serialKeyUrl, "");
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         ResetEmailRequestDao dao = new ResetEmailRequestDao();
         System.out.println(dao.getInstanceByUserId(2));
-    }
+    }*/
 
     public void send(Integer userId) {
         User user = new UserDao().getInstance(userId);
