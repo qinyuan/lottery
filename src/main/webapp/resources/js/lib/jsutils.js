@@ -203,11 +203,18 @@ var JSUtils = {
         }
         return str;
     },
+    limitTextLength: function ($element, len) {
+        var text = $element.text();
+        $element.attr('title', text);
+        if (this.getChineseStringLength(text) > len) {
+            $element.text(this.getChineseSubString(text, len));
+        }
+    },
     validateEmail: function (email) {
         var pattern = /^[a-zA-Z0-9_\\-\\.]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$/;
         return email && email.match(pattern) != null;
     },
-    validateTel : function(tel) {
+    validateTel: function (tel) {
         var pattern = /^\d{11}$/;
         return tel && tel.match(pattern) != null;
     },

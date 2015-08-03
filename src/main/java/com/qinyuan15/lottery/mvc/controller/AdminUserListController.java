@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.qinyuan15.lottery.mvc.dao.SystemInfoSendRecordDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.mail.NormalMailSender;
+import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mail.MailAccountDao;
 import com.qinyuan15.utils.mvc.controller.DatabaseTable;
 import com.qinyuan15.utils.mvc.controller.ImageController;
@@ -28,7 +29,12 @@ public class AdminUserListController extends ImageController {
 
     @RequestMapping("/admin-user-list")
     public String index(@RequestParam(value = "orderField", required = false) String orderField,
-                        @RequestParam(value = "orderType", required = false) String orderType) {
+                        @RequestParam(value = "orderType", required = false) String orderType,
+                        @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+        if (!IntegerUtils.isPositive(pageSize)) {
+            pageSize = 10;
+        }
+
         IndexHeaderUtils.setHeaderParameters(this);
 
         DatabaseTable userTable = getUserTable();
@@ -44,7 +50,7 @@ public class AdminUserListController extends ImageController {
         }
 
         setAttribute("userTable", userTable);
-        new PaginationAttributeAdder(userTable, request).setRowItemsName("users").setPageSize(10).add();
+        new PaginationAttributeAdder(userTable, request).setRowItemsName("users").setPageSize(pageSize).add();
 
         setAttribute("mailAccounts", new MailAccountDao().getInstances());
 

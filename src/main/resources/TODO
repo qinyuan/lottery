@@ -20,3 +20,7 @@ reset-email.html和activate-account.html页面的登录框显示有问题
 修改绑定邮箱的功能应该补充“再次发送”
 
 检查AdminUserListController中的SQL
+
+邮箱账户中的发件箱最好是不能更改
+
+在邮件列表中增加筛选和预览功能
