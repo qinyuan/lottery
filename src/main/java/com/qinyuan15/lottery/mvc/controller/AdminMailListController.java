@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan15.utils.html.HtmlUtils;
 import com.qinyuan15.utils.mvc.controller.DatabaseTable;
 import com.qinyuan15.utils.mvc.controller.DatabaseTableColumnPostHandler;
 import com.qinyuan15.utils.mvc.controller.ImageController;
@@ -37,11 +38,7 @@ public class AdminMailListController extends ImageController {
         table.addField("正文", "m.content", "content", new DatabaseTableColumnPostHandler() {
             @Override
             public Object handle(Object targetValue) {
-                if (targetValue == null) {
-                    return null;
-                }
-
-                return targetValue.toString().replaceAll("<[^>]+>", "");
+                return targetValue == null ? null : HtmlUtils.toText(targetValue.toString());
             }
         });
         return table;

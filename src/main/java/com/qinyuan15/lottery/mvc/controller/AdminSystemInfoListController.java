@@ -1,11 +1,12 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.utils.mvc.controller.*;
+import com.qinyuan15.utils.html.HtmlUtils;
+import com.qinyuan15.utils.mvc.controller.DatabaseTable;
+import com.qinyuan15.utils.mvc.controller.DatabaseTableColumnPostHandler;
+import com.qinyuan15.utils.mvc.controller.ImageController;
+import com.qinyuan15.utils.mvc.controller.PaginationAttributeAdder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class AdminSystemInfoListController extends ImageController {
@@ -15,8 +16,8 @@ public class AdminSystemInfoListController extends ImageController {
         IndexHeaderUtils.setHeaderParameters(this);
 
         DatabaseTable table = getTable();
-        setAttribute("mailTable", table);
-        new PaginationAttributeAdder(table, request).setRowItemsName("mailRecords").setPageSize(10).add();
+        setAttribute("infoTable", table);
+        new PaginationAttributeAdder(table, request).setRowItemsName("infoRecords").setPageSize(10).add();
 
         setTitle("系统消息列表");
         addCss("admin-form");
@@ -31,24 +32,13 @@ public class AdminSystemInfoListController extends ImageController {
         DatabaseTable table = new DatabaseTable(tableName, "r.id", DatabaseTable.QueryType.SQL);
         table.addField("时间", "DATE_FORMAT(i.build_time,'%Y-%m-%d %T')", "build_time");
         table.addField("接收者", "u.username", "receiver");
-        table.addField("内容", "m.content", "content", new DatabaseTableColumnPostHandler() {
+        table.addField("内容", "i.content", "content", new DatabaseTableColumnPostHandler() {
             @Override
             public Object handle(Object targetValue) {
-                if (targetValue == null) {
-                    return null;
-                }
-
-                return targetValue.toString().replaceAll("<[^>]+>", "");
+                return targetValue == null ? null : HtmlUtils.toText(targetValue.toString());
             }
         });
+        table.addField("状态", "CASE WHEN unread=TRUE THEN '未读' ELSE '已读' END", "status");
         return table;
     }
-
-    /*
-    @RequestMapping("/hello-world.json")
-    @ResponseBody
-    public String json(){
-        return success();
-    }
-    */
 }
