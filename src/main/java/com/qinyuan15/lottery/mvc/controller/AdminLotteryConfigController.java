@@ -37,6 +37,7 @@ public class AdminLotteryConfigController extends ImageController {
         setAttribute("mailSelectFormItems", new MailSelectFormItemBuilder().build());
 
         // other data
+        setAttribute("lotteryAnnouncementTemplate", AppConfig.getLotteryAnnouncementTemplate());
         setAttribute("newLotLiveness", AppConfig.getNewLotLiveness());
         setAttribute("shareSucceedLiveness", AppConfig.getShareSucceedLiveness());
         setAttribute("lotteryRule", AppConfig.getLotteryRule());
@@ -64,7 +65,8 @@ public class AdminLotteryConfigController extends ImageController {
                          @RequestParam(value = "lotteryRule", required = true) String lotteryRule,
                          @RequestParam(value = "newLotteryChanceMailAccountId", required = true) Integer newLotteryChanceMailAccountId,
                          @RequestParam(value = "newLotteryChanceMailSubjectTemplate", required = true) String newLotteryChanceMailSubjectTemplate,
-                         @RequestParam(value = "newLotteryChanceMailContentTemplate", required = true) String newLotteryChanceMailContentTemplate) {
+                         @RequestParam(value = "newLotteryChanceMailContentTemplate", required = true) String newLotteryChanceMailContentTemplate,
+                         @RequestParam(value = "lotteryAnnouncementTemplate", required = true) String lotteryAnnouncementTemplate) {
 
         AppConfig.updateSinaWeiboTitle(sinaWeiboTitle);
         AppConfig.updateSinaWeiboIncludePicture(sinaWeiboIncludePicture);
@@ -77,6 +79,7 @@ public class AdminLotteryConfigController extends ImageController {
         AppConfig.updateNewLotLiveness(newLotLiveness);
         AppConfig.updateShareSucceedLiveness(shareSucceedLiveness);
         AppConfig.updateLotteryRule(lotteryRule);
+        AppConfig.updateLotteryAnnouncementTemplate(lotteryAnnouncementTemplate);
 
         AppConfig.updateNewLotteryChanceMailAccountId(newLotteryChanceMailAccountId);
         AppConfig.updateNewLotteryChanceMailSubjectTemplate(newLotteryChanceMailSubjectTemplate);

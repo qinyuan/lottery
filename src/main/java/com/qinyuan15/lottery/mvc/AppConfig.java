@@ -355,6 +355,18 @@ public class AppConfig {
     }
     ///////////////////////////// new lottery chance end //////////////////////////////
 
+    ///////////////////////////// lottery announcement template start ////////////////////////////
+    private final static String LOTTERY_ANNOUNCEMENT_TEMPLATE_KEY = "lotteryAnnouncementTemplateKey";
+
+    public static String getLotteryAnnouncementTemplate() {
+        return dao.get(LOTTERY_ANNOUNCEMENT_TEMPLATE_KEY);
+    }
+
+    public static void updateLotteryAnnouncementTemplate(String template) {
+        dao.save(LOTTERY_ANNOUNCEMENT_TEMPLATE_KEY, template);
+    }
+    ///////////////////////////// lottery announcement template end //////////////////////////////
+
     ///////////////////////////// lottery rule start ///////////////////////////////
     private final static String LOTTERY_RULE_KEY = "lotteryRule";
 

@@ -159,6 +159,21 @@
                             <textarea class="ckeditor" name="lotteryRule">${lotteryRule}</textarea>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="title">抽奖结果公告
+                            <div class="comment">
+                                注：<br/>
+                                {{b_phase}}指代双色球期数<br/>
+                                {{b_number}}指代双色球开奖结果<br/>
+                                {{p_number}}指代获奖者的抽奖号<br/>
+                                {{p_count}}指代总参与人数
+                            </div>
+                        </td>
+                        <td class="input">
+                            <textarea name="lotteryAnnouncementTemplate"
+                                      class="ckeditor">${lotteryAnnouncementTemplate}</textarea>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>

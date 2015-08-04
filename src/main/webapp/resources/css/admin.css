@@ -104,10 +104,11 @@ div.form > form div.submit {
     clear: both;
 }
 
-table.email-template div.comment {
+div.edit-unit div.content td.title div.comment {
     margin-top: 20px;
     color: #289923;
     font-size: 9pt;
+    text-align: left;
 }
 
 #emailAddEditForm {

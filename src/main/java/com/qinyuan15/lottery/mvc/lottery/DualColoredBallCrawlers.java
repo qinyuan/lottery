@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,11 @@ public class DualColoredBallCrawlers {
     private final static Logger LOGGER = LoggerFactory.getLogger(DualColoredBallCrawlers.class);
     private Map<Integer, CrawlThread> threads = new HashMap<>();
     private List<DualColoredBallCrawler> crawlers;
+    private final DecimalFormat lotNumberFormat;
+
+    public DualColoredBallCrawlers(DecimalFormat lotNumberFormat) {
+        this.lotNumberFormat = lotNumberFormat;
+    }
 
     public void init() {
         new LoadActivityThread().start();
@@ -74,6 +80,7 @@ public class DualColoredBallCrawlers {
                         new VirtualParticipantAdjuster().adjust(activity.getId(), Long.parseLong(result.result));
                         new DualColoredBallRecordDao().add(activity.getDualColoredBallTerm(),
                                 result.drawTime, result.result);
+                        new LotteryResultUpdater(lotNumberFormat).update(activity.getId(), result.result);
                         threads.remove(activity.getId());
                         break;
                     }
