@@ -3,6 +3,8 @@ package com.qinyuan15.lottery.mvc.mail;
 import com.qinyuan15.lottery.mvc.dao.ResetEmailRequestDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
+import com.qinyuan15.utils.DateUtils;
+import com.qinyuan15.utils.hibernate.HibernateUtils;
 import com.qinyuan15.utils.mail.MailSenderBuilder;
 import com.qinyuan15.utils.mail.MailSerialKey;
 import com.qinyuan15.utils.mail.MailSerialKeyDao;
@@ -29,10 +31,10 @@ abstract class SerialKeyMailSender {
         this(serialKeyUrl, "");
     }
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         ResetEmailRequestDao dao = new ResetEmailRequestDao();
         System.out.println(dao.getInstanceByUserId(2));
-    }*/
+    }
 
     public void send(Integer userId) {
         User user = new UserDao().getInstance(userId);
@@ -42,7 +44,10 @@ abstract class SerialKeyMailSender {
 
         MailSerialKeyDao mailSerialKeyDao = getMailSerialKeyDao();
         MailSerialKey mailSerialKey = mailSerialKeyDao.getInstanceByUserId(userId);
-        if (!isOldSerialKeyUsable(mailSerialKey)) {
+        if (isOldSerialKeyUsable(mailSerialKey)) {
+            mailSerialKey.setSendTime(DateUtils.nowString());
+            HibernateUtils.update(mailSerialKey);
+        } else {
             Integer requestId = mailSerialKeyDao.add(userId, serialKeyPrefix);
             mailSerialKey = mailSerialKeyDao.getInstance(requestId);
         }

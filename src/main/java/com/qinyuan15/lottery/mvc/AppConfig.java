@@ -19,6 +19,7 @@ public class AppConfig {
 
     private final static AppConfigDao dao = new AppConfigDao();
 
+    /////////////////////// index header left logo start //////////////////////////
     private final static String INDEX_HEADER_LEFT_LOGO_KEY = "indexHeaderLeftLogo";
 
     public static String getIndexHeaderLeftLogo() {
@@ -28,7 +29,9 @@ public class AppConfig {
     public static void updateIndexHeaderLeftLogo(String indexHeaderLeftLogo) {
         dao.save(INDEX_HEADER_LEFT_LOGO_KEY, indexHeaderLeftLogo);
     }
+    /////////////////////// index header left logo end //////////////////////////
 
+    /////////////////////// index header right logo start //////////////////////////
     private final static String INDEX_HEADER_RIGHT_LOGO_KEY = "indexHeaderRightLogo";
 
     public static String getIndexHeaderRightLogo() {
@@ -38,7 +41,9 @@ public class AppConfig {
     public static void updateIndexHeaderRightLogo(String indexHeaderRightLogo) {
         dao.save(INDEX_HEADER_RIGHT_LOGO_KEY, indexHeaderRightLogo);
     }
+    /////////////////////// index header right logo end //////////////////////////
 
+    /////////////////////// index header slogan start ////////////////////////////
     private final static String INDEX_HEADER_SLOGAN_KEY = "indexHeaderSlogan";
 
     public static String getIndexHeaderSlogan() {
@@ -48,7 +53,9 @@ public class AppConfig {
     public static void updateIndexHeaderSlogan(String indexHeaderSlogan) {
         dao.save(INDEX_HEADER_SLOGAN_KEY, indexHeaderSlogan);
     }
+    /////////////////////// index header slogan end ////////////////////////////
 
+    /////////////////////// index image cycle interval start ///////////////////
     private final static String INDEX_IMAGE_CYCLE_INTERVAL_KEY = "indexImageCycleInterval";
     private final static int DEFAULT_INDEX_IMAGE_CYCLE_INTERVAL = 10;
 
@@ -60,7 +67,9 @@ public class AppConfig {
     public static void updateIndexImageCycleInterval(int indexImageCycleInterval) {
         dao.save(INDEX_IMAGE_CYCLE_INTERVAL_KEY, String.valueOf(indexImageCycleInterval));
     }
+    ////////////////////// index image cycle interval end ///////////////////////
 
+    ////////////////////// footer poster start //////////////////////////////
     private final static String FOOTER_POSTER_KEY = "footerPoster";
 
     public static String getFooterPoster() {
@@ -70,7 +79,9 @@ public class AppConfig {
     public static void updateFooterPoster(String footerPoster) {
         dao.save(FOOTER_POSTER_KEY, footerPoster);
     }
+    ////////////////////// footer poster end ///////////////////////////////
 
+    ////////////////////// footer text start /////////////////////////////////
     private final static String FOOTER_TEXT_KEY = "footerText";
 
     public static String getFooterText() {
@@ -80,7 +91,9 @@ public class AppConfig {
     public static void updateFooterText(String footerText) {
         dao.save(FOOTER_TEXT_KEY, footerText);
     }
+    ////////////////////// footer text end /////////////////////////////////
 
+    ////////////////////// commodity header left logo start ///////////////////////////
     private final static String COMMODITY_HEADER_LEFT_LOGO_KEY = "commodityHeaderLeftLogo";
 
     public static String getCommodityHeaderLeftLogo() {
@@ -90,7 +103,9 @@ public class AppConfig {
     public static void updateCommodityHeaderLeftLogo(String commodityHeaderLeftLogo) {
         dao.save(COMMODITY_HEADER_LEFT_LOGO_KEY, commodityHeaderLeftLogo);
     }
+    ////////////////////// commodity header left logo end ///////////////////////////
 
+    /////////////////////////////// favicon start ////////////////////////////////////
     private final static String FAVICON_KEY = "favicon";
 
     public static String getFavicon() {
@@ -100,7 +115,9 @@ public class AppConfig {
     public static void updateFavicon(String favicon) {
         dao.save(FAVICON_KEY, favicon);
     }
+    ////////////////////////////// favicon end /////////////////////////////////////
 
+    ////////////////////////////// sina weibo share link start /////////////////////////////
     private final static String SINA_WEIBO_TITLE_KEY = "sinaWeiboTitle";
 
     public static String getSinaWeiboTitle() {
@@ -120,7 +137,9 @@ public class AppConfig {
     public static void updateSinaWeiboIncludePicture(Boolean includePicture) {
         dao.saveBoolean(SINA_WEIBO_INCLUDE_PICTURE_KEY, includePicture);
     }
+    ///////////////////////////// sina weibo share link end ////////////////////////////////
 
+    ///////////////////////////// qq share link start //////////////////////////////
     private final static String QQ_TITLE_KEY = "qqTitle";
 
     public static String getQQTitle() {
@@ -150,7 +169,9 @@ public class AppConfig {
     public static void updateQQIncludePicture(Boolean includePicture) {
         dao.saveBoolean(QQ_INCLUDE_PICTURE_KEY, includePicture);
     }
+    ////////////////////////// qq share link end /////////////////////////////////
 
+    ////////////////////////// qzone share link start //////////////////////////////
     private final static String QZONE_TITLE_KEY = "qzoneTitle";
 
     public static String getQZoneTitle() {
@@ -180,7 +201,9 @@ public class AppConfig {
     public static void updateQzoneIncludePicture(Boolean includePicture) {
         dao.saveBoolean(QZONE_INCLUDE_PICTURE_KEY, includePicture);
     }
+    ///////////////////////// qzone share link end ///////////////////////////////
 
+    ///////////////////////// new lot liveness start ///////////////////////////////
     private final static String NEW_LOT_LIVENESS_KEY = "newLotLiveness";
 
     public static Integer getNewLotLiveness() {
@@ -190,7 +213,9 @@ public class AppConfig {
     public static void updateNewLotLiveness(Integer newLotLiveness) {
         dao.saveInteger(NEW_LOT_LIVENESS_KEY, newLotLiveness);
     }
+    ///////////////////////// new lot liveness end ///////////////////////////////
 
+    ///////////////////////// share succeed liveness start /////////////////////
     private final static String SHARE_SUCCEED_LIVENESS_KEY = "shareSucceedLiveness";
 
     public static Integer getShareSucceedLiveness() {
@@ -200,7 +225,9 @@ public class AppConfig {
     public static void updateShareSucceedLiveness(Integer shareSucceedLiveness) {
         dao.saveInteger(SHARE_SUCCEED_LIVENESS_KEY, shareSucceedLiveness);
     }
+    ///////////////////////// share succeed liveness end /////////////////////
 
+    ///////////////////////////////////// activate mail start ///////////////////////////////////
     private final static String ACTIVATE_MAIL_SUBJECT_TEMPLATE_KEY = "activateMailSubjectTemplate";
 
     public static String getActivateMailSubjectTemplate() {
@@ -230,8 +257,9 @@ public class AppConfig {
     public static void updateActivateMailAccountId(Integer mailAccountId) {
         dao.saveInteger(ACTIVATE_MAIL_ACCOUNT_ID_KEY, mailAccountId);
     }
+    ///////////////////////////////////// activate mail end /////////////////////////////////////
 
-
+    //////////////////////////////// reset password mail start //////////////////////////
     private final static String RESET_PASSWORD_MAIL_SUBJECT_TEMPLATE_KEY = "resetPasswordMailSubjectTemplate";
 
     public static String getResetPasswordMailSubjectTemplate() {
@@ -261,7 +289,9 @@ public class AppConfig {
     public static void updateResetPasswordMailAccountId(Integer mailAccountId) {
         dao.saveInteger(RESET_PASSWORD_MAIL_ACCOUNT_ID_KEY, mailAccountId);
     }
+    //////////////////////////////// reset password mail end /////////////////////////////
 
+    //////////////////////////////// reset email mail start /////////////////////////////
     private final static String RESET_EMAIL_MAIL_SUBJECT_TEMPLATE_KEY = "resetEmailMailSubjectTemplate";
 
     public static String getResetEmailMailSubjectTemplate() {
@@ -291,7 +321,41 @@ public class AppConfig {
     public static void updateResetEmailMailAccountId(Integer mailAccountId) {
         dao.saveInteger(RESET_EMAIL_MAIL_ACCOUNT_ID_KEY, mailAccountId);
     }
+    ///////////////////////////// reset email mail end /////////////////////////////
 
+    ///////////////////////////// new lottery chance start //////////////////////////////
+    private final static String NEW_LOTTERY_CHANCE_MAIL_SUBJECT_TEMPLATE_KEY = "newLotteryChanceMailSubjectTemplate";
+
+    public static String getNewLotteryChanceMailSubjectTemplate() {
+        return dao.get(NEW_LOTTERY_CHANCE_MAIL_SUBJECT_TEMPLATE_KEY);
+    }
+
+    public static void updateNewLotteryChanceMailSubjectTemplate(String template) {
+        dao.save(NEW_LOTTERY_CHANCE_MAIL_SUBJECT_TEMPLATE_KEY, template);
+    }
+
+    private final static String NEW_LOTTERY_CHANCE_MAIL_CONTENT_TEMPLATE_KEY = "newLotteryChanceMailContentTemplate";
+
+    public static String getNewLotteryChanceMailContentTemplate() {
+        return dao.get(NEW_LOTTERY_CHANCE_MAIL_CONTENT_TEMPLATE_KEY);
+    }
+
+    public static void updateNewLotteryChanceMailContentTemplate(String template) {
+        dao.save(NEW_LOTTERY_CHANCE_MAIL_CONTENT_TEMPLATE_KEY, template);
+    }
+
+    private final static String NEW_LOTTERY_CHANCE_MAIL_ACCOUNT_ID_KEY = "newLotteryChanceMailAccountId";
+
+    public static Integer getNewLotteryChanceMailAccountId() {
+        return dao.getInteger(NEW_LOTTERY_CHANCE_MAIL_ACCOUNT_ID_KEY);
+    }
+
+    public static void updateNewLotteryChanceMailAccountId(String template) {
+        dao.save(NEW_LOTTERY_CHANCE_MAIL_ACCOUNT_ID_KEY, template);
+    }
+    ///////////////////////////// new lottery chance end //////////////////////////////
+
+    ///////////////////////////// lottery rule start ///////////////////////////////
     private final static String LOTTERY_RULE_KEY = "lotteryRule";
 
     public static String getLotteryRule() {
@@ -301,4 +365,5 @@ public class AppConfig {
     public static void updateLotteryRule(String lotteryRule) {
         dao.save(LOTTERY_RULE_KEY, lotteryRule);
     }
+    ///////////////////////////// lottery rule end ///////////////////////////////
 }

@@ -11,7 +11,7 @@ HibernateListBuilder.getFirstItem需要优化
 
 admin.jsp中，邮箱帐户未选择时，应该提示为未选择
 
-修改绑定邮箱的功能应该补充“再次发送”
+防止用户连续重发邮箱
 
 检查AdminUserListController中的SQL
 

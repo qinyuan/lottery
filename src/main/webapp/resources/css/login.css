@@ -55,4 +55,5 @@ div.login > form div.submit button {
 div.login > form div.error-info {
     text-align: center;
     color: #FF3448;
+    display: none;
 }

@@ -19,7 +19,7 @@
 
         return true;
     });
-    if ($.param('login_error')) {
+    if ($.url.param('login_error')) {
         $('form div.error-info').twinkle(4);
     }
 })();
