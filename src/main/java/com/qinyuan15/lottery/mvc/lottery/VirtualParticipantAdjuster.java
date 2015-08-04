@@ -34,14 +34,15 @@ public class VirtualParticipantAdjuster {
         }
 
         Set<Integer> lotSet = new HashSet<>(lots);
-        if (!lotSet.contains(count)) {
+        if (count > 0 && !lotSet.contains(count)) {
             return;
         }
 
-        int retryTimes = 4000, virtualParticipantToAdd = 1;
+        int retryTimes = 4000, virtualParticipantToAdd = 0;
         WinnerCalculator winnerCalculator = new WinnerCalculator();
         while ((--retryTimes) >= 0) {
-            if (!lotSet.contains(winnerCalculator.run(result, count + virtualParticipantToAdd))) {
+            int totalCount = count + virtualParticipantToAdd;
+            if (totalCount > 0 && !lotSet.contains(winnerCalculator.run(result, totalCount))) {
                 new VirtualParticipantCreator().create(activityId, virtualParticipantToAdd);
                 break;
             }

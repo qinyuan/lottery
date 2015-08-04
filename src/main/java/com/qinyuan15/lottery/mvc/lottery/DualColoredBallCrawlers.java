@@ -85,6 +85,7 @@ public class DualColoredBallCrawlers {
                         break;
                     }
                 } catch (Throwable e) {
+                    e.printStackTrace();
                     LOGGER.error("Fail to crawl activity whose id is {}, info: {}", activity.getId(), e);
                 }
                 ThreadUtils.sleep(((double) timeDiff) / 1000 / 3);

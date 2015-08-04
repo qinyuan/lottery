@@ -13,6 +13,9 @@ public class DualColoredBallRecordDao {
     }
 
     public Integer add(int year, int term, String publishDate, String result) {
+        if (hasTerm(year, term)) {
+            return null;
+        }
         DualColoredBallRecord record = new DualColoredBallRecord();
         record.setYear(year);
         record.setTerm(term);
@@ -20,6 +23,8 @@ public class DualColoredBallRecordDao {
         record.setResult(result);
         return HibernateUtils.save(record);
     }
+
+
 
     public DualColoredBallRecord getNearestInstance(int year, int term) {
         return new HibernateListBuilder().addEqualFilter("year", year)

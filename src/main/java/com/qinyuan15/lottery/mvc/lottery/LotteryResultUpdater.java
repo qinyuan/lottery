@@ -30,6 +30,10 @@ public class LotteryResultUpdater {
 
         int phase = activity.getDualColoredBallTerm();
         int participantCount = new LotteryLotCounter().count(activity);
+        if (participantCount == 0) {
+            return;
+        }
+
         int winner = new WinnerCalculator().run(Long.parseLong(dualColoredBallResult), participantCount);
         String winnerString = lotNumberFormat.format(winner);
 
