@@ -1,11 +1,7 @@
 package com.qinyuan15.lottery.mvc.lottery;
 
-import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryLot;
 import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
-import com.qinyuan15.lottery.mvc.dao.User;
-import com.qinyuan15.utils.IntegerUtils;
 
 import java.util.List;
 
@@ -16,24 +12,24 @@ import java.util.List;
 public class LotteryLotCreator {
     private final Integer activityId;
     private final Integer continuousSerialLimit;
-    private final User user;
+    private final int userId;
 
-    public LotteryLotCreator(Integer activityId, Integer continuousSerialLimit, User user) {
+    public LotteryLotCreator(Integer activityId, Integer continuousSerialLimit, int userId) {
         this.activityId = activityId;
         this.continuousSerialLimit = continuousSerialLimit;
-        this.user = user;
+        this.userId = userId;
     }
 
     public CreateResult create() {
         List<LotteryLot> lots = LotteryLotDao.factory()
                 .setActivityId(activityId)
-                .setUserId(user.getId())
+                .setUserId(userId)
                 .getInstances();
 
         boolean newLot;
-        if (lots.size() < getAvailableLotCount()) {
+        if (lots.size() < new LotteryLotCounter().getAvailableLotCount(activityId, userId)) {
             LotteryLotDao lotDao = new LotteryLotDao();
-            Integer id = lotDao.add(activityId, user.getId(),
+            Integer id = lotDao.add(activityId, userId,
                     new LotteryLotSerialGeneratorImpl(activityId, continuousSerialLimit));
             lots.add(lotDao.getInstance(id));
             newLot = true;
@@ -43,17 +39,6 @@ public class LotteryLotCreator {
         return new CreateResult(lots, newLot);
     }
 
-    private int getAvailableLotCount() {
-        int count = 1;
-
-        Integer newLotLivness = AppConfig.getNewLotLiveness();
-        if (!IntegerUtils.isPositive(newLotLivness)) {
-            return count;
-        }
-
-        int livenesss = new LotteryLivenessDao().getLiveness(user.getId(), activityId);
-        return count + livenesss / newLotLivness;
-    }
 
     public static class CreateResult {
         private List<LotteryLot> lots;

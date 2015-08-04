@@ -33,15 +33,23 @@ public class AdminController extends ImageController {
 
         setAttribute("activateMailSubjectTemplate", AppConfig.getActivateMailSubjectTemplate());
         setAttribute("activateMailContentTemplate", AppConfig.getActivateMailContentTemplate());
+        addJavaScriptData("currentActivateMailAccountId", AppConfig.getActivateMailAccountId());
+
         setAttribute("resetPasswordMailSubjectTemplate", AppConfig.getResetPasswordMailSubjectTemplate());
         setAttribute("resetPasswordMailContentTemplate", AppConfig.getResetPasswordMailContentTemplate());
+        addJavaScriptData("currentResetPasswordMailAccountId", AppConfig.getResetPasswordMailAccountId());
+
         setAttribute("resetEmailMailSubjectTemplate", AppConfig.getResetEmailMailSubjectTemplate());
         setAttribute("resetEmailMailContentTemplate", AppConfig.getResetEmailMailContentTemplate());
+        addJavaScriptData("currentResetEmailMailAccountId", AppConfig.getResetEmailMailAccountId());
+
+        setAttribute("newLotteryChanceMailSubjectTemplate", AppConfig.getNewLotteryChanceMailSubjectTemplate());
+        setAttribute("newLotteryChanceMailContentTemplate", AppConfig.getNewLotteryChanceMailContentTemplate());
+        addJavaScriptData("currentNewLotteryChanceMailAccountId", AppConfig.getNewLotteryChanceMailAccountId());
 
         setAttribute("mails", new MailAccountDao().getInstances());
         setAttribute("mailSelectFormItems", new SelectFormItemsBuilder().build(
                 new MailAccountDao().getInstances(), "username"));
-        addJavaScriptData("currentActivateMailAccountId", AppConfig.getActivateMailAccountId());
 
         setTitle("系统设置");
         addCss("admin-form");
@@ -131,7 +139,10 @@ public class AdminController extends ImageController {
                          @RequestParam(value = "resetPasswordMailContentTemplate", required = true) String resetPasswordMailContentTemplate,
                          @RequestParam(value = "resetEmailMailAccountId", required = true) Integer resetEmailMailAccountId,
                          @RequestParam(value = "resetEmailMailSubjectTemplate", required = true) String resetEmailMailSubjectTemplate,
-                         @RequestParam(value = "resetEmailMailContentTemplate", required = true) String resetEmailMailContentTemplate) {
+                         @RequestParam(value = "resetEmailMailContentTemplate", required = true) String resetEmailMailContentTemplate,
+                         @RequestParam(value = "newLotteryChanceMailAccountId", required = true) Integer newLotteryChanceMailAccountId,
+                         @RequestParam(value = "newLotteryChanceMailSubjectTemplate", required = true) String newLotteryChanceMailSubjectTemplate,
+                         @RequestParam(value = "newLotteryChanceMailContentTemplate", required = true) String newLotteryChanceMailContentTemplate) {
 
         final String redirectPage = "admin";
 
@@ -191,12 +202,18 @@ public class AdminController extends ImageController {
         AppConfig.updateActivateMailAccountId(activateMailAccountId);
         AppConfig.updateActivateMailSubjectTemplate(activateMailSubjectTemplate);
         AppConfig.updateActivateMailContentTemplate(activateMailContentTemplate);
+
         AppConfig.updateResetPasswordMailAccountId(resetPasswordMailAccountId);
         AppConfig.updateResetPasswordMailSubjectTemplate(resetPasswordMailSubjectTemplate);
         AppConfig.updateResetPasswordMailContentTemplate(resetPasswordMailContentTemplate);
+
         AppConfig.updateResetEmailMailAccountId(resetEmailMailAccountId);
         AppConfig.updateResetEmailMailSubjectTemplate(resetEmailMailSubjectTemplate);
         AppConfig.updateResetEmailMailContentTemplate(resetEmailMailContentTemplate);
+
+        AppConfig.updateNewLotteryChanceMailAccountId(newLotteryChanceMailAccountId);
+        AppConfig.updateNewLotteryChanceMailSubjectTemplate(newLotteryChanceMailSubjectTemplate);
+        AppConfig.updateNewLotteryChanceMailContentTemplate(newLotteryChanceMailContentTemplate);
 
         new NavigationLinkDao().clearAndSave(buildNavigationLinks(headerLinkTitles, headerLinkHrefs));
 

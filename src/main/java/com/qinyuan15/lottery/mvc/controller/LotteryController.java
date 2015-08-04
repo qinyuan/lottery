@@ -85,7 +85,7 @@ public class LotteryController extends ImageController {
 
         // get serial numbers
         LotteryLotCreator.CreateResult lotteryLotCreateResult = new LotteryLotCreator(
-                activity.getId(), activity.getContinuousSerialLimit(), user).create();
+                activity.getId(), activity.getContinuousSerialLimit(), user.getId()).create();
         result.put("serialNumbers", getSerialNumbersFromLotteryLots(lotteryLotCreateResult.getLots()));
         if (lotteryLotCreateResult.hasNewLot()) {
             result.put(SUCCESS, true);

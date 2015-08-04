@@ -268,7 +268,7 @@
     </div>
 </div>
 <div class="edit-unit">
-    <div class="title">用户获得新抽奖机会的邮件设置</div>
+    <div class="title">用户获得新抽奖机会的通知邮件设置</div>
     <div class="content">
         <table class="email-template">
             <tbody>
@@ -276,7 +276,7 @@
                 <td class="title">发件箱</td>
                 <td class="input">
                     <c:set var="selectFormItems" value="${mailSelectFormItems}"/>
-                    <c:set var="selectFormId" value="new-lotttery-chance-mail-select"/>
+                    <c:set var="selectFormId" value="new-lottery-chance-mail-select"/>
                     <c:set var="selectFormName" value="newLotteryChanceMailAccountId"/>
                     <%@include file="widget-select-form.jsp" %>
                 </td>

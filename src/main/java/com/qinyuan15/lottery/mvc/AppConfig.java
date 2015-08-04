@@ -350,8 +350,8 @@ public class AppConfig {
         return dao.getInteger(NEW_LOTTERY_CHANCE_MAIL_ACCOUNT_ID_KEY);
     }
 
-    public static void updateNewLotteryChanceMailAccountId(String template) {
-        dao.save(NEW_LOTTERY_CHANCE_MAIL_ACCOUNT_ID_KEY, template);
+    public static void updateNewLotteryChanceMailAccountId(Integer accountId) {
+        dao.saveInteger(NEW_LOTTERY_CHANCE_MAIL_ACCOUNT_ID_KEY, accountId);
     }
     ///////////////////////////// new lottery chance end //////////////////////////////
 

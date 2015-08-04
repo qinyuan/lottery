@@ -1,19 +1,29 @@
 package com.qinyuan15.lottery.mvc.lottery;
 
+import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
+import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
+import com.qinyuan15.utils.IntegerUtils;
 
 /**
  * Class to count lottery lot of certain lottery activity
  */
 public class LotteryLotCounter {
+    /**
+     * count the total lot number of certain lottery activity,
+     * including virtual lot and real lot
+     *
+     * @param activity lottery activity to count
+     * @return total lot number of the activity
+     */
     public int count(LotteryActivity activity) {
         Integer count = activity.getVirtualParticipants();
         if (count == null) {
-            count = realCount(activity.getId());
+            count = countReal(activity.getId());
         } else {
-            count += realCount(activity.getId());
+            count += countReal(activity.getId());
         }
 
         if (activity.getExpire()) {
@@ -32,7 +42,33 @@ public class LotteryLotCounter {
         }
     }
 
-    public int realCount(Integer activityId) {
+    /**
+     * count the real lot number of certain lottery activity
+     *
+     * @param activityId id of activity to count
+     * @return real lot number of the lottery activity
+     */
+    public int countReal(Integer activityId) {
         return LotteryLotDao.factory().setActivityId(activityId).getCount();
+    }
+
+    /**
+     * get the available lot number of certain activity and certain user
+     *
+     * @param activityId id of activity to count
+     * @param userId     id of user to count
+     * @return available lot number
+     */
+    public int getAvailableLotCount(int activityId, int userId) {
+        int count = 1;
+
+        Integer newLotLivness = AppConfig.getNewLotLiveness();
+        if (!IntegerUtils.isPositive(newLotLivness)) {
+            return count;
+        }
+
+        //int livenesss = new LotteryLivenessDao().getLiveness(user.getId(), activityId);
+        int livenesss = new LotteryLivenessDao().getLiveness(userId, activityId);
+        return count + livenesss / newLotLivness;
     }
 }

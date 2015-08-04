@@ -148,7 +148,7 @@ public class LotteryActivity extends PersistObject {
 
     public int getRealParticipantCount() {
         if (realParticipantCountCache == null) {
-            realParticipantCountCache = new LotteryLotCounter().realCount(this.getId());
+            realParticipantCountCache = new LotteryLotCounter().countReal(this.getId());
         }
         return realParticipantCountCache;
     }

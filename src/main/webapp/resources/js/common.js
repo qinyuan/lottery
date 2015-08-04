@@ -33,8 +33,9 @@ var angularUtils = {
         var $this = $(this);
         var commodityId = $this.dataOptions('id');
         var text = $this.text();
-        $div.find('button').html(text + ' <span class="caret"></span>');
-        $div.find('input[type=hidden]:first').val(commodityId);
+        var $parent = $this.getParentByTagNameAndClass('div', 'dropdown');
+        $parent.find('button').html(text + ' <span class="caret"></span>');
+        $parent.find('input[type=hidden]:first').val(commodityId);
     });
 })();
 (function () {

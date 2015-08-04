@@ -5,6 +5,11 @@ import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class LivenessQuerier {
+    /**
+     * Query max liveness of certain activity, including real liveness and virtual liveness
+     * @param activity activity to query
+     * @return max liveness of activity
+     */
     public LivenessInfo queryMax(LotteryActivity activity) {
         Integer virtualLiveness = activity.getVirtualLiveness();
         if (virtualLiveness == null) {

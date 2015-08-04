@@ -81,27 +81,24 @@
     });
 })();
 (function () {
-    // codes about activate and reset mail account
-    if (window['currentActivateMailAccountId']) {
-        $('div.activate-mail-select li a').each(function () {
-            var $this = $(this);
-            if ($this.dataOptions('id') == window['currentActivateMailAccountId']) {
-                $this.trigger('click');
-                return false;
-            }
-            return true;
-        });
+    // codes about mail account
+    function initMailSelectForm(divClass, initValue) {
+        if (initValue) {
+            $('div.' + divClass + ' li a').each(function () {
+                var $this = $(this);
+                if ($this.dataOptions('id') == initValue) {
+                    $this.trigger('click');
+                    return false;
+                }
+                return true;
+            });
+        }
     }
-    if (window['currentResetPasswordMailAccountId']) {
-        $('div.activate-mail-select li a').each(function () {
-            var $this = $(this);
-            if ($this.dataOptions('id') == window['currentResetPasswordMailAccountId']) {
-                $this.trigger('click');
-                return false;
-            }
-            return true;
-        });
-    }
+
+    initMailSelectForm('activate-mail-select', window['currentActivateMailAccountId']);
+    initMailSelectForm('reset-password-mail-select', window['currentResetPasswordMailAccountId']);
+    initMailSelectForm('reset-email-mail-select', window['currentResetEmailMailAccountId']);
+    initMailSelectForm('new-lottery-chance-mail-select', window['currentNewLotteryChanceMailAccountId']);
 })();
 (function () {
     JSUtils.recordScrollStatus();
