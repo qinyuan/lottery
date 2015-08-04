@@ -52,7 +52,8 @@ div.form div.list-type {
 #announceEditForm {
     padding: 20px;
     margin-top: -126px;
-    margin-left: -214px;
+    width: 760px;
+    margin-left: -380px;
 }
 
 #announceEditForm td {

@@ -42,6 +42,7 @@ public class AdminLotteryActivityController extends ImageController {
 
         setTitle("抽奖管理");
         addJs("lib/bootstrap/js/bootstrap.min", false);
+        addJs("lib/ckeditor/ckeditor", false);
         addCss("admin-form");
         addCssAndJs("admin-lottery-activity");
         return "admin-lottery-activity";

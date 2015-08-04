@@ -196,13 +196,16 @@
     var $announceEditForm = $('#announceEditForm');
     var $announceOkButton = $announceEditForm.getButtonByName('ok');
     var $announceCancelButton = $announceEditForm.getButtonByName('cancel');
+    var $announceEditor = CKEDITOR.replace('announcementEditor', {'width': 650});
 
     function showAnnounceEditForm(id, winners, announcement) {
         JSUtils.showTransparentBackground(1);
         $announceEditForm.setInputValue('id', id);
         $announceEditForm.setInputValue('winners', winners);
-        $announceEditForm.find('textarea[name=announcement]').val(announcement);
+        //$announceEditForm.find('textarea[name=announcement]').val(announcement);
+        $announceEditor.setData(announcement);
         $announceEditForm.fadeIn(500).focusFirstTextInput();
+        JSUtils.scrollToVerticalCenter($announceEditForm);
     }
 
     $stopImages.click(function () {
@@ -218,7 +221,7 @@
         showAnnounceEditForm(
             $tr.dataOptions('id'),
             $tr.find('td.winners').trimText(),
-            $tr.find('td.announcement').trimText()
+            $.trim($tr.find('td.announcement').html())
         );
     });
     $announceCancelButton.click(function () {

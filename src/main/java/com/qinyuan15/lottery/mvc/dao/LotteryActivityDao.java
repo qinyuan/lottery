@@ -156,7 +156,7 @@ public class LotteryActivityDao {
         new LotteryLotDao().updateWinnerBySerialNumbers(id, serialNumbers);
 
         LotteryActivity activity = getInstance(id);
-        activity.setWinners(Joiner.on(",").join(serialNumbers));
+        activity.setWinners(winners);
         activity.setAnnouncement(announcement);
         HibernateUtils.update(activity);
     }
