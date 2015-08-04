@@ -4,12 +4,12 @@ import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.MailAccountReferenceValidator;
 import com.qinyuan15.lottery.mvc.dao.NavigationLink;
 import com.qinyuan15.lottery.mvc.dao.NavigationLinkDao;
+import com.qinyuan15.lottery.mvc.mail.MailSelectFormItemBuilder;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.config.LinkAdapter;
 import com.qinyuan15.utils.mail.MailAccountDao;
 import com.qinyuan15.utils.mail.MailAddressValidator;
 import com.qinyuan15.utils.mvc.controller.ImageController;
-import com.qinyuan15.utils.mvc.controller.SelectFormItemsBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -43,13 +43,8 @@ public class AdminController extends ImageController {
         setAttribute("resetEmailMailContentTemplate", AppConfig.getResetEmailMailContentTemplate());
         addJavaScriptData("currentResetEmailMailAccountId", AppConfig.getResetEmailMailAccountId());
 
-        setAttribute("newLotteryChanceMailSubjectTemplate", AppConfig.getNewLotteryChanceMailSubjectTemplate());
-        setAttribute("newLotteryChanceMailContentTemplate", AppConfig.getNewLotteryChanceMailContentTemplate());
-        addJavaScriptData("currentNewLotteryChanceMailAccountId", AppConfig.getNewLotteryChanceMailAccountId());
-
         setAttribute("mails", new MailAccountDao().getInstances());
-        setAttribute("mailSelectFormItems", new SelectFormItemsBuilder().build(
-                new MailAccountDao().getInstances(), "username"));
+        setAttribute("mailSelectFormItems", new MailSelectFormItemBuilder().build());
 
         setTitle("系统设置");
         addCss("admin-form");
@@ -139,10 +134,7 @@ public class AdminController extends ImageController {
                          @RequestParam(value = "resetPasswordMailContentTemplate", required = true) String resetPasswordMailContentTemplate,
                          @RequestParam(value = "resetEmailMailAccountId", required = true) Integer resetEmailMailAccountId,
                          @RequestParam(value = "resetEmailMailSubjectTemplate", required = true) String resetEmailMailSubjectTemplate,
-                         @RequestParam(value = "resetEmailMailContentTemplate", required = true) String resetEmailMailContentTemplate,
-                         @RequestParam(value = "newLotteryChanceMailAccountId", required = true) Integer newLotteryChanceMailAccountId,
-                         @RequestParam(value = "newLotteryChanceMailSubjectTemplate", required = true) String newLotteryChanceMailSubjectTemplate,
-                         @RequestParam(value = "newLotteryChanceMailContentTemplate", required = true) String newLotteryChanceMailContentTemplate) {
+                         @RequestParam(value = "resetEmailMailContentTemplate", required = true) String resetEmailMailContentTemplate) {
 
         final String redirectPage = "admin";
 
@@ -210,10 +202,6 @@ public class AdminController extends ImageController {
         AppConfig.updateResetEmailMailAccountId(resetEmailMailAccountId);
         AppConfig.updateResetEmailMailSubjectTemplate(resetEmailMailSubjectTemplate);
         AppConfig.updateResetEmailMailContentTemplate(resetEmailMailContentTemplate);
-
-        AppConfig.updateNewLotteryChanceMailAccountId(newLotteryChanceMailAccountId);
-        AppConfig.updateNewLotteryChanceMailSubjectTemplate(newLotteryChanceMailSubjectTemplate);
-        AppConfig.updateNewLotteryChanceMailContentTemplate(newLotteryChanceMailContentTemplate);
 
         new NavigationLinkDao().clearAndSave(buildNavigationLinks(headerLinkTitles, headerLinkHrefs));
 

@@ -27,18 +27,6 @@ var angularUtils = {
     }
 })();
 (function () {
-    // actions about bootstrap style select form
-    var $div = $('div.dropdown');
-    $div.find('ul.dropdown-menu a').click(function () {
-        var $this = $(this);
-        var commodityId = $this.dataOptions('id');
-        var text = $this.text();
-        var $parent = $this.getParentByTagNameAndClass('div', 'dropdown');
-        $parent.find('button').html(text + ' <span class="caret"></span>');
-        $parent.find('input[type=hidden]:first').val(commodityId);
-    });
-})();
-(function () {
     function showRegisterForm() {
         $registerForm.get$Inputs().each(function () {
             resetRegisterInput(this);

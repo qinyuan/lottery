@@ -82,23 +82,9 @@
 })();
 (function () {
     // codes about mail account
-    function initMailSelectForm(divClass, initValue) {
-        if (initValue) {
-            $('div.' + divClass + ' li a').each(function () {
-                var $this = $(this);
-                if ($this.dataOptions('id') == initValue) {
-                    $this.trigger('click');
-                    return false;
-                }
-                return true;
-            });
-        }
-    }
-
-    initMailSelectForm('activate-mail-select', window['currentActivateMailAccountId']);
-    initMailSelectForm('reset-password-mail-select', window['currentResetPasswordMailAccountId']);
-    initMailSelectForm('reset-email-mail-select', window['currentResetEmailMailAccountId']);
-    initMailSelectForm('new-lottery-chance-mail-select', window['currentNewLotteryChanceMailAccountId']);
+    JSUtils.loadSelectFormEventsAndValue($('div.activate-mail-select'), window['currentActivateMailAccountId']);
+    JSUtils.loadSelectFormEventsAndValue($('div.reset-password-mail-select'), window['currentResetPasswordMailAccountId']);
+    JSUtils.loadSelectFormEventsAndValue($('div.reset-email-mail-select'), window['currentResetEmailMailAccountId']);
 })();
 (function () {
     JSUtils.recordScrollStatus();

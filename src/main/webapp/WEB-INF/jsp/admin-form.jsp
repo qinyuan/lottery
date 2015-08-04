@@ -267,45 +267,6 @@
         </table>
     </div>
 </div>
-<div class="edit-unit">
-    <div class="title">用户获得新抽奖机会的通知邮件设置</div>
-    <div class="content">
-        <table class="email-template">
-            <tbody>
-            <tr>
-                <td class="title">发件箱</td>
-                <td class="input">
-                    <c:set var="selectFormItems" value="${mailSelectFormItems}"/>
-                    <c:set var="selectFormId" value="new-lottery-chance-mail-select"/>
-                    <c:set var="selectFormName" value="newLotteryChanceMailAccountId"/>
-                    <%@include file="widget-select-form.jsp" %>
-                </td>
-            </tr>
-            <tr>
-                <td class="title">邮件标题</td>
-                <td class="input">
-                    <input type="text" name="newLotteryChanceMailSubjectTemplate" class="form-control"
-                           value="${newLotteryChanceMailSubjectTemplate}" placeholder="在此输入邮件的标题"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="title">邮件正文模板
-                    <div class="comment">
-                        注：<br/>
-                        {{user}}指代用户名；<br/>
-                        {{url}}指代抽奖链接。
-                    </div>
-                </td>
-                <td class="input">
-                    <textarea name="newLotteryChanceMailContentTemplate"
-                              class="ckeditor">${newLotteryChanceMailContentTemplate}</textarea>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
 <div class="submit">
     <button id="submitButton" type="submit" class="btn btn-success">确定</button>
 </div>

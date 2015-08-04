@@ -337,6 +337,37 @@ var JSUtils = {
         return this.isDateString(str) || this.isDateTimeString(str);
     },
     /**
+     * set events and initial values of bootstrap style select form
+     * @param $div
+     * @param initValue
+     */
+    loadSelectFormEventsAndValue: function ($div, initValue) {
+        this.loadSelectFormEvents($div);
+        this.loadSelectFormValue($div, initValue);
+    },
+    loadSelectFormEvents: function ($div) {
+        $div.find('ul.dropdown-menu a').click(function () {
+            var $this = $(this);
+            var id = $this.dataOptions('id');
+            var text = $this.text();
+            var $parent = $this.getParentByTagNameAndClass('div', 'dropdown');
+            $parent.find('button').html(text + ' <span class="caret"></span>');
+            $parent.find('input[type=hidden]:first').val(id);
+        });
+    },
+    loadSelectFormValue: function ($div, initValue) {
+        if (initValue) {
+            $div.find('li a').each(function () {
+                var $this = $(this);
+                if ($this.dataOptions('id') == initValue) {
+                    $this.trigger('click');
+                    return false;
+                }
+                return true;
+            });
+        }
+    },
+    /**
      * update certain parameter of current url, then return the new url
      */
     updateUrlParam: function (params) {

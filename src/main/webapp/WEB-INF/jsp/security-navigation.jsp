@@ -11,11 +11,11 @@
     <security:authorize ifAnyGranted="ROLE_ADMIN">
         <li><a class="text" href="admin.html"><security:authentication property="name"/></a></li>
         <li><a class="text" href="j_spring_security_logout">退出</a></li>
-        <li><a id="systemEditLink" class="text" href="admin.html">系统设置</a>
+        <li><a id="systemEditLink" class="text" href="admin.html">基础设置</a>
             <ul>
-                <li><a class="text" href="admin.html">系统</a></li>
-                <li><a class="text" href="admin-index-edit.html">主页</a></li>
-                <li><a class="text" href="admin-help.html">帮助中心</a></li>
+                <li><a class="text" href="admin.html">系统设置</a></li>
+                <li><a class="text" href="admin-index-edit.html">主页设置</a></li>
+                <li><a class="text" href="admin-help.html">帮助设置</a></li>
                 <li class="footer"></li>
             </ul>
         </li>

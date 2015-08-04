@@ -13,4 +13,5 @@ $('#commodityLotteryLink').addClass('emphasize');
             return true;
         }
     });
+    JSUtils.loadSelectFormEventsAndValue($('div.new-lottery-chance-mail-select'), window['currentNewLotteryChanceMailAccountId']);
 })();

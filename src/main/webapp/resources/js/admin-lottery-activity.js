@@ -184,16 +184,10 @@
         $form.setInputValue('continuousSerialLimit', $tr.find('td.continuous-serial-limit').text());
         $form.setInputValue('expectParticipantCount', $tr.find('td.expect-participant-count').text());
 
-        var commodityId = $tr.find('td.commodity').dataOptions('commodityId');
-        $form.find('div.commodity-select li a').each(function () {
-            var $this = $(this);
-            if ($this.dataOptions('id') == commodityId) {
-                $this.trigger('click');
-                return false;
-            }
-            return true;
-        });
+        JSUtils.loadSelectFormValue($commoditySelect, $tr.find('td.commodity').dataOptions('commodityId'));
     });
+    var $commoditySelect = $form.find('div.commodity-select');
+    JSUtils.loadSelectFormEvents($commoditySelect);
 })();
 (function () {
     // codes about announcement edit form

@@ -18,12 +18,10 @@
                     <tr>
                         <td class="title">是否分享图片</td>
                         <td class="input boolean">
-                    <span><input type="radio"
-                                 <c:if test="${sinaWeiboIncludePicture}">checked</c:if>
-                                 name="sinaWeiboIncludePicture" value="true">是</span>
-                    <span><input type="radio"
-                                 <c:if test="${!sinaWeiboIncludePicture}">checked</c:if>
-                                 name="sinaWeiboIncludePicture" value="false">否</span>
+                    <span><input type="radio" name="sinaWeiboIncludePicture" value="true"
+                                 <c:if test="${sinaWeiboIncludePicture}">checked</c:if>>是</span>
+                    <span><input type="radio" name="sinaWeiboIncludePicture" value="false"
+                                 <c:if test="${!sinaWeiboIncludePicture}">checked</c:if>>否</span>
                         </td>
                     </tr>
                     </tbody>
@@ -52,10 +50,10 @@
                     <tr>
                         <td class="title">是否分享图片</td>
                         <td class="input boolean">
-                    <span><input type="radio"
-                                 <c:if test="${qqIncludePicture}">checked</c:if> name="qqIncludePicture" value="true">是</span>
-                    <span><input type="radio"
-                                 <c:if test="${!qqIncludePicture}">checked</c:if> name="qqIncludePicture" value="false">否</span>
+                    <span><input type="radio" name="qqIncludePicture" value="true"
+                                 <c:if test="${qqIncludePicture}">checked</c:if>>是</span>
+                    <span><input type="radio" name="qqIncludePicture" value="false"
+                                 <c:if test="${!qqIncludePicture}">checked</c:if>>否</span>
                         </td>
                     </tr>
                     </tbody>
@@ -84,12 +82,48 @@
                     <tr>
                         <td class="title">是否分享图片</td>
                         <td class="input boolean">
-                    <span><input type="radio"
-                                 <c:if test="${qzoneIncludePicture}">checked</c:if> name="qzoneIncludePicture"
-                                 value="true">是</span>
-                    <span><input type="radio"
-                                 <c:if test="${!qzoneIncludePicture}">checked</c:if> name="qzoneIncludePicture"
-                                 value="false">否</span>
+                            <span><input type="radio" name="qzoneIncludePicture" value="true"
+                                         <c:if test="${qzoneIncludePicture}">checked</c:if>>是</span>
+                            <span><input type="radio" name="qzoneIncludePicture" value="false"
+                                         <c:if test="${!qzoneIncludePicture}">checked</c:if>>否</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="edit-unit">
+            <div class="title">用户获得新抽奖机会的通知邮件设置</div>
+            <div class="content">
+                <table class="email-template">
+                    <tbody>
+                    <tr>
+                        <td class="title">发件箱</td>
+                        <td class="input">
+                            <c:set var="selectFormItems" value="${mailSelectFormItems}"/>
+                            <c:set var="selectFormId" value="new-lottery-chance-mail-select"/>
+                            <c:set var="selectFormName" value="newLotteryChanceMailAccountId"/>
+                            <%@include file="widget-select-form.jsp" %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="title">邮件标题</td>
+                        <td class="input">
+                            <input type="text" name="newLotteryChanceMailSubjectTemplate" class="form-control"
+                                   value="${newLotteryChanceMailSubjectTemplate}" placeholder="在此输入邮件的标题"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="title">邮件正文模板
+                            <div class="comment">
+                                注：<br/>
+                                {{user}}指代用户名；<br/>
+                                {{url}}指代抽奖链接。
+                            </div>
+                        </td>
+                        <td class="input">
+                            <textarea name="newLotteryChanceMailContentTemplate"
+                                      class="ckeditor">${newLotteryChanceMailContentTemplate}</textarea>
                         </td>
                     </tr>
                     </tbody>
