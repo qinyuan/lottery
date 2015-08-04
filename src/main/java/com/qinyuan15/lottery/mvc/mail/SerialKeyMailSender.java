@@ -1,6 +1,5 @@
 package com.qinyuan15.lottery.mvc.mail;
 
-import com.qinyuan15.lottery.mvc.dao.ResetEmailRequestDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.utils.DateUtils;
@@ -10,7 +9,7 @@ import com.qinyuan15.utils.mail.MailSerialKey;
 import com.qinyuan15.utils.mail.MailSerialKeyDao;
 import org.springframework.util.StringUtils;
 
-abstract class SerialKeyMailSender {
+abstract class SerialKeyMailSender implements MailSender{
     private final String serialKeyUrl;
     private final String serialKeyPrefix;
 
@@ -29,11 +28,6 @@ abstract class SerialKeyMailSender {
 
     public SerialKeyMailSender(String serialKeyUrl) {
         this(serialKeyUrl, "");
-    }
-
-    public static void main(String[] args) {
-        ResetEmailRequestDao dao = new ResetEmailRequestDao();
-        System.out.println(dao.getInstanceByUserId(2));
     }
 
     public void send(Integer userId) {

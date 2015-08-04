@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.mail;
 
-public class NormalMailPlaceholderConverter {
+public class NormalMailPlaceholderConverter implements MailPlaceholderConverter {
     public final static String USER_PLACEHOLDER = "{{user}}";
     private final String username;
 

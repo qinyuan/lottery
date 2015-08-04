@@ -21,22 +21,16 @@ public class LotteryLotCreator {
     }
 
     public CreateResult create() {
-        List<LotteryLot> lots = LotteryLotDao.factory()
-                .setActivityId(activityId)
-                .setUserId(userId)
-                .getInstances();
-
         boolean newLot;
-        if (lots.size() < new LotteryLotCounter().getAvailableLotCount(activityId, userId)) {
-            LotteryLotDao lotDao = new LotteryLotDao();
-            Integer id = lotDao.add(activityId, userId,
+        if (new LotteryLotCounter().getAvailableLotCount(activityId, userId) > 0) {
+            new LotteryLotDao().add(activityId, userId,
                     new LotteryLotSerialGeneratorImpl(activityId, continuousSerialLimit));
-            lots.add(lotDao.getInstance(id));
             newLot = true;
         } else {
             newLot = false;
         }
-        return new CreateResult(lots, newLot);
+        return new CreateResult(LotteryLotDao.factory().setActivityId(activityId).setUserId(userId).getInstances(),
+                newLot);
     }
 
 

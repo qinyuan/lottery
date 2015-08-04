@@ -1,10 +1,14 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.google.common.base.Joiner;
+import com.qinyuan15.lottery.mvc.lottery.LotteryLotCounter;
+import com.qinyuan15.lottery.mvc.mail.NewLotteryChanceMailSender;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
@@ -12,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LotteryLivenessDao {
+    private final static Logger LOGGER = LoggerFactory.getLogger(LotteryLivenessDao.class);
+
     public List<LotteryLiveness> getInstances(Integer userId) {
         LotteryActivity activity = getLastLotteryActivity();
         return new HibernateListBuilder().addEqualFilter("spreadUserId", userId)
@@ -96,6 +102,18 @@ public class LotteryLivenessDao {
         ll.setLiveness(liveness);
         ll.setSpreadWay(spreadWay);
         ll.setRegisterBefore(registerBefore);
-        return HibernateUtils.save(ll);
+        Integer id = HibernateUtils.save(ll);
+
+        // send email to user
+        if (new LotteryLotCounter().getAvailableLotCount(activityId, spreadUserId) > 0) {
+            try {
+                new NewLotteryChanceMailSender().send(spreadUserId, activityId);
+            } catch (Exception e) {
+                LOGGER.error("Fail to send new lottery chance mail, activityId: {}, userId: {}, info: {}",
+                        activityId, spreadUserId, e);
+            }
+        }
+
+        return id;
     }
 }

@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.mail;
 
-class SerialKeyMailPlaceholderConverter {
+class SerialKeyMailPlaceholderConverter implements MailPlaceholderConverter {
     public final static String USER_PLACEHOLDER = "{{user}}";
     public final static String URL_PLACEHOLDER = "{{url}}";
 

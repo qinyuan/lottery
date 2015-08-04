@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class NormalMailSender {
+public class NormalMailSender implements MailSender {
     private final static Logger LOGGER = LoggerFactory.getLogger(NormalMailSender.class);
     private final EmailDao emailDao = new EmailDao();
     private final MailSendRecordDao recordDao = new MailSendRecordDao();

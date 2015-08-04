@@ -60,6 +60,29 @@ public class LotteryLotCounter {
      * @return available lot number
      */
     public int getAvailableLotCount(int activityId, int userId) {
+        int count = getMaxLotCount(activityId, userId) - countReal(activityId, userId);
+        return Math.max(0, count);
+    }
+
+    /**
+     * count the read lot number of certain lottery activity and certain user
+     *
+     * @param activityId id of activity to count
+     * @param userId     id of user to count
+     * @return real lot number of the lottery activity and user
+     */
+    private int countReal(int activityId, int userId) {
+        return LotteryLotDao.factory().setActivityId(activityId).setUserId(userId).getCount();
+    }
+
+    /**
+     * get the max lot number certain user can take in certain activity
+     *
+     * @param activityId id of activity to count
+     * @param userId     id of user to count
+     * @return available lot number
+     */
+    private int getMaxLotCount(int activityId, int userId) {
         int count = 1;
 
         Integer newLotLivness = AppConfig.getNewLotLiveness();
@@ -67,7 +90,6 @@ public class LotteryLotCounter {
             return count;
         }
 
-        //int livenesss = new LotteryLivenessDao().getLiveness(user.getId(), activityId);
         int livenesss = new LotteryLivenessDao().getLiveness(userId, activityId);
         return count + livenesss / newLotLivness;
     }
