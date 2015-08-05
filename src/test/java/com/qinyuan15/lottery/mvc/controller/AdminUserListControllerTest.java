@@ -13,7 +13,7 @@ public class AdminUserListControllerTest {
         table.addOrder("username", false);
 
         System.out.println(table.getRows().size());
-        table.addEqualFilter("last_send_time", "2012-12-12 12:12:12");
-        System.out.println(table.getRows().size());
+        System.out.println(table.getRows().get(0).getCols()[4]);
+        System.out.println(table.getDistinctValues("last_send_time"));
     }
 }

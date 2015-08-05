@@ -7,5 +7,8 @@
     }).each(function () {
         JSUtils.limitTextLength($(this), 30);
     });
-    $('#statisticLink').addClass('emphasize');
+
+    JSUtils.loadTableFilterEvents('admin-system-info-list-distinct-values.json', 'admin-system-info-list-filter.json',
+        'admin-system-info-list-filter-remove.json');
 })();
+$('#statisticLink').addClass('emphasize');

@@ -6,8 +6,7 @@ import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.mail.NormalMailSender;
 import com.qinyuan15.utils.mail.MailAccountDao;
 import com.qinyuan15.utils.mvc.controller.DatabaseTable;
-import com.qinyuan15.utils.mvc.controller.ImageController;
-import com.qinyuan15.utils.mvc.controller.MVCTableUtil;
+import com.qinyuan15.utils.mvc.controller.TableController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,14 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-public class AdminUserListController extends ImageController {
+public class AdminUserListController extends TableController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminUserListController.class);
 
     @RequestMapping("/admin-user-list")
     public String index() {
         IndexHeaderUtils.setHeaderParameters(this);
 
-        getTableUtil().addIndexAttributes(getUserTable());
+        getTableUtil().addIndexAttributes(getTable());
         setAttribute("mailAccounts", new MailAccountDao().getInstances());
 
         setTitle("用户列表");
@@ -96,39 +95,23 @@ public class AdminUserListController extends ImageController {
 
     @RequestMapping(value = "/admin-user-list-distinct-values.json", method = RequestMethod.GET)
     @ResponseBody
-    public String getDistinctValues(@RequestParam(value = "alias", required = false) String alias) {
-        if (!StringUtils.hasText(alias)) {
-            return failByInvalidParam();
-        }
-        return toJson(getTableUtil().getDistinctValues(getUserTable(), alias));
+    public String getDistinctValues() {
+        return super.getDistinctValues();
     }
 
     @RequestMapping(value = "/admin-user-list-filter.json", method = RequestMethod.POST)
     @ResponseBody
-    public String addFilter(@RequestParam(value = "filterField", required = true) String filterField,
-                            @RequestParam(value = "filterValues[]", required = false) String[] filterValues) {
-        if (!StringUtils.hasText(filterField)) {
-            return failByInvalidParam();
-        }
-        getTableUtil().addFilter(filterField, filterValues);
-        return success();
+    public String addFilter() {
+        return super.addFilter();
     }
 
     @RequestMapping(value = "/admin-user-list-filter-remove.json", method = RequestMethod.POST)
     @ResponseBody
-    public String removeFilter(@RequestParam(value = "filterField", required = true) String filterField) {
-        if (!StringUtils.hasText(filterField)) {
-            return failByInvalidParam();
-        }
-        getTableUtil().removeFilter(filterField);
-        return success();
+    public String removeFilter() {
+        return super.removeFilter();
     }
 
-    private MVCTableUtil getTableUtil() {
-        return new MVCTableUtil(request, this.getClass());
-    }
-
-    private DatabaseTable getUserTable() {
+    protected DatabaseTable getTable() {
         String livenessTable = "SELECT spread_user_id,SUM(liveness) AS sum_liveness FROM lottery_liveness " +
                 "WHERE activity_id=(SELECT MAX(id) FROM lottery_activity WHERE expire=false) GROUP BY spread_user_id";
         String tableName = "user AS u LEFT JOIN (" + livenessTable + ") AS l ON u.id=l.spread_user_id";
@@ -156,8 +139,6 @@ public class AdminUserListController extends ImageController {
         table.addField("邮箱", "u.email", "email");
         table.addField("地区", "lr.location", "location");
         table.addField("活跃度", "l.sum_liveness", "liveness");
-        //table.addField("最后一封邮件时间", "DATE_FORMAT(mr.last_send_time,'%Y-%m-%d %T')", "last_send_time");
-        //table.addField("最近一次抽奖", "DATE_FORMAT(lot.last_lot_time,'%Y-%m-%d %T')", "lot_time");
         table.addField("最后一封邮件时间", "mr.last_send_time", "last_send_time");
         table.addField("最近一次抽奖", "lot.last_lot_time", "lot_time");
         table.addField("邀请了谁", "idu.invited_users", "invited_users");

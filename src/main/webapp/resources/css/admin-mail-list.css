@@ -1,0 +1,8 @@
+
+table.normal col.send_time, table.normal th.send_time {
+    width: 140px;
+}
+
+table.normal col.send_email, table.normal th.send_email {
+    width: 150px;
+}

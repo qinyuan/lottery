@@ -15,7 +15,7 @@
             <th>序号</th>
             <c:forEach var="head" items="${table.heads}" varStatus="status">
                 <th class="${table.aliases[status.index]}">${head}
-                    <c:if test="${status.index<3}">
+                    <c:if test="${status.index < 3}">
                         <div title="排序筛选" class="filter">
                             <button class="${table.headStyles[status.index]}"></button>
                         </div>
