@@ -1,21 +1,28 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan15.utils.html.HtmlUtils;
-import com.qinyuan15.utils.mvc.controller.DatabaseTable;
-import com.qinyuan15.utils.mvc.controller.DatabaseTableColumnPostHandler;
-import com.qinyuan15.utils.mvc.controller.ImageController;
-import com.qinyuan15.utils.mvc.controller.PaginationAttributeAdder;
+import com.qinyuan15.utils.mvc.controller.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class AdminMailListController extends ImageController {
 
     @RequestMapping("/admin-mail-list")
-    public String index() {
+    public String index(@RequestParam(value = "orderField", required = false) String orderField,
+                        @RequestParam(value = "orderType", required = false) String orderType,
+                        @RequestParam(value = "pageSize", required = false) Integer pageSize) {
         IndexHeaderUtils.setHeaderParameters(this);
 
         DatabaseTable table = getTable();
+        MVCTableUtil tableUtil = getTableUtil();
+        tableUtil.addOrder(table, orderField, orderType);
+        tableUtil.addFilters(table);
+
         setAttribute("mailTable", table);
         new PaginationAttributeAdder(table, request).setRowItemsName("mailRecords").setPageSize(10).add();
 
@@ -23,6 +30,19 @@ public class AdminMailListController extends ImageController {
         addCss("admin-form");
         addCssAndJs("admin-mail-list");
         return "admin-mail-list";
+    }
+
+    @RequestMapping(value = "/admin-mail-list-distinct-values.json", method = RequestMethod.GET)
+    @ResponseBody
+    public String getDistinctValues(@RequestParam(value = "alias", required = false) String alias) {
+        if (!StringUtils.hasText(alias)) {
+            return failByInvalidParam();
+        }
+        return toJson(getTableUtil().getDistinctValues(getTable(), alias));
+    }
+
+    private MVCTableUtil getTableUtil() {
+        return new MVCTableUtil(session, this.getClass());
     }
 
     private DatabaseTable getTable() {

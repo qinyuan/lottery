@@ -34,6 +34,7 @@ public class AdminUserListController extends ImageController {
         }
 
         IndexHeaderUtils.setHeaderParameters(this);
+
         DatabaseTable userTable = getUserTable();
         MVCTableUtil tableUtil = getTableUtil();
         tableUtil.addOrder(userTable, orderField, orderType);
