@@ -7,4 +7,5 @@
     }).each(function () {
         JSUtils.limitTextLength($(this), 30);
     });
+    $('#statisticLink').addClass('emphasize');
 })();

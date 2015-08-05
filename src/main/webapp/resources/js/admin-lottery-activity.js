@@ -202,7 +202,6 @@
         JSUtils.showTransparentBackground(1);
         $announceEditForm.setInputValue('id', id);
         $announceEditForm.setInputValue('winners', winners);
-        //$announceEditForm.find('textarea[name=announcement]').val(announcement);
         $announceEditor.setData(announcement);
         $announceEditForm.fadeIn(500).focusFirstTextInput();
         JSUtils.scrollToVerticalCenter($announceEditForm);

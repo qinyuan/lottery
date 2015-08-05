@@ -15,9 +15,11 @@
             <th>序号</th>
             <c:forEach var="head" items="${mailTable.heads}" varStatus="status">
                 <th class="${mailTable.aliases[status.index]}">${head}
-                    <%--<div title="排序筛选" class="filter">
-                        <button class="${mailTable.headStyles[status.index]}"></button>
-                    </div>--%>
+                    <c:if test="${status.index<3}">
+                        <div title="排序筛选" class="filter">
+                            <button class="${mailTable.headStyles[status.index]}"></button>
+                        </div>
+                    </c:if>
                 </th>
             </c:forEach>
             </thead>

@@ -2,7 +2,6 @@ admin.jsp提交的内容不完整时出错
 邮箱验证成功之后，自动关掉提示激活邮箱的对话框
 给user表添加索引
 HibernateListBuilder.getFirstItem需要优化
-补充自动完成中奖结果以及中奖公告的功能
 补充自动发送中奖结果的功能
 
 检查commodity的inLottery属性有什么用

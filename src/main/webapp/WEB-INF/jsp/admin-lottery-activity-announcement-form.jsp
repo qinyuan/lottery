@@ -13,7 +13,6 @@
         <tr>
             <td class="title">中奖公告</td>
             <td class="content">
-                <%--<textarea name="announcement" class="form-control" cols="35" rows="5"></textarea>--%>
                 <textarea name="announcement" id="announcementEditor"></textarea>
             </td>
         </tr>

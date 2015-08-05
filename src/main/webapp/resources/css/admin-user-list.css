@@ -2,38 +2,6 @@ div.buttons {
     margin-bottom: 5px;
 }
 
-table div.filter {
-    position: relative;
-    float: right;
-}
-
-table div.filter button.filter {
-    vertical-align: top;
-    padding: 9px 9px;
-    background: url("images/table-filter.png") no-repeat;
-    cursor: pointer;
-}
-
-table div.filter button.filter.asc {
-    background-position: -19px 0;
-}
-
-table div.filter button.filter.desc {
-    background-position: -37px 0;
-}
-
-table div.filter button.filter.filtered {
-    background-position: -90px 0;
-}
-
-table div.filter button.filter.filtered.asc {
-    background-position: -72px 0;
-}
-
-table div.filter button.filter.filtered.desc {
-    background-position: -54px 0;
-}
-
 form .comment {
     color: #418940;
     font-size: 9pt;
