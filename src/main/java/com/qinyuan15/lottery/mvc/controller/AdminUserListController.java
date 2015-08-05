@@ -4,12 +4,10 @@ import com.google.common.collect.Lists;
 import com.qinyuan15.lottery.mvc.dao.SystemInfoSendRecordDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.mail.NormalMailSender;
-import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mail.MailAccountDao;
 import com.qinyuan15.utils.mvc.controller.DatabaseTable;
 import com.qinyuan15.utils.mvc.controller.ImageController;
 import com.qinyuan15.utils.mvc.controller.MVCTableUtil;
-import com.qinyuan15.utils.mvc.controller.PaginationAttributeAdder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -26,23 +24,10 @@ public class AdminUserListController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminUserListController.class);
 
     @RequestMapping("/admin-user-list")
-    public String index(@RequestParam(value = "orderField", required = false) String orderField,
-                        @RequestParam(value = "orderType", required = false) String orderType,
-                        @RequestParam(value = "pageSize", required = false) Integer pageSize) {
-        if (!IntegerUtils.isPositive(pageSize)) {
-            pageSize = 10;
-        }
-
+    public String index() {
         IndexHeaderUtils.setHeaderParameters(this);
 
-        DatabaseTable userTable = getUserTable();
-        MVCTableUtil tableUtil = getTableUtil();
-        tableUtil.addOrder(userTable, orderField, orderType);
-        tableUtil.addFilters(userTable);
-
-        setAttribute("userTable", userTable);
-        new PaginationAttributeAdder(userTable, request).setRowItemsName("users").setPageSize(pageSize).add();
-
+        getTableUtil().addIndexAttributes(getUserTable());
         setAttribute("mailAccounts", new MailAccountDao().getInstances());
 
         setTitle("用户列表");
@@ -115,7 +100,7 @@ public class AdminUserListController extends ImageController {
         if (!StringUtils.hasText(alias)) {
             return failByInvalidParam();
         }
-        return toJson(getUserTable().getDistinctValues(alias));
+        return toJson(getTableUtil().getDistinctValues(getUserTable(), alias));
     }
 
     @RequestMapping(value = "/admin-user-list-filter.json", method = RequestMethod.POST)
@@ -140,7 +125,7 @@ public class AdminUserListController extends ImageController {
     }
 
     private MVCTableUtil getTableUtil() {
-        return new MVCTableUtil(session, this.getClass());
+        return new MVCTableUtil(request, this.getClass());
     }
 
     private DatabaseTable getUserTable() {

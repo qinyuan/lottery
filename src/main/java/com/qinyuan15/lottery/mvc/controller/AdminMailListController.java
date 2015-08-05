@@ -1,7 +1,10 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan15.utils.html.HtmlUtils;
-import com.qinyuan15.utils.mvc.controller.*;
+import com.qinyuan15.utils.mvc.controller.DatabaseTable;
+import com.qinyuan15.utils.mvc.controller.DatabaseTableColumnPostHandler;
+import com.qinyuan15.utils.mvc.controller.ImageController;
+import com.qinyuan15.utils.mvc.controller.MVCTableUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,18 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AdminMailListController extends ImageController {
 
     @RequestMapping("/admin-mail-list")
-    public String index(@RequestParam(value = "orderField", required = false) String orderField,
-                        @RequestParam(value = "orderType", required = false) String orderType,
-                        @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+    public String index() {
         IndexHeaderUtils.setHeaderParameters(this);
 
-        DatabaseTable table = getTable();
-        MVCTableUtil tableUtil = getTableUtil();
-        tableUtil.addOrder(table, orderField, orderType);
-        tableUtil.addFilters(table);
-
-        setAttribute("mailTable", table);
-        new PaginationAttributeAdder(table, request).setRowItemsName("mailRecords").setPageSize(10).add();
+        getTableUtil().addIndexAttributes(getTable());
 
         setTitle("邮件列表");
         addCss("admin-form");
@@ -42,7 +37,7 @@ public class AdminMailListController extends ImageController {
     }
 
     private MVCTableUtil getTableUtil() {
-        return new MVCTableUtil(session, this.getClass());
+        return new MVCTableUtil(request, this.getClass());
     }
 
     private DatabaseTable getTable() {
