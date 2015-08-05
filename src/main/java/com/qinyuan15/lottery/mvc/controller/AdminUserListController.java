@@ -156,8 +156,10 @@ public class AdminUserListController extends ImageController {
         table.addField("邮箱", "u.email", "email");
         table.addField("地区", "lr.location", "location");
         table.addField("活跃度", "l.sum_liveness", "liveness");
-        table.addField("最后一封邮件时间", "DATE_FORMAT(mr.last_send_time,'%Y-%m-%d %T')", "last_send_time");
-        table.addField("最近一次抽奖", "DATE_FORMAT(lot.last_lot_time,'%Y-%m-%d %T')", "lot_time");
+        //table.addField("最后一封邮件时间", "DATE_FORMAT(mr.last_send_time,'%Y-%m-%d %T')", "last_send_time");
+        //table.addField("最近一次抽奖", "DATE_FORMAT(lot.last_lot_time,'%Y-%m-%d %T')", "lot_time");
+        table.addField("最后一封邮件时间", "mr.last_send_time", "last_send_time");
+        table.addField("最近一次抽奖", "lot.last_lot_time", "lot_time");
         table.addField("邀请了谁", "idu.invited_users", "invited_users");
         table.addField("被请邀请", "iu.username", "invite_user");
         table.addEqualFilter("u.role", User.NORMAL);
