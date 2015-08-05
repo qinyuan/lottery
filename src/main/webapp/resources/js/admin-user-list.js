@@ -272,9 +272,7 @@
             return this;
         }
     }).init();
-})();
-(function () {
-    // codes about filter
+
     JSUtils.loadTableFilterEvents('admin-user-list-distinct-values.json', 'admin-user-list-filter.json',
         'admin-user-list-filter-remove.json');
 })();

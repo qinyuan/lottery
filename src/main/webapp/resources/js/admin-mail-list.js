@@ -12,5 +12,8 @@
     }).each(function () {
         JSUtils.limitTextLength($(this), 30);
     });
-    $('#statisticLink').addClass('emphasize');
+
+    JSUtils.loadTableFilterEvents('admin-mail-list-distinct-values.json', 'admin-mail-list-filter.json',
+        'admin-mail-list-filter-remove.json');
 })();
+$('#statisticLink').addClass('emphasize');
