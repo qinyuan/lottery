@@ -36,6 +36,27 @@ public class AdminMailListController extends ImageController {
         return toJson(getTableUtil().getDistinctValues(getTable(), alias));
     }
 
+    @RequestMapping(value = "/admin-mail-list-filter.json", method = RequestMethod.POST)
+    @ResponseBody
+    public String addFilter(@RequestParam(value = "filterField", required = true) String filterField,
+                            @RequestParam(value = "filterValues[]", required = false) String[] filterValues) {
+        if (!StringUtils.hasText(filterField)) {
+            return failByInvalidParam();
+        }
+        getTableUtil().addFilter(filterField, filterValues);
+        return success();
+    }
+
+    @RequestMapping(value = "/admin-mail-list-filter-remove.json", method = RequestMethod.POST)
+    @ResponseBody
+    public String removeFilter(@RequestParam(value = "filterField", required = true) String filterField) {
+        if (!StringUtils.hasText(filterField)) {
+            return failByInvalidParam();
+        }
+        getTableUtil().removeFilter(filterField);
+        return success();
+    }
+
     private MVCTableUtil getTableUtil() {
         return new MVCTableUtil(request, this.getClass());
     }
