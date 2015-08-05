@@ -8,6 +8,7 @@ import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mail.MailAccountDao;
 import com.qinyuan15.utils.mvc.controller.DatabaseTable;
 import com.qinyuan15.utils.mvc.controller.ImageController;
+import com.qinyuan15.utils.mvc.controller.MVCTableUtil;
 import com.qinyuan15.utils.mvc.controller.PaginationAttributeAdder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class AdminUserListController extends ImageController {
@@ -36,18 +34,10 @@ public class AdminUserListController extends ImageController {
         }
 
         IndexHeaderUtils.setHeaderParameters(this);
-
         DatabaseTable userTable = getUserTable();
-        if (StringUtils.hasText(orderField)) {
-            if (orderType != null && orderType.toLowerCase().equals("desc")) {
-                userTable.addOrder(orderField, false);
-            } else {
-                userTable.addOrder(orderField, true);
-            }
-        }
-        for (Map.Entry<String, String[]> entry : getFilters().entrySet()) {
-            userTable.addFilter(entry.getKey(), Lists.newArrayList(entry.getValue()));
-        }
+        MVCTableUtil tableUtil = getTableUtil();
+        tableUtil.addOrder(userTable, orderField, orderType);
+        tableUtil.addFilters(userTable);
 
         setAttribute("userTable", userTable);
         new PaginationAttributeAdder(userTable, request).setRowItemsName("users").setPageSize(pageSize).add();
@@ -118,21 +108,13 @@ public class AdminUserListController extends ImageController {
         }
     }
 
-
-    private final static String NULL_STRING = "(空白)";
-
     @RequestMapping(value = "/admin-user-list-distinct-values.json", method = RequestMethod.GET)
     @ResponseBody
     public String getDistinctValues(@RequestParam(value = "alias", required = false) String alias) {
-        DatabaseTable userTable = getUserTable();
-        List<DistinctItem> items = new ArrayList<>();
-        for (Object value : userTable.getDistinctValues(alias)) {
-            if (value == null) {
-                value = NULL_STRING;
-            }
-            items.add(new DistinctItem(value, !isFiltered(alias, value)));
+        if (!StringUtils.hasText(alias)) {
+            return failByInvalidParam();
         }
-        return toJson(items);
+        return toJson(getUserTable().getDistinctValues(alias));
     }
 
     @RequestMapping(value = "/admin-user-list-filter.json", method = RequestMethod.POST)
@@ -142,17 +124,7 @@ public class AdminUserListController extends ImageController {
         if (!StringUtils.hasText(filterField)) {
             return failByInvalidParam();
         }
-
-        if (filterValues == null) {
-            filterValues = new String[0];
-        }
-        for (int i = 0; i < filterValues.length; i++) {
-            if (NULL_STRING.equals(filterValues[i])) {
-                filterValues[i] = null;
-            }
-        }
-
-        getFilters().put(filterField, filterValues);
+        getTableUtil().addFilter(filterField, filterValues);
         return success();
     }
 
@@ -162,61 +134,12 @@ public class AdminUserListController extends ImageController {
         if (!StringUtils.hasText(filterField)) {
             return failByInvalidParam();
         }
-
-        getFilters().remove(filterField);
+        getTableUtil().removeFilter(filterField);
         return success();
     }
 
-    /**
-     * validate is certain value in certain field is filtered
-     *
-     * @param field field in database
-     * @param value value of given field
-     * @return true is value is filtered
-     */
-    private boolean isFiltered(String field, Object value) {
-        String[] values = getFilters().get(field);
-        if (values == null) {
-            return false;
-        }
-
-        if (value.equals(NULL_STRING)) {
-            for (String v : values) {
-                if (v == null) {
-                    return false;
-                }
-            }
-        } else {
-            String valueString = value.toString();
-            for (String v : values) {
-                if (v != null && v.equals(valueString)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private final static String FILTERS_KEY = "admin-user-list-filters";
-
-    private Map<String, String[]> getFilters() {
-        @SuppressWarnings("unchecked")
-        Map<String, String[]> filters = (Map) session.getAttribute(FILTERS_KEY);
-        if (filters == null) {
-            filters = new HashMap<>();
-            session.setAttribute(FILTERS_KEY, filters);
-        }
-        return filters;
-    }
-
-    private static class DistinctItem {
-        public final Object text;
-        public final boolean checked;
-
-        DistinctItem(Object text, boolean checked) {
-            this.text = text;
-            this.checked = checked;
-        }
+    private MVCTableUtil getTableUtil() {
+        return new MVCTableUtil(session, this.getClass());
     }
 
     private DatabaseTable getUserTable() {
