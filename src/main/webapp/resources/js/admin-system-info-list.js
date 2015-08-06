@@ -5,7 +5,7 @@
         var receiver = $this.getParentByTagName('tr').find('td.receiver').text();
         $this.text($this.text().replace('{{user}}', receiver));
     }).each(function () {
-        JSUtils.limitTextLength($(this), 30);
+        JSUtils.limitTextLength($(this), 70);
     });
 
     JSUtils.loadTableFilterEvents('admin-system-info-list-distinct-values.json', 'admin-system-info-list-filter.json',

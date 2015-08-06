@@ -7,12 +7,12 @@ abstract public class AbstractDualColoredBallCrawler implements DualColoredBallC
     public Result getResult(int fullTermNumber) {
         HttpClient httpClient = new HttpClient();
         String pageContent = httpClient.getContent(getPageUrl(fullTermNumber));
-        DualColoredBallPageParser pageParser = getPageParser(pageContent);
+        DualColoredBallPageParser pageParser = getPageParser(pageContent, fullTermNumber);
 
         return new Result(pageParser.getResult(), pageParser.getDrawTime());
     }
 
     protected abstract String getPageUrl(int fullTermNumber);
 
-    protected abstract DualColoredBallPageParser getPageParser(String pageContent);
+    protected abstract DualColoredBallPageParser getPageParser(String pageContent, int fullTermNumber);
 }

@@ -7,7 +7,7 @@ public class BaiduLecaiCrawler extends AbstractDualColoredBallCrawler {
     }
 
     @Override
-    protected DualColoredBallPageParser getPageParser(String pageContent) {
+    protected DualColoredBallPageParser getPageParser(String pageContent, int fullTermNumber) {
         return new BaiduLecaiPageParser(pageContent);
     }
 }
