@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.utils.hibernate.HibernateDeleter;
+import com.qinyuan15.utils.hibernate.AbstractRankingDao;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 import com.qinyuan15.utils.hibernate.ReferenceValidator;
@@ -12,7 +12,7 @@ import java.util.List;
  * Dao class of commodity
  * Created by qinyuan on 15-6-22.
  */
-public class CommodityDao {
+public class CommodityDao extends AbstractRankingDao<Commodity> {
 
     public static class Factory implements PaginationItemFactory<Commodity> {
         @Override
@@ -49,9 +49,10 @@ public class CommodityDao {
         return new ReferenceValidator().add(LotteryActivity.class, "commodityId").isUsed(id);
     }
 
+    @Override
     public void delete(Integer id) {
         if (!isUsed(id)) {
-            HibernateDeleter.deleteById(Commodity.class, id);
+            super.delete(id);
         }
     }
 
@@ -75,16 +76,8 @@ public class CommodityDao {
         }
     }
 
-    public Commodity getInstance(Integer id) {
-        return HibernateUtils.get(Commodity.class, id);
-    }
-
     public Commodity getFirstVisibleInstance() {
         return new HibernateListBuilder().addEqualFilter("visible", true).getFirstItem(Commodity.class);
-    }
-
-    public List<Commodity> getInstances() {
-        return new HibernateListBuilder().build(Commodity.class);
     }
 
     public List<Commodity> getVisibleInstances() {

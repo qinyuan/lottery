@@ -1,29 +1,15 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.utils.hibernate.HibernateDeleter;
+import com.qinyuan15.utils.hibernate.AbstractRankingDao;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 import com.qinyuan15.utils.hibernate.RankingDao;
 
-import java.util.List;
-
-public class HelpGroupDao {
+public class HelpGroupDao extends AbstractRankingDao<HelpGroup> {
     public Integer add(String title) {
         HelpGroup helpGroup = new HelpGroup();
         helpGroup.setTitle(title);
 
         return new RankingDao().add(helpGroup);
-    }
-
-    public List<HelpGroup> getInstances() {
-        return new RankingDao().getInstances(HelpGroup.class);
-    }
-
-    public HelpGroup getInstance(Integer id) {
-        return HibernateUtils.get(HelpGroup.class, id);
-    }
-
-    public HelpGroup getFirstInstance() {
-        return new RankingDao().getFirstInstance(HelpGroup.class);
     }
 
     public void update(Integer id, String title) {
@@ -34,16 +20,9 @@ public class HelpGroupDao {
         }
     }
 
+    @Override
     public void delete(Integer id) {
-        HibernateDeleter.deleteById(HelpGroup.class, id);
+        super.delete(id);
         new HelpItemDao().deleteByGroupId(id);
-    }
-
-    public void rankUp(int id) {
-        new RankingDao().rankUp(HelpGroup.class, id);
-    }
-
-    public void rankDown(int id) {
-        new RankingDao().rankDown(HelpGroup.class, id);
     }
 }

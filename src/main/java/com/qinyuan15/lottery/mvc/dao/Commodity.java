@@ -1,12 +1,12 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.utils.hibernate.PersistObject;
+import com.qinyuan15.utils.hibernate.AbstractRanking;
 
 /**
  * Class about Commodity
  * Created by qinyuan on 15-6-22.
  */
-public class Commodity extends PersistObject {
+public class Commodity extends AbstractRanking {
     private Double price;
     private String name;
     private Boolean inLottery;
