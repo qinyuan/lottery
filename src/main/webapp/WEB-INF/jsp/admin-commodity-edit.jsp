@@ -76,6 +76,7 @@
                         </div>
                     </td>
                     <td class="action">
+                        <jsp:include page="widget-ranking.jsp"/>
                         <a href="commodity.html?id=${commodity.id}" target="_blank"><img
                                 title="预览" src="resources/css/images/preview.gif"/></a>
                         <a href="admin-commodity-link.html?id=${commodity.id}" target="_blank"><img

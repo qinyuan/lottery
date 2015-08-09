@@ -140,7 +140,7 @@ public class AdminCommodityEditController extends ImageController {
         }
     }
 
-    @RequestMapping("/admin-rank-up-commodity.json")
+    @RequestMapping("/admin-commodity-rank-up.json")
     @ResponseBody
     public String rankUp(@RequestParam(value = "id", required = true) Integer id) {
         try {
@@ -152,7 +152,7 @@ public class AdminCommodityEditController extends ImageController {
         }
     }
 
-    @RequestMapping("/admin-rank-down-commodity.json")
+    @RequestMapping("/admin-commodity-rank-down.json")
     @ResponseBody
     public String rankDown(@RequestParam(value = "id", required = true) Integer id) {
         try {

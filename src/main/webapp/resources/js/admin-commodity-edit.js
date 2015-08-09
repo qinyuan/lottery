@@ -16,8 +16,24 @@
     });
 })();
 (function () {
-    $('#commodityLotteryLink').addClass('emphasize');
-
+    // codes about deleting/ranking commodity
+    $('table img.delete').click(function () {
+        var id = $(this).getParentByTagName('tr').dataOptions('id');
+        if (confirm('确定删除？')) {
+            $.post('admin-commodity-delete.json', {id: id}, JSUtils.normalAjaxCallback);
+        }
+    });
+    $('table img.rank-up').click(function () {
+        var id = $(this).getParentByTagName('tr').dataOptions('id');
+        $.post('admin-commodity-rank-up.json', {id: id}, JSUtils.normalAjaxCallback);
+    });
+    $('table img.rank-down').click(function () {
+        var id = $(this).getParentByTagName('tr').dataOptions('id');
+        $.post('admin-commodity-rank-down.json', {id: id}, JSUtils.normalAjaxCallback);
+    });
+})();
+(function () {
+    // codes about adding/editing commodity
     var $form = $('#commodityForm').focusFirstTextInput();
     var $okButton = $form.find('button[name=ok]');
     var $cancelButton = $form.find('button[name=cancel]');
@@ -49,16 +65,8 @@
             return false;
         }
     });
-    $('img.delete').click(function () {
-        var id = $(this).getParentByTagName('tr').dataOptions()['id'];
-        if (confirm('确定删除？')) {
-            $.post('admin-commodity-delete.json', {
-                id: id
-            }, JSUtils.normalAjaxCallback);
-        }
-    });
 
-    $('img.edit').click(function () {
+    $('table img.edit').click(function () {
         var $tr = $(this).getParentByTagName('tr');
         var id = $tr.dataOptions()['id'];
         var name = $tr.find('td.name').trimText();
@@ -91,3 +99,5 @@
         $form.focusFirstTextInput();
     });
 })();
+JSUtils.recordScrollStatus();
+$('#commodityLotteryLink').addClass('emphasize');

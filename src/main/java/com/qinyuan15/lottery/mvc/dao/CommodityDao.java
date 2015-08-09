@@ -22,7 +22,7 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
 
         @Override
         public List<Commodity> getInstances(int firstResult, int maxResults) {
-            return new HibernateListBuilder().limit(firstResult, maxResults).build(Commodity.class);
+            return new CommodityDao().getInstances(firstResult, maxResults);
         }
     }
 
@@ -77,11 +77,15 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
     }
 
     public Commodity getFirstVisibleInstance() {
-        return new HibernateListBuilder().addEqualFilter("visible", true).getFirstItem(Commodity.class);
+        return getVisibleListBuilder().getFirstItem(Commodity.class);
     }
 
     public List<Commodity> getVisibleInstances() {
-        return new HibernateListBuilder().addEqualFilter("visible", true).build(Commodity.class);
+        return getVisibleListBuilder().build(Commodity.class);
+    }
+
+    private HibernateListBuilder getVisibleListBuilder() {
+        return new HibernateListBuilder().addEqualFilter("visible", true).addOrder("ranking", true);
     }
 
     private void changeLottery(Integer commodityId, Boolean inLottery) {

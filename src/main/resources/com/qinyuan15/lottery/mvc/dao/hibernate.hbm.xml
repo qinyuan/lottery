@@ -30,6 +30,7 @@
         <property name="snapshot"/>
         <property name="detailImage" column="detail_image"/>
         <property name="visible"/>
+        <property name="ranking"/>
     </class>
     <class name="User" table="user">
         <id name="id" column="id">

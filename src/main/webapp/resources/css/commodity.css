@@ -154,7 +154,7 @@ div.main-body div.detail {
     position: relative;
     margin: 70px 0;
     text-align: center;
-    min-height: 80%;
+    min-height: 500px;
 }
 
 div.main-body > div.detail > div.participant-count {
