@@ -36,7 +36,7 @@ div.header > div.content > div.right-navigation > ul li {
 
 div.header > div.content > div.right-navigation > ul li a {
     padding: 0 10px;
-    font-size: 11pt;
+    font-size: 9pt;
     color: #606060;
     border-right: #B1B1B1 1px solid;
 }
@@ -78,16 +78,16 @@ div.header > div.content > div.right-navigation > ul li a.text.emphasize {
     color: #87BE4C;
 }
 
-div.body div.snapshots {
+div.main-body div.snapshots {
     margin-top: 30px;
     border-bottom: 1px solid #DBDBDB;
-    overflow: hidden;
     padding: 0 40px;
-    min-height: 172px;
+    height: 170px;
+    overflow: hidden;
     position: relative;
 }
 
-div.body div.snapshots div.snapshot {
+div.main-body div.snapshots div.snapshot {
     width: 112px;
     height: 170px;
     float: left;
@@ -97,22 +97,22 @@ div.body div.snapshots div.snapshot {
     display: none;
 }
 
-div.body div.snapshots div.snapshot.selected,
-div.body div.snapshots div.snapshot:hover {
+div.main-body div.snapshots div.snapshot.selected,
+div.main-body div.snapshots div.snapshot:hover {
     border-bottom-color: #79B834;
 }
 
-div.body div.snapshots div.snapshot {
+div.main-body div.snapshots div.snapshot {
     color: #696969;
     font-size: 9pt;
     margin: 0 20px;
 }
 
-div.body div.snapshots div.snapshot > div.price {
+div.main-body div.snapshots div.snapshot > div.price {
     margin: 5px 0;
 }
 
-div.body div.snapshots div.snapshot div.image {
+div.main-body div.snapshots div.snapshot div.image {
     width: 112px;
     height: 112px;
     background-position: center center;
@@ -120,8 +120,8 @@ div.body div.snapshots div.snapshot div.image {
     overflow: hidden;
 }
 
-div.body div.snapshots div.prev,
-div.body div.snapshots div.next {
+div.main-body div.snapshots div.prev,
+div.main-body div.snapshots div.next {
     position: absolute;
     width: 35px;
     height: 110px;
@@ -131,29 +131,33 @@ div.body div.snapshots div.next {
     display: none;
 }
 
-div.body div.snapshots div.prev:hover,
-div.body div.snapshots div.next:hover {
-    opacity: 0.8;
-    filter: alpha(opacity=80);
+div.main-body div.snapshots div.prev:hover,
+div.main-body div.snapshots div.next:hover {
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+    background-color: #f0f0f0;
 }
 
-div.body div.snapshots div.prev {
+div.main-body div.snapshots div.prev {
+    display: none;
     background-position: 0 0;
     left: 0;
 }
 
-div.body div.snapshots div.next {
+div.main-body div.snapshots div.next {
     background-position: -35px 0;
     right: 5px;
+    display: none;
 }
 
-div.body div.detail {
+div.main-body div.detail {
     position: relative;
     margin: 70px 0;
     text-align: center;
+    min-height: 80%;
 }
 
-div.body > div.detail > div.participant-count {
+div.main-body > div.detail > div.participant-count {
     position: absolute;
     top: 15px;
     left: 50%;

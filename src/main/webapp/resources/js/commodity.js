@@ -1,130 +1,162 @@
 ;
 (function () {
-    // code about participant count
-    function updateParticipantCount(commodityId) {
-        $.post('participant-count.json', {
-            commodityId: commodityId
-        }, function (data) {
-            if (data['participantCount']) {
-                var $participantCountDiv = $('div.body > div.detail > div.participant-count');
-                $participantCountDiv.find("span.participant-count").text(data['participantCount']);
-                $participantCountDiv.show();
-            }
-        });
-    }
-
-    updateParticipantCount(window['selectedCommodityId']);
-    setInterval(function () {
-        updateParticipantCount(getSelectedCommodityId());
-    }, 2000); // refresh each two seconds
-
-    // code about commodity image
-    var snapshotDisplaySize = 6;
-    var $snapshots = $('div.body div.snapshots div.snapshot');
-    var snapshotCount = $snapshots.size();
-    var selectedId = window['selectedCommodityId'];
-
-    function loadDetailImageById(id) {
-        $('div.body > div.detail > div.participant-count').hide();
-        var $img = $('div.body div.detail img');
-        $img.hide();
-        $.post('commodity-info.json', {
-            id: id
-        }, function (data) {
-            $img.attr('src', data['commodity']['detailImage']);
-            $img.fadeIn(500, function () {
-                updateParticipantCount(getSelectedCommodityId());
+    var participantCount = ({
+        get$Div: function () {
+            return $('div.main-body > div.detail > div.participant-count');
+        },
+        update: function (commodityId) {
+            var self = this;
+            $.post('participant-count.json', {
+                commodityId: commodityId
+            }, function (data) {
+                var $participantCountDiv = self.get$Div();
+                if (data['participantCount']) {
+                    $participantCountDiv.find("span.participant-count").text(data['participantCount']);
+                    $participantCountDiv.show();
+                } else {
+                    $participantCountDiv.hide();
+                }
             });
-            loadCommodityMap(data['commodityMaps']);
-        })
-    }
-
-    function getVisibleSnapshots() {
-        return $snapshots.filter(function () {
-            return $(this).css('display') == 'block';
-        });
-    }
-
-    function loadCommodityMap(commodityMaps) {
-        var mapHtml = JSUtils.handlebars('mapTemplate', {'commodityMaps': commodityMaps});
-        $('#commodityMap').html(mapHtml);
-    }
-
-    var $prevArrow = $('div.body div.snapshots div.prev');
-    var $nextArrow = $('div.body div.snapshots div.next');
-    if (snapshotCount > snapshotDisplaySize) {
-        $prevArrow.click(function () {
-            var $visibleSnapshots = getVisibleSnapshots();
-            var $firstVisibleSnapshot = $visibleSnapshots.first();
-            var $lastVisibleSnapshot = $visibleSnapshots.last();
-
-            for (var i = 0; i < snapshotDisplaySize; i++) {
-                $firstVisibleSnapshot = $firstVisibleSnapshot.prev();
-                if ($firstVisibleSnapshot.size() > 0 && $firstVisibleSnapshot.hasClass('snapshot')) {
-                    $lastVisibleSnapshot.hide(500);
-                    $lastVisibleSnapshot = $lastVisibleSnapshot.prev();
-                    $firstVisibleSnapshot.show(500);
-                    if (i == 0) {
-                        $nextArrow.show();
-                    }
-                } else {
-                    if (i > 0) {
-                        $prevArrow.hide();
-                    }
-                    break;
-                }
-            }
-        }).show();
-        $nextArrow.click(function () {
-            var $visibleSnapshots = getVisibleSnapshots();
-            var $firstVisibleSnapshot = $visibleSnapshots.first();
-            var $lastVisibleSnapshot = $visibleSnapshots.last();
-
-            for (var i = 0; i < snapshotDisplaySize; i++) {
-                $lastVisibleSnapshot = $lastVisibleSnapshot.next();
-                if ($lastVisibleSnapshot.size() > 0 && $lastVisibleSnapshot.hasClass('snapshot')) {
-                    $firstVisibleSnapshot.hide(500);
-                    $firstVisibleSnapshot = $firstVisibleSnapshot.next();
-                    $lastVisibleSnapshot.show(500);
-                    if (i == 0) {
-                        $prevArrow.show();
-                    }
-                } else {
-                    if (i > 0) {
-                        $nextArrow.hide();
-                    }
-                    break;
-                }
-            }
-        }).show();
-    }
-
-    // show snapshot beside selected snapshot
-    for (var i = 0; i < snapshotCount; i++) {
-        var $snapshot = $snapshots.eq(i);
-        if ($snapshot.dataOptions('id') == selectedId) {
-            $snapshot.addClass('selected');
-            var startIndex = parseInt(i / snapshotDisplaySize) * snapshotDisplaySize;
-            var endIndex = startIndex + 5;
-            while (endIndex >= snapshotCount) {
-                endIndex--;
-                startIndex--;
-            }
-            for (var j = startIndex; j <= endIndex && j < snapshotCount; j++) {
-                $snapshots.eq(j).show();
-            }
-            break;
+        },
+        hide: function () {
+            this.get$Div().hide();
+        },
+        init: function () {
+            this.update(window['selectedCommodityId']);
+            var self = this;
+            setInterval(function () {
+                self.update(getSelectedCommodityId());
+            }, 2000); // refresh each two seconds
+            return this;
         }
-    }
-    $snapshots.click(function () {
-        $snapshots.removeClass('selected');
-        var $this = $(this);
-        $this.addClass('selected');
-        var id = $this.dataOptions('id');
-        loadDetailImageById(id);
-    });
+    }).init();
 
-    loadCommodityMap(window['commodityMaps']);
+    var snapshots = ({
+        $divs: $('div.main-body div.snapshots div.snapshot'),
+        loadDetail: function (imageId) {
+            participantCount.get$Div().hide();
+            var $img = $('div.main-body div.detail img');
+            $img.hide();
+
+            var self = this;
+            $.post('commodity-info.json', {
+                id: imageId
+            }, function (data) {
+                $img.attr('src', data['commodity']['detailImage']);
+                $img.fadeIn(500, function () {
+                    participantCount.update(getSelectedCommodityId());
+                });
+                self.loadCommodityMap(data['commodityMaps']);
+            })
+        },
+        displaySize: 6,
+        startIndex: 0,
+        endIndex: 5,
+        loadCommodityMap: function (commodityMaps) {
+            var mapHtml = JSUtils.handlebars('mapTemplate', {'commodityMaps': commodityMaps});
+            $('#commodityMap').html(mapHtml);
+        },
+        $prevIcon: $('div.main-body div.snapshots div.prev'),
+        $nextIcon: $('div.main-body div.snapshots div.next'),
+        showPrevInstances: function () {
+            var oldStartIndex = this.startIndex;
+            var oldEndIndex = this.endIndex;
+
+            this.$nextIcon.show();
+
+            var newStartIndex = oldStartIndex - this.displaySize;
+            if (newStartIndex <= 0) {
+                newStartIndex = 0;
+                this.$prevIcon.hide();
+            }
+            var newEndIndex = newStartIndex + this.displaySize - 1;
+
+            this.startIndex = newStartIndex;
+            this.endIndex = newEndIndex;
+
+            var i = 0;
+            while (oldEndIndex - i > newEndIndex) {
+                this.$divs.eq(oldEndIndex - i).hide(500);
+                this.$divs.eq(oldStartIndex - i - 1).show(500);
+                i++;
+            }
+        },
+        showNextInstances: function () {
+            var oldStartIndex = this.startIndex;
+            var oldEndIndex = this.endIndex;
+
+            this.$prevIcon.show();
+
+            var newEndIndex = oldEndIndex + this.displaySize;
+            var snapshotCount = this.$divs.size();
+            if (newEndIndex >= snapshotCount - 1) {
+                newEndIndex = snapshotCount - 1;
+                this.$nextIcon.hide();
+            }
+            var newStartIndex = newEndIndex - this.displaySize + 1;
+
+            this.startIndex = newStartIndex;
+            this.endIndex = newEndIndex;
+
+            var i = 0;
+            while (oldStartIndex + i < newStartIndex) {
+                this.$divs.eq(oldStartIndex + i).hide(500);
+                this.$divs.eq(oldEndIndex + i + 1).show(500);
+                i++;
+            }
+        },
+        init: function () {
+            var selectedId = window['selectedCommodityId'];
+            var snapshotCount = this.$divs.size();
+
+            // show snapshot beside selected snapshot
+            for (var i = 0; i < snapshotCount; i++) {
+                var $snapshot = this.$divs.eq(i);
+                if ($snapshot.dataOptions('id') == selectedId) {
+                    $snapshot.addClass('selected');
+                    var startIndex = parseInt(i / this.displaySize) * this.displaySize;
+                    var endIndex = startIndex + 5;
+                    while (endIndex >= snapshotCount) {
+                        endIndex--;
+                        startIndex--;
+                    }
+                    for (var j = startIndex; j <= endIndex && j < snapshotCount; j++) {
+                        this.$divs.eq(j).show();
+                    }
+                    break;
+                }
+            }
+
+            var self = this;
+
+            // click events
+            this.$divs.click(function () {
+                self.$divs.removeClass('selected');
+                var $this = $(this);
+                $this.addClass('selected');
+                var id = $this.dataOptions('id');
+                self.loadDetail(id);
+            });
+
+
+            if (snapshotCount > this.displaySize) {
+                this.$prevIcon.click(function () {
+                    self.showPrevInstances();
+                });
+                this.$nextIcon.click(function () {
+                    self.showNextInstances();
+                }).show();
+                this.startIndex = 0;
+                this.endIndex = this.displaySize - 1;
+            } else {
+                this.startIndex = 0;
+                this.endIndex = snapshotCount - 1;
+            }
+
+            this.loadCommodityMap(window['commodityMaps']);
+            return this;
+        }
+    }).init();
 })();
 (function () {
     // codes about lottery
@@ -325,7 +357,7 @@
             this.$div.fadeIn(200);
             JSUtils.scrollToVerticalCenter(this.$div);
             if (parentId) {
-                this.$parent = $('#'+parentId);
+                this.$parent = $('#' + parentId);
                 this.$parent.hide();
             }
         },
@@ -385,6 +417,6 @@
 })();
 var getLotteryLot, showLotteryRule;
 function getSelectedCommodityId() {
-    var $selectedSnapshot = $('div.body div.snapshots div.snapshot.selected');
+    var $selectedSnapshot = $('div.main-body div.snapshots div.snapshot.selected');
     return $selectedSnapshot.dataOptions('id');
 }

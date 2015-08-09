@@ -11,6 +11,7 @@
         <property name="crawlers">
             <list>
                 <bean class="com.qinyuan15.lottery.mvc.lottery.BaiduLecaiCrawler"/>
+                <bean class="com.qinyuan15.lottery.mvc.lottery.ZhcwCrawler"/>
             </list>
         </property>
     </bean>

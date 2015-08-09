@@ -11,7 +11,7 @@
         </div>
     </div>
 </div>
-<div class="body page-width">
+<div class="main-body page-width">
     <div class="snapshots">
         <div class="prev lightTransparent"></div>
         <c:forEach var="snapshot" items="${snapshots}">

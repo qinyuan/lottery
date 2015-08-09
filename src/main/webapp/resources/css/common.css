@@ -15,6 +15,10 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 .shadow {
     -moz-box-shadow: 1px 1px 10px rgb(213, 213, 213);
     -webkit-box-shadow: 1px 1px 10px rgb(213, 213, 213);
@@ -191,9 +195,11 @@ div.activate-remind div.title div.close-icon:hover {
 }
 
 #springLoginForm div.title div.text {
+    line-height: 40px;
+    font-size: 11pt;
     left: 120px;
-    bottom: 12px;
     color: #7E8081;
+    bottom: 0;
 }
 
 #springLoginForm div.title div.close-icon {

@@ -43,6 +43,8 @@ div.header > div.content > div.right-logo {
     top: 0;
     right: 0;
     z-index: 1;
+    overflow: visible;
+    line-height: 26px;
 }
 
 div.header > div.content > div.right-logo img {
@@ -61,23 +63,23 @@ div.header > div.content > div.right-logo > ul li {
 }
 
 div.header > div.content > div.right-logo > ul li a {
-    padding: 17px 15px;
-    font-size: 11pt;
+    padding: 16px 15px;
+    font-size: 9pt;
     color: #ffffff;
 }
 
 div.header > div.content > div.right-logo > ul li ul {
-    width: 0;
     display: none;
     position: absolute;
     left: 0;
-    top: 145%;
+    top: 120%;
+    width: 100%;
     z-index: 1;
 }
 
 div.header > div.content > div.right-logo > ul li li {
     background-color: #5F5F5F;
-    width: 103px;
+    width: 100%;
 }
 
 div.header > div.content > div.right-logo > ul li li.footer {
