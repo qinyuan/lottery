@@ -25,7 +25,6 @@ public class HelpController extends ImageController {
         return "help";
     }
 
-
     protected HelpItem adaptHelpItem(HelpItem helpItem) {
         helpItem.setIcon(pathToUrl(helpItem.getIcon()));
         return helpItem;

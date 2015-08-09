@@ -139,4 +139,28 @@ public class AdminCommodityEditController extends ImageController {
             return failByDatabaseError();
         }
     }
+
+    @RequestMapping("/admin-rank-up-commodity.json")
+    @ResponseBody
+    public String rankUp(@RequestParam(value = "id", required = true) Integer id) {
+        try {
+            new CommodityDao().rankUp(id);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("Fail to rank up commodity, id: {}, info: {}", id, e);
+            return failByDatabaseError();
+        }
+    }
+
+    @RequestMapping("/admin-rank-down-commodity.json")
+    @ResponseBody
+    public String rankDown(@RequestParam(value = "id", required = true) Integer id) {
+        try {
+            new CommodityDao().rankDown(id);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("Fail to rank down commodity, id: {}, info: {}", id, e);
+            return failByDatabaseError();
+        }
+    }
 }

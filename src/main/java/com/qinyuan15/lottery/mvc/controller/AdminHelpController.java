@@ -81,7 +81,7 @@ public class AdminHelpController extends HelpController {
             new HelpGroupDao().delete(id);
             return success();
         } catch (Exception e) {
-            LOGGER.error("Fail to edit help group, info {}", e);
+            LOGGER.error("Fail to edit help group, id: {}, info {}", id, e);
             return failByDatabaseError();
         }
     }
@@ -93,7 +93,7 @@ public class AdminHelpController extends HelpController {
             new HelpGroupDao().rankUp(id);
             return success();
         } catch (Exception e) {
-            LOGGER.error("Fail to rank up help group, info {}", e);
+            LOGGER.error("Fail to rank up help group, id: {}, info: {}", id, e);
             return failByDatabaseError();
         }
     }
@@ -105,7 +105,7 @@ public class AdminHelpController extends HelpController {
             new HelpGroupDao().rankDown(id);
             return success();
         } catch (Exception e) {
-            LOGGER.error("Fail to rank down help group, info {}", e);
+            LOGGER.error("Fail to rank down help group, id: {}, info: {}", id, e);
             return failByDatabaseError();
         }
     }
@@ -186,13 +186,13 @@ public class AdminHelpController extends HelpController {
         }
     }
 
-    @RequestMapping("/query-help-item.json")
+    @RequestMapping("/query-help-item.json") // this url should not start with 'admin'
     @ResponseBody
     public String queryItem(@RequestParam(value = "id", required = true) Integer id) {
         return toJson(adaptHelpItem(new HelpItemDao().getInstance(id)));
     }
 
-    @RequestMapping("/query-help-items.json")
+    @RequestMapping("/query-help-items.json") // this url should not start with 'admin'
     @ResponseBody
     public String queryItems(@RequestParam(value = "id", required = false) Integer groupId) {
         HelpGroup group;
