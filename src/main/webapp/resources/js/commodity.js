@@ -34,6 +34,7 @@
     var snapshots = ({
         $divs: $('div.main-body div.snapshots div.snapshot'),
         loadDetail: function (imageId) {
+            //location.href = JSUtils.updateUrlParam('id', imageId);
             participantCount.get$Div().hide();
             var $img = $('div.main-body div.detail img');
             $img.hide();
@@ -110,22 +111,33 @@
             var snapshotCount = this.$divs.size();
 
             // show snapshot beside selected snapshot
+            this.startIndex = 0;
+            this.endIndex = snapshotCount - 1;
             for (var i = 0; i < snapshotCount; i++) {
                 var $snapshot = this.$divs.eq(i);
                 if ($snapshot.dataOptions('id') == selectedId) {
                     $snapshot.addClass('selected');
                     var startIndex = parseInt(i / this.displaySize) * this.displaySize;
-                    var endIndex = startIndex + 5;
+                    var endIndex = startIndex + this.displaySize - 1;
                     while (endIndex >= snapshotCount) {
                         endIndex--;
                         startIndex--;
                     }
+                    this.startIndex = startIndex;
+                    this.endIndex = endIndex;
                     for (var j = startIndex; j <= endIndex && j < snapshotCount; j++) {
                         this.$divs.eq(j).show();
                     }
                     break;
                 }
             }
+            if (this.startIndex > 0) {
+                this.$prevIcon.show();
+            }
+            if (this.endIndex < snapshotCount - 1) {
+                this.$nextIcon.show();
+            }
+            this.loadDetail(selectedId);
 
             var self = this;
 
@@ -137,23 +149,14 @@
                 var id = $this.dataOptions('id');
                 self.loadDetail(id);
             });
+            this.$prevIcon.click(function () {
+                self.showPrevInstances();
+            });
+            this.$nextIcon.click(function () {
+                self.showNextInstances();
+            });
 
-
-            if (snapshotCount > this.displaySize) {
-                this.$prevIcon.click(function () {
-                    self.showPrevInstances();
-                });
-                this.$nextIcon.click(function () {
-                    self.showNextInstances();
-                }).show();
-                this.startIndex = 0;
-                this.endIndex = this.displaySize - 1;
-            } else {
-                this.startIndex = 0;
-                this.endIndex = snapshotCount - 1;
-            }
-
-            this.loadCommodityMap(window['commodityMaps']);
+            //this.loadCommodityMap(window['commodityMaps']);
             return this;
         }
     }).init();

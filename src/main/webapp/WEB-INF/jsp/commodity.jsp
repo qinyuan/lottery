@@ -25,7 +25,8 @@
     </div>
     <div class="detail">
         <div class="participant-count"><span class="participant-count"></span>人抽奖</div>
-        <img src="${commodity.detailImage}" usemap="#commodityMap"/>
+        <%--<img src="${commodity.detailImage}" usemap="#commodityMap"/>--%>
+        <img usemap="#commodityMap"/>
     </div>
 </div>
 <map name="commodityMap" id="commodityMap"></map>
