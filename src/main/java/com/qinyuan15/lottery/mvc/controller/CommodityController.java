@@ -5,7 +5,9 @@ import com.qinyuan15.lottery.mvc.ImageMapType;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
+import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.utils.DoubleUtils;
+import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.image.ImageMap;
 import com.qinyuan15.utils.image.ImageMapDao;
 import com.qinyuan15.utils.mvc.controller.ImageController;
@@ -29,11 +31,7 @@ public class CommodityController extends ImageController {
                         @RequestParam(value = "medium", required = false) String medium) {
         CommodityHeaderUtils.setHeaderParameters(this);
 
-        CommodityDao dao = new CommodityDao();
-        Commodity commodity = dao.getInstance(id);
-        if (commodity == null || !commodity.getVisible()) {
-            commodity = dao.getFirstVisibleInstance();
-        }
+        Commodity commodity = getCommodity(id);
 
         LivenessAdder livenessAdder = new LivenessAdder(session);
         if (commodity == null) {
@@ -61,6 +59,27 @@ public class CommodityController extends ImageController {
         addJs("resources/js/lib/handlebars.min-v1.3.0", false);
         addCssAndJs("commodity");
         return "commodity";
+    }
+
+    private Commodity getCommodity(Integer commodityId) {
+        if (!IntegerUtils.isPositive(commodityId)) {
+            return null;
+        }
+
+        CommodityDao dao = new CommodityDao();
+        Commodity commodity = dao.getInstance(commodityId);
+
+        if (SecurityUtils.hasAuthority(User.ADMIN)) {
+            if (commodity == null) {
+                commodity = dao.getFirstInstance();
+            }
+        } else {
+            if (commodity == null || !commodity.getVisible()) {
+                commodity = dao.getFirstVisibleInstance();
+            }
+        }
+
+        return commodity;
     }
 
 
@@ -98,7 +117,12 @@ public class CommodityController extends ImageController {
 
     private List<CommoditySnapshot> buildSnapshots() {
         List<CommoditySnapshot> snapshots = new ArrayList<>();
-        for (Commodity commodity : new CommodityDao().getVisibleInstances()) {
+
+        CommodityDao dao = new CommodityDao();
+        List<Commodity> commodities = SecurityUtils.hasAuthority(User.ADMIN) ?
+                dao.getInstances() : dao.getVisibleInstances();
+
+        for (Commodity commodity : commodities) {
             getUrlAdapter().adapt(commodity);
 
             CommoditySnapshot snapshot = new CommoditySnapshot();
