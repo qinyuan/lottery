@@ -4,6 +4,7 @@ import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.ImageMapType;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
+import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.utils.DoubleUtils;
 import com.qinyuan15.utils.image.ImageMap;
 import com.qinyuan15.utils.image.ImageMapDao;
@@ -68,12 +69,13 @@ public class CommodityController extends ImageController {
     }
 
     public class CommoditySnapshot {
-        private Integer id;
+        private int id;
         private String name;
-        private Double price;
+        private String price;
         private String snapshot;
+        private boolean inLottery;
 
-        public Integer getId() {
+        public int getId() {
             return id;
         }
 
@@ -81,12 +83,16 @@ public class CommodityController extends ImageController {
             return name;
         }
 
-        public Double getPrice() {
+        public String getPrice() {
             return price;
         }
 
         public String getSnapshot() {
             return snapshot;
+        }
+
+        public boolean isInLottery() {
+            return inLottery;
         }
     }
 
@@ -98,8 +104,9 @@ public class CommodityController extends ImageController {
             CommoditySnapshot snapshot = new CommoditySnapshot();
             snapshot.id = commodity.getId();
             snapshot.name = commodity.getName();
-            snapshot.price = commodity.getPrice();
+            snapshot.price = commodity.getFormattedPrice();
             snapshot.snapshot = commodity.getSnapshot();
+            snapshot.inLottery = new LotteryActivityDao().hasActiveLottery(commodity.getId());
 
             snapshots.add(snapshot);
         }

@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan15.utils.CurrencyUtils;
 import com.qinyuan15.utils.hibernate.AbstractRanking;
 
 /**
@@ -69,5 +70,10 @@ public class Commodity extends AbstractRanking {
 
     public void setVisible(Boolean visible) {
         this.visible = visible;
+    }
+
+    // derivative fields
+    public String getFormattedPrice() {
+        return this.price == null ? null : CurrencyUtils.trimUselessDecimal(this.price);
     }
 }

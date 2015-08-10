@@ -88,6 +88,7 @@ div.main-body div.snapshots {
 }
 
 div.main-body div.snapshots div.snapshot {
+    position: relative;
     width: 120px;
     height: 170px;
     float: left;
@@ -111,6 +112,22 @@ div.main-body div.snapshots div.snapshot > div.name {
 
 div.main-body div.snapshots div.snapshot > div.price {
     margin-top: 3px;
+}
+
+div.main-body div.snapshots div.snapshot > div.in-lottery-icon {
+    position: absolute;
+    right: 0;
+    bottom: 50px;
+}
+
+div.main-body div.snapshots div.snapshot:hover > div.in-lottery-icon {
+    opacity: 0.99;
+    filter: alpha(opacity=99);
+}
+
+div.main-body div.snapshots div.snapshot > div.in-lottery-icon img {
+    width: 38px;
+    height: 36px;
 }
 
 div.main-body div.snapshots div.snapshot div.image {

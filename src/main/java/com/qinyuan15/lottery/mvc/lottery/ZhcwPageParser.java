@@ -39,6 +39,9 @@ public class ZhcwPageParser implements DualColoredBallPageParser {
 
     @Override
     public String getDrawTime() {
+        if (data == null) {
+            return null;
+        }
         Object date = data.get("kjDate");
         if (date == null || !(date instanceof String)) {
             return null;

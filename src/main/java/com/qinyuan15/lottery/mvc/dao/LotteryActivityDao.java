@@ -1,6 +1,5 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.google.common.base.Joiner;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.hibernate.HibernateDeleter;
@@ -69,6 +68,10 @@ public class LotteryActivityDao {
 
     public boolean hasLottery(Integer commodityId) {
         return factory().setCommodityId(commodityId).getCount() > 0;
+    }
+
+    public boolean hasActiveLottery(Integer commodityId) {
+        return factory().setCommodityId(commodityId).setExpire(false).getCount() > 0;
     }
 
     public LotteryActivity getActiveInstanceByCommodityId(Integer commodityId) {

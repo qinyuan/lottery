@@ -18,7 +18,10 @@
             <div class="snapshot" title="单击切换到该商品" data-options="id:${snapshot.id}">
                 <div class="image" style="background-image: url('${snapshot.snapshot}')"></div>
                 <div class="name">${snapshot.name}</div>
-                <div class="price">${snapshot.price}元</div>
+                <div class="price"><c:if test="${!snapshot.inLottery}">${snapshot.price}元</c:if></div>
+                <c:if test="${snapshot.inLottery}">
+                    <div class="in-lottery-icon mediumTransparent" title="抽奖中"><img src="resources/css/images/commodity/in-lottery.png"/></div>
+                </c:if>
             </div>
         </c:forEach>
         <div class="next lightTransparent"></div>
