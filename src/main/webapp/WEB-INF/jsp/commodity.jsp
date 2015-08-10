@@ -33,7 +33,8 @@
     </div>-->
 </div>
 <div class="main-body">
-    <div class="detail" style="background-image:url('${commodity.backImage}')">
+    <%--<div class="detail" style="background-image:url('${commodity.backImage}')">--%>
+    <div class="detail">
         <div class="participant-count"><span class="participant-count"></span>人抽奖</div>
         <img usemap="#commodityMap"/>
     </div>

@@ -62,10 +62,6 @@ public class CommodityController extends ImageController {
     }
 
     private Commodity getCommodity(Integer commodityId) {
-        if (!IntegerUtils.isPositive(commodityId)) {
-            return null;
-        }
-
         CommodityDao dao = new CommodityDao();
         Commodity commodity = dao.getInstance(commodityId);
 

@@ -4,6 +4,11 @@ import org.junit.Test;
 
 public class CommodityDaoTest {
     @Test
+    public void testGetFirstInstance() {
+        System.out.println(new CommodityDao().getFirstInstance());
+    }
+
+    @Test
     public void testRankUp() {
         //new CommodityDao().rankUp(19);
     }

@@ -22,11 +22,11 @@
             this.get$Div().hide();
         },
         init: function () {
-            this.update(window['selectedCommodityId']);
+            //this.update(window['selectedCommodityId']);
             var self = this;
             setInterval(function () {
                 self.update(getSelectedCommodityId());
-            }, 2000); // refresh each two seconds
+            }, 3000); // refresh each three seconds
             return this;
         }
     }).init();
@@ -36,14 +36,17 @@
         loadDetail: function (imageId) {
             //location.href = JSUtils.updateUrlParam('id', imageId);
             participantCount.get$Div().hide();
-            var $img = $('div.main-body div.detail img');
+            var $detail = $('div.main-body div.detail');
+            var $img = $detail.find('img');
             $img.hide();
 
             var self = this;
             $.post('commodity-info.json', {
                 id: imageId
             }, function (data) {
-                $img.attr('src', data['commodity']['detailImage']);
+                var commodity = data['commodity'];
+                $detail.css('background-image', 'url("' + commodity['backImage'] + '")');
+                $img.attr('src', commodity['detailImage']);
                 $img.fadeIn(500, function () {
                     participantCount.update(getSelectedCommodityId());
                 });

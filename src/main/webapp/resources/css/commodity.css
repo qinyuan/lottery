@@ -184,6 +184,7 @@ div.main-body > div.detail > div.participant-count {
     margin-left: 200px;
     font-size: 12pt;
     color: #909090;
+    display: none;
 }
 
 .float-panel div.title {
