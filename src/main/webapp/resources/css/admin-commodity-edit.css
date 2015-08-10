@@ -1,4 +1,5 @@
 div.form form {
+    width: 780px;
     padding: 10px 20px;
     background-color: #D8F7E9;
     margin-bottom: 10px;
@@ -33,6 +34,11 @@ div.form form td.title {
 
 div.form form button {
     margin-right: 30px;
+}
+
+div.form td.backImage span.no-back {
+    color:#09821D;
+    font-style: italic;
 }
 
 ul.pagination {

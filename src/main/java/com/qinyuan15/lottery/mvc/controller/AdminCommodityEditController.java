@@ -55,6 +55,8 @@ public class AdminCommodityEditController extends ImageController {
                          @RequestParam(value = "snapshotFile", required = true) MultipartFile snapshotFile,
                          @RequestParam(value = "detailImage", required = true) String detailImage,
                          @RequestParam(value = "detailImageFile", required = true) MultipartFile detailImageFile,
+                         @RequestParam(value = "backImage", required = true) String backImage,
+                         @RequestParam(value = "backImageFile", required = true) MultipartFile backImageFile,
                          @RequestParam(value = "pageNumber", required = false) Integer pageNumber) {
         // adjust own parameter
         if (own == null) {
@@ -90,16 +92,28 @@ public class AdminCommodityEditController extends ImageController {
             redirect(indexPage, "商品详细图(大图片)处理失败！");
         }
 
+        String backImagePath;
+        if (isUploadFileEmpty(backImageFile) && !StringUtils.hasText(backImage)) {
+            backImagePath = "";
+        } else {
+            try {
+                backImagePath = getSavePath(backImage, backImageFile);
+            } catch (Exception e) {
+                LOGGER.error("error in getting save path of backImage: {}", e);
+                return redirect(indexPage, "背景图片处理失败");
+            }
+        }
+
         try {
             CommodityDao dao = new CommodityDao();
             if (IntegerUtils.isPositive(id)) {
-                dao.update(id, name, price, own, snapshotPath, detailImagePath);
+                dao.update(id, name, price, own, snapshotPath, detailImagePath, backImagePath);
             } else {
-                dao.add(name, price, own, snapshotPath, detailImagePath);
+                dao.add(name, price, own, snapshotPath, detailImagePath, backImagePath);
             }
         } catch (Exception e) {
             LOGGER.error("error in saving or updating commodity: {}", e);
-            e.printStackTrace();
+            //e.printStackTrace();
             redirect(indexPage, "数据库操作失败！");
         }
         return redirect(indexPage);

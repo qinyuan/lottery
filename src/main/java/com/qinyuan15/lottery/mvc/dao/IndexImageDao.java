@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.hibernate.HibernateDeleter;
+import com.qinyuan15.utils.hibernate.AbstractDao;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 
@@ -11,15 +11,11 @@ import java.util.List;
  * Dao of IndexImage
  * Created by qinyuan on 15-6-18.
  */
-public class IndexImageDao {
-
+public class IndexImageDao extends AbstractDao<IndexImage> {
+    @Override
     public List<IndexImage> getInstances() {
         return new HibernateListBuilder().addOrder("rowIndex", true).addOrder("id", true)
                 .build(IndexImage.class);
-    }
-
-    public IndexImage getInstance(Integer id) {
-        return HibernateUtils.get(IndexImage.class, id);
     }
 
     public synchronized Integer add(String path, String backPath) {
@@ -49,9 +45,5 @@ public class IndexImageDao {
             indexImage.setBackPath(backPath);
             HibernateUtils.update(indexImage);
         }
-    }
-
-    public void delete(Integer id) {
-        HibernateDeleter.deleteById(IndexImage.class, id);
     }
 }

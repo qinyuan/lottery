@@ -30,13 +30,15 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
         return new Factory();
     }
 
-    public Integer add(String name, Double price, Boolean own, String snapshot, String detailImage) {
+    public Integer add(String name, Double price, Boolean own, String snapshot, String detailImage,
+                       String backImage) {
         Commodity commodity = new Commodity();
         commodity.setPrice(price);
         commodity.setName(name);
         commodity.setOwn(own);
         commodity.setSnapshot(snapshot);
         commodity.setDetailImage(detailImage);
+        commodity.setBackImage(backImage);
 
         // set default field
         commodity.setInLottery(false);
@@ -64,7 +66,8 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
         }
     }
 
-    public void update(Integer id, String name, Double price, Boolean own, String snapshot, String detailImage) {
+    public void update(Integer id, String name, Double price, Boolean own, String snapshot,
+                       String detailImage, String backImage) {
         Commodity commodity = getInstance(id);
         if (commodity != null) {
             commodity.setPrice(price);
@@ -72,6 +75,7 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
             commodity.setOwn(own);
             commodity.setSnapshot(snapshot);
             commodity.setDetailImage(detailImage);
+            commodity.setBackImage(backImage);
             HibernateUtils.update(commodity);
         }
     }

@@ -14,6 +14,7 @@ public class Commodity extends AbstractRanking {
     private Boolean own;
     private String snapshot;
     private String detailImage;
+    private String backImage;
     private Boolean visible;
 
     public Double getPrice() {
@@ -38,6 +39,10 @@ public class Commodity extends AbstractRanking {
 
     public String getDetailImage() {
         return detailImage;
+    }
+
+    public String getBackImage() {
+        return backImage;
     }
 
     public Boolean getVisible() {
@@ -66,6 +71,10 @@ public class Commodity extends AbstractRanking {
 
     public void setDetailImage(String detailImage) {
         this.detailImage = detailImage;
+    }
+
+    public void setBackImage(String backImage) {
+        this.backImage = backImage;
     }
 
     public void setVisible(Boolean visible) {

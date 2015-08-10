@@ -23,6 +23,7 @@ public class CommodityUrlAdapter {
 
         commodity.setSnapshot(controller.pathToUrl(commodity.getSnapshot()));
         commodity.setDetailImage(controller.pathToUrl(commodity.getDetailImage()));
+        commodity.setBackImage(controller.pathToUrl(commodity.getBackImage()));
         return commodity;
     }
 

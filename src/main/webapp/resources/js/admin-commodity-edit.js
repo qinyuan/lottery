@@ -74,6 +74,7 @@
         var own = $tr.find('td.own').trimText() == '是';
         var snapshot = $tr.find('td.snapshot img').attr('src');
         var detailImage = $tr.find('td.detailImage img').attr('src');
+        var backImage = $tr.find('td.backImage img').attr('src');
 
         $form.setInputValue('id', id);
         $form.setInputValue('name', name);
@@ -83,6 +84,8 @@
         $form.setInputValue('snapshotFile', null);
         $form.setInputValue('detailImage', detailImage);
         $form.setInputValue('detailImageFile', null);
+        $form.setInputValue('backImage', backImage);
+        $form.setInputValue('backImageFile', null);
         if ($.url.param('pageNumber')) {
             $form.setInputValue('pageNumber', $.url.param('pageNumber'));
         }

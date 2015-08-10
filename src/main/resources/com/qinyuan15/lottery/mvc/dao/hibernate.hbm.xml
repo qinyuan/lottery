@@ -29,6 +29,7 @@
         <property name="inLottery" column="in_lottery"/>
         <property name="snapshot"/>
         <property name="detailImage" column="detail_image"/>
+        <property name="backImage" column="back_image"/>
         <property name="visible"/>
         <property name="ranking"/>
     </class>
