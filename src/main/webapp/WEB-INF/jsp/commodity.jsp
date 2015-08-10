@@ -26,9 +26,15 @@
         </c:forEach>
         <div class="next lightTransparent"></div>
     </div>
-    <div class="detail">
+    <!--<div class="detail">
         <div class="participant-count"><span class="participant-count"></span>人抽奖</div>
         <%--<img src="${commodity.detailImage}" usemap="#commodityMap"/>--%>
+        <img usemap="#commodityMap"/>
+    </div>-->
+</div>
+<div class="main-body">
+    <div class="detail" style="background-image:url('${commodity.backImage}')">
+        <div class="participant-count"><span class="participant-count"></span>人抽奖</div>
         <img usemap="#commodityMap"/>
     </div>
 </div>
