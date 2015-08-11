@@ -15,12 +15,12 @@ public class LotteryLivenessDaoTest {
 
     @Test
     public void testGetLiveness() {
-        System.out.println(dao.getLiveness(6, 27));
+        System.out.println(dao.getLiveness(2));
     }
 
     @Test
     public void testGetMaxLivenessUsernames() {
-        System.out.println(dao.getMaxLivenessUsernames(27));
+        System.out.println(dao.getMaxLivenessUsernames());
     }
 
     @Test

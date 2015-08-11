@@ -16,7 +16,7 @@ public class LivenessQuerier {
             virtualLiveness = 0;
         }
 
-        Pair<String, Integer> realMaxLivenessPair = new LotteryLivenessDao().getMaxLivenessUsernames(activity.getId());
+        Pair<String, Integer> realMaxLivenessPair = new LotteryLivenessDao().getMaxLivenessUsernames(/*activity.getId()*/);
         Integer realMaxLiveness = realMaxLivenessPair == null ? 0 : realMaxLivenessPair.getRight();
         if (realMaxLiveness == null || realMaxLiveness < 0) {
             realMaxLiveness = 0;

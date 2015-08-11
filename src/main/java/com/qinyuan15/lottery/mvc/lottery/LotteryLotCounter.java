@@ -90,7 +90,7 @@ public class LotteryLotCounter {
             return count;
         }
 
-        int livenesss = new LotteryLivenessDao().getLiveness(userId, activityId);
+        int livenesss = new LotteryLivenessDao().getLiveness(userId/*, activityId*/);
         return count + livenesss / newLotLivness;
     }
 }

@@ -15,23 +15,43 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LotteryLivenessDao {
-    private final static Logger LOGGER = LoggerFactory.getLogger(LotteryLivenessDao.class);
+// LotteryLivenessDao is backed up because of changing of requirement
+class LotteryLivenessDaoBackup {
+    private final static Logger LOGGER = LoggerFactory.getLogger(LotteryLivenessDaoBackup.class);
 
     public List<LotteryLiveness> getInstances(Integer userId) {
+        LotteryActivity activity = getLastLotteryActivity();
         return new HibernateListBuilder().addEqualFilter("spreadUserId", userId)
-                .build(LotteryLiveness.class);
+                .addEqualFilter("activityId", activity.getId()).build(LotteryLiveness.class);
     }
 
-    public int getLiveness(Integer spreadUserId) {
+    /**
+     * Get liveness of certain user in his/her last lottery activity
+     *
+     * @param userId id of user
+     * @return liveness of last lottery activity
+     */
+    public int getLiveness(Integer userId) {
+        LotteryActivity activity = getLastLotteryActivity();
+        return activity == null ? 0 : getLiveness(userId, activity.getId());
+    }
+
+    private LotteryActivity getLastLotteryActivity() {
+        LotteryActivityDao activityDao = new LotteryActivityDao();
+        LotteryActivity activity = activityDao.getLastActiveInstance();
+        return activity == null ? activityDao.getLastInstance() : activity;
+    }
+
+    public int getLiveness(Integer spreadUserId, Integer activityId) {
         Long liveness = (Long) new HibernateListBuilder().addEqualFilter("spreadUserId", spreadUserId)
+                .addEqualFilter("activityId", activityId)
                 .getFirstItem("SELECT SUM(liveness) FROM LotteryLiveness");
         return liveness == null ? 0 : liveness.intValue();
     }
 
-    public Pair<String, Integer> getMaxLivenessUsernames() {
+    public Pair<String, Integer> getMaxLivenessUsernames(Integer activityId) {
         String subSQL = "SELECT spread_user_id,SUM(liveness) AS liveness FROM lottery_liveness " +
-                "GROUP BY spread_user_id";
+                "WHERE activity_id=" + activityId + " GROUP BY spread_user_id";
         String sql = "SELECT u.username,l.liveness FROM user AS u INNER JOIN (" +
                 subSQL + ") AS l ON u.id=l.spread_user_id";
         List<Object[]> list = new HibernateListBuilder().buildBySQL(sql);
@@ -52,9 +72,10 @@ public class LotteryLivenessDao {
     }
 
 
-    private boolean hasInstance(Integer spreadUserId, Integer receiveUserId) {
+    private boolean hasInstance(Integer spreadUserId, Integer receiveUserId, Integer activityId) {
         return new HibernateListBuilder().addEqualFilter("spreadUserId", spreadUserId)
                 .addEqualFilter("receiveUserId", receiveUserId)
+                .addEqualFilter("activityId", activityId)
                 .count(LotteryLiveness.class) > 0;
     }
 
@@ -71,7 +92,7 @@ public class LotteryLivenessDao {
                        boolean registerBefore, Integer activityId) {
         if (!IntegerUtils.isPositive(spreadUserId) || !IntegerUtils.isPositive(receiveUserId)
                 || spreadUserId.equals(receiveUserId) || !IntegerUtils.isPositive(activityId)
-                || hasInstance(spreadUserId, receiveUserId)) {
+                || hasInstance(spreadUserId, receiveUserId, activityId)) {
             return null;
         }
 

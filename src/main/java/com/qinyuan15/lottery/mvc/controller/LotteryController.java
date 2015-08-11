@@ -95,7 +95,7 @@ public class LotteryController extends ImageController {
         }
 
         // liveness parameter
-        result.put("liveness", new LotteryLivenessDao().getLiveness(user.getId(), activity.getId()));
+        result.put("liveness", new LotteryLivenessDao().getLiveness(user.getId()/*, activity.getId()*/));
         LivenessQuerier.LivenessInfo maxLivnessInfo = new LivenessQuerier().queryMax(activity);
         result.put("maxLiveness", maxLivnessInfo.liveness);
         result.put("maxLivenessUsers", maxLivnessInfo.users);
