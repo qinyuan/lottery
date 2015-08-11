@@ -324,6 +324,16 @@ public class AppConfig {
     ///////////////////////////// reset email mail end /////////////////////////////
 
     ///////////////////////////// new lottery chance start //////////////////////////////
+    private final static String REMIND_NEW_LOTTERY_CHANCE_BY_MAIL_KEY = "remindNewLotteryChanceByMail";
+
+    public static Boolean getRemindNewLotteryChanceByMail() {
+        return dao.getBoolean(REMIND_NEW_LOTTERY_CHANCE_BY_MAIL_KEY);
+    }
+
+    public static void updateRemindNewLotteryChanceByMail(Boolean bool) {
+        dao.saveBoolean(REMIND_NEW_LOTTERY_CHANCE_BY_MAIL_KEY, bool);
+    }
+
     private final static String NEW_LOTTERY_CHANCE_MAIL_SUBJECT_TEMPLATE_KEY = "newLotteryChanceMailSubjectTemplate";
 
     public static String getNewLotteryChanceMailSubjectTemplate() {
@@ -352,6 +362,26 @@ public class AppConfig {
 
     public static void updateNewLotteryChanceMailAccountId(Integer accountId) {
         dao.saveInteger(NEW_LOTTERY_CHANCE_MAIL_ACCOUNT_ID_KEY, accountId);
+    }
+
+    private final static String REMIND_NEW_LOTTERY_CHANCE_BY_SYSTEM_INFO_KEY = "remindNewLotteryChanceBySystemInfo";
+
+    public static Boolean getRemindNewLotteryChanceBySystemInfo() {
+        return dao.getBoolean(REMIND_NEW_LOTTERY_CHANCE_BY_SYSTEM_INFO_KEY);
+    }
+
+    public static void updateRemindNewLotteryChanceBySystemInfo(Boolean bool) {
+        dao.saveBoolean(REMIND_NEW_LOTTERY_CHANCE_BY_SYSTEM_INFO_KEY, bool);
+    }
+
+    private final static String NEW_LOTTERY_CHANCE_SYSTEM_INFO_TEMPLATE_KEY = "newLotteryChanceSystemInfoTemplate";
+
+    public static String getNewLotteryChanceSystemInfoTemplate() {
+        return dao.get(NEW_LOTTERY_CHANCE_SYSTEM_INFO_TEMPLATE_KEY);
+    }
+
+    public static void updateNewLotteryChanceSystemInfoTemplate(String template) {
+        dao.save(NEW_LOTTERY_CHANCE_SYSTEM_INFO_TEMPLATE_KEY, template);
     }
     ///////////////////////////// new lottery chance end //////////////////////////////
 

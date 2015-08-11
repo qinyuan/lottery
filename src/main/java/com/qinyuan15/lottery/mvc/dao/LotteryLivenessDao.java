@@ -1,7 +1,9 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.google.common.base.Joiner;
+import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.lottery.LotteryLotCounter;
+import com.qinyuan15.lottery.mvc.lottery.NewLotteryChanceSystemInfoSender;
 import com.qinyuan15.lottery.mvc.mail.NewLotteryChanceMailSender;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
@@ -86,11 +88,24 @@ public class LotteryLivenessDao {
 
         // send email to user
         if (new LotteryLotCounter().getAvailableLotCount(activityId, spreadUserId) > 0) {
-            try {
-                new NewLotteryChanceMailSender().send(spreadUserId, activityId);
-            } catch (Exception e) {
-                LOGGER.error("Fail to send new lottery chance mail, activityId: {}, userId: {}, info: {}",
-                        activityId, spreadUserId, e);
+            Boolean remindNewLotteryChanceByMail = AppConfig.getRemindNewLotteryChanceByMail();
+            if (remindNewLotteryChanceByMail != null && remindNewLotteryChanceByMail) {
+                try {
+                    new NewLotteryChanceMailSender().send(spreadUserId, activityId);
+                } catch (Exception e) {
+                    LOGGER.error("Fail to send new lottery chance mail, activityId: {}, userId: {}, info: {}",
+                            activityId, spreadUserId, e);
+                }
+            }
+
+            Boolean remindNewLotteryChanceBySystemInfo = AppConfig.getRemindNewLotteryChanceBySystemInfo();
+            if (remindNewLotteryChanceBySystemInfo != null && remindNewLotteryChanceBySystemInfo) {
+                try {
+                    new NewLotteryChanceSystemInfoSender().send(spreadUserId, activityId);
+                } catch (Exception e) {
+                    LOGGER.error("Fail to send new lottery chance system info, activityId: {}, userId: {}, info: {}",
+                            activityId, spreadUserId, e);
+                }
             }
         }
 

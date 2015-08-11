@@ -1,14 +1,16 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.google.common.collect.Lists;
 import com.qinyuan15.utils.IntegerUtils;
+import com.qinyuan15.utils.hibernate.AbstractDao;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
 
 import java.util.List;
 
-public class SystemInfoSendRecordDao {
-    public SystemInfoSendRecord getInstance(Integer id) {
-        return HibernateUtils.get(SystemInfoSendRecord.class, id);
+public class SystemInfoSendRecordDao extends AbstractDao<SystemInfoSendRecord> {
+    public void add(Integer userId, String infoContent) {
+        add(Lists.newArrayList(userId), infoContent);
     }
 
     public void add(List<Integer> userIds, String infoContent) {
@@ -21,7 +23,7 @@ public class SystemInfoSendRecordDao {
         }
     }
 
-    public Integer add(Integer userId, Integer infoId) {
+    private Integer add(Integer userId, Integer infoId) {
         SystemInfoSendRecord record = new SystemInfoSendRecord();
         record.setUserId(userId);
         record.setInfoId(infoId);
