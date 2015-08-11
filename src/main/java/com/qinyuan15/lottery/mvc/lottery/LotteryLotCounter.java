@@ -83,6 +83,14 @@ public class LotteryLotCounter {
      * @return available lot number
      */
     private int getMaxLotCount(int activityId, int userId) {
+        Integer newLotLivness = AppConfig.getNewLotLiveness();
+        if (!IntegerUtils.isPositive(newLotLivness)) {
+            return 0;
+        }
+
+        int livenesss = new LotteryLivenessDao().getLiveness(userId);
+        return livenesss >= newLotLivness ? 1 : 0;
+        /*
         int count = 1;
 
         Integer newLotLivness = AppConfig.getNewLotLiveness();
@@ -90,7 +98,8 @@ public class LotteryLotCounter {
             return count;
         }
 
-        int livenesss = new LotteryLivenessDao().getLiveness(userId/*, activityId*/);
+        int livenesss = new LotteryLivenessDao().getLiveness(userId);
         return count + livenesss / newLotLivness;
+        */
     }
 }
