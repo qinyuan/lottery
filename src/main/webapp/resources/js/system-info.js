@@ -26,3 +26,4 @@
     loadInfoItems($unreadItems, window['unreadSystemInfoItems']);
     loadInfoItems($readItems, window['readSystemInfoItems']);
 })();
+$('#systemInformationNavigation').addClass('emphasize');

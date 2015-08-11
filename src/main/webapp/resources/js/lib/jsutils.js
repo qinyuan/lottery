@@ -241,8 +241,8 @@ var JSUtils = {
                 'left': 0,
                 'display': 'none',
                 'background-color': '#000000',
-                opacity: 0.7,
-                filter: 'alpha(opacity=70)'
+                opacity: 0.4,
+                filter: 'alpha(opacity=40)'
             };
             if (zIndex) {
                 style['z-index'] = zIndex;
