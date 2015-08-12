@@ -4,6 +4,10 @@
 <div class="page-width form">
     <div>
         <div class="buttons">
+            <%--
+            <div class="switch switch-small" data-on-label="列表" data-off-label="表格">
+                <input type="checkbox"<c:if test="${listMode}"> checked</c:if>/>
+            </div>--%>
             <button class="btn btn-primary btn-sm" id="openMailForm" disabled>发送邮件</button>
             <button class="btn btn-info btn-sm" id="openSystemInfoForm" disabled>发送系统消息</button>
         </div>
@@ -54,7 +58,7 @@
         </tr>
         <tr class="comment">
             <td style="text-align:right;">(说明)</td>
-            <td >在邮件标题或正文中，可以用{{user}}指代收件人的用户名</td>
+            <td>在邮件标题或正文中，可以用{{user}}指代收件人的用户名</td>
         </tr>
         <tr>
             <td class="title">标题</td>

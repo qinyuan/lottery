@@ -23,11 +23,21 @@ public class AdminUserListController extends TableController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminUserListController.class);
 
     @RequestMapping("/admin-user-list")
-    public String index() {
+    public String index(@RequestParam(value = "listMode", required = false) String listMode) {
         IndexHeaderUtils.setHeaderParameters(this);
+
+        if (listMode != null && listMode.equals("false")) {
+            setAttribute("listMode", false);
+        } else {
+            setAttribute("listMode", true);
+        }
 
         getTableUtil().addIndexAttributes(getTable());
         setAttribute("mailAccounts", new MailAccountDao().getInstances());
+
+        // bootstrap switch
+        addJs("lib/bootstrap/js/bootstrap-switch", false);
+        addCss("resources/js/lib/bootstrap/css/bootstrap-switch.min", false);
 
         setTitle("用户列表");
         addJs("lib/ckeditor/ckeditor", false);
