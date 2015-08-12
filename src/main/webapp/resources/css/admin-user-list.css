@@ -1,5 +1,10 @@
+div.display-mode {
+    font-size: 12pt;
+    padding: 10px 0;
+}
+
 div.buttons {
-    margin-bottom: 5px;
+    margin: 15px 0 5px;
 }
 
 form .comment {

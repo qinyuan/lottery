@@ -23,13 +23,13 @@ public class AdminUserListController extends TableController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminUserListController.class);
 
     @RequestMapping("/admin-user-list")
-    public String index(@RequestParam(value = "listMode", required = false) String listMode) {
+    public String index(@RequestParam(value = "displayMode", required = false) String displayMode) {
         IndexHeaderUtils.setHeaderParameters(this);
 
-        if (listMode != null && listMode.equals("false")) {
-            setAttribute("listMode", false);
+        if (displayMode != null && displayMode.equals("table")) {
+            setAttribute("displayMode", "table");
         } else {
-            setAttribute("listMode", true);
+            setAttribute("displayMode", "list");
         }
 
         getTableUtil().addIndexAttributes(getTable());
@@ -38,6 +38,10 @@ public class AdminUserListController extends TableController {
         // bootstrap switch
         addJs("lib/bootstrap/js/bootstrap-switch", false);
         addCss("resources/js/lib/bootstrap/css/bootstrap-switch.min", false);
+
+        // icheck
+        addCss("resources/js/lib/icheck/skins/all", false);
+        addJs("lib/icheck/icheck.min", false);
 
         setTitle("用户列表");
         addJs("lib/ckeditor/ckeditor", false);

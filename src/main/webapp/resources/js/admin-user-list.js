@@ -276,4 +276,13 @@
     JSUtils.loadTableFilterEvents('admin-user-list-distinct-values.json', 'admin-user-list-filter.json',
         'admin-user-list-filter-remove.json');
 })();
+(function () {
+    // code about display mode
+    $('div.display-mode input').iCheck({
+        checkboxClass: 'icheckbox_minimal',
+        radioClass: 'iradio_minimal'
+    }).on('ifChecked', function () {
+        location.href = JSUtils.updateUrlParam('displayMode', this.value);
+    });
+})();
 $('#statisticLink').addClass('emphasize');

@@ -3,46 +3,16 @@
 <%@include file="index-header.jsp" %>
 <div class="page-width form">
     <div>
-        <div class="buttons">
-            <%--
-            <div class="switch switch-small" data-on-label="列表" data-off-label="表格">
-                <input type="checkbox"<c:if test="${listMode}"> checked</c:if>/>
-            </div>--%>
-            <button class="btn btn-primary btn-sm" id="openMailForm" disabled>发送邮件</button>
-            <button class="btn btn-info btn-sm" id="openSystemInfoForm" disabled>发送系统消息</button>
+        <div class="display-mode">
+            显示模式：
+            <span style="padding:0 10px;"></span>
+            <input type="radio" name="displayMode" value="list"<c:if test="${displayMode == 'list'}"> checked</c:if>/>
+            列表
+            <span style="padding:0 3px;"></span>
+            <input type="radio" name="displayMode" value="table"<c:if test="${displayMode == 'table'}"> checked</c:if>/>
+            表格
         </div>
-        <table class="normal">
-            <colgroup>
-                <col class="select"/>
-                <col class="index"/>
-                <c:forEach var="alias" items="${table.aliases}">
-                    <col class="${alias}"/>
-                </c:forEach>
-            </colgroup>
-            <thead>
-            <th><input type="checkbox" class="select-all" title="全选/全不选"/></th>
-            <th>序号</th>
-            <c:forEach var="head" items="${table.heads}" varStatus="status">
-                <th class="${table.aliases[status.index]}">${head}
-                    <div title="排序筛选" class="filter">
-                        <button class="${table.headStyles[status.index]}"></button>
-                    </div>
-                </th>
-            </c:forEach>
-            </thead>
-            <tbody>
-            <c:forEach var="user" items="${paginationItems}" varStatus="status">
-                <tr data-options="id:${user.id}">
-                    <td><input type="checkbox" class="select-user" name="userIds" value="${user.id}"/></td>
-                    <td>${status.index + rowStartIndex}</td>
-                    <c:forEach var="col" items="${user.cols}" varStatus="innerStatus">
-                        <td class="${table.aliases[innerStatus.index]}">${col}</td>
-                    </c:forEach>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-        <%@include file="widget-pagination.jsp" %>
+
     </div>
 </div>
 <form class="float-panel shadow edit-form" id="mailForm">
