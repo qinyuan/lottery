@@ -15,6 +15,14 @@ public class UserDaoTest {
     }
 
     @Test
+    public void testCount() {
+        System.out.println(userDao.countAllUsers());
+        System.out.println(userDao.countActiveUsers());
+        System.out.println(userDao.countDirectlyRegisterUsers());
+        System.out.println(userDao.countInvitedRegisterUsers());
+    }
+
+    @Test
     public void testAddNormal() {
         //userDao.addNormal("hello", "world", "qinyuan15@sina.com", "12345");
     }

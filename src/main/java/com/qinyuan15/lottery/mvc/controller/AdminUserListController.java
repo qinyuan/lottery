@@ -3,6 +3,7 @@ package com.qinyuan15.lottery.mvc.controller;
 import com.google.common.collect.Lists;
 import com.qinyuan15.lottery.mvc.dao.SystemInfoSendRecordDao;
 import com.qinyuan15.lottery.mvc.dao.User;
+import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.lottery.mvc.mail.NormalMailSender;
 import com.qinyuan15.utils.mail.MailAccountDao;
 import com.qinyuan15.utils.mvc.controller.DatabaseTable;
@@ -28,11 +29,16 @@ public class AdminUserListController extends TableController {
 
         if (displayMode != null && displayMode.equals("table")) {
             setAttribute("displayMode", "table");
+            getTableUtil().addIndexAttributes(getTable());
         } else {
             setAttribute("displayMode", "list");
+            UserDao userDao = new UserDao();
+            setAttribute("userCount", userDao.countAllUsers());
+            setAttribute("activeUserCount", userDao.countActiveUsers());
+            setAttribute("directlyRegisterUserCount", userDao.countDirectlyRegisterUsers());
+            setAttribute("invitedRegisterUserCount", userDao.countInvitedRegisterUsers());
         }
 
-        getTableUtil().addIndexAttributes(getTable());
         setAttribute("mailAccounts", new MailAccountDao().getInstances());
 
         // bootstrap switch
