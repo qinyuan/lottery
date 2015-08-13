@@ -104,8 +104,10 @@ public class AdminLotteryActivityController extends ImageController {
                 dao.update(id, term, commodityId, startTime, expectEndTime, continuousSerialLimit,
                         expectParticipantCount, virtualLiveness, virtualLivenessUsers, dualColoredBallTerm);
             } else {
-                if (dao.hasActiveLottery(commodityId)) {
+                if (new CommodityDao().hasActiveLottery(commodityId)) {
                     return fail("此商品的上一期抽奖还未结束，不能重复添加抽奖！");
+                } else if (dao.hasTerm(term)) {
+                    return fail("第" + term + "期抽奖已经存在，请填写别的期数！");
                 }
                 dao.add(term, commodityId, startTime, expectEndTime, continuousSerialLimit,
                         expectParticipantCount, dualColoredBallTerm);

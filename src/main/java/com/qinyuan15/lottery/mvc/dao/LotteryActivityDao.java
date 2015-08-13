@@ -2,6 +2,7 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
+import com.qinyuan15.utils.hibernate.AbstractDao;
 import com.qinyuan15.utils.hibernate.HibernateDeleter;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.hibernate.HibernateUtils;
@@ -11,7 +12,7 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LotteryActivityDao {
+public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
     public static class Factory implements PaginationItemFactory<LotteryActivity> {
         private Integer commodityId;
         private Boolean expire;
@@ -56,41 +57,31 @@ public class LotteryActivityDao {
         public List<LotteryActivity> getInstances() {
             return getListBuilder().build(LotteryActivity.class);
         }
+
+        public LotteryActivity getFirstInstance() {
+            List<LotteryActivity> activities = getInstances();
+            return activities.size() == 0 ? null : activities.get(0);
+        }
     }
 
     public static Factory factory() {
         return new Factory();
     }
 
-    public LotteryActivity getInstance(Integer id) {
-        return HibernateUtils.get(LotteryActivity.class, id);
-    }
-
-    public boolean hasLottery(Integer commodityId) {
-        return factory().setCommodityId(commodityId).getCount() > 0;
-    }
-
-    public boolean hasActiveLottery(Integer commodityId) {
-        return factory().setCommodityId(commodityId).setExpire(false).getCount() > 0;
+    public boolean hasTerm(Integer term) {
+        return new HibernateListBuilder().addEqualFilter("term", term).count(getPersistClass()) > 0;
     }
 
     public LotteryActivity getActiveInstanceByCommodityId(Integer commodityId) {
-        List<LotteryActivity> activities = factory().setCommodityId(commodityId).setExpire(false).getInstances();
-        if (activities.size() == 0) {
-            return null;
-        } else {
-            return activities.get(0);
-        }
+        return factory().setCommodityId(commodityId).setExpire(false).getFirstInstance();
     }
 
     public LotteryActivity getLastInstance() {
-        List<LotteryActivity> activities = factory().getInstances();
-        return activities.size() == 0 ? null : activities.get(0);
+        return factory().getFirstInstance(); // factory order by id desc
     }
 
     public LotteryActivity getLastActiveInstance() {
-        List<LotteryActivity> activities = factory().setExpire(false).getInstances();
-        return activities.size() == 0 ? null : activities.get(0);
+        return factory().setExpire(false).getFirstInstance();
     }
 
     public Integer getMaxTerm() {

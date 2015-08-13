@@ -49,8 +49,7 @@ public class LotteryController extends ImageController {
         }
 
         // if current commodity has no lottery
-        LotteryActivityDao lotteryActivityDao = new LotteryActivityDao();
-        if (!lotteryActivityDao.hasLottery(commodityId)) {
+        if (!new CommodityDao().hasLottery(commodityId)) {
             return fail("noLottery");
         }
 
