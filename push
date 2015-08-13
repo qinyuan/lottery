@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [ "$1" != "" ]; then
+if [ "$1" == "" ] || [ "$2" != "" ]; then 
+    echo "Usages: $0 <comment>"
+else
     git add -A
     git commit -a -m "$1"
     git push origin master
-else
-    echo "Usages: $0 <comment>"
 fi
 
 
