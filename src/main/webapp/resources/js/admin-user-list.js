@@ -285,4 +285,71 @@
         location.href = JSUtils.updateUrlParam('displayMode', this.value);
     });
 })();
+(function () {
+    // code about list mode
+    var $livenessFilter = $('div.user-filter div.content div.liveness').setDefaultButton('livenessFilterSubmit');
+    var $livenessFilterButton = $livenessFilter.find('button').click(function () {
+        var minLiveness = $livenessFilterInput.val();
+        if (JSUtils.isNumberString(minLiveness)) {
+            location.href = JSUtils.updateUrlParam('minLiveness', minLiveness);
+        } else {
+            alert('最小爱心值必须为数字格式');
+        }
+    });
+    var $livenessFilterInput = $livenessFilter.find('input[type=text]').focus(function () {
+        $livenessFilterButton.fadeIn(300);
+    }).blur(function () {
+        $livenessFilterButton.fadeOut(200);
+    });
+
+    var activityFilterForm = ({
+        $form: $('#lotteryActivityFilterForm'),
+        $cancelButton: $('#cancelLotteryActivityFilter'),
+        $submitButton: $('#submitLotteryActivityFilter'),
+        get$Activities: function () {
+            return this.$form.find('div.activities div.activity');
+        },
+        show: function () {
+            JSUtils.showTransparentBackground(1);
+            this.$form.fadeIn(200);
+            JSUtils.scrollToVerticalCenter(this.$form);
+        },
+        hide: function () {
+            this.$form.fadeOut(200, function () {
+                JSUtils.hideTransparentBackground();
+            });
+        },
+        inputName: 'filterLotteryActivityIds',
+        init: function () {
+            var self = this;
+            this.get$Activities().click(function () {
+                var $this = $(this);
+                if ($this.hasClass('selected')) {
+                    $this.removeClass('selected');
+                    $this.find('input[type=hidden]').remove();
+                } else {
+                    $this.addClass('selected');
+                    var id = $this.dataOptions('id');
+                    $this.append('<input type="hidden" name="' + self.inputName + '" value="' + id + '"/>');
+                }
+            });
+            this.$cancelButton.click(function () {
+                self.hide();
+            });
+            this.$submitButton.click(function () {
+                if (self.$form.find('input[name=' + self.inputName + ']').size() == 0) {
+                    alert('未选择任何一期活动');
+                } else {
+                    var url = 'admin-user-list-add-lottery-activity-filters.json';
+                    $.post(url, self.$form.serialize(), JSUtils.normalAjaxCallback);
+                }
+            });
+            return this;
+        }
+    }).init();
+
+    $('div.user-filter > div.content div.activity button').click(function () {
+        activityFilterForm.show();
+    });
+})();
 $('#statisticLink').addClass('emphasize');

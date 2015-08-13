@@ -32,7 +32,7 @@
     </div>
 </form>
 <form class="float-panel shadow edit-form" id="systemInfoForm">
-    <div style="margin-bottom: 10px;">
+    <div style="margin-bottom:10px;">
         <div class="comment">在邮件标题或正文中，可以用{{user}}指代收件人的用户名</div>
         <textarea name="content" id="systemInfoContent"></textarea>
     </div>
@@ -55,3 +55,17 @@
         <button class="btn btn-primary" id="cancelSystemInfoPreview">返回</button>
     </div>
 </div>
+<form class="float-panel shadow edit-form" id="lotteryActivityFilterForm">
+    <div class="activities">
+        <c:forEach var="activity" items="${lotteryActivities}">
+            <div class="activity" title="单击选择" data-options="id:${activity.id}">
+                <div class="term">第${activity.term}期</div>
+                <div class="commodity">奖品：${activity.commodity.name}</div>
+            </div>
+        </c:forEach>
+    </div>
+    <div class="submit">
+        <button type="button" id="submitLotteryActivityFilter" class="btn btn-success">确定</button>
+        <button type="button" id="cancelLotteryActivityFilter" class="btn btn-default">取消</button>
+    </div>
+</form>

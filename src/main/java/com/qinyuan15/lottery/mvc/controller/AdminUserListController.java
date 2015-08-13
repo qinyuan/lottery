@@ -1,10 +1,12 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.google.common.collect.Lists;
+import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.SystemInfoSendRecordDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.lottery.mvc.mail.NormalMailSender;
+import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mail.MailAccountDao;
 import com.qinyuan15.utils.mvc.controller.DatabaseTable;
 import com.qinyuan15.utils.mvc.controller.TableController;
@@ -18,13 +20,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Controller
 public class AdminUserListController extends TableController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminUserListController.class);
 
+    private final static String MIN_LIVENESS_SESSION_KEY = "admin-user-list-min-liveness";
+    private final static String FILTER_LOTTERY_ACTIVITY_IDS_SESSION_KEY = "admin-user-list-filter-lottery-activity-ids";
+
     @RequestMapping("/admin-user-list")
-    public String index(@RequestParam(value = "displayMode", required = false) String displayMode) {
+    public String index(@RequestParam(value = "displayMode", required = false) String displayMode,
+                        @RequestParam(value = "minLiveness", required = false) Integer minLiveness) {
         IndexHeaderUtils.setHeaderParameters(this);
 
         if (displayMode != null && displayMode.equals("table")) {
@@ -37,13 +45,22 @@ public class AdminUserListController extends TableController {
             setAttribute("activeUserCount", userDao.countActiveUsers());
             setAttribute("directlyRegisterUserCount", userDao.countDirectlyRegisterUsers());
             setAttribute("invitedRegisterUserCount", userDao.countInvitedRegisterUsers());
+            setAttribute("lotteryActivities", new LotteryActivityDao().getInstances());
+
+            if (IntegerUtils.isPositive(minLiveness)) {
+                session.setAttribute(MIN_LIVENESS_SESSION_KEY, minLiveness);
+            }
+            setAttribute("minLiveness", session.getAttribute(MIN_LIVENESS_SESSION_KEY));
+
+            addCss("resources/js/lib/font-awesome/css/font-awesome.min", false);
+            addCss("resources/js/lib/buttons/buttons.min", false);
         }
 
         setAttribute("mailAccounts", new MailAccountDao().getInstances());
 
         // bootstrap switch
-        addJs("lib/bootstrap/js/bootstrap-switch", false);
-        addCss("resources/js/lib/bootstrap/css/bootstrap-switch.min", false);
+        //addJs("lib/bootstrap/js/bootstrap-switch", false);
+        //addCss("resources/js/lib/bootstrap/css/bootstrap-switch.min", false);
 
         // icheck
         addCss("resources/js/lib/icheck/skins/all", false);
@@ -54,6 +71,26 @@ public class AdminUserListController extends TableController {
         addCss("admin-form");
         addCssAndJs("admin-user-list");
         return "admin-user-list";
+    }
+
+    @RequestMapping(value = "/admin-user-list-add-lottery-activity-filters.json", method = RequestMethod.POST)
+    @ResponseBody
+    public String addLotteryActivityFilters(@RequestParam(value = "filterLotteryActivityIds", required = true)
+                                            Integer[] filterLotteryActivityIds) {
+        if (filterLotteryActivityIds != null && filterLotteryActivityIds.length > 0) {
+            getFilterLotteryActivityIds().addAll(Lists.newArrayList(filterLotteryActivityIds));
+        }
+        return success();
+    }
+
+    @SuppressWarnings("unchecked")
+    private Set<Integer> getFilterLotteryActivityIds() {
+        Object idsObject = session.getAttribute(FILTER_LOTTERY_ACTIVITY_IDS_SESSION_KEY);
+        if (idsObject == null || !(idsObject instanceof Set)) {
+            return new TreeSet<>();
+        } else {
+            return (Set) idsObject;
+        }
     }
 
     @RequestMapping(value = "/admin-user-list-send-mail.json", method = RequestMethod.POST)
