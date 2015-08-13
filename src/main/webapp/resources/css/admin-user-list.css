@@ -1,12 +1,36 @@
 div.display-mode {
     font-size: 12pt;
     padding: 10px 0;
+    border-bottom: 1px solid #e5e5e5;
 }
 
+/* list mode style start */
+div.count {
+    margin: 15px 0 5px;
+}
+
+div.count > span {
+    padding-right: 40px;
+    font-size: 10pt;
+}
+
+div.count span.number {
+    font-size: 14pt;
+    font-weight: bold;
+    font-style: italic;
+    color: #20AE33;
+}
+
+/* list mode style end */
+
+/* table mode style start */
 div.buttons {
     margin: 15px 0 5px;
 }
 
+/* table mode style end */
+
+/* float panel style start */
 form .comment {
     color: #418940;
     font-size: 9pt;
@@ -78,3 +102,5 @@ div.preview-panel div.button {
     font-size: 12pt;
     margin-bottom: 5px;
 }
+
+/* float-panel style end */
