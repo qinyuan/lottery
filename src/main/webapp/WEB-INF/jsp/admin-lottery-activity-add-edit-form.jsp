@@ -6,6 +6,13 @@
             <table>
                 <tbody>
                 <tr>
+                    <td class="title">期数<span class="required">*</span></td>
+                    <td class="input">
+                        第<input style="width:160px;margin:0 8px;" type="text" name="term" class="form-control"
+                                value="${nextTerm}" placeholder="数字格式，如'123'等"/>期
+                    </td>
+                </tr>
+                <tr>
                     <td class="title">奖品<span class="required">*</span></td>
                     <td class="input">
                         <c:set var="selectFormItems" value="${allCommodities}"/>
@@ -14,10 +21,10 @@
                         <%@include file="widget-select-form.jsp" %>
                     </td>
                     <td class="title">开始时间<span class="required">*</span></td>
-                    <td class="content" style="width: 300px;">
+                    <td class="content" style="width:300px;">
                         <input type="text" name="startTime" class="form-control"
                                placeholder="格式如'2015-01-01 09:00:00'" disabled/>
-                        <span style="padding-left: 10px;">
+                        <span style="padding-left:10px;">
                             <input type="checkbox" name="autoStartTime" checked>自动生成
                         </span>
                     </td>
@@ -25,7 +32,7 @@
                 <tr>
                     <td class="title">绑定双色球<span class="required">*</span></td>
                     <td class="content">
-                        第<input style="width:160px; margin: 0 8px;" type="text" name="dualColoredBallTerm"
+                        第<input style="width:160px;margin:0 8px;" type="text" name="dualColoredBallTerm"
                                 class="form-control" value="${nextDualColoredBallTerm}"
                                 maxlength="7" placeholder="格式如'2015077'等"/>期
                     </td>

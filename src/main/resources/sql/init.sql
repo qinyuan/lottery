@@ -51,6 +51,7 @@ create table help_item (
 
 create table lottery_activity(
   id int primary key auto_increment,
+  term int unique not null,
   commodity_id int not null,
   start_time datetime not null,
   expect_end_time datetime,

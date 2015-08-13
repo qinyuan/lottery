@@ -15,4 +15,9 @@ public class LotteryActivityDaoTest {
     public void testIncreaseMaxSerialNumber() {
         //dao.increaseMaxSerialNumber(25, 2);
     }
+
+    @Test
+    public void testGetMaxTerm() {
+        System.out.println(new LotteryActivityDao().getMaxTerm());
+    }
 }

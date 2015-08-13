@@ -93,9 +93,14 @@ public class LotteryActivityDao {
         return activities.size() == 0 ? null : activities.get(0);
     }
 
-    public Integer add(Integer commodityId, String startTime, String expectEndTime, Integer continuousSerialLimit,
-                       Integer expectParticipantCount, Integer dualColoredBallTerm) {
+    public Integer getMaxTerm() {
+        return (Integer) new HibernateListBuilder().getFirstItem("SELECT MAX(term) FROM LotteryActivity");
+    }
+
+    public Integer add(Integer term, Integer commodityId, String startTime, String expectEndTime,
+                       Integer continuousSerialLimit, Integer expectParticipantCount, Integer dualColoredBallTerm) {
         LotteryActivity activity = new LotteryActivity();
+        activity.setTerm(term);
         activity.setCommodityId(commodityId);
         activity.setStartTime(startTime);
         activity.setExpectEndTime(expectEndTime);
@@ -125,10 +130,11 @@ public class LotteryActivityDao {
         HibernateUtils.executeUpdate(hql);
     }
 
-    public void update(Integer id, Integer commodityId, String startTime, String expectEndTime,
+    public void update(Integer id, Integer term, Integer commodityId, String startTime, String expectEndTime,
                        Integer continuousSerialLimit, Integer expectParticipantCount,
                        Integer virutalLiveness, String virtualLivenessUsers, Integer dualColoredBallTerm) {
         LotteryActivity activity = getInstance(id);
+        activity.setTerm(term);
         activity.setCommodityId(commodityId);
         activity.setStartTime(startTime);
         activity.setExpectEndTime(expectEndTime);

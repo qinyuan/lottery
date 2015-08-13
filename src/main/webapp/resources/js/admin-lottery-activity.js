@@ -2,6 +2,7 @@
 (function () {
     // codes about lottery activity form
     var $form = $('#lotteryActivityForm');
+    var $term = $form.getInputByName('term');
     var $startTime = $form.getInputByName('startTime');
     var $autoStartTime = $form.getInputByName('autoStartTime');
     var $expectEndTime = $form.getInputByName('expectEndTime');
@@ -25,11 +26,12 @@
             $livenessRow.hide();
         }
         $form.fadeIn(300, function () {
-            if ($autoStartTime.get(0).checked) {
-                $dualColoredBallTerm.focusOrSelect();
-            } else {
-                $startTime.focusOrSelect();
-            }
+            $term.focusOrSelect();
+            /*if ($autoStartTime.get(0).checked) {
+             $dualColoredBallTerm.focusOrSelect();
+             } else {
+             $startTime.focusOrSelect();
+             }*/
         });
     }
 
@@ -45,6 +47,18 @@
     }
 
     function validateInputForm() {
+        if ($term.trimVal() == '') {
+            alert('期数不能为空！');
+            $term.focusOrSelect();
+            return false;
+        }
+
+        if (!JSUtils.isNumberString($term.val())) {
+            alert('期数必须为数字格式！');
+            $term.focusOrSelect();
+            return false;
+        }
+
         if (!$autoStartTime.get(0).checked) {
             var startTime = $startTime.trimVal();
             if (startTime == '') {
@@ -129,6 +143,7 @@
             $.post('admin-lottery-activity-add-edit.json', $form.serialize(), function (data) {
                 if (!data.success) {
                     alert(data.detail);
+                    return;
                 }
                 if ($form.getInputByName('id').val()) {
                     // if edit, just reload

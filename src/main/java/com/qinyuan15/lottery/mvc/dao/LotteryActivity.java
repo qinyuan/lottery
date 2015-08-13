@@ -4,10 +4,9 @@ import com.qinyuan15.lottery.mvc.lottery.LotteryLotCounter;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.hibernate.PersistObject;
 
-import java.util.List;
-
 public class LotteryActivity extends PersistObject {
     private Integer commodityId;
+    private Integer term;
     private String startTime;
     private String expectEndTime;
     private String endTime;
@@ -28,6 +27,14 @@ public class LotteryActivity extends PersistObject {
 
     public void setCommodityId(Integer commodityId) {
         this.commodityId = commodityId;
+    }
+
+    public Integer getTerm() {
+        return term;
+    }
+
+    public void setTerm(Integer term) {
+        this.term = term;
     }
 
     public String getStartTime() {

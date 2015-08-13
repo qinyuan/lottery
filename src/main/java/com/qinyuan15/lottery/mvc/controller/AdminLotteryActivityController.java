@@ -39,6 +39,7 @@ public class AdminLotteryActivityController extends ImageController {
         DualColoredBallRecord latestRecord = new DualColoredBallRecordDao().getLatestInstance();
         setAttribute("nextDualColoredBallTerm", latestRecord.getYear() +
                 new DecimalFormat("000").format(latestRecord.getTerm() + 1));
+        setAttribute("nextTerm", new LotteryActivityDao().getMaxTerm() + 1);
 
         setTitle("抽奖管理");
         addJs("lib/bootstrap/js/bootstrap.min", false);
@@ -52,6 +53,7 @@ public class AdminLotteryActivityController extends ImageController {
     @RequestMapping("/admin-lottery-activity-add-edit.json")
     @ResponseBody
     public String addEdit(@RequestParam(value = "id", required = false) Integer id,
+                          @RequestParam(value = "term", required = true) Integer term,
                           @RequestParam(value = "commodityId", required = true) Integer commodityId,
                           @RequestParam(value = "startTime", required = false) String startTime,
                           @RequestParam(value = "autoStartTime", required = false) String autoStartTime,
@@ -67,6 +69,10 @@ public class AdminLotteryActivityController extends ImageController {
             if (!DateUtils.isDateOrDateTime(startTime)) {
                 return fail("开始时间格式错误！");
             }
+        }
+
+        if (!IntegerUtils.isPositive(term)) {
+            return fail("期数未选择！");
         }
 
         if (!IntegerUtils.isPositive(commodityId)) {
@@ -95,10 +101,13 @@ public class AdminLotteryActivityController extends ImageController {
         try {
             LotteryActivityDao dao = new LotteryActivityDao();
             if (IntegerUtils.isPositive(id)) {
-                dao.update(id, commodityId, startTime, expectEndTime, continuousSerialLimit,
+                dao.update(id, term, commodityId, startTime, expectEndTime, continuousSerialLimit,
                         expectParticipantCount, virtualLiveness, virtualLivenessUsers, dualColoredBallTerm);
             } else {
-                dao.add(commodityId, startTime, expectEndTime, continuousSerialLimit,
+                if (dao.hasActiveLottery(commodityId)) {
+                    return fail("此商品的上一期抽奖还未结束，不能重复添加抽奖！");
+                }
+                dao.add(term, commodityId, startTime, expectEndTime, continuousSerialLimit,
                         expectParticipantCount, dualColoredBallTerm);
             }
             return success();

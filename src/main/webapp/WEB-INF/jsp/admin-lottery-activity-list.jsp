@@ -3,6 +3,7 @@
 <table class="normal">
     <colgroup>
         <col class="index"/>
+        <col class="term"/>
         <col class="commodity"/>
         <col class="start-time"/>
         <col class="${listExpire ? 'end-time' : 'expect-end-time'}"/>
@@ -24,6 +25,7 @@
     </colgroup>
     <thead>
     <th>序号</th>
+    <th>期数</th>
     <th>奖品</th>
     <th>开始时间</th>
     <th>${listExpire ? '实际' : '预计'}结束时间</th>
@@ -47,6 +49,7 @@
     <c:forEach var="activity" items="${activities}" varStatus="status">
         <tr data-options="id:${activity.id}">
             <td>${status.index + rowStartIndex}</td>
+            <td class="term">${activity.term}</td>
             <td class="commodity" data-options="commodityId: ${activity.commodity.id}">${activity.commodity.name}</td>
             <td class="start-time">${activity.startTime}</td>
             <td class="${listExpire ? 'end-time' : 'expect-end-time'}"
