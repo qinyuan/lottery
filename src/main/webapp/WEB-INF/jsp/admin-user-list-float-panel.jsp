@@ -57,12 +57,15 @@
 </div>
 <form class="float-panel shadow edit-form" id="lotteryActivityFilterForm">
     <div class="activities">
-        <c:forEach var="activity" items="${lotteryActivities}">
+        <c:forEach var="activity" items="${unselectedLotteryActivities}">
             <div class="activity" title="单击选择" data-options="id:${activity.id}">
                 <div class="term">第${activity.term}期</div>
                 <div class="commodity">奖品：${activity.commodity.name}</div>
             </div>
         </c:forEach>
+        <c:if test="${fn:length(unselectedLotteryActivities) == 0}">
+            <div class="no-activity">没有可供筛选的活动！</div>
+        </c:if>
     </div>
     <div class="submit">
         <button type="button" id="submitLotteryActivityFilter" class="btn btn-success">确定</button>

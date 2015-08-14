@@ -287,6 +287,12 @@
 })();
 (function () {
     // code about list mode
+    $('div.user-filter > div.content div.activity div.item div.icon').click(function () {
+        var id = $(this).getParentByTagNameAndClass('div', 'item').dataOptions('id');
+        var url = 'admin-user-list-delete-lottery-activity-filter.json';
+        $.post(url, {filterLotteryActivityId: id}, JSUtils.normalAjaxCallback);
+    });
+
     var $livenessFilter = $('div.user-filter div.content div.liveness').setDefaultButton('livenessFilterSubmit');
     var $livenessFilterButton = $livenessFilter.find('button').click(function () {
         var minLiveness = $livenessFilterInput.val();
@@ -350,6 +356,20 @@
 
     $('div.user-filter > div.content div.activity button').click(function () {
         activityFilterForm.show();
+    });
+
+    $('div.user-list div.content div.list-body div.user > div').click(function () {
+        var $this = $(this);
+        if (!$this.hasClass('id')) {
+            var checkbox = $this.parent().find('input[type=checkbox]').get(0);
+            checkbox.checked = !(checkbox.checked);
+        }
+    });
+    $('#selectOrUnselectUsers').click(function () {
+        var checked = this.checked;
+        $('div.user-list div.content div.list-body div.user input[type=checkbox]').each(function () {
+            this.checked = checked;
+        });
     });
 })();
 $('#statisticLink').addClass('emphasize');

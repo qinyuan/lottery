@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="inc-taglib.jsp" %>
 <div class="buttons">
-    <button class="btn btn-primary btn-sm" id="openMailForm" disabled>发送邮件</button>
-    <button class="btn btn-info btn-sm" id="openSystemInfoForm" disabled>发送系统消息</button>
+    <button class="btn btn-primary btn-sm" id="openSystemInfoForm" disabled>发送系统消息</button>
+    <button class="btn btn-info btn-sm" id="openMailForm" disabled>发送邮件</button>
 </div>
 <table class="normal">
     <colgroup>

@@ -1,12 +1,10 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.google.common.collect.Lists;
-import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
-import com.qinyuan15.lottery.mvc.dao.SystemInfoSendRecordDao;
-import com.qinyuan15.lottery.mvc.dao.User;
-import com.qinyuan15.lottery.mvc.dao.UserDao;
+import com.qinyuan15.lottery.mvc.dao.*;
 import com.qinyuan15.lottery.mvc.mail.NormalMailSender;
 import com.qinyuan15.utils.IntegerUtils;
+import com.qinyuan15.utils.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.mail.MailAccountDao;
 import com.qinyuan15.utils.mvc.controller.DatabaseTable;
 import com.qinyuan15.utils.mvc.controller.TableController;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -45,12 +44,26 @@ public class AdminUserListController extends TableController {
             setAttribute("activeUserCount", userDao.countActiveUsers());
             setAttribute("directlyRegisterUserCount", userDao.countDirectlyRegisterUsers());
             setAttribute("invitedRegisterUserCount", userDao.countInvitedRegisterUsers());
-            setAttribute("lotteryActivities", new LotteryActivityDao().getInstances());
 
-            if (IntegerUtils.isPositive(minLiveness)) {
+            if (IntegerUtils.isNotNegative(minLiveness)) {
                 session.setAttribute(MIN_LIVENESS_SESSION_KEY, minLiveness);
             }
-            setAttribute("minLiveness", session.getAttribute(MIN_LIVENESS_SESSION_KEY));
+            setAttribute("minLiveness", getMinLiveness());
+
+            List<LotteryActivity> selectedActivities = new ArrayList<>();
+            List<LotteryActivity> unselectedActivities = new ArrayList<>();
+            Set<Integer> filterLotteryActivityIds = getFilterLotteryActivityIds();
+            for (LotteryActivity activity : new LotteryActivityDao().getInstances()) {
+                if (filterLotteryActivityIds.contains(activity.getId())) {
+                    selectedActivities.add(activity);
+                } else {
+                    unselectedActivities.add(activity);
+                }
+            }
+            setAttribute("selectedLotteryActivities", selectedActivities);
+            setAttribute("unselectedLotteryActivities", unselectedActivities);
+
+            setAttribute("users", getSimpleTable(getMinLiveness(), filterLotteryActivityIds));
 
             addCss("resources/js/lib/font-awesome/css/font-awesome.min", false);
             addCss("resources/js/lib/buttons/buttons.min", false);
@@ -73,6 +86,27 @@ public class AdminUserListController extends TableController {
         return "admin-user-list";
     }
 
+    private int getMinLiveness() {
+        Object minLivenessFromSession = session.getAttribute(MIN_LIVENESS_SESSION_KEY);
+        if (minLivenessFromSession != null && minLivenessFromSession instanceof Integer) {
+            return (Integer) minLivenessFromSession;
+        } else {
+            return 0;
+        }
+    }
+
+    @RequestMapping(value = "/admin-user-list-delete-lottery-activity-filter.json", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteLotteryActivityFilter(@RequestParam(value = "filterLotteryActivityId", required = false)
+                                              Integer filterLotteryActivityId) {
+        if (IntegerUtils.isPositive(filterLotteryActivityId)) {
+            getFilterLotteryActivityIds().remove(filterLotteryActivityId);
+            return success();
+        } else {
+            return failByInvalidParam();
+        }
+    }
+
     @RequestMapping(value = "/admin-user-list-add-lottery-activity-filters.json", method = RequestMethod.POST)
     @ResponseBody
     public String addLotteryActivityFilters(@RequestParam(value = "filterLotteryActivityIds", required = true)
@@ -87,7 +121,9 @@ public class AdminUserListController extends TableController {
     private Set<Integer> getFilterLotteryActivityIds() {
         Object idsObject = session.getAttribute(FILTER_LOTTERY_ACTIVITY_IDS_SESSION_KEY);
         if (idsObject == null || !(idsObject instanceof Set)) {
-            return new TreeSet<>();
+            Set<Integer> ids = new TreeSet<>();
+            session.setAttribute(FILTER_LOTTERY_ACTIVITY_IDS_SESSION_KEY, ids);
+            return ids;
         } else {
             return (Set) idsObject;
         }
@@ -168,10 +204,41 @@ public class AdminUserListController extends TableController {
         return super.removeFilter();
     }
 
+    private String getBaseTableName() {
+        /*String livenessTable = "SELECT spread_user_id,SUM(liveness) AS sum_liveness FROM lottery_liveness " +
+                "WHERE activity_id=(SELECT MAX(id) FROM lottery_activity WHERE expire=false) GROUP BY spread_user_id";*/
+        String livenessTable = "SELECT spread_user_id,SUM(liveness) AS sum_liveness " +
+                "FROM lottery_liveness GROUP BY spread_user_id";
+        return "user AS u LEFT JOIN (" + livenessTable + ") AS l ON u.id=l.spread_user_id";
+    }
+
+    private List<Object[]> getSimpleTable(int minLiveness, Set<Integer> activityIds) {
+        String loginRecordTable = "SELECT MAX(login_time) AS last_login_time,user_id FROM login_record GROUP BY user_id";
+        String sql = "SELECT u.id,u.username,l.sum_liveness,DATE_FORMAT(lr.last_login_time,'%Y-%m-%d %T') FROM " +
+                getBaseTableName() + " LEFT JOIN (" + loginRecordTable + ") AS lr ON u.id=lr.user_id";
+
+        String whereClause = "";
+        if (minLiveness > 0) {
+            whereClause += " WHERE l.sum_liveness>=" + minLiveness;
+        }
+        for (Integer activityId : activityIds) {
+            if (!IntegerUtils.isPositive(activityId)) {
+                continue;
+            }
+            if (whereClause.isEmpty()) {
+                whereClause += " WHERE";
+            } else {
+                whereClause += " AND";
+            }
+            whereClause += " u.id IN (SELECT user_id FROM lottery_lot WHERE activity_id=" + activityId + ")";
+        }
+        sql += whereClause + " ORDER BY u.id ASC";
+
+        return new HibernateListBuilder().buildBySQL(sql);
+    }
+
     protected DatabaseTable getTable() {
-        String livenessTable = "SELECT spread_user_id,SUM(liveness) AS sum_liveness FROM lottery_liveness " +
-                "WHERE activity_id=(SELECT MAX(id) FROM lottery_activity WHERE expire=false) GROUP BY spread_user_id";
-        String tableName = "user AS u LEFT JOIN (" + livenessTable + ") AS l ON u.id=l.spread_user_id";
+        String tableName = getBaseTableName();
 
         String lotTable = "SELECT user_id,MAX(lot_time) AS last_lot_time FROM lottery_lot GROUP BY user_id";
         tableName += " LEFT JOIN (" + lotTable + ") AS lot ON u.id=lot.user_id";
