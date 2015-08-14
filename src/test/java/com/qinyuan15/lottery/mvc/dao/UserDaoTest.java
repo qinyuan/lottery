@@ -16,10 +16,10 @@ public class UserDaoTest {
 
     @Test
     public void testCount() {
-        System.out.println(userDao.countAllUsers());
-        System.out.println(userDao.countActiveUsers());
-        System.out.println(userDao.countDirectlyRegisterUsers());
-        System.out.println(userDao.countInvitedRegisterUsers());
+        System.out.println(userDao.countNormalUsers());
+        System.out.println(userDao.countActiveNormalUsers());
+        System.out.println(userDao.countDirectlyRegisterNormalUsers());
+        System.out.println(userDao.countInvitedRegisterNormalUsers());
     }
 
     @Test

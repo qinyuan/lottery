@@ -116,20 +116,24 @@ public class UserDao extends SimpleUserDao {
         return new HibernateListBuilder().build(User.class);
     }
 
-    public int countAllUsers() {
-        return new HibernateListBuilder().count(User.class);
+    public int countNormalUsers() {
+        return getNormalUserListBuilder().count(User.class);
     }
 
-    public int countActiveUsers() {
-        return new HibernateListBuilder().addEqualFilter("active", true).count(User.class);
+    public int countActiveNormalUsers() {
+        return getNormalUserListBuilder().addEqualFilter("active", true).count(User.class);
     }
 
-    public int countDirectlyRegisterUsers() {
-        return new HibernateListBuilder().addFilter("spreadUserId IS NULL").count(User.class);
+    public int countDirectlyRegisterNormalUsers() {
+        return getNormalUserListBuilder().addFilter("spreadUserId IS NULL").count(User.class);
     }
 
-    public int countInvitedRegisterUsers() {
-        return new HibernateListBuilder().addFilter("spreadUserId IS NOT NULL").count(User.class);
+    public int countInvitedRegisterNormalUsers() {
+        return getNormalUserListBuilder().addFilter("spreadUserId IS NOT NULL").count(User.class);
+    }
+
+    private HibernateListBuilder getNormalUserListBuilder() {
+        return new HibernateListBuilder().addEqualFilter("role", User.NORMAL);
     }
 
     public void updatePassword(Integer id, String password) {

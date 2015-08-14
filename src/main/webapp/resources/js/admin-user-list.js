@@ -171,7 +171,7 @@
     }).init();
 
     var users = ({
-        $checkboxes: $('table input.select-user'),
+        $checkboxes: $('input.select-user'),
         $selectAll: $('table thead th > input.select-all'),
         get$SelectedCheckboxes: function () {
             return  this.$checkboxes.filter(function () {
@@ -188,7 +188,13 @@
         getSelectedNames: function () {
             var names = [];
             this.get$SelectedCheckboxes().each(function () {
-                names.push($(this).getParentByTagName('tr').find('td.username').text());
+                var $this = $(this), username;
+                if ($this.hasClass('list-mode')) {
+                    username = $this.getParentByTagNameAndClass('div', 'user').find('div.username').text();
+                } else {
+                    username = $this.getParentByTagName('tr').find('td.username').text();
+                }
+                names.push(username);
             });
             return names;
         },

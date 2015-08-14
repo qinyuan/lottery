@@ -33,7 +33,7 @@
         <div class="list-body">
             <c:forEach var="user" items="${users}">
                 <div class="user">
-                    <div class="id"><input type="checkbox" name="userIds" value="${user[0]}"></div>
+                    <div class="id"><input type="checkbox" class="select-user list-mode" value="${user[0]}"></div>
                     <div class="username" title="姓名">${user[1]}</div>
                     <div class="liveness" title="爱心">${user[2] == null ? 0 : user[2]}</div>
                     <div class="login-time" title="最后一次登录时间">${user[3]}</div>

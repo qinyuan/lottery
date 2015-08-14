@@ -221,6 +221,7 @@ div.preview-panel {
 }
 
 div.preview-panel div.button {
+    width: 100%;
     text-align: center;
 }
 

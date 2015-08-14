@@ -40,10 +40,10 @@ public class AdminUserListController extends TableController {
         } else {
             setAttribute("displayMode", "list");
             UserDao userDao = new UserDao();
-            setAttribute("userCount", userDao.countAllUsers());
-            setAttribute("activeUserCount", userDao.countActiveUsers());
-            setAttribute("directlyRegisterUserCount", userDao.countDirectlyRegisterUsers());
-            setAttribute("invitedRegisterUserCount", userDao.countInvitedRegisterUsers());
+            setAttribute("userCount", userDao.countNormalUsers());
+            setAttribute("activeUserCount", userDao.countActiveNormalUsers());
+            setAttribute("directlyRegisterUserCount", userDao.countDirectlyRegisterNormalUsers());
+            setAttribute("invitedRegisterUserCount", userDao.countInvitedRegisterNormalUsers());
 
             if (IntegerUtils.isNotNegative(minLiveness)) {
                 session.setAttribute(MIN_LIVENESS_SESSION_KEY, minLiveness);
@@ -217,20 +217,15 @@ public class AdminUserListController extends TableController {
         String sql = "SELECT u.id,u.username,l.sum_liveness,DATE_FORMAT(lr.last_login_time,'%Y-%m-%d %T') FROM " +
                 getBaseTableName() + " LEFT JOIN (" + loginRecordTable + ") AS lr ON u.id=lr.user_id";
 
-        String whereClause = "";
+        String whereClause = " WHERE u.role='" + User.NORMAL + "'";
         if (minLiveness > 0) {
-            whereClause += " WHERE l.sum_liveness>=" + minLiveness;
+            whereClause += " AND l.sum_liveness>=" + minLiveness;
         }
         for (Integer activityId : activityIds) {
             if (!IntegerUtils.isPositive(activityId)) {
                 continue;
             }
-            if (whereClause.isEmpty()) {
-                whereClause += " WHERE";
-            } else {
-                whereClause += " AND";
-            }
-            whereClause += " u.id IN (SELECT user_id FROM lottery_lot WHERE activity_id=" + activityId + ")";
+            whereClause += " AND u.id IN (SELECT user_id FROM lottery_lot WHERE activity_id=" + activityId + ")";
         }
         sql += whereClause + " ORDER BY u.id ASC";
 
