@@ -42,9 +42,9 @@
             <c:choose>
                 <c:when test="${fn:length(users)>0}">
                     <div class="buttons">
-                        <input type="checkbox" id="selectOrUnselectUsers"/>全选/全不选
-                        <button class="btn btn-primary" id="openSystemInfoForm">发送系统消息</button>
-                        <button class="btn btn-info" id="openMailForm">发送邮件</button>
+                        <input type="checkbox" id="selectOrUnselectUsers" class="select-all"/>全选/全不选
+                        <button class="btn btn-primary" id="openSystemInfoForm" disabled>发送系统消息</button>
+                        <button class="btn btn-info" id="openMailForm" disabled>发送邮件</button>
                     </div>
                 </c:when>
                 <c:otherwise>

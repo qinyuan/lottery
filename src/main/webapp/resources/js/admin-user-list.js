@@ -172,7 +172,7 @@
 
     var users = ({
         $checkboxes: $('input.select-user'),
-        $selectAll: $('table thead th > input.select-all'),
+        $selectAll: $('input.select-all'),
         get$SelectedCheckboxes: function () {
             return  this.$checkboxes.filter(function () {
                 return this.checked;
@@ -363,19 +363,11 @@
     $('div.user-filter > div.content div.activity button').click(function () {
         activityFilterForm.show();
     });
-
     $('div.user-list div.content div.list-body div.user > div').click(function () {
         var $this = $(this);
         if (!$this.hasClass('id')) {
-            var checkbox = $this.parent().find('input[type=checkbox]').get(0);
-            checkbox.checked = !(checkbox.checked);
+            $this.parent().find('input[type=checkbox]').trigger('click');
         }
-    });
-    $('#selectOrUnselectUsers').click(function () {
-        var checked = this.checked;
-        $('div.user-list div.content div.list-body div.user input[type=checkbox]').each(function () {
-            this.checked = checked;
-        });
     });
 })();
 $('#statisticLink').addClass('emphasize');
