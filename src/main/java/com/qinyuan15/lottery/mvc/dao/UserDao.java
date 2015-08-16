@@ -116,6 +116,10 @@ public class UserDao extends SimpleUserDao {
         return new HibernateListBuilder().build(User.class);
     }
 
+    public int countAllUsers() {
+        return new HibernateListBuilder().count(User.class);
+    }
+
     public int countNormalUsers() {
         return getNormalUserListBuilder().count(User.class);
     }

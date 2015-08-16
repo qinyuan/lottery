@@ -23,6 +23,7 @@ div.count span.number {
 
 div.user-list {
     border-top: 1px solid #e5e5e5;;
+    margin: 15px 0;
     overflow: hidden;
 }
 
@@ -147,9 +148,32 @@ div.user-list div.content div.list-body div.buttons #openSystemInfoForm {
     margin-left: 20px;
 }
 
-div.user-list div.content div.list-body div.no-user {
+div.user-list div.content div.list-body div.no-user,
+div.user-list div.content div.location-count div.locations div.no-register {
     color: #C24332;
     font-size: 12pt;
+}
+
+div.location-count {
+    border-top: 1px solid #e5e5e5;
+    overflow: hidden;
+    padding-bottom: 30px;
+}
+
+div.location-count div.title {
+    margin: 15px 0 5px;
+    font-size: 12pt;
+}
+
+div.location-count div.locations {
+    overflow: hidden;
+    padding: 0 25px;
+}
+
+div.location-count div.locations div.location {
+    font-size: 9pt;
+    float: left;
+    margin: 4px 6px;
 }
 
 /* list mode style end */

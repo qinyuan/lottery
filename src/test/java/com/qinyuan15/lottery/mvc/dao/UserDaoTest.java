@@ -16,6 +16,7 @@ public class UserDaoTest {
 
     @Test
     public void testCount() {
+        System.out.println(userDao.countAllUsers());
         System.out.println(userDao.countNormalUsers());
         System.out.println(userDao.countActiveNormalUsers());
         System.out.println(userDao.countDirectlyRegisterNormalUsers());

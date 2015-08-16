@@ -54,3 +54,16 @@
         </div>
     </div>
 </div>
+<div class="location-count">
+    <div class="title">注册区域人数统计(按第一次登录地区)</div>
+    <div class="locations">
+        <c:forEach var="locationCount" items="${locationCounts}">
+            <div class="location">
+                ${locationCount.left}: ${locationCount.right}
+            </div>
+        </c:forEach>
+        <c:if test="${fn:length(locationCounts) == 0}">
+            <span class="no-register">无注册用户</span>
+        </c:if>
+    </div>
+</div>

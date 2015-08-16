@@ -2,6 +2,7 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.google.common.collect.Lists;
 import com.qinyuan15.lottery.mvc.dao.*;
+import com.qinyuan15.lottery.mvc.login.RegisterLocationCounter;
 import com.qinyuan15.lottery.mvc.mail.NormalMailSender;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.hibernate.HibernateListBuilder;
@@ -64,6 +65,7 @@ public class AdminUserListController extends TableController {
             setAttribute("unselectedLotteryActivities", unselectedActivities);
 
             setAttribute("users", getSimpleTable(getMinLiveness(), filterLotteryActivityIds));
+            setAttribute("locationCounts", new RegisterLocationCounter().count());
 
             addCss("resources/js/lib/font-awesome/css/font-awesome.min", false);
             addCss("resources/js/lib/buttons/buttons.min", false);
