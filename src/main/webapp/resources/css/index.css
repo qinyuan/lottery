@@ -1,4 +1,5 @@
-div.posters > div.poster {
+div.posters div.poster {
+    position: relative;
     text-align: center;
     width: 100%;
     min-width: 1000px;
@@ -6,6 +7,41 @@ div.posters > div.poster {
     background: no-repeat top center;
 }
 
-div.posters > div.poster > div.image {
+div.posters div.poster div.background {
+    background: no-repeat top center;
+}
+
+div.posters div.poster > div.image {
     line-height: 0;
+}
+
+div.posters div.poster div.dots {
+    position: absolute;
+    bottom: 10px;
+    text-align: center;
+    left: 50%;
+}
+
+div.posters div.poster div.dots div.dot {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin: 0 4px;
+    text-indent: -999em;
+    border: 3px solid #fff;
+    border-radius: 9px;
+    cursor: pointer;
+    opacity: .4;
+    -webkit-transition: background .5s, opacity .5s;
+    -moz-transition: background .5s, opacity .5s;
+    transition: background .5s, opacity .5s;
+}
+
+div.posters div.poster div.dots div.dot.selected {
+    border-color: #017CB3;
+    background-color: #017CB3;
+    opacity: 1;
+    -webkit-transition: background 1s, opacity 1s;
+    -moz-transition: background 1s, opacity 1s;
+    transition: background 1s, opacity 1s;
 }
