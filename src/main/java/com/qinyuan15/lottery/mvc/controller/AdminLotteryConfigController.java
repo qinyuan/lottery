@@ -15,18 +15,18 @@ public class AdminLotteryConfigController extends ImageController {
         CommodityHeaderUtils.setHeaderParameters(this);
 
         // data about sina weibo
-        setAttribute("sinaWeiboTitle", AppConfig.getSinaWeiboTitle());
-        setAttribute("sinaWeiboIncludePicture", AppConfig.getSinaWeiboIncludePicture());
+        setAttribute("sinaWeiboTitle", AppConfig.getLotterySinaWeiboTitle());
+        setAttribute("sinaWeiboIncludePicture", AppConfig.getLotterySinaWeiboIncludePicture());
 
         // data about qq
-        setAttribute("qqTitle", AppConfig.getQQTitle());
-        setAttribute("qqSummary", AppConfig.getQQSummary());
-        setAttribute("qqIncludePicture", AppConfig.getQQIncludePicture());
+        setAttribute("qqTitle", AppConfig.getLotteryQQTitle());
+        setAttribute("qqSummary", AppConfig.getLotteryQQSummary());
+        setAttribute("qqIncludePicture", AppConfig.getLotteryQQIncludePicture());
 
         // data about qzone
-        setAttribute("qzoneTitle", AppConfig.getQZoneTitle());
-        setAttribute("qzoneSummary", AppConfig.getQzoneSummary());
-        setAttribute("qzoneIncludePicture", AppConfig.getQzoneIncludePicture());
+        setAttribute("qzoneTitle", AppConfig.getLotteryQzoneTitle());
+        setAttribute("qzoneSummary", AppConfig.getLotteryQzoneSummary());
+        setAttribute("qzoneIncludePicture", AppConfig.getLotteryQzoneIncludePicture());
 
         // data about new lottery chance
         setAttribute("remindNewLotteryChanceByMail", AppConfig.getRemindNewLotteryChanceByMail());
@@ -74,14 +74,14 @@ public class AdminLotteryConfigController extends ImageController {
                          @RequestParam(value = "remindNewLotteryChanceBySystemInfo", required = false) String remindNewLotteryChanceBySystemInfo,
                          @RequestParam(value = "newLotteryChanceSystemInfoTemplate", required = true) String newLotteryChanceSystemInfoTemplate) {
 
-        AppConfig.updateSinaWeiboTitle(sinaWeiboTitle);
-        AppConfig.updateSinaWeiboIncludePicture(sinaWeiboIncludePicture);
-        AppConfig.updateQQTitle(qqTitle);
-        AppConfig.updateQQSummary(qqSummary);
-        AppConfig.updateQQIncludePicture(qqIncludePicture);
-        AppConfig.updateQzoneTitle(qzoneTitle);
-        AppConfig.updateQzoneSummary(qzoneSummary);
-        AppConfig.updateQzoneIncludePicture(qzoneIncludePicture);
+        AppConfig.updateLotterySinaWeiboTitle(sinaWeiboTitle);
+        AppConfig.updateLotterySinaWeiboIncludePicture(sinaWeiboIncludePicture);
+        AppConfig.updateLotteryQQTitle(qqTitle);
+        AppConfig.updateLotteryQQSummary(qqSummary);
+        AppConfig.updateLotteryQQIncludePicture(qqIncludePicture);
+        AppConfig.updateLotteryQzoneTitle(qzoneTitle);
+        AppConfig.updateLotteryQzoneSummary(qzoneSummary);
+        AppConfig.updateLotteryQzoneIncludePicture(qzoneIncludePicture);
         AppConfig.updateNewLotLiveness(newLotLiveness);
         AppConfig.updateShareSucceedLiveness(shareSucceedLiveness);
         AppConfig.updateLotteryRule(lotteryRule);
