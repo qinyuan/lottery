@@ -2,10 +2,10 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.*;
-import com.qinyuan15.lottery.mvc.lottery.LivenessQuerier;
-import com.qinyuan15.lottery.mvc.lottery.LotteryLotCounter;
-import com.qinyuan15.lottery.mvc.lottery.LotteryLotCreator;
-import com.qinyuan15.lottery.mvc.lottery.LotteryShareUrlBuilder;
+import com.qinyuan15.lottery.mvc.activity.LivenessQuerier;
+import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
+import com.qinyuan15.lottery.mvc.activity.LotteryLotCreator;
+import com.qinyuan15.lottery.mvc.activity.LotteryShareUrlBuilder;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.database.hibernate.HibernateUtils;
@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Controller about lottery
+ * Controller about activity
  * Created by qinyuan on 15-7-10.
  */
 @Controller
@@ -48,7 +48,7 @@ public class LotteryController extends ImageController {
             return failByInvalidParam();
         }
 
-        // if current commodity has no lottery
+        // if current commodity has no activity
         if (!new CommodityDao().hasLottery(commodityId)) {
             return fail("noLottery");
         }
@@ -68,7 +68,7 @@ public class LotteryController extends ImageController {
         User user = new UserDao().getInstance(securitySearcher.getUserId());
         result.put("username", user.getUsername());
 
-        // if no privilege to take lottery
+        // if no privilege to take activity
         if (!SecurityUtils.hasAuthority(User.NORMAL)) {
             result.put(SUCCESS, false);
             result.put(DETAIL, "noPrivilege");

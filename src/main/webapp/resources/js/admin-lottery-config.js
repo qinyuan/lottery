@@ -28,7 +28,7 @@
             $systemInfoConfig.hide(200);
         }
     });
-    JSUtils.loadSelectFormEventsAndValue($('div.new-lottery-chance-mail-select'),
+    JSUtils.loadSelectFormEventsAndValue($('div.new-activity-chance-mail-select'),
         window['currentNewLotteryChanceMailAccountId']);
 })();
 $('#commodityLotteryLink').addClass('emphasize');

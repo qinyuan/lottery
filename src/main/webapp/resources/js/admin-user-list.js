@@ -295,7 +295,7 @@
     // code about list mode
     $('div.user-filter > div.content div.activity div.item div.icon').click(function () {
         var id = $(this).getParentByTagNameAndClass('div', 'item').dataOptions('id');
-        var url = 'admin-user-list-delete-lottery-activity-filter.json';
+        var url = 'admin-user-list-delete-activity-activity-filter.json';
         $.post(url, {filterLotteryActivityId: id}, JSUtils.normalAjaxCallback);
     });
 
@@ -352,7 +352,7 @@
                 if (self.$form.find('input[name=' + self.inputName + ']').size() == 0) {
                     alert('未选择任何一期活动');
                 } else {
-                    var url = 'admin-user-list-add-lottery-activity-filters.json';
+                    var url = 'admin-user-list-add-activity-activity-filters.json';
                     $.post(url, self.$form.serialize(), JSUtils.normalAjaxCallback);
                 }
             });

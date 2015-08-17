@@ -165,7 +165,7 @@
     }).init();
 })();
 (function () {
-    // codes about lottery
+    // codes about activity
     function setFloatPanelUsername($floatPanel, username) {
         $floatPanel.find('div.title div.text span.username').text(username);
     }
@@ -324,15 +324,15 @@
         // serial number
         var serialNumbers = options['serialNumbers'];
         if (serialNumbers) {
-            var $numberList = $lotteryResult.find('div.body div.my-lottery div.number div.number-list').empty();
+            var $numberList = $lotteryResult.find('div.body div.my-activity div.number div.number-list').empty();
             for (var i = 0, len = serialNumbers.length; i < len; i++) {
                 $numberList.append('<span>' + serialNumbers[i] + '</span>')
             }
         }
 
         // liveness
-        $lotteryResult.find('div.body div.my-lottery span.my-liveness').text(options['liveness']);
-        $lotteryResult.find('div.body div.my-lottery span.max-liveness').text(options['maxLiveness'])
+        $lotteryResult.find('div.body div.my-activity span.my-liveness').text(options['liveness']);
+        $lotteryResult.find('div.body div.my-activity span.max-liveness').text(options['maxLiveness'])
             .attr('title', options['maxLivenessUsers']);
 
         // share url
@@ -395,7 +395,7 @@
     getLotteryLot = function () {
         /*var $selectedSnapshot = $('div.body div.snapshots div.snapshot.selected');
          var commodityId = $selectedSnapshot.dataOptions('id');*/
-        $.post('take-lottery.json', {
+        $.post('take-activity.json', {
             'commodityId': getSelectedCommodityId()
         }, function (data) {
             if (data.success) {

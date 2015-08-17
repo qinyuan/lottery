@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.google.common.base.Joiner;
-import com.qinyuan15.lottery.mvc.lottery.LotteryLotCounter;
+import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
 import com.qinyuan15.lottery.mvc.mail.NewLotteryChanceMailSender;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
@@ -26,10 +26,10 @@ class LotteryLivenessDaoBackup {
     }
 
     /**
-     * Get liveness of certain user in his/her last lottery activity
+     * Get liveness of certain user in his/her last activity activity
      *
      * @param userId id of user
-     * @return liveness of last lottery activity
+     * @return liveness of last activity activity
      */
     public int getLiveness(Integer userId) {
         LotteryActivity activity = getLastLotteryActivity();
@@ -110,7 +110,7 @@ class LotteryLivenessDaoBackup {
             try {
                 new NewLotteryChanceMailSender().send(spreadUserId, activityId);
             } catch (Exception e) {
-                LOGGER.error("Fail to send new lottery chance mail, activityId: {}, userId: {}, info: {}",
+                LOGGER.error("Fail to send new activity chance mail, activityId: {}, userId: {}, info: {}",
                         activityId, spreadUserId, e);
             }
         }

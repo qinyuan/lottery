@@ -4,7 +4,7 @@ import com.qinyuan15.lottery.mvc.dao.CommodityDao;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecord;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
-import com.qinyuan15.lottery.mvc.lottery.DualColoredBallTermValidator;
+import com.qinyuan15.lottery.mvc.activity.DualColoredBallTermValidator;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mvc.controller.ImageController;
@@ -45,8 +45,8 @@ public class AdminLotteryActivityController extends ImageController {
         addJs("lib/bootstrap/js/bootstrap.min", false);
         addJs("lib/ckeditor/ckeditor", false);
         addCss("admin-form");
-        addCssAndJs("admin-lottery-activity");
-        return "admin-lottery-activity";
+        addCssAndJs("admin-activity-activity");
+        return "admin-activity-activity";
     }
 
 
@@ -114,7 +114,7 @@ public class AdminLotteryActivityController extends ImageController {
             }
             return success();
         } catch (Exception e) {
-            LOGGER.error("Fail to add or update lottery activity, info: {}", e);
+            LOGGER.error("Fail to add or update activity activity, info: {}", e);
             return failByDatabaseError();
         }
     }
@@ -135,7 +135,7 @@ public class AdminLotteryActivityController extends ImageController {
             dao.delete(id);
             return success();
         } catch (Exception e) {
-            LOGGER.error("fail to delete lottery activity, info: {}", e);
+            LOGGER.error("fail to delete activity activity, info: {}", e);
             return failByDatabaseError();
         }
     }
@@ -151,7 +151,7 @@ public class AdminLotteryActivityController extends ImageController {
             new LotteryActivityDao().end(id);
             return success();
         } catch (Exception e) {
-            LOGGER.error("fail to stop lottery activity, info: {}", e);
+            LOGGER.error("fail to stop activity activity, info: {}", e);
             return failByDatabaseError();
         }
     }
