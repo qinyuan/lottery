@@ -2,10 +2,10 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.*;
-import com.qinyuan15.lottery.mvc.lottery.LivenessQuerier;
-import com.qinyuan15.lottery.mvc.lottery.LotteryLotCounter;
-import com.qinyuan15.lottery.mvc.lottery.LotteryLotCreator;
-import com.qinyuan15.lottery.mvc.lottery.LotteryShareUrlBuilder;
+import com.qinyuan15.lottery.mvc.activity.LivenessQuerier;
+import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
+import com.qinyuan15.lottery.mvc.activity.LotteryLotCreator;
+import com.qinyuan15.lottery.mvc.activity.LotteryShareUrlBuilder;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.database.hibernate.HibernateUtils;

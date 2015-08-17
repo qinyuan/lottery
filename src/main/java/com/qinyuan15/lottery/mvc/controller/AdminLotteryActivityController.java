@@ -4,7 +4,7 @@ import com.qinyuan15.lottery.mvc.dao.CommodityDao;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecord;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
-import com.qinyuan15.lottery.mvc.lottery.DualColoredBallTermValidator;
+import com.qinyuan15.lottery.mvc.activity.DualColoredBallTermValidator;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mvc.controller.ImageController;

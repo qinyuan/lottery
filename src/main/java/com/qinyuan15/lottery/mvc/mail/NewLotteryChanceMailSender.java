@@ -3,7 +3,7 @@ package com.qinyuan15.lottery.mvc.mail;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.User;
-import com.qinyuan15.lottery.mvc.lottery.NewLotteryChanceInfoSender;
+import com.qinyuan15.lottery.mvc.activity.NewLotteryChanceInfoSender;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mail.MailSenderBuilder;
 import org.slf4j.Logger;

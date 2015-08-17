@@ -2,8 +2,8 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.google.common.base.Joiner;
 import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.lottery.mvc.lottery.LotteryLotCounter;
-import com.qinyuan15.lottery.mvc.lottery.NewLotteryChanceSystemInfoSender;
+import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
+import com.qinyuan15.lottery.mvc.activity.NewLotteryChanceSystemInfoSender;
 import com.qinyuan15.lottery.mvc.mail.NewLotteryChanceMailSender;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
