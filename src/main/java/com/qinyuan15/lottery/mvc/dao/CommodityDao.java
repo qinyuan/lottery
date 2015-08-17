@@ -16,7 +16,7 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
 
     public static class Factory implements PaginationItemFactory<Commodity> {
         @Override
-        public long getCount() {
+        public int getCount() {
             return new HibernateListBuilder().count(Commodity.class);
         }
 
