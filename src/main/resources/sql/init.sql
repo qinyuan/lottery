@@ -82,6 +82,7 @@ create table seckill_activity (
   id int primary key auto_increment,
   term int unique not null,
   commodity_id int not null,
+  description varchar(2000),
   start_time datetime not null,
   expire boolean not null,
   winners char(100),

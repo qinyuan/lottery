@@ -100,6 +100,7 @@
         </id>
         <property name="term"/>
         <property name="commodityId" column="commodity_id"/>
+        <property name="description"/>
         <property name="startTime" column="start_time"/>
         <property name="expire" column="expire"/>
         <property name="expectParticipantCount" column="expect_participant_count"/>

@@ -66,23 +66,27 @@ public class SeckillActivityDao extends AbstractDao<SeckillActivity> {
         return (Integer) new HibernateListBuilder().getFirstItem("SELECT MAX(term) FROM SeckillActivity");
     }
 
-    public Integer add(Integer term, Integer commodityId, String startTime, Integer expectParticipantCount) {
+    public Integer add(Integer term, Integer commodityId, String startTime, Integer expectParticipantCount,
+                       String description) {
         SeckillActivity activity = new SeckillActivity();
         activity.setTerm(term);
         activity.setCommodityId(commodityId);
         activity.setStartTime(startTime);
         activity.setExpectParticipantCount(expectParticipantCount);
+        activity.setDescription(description);
 
         activity.setExpire(false);
         return HibernateUtils.save(activity);
     }
 
-    public void update(Integer id, Integer term, Integer commodityId, String startTime, Integer expectParticipantCount) {
+    public void update(Integer id, Integer term, Integer commodityId, String startTime,
+                       Integer expectParticipantCount, String description) {
         SeckillActivity activity = getInstance(id);
         activity.setTerm(term);
         activity.setCommodityId(commodityId);
         activity.setStartTime(startTime);
         activity.setExpectParticipantCount(expectParticipantCount);
+        activity.setDescription(description);
         HibernateUtils.update(activity);
     }
 
