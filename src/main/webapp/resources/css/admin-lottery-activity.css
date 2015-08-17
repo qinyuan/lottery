@@ -46,7 +46,7 @@ div.form div.list-type {
     padding-top: 10px;
 }
 
-/*********************** activity list table end *********************/
+/*********************** lottery list table end *********************/
 
 /*********************** announcement edit form start ***********************/
 #announceEditForm {
@@ -74,7 +74,7 @@ div.form div.list-type {
 
 /******************* announcement edit form end ***************************/
 
-/****************** activity activity add and edit form start *****************/
+/****************** lottery activity add and edit form start *****************/
 #lotteryActivityForm {
     padding: 15px;
     margin-left: -410px;
@@ -112,4 +112,4 @@ div.form div.list-type {
     margin: 0 5px;
 }
 
-/********************* activity activity add and edit form end *****************/
+/********************* lottery activity add and edit form end *****************/

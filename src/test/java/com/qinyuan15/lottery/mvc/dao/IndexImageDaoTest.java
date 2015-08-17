@@ -16,6 +16,6 @@ public class IndexImageDaoTest {
 
     @Test
     public void testAdd() throws Exception {
-        //dao.add("/var/www/html/activity/hello", "/var/www/html/activity/world");
+        //dao.add("/var/www/html/lottery/hello", "/var/www/html/lottery/world");
     }
 }

@@ -130,7 +130,7 @@ public class SeckillActivityDao extends AbstractDao<SeckillActivity> {
 
     public void delete(Integer id) {
         if (isExpire(id)) {
-            throw new RuntimeException("Can not delete activity activity expired");
+            throw new RuntimeException("Can not delete lottery activity expired");
         } else {
             super.delete(id);
         }

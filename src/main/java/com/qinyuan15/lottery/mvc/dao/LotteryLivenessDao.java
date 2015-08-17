@@ -2,8 +2,8 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.google.common.base.Joiner;
 import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
-import com.qinyuan15.lottery.mvc.activity.NewLotteryChanceSystemInfoSender;
+import com.qinyuan15.lottery.mvc.lottery.LotteryLotCounter;
+import com.qinyuan15.lottery.mvc.lottery.NewLotteryChanceSystemInfoSender;
 import com.qinyuan15.lottery.mvc.mail.NewLotteryChanceMailSender;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
@@ -93,7 +93,7 @@ public class LotteryLivenessDao {
                 try {
                     new NewLotteryChanceMailSender().send(spreadUserId, activityId);
                 } catch (Exception e) {
-                    LOGGER.error("Fail to send new activity chance mail, activityId: {}, userId: {}, info: {}",
+                    LOGGER.error("Fail to send new lottery chance mail, activityId: {}, userId: {}, info: {}",
                             activityId, spreadUserId, e);
                 }
             }
@@ -103,7 +103,7 @@ public class LotteryLivenessDao {
                 try {
                     new NewLotteryChanceSystemInfoSender().send(spreadUserId, activityId);
                 } catch (Exception e) {
-                    LOGGER.error("Fail to send new activity chance system info, activityId: {}, userId: {}, info: {}",
+                    LOGGER.error("Fail to send new lottery chance system info, activityId: {}, userId: {}, info: {}",
                             activityId, spreadUserId, e);
                 }
             }

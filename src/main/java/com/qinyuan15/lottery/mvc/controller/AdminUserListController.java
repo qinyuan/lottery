@@ -28,7 +28,7 @@ public class AdminUserListController extends TableController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminUserListController.class);
 
     private final static String MIN_LIVENESS_SESSION_KEY = "admin-user-list-min-liveness";
-    private final static String FILTER_LOTTERY_ACTIVITY_IDS_SESSION_KEY = "admin-user-list-filter-activity-activity-ids";
+    private final static String FILTER_LOTTERY_ACTIVITY_IDS_SESSION_KEY = "admin-user-list-filter-lottery-activity-ids";
 
     @RequestMapping("/admin-user-list")
     public String index(@RequestParam(value = "displayMode", required = false) String displayMode,

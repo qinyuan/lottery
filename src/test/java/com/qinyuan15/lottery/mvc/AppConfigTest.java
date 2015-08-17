@@ -14,7 +14,7 @@ public class AppConfigTest {
     @Test
     public void testGetAppHost() {
         String appHost = AppConfig.getAppHost();
-        assertThat(appHost).isEqualTo("http://localhost:8080/activity/");
+        assertThat(appHost).isEqualTo("http://localhost:8080/lottery/");
     }
 
     @Test

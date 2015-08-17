@@ -143,10 +143,10 @@ public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
     }
 
     /**
-     * validate if activity activity is expired
+     * validate if lottery activity is expired
      *
-     * @param id id of activity activity to query
-     * @return true if activity activity can be found and is expired, otherwise false
+     * @param id id of lottery activity to query
+     * @return true if lottery activity can be found and is expired, otherwise false
      */
     public boolean isExpire(Integer id) {
         String hql = "SELECT expire FROM LotteryActivity WHERE id=" + id;
@@ -159,7 +159,7 @@ public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
 
     public void delete(Integer id) {
         if (isExpire(id)) {
-            throw new RuntimeException("Can not delete activity activity expired");
+            throw new RuntimeException("Can not delete lottery activity expired");
         } else {
             super.delete(id);
         }

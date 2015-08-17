@@ -1,6 +1,6 @@
 ;
 (function () {
-    // codes about activity activity form
+    // codes about lottery activity form
     var $form = $('#lotteryActivityForm');
     var $term = $form.getInputByName('term');
     var $startTime = $form.getInputByName('startTime');
@@ -140,7 +140,7 @@
         if (!validateInputForm()) {
             return false;
         } else {
-            $.post('admin-activity-activity-add-edit.json', $form.serialize(), function (data) {
+            $.post('admin-lottery-activity-add-edit.json', $form.serialize(), function (data) {
                 if (!data.success) {
                     alert(data.detail);
                     return;
@@ -150,7 +150,7 @@
                     location.reload();
                 } else {
                     // if add, go to first page
-                    location.href = 'admin-activity-activity.html';
+                    location.href = 'admin-lottery-activity.html';
                 }
             });
         }
@@ -225,7 +225,7 @@
     $stopImages.click(function () {
         if (confirm('确定强行结束该抽奖活动？')) {
             var activityId = $(this).getParentByTagName('tr').dataOptions('id');
-            $.post('admin-activity-activity-stop.json', {
+            $.post('admin-lottery-activity-stop.json', {
                 'id': activityId
             }, JSUtils.normalAjaxCallback);
         }
@@ -246,7 +246,7 @@
     $announceOkButton.click(function (e) {
         e.preventDefault();
         $.post(
-            'admin-activity-activity-update-announcement.json',
+            'admin-lottery-activity-update-announcement.json',
             $announceEditForm.serialize(),
             JSUtils.normalAjaxCallback
         );
@@ -263,7 +263,7 @@
     $deleteImages.click(function () {
         if (confirm('确定删除？')) {
             var activityId = $(this).getParentByTagName('tr').dataOptions('id');
-            $.post('admin-activity-activity-delete.json', {
+            $.post('admin-lottery-activity-delete.json', {
                 'id': activityId
             }, JSUtils.normalAjaxCallback);
         }

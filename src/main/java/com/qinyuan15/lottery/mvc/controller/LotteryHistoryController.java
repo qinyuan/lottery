@@ -24,8 +24,8 @@ public class LotteryHistoryController extends ImageController {
         new PaginationAttributeAdder(table, request).setRowItemsName("lotteryHistories").setPageSize(10).add();
 
         setTitle("抽奖历史");
-        addCssAndJs("activity-history");
-        return "activity-history";
+        addCssAndJs("lottery-history");
+        return "lottery-history";
     }
 
     private DatabaseTable getTable() {

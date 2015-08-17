@@ -117,7 +117,7 @@ public class AppConfig {
     }
     ////////////////////////////// favicon end /////////////////////////////////////
 
-    ////////////////////////////// activity sina weibo share link start /////////////////////////////
+    ////////////////////////////// lottery sina weibo share link start /////////////////////////////
     private final static String LOTTERY_SINA_WEIBO_TITLE_KEY = "lotterySinaWeiboTitle";
 
     public static String getLotterySinaWeiboTitle() {
@@ -137,7 +137,7 @@ public class AppConfig {
     public static void updateLotterySinaWeiboIncludePicture(Boolean includePicture) {
         dao.saveBoolean(LOTTERY_SINA_WEIBO_INCLUDE_PICTURE_KEY, includePicture);
     }
-    ///////////////////////////// activity sina weibo share link end ////////////////////////////////
+    ///////////////////////////// lottery sina weibo share link end ////////////////////////////////
 
     ///////////////////////////// seckill sina weibo share link start //////////////////////////////
     private final static String SECKILL_SINA_WEIBO_TITLE_KEY = "seckillSinaWeiboTitle";
@@ -161,7 +161,7 @@ public class AppConfig {
     }
     ///////////////////////////// seckill sina weibo share link end ////////////////////////////////
 
-    ///////////////////////////// activity qq share link start //////////////////////////////
+    ///////////////////////////// lottery qq share link start //////////////////////////////
     private final static String LOTTERY_QQ_TITLE_KEY = "lotteryQQTitle";
 
     public static String getLotteryQQTitle() {
@@ -191,7 +191,7 @@ public class AppConfig {
     public static void updateLotteryQQIncludePicture(Boolean includePicture) {
         dao.saveBoolean(LOTTERY_QQ_INCLUDE_PICTURE_KEY, includePicture);
     }
-    ////////////////////////// activity qq share link end /////////////////////////////////
+    ////////////////////////// lottery qq share link end /////////////////////////////////
 
     ////////////////////////// seckill qq share link start ///////////////////////////////
     private final static String SECKILL_QQ_TITLE_KEY = "seckillQQTitle";
@@ -225,7 +225,7 @@ public class AppConfig {
     }
     ////////////////////////// seckill qq share link end /////////////////////////////////
 
-    ////////////////////////// activity qzone share link start //////////////////////////////
+    ////////////////////////// lottery qzone share link start //////////////////////////////
     private final static String LOTTERY_QZONE_TITLE_KEY = "lotteryQzoneTitle";
 
     public static String getLotteryQzoneTitle() {
@@ -255,7 +255,7 @@ public class AppConfig {
     public static void updateLotteryQzoneIncludePicture(Boolean includePicture) {
         dao.saveBoolean(LOTTERY_QZONE_INCLUDE_PICTURE_KEY, includePicture);
     }
-    ///////////////////////// activity qzone share link end ///////////////////////////////
+    ///////////////////////// lottery qzone share link end ///////////////////////////////
 
     ///////////////////////// seckill qzone share link start //////////////////////////////
     private final static String SECKILL_QZONE_TITLE_KEY = "seckillQzoneTitle";
@@ -431,7 +431,7 @@ public class AppConfig {
     }
     ///////////////////////////// reset email mail end /////////////////////////////
 
-    ///////////////////////////// new activity chance start //////////////////////////////
+    ///////////////////////////// new lottery chance start //////////////////////////////
     private final static String REMIND_NEW_LOTTERY_CHANCE_BY_MAIL_KEY = "remindNewLotteryChanceByMail";
 
     public static Boolean getRemindNewLotteryChanceByMail() {
@@ -491,9 +491,9 @@ public class AppConfig {
     public static void updateNewLotteryChanceSystemInfoTemplate(String template) {
         dao.save(NEW_LOTTERY_CHANCE_SYSTEM_INFO_TEMPLATE_KEY, template);
     }
-    ///////////////////////////// new activity chance end //////////////////////////////
+    ///////////////////////////// new lottery chance end //////////////////////////////
 
-    ///////////////////////////// activity announcement template start ////////////////////////////
+    ///////////////////////////// lottery announcement template start ////////////////////////////
     private final static String LOTTERY_ANNOUNCEMENT_TEMPLATE_KEY = "lotteryAnnouncementTemplateKey";
 
     public static String getLotteryAnnouncementTemplate() {
@@ -503,9 +503,9 @@ public class AppConfig {
     public static void updateLotteryAnnouncementTemplate(String template) {
         dao.save(LOTTERY_ANNOUNCEMENT_TEMPLATE_KEY, template);
     }
-    ///////////////////////////// activity announcement template end //////////////////////////////
+    ///////////////////////////// lottery announcement template end //////////////////////////////
 
-    ///////////////////////////// activity rule start ///////////////////////////////
+    ///////////////////////////// lottery rule start ///////////////////////////////
     private final static String LOTTERY_RULE_KEY = "lotteryRule";
 
     public static String getLotteryRule() {
@@ -515,5 +515,5 @@ public class AppConfig {
     public static void updateLotteryRule(String lotteryRule) {
         dao.save(LOTTERY_RULE_KEY, lotteryRule);
     }
-    ///////////////////////////// activity rule end ///////////////////////////////
+    ///////////////////////////// lottery rule end ///////////////////////////////
 }

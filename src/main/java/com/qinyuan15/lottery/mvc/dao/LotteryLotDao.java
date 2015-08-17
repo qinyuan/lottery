@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.google.common.base.Joiner;
-import com.qinyuan15.lottery.mvc.activity.LotteryLotSerialGenerator;
+import com.qinyuan15.lottery.mvc.lottery.LotteryLotSerialGenerator;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.database.hibernate.AbstractDao;

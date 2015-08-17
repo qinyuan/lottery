@@ -28,7 +28,7 @@ public class AdminLotteryConfigController extends ImageController {
         setAttribute("qzoneSummary", AppConfig.getLotteryQzoneSummary());
         setAttribute("qzoneIncludePicture", AppConfig.getLotteryQzoneIncludePicture());
 
-        // data about new activity chance
+        // data about new lottery chance
         setAttribute("remindNewLotteryChanceByMail", AppConfig.getRemindNewLotteryChanceByMail());
         setAttribute("newLotteryChanceMailSubjectTemplate", AppConfig.getNewLotteryChanceMailSubjectTemplate());
         setAttribute("newLotteryChanceMailContentTemplate", AppConfig.getNewLotteryChanceMailContentTemplate());
@@ -50,8 +50,8 @@ public class AdminLotteryConfigController extends ImageController {
         addCss("admin");
         addJs("lib/ckeditor/ckeditor", false);
         addJs("lib/bootstrap/js/bootstrap.min", false);
-        addCssAndJs("admin-activity-config");
-        return "admin-activity-config";
+        addCssAndJs("admin-lottery-config");
+        return "admin-lottery-config";
     }
 
     @RequestMapping("/admin-lottery-config-submit")
@@ -103,6 +103,6 @@ public class AdminLotteryConfigController extends ImageController {
             AppConfig.updateRemindNewLotteryChanceBySystemInfo(false);
         }
 
-        return redirect("admin-activity-config");
+        return redirect("admin-lottery-config");
     }
 }
