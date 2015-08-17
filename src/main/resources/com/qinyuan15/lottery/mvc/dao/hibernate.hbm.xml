@@ -43,7 +43,6 @@
         <property name="email"/>
         <property name="tel"/>
         <property name="active"/>
-        <!--<property name="liveness"/>-->
         <property name="serialKey" column="serial_key"/>
         <property name="spreadUserId" column="spread_user_id"/>
         <property name="spreadWay" column="spread_way"/>
@@ -93,6 +92,27 @@
         <property name="userId" column="user_id"/>
         <property name="lotTime" column="lot_time"/>
         <property name="serialNumber" column="serial_number"/>
+        <property name="win" column="win"/>
+    </class>
+    <class name="SeckillActivity" table="seckill_activity">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="term"/>
+        <property name="commodityId" column="commodity_id"/>
+        <property name="startTime" column="start_time"/>
+        <property name="expire" column="expire"/>
+        <property name="expectParticipantCount" column="expect_participant_count"/>
+        <property name="announcement" column="announcement"/>
+        <property name="winners"/>
+    </class>
+    <class name="SeckillLot" table="seckill_lot">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="activityId" column="activity_id"/>
+        <property name="userId" column="user_id"/>
+        <property name="lotTime" column="lot_time"/>
         <property name="win" column="win"/>
     </class>
     <class name="DualColoredBallRecord" table="dual_colored_ball_record">

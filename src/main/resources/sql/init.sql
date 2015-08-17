@@ -74,8 +74,28 @@ create table lottery_lot (
   user_id int not null,
   lot_time datetime not null,
   serial_number int not null,
-  win boolean
+  win boolean,
   unique(activity_id, user_id, serial_number)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table seckill_activity (
+  id int primary key auto_increment,
+  term int unique not null,
+  commodity_id int not null,
+  start_time datetime not null,
+  expire boolean not null,
+  winners char(100),
+  announcement varchar(2000),
+  expect_participant_count int
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table seckill_lot (
+  id int primary key auto_increment,
+  activity_id int not null,
+  user_id int not null,
+  lot_time datetime not null,
+  win boolean,
+  unique(activity_id, user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table lottery_liveness (
