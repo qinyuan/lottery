@@ -9,13 +9,13 @@ import com.qinyuan15.utils.sns.share.SinaWeiboShareUrlBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShareUrlBuilder {
+public class LotteryShareUrlBuilder {
     private final static String PAGE = "commodity.html";
 
     private final String pictureUrl;
     private final String targetUrl;
 
-    public ShareUrlBuilder(String userSerialKey, String host, Commodity commodity) {
+    public LotteryShareUrlBuilder(String userSerialKey, String host, Commodity commodity) {
         this.pictureUrl = commodity.getSnapshot();
         if (!host.contains("/")) {
             host += "/";
@@ -24,22 +24,22 @@ public class ShareUrlBuilder {
     }
 
     public String getSinaShareUrl() {
-        String title = AppConfig.getSinaWeiboTitle();
+        String title = AppConfig.getLotterySinaWeiboTitle();
         return new SinaWeiboShareUrlBuilder(getFinalTargetUrl(ShareMedium.SINA_WEIBO.en), title,
-                getPictures(AppConfig.getSinaWeiboIncludePicture())).build();
+                getPictures(AppConfig.getLotterySinaWeiboIncludePicture())).build();
     }
 
     public String getQQShareUrl() {
-        String title = AppConfig.getQQTitle();
-        String summary = AppConfig.getQQSummary();
+        String title = AppConfig.getLotteryQQTitle();
+        String summary = AppConfig.getLotteryQQSummary();
         return new QQShareUrlBuilder(getFinalTargetUrl(ShareMedium.QQ.en), title, summary,
-                getPictures(AppConfig.getQQIncludePicture())).build();
+                getPictures(AppConfig.getLotteryQQIncludePicture())).build();
     }
 
     public String getQzoneShareUrl() {
-        String title = AppConfig.getQZoneTitle();
-        String summary = AppConfig.getQzoneSummary();
-        Boolean includePicture = AppConfig.getQzoneIncludePicture();
+        String title = AppConfig.getLotteryQzoneTitle();
+        String summary = AppConfig.getLotteryQzoneSummary();
+        Boolean includePicture = AppConfig.getLotteryQzoneIncludePicture();
         String picture = (includePicture != null && includePicture) ? pictureUrl : null;
         return new QzoneShareUrlBuilder(getFinalTargetUrl(ShareMedium.QZONE.en), title, summary, picture).build();
     }

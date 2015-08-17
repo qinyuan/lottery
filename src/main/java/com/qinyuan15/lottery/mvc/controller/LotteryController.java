@@ -5,7 +5,7 @@ import com.qinyuan15.lottery.mvc.dao.*;
 import com.qinyuan15.lottery.mvc.lottery.LivenessQuerier;
 import com.qinyuan15.lottery.mvc.lottery.LotteryLotCounter;
 import com.qinyuan15.lottery.mvc.lottery.LotteryLotCreator;
-import com.qinyuan15.lottery.mvc.lottery.ShareUrlBuilder;
+import com.qinyuan15.lottery.mvc.lottery.LotteryShareUrlBuilder;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.database.hibernate.HibernateUtils;
@@ -104,11 +104,11 @@ public class LotteryController extends ImageController {
             user.setSerialKey(RandomStringUtils.randomAlphanumeric(UserDao.SERIAL_KEY_LENGTH));
             HibernateUtils.update(user);
         }
-        ShareUrlBuilder shareUrlBuilder = new ShareUrlBuilder(user.getSerialKey(), AppConfig.getAppHost(),
+        LotteryShareUrlBuilder lotteryShareUrlBuilder = new LotteryShareUrlBuilder(user.getSerialKey(), AppConfig.getAppHost(),
                 new CommodityUrlAdapter(this).adapt(new CommodityDao().getInstance(commodityId)));
-        result.put("sinaWeiboShareUrl", shareUrlBuilder.getSinaShareUrl());
-        result.put("qqShareUrl", shareUrlBuilder.getQQShareUrl());
-        result.put("qzoneShareUrl", shareUrlBuilder.getQzoneShareUrl());
+        result.put("sinaWeiboShareUrl", lotteryShareUrlBuilder.getSinaShareUrl());
+        result.put("qqShareUrl", lotteryShareUrlBuilder.getQQShareUrl());
+        result.put("qzoneShareUrl", lotteryShareUrlBuilder.getQzoneShareUrl());
 
         // participants data
         result.put("participantCount", new LotteryLotCounter().count(activity));
