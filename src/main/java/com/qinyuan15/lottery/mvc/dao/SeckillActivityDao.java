@@ -77,20 +77,6 @@ public class SeckillActivityDao extends AbstractDao<SeckillActivity> {
         return HibernateUtils.save(activity);
     }
 
-    public void updateMaxSerialNumber(Integer id, int serialNumber) {
-        String hql = "UPDATE SeckillActivity SET maxSerialNumber=" + serialNumber + " WHERE id=" + id;
-        HibernateUtils.executeUpdate(hql);
-    }
-
-    public void increaseMaxSerialNumber(Integer id) {
-        increaseMaxSerialNumber(id, 1);
-    }
-
-    public void increaseMaxSerialNumber(Integer id, int n) {
-        String hql = "UPDATE SeckillActivity SET maxSerialNumber=maxSerialNumber+" + n + " WHERE id=" + id;
-        HibernateUtils.executeUpdate(hql);
-    }
-
     public void update(Integer id, Integer term, Integer commodityId, String startTime, Integer expectParticipantCount) {
         SeckillActivity activity = getInstance(id);
         activity.setTerm(term);
@@ -124,10 +110,10 @@ public class SeckillActivityDao extends AbstractDao<SeckillActivity> {
     }
 
     /**
-     * validate if lottery activity is expired
+     * validate if seckill activity is expired
      *
-     * @param id id of lottery activity to query
-     * @return true is lottery activity can be found and is expired, otherwise false
+     * @param id id of seckill activity to query
+     * @return true if seckill activity can be found and is expired, otherwise false
      */
     public boolean isExpire(Integer id) {
         String hql = "SELECT expire FROM SeckillActivity WHERE id=" + id;

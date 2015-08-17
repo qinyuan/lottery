@@ -146,7 +146,7 @@ public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
      * validate if lottery activity is expired
      *
      * @param id id of lottery activity to query
-     * @return true is lottery activity can be found and is expired, otherwise false
+     * @return true if lottery activity can be found and is expired, otherwise false
      */
     public boolean isExpire(Integer id) {
         String hql = "SELECT expire FROM LotteryActivity WHERE id=" + id;

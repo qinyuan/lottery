@@ -2,7 +2,7 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan15.utils.database.hibernate.PersistObject;
 
-public class AbstractLot extends PersistObject {
+abstract class AbstractLot extends PersistObject {
     private Integer activityId;
     private Integer userId;
     private String lotTime;

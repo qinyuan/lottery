@@ -4,16 +4,14 @@ import com.google.common.base.Joiner;
 import com.qinyuan15.lottery.mvc.lottery.LotteryLotSerialGenerator;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
+import com.qinyuan15.utils.database.hibernate.AbstractDao;
 import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.database.hibernate.HibernateUtils;
+import com.qinyuan15.utils.mvc.controller.AbstractPaginationItemFactory;
 
 import java.util.List;
 
-public class LotteryLotDao {
-    public LotteryLot getInstance(Integer id) {
-        return HibernateUtils.get(LotteryLot.class, id);
-    }
-
+public class LotteryLotDao extends AbstractDao<LotteryLot> {
     public Integer add(Integer activityId, Integer userId, LotteryLotSerialGenerator serialGenerator) {
         LotteryLot lotteryLot = new LotteryLot();
         lotteryLot.setActivityId(activityId);
@@ -42,7 +40,7 @@ public class LotteryLotDao {
         return factory().setActivityId(activityId).setSerialNumber(serialNumber).getCount() > 0;
     }
 
-    public static class Factory {
+    public static class Factory extends AbstractPaginationItemFactory<LotteryLot> {
         private Integer activityId;
         private Integer userId;
         private Integer serialNumber;
@@ -68,7 +66,8 @@ public class LotteryLotDao {
             return this;
         }
 
-        private HibernateListBuilder createListBuilder() {
+        @Override
+        protected HibernateListBuilder getListBuilder() {
             HibernateListBuilder listBuilder = new HibernateListBuilder();
             if (IntegerUtils.isPositive(activityId)) {
                 listBuilder.addEqualFilter("activityId", activityId);
@@ -83,14 +82,6 @@ public class LotteryLotDao {
                 listBuilder.addEqualFilter("win", win);
             }
             return listBuilder;
-        }
-
-        public List<LotteryLot> getInstances() {
-            return createListBuilder().build(LotteryLot.class);
-        }
-
-        public int getCount() {
-            return createListBuilder().count(LotteryLot.class);
         }
     }
 
