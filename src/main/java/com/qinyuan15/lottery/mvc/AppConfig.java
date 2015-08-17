@@ -117,91 +117,177 @@ public class AppConfig {
     }
     ////////////////////////////// favicon end /////////////////////////////////////
 
-    ////////////////////////////// sina weibo share link start /////////////////////////////
-    private final static String SINA_WEIBO_TITLE_KEY = "sinaWeiboTitle";
+    ////////////////////////////// lottery sina weibo share link start /////////////////////////////
+    private final static String LOTTERY_SINA_WEIBO_TITLE_KEY = "lotterySinaWeiboTitle";
 
-    public static String getSinaWeiboTitle() {
-        return dao.get(SINA_WEIBO_TITLE_KEY);
+    public static String getLotterySinaWeiboTitle() {
+        return dao.get(LOTTERY_SINA_WEIBO_TITLE_KEY);
     }
 
-    public static void updateSinaWeiboTitle(String title) {
-        dao.save(SINA_WEIBO_TITLE_KEY, title);
+    public static void updateLotterySinaWeiboTitle(String title) {
+        dao.save(LOTTERY_SINA_WEIBO_TITLE_KEY, title);
     }
 
-    private final static String SINA_WEIBO_INCLUDE_PICTURE_KEY = "sinaWeiboIncludePicture";
+    private final static String LOTTERY_SINA_WEIBO_INCLUDE_PICTURE_KEY = "lotterySinaWeiboIncludePicture";
 
-    public static Boolean getSinaWeiboIncludePicture() {
-        return dao.getBoolean(SINA_WEIBO_INCLUDE_PICTURE_KEY);
+    public static Boolean getLotterySinaWeiboIncludePicture() {
+        return dao.getBoolean(LOTTERY_SINA_WEIBO_INCLUDE_PICTURE_KEY);
     }
 
-    public static void updateSinaWeiboIncludePicture(Boolean includePicture) {
-        dao.saveBoolean(SINA_WEIBO_INCLUDE_PICTURE_KEY, includePicture);
+    public static void updateLotterySinaWeiboIncludePicture(Boolean includePicture) {
+        dao.saveBoolean(LOTTERY_SINA_WEIBO_INCLUDE_PICTURE_KEY, includePicture);
     }
-    ///////////////////////////// sina weibo share link end ////////////////////////////////
+    ///////////////////////////// lottery sina weibo share link end ////////////////////////////////
 
-    ///////////////////////////// qq share link start //////////////////////////////
-    private final static String QQ_TITLE_KEY = "qqTitle";
+    ///////////////////////////// seckill sina weibo share link start //////////////////////////////
+    private final static String SECKILL_SINA_WEIBO_TITLE_KEY = "seckillSinaWeiboTitle";
 
-    public static String getQQTitle() {
-        return dao.get(QQ_TITLE_KEY);
-    }
-
-    public static void updateQQTitle(String title) {
-        dao.save(QQ_TITLE_KEY, title);
+    public static String getSeckillSinaWeiboTitle() {
+        return dao.get(SECKILL_SINA_WEIBO_TITLE_KEY);
     }
 
-    private final static String QQ_SUMMARY_KEY = "qqSummary";
-
-    public static String getQQSummary() {
-        return dao.get(QQ_SUMMARY_KEY);
+    public static void updateSeckillSinaWeiboTitle(String title) {
+        dao.save(SECKILL_SINA_WEIBO_TITLE_KEY, title);
     }
 
-    public static void updateQQSummary(String summary) {
-        dao.save(QQ_SUMMARY_KEY, summary);
+    private final static String SECKILL_SINA_WEIBO_INCLUDE_PICTURE_KEY = "seckillSinaWeiboIncludePicture";
+
+    public static Boolean getSeckillSinaWeiboIncludePicture() {
+        return dao.getBoolean(SECKILL_SINA_WEIBO_INCLUDE_PICTURE_KEY);
     }
 
-    private final static String QQ_INCLUDE_PICTURE_KEY = "qqIncludePicture";
+    public static void updateSeckillSinaWeiboIncludePicture(Boolean includePicture) {
+        dao.saveBoolean(SECKILL_SINA_WEIBO_INCLUDE_PICTURE_KEY, includePicture);
+    }
+    ///////////////////////////// seckill sina weibo share link end ////////////////////////////////
 
-    public static Boolean getQQIncludePicture() {
-        return dao.getBoolean(QQ_INCLUDE_PICTURE_KEY);
+    ///////////////////////////// lottery qq share link start //////////////////////////////
+    private final static String LOTTERY_QQ_TITLE_KEY = "lotteryQQTitle";
+
+    public static String getLotteryQQTitle() {
+        return dao.get(LOTTERY_QQ_TITLE_KEY);
     }
 
-    public static void updateQQIncludePicture(Boolean includePicture) {
-        dao.saveBoolean(QQ_INCLUDE_PICTURE_KEY, includePicture);
-    }
-    ////////////////////////// qq share link end /////////////////////////////////
-
-    ////////////////////////// qzone share link start //////////////////////////////
-    private final static String QZONE_TITLE_KEY = "qzoneTitle";
-
-    public static String getQZoneTitle() {
-        return dao.get(QZONE_TITLE_KEY);
+    public static void updateLotteryQQTitle(String title) {
+        dao.save(LOTTERY_QQ_TITLE_KEY, title);
     }
 
-    public static void updateQzoneTitle(String title) {
-        dao.save(QZONE_TITLE_KEY, title);
+    private final static String LOTTERY_QQ_SUMMARY_KEY = "lotteryQQSummary";
+
+    public static String getLotteryQQSummary() {
+        return dao.get(LOTTERY_QQ_SUMMARY_KEY);
     }
 
-    private final static String QZONE_SUMMARY_KEY = "qzoneSummary";
-
-    public static String getQzoneSummary() {
-        return dao.get(QZONE_SUMMARY_KEY);
+    public static void updateLotteryQQSummary(String summary) {
+        dao.save(LOTTERY_QQ_SUMMARY_KEY, summary);
     }
 
-    public static void updateQzoneSummary(String summary) {
-        dao.save(QZONE_SUMMARY_KEY, summary);
+    private final static String LOTTERY_QQ_INCLUDE_PICTURE_KEY = "lotteryQQIncludePicture";
+
+    public static Boolean getLotteryQQIncludePicture() {
+        return dao.getBoolean(LOTTERY_QQ_INCLUDE_PICTURE_KEY);
     }
 
-    private final static String QZONE_INCLUDE_PICTURE_KEY = "qzoneIncludePicture";
+    public static void updateLotteryQQIncludePicture(Boolean includePicture) {
+        dao.saveBoolean(LOTTERY_QQ_INCLUDE_PICTURE_KEY, includePicture);
+    }
+    ////////////////////////// lottery qq share link end /////////////////////////////////
 
-    public static Boolean getQzoneIncludePicture() {
-        return dao.getBoolean(QZONE_INCLUDE_PICTURE_KEY);
+    ////////////////////////// seckill qq share link start ///////////////////////////////
+    private final static String SECKILL_QQ_TITLE_KEY = "seckillQQTitle";
+
+    public static String getSeckillQQTitle() {
+        return dao.get(SECKILL_QQ_TITLE_KEY);
     }
 
-    public static void updateQzoneIncludePicture(Boolean includePicture) {
-        dao.saveBoolean(QZONE_INCLUDE_PICTURE_KEY, includePicture);
+    public static void updateSeckillQQTitle(String title) {
+        dao.save(SECKILL_QQ_TITLE_KEY, title);
     }
-    ///////////////////////// qzone share link end ///////////////////////////////
+
+    private final static String SECKILL_QQ_SUMMARY_KEY = "seckillQQSummary";
+
+    public static String getSeckillQQSummary() {
+        return dao.get(SECKILL_QQ_SUMMARY_KEY);
+    }
+
+    public static void updateSeckillQQSummary(String summary) {
+        dao.save(SECKILL_QQ_SUMMARY_KEY, summary);
+    }
+
+    private final static String SECKILL_QQ_INCLUDE_PICTURE_KEY = "seckillQQIncludePicture";
+
+    public static Boolean getSeckillQQIncludePicture() {
+        return dao.getBoolean(SECKILL_QQ_INCLUDE_PICTURE_KEY);
+    }
+
+    public static void updateSeckillQQIncludePicture(Boolean includePicture) {
+        dao.saveBoolean(SECKILL_QQ_INCLUDE_PICTURE_KEY, includePicture);
+    }
+    ////////////////////////// seckill qq share link end /////////////////////////////////
+
+    ////////////////////////// lottery qzone share link start //////////////////////////////
+    private final static String LOTTERY_QZONE_TITLE_KEY = "lotteryQzoneTitle";
+
+    public static String getLotteryQzoneTitle() {
+        return dao.get(LOTTERY_QZONE_TITLE_KEY);
+    }
+
+    public static void updateLotteryQzoneTitle(String title) {
+        dao.save(LOTTERY_QZONE_TITLE_KEY, title);
+    }
+
+    private final static String LOTTERY_QZONE_SUMMARY_KEY = "lotteryQzoneSummary";
+
+    public static String getLotteryQzoneSummary() {
+        return dao.get(LOTTERY_QZONE_SUMMARY_KEY);
+    }
+
+    public static void updateLotteryQzoneSummary(String summary) {
+        dao.save(LOTTERY_QZONE_SUMMARY_KEY, summary);
+    }
+
+    private final static String LOTTERY_QZONE_INCLUDE_PICTURE_KEY = "lotteryQzoneIncludePicture";
+
+    public static Boolean getLotteryQzoneIncludePicture() {
+        return dao.getBoolean(LOTTERY_QZONE_INCLUDE_PICTURE_KEY);
+    }
+
+    public static void updateLotteryQzoneIncludePicture(Boolean includePicture) {
+        dao.saveBoolean(LOTTERY_QZONE_INCLUDE_PICTURE_KEY, includePicture);
+    }
+    ///////////////////////// lottery qzone share link end ///////////////////////////////
+
+    ///////////////////////// seckill qzone share link start //////////////////////////////
+    private final static String SECKILL_QZONE_TITLE_KEY = "seckillQzoneTitle";
+
+    public static String getSeckillQzoneTitle() {
+        return dao.get(SECKILL_QZONE_TITLE_KEY);
+    }
+
+    public static void updateSeckillQzoneTitle(String title) {
+        dao.save(SECKILL_QZONE_TITLE_KEY, title);
+    }
+
+    private final static String SECKILL_QZONE_SUMMARY_KEY = "seckillQzoneSummary";
+
+    public static String getSeckillQzoneSummary() {
+        return dao.get(SECKILL_QZONE_SUMMARY_KEY);
+    }
+
+    public static void updateSeckillQzoneSummary(String summary) {
+        dao.save(SECKILL_QZONE_SUMMARY_KEY, summary);
+    }
+
+    private final static String SECKILL_QZONE_INCLUDE_PICTURE_KEY = "seckillQzoneIncludePicture";
+
+    public static Boolean getSeckillQzoneIncludePicture() {
+        return dao.getBoolean(SECKILL_QZONE_INCLUDE_PICTURE_KEY);
+    }
+
+    public static void updateSeckillQzoneIncludePicture(Boolean includePicture) {
+        dao.saveBoolean(SECKILL_QZONE_INCLUDE_PICTURE_KEY, includePicture);
+    }
+    ///////////////////////// seckill qzone share link end ////////////////////////////////
 
     ///////////////////////// new lot liveness start ///////////////////////////////
     private final static String NEW_LOT_LIVENESS_KEY = "newLotLiveness";
