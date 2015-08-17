@@ -5,7 +5,7 @@ import com.qinyuan15.lottery.mvc.dao.*;
 import com.qinyuan15.lottery.mvc.login.RegisterLocationCounter;
 import com.qinyuan15.lottery.mvc.mail.NormalMailSender;
 import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.hibernate.HibernateListBuilder;
+import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.mail.MailAccountDao;
 import com.qinyuan15.utils.mvc.controller.DatabaseTable;
 import com.qinyuan15.utils.mvc.controller.TableController;

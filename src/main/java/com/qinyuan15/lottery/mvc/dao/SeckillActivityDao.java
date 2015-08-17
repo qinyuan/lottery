@@ -3,16 +3,17 @@ package com.qinyuan15.lottery.mvc.dao;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.database.hibernate.AbstractDao;
+import com.qinyuan15.utils.database.hibernate.HibernateDeleter;
 import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.database.hibernate.HibernateUtils;
-import com.qinyuan15.utils.mvc.controller.AbstractPaginationItemFactory;
+import com.qinyuan15.utils.mvc.controller.PaginationItemFactory;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
-    public static class Factory extends AbstractPaginationItemFactory<LotteryActivity> {
+public class SeckillActivityDao extends AbstractDao<SeckillActivity> {
+    public static class Factory implements PaginationItemFactory<SeckillActivity> {
         private Integer commodityId;
         private Boolean expire;
 
@@ -26,12 +27,10 @@ public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
             return this;
         }
 
-        @Override
-        protected HibernateListBuilder getListBuilder() {
-            // order by expire desc, end time desc, start time desc
+        private HibernateListBuilder getListBuilder() {
+            // order by expire desc, start time desc
             HibernateListBuilder listBuilder = new HibernateListBuilder()
                     .addOrder("expire", false)
-                    .addOrder("endTime", false)
                     .addOrder("startTime", false);
 
             if (IntegerUtils.isPositive(this.commodityId)) {
@@ -43,6 +42,25 @@ public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
             listBuilder.addOrder("id", false);
             return listBuilder;
         }
+
+        @Override
+        public long getCount() {
+            return getListBuilder().count(SeckillActivity.class);
+        }
+
+        @Override
+        public List<SeckillActivity> getInstances(int firstResult, int maxResults) {
+            return getListBuilder().limit(firstResult, maxResults).build(SeckillActivity.class);
+        }
+
+        public List<SeckillActivity> getInstances() {
+            return getListBuilder().build(SeckillActivity.class);
+        }
+
+        public SeckillActivity getFirstInstance() {
+            List<SeckillActivity> activities = getInstances();
+            return activities.size() == 0 ? null : activities.get(0);
+        }
     }
 
     public static Factory factory() {
@@ -53,43 +71,36 @@ public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
         return new HibernateListBuilder().addEqualFilter("term", term).count(getPersistClass()) > 0;
     }
 
-    public LotteryActivity getActiveInstanceByCommodityId(Integer commodityId) {
+    public SeckillActivity getActiveInstanceByCommodityId(Integer commodityId) {
         return factory().setCommodityId(commodityId).setExpire(false).getFirstInstance();
     }
 
-    public LotteryActivity getLastInstance() {
+    public SeckillActivity getLastInstance() {
         return factory().getFirstInstance(); // factory order by id desc
     }
 
-    public LotteryActivity getLastActiveInstance() {
+    public SeckillActivity getLastActiveInstance() {
         return factory().setExpire(false).getFirstInstance();
     }
 
     public Integer getMaxTerm() {
-        return (Integer) new HibernateListBuilder().getFirstItem("SELECT MAX(term) FROM LotteryActivity");
+        return (Integer) new HibernateListBuilder().getFirstItem("SELECT MAX(term) FROM SeckillActivity");
     }
 
     public Integer add(Integer term, Integer commodityId, String startTime, String expectEndTime,
                        Integer continuousSerialLimit, Integer expectParticipantCount, Integer dualColoredBallTerm) {
-        LotteryActivity activity = new LotteryActivity();
+        SeckillActivity activity = new SeckillActivity();
         activity.setTerm(term);
         activity.setCommodityId(commodityId);
         activity.setStartTime(startTime);
-        activity.setExpectEndTime(expectEndTime);
-        activity.setContinuousSerialLimit(continuousSerialLimit);
         activity.setExpectParticipantCount(expectParticipantCount);
-        activity.setDualColoredBallTerm(dualColoredBallTerm);
-
-        // set default values
-        activity.setMaxSerialNumber(0);
-        activity.setVirtualParticipants(0);
 
         activity.setExpire(false);
         return HibernateUtils.save(activity);
     }
 
     public void updateMaxSerialNumber(Integer id, int serialNumber) {
-        String hql = "UPDATE LotteryActivity SET maxSerialNumber=" + serialNumber + " WHERE id=" + id;
+        String hql = "UPDATE SeckillActivity SET maxSerialNumber=" + serialNumber + " WHERE id=" + id;
         HibernateUtils.executeUpdate(hql);
     }
 
@@ -98,29 +109,23 @@ public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
     }
 
     public void increaseMaxSerialNumber(Integer id, int n) {
-        String hql = "UPDATE LotteryActivity SET maxSerialNumber=maxSerialNumber+" + n + " WHERE id=" + id;
+        String hql = "UPDATE SeckillActivity SET maxSerialNumber=maxSerialNumber+" + n + " WHERE id=" + id;
         HibernateUtils.executeUpdate(hql);
     }
 
     public void update(Integer id, Integer term, Integer commodityId, String startTime, String expectEndTime,
                        Integer continuousSerialLimit, Integer expectParticipantCount,
                        Integer virutalLiveness, String virtualLivenessUsers, Integer dualColoredBallTerm) {
-        LotteryActivity activity = getInstance(id);
+        SeckillActivity activity = getInstance(id);
         activity.setTerm(term);
         activity.setCommodityId(commodityId);
         activity.setStartTime(startTime);
-        activity.setExpectEndTime(expectEndTime);
-        activity.setContinuousSerialLimit(continuousSerialLimit);
         activity.setExpectParticipantCount(expectParticipantCount);
-        activity.setVirtualLiveness(virutalLiveness);
-        activity.setVirtualLivenessUsers(virtualLivenessUsers);
-        activity.setDualColoredBallTerm(dualColoredBallTerm);
         HibernateUtils.update(activity);
     }
 
     public void end(Integer id) {
-        LotteryActivity activity = getInstance(id);
-        activity.setEndTime(DateUtils.nowString());
+        SeckillActivity activity = getInstance(id);
         activity.setExpire(true);
         HibernateUtils.update(activity);
     }
@@ -136,7 +141,7 @@ public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
         }
         new LotteryLotDao().updateWinnerBySerialNumbers(id, serialNumbers);
 
-        LotteryActivity activity = getInstance(id);
+        SeckillActivity activity = getInstance(id);
         activity.setWinners(winners);
         activity.setAnnouncement(announcement);
         HibernateUtils.update(activity);
@@ -149,7 +154,7 @@ public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
      * @return true is lottery activity can be found and is expired, otherwise false
      */
     public boolean isExpire(Integer id) {
-        String hql = "SELECT expire FROM LotteryActivity WHERE id=" + id;
+        String hql = "SELECT expire FROM SeckillActivity WHERE id=" + id;
         Boolean expire = (Boolean) new HibernateListBuilder().getFirstItem(hql);
         if (expire == null) {
             expire = false;
@@ -160,13 +165,12 @@ public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
     public void delete(Integer id) {
         if (isExpire(id)) {
             throw new RuntimeException("Can not delete lottery activity expired");
-        } else {
-            super.delete(id);
         }
+        HibernateDeleter.deleteById(SeckillActivity.class, id);
     }
 
     public Integer getMaxSerialNumber(Integer activityId) {
         return (Integer) new HibernateListBuilder().addEqualFilter("id", activityId)
-                .getFirstItem("SELECT maxSerialNumber FROM LotteryActivity");
+                .getFirstItem("SELECT maxSerialNumber FROM SeckillActivity");
     }
 }

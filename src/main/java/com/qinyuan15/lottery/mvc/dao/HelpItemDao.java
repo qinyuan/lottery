@@ -1,9 +1,9 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.utils.hibernate.HibernateDeleter;
-import com.qinyuan15.utils.hibernate.HibernateListBuilder;
-import com.qinyuan15.utils.hibernate.HibernateUtils;
-import com.qinyuan15.utils.hibernate.RankingDao;
+import com.qinyuan15.utils.database.hibernate.HibernateDeleter;
+import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
+import com.qinyuan15.utils.database.hibernate.HibernateUtils;
+import com.qinyuan15.utils.database.hibernate.RankingDao;
 
 import java.util.List;
 

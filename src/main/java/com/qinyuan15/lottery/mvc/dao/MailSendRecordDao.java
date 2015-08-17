@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan15.utils.DateUtils;
-import com.qinyuan15.utils.hibernate.HibernateUtils;
+import com.qinyuan15.utils.database.hibernate.HibernateUtils;
 
 public class MailSendRecordDao {
     public Integer add(Integer mailAccountId, Integer userId, Integer mailId) {

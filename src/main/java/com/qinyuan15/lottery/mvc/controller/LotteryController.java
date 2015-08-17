@@ -8,7 +8,7 @@ import com.qinyuan15.lottery.mvc.lottery.LotteryLotCreator;
 import com.qinyuan15.lottery.mvc.lottery.ShareUrlBuilder;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.hibernate.HibernateUtils;
+import com.qinyuan15.utils.database.hibernate.HibernateUtils;
 import com.qinyuan15.utils.mvc.controller.ImageController;
 import com.qinyuan15.utils.security.SecurityUtils;
 import com.qinyuan15.utils.tel.TelValidator;

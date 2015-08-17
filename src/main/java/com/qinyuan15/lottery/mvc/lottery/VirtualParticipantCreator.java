@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.lottery;
 
-import com.qinyuan15.utils.hibernate.HibernateUtils;
+import com.qinyuan15.utils.database.hibernate.HibernateUtils;
 
 /**
  * Class to create virtual participant

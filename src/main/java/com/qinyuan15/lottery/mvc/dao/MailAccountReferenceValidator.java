@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.utils.hibernate.ReferenceValidator;
+import com.qinyuan15.utils.database.hibernate.ReferenceValidator;
 
 public class MailAccountReferenceValidator {
     private ReferenceValidator validator = new ReferenceValidator().add(MailSendRecord.class, "mailAccountId");

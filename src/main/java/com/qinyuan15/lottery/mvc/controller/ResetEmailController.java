@@ -4,7 +4,7 @@ import com.qinyuan15.lottery.mvc.dao.ResetEmailRequestDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.lottery.mvc.mail.ResetEmailMailSender;
-import com.qinyuan15.utils.hibernate.HibernateUtils;
+import com.qinyuan15.utils.database.hibernate.HibernateUtils;
 import com.qinyuan15.utils.mail.MailSerialKey;
 import com.qinyuan15.utils.mvc.UrlUtils;
 import com.qinyuan15.utils.mvc.controller.ImageController;

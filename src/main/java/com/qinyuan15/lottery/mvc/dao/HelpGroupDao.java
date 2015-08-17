@@ -1,8 +1,8 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.utils.hibernate.AbstractRankingDao;
-import com.qinyuan15.utils.hibernate.HibernateUtils;
-import com.qinyuan15.utils.hibernate.RankingDao;
+import com.qinyuan15.utils.database.hibernate.AbstractRankingDao;
+import com.qinyuan15.utils.database.hibernate.HibernateUtils;
+import com.qinyuan15.utils.database.hibernate.RankingDao;
 
 public class HelpGroupDao extends AbstractRankingDao<HelpGroup> {
     public Integer add(String title) {

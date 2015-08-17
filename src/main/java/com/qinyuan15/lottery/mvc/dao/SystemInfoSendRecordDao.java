@@ -2,9 +2,9 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.google.common.collect.Lists;
 import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.hibernate.AbstractDao;
-import com.qinyuan15.utils.hibernate.HibernateListBuilder;
-import com.qinyuan15.utils.hibernate.HibernateUtils;
+import com.qinyuan15.utils.database.hibernate.AbstractDao;
+import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
+import com.qinyuan15.utils.database.hibernate.HibernateUtils;
 
 import java.util.List;
 
