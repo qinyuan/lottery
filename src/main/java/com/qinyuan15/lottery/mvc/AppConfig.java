@@ -313,6 +313,28 @@ public class AppConfig {
     }
     ///////////////////////// share succeed liveness end /////////////////////
 
+    ///////////////////////// seckill poker site start ///////////////////////////////
+    private final static String SECKILL_POKER_FRONT_SIZE_KEY = "seckillPokerFrontSize";
+
+    public static String getSeckillPokerFrontSize() {
+        return dao.get(SECKILL_POKER_FRONT_SIZE_KEY);
+    }
+
+    public static void updateSeckillPokerFrontSize(String path) {
+        dao.save(SECKILL_POKER_FRONT_SIZE_KEY, path);
+    }
+
+    private final static String SECKILL_POKER_BACK_SIZE_KEY = "seckillPokerBackSize";
+
+    public static String getSeckillPokerBackSize() {
+        return dao.get(SECKILL_POKER_BACK_SIZE_KEY);
+    }
+
+    public static void updateSeckillPokerBackSize(String path) {
+        dao.save(SECKILL_POKER_BACK_SIZE_KEY, path);
+    }
+    ///////////////////////// seckill poker site end ////////////////////////////////
+
     ///////////////////////////////////// activate mail start ///////////////////////////////////
     private final static String ACTIVATE_MAIL_SUBJECT_TEMPLATE_KEY = "activateMailSubjectTemplate";
 
