@@ -1,19 +1,17 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.database.hibernate.AbstractDao;
-import com.qinyuan15.utils.database.hibernate.HibernateDeleter;
 import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.database.hibernate.HibernateUtils;
-import com.qinyuan15.utils.mvc.controller.PaginationItemFactory;
+import com.qinyuan15.utils.mvc.controller.AbstractPaginationItemFactory;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SeckillActivityDao extends AbstractDao<SeckillActivity> {
-    public static class Factory implements PaginationItemFactory<SeckillActivity> {
+    public static class Factory extends AbstractPaginationItemFactory<SeckillActivity> {
         private Integer commodityId;
         private Boolean expire;
 
@@ -27,7 +25,7 @@ public class SeckillActivityDao extends AbstractDao<SeckillActivity> {
             return this;
         }
 
-        private HibernateListBuilder getListBuilder() {
+        protected HibernateListBuilder getListBuilder() {
             // order by expire desc, start time desc
             HibernateListBuilder listBuilder = new HibernateListBuilder()
                     .addOrder("expire", false)
@@ -41,25 +39,6 @@ public class SeckillActivityDao extends AbstractDao<SeckillActivity> {
             }
             listBuilder.addOrder("id", false);
             return listBuilder;
-        }
-
-        @Override
-        public long getCount() {
-            return getListBuilder().count(SeckillActivity.class);
-        }
-
-        @Override
-        public List<SeckillActivity> getInstances(int firstResult, int maxResults) {
-            return getListBuilder().limit(firstResult, maxResults).build(SeckillActivity.class);
-        }
-
-        public List<SeckillActivity> getInstances() {
-            return getListBuilder().build(SeckillActivity.class);
-        }
-
-        public SeckillActivity getFirstInstance() {
-            List<SeckillActivity> activities = getInstances();
-            return activities.size() == 0 ? null : activities.get(0);
         }
     }
 
@@ -87,8 +66,7 @@ public class SeckillActivityDao extends AbstractDao<SeckillActivity> {
         return (Integer) new HibernateListBuilder().getFirstItem("SELECT MAX(term) FROM SeckillActivity");
     }
 
-    public Integer add(Integer term, Integer commodityId, String startTime, String expectEndTime,
-                       Integer continuousSerialLimit, Integer expectParticipantCount, Integer dualColoredBallTerm) {
+    public Integer add(Integer term, Integer commodityId, String startTime, Integer expectParticipantCount) {
         SeckillActivity activity = new SeckillActivity();
         activity.setTerm(term);
         activity.setCommodityId(commodityId);
@@ -113,9 +91,7 @@ public class SeckillActivityDao extends AbstractDao<SeckillActivity> {
         HibernateUtils.executeUpdate(hql);
     }
 
-    public void update(Integer id, Integer term, Integer commodityId, String startTime, String expectEndTime,
-                       Integer continuousSerialLimit, Integer expectParticipantCount,
-                       Integer virutalLiveness, String virtualLivenessUsers, Integer dualColoredBallTerm) {
+    public void update(Integer id, Integer term, Integer commodityId, String startTime, Integer expectParticipantCount) {
         SeckillActivity activity = getInstance(id);
         activity.setTerm(term);
         activity.setCommodityId(commodityId);
@@ -165,12 +141,8 @@ public class SeckillActivityDao extends AbstractDao<SeckillActivity> {
     public void delete(Integer id) {
         if (isExpire(id)) {
             throw new RuntimeException("Can not delete lottery activity expired");
+        } else {
+            super.delete(id);
         }
-        HibernateDeleter.deleteById(SeckillActivity.class, id);
-    }
-
-    public Integer getMaxSerialNumber(Integer activityId) {
-        return (Integer) new HibernateListBuilder().addEqualFilter("id", activityId)
-                .getFirstItem("SELECT maxSerialNumber FROM SeckillActivity");
     }
 }
