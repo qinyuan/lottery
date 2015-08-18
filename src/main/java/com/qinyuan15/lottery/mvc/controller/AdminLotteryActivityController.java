@@ -88,7 +88,10 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                 dao.update(id, term, commodityId, startTime, expectEndTime, continuousSerialLimit,
                         expectParticipantCount, virtualLiveness, virtualLivenessUsers, dualColoredBallTerm);
             } else {
-                if (new CommodityDao().hasActiveLottery(commodityId)) {
+                CommodityDao commodityDao = new CommodityDao();
+                if (commodityDao.hasActiveSeckill(commodityId)) {
+                    return fail("此商品的上一期秒杀还未结束，不能为准备进行秒杀的商品添加抽奖！");
+                } else if (commodityDao.hasActiveLottery(commodityId)) {
                     return fail("此商品的上一期抽奖还未结束，不能重复添加抽奖！");
                 } else if (dao.hasTerm(term)) {
                     return fail("第" + term + "期抽奖已经存在，请填写别的期数！");

@@ -125,4 +125,24 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
     public boolean hasActiveLottery(Integer commodityId) {
         return LotteryActivityDao.factory().setCommodityId(commodityId).setExpire(false).getCount() > 0;
     }
+
+    /**
+     * validate if certain commodity has seckill activity
+     *
+     * @param commodityId id of commodity
+     * @return true if this commodity has seckill activity
+     */
+    public boolean hasSeckill(Integer commodityId) {
+        return SeckillActivityDao.factory().setCommodityId(commodityId).getCount() > 0;
+    }
+
+    /**
+     * validate if certain commodity has active seckill activity
+     *
+     * @param commodityId id of commodity
+     * @return true if this commodity has active seckill activity
+     */
+    public boolean hasActiveSeckill(Integer commodityId) {
+        return SeckillActivityDao.factory().setCommodityId(commodityId).setExpire(false).getCount() > 0;
+    }
 }
