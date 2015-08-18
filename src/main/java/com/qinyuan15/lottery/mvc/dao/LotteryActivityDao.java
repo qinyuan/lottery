@@ -2,46 +2,19 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.database.hibernate.AbstractDao;
 import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.database.hibernate.HibernateUtils;
-import com.qinyuan15.utils.mvc.controller.AbstractPaginationItemFactory;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
-    public static class Factory extends AbstractPaginationItemFactory<LotteryActivity> {
-        private Integer commodityId;
-        private Boolean expire;
-
-        public Factory setCommodityId(Integer commodityId) {
-            this.commodityId = commodityId;
-            return this;
-        }
-
-        public Factory setExpire(Boolean expire) {
-            this.expire = expire;
-            return this;
-        }
-
+public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
+    public static class Factory extends AbstractActivityPaginationItemFactory<LotteryActivity> {
         @Override
-        protected HibernateListBuilder getListBuilder() {
-            // order by expire desc, end time desc, start time desc
-            HibernateListBuilder listBuilder = new HibernateListBuilder()
-                    .addOrder("expire", false)
-                    .addOrder("endTime", false)
-                    .addOrder("startTime", false);
-
-            if (IntegerUtils.isPositive(this.commodityId)) {
-                listBuilder.addEqualFilter("commodityId", this.commodityId);
-            }
-            if (this.expire != null) {
-                listBuilder.addEqualFilter("expire", this.expire);
-            }
-            listBuilder.addOrder("id", false);
-            return listBuilder;
+        protected void addOrders(HibernateListBuilder listBuilder) {
+            listBuilder.addOrder("expire", false).addOrder("endTime", false)
+                    .addOrder("startTime", false).addOrder("id", false);
         }
     }
 
@@ -49,24 +22,9 @@ public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
         return new Factory();
     }
 
-    public boolean hasTerm(Integer term) {
-        return new HibernateListBuilder().addEqualFilter("term", term).count(getPersistClass()) > 0;
-    }
-
-    public LotteryActivity getActiveInstanceByCommodityId(Integer commodityId) {
-        return factory().setCommodityId(commodityId).setExpire(false).getFirstInstance();
-    }
-
-    public LotteryActivity getLastInstance() {
-        return factory().getFirstInstance(); // factory order by id desc
-    }
-
-    public LotteryActivity getLastActiveInstance() {
-        return factory().setExpire(false).getFirstInstance();
-    }
-
-    public Integer getMaxTerm() {
-        return (Integer) new HibernateListBuilder().getFirstItem("SELECT MAX(term) FROM LotteryActivity");
+    @Override
+    public AbstractActivityPaginationItemFactory<LotteryActivity> getFactory() {
+        return factory();
     }
 
     public Integer add(Integer term, Integer commodityId, String startTime, String expectEndTime,
@@ -118,6 +76,7 @@ public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
         HibernateUtils.update(activity);
     }
 
+    @Override
     public void end(Integer id) {
         LotteryActivity activity = getInstance(id);
         activity.setEndTime(DateUtils.nowString());
@@ -125,6 +84,7 @@ public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
         HibernateUtils.update(activity);
     }
 
+    @Override
     public void updateResult(Integer id, String winners, String announcement) {
         List<Integer> serialNumbers = new ArrayList<>();
         if (StringUtils.hasText(winners)) {
@@ -136,33 +96,7 @@ public class LotteryActivityDao extends AbstractDao<LotteryActivity> {
         }
         new LotteryLotDao().updateWinnerBySerialNumbers(id, serialNumbers);
 
-        LotteryActivity activity = getInstance(id);
-        activity.setWinners(winners);
-        activity.setAnnouncement(announcement);
-        HibernateUtils.update(activity);
-    }
-
-    /**
-     * validate if lottery activity is expired
-     *
-     * @param id id of lottery activity to query
-     * @return true if lottery activity can be found and is expired, otherwise false
-     */
-    public boolean isExpire(Integer id) {
-        String hql = "SELECT expire FROM LotteryActivity WHERE id=" + id;
-        Boolean expire = (Boolean) new HibernateListBuilder().getFirstItem(hql);
-        if (expire == null) {
-            expire = false;
-        }
-        return expire;
-    }
-
-    public void delete(Integer id) {
-        if (isExpire(id)) {
-            throw new RuntimeException("Can not delete lottery activity expired");
-        } else {
-            super.delete(id);
-        }
+        super.updateResult(id, winners, announcement);
     }
 
     public Integer getMaxSerialNumber(Integer activityId) {
