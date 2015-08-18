@@ -45,3 +45,8 @@ div.posters div.poster div.dots div.dot.selected {
     -moz-transition: background 1s, opacity 1s;
     transition: background 1s, opacity 1s;
 }
+
+div.posters div.poster div.dots.unload div.dot {
+    border-color: transparent;
+    background-color: transparent;
+}

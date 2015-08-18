@@ -75,4 +75,11 @@
             }
         }, cycleInterval);
     });
+    $('div.dots').each(function () {
+        var $this = $(this);
+        var width = $this.width();
+        if (width > 0) {
+            $this.css('margin-left', '-' + (width / 2) + 'px').removeClass('unload');
+        }
+    });
 })();

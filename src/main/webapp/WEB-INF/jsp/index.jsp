@@ -15,7 +15,7 @@
                 </div>
             </div>
             <c:if test="${multiImage}">
-                <div class="dots">
+                <div class="dots unload">
                     <c:forEach var="indexImage" items="${indexImages}" varStatus="status">
                         <div class="dot<c:if test="${status.index == 0}"> selected</c:if>"
                              data-options="index:${status.index}"></div>
