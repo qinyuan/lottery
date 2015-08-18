@@ -1,15 +1,9 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.lottery.mvc.dao.CommodityDao;
-import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecord;
-import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
-import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.activity.DualColoredBallTermValidator;
+import com.qinyuan15.lottery.mvc.dao.*;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.mvc.controller.ImageController;
-import com.qinyuan15.utils.mvc.controller.PaginationAttributeAdder;
-import com.qinyuan15.utils.mvc.controller.SelectFormItemsBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -21,32 +15,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.text.DecimalFormat;
 
 @Controller
-public class AdminLotteryActivityController extends ImageController {
+public class AdminLotteryActivityController extends AbstractActivityAdminController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminLotteryActivityController.class);
+
+    @Override
+    protected AbstractActivityDao getActivityDao() {
+        return new LotteryActivityDao();
+    }
 
     @RequestMapping("/admin-lottery-activity")
     public String index(@RequestParam(value = "listType", required = false) String listType) {
-        IndexHeaderUtils.setHeaderParameters(this);
-
-        boolean listExpire = (listType != null && listType.equals("expire"));
-        setAttribute("listExpire", listExpire);
-
-        new PaginationAttributeAdder(LotteryActivityDao.factory().setExpire(listExpire), request)
-                .setRowItemsName("activities").setPageSize(10).add();
-
-        // used by commodity select form
-        setAttribute("allCommodities", new SelectFormItemsBuilder().build(new CommodityDao().getInstances(), "name"));
+        setTitle("抽奖管理");
         DualColoredBallRecord latestRecord = new DualColoredBallRecordDao().getLatestInstance();
         setAttribute("nextDualColoredBallTerm", latestRecord.getYear() +
                 new DecimalFormat("000").format(latestRecord.getTerm() + 1));
-        setAttribute("nextTerm", new LotteryActivityDao().getMaxTerm() + 1);
 
-        setTitle("抽奖管理");
-        addJs("lib/bootstrap/js/bootstrap.min", false);
-        addJs("lib/ckeditor/ckeditor", false);
-        addCss("admin-form");
-        addCssAndJs("admin-lottery-activity");
-        return "admin-lottery-activity";
+        return super.index(listType, "admin-lottery-activity");
     }
 
 
@@ -122,38 +106,13 @@ public class AdminLotteryActivityController extends ImageController {
     @RequestMapping("/admin-lottery-activity-delete.json")
     @ResponseBody
     public String delete(@RequestParam(value = "id", required = true) Integer id) {
-        if (!IntegerUtils.isPositive(id)) {
-            return failByInvalidParam();
-        }
-
-        LotteryActivityDao dao = new LotteryActivityDao();
-        if (dao.isExpire(id)) {
-            return fail("无法删除已经结束的抽奖活动！");
-        }
-
-        try {
-            dao.delete(id);
-            return success();
-        } catch (Exception e) {
-            LOGGER.error("fail to delete lottery activity, info: {}", e);
-            return failByDatabaseError();
-        }
+        return super.delete(id);
     }
 
     @RequestMapping("/admin-lottery-activity-stop.json")
     @ResponseBody
     public String stop(@RequestParam(value = "id", required = true) Integer id) {
-        if (!IntegerUtils.isPositive(id)) {
-            return failByInvalidParam();
-        }
-
-        try {
-            new LotteryActivityDao().end(id);
-            return success();
-        } catch (Exception e) {
-            LOGGER.error("fail to stop lottery activity, info: {}", e);
-            return failByDatabaseError();
-        }
+        return super.stop(id);
     }
 
     @RequestMapping("/admin-lottery-activity-update-announcement.json")
@@ -161,10 +120,6 @@ public class AdminLotteryActivityController extends ImageController {
     public String updateAnnouncement(@RequestParam(value = "id", required = true) Integer id,
                                      @RequestParam(value = "winners", required = true) String winners,
                                      @RequestParam(value = "announcement", required = true) String announcement) {
-        if (!IntegerUtils.isPositive(id)) {
-            return failByInvalidParam();
-        }
-
         if (StringUtils.hasText(winners)) {
             for (String winner : winners.split(",")) {
                 if (!IntegerUtils.isPositive(winner)) {
@@ -172,13 +127,6 @@ public class AdminLotteryActivityController extends ImageController {
                 }
             }
         }
-
-        try {
-            new LotteryActivityDao().updateResult(id, winners, announcement);
-            return success();
-        } catch (Exception e) {
-            LOGGER.error("Fail to update announcement, info: {}", e);
-            return failByDatabaseError();
-        }
+        return super.updateAnnouncement(id, winners, announcement);
     }
 }

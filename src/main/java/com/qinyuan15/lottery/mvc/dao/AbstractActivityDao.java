@@ -4,7 +4,7 @@ import com.qinyuan15.utils.database.hibernate.AbstractDao;
 import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.database.hibernate.HibernateUtils;
 
-abstract class AbstractActivityDao<T extends AbstractActivity> extends AbstractDao<T> {
+public abstract class AbstractActivityDao<T extends AbstractActivity> extends AbstractDao<T> {
     public abstract AbstractActivityPaginationItemFactory<T> getFactory();
 
     public boolean hasTerm(Integer term) {

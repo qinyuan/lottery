@@ -4,7 +4,7 @@ import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.mvc.controller.AbstractPaginationItemFactory;
 
-abstract class AbstractActivityPaginationItemFactory<T extends AbstractActivity>
+public abstract class AbstractActivityPaginationItemFactory<T extends AbstractActivity>
         extends AbstractPaginationItemFactory<T> {
     private Integer commodityId;
     private Boolean expire;
