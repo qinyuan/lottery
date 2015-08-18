@@ -34,6 +34,15 @@ alter table user add column serial_key char(200) unique;
 alter table user add column spread_user_id int;
 alter table user add column spread_way char(50);
 
+create table virtual_user (
+  id int primary key auto_increment,
+  username char(50) unique not null,
+  tel_prefix int not null,
+  tel_suffix int not null,
+  mail_prefix char(10) not null,
+  mail_suffix char(50) not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 create table help_group (
   id int primary key auto_increment,
   title char(100) not null,

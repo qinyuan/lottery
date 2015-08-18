@@ -160,4 +160,14 @@
         <property name="infoId" column="info_id"/>
         <property name="unread" column="unread"/>
     </class>
+    <class name="VirtualUser" table="virtual_user">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="username" column="username"/>
+        <property name="telPrefix" column="tel_prefix"/>
+        <property name="telSuffix" column="tel_suffix"/>
+        <property name="mailPrefix" column="mail_prefix"/>
+        <property name="mailSuffix" column="mail_suffix"/>
+    </class>
 </hibernate-mapping>
