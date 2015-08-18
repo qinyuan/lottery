@@ -314,24 +314,24 @@ public class AppConfig {
     ///////////////////////// share succeed liveness end /////////////////////
 
     ///////////////////////// seckill poker site start ///////////////////////////////
-    private final static String SECKILL_POKER_FRONT_SIZE_KEY = "seckillPokerFrontSize";
+    private final static String SECKILL_POKER_FRONT_SIDE_KEY = "seckillPokerFrontSide";
 
-    public static String getSeckillPokerFrontSize() {
-        return dao.get(SECKILL_POKER_FRONT_SIZE_KEY);
+    public static String getSeckillPokerFrontSide() {
+        return dao.get(SECKILL_POKER_FRONT_SIDE_KEY);
     }
 
-    public static void updateSeckillPokerFrontSize(String path) {
-        dao.save(SECKILL_POKER_FRONT_SIZE_KEY, path);
+    public static void updateSeckillPokerFrontSide(String path) {
+        dao.save(SECKILL_POKER_FRONT_SIDE_KEY, path);
     }
 
-    private final static String SECKILL_POKER_BACK_SIZE_KEY = "seckillPokerBackSize";
+    private final static String SECKILL_POKER_BACK_SIDE_KEY = "seckillPokerBackSide";
 
-    public static String getSeckillPokerBackSize() {
-        return dao.get(SECKILL_POKER_BACK_SIZE_KEY);
+    public static String getSeckillPokerBackSide() {
+        return dao.get(SECKILL_POKER_BACK_SIDE_KEY);
     }
 
-    public static void updateSeckillPokerBackSize(String path) {
-        dao.save(SECKILL_POKER_BACK_SIZE_KEY, path);
+    public static void updateSeckillPokerBackSide(String path) {
+        dao.save(SECKILL_POKER_BACK_SIDE_KEY, path);
     }
     ///////////////////////// seckill poker site end ////////////////////////////////
 

@@ -7,6 +7,6 @@
 <input type="file" id="${param.id}File" name="${param.id}File" style="display:block;float:left;"/>
 <c:if test="${param.snapshot && param.value!=null && fn:length(param.value)>0}">
     <a target="_blank" href="${param.value}?t=<%=new Random().nextInt()%>" title="单击预览">
-        <img src="${param.value}" onload="adjustImageWidth(this, 250);"/>
+        <img src="${param.value}" onload="adjustImage(this, 250, 200);"/>
     </a>
 </c:if>

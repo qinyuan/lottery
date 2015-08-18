@@ -12,7 +12,6 @@ public class AdminLotteryConfigController extends ImageController {
     @RequestMapping("/admin-lottery-config")
     public String index() {
         IndexHeaderUtils.setHeaderParameters(this);
-        CommodityHeaderUtils.setHeaderParameters(this);
 
         // data about sina weibo
         setAttribute("sinaWeiboTitle", AppConfig.getLotterySinaWeiboTitle());
