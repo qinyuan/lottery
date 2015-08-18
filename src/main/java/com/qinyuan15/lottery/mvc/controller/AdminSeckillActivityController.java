@@ -8,7 +8,6 @@ import com.qinyuan15.utils.IntegerUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +24,7 @@ public class AdminSeckillActivityController extends AbstractActivityAdminControl
     @RequestMapping("/admin-seckill-activity")
     public String index(@RequestParam(value = "listType", required = false) String listType) {
         setTitle("秒杀管理");
+        setAttribute("defaultStartTime", DateUtils.toLongString(DateUtils.oneDayLater()));
         return super.index(listType, "admin-seckill-activity");
     }
 
@@ -34,16 +34,12 @@ public class AdminSeckillActivityController extends AbstractActivityAdminControl
     public String addEdit(@RequestParam(value = "id", required = false) Integer id,
                           @RequestParam(value = "term", required = true) Integer term,
                           @RequestParam(value = "commodityId", required = true) Integer commodityId,
-                          @RequestParam(value = "startTime", required = false) String startTime,
-                          @RequestParam(value = "autoStartTime", required = false) String autoStartTime,
+                          @RequestParam(value = "startTime", required = true) String startTime,
                           @RequestParam(value = "expectParticipantCount", required = true) Integer expectParticipantCount,
-                          @RequestParam(value = "description", required = true) String description) {
-        if (StringUtils.hasText(autoStartTime)) {
-            startTime = DateUtils.nowString();
-        } else {
-            if (!DateUtils.isDateOrDateTime(startTime)) {
-                return fail("开始时间格式错误！");
-            }
+                          @RequestParam(value = "description", required = true) String description,
+                          @RequestParam(value = "winners", required = true) String winners) {
+        if (!DateUtils.isDateOrDateTime(startTime)) {
+            return fail("开始时间格式错误！");
         }
 
         if (!IntegerUtils.isPositive(term)) {
@@ -57,14 +53,14 @@ public class AdminSeckillActivityController extends AbstractActivityAdminControl
         try {
             SeckillActivityDao dao = new SeckillActivityDao();
             if (IntegerUtils.isPositive(id)) {
-                dao.update(id, term, commodityId, startTime, expectParticipantCount, description);
+                dao.update(id, term, commodityId, startTime, expectParticipantCount, description, winners);
             } else {
                 if (new CommodityDao().hasActiveLottery(commodityId)) {
                     return fail("此商品的上一期秒杀还未结束，不能重复添加秒杀！");
                 } else if (dao.hasTerm(term)) {
                     return fail("第" + term + "期秒杀已经存在，请填写别的期数！");
                 }
-                dao.add(term, commodityId, startTime, expectParticipantCount, description);
+                dao.add(term, commodityId, startTime, expectParticipantCount, description, winners);
             }
             return success();
         } catch (Exception e) {

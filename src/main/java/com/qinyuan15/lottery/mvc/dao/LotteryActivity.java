@@ -1,5 +1,7 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan15.lottery.mvc.activity.LotCounter;
+import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
 import com.qinyuan15.utils.DateUtils;
 
 public class LotteryActivity extends AbstractActivity {
@@ -80,5 +82,10 @@ public class LotteryActivity extends AbstractActivity {
     public int getParticipantCount() {
         return virtualParticipants == null ? getRealParticipantCount() :
                 getRealParticipantCount() + virtualParticipants;
+    }
+
+    @Override
+    protected LotCounter getLotCounter() {
+        return new LotteryLotCounter();
     }
 }

@@ -19,7 +19,7 @@
                 <li class="footer"></li>
             </ul>
         </li>
-        <li><a id="commodityLotteryLink" class="text" href="admin-commodity-edit.html">商品&活动</a>
+        <li><a id="commoditySeckillLink" class="text" href="admin-commodity-edit.html">商品&活动</a>
             <ul>
                 <li><a class="text" href="admin-commodity-edit.html">商品管理</a></li>
                 <li><a class="text" href="admin-lottery-config.html">抽奖配置</a></li>

@@ -31,4 +31,4 @@
     JSUtils.loadSelectFormEventsAndValue($('div.new-lottery-chance-mail-select'),
         window['currentNewLotteryChanceMailAccountId']);
 })();
-$('#commodityLotteryLink').addClass('emphasize');
+$('#commoditySeckillLink').addClass('emphasize');

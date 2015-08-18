@@ -24,8 +24,9 @@ public abstract class AbstractActivityDao<T extends AbstractActivity> extends Ab
     }
 
     public Integer getMaxTerm() {
-        return (Integer) new HibernateListBuilder().getFirstItem("SELECT MAX(term) FROM " +
+        Integer maxTerm = (Integer) new HibernateListBuilder().getFirstItem("SELECT MAX(term) FROM " +
                 getPersistClass().getSimpleName());
+        return maxTerm == null ? 0 : maxTerm;
     }
 
     public void end(Integer id) {

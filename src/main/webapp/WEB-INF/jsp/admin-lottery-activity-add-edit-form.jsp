@@ -79,4 +79,3 @@
         </c:otherwise>
     </c:choose>
 </form>
-<%@include file="inc-taglib.jsp" %>

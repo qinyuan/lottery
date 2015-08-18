@@ -4,10 +4,10 @@
     <table>
         <tbody>
         <tr>
-            <td class="title">中奖号码</td>
+            <td class="title">中奖用户</td>
             <td class="content">
                 <input type="text" name="winners" class="form-control"
-                       placeholder="在此输入中奖号码，多个号码间用英文逗号分隔"/>
+                       placeholder="在此输入中奖用户，多个用户间用英文逗号分隔"/>
             </td>
         </tr>
         <tr>

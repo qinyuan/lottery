@@ -10,7 +10,7 @@ import com.qinyuan15.utils.IntegerUtils;
 /**
  * Class to count lottery lot of certain lottery activity
  */
-public class LotteryLotCounter {
+public class LotteryLotCounter implements LotCounter{
     /**
      * count the total lot number of certain lottery activity,
      * including virtual lot and real lot

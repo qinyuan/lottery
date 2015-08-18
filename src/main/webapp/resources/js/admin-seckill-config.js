@@ -1,0 +1,1 @@
+$('#commoditySeckillLink').addClass('emphasize');

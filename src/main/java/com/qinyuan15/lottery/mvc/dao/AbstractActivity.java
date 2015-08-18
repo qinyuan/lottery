@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
+import com.qinyuan15.lottery.mvc.activity.LotCounter;
 import com.qinyuan15.utils.DateUtils;
 import com.qinyuan15.utils.database.hibernate.PersistObject;
 
@@ -83,8 +83,10 @@ abstract class AbstractActivity extends PersistObject {
 
     public int getRealParticipantCount() {
         if (realParticipantCountCache == null) {
-            realParticipantCountCache = new LotteryLotCounter().countReal(this.getId());
+            realParticipantCountCache = getLotCounter().countReal(this.getId());
         }
         return realParticipantCountCache;
     }
+
+    protected abstract LotCounter getLotCounter();
 }

@@ -103,4 +103,4 @@
     });
 })();
 JSUtils.recordScrollStatus();
-$('#commodityLotteryLink').addClass('emphasize');
+$('#commoditySeckillLink').addClass('emphasize');

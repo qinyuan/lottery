@@ -27,11 +27,6 @@
         }
         $form.fadeIn(300, function () {
             $term.focusOrSelect();
-            /*if ($autoStartTime.get(0).checked) {
-             $dualColoredBallTerm.focusOrSelect();
-             } else {
-             $startTime.focusOrSelect();
-             }*/
         });
     }
 
@@ -115,7 +110,7 @@
 
         var expectParticipantCount = $expectParticipantCount.val();
         if (expectParticipantCount != '' && !JSUtils.isNumberString(expectParticipantCount)) {
-            alert('预期参数人数只能为数字格式！');
+            alert('预期参与人数只能为数字格式！');
             $expectParticipantCount.focusOrSelect();
             return false;
         }
@@ -153,9 +148,8 @@
                     location.href = 'admin-lottery-activity.html';
                 }
             });
+            return false;
         }
-
-        return true;
     });
     $cancelButton.click(function () {
         $form.getInputByName('id').val(null);
@@ -188,16 +182,16 @@
         showForm(true);
         var $tr = $(this).getParentByTagName('tr');
         $form.setInputValue('id', $tr.dataOptions('id'));
-        $form.getInputByName('startTime').attr('disabled', false)
-            .val($tr.find('td.start-time').text()).focusOrSelect();
-        $form.getInputByName('autoStartTime').get(0).checked = false;
+        $term.val($tr.find('td.term').text()).focusOrSelect();
+        $startTime.attr('disabled', false).val($tr.find('td.start-time').text());
+        $autoStartTime.get(0).checked = false;
         var $expectEndTimeTd = $tr.find('td.expect-end-time');
-        $form.setInputValue('expectEndTime', $expectEndTimeTd.text());
-        $form.setInputValue('dualColoredBallTerm', $expectEndTimeTd.dataOptions('dualColoredBallTerm'));
-        $form.setInputValue('virtualLiveness', $tr.find('td.virtual-liveness').text());
-        $form.setInputValue('virtualLivenessUsers', $tr.find('td.virtual-liveness-users').text());
-        $form.setInputValue('continuousSerialLimit', $tr.find('td.continuous-serial-limit').text());
-        $form.setInputValue('expectParticipantCount', $tr.find('td.expect-participant-count').text());
+        $expectEndTime.val($expectEndTimeTd.text());
+        $dualColoredBallTerm.val($expectEndTimeTd.dataOptions('dualColoredBallTerm'));
+        $virtualLiveness.val($tr.find('td.virtual-liveness').text());
+        $virtualLivenessUsers.val($tr.find('td.virtual-liveness-users').text());
+        $continuousSerialLimit.val($tr.find('td.continuous-serial-limit').text());
+        $expectParticipantCount.val($tr.find('td.expect-participant-count').text());
 
         JSUtils.loadSelectFormValue($commoditySelect, $tr.find('td.commodity').dataOptions('commodityId'));
     });
@@ -269,4 +263,4 @@
         }
     });
 })();
-$('#commodityLotteryLink').addClass('emphasize');
+$('#commoditySeckillLink').addClass('emphasize');
