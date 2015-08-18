@@ -26,6 +26,7 @@
                 <li><a class="text" href="admin-lottery-activity.html">抽奖管理</a></li>
                 <li><a class="text" href="admin-seckill-config.html">秒杀配置</a></li>
                 <li><a class="text" href="admin-seckill-activity.html">秒杀管理</a></li>
+                <li><a class="text" href="admin-virtual-user.html">虚拟用户</a></li>
                 <li class="footer"></li>
             </ul>
         </li>

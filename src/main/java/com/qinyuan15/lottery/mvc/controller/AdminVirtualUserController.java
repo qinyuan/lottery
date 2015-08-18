@@ -21,11 +21,12 @@ public class AdminVirtualUserController extends ImageController {
 
         addCss("resources/js/lib/font-awesome/css/font-awesome.min", false);
         addCss("resources/js/lib/buttons/buttons.min", false);
+        addCss("admin-form");
         addCssAndJs("admin-virtual-user");
         return "admin-virtual-user";
     }
 
-    @RequestMapping("/admin-virtual-user-add-update")
+    @RequestMapping("/admin-virtual-user-add-update.json")
     @ResponseBody
     public String addOrUpdate(@RequestParam(value = "id", required = false) Integer id,
                               @RequestParam(value = "username", required = true) String username,
@@ -70,6 +71,7 @@ public class AdminVirtualUserController extends ImageController {
         }
 
         try {
+            // TODO validate if username exists before adding and editing
             if (IntegerUtils.isPositive(id)) {
                 new VirtualUserDao().update(id, username, telPrefix, telSuffix, mailPrefix, mailSuffix);
             } else {

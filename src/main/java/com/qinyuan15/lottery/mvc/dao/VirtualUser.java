@@ -51,7 +51,7 @@ public class VirtualUser extends PersistObject {
 
     // derivative fields
     public String getTel() {
-        return this.telPrefix + "**" + this.telSuffix;
+        return this.telPrefix + "****" + this.telSuffix;
     }
 
     public String getMail() {
