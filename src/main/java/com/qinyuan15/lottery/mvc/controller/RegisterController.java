@@ -1,10 +1,12 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.lottery.mvc.mail.ActivateMailSender;
+import com.qinyuan15.lottery.mvc.account.NewUserValidator;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
+import com.qinyuan15.lottery.mvc.mail.ActivateMailSender;
 import com.qinyuan15.utils.mail.MailAddressValidator;
 import com.qinyuan15.utils.mvc.controller.BaseController;
+import com.qinyuan15.utils.tel.TelValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -48,9 +50,20 @@ public class RegisterController extends BaseController {
             return fail("用户名不能为空！");
         }
 
-        if (userDao.hasUsername(username)) {
-            return fail("该用户名已经存在！");
+        if (username.contains("@")) {
+            return fail("用户名不能包含'@'字符！");
         }
+
+        if (new TelValidator().validate(username)) {
+            return fail("用户名不能为电话号码！");
+        }
+
+        if (new NewUserValidator().hasUsername(username)) {
+            return fail("该用户名已经被注册！");
+        }
+        /*if (userDao.hasUsername(username)) {
+            return fail("该用户名已经存在！");
+        }*/
 
         if (!StringUtils.hasText(password)) {
             return fail("密码不能为空！");
@@ -124,8 +137,15 @@ public class RegisterController extends BaseController {
         if (username.length() < 2) {
             return fail("用户名至少使用2个字符");
         }
+        if (username.contains("@")) {
+            return fail("用户名不能包含'@'字符");
+        }
+        if (new TelValidator().validate(username)) {
+            return fail("用户名不能为电话号码");
+        }
 
-        if (userDao.hasUsername(username)) {
+        //if (userDao.hasUsername(username)) {
+        if (new NewUserValidator().hasUsername(username)) {
             return fail("用户名已经被使用，" + TO_LOGIN_HTML);
         } else {
             return success();

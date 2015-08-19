@@ -1,4 +1,4 @@
-package com.qinyuan15.lottery.mvc.login;
+package com.qinyuan15.lottery.mvc.account;
 
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;

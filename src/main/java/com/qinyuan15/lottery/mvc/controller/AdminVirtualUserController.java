@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan15.lottery.mvc.account.NewUserValidator;
 import com.qinyuan15.lottery.mvc.dao.VirtualUserDao;
 import com.qinyuan15.utils.IntegerUtils;
 import com.qinyuan15.utils.mvc.controller.ImageController;
@@ -71,7 +72,9 @@ public class AdminVirtualUserController extends ImageController {
         }
 
         try {
-            // TODO validate if username exists before adding and editing
+            if (isReduplicated(id, username)) {
+                return fail("该用户名已经被使用，请换另一个用户名！");
+            }
             if (IntegerUtils.isPositive(id)) {
                 new VirtualUserDao().update(id, username, telPrefix, telSuffix, mailPrefix, mailSuffix);
             } else {
@@ -83,6 +86,10 @@ public class AdminVirtualUserController extends ImageController {
         }
     }
 
+    private boolean isReduplicated(Integer id, String username) {
+        return !(IntegerUtils.isPositive(id) && new VirtualUserDao().getInstance(id).getUsername().equals(username))
+                && new NewUserValidator().hasUsername(username);
+    }
 
     @RequestMapping("/admin-virtual-user-delete.json")
     @ResponseBody

@@ -1,7 +1,9 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan15.utils.database.hibernate.AbstractDao;
+import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
 import com.qinyuan15.utils.database.hibernate.HibernateUtils;
+import org.springframework.util.StringUtils;
 
 public class VirtualUserDao extends AbstractDao<VirtualUser> {
     public Integer add(String username, String telPrefix, String telSuffix, String mailPrefix, String mailSuffix) {
@@ -25,5 +27,19 @@ public class VirtualUserDao extends AbstractDao<VirtualUser> {
         user.setMailSuffix(mailSuffix);
 
         HibernateUtils.update(user);
+    }
+
+    public VirtualUser getInstanceByUsername(String username) {
+        if (!StringUtils.hasText(username)) {
+            return null;
+        }
+
+        return new HibernateListBuilder()
+                .addFilter("username=:username").addArgument("username", username)
+                .getFirstItem(VirtualUser.class);
+    }
+
+    public boolean hasUsername(String username) {
+        return getInstanceByUsername(username) != null;
     }
 }

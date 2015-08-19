@@ -42,6 +42,12 @@ public class UserDao extends SimpleUserDao {
         return getInstanceByEmail(email) != null;
     }
 
+    /**
+     * Query user by username, email or tel
+     *
+     * @param usernameFromLoginForm username from login from, including username, email or tel
+     * @return user whose username, email or tel is usernameFromLoginForm
+     */
     @Override
     public User getInstanceByName(String usernameFromLoginForm) {
         User user = getInstanceByUsername(usernameFromLoginForm);
