@@ -1,10 +1,10 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.database.hibernate.HibernateDeleter;
-import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
-import com.qinyuan15.utils.database.hibernate.HibernateUtils;
-import com.qinyuan15.utils.security.SimpleUserDao;
+import com.qinyuan.lib.database.hibernate.HibernateDeleter;
+import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
+import com.qinyuan.lib.database.hibernate.HibernateUtils;
+import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.mvc.security.SimpleUserDao;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.util.StringUtils;
 

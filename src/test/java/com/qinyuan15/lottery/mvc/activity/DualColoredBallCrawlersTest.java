@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity;
 
-import com.qinyuan15.utils.concurrent.ThreadUtils;
+import com.qinyuan.lib.lang.concurrent.ThreadUtils;
 import org.junit.Test;
 
 import java.text.DecimalFormat;

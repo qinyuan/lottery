@@ -1,8 +1,8 @@
 package com.qinyuan15.lottery.mvc;
 
-import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.config.AppConfigDao;
-import com.qinyuan15.utils.file.ClasspathFileUtils;
+import com.qinyuan.lib.config.AppConfigDao;
+import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.lang.file.ClasspathFileUtils;
 
 /**
  * Application Configuration

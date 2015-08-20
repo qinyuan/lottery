@@ -1,11 +1,11 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.utils.DateUtils;
-import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.database.hibernate.AbstractDao;
-import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
-import com.qinyuan15.utils.database.hibernate.HibernateUtils;
-import com.qinyuan15.utils.mvc.controller.AbstractPaginationItemFactory;
+import com.qinyuan.lib.database.hibernate.AbstractDao;
+import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
+import com.qinyuan.lib.database.hibernate.HibernateUtils;
+import com.qinyuan.lib.lang.DateUtils;
+import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.mvc.controller.AbstractPaginationItemFactory;
 
 public class SeckillLotDao extends AbstractDao<SeckillLot> {
     public Integer add(Integer activityId, Integer userId) {

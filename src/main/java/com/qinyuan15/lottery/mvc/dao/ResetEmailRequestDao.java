@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.utils.mail.MailSerialKeyDao;
+import com.qinyuan.lib.contact.mail.MailSerialKeyDao;
 
 public class ResetEmailRequestDao extends MailSerialKeyDao {
     public ResetEmailRequestDao() {

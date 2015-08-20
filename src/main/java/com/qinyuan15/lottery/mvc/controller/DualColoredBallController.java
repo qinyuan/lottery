@@ -1,13 +1,13 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecord;
-import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
+import com.qinyuan.lib.lang.DateUtils;
+import com.qinyuan.lib.mvc.controller.BaseController;
 import com.qinyuan15.lottery.mvc.activity.BaiduLecaiCrawler;
 import com.qinyuan15.lottery.mvc.activity.DualColoredBallCalculator;
 import com.qinyuan15.lottery.mvc.activity.DualColoredBallCrawler;
 import com.qinyuan15.lottery.mvc.activity.DualColoredBallTerm;
-import com.qinyuan15.utils.DateUtils;
-import com.qinyuan15.utils.mvc.controller.BaseController;
+import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecord;
+import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

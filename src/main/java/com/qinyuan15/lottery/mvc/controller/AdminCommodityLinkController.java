@@ -1,11 +1,11 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan.lib.image.ImageMapDao;
+import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan15.lottery.mvc.ImageMapType;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
-import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.image.ImageMapDao;
-import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

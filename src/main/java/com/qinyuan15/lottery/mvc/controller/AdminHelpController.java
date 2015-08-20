@@ -1,12 +1,12 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan15.lottery.mvc.RichHelpGroup;
 import com.qinyuan15.lottery.mvc.dao.HelpGroup;
 import com.qinyuan15.lottery.mvc.dao.HelpGroupDao;
 import com.qinyuan15.lottery.mvc.dao.HelpItemDao;
 import com.qinyuan15.lottery.mvc.dao.User;
-import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.security.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

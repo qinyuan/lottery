@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.mail;
 
-import com.qinyuan15.utils.mail.MailAccountDao;
-import com.qinyuan15.utils.mvc.controller.SelectFormItemsBuilder;
+import com.qinyuan.lib.contact.mail.MailAccountDao;
+import com.qinyuan.lib.mvc.controller.SelectFormItemsBuilder;
 
 import java.util.List;
 

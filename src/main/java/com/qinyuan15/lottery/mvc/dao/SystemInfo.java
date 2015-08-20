@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.utils.DateUtils;
-import com.qinyuan15.utils.database.hibernate.PersistObject;
+import com.qinyuan.lib.database.hibernate.PersistObject;
+import com.qinyuan.lib.lang.DateUtils;
 
 public class SystemInfo extends PersistObject {
     private String buildTime;

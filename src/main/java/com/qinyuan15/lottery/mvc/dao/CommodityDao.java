@@ -1,10 +1,10 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.utils.database.hibernate.AbstractRankingDao;
-import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
-import com.qinyuan15.utils.database.hibernate.HibernateUtils;
-import com.qinyuan15.utils.database.hibernate.ReferenceValidator;
-import com.qinyuan15.utils.mvc.controller.PaginationItemFactory;
+import com.qinyuan.lib.database.hibernate.AbstractRankingDao;
+import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
+import com.qinyuan.lib.database.hibernate.HibernateUtils;
+import com.qinyuan.lib.database.hibernate.ReferenceValidator;
+import com.qinyuan.lib.mvc.controller.PaginationItemFactory;
 
 import java.util.List;
 

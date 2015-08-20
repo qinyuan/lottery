@@ -1,7 +1,9 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.utils.html.HtmlUtils;
-import com.qinyuan15.utils.mvc.controller.*;
+import com.qinyuan.lib.mvc.controller.DatabaseTable;
+import com.qinyuan.lib.mvc.controller.DatabaseTableColumnPostHandler;
+import com.qinyuan.lib.mvc.controller.TableController;
+import com.qinyuan.lib.network.html.HtmlUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

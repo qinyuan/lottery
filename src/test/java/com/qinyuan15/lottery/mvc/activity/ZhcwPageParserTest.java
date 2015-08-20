@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity;
 
-import com.qinyuan15.utils.test.TestFileUtils;
+import com.qinyuan.lib.lang.test.TestFileUtils;
 import org.junit.Before;
 import org.junit.Test;
 

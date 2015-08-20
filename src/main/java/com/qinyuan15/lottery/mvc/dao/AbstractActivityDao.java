@@ -1,8 +1,8 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.utils.database.hibernate.AbstractDao;
-import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
-import com.qinyuan15.utils.database.hibernate.HibernateUtils;
+import com.qinyuan.lib.database.hibernate.AbstractDao;
+import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
+import com.qinyuan.lib.database.hibernate.HibernateUtils;
 
 public abstract class AbstractActivityDao<T extends AbstractActivity> extends AbstractDao<T> {
     public abstract AbstractActivityPaginationItemFactory<T> getFactory();

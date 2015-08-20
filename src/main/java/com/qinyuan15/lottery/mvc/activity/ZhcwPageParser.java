@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.activity;
 
 import com.google.common.base.Joiner;
-import com.qinyuan15.utils.html.JavaScriptExecutor;
+import com.qinyuan.lib.network.html.JavaScriptExecutor;
 import org.mozilla.javascript.NativeObject;
 
 import java.text.DecimalFormat;

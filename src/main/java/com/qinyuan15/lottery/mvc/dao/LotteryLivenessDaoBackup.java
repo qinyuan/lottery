@@ -1,11 +1,11 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.google.common.base.Joiner;
+import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
+import com.qinyuan.lib.database.hibernate.HibernateUtils;
+import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
 import com.qinyuan15.lottery.mvc.mail.NewLotteryChanceMailSender;
-import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
-import com.qinyuan15.utils.database.hibernate.HibernateUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

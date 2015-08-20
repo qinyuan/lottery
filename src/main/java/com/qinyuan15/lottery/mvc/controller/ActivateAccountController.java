@@ -1,10 +1,10 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.utils.mail.MailSerialKey;
+import com.qinyuan.lib.contact.mail.MailSerialKey;
+import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan15.lottery.mvc.dao.ActivateRequestDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
-import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan15.utils.mvc.controller.DatabaseTable;
+import com.qinyuan.lib.mvc.controller.DatabaseTable;
 import org.junit.Test;
 import org.powermock.reflect.Whitebox;
 

@@ -1,8 +1,8 @@
 package com.qinyuan15.lottery.mvc.account;
 
+import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
-import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

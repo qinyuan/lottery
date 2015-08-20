@@ -1,15 +1,15 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan.lib.config.LinkAdapter;
+import com.qinyuan.lib.contact.mail.MailAccountDao;
+import com.qinyuan.lib.contact.mail.MailAddressValidator;
+import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.MailAccountReferenceValidator;
 import com.qinyuan15.lottery.mvc.dao.NavigationLink;
 import com.qinyuan15.lottery.mvc.dao.NavigationLinkDao;
 import com.qinyuan15.lottery.mvc.mail.MailSelectFormItemBuilder;
-import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.config.LinkAdapter;
-import com.qinyuan15.utils.mail.MailAccountDao;
-import com.qinyuan15.utils.mail.MailAddressValidator;
-import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

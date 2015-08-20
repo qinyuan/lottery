@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity;
 
-import com.qinyuan15.utils.http.HttpClient;
+import com.qinyuan.lib.network.http.HttpClient;
 
 abstract public class AbstractDualColoredBallCrawler implements DualColoredBallCrawler {
     @Override

@@ -1,11 +1,11 @@
 package com.qinyuan15.lottery.mvc.mail;
 
+import com.qinyuan.lib.contact.mail.EmailDao;
+import com.qinyuan.lib.contact.mail.MailSenderBuilder;
+import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan15.lottery.mvc.dao.MailSendRecordDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
-import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.mail.EmailDao;
-import com.qinyuan15.utils.mail.MailSenderBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

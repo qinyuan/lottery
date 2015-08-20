@@ -1,12 +1,12 @@
 package com.qinyuan15.lottery.mvc.mail;
 
+import com.qinyuan.lib.contact.mail.MailSenderBuilder;
+import com.qinyuan.lib.contact.mail.MailSerialKey;
+import com.qinyuan.lib.contact.mail.MailSerialKeyDao;
+import com.qinyuan.lib.database.hibernate.HibernateUtils;
+import com.qinyuan.lib.lang.DateUtils;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
-import com.qinyuan15.utils.DateUtils;
-import com.qinyuan15.utils.database.hibernate.HibernateUtils;
-import com.qinyuan15.utils.mail.MailSenderBuilder;
-import com.qinyuan15.utils.mail.MailSerialKey;
-import com.qinyuan15.utils.mail.MailSerialKeyDao;
 import org.springframework.util.StringUtils;
 
 abstract class SerialKeyMailSender implements MailSender{

@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan.lib.mvc.security.AjaxAuthenticationSuccessHandler;
 import com.qinyuan15.lottery.mvc.LoginRecordAdder;
-import com.qinyuan15.utils.security.AjaxAuthenticationSuccessHandler;
 import org.springframework.security.core.Authentication;
 
 import javax.servlet.ServletException;

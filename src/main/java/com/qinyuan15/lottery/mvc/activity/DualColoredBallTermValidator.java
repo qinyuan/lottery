@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity;
 
-import com.qinyuan15.utils.IntegerUtils;
+import com.qinyuan.lib.lang.IntegerUtils;
 
 public class DualColoredBallTermValidator {
     public boolean validate(Integer fullTermNumber) {

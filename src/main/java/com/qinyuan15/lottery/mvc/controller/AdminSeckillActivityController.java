@@ -1,10 +1,10 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan.lib.lang.DateUtils;
+import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan15.lottery.mvc.dao.AbstractActivityDao;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
 import com.qinyuan15.lottery.mvc.dao.SeckillActivityDao;
-import com.qinyuan15.utils.DateUtils;
-import com.qinyuan15.utils.IntegerUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

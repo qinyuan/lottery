@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.share;
 
-import com.qinyuan15.utils.mvc.UrlUtils;
-import com.qinyuan15.utils.test.TestFileUtils;
+import com.qinyuan.lib.lang.test.TestFileUtils;
+import com.qinyuan.lib.network.url.UrlUtils;
 import org.junit.Test;
 
 public class XinaWeiboShareUrlBuilderTest {

@@ -1,9 +1,9 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan.lib.contact.mail.MailSerialKey;
+import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan15.lottery.mvc.dao.ResetPasswordRequestDao;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
-import com.qinyuan15.utils.mail.MailSerialKey;
-import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

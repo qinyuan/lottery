@@ -1,11 +1,11 @@
 package com.qinyuan15.lottery.mvc.activity;
 
+import com.qinyuan.lib.lang.DateUtils;
+import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.lang.concurrent.ThreadUtils;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
-import com.qinyuan15.utils.DateUtils;
-import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.concurrent.ThreadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

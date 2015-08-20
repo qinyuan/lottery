@@ -1,12 +1,12 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan.lib.contact.mail.MailAddressValidator;
+import com.qinyuan.lib.contact.tel.TelValidator;
+import com.qinyuan.lib.mvc.controller.BaseController;
 import com.qinyuan15.lottery.mvc.account.NewUserValidator;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.lottery.mvc.mail.ActivateMailSender;
-import com.qinyuan15.utils.mail.MailAddressValidator;
-import com.qinyuan15.utils.mvc.controller.BaseController;
-import com.qinyuan15.utils.tel.TelValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

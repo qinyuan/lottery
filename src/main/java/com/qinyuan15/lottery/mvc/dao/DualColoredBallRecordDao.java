@@ -1,8 +1,8 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
+import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan15.lottery.mvc.activity.DualColoredBallTerm;
-import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
-import com.qinyuan15.utils.database.hibernate.HibernateUtils;
 
 import java.util.List;
 

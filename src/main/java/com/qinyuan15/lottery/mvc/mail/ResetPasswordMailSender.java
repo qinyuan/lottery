@@ -1,8 +1,8 @@
 package com.qinyuan15.lottery.mvc.mail;
 
+import com.qinyuan.lib.contact.mail.MailSerialKeyDao;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.ResetPasswordRequestDao;
-import com.qinyuan15.utils.mail.MailSerialKeyDao;
 
 /**
  * Class to send reset passsword mail

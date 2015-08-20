@@ -1,12 +1,12 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
-import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.security.SecurityUtils;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;

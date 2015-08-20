@@ -1,8 +1,8 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.database.hibernate.HibernateListBuilder;
-import com.qinyuan15.utils.mvc.controller.AbstractPaginationItemFactory;
+import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
+import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.mvc.controller.AbstractPaginationItemFactory;
 
 public abstract class AbstractActivityPaginationItemFactory<T extends AbstractActivity>
         extends AbstractPaginationItemFactory<T> {

@@ -1,9 +1,9 @@
 package com.qinyuan15.lottery.mvc;
 
+import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.mvc.security.LoginRecordDao;
+import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
-import com.qinyuan15.utils.IntegerUtils;
-import com.qinyuan15.utils.security.LoginRecordDao;
-import com.qinyuan15.utils.security.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

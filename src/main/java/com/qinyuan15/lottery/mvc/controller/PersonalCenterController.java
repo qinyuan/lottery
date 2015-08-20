@@ -1,16 +1,16 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan.lib.contact.mail.MailAddressValidator;
+import com.qinyuan.lib.contact.tel.TelValidator;
+import com.qinyuan.lib.database.hibernate.HibernateUtils;
+import com.qinyuan.lib.mvc.controller.ImageController;
+import com.qinyuan.lib.mvc.security.LoginRecord;
+import com.qinyuan.lib.mvc.security.LoginRecordDao;
+import com.qinyuan.lib.mvc.security.SecuritySearcher;
 import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.lottery.mvc.mail.ResetEmailMailSender;
-import com.qinyuan15.utils.database.hibernate.HibernateUtils;
-import com.qinyuan15.utils.mail.MailAddressValidator;
-import com.qinyuan15.utils.mvc.controller.ImageController;
-import com.qinyuan15.utils.security.LoginRecord;
-import com.qinyuan15.utils.security.LoginRecordDao;
-import com.qinyuan15.utils.security.SecuritySearcher;
-import com.qinyuan15.utils.tel.TelValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

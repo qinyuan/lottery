@@ -4,7 +4,7 @@ package com.qinyuan15.lottery.mvc.dao;
  * User with email and tel
  * Created by qinyuan on 15-6-29.
  */
-public class User extends com.qinyuan15.utils.security.User {
+public class User extends com.qinyuan.lib.mvc.security.User {
     public final static String ADMIN = "ROLE_ADMIN";
     public final static String NORMAL = "ROLE_NORMAL";
 

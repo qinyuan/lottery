@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

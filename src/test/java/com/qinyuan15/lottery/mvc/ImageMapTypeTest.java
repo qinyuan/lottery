@@ -1,6 +1,5 @@
 package com.qinyuan15.lottery.mvc;
 
-import com.qinyuan15.utils.image.ImageMapDao;
 import org.junit.Test;
 
 /**

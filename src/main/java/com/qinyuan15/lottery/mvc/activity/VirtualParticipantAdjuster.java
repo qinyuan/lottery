@@ -1,9 +1,9 @@
 package com.qinyuan15.lottery.mvc.activity;
 
+import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
-import com.qinyuan15.utils.IntegerUtils;
 
 import java.util.HashSet;
 import java.util.List;

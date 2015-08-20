@@ -16,11 +16,12 @@
         <hibernate.version>4.3.5.Final</hibernate.version>
         <jackson.version>2.3.0</jackson.version>
         <powermock.version>1.5.1</powermock.version>
+        <qinyuan-lib.version>1.0-SNAPSHOT</qinyuan-lib.version>
     </properties>
 
     <dependencies>
         <!-- dependencies about database -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
@@ -44,10 +45,10 @@
             <groupId>com.mchange</groupId>
             <artifactId>mchange-commons-java</artifactId>
             <version>0.2.8</version>
-        </dependency>
+        </dependency>-->
 
         <!-- spring MVC dependencies -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>${spring.version}</version>
@@ -71,10 +72,10 @@
             <groupId>quartz</groupId>
             <artifactId>quartz</artifactId>
             <version>1.5.2</version>
-        </dependency>
+        </dependency>-->
 
         <!-- spring security dependencies -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
             <version>${spring.version}</version>
@@ -98,7 +99,7 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-acl</artifactId>
             <version>${spring.version}</version>
-        </dependency>
+        </dependency>-->
 
         <!-- servlet dependencies -->
         <dependency>
@@ -125,7 +126,7 @@
         </dependency>
 
         <!-- other libraries -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.0</version>
@@ -180,12 +181,47 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>17.0</version>
-        </dependency>
+        </dependency>-->
 
-        <dependency>
+        <!--<dependency>
             <groupId>com.qinyuan15.utils</groupId>
             <artifactId>qinyuan-utils</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>-->
+        <dependency>
+            <groupId>com.qinyuan-lib</groupId>
+            <artifactId>qinyuan-lib-lang</artifactId>
+            <version>${qinyuan-lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.qinyuan-lib</groupId>
+            <artifactId>qinyuan-lib-database</artifactId>
+            <version>${qinyuan-lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.qinyuan-lib</groupId>
+            <artifactId>qinyuan-lib-config</artifactId>
+            <version>${qinyuan-lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.qinyuan-lib</groupId>
+            <artifactId>qinyuan-lib-contact</artifactId>
+            <version>${qinyuan-lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.qinyuan-lib</groupId>
+            <artifactId>qinyuan-lib-image</artifactId>
+            <version>${qinyuan-lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.qinyuan-lib</groupId>
+            <artifactId>qinyuan-lib-mvc</artifactId>
+            <version>${qinyuan-lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.qinyuan-lib</groupId>
+            <artifactId>qinyuan-lib-sns</artifactId>
+            <version>${qinyuan-lib.version}</version>
         </dependency>
 
         <!-- test dependencies -->

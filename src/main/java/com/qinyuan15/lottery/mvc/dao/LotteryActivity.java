@@ -1,8 +1,8 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan.lib.lang.DateUtils;
 import com.qinyuan15.lottery.mvc.activity.LotCounter;
 import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
-import com.qinyuan15.utils.DateUtils;
 
 public class LotteryActivity extends AbstractActivity {
     private String expectEndTime;

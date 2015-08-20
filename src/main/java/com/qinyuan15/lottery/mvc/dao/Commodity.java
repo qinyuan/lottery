@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.utils.CurrencyUtils;
-import com.qinyuan15.utils.database.hibernate.AbstractRanking;
+import com.qinyuan.lib.database.hibernate.AbstractRanking;
+import com.qinyuan.lib.lang.CurrencyUtils;
 
 /**
  * Class about Commodity

@@ -1,8 +1,8 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan15.lottery.mvc.RichHelpGroup;
 import com.qinyuan15.lottery.mvc.dao.HelpItem;
-import com.qinyuan15.utils.mvc.controller.ImageController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 

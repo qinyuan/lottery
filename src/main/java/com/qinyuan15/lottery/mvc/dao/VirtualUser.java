@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan15.utils.database.hibernate.PersistObject;
+import com.qinyuan.lib.database.hibernate.PersistObject;
 
 public class VirtualUser extends PersistObject {
     private String username;
