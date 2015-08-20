@@ -1,4 +1,4 @@
-div.main-body div.right table.user-info {
+/*div.main-body div.right table.user-info {
     border-collapse: collapse;
 }
 
@@ -104,17 +104,88 @@ div.main-body div.right table.user-info div.change-email-result span.resend-succ
 div.main-body div.right table.user-info div.change-email-result span.resend-fail {
     color: #FFA457;
     display: none;
+}*/
+
+div.main-body div.right div.title.setting {
+    border-bottom: 1px solid #D8DFEA;
+    font-weight: bold;
+    padding: 5px 30px 20px;
+    background: url("images/setting.png") no-repeat 0 2px;
 }
 
-div.main-body div.login-history {
+div.main-body div.right div.content.setting {
+    padding: 35px 36px;
+    font-size: 10pt;
+}
+
+div.main-body div.right div.content.setting div.row {
+    padding: 3px 10px;
+    clear: both;
+    overflow: hidden;
+    border-bottom: 1px dotted #CDCDCD;
+}
+
+div.main-body div.right div.content.setting div.row > span {
+    display: block;
+    float: left;
+    line-height: 30px;
+}
+
+div.main-body div.right div.content.setting div.row span.left {
+    width: 70px;
+    text-align: right;
+    margin-right: 20px;
+}
+
+div.main-body div.right div.content.setting span.left {
+    color: #000000;
+    font-size: 9pt;
+}
+
+div.main-body div.right div.content.setting span.right input {
+    padding: 2px 5px;
+    height: 25px;
+    width: 140px;
+    border-radius: 0;
+    border-color: #808080;
+}
+
+div.main-body div.right div.content.setting span.right select {
+    background-color: #ffffff;
+    border: 1px solid #808080;
+}
+
+div.main-body div.right div.content.setting div.submit {
     margin-top: 30px;
-    padding-top: 15px;
-    border-top: 1px dashed #dfdfdf;
+    padding-left: 60px;
 }
 
-div.main-body div.login-history td,
-div.main-body div.login-history th {
-    font-size: 12pt;
+div.main-body div.right div.content.setting div.submit button {
+    background: url("images/login-button-back.png") 0 0 repeat-x;
+    height: 30px;
+    width: 70px;
+    border-radius: 3px;
+    color: #fff;
+}
+
+div.main-body div.history.title {
+    margin-top: 60px;
+    /*padding-top: 15px;*/
+    /*border-top: 1px dashed #dfdfdf;*/
+    border-bottom: 1px solid #D8DFEA;
+    font-weight: bold;
+    padding: 5px 30px 20px;
+    background: url("images/history.jpg") no-repeat 0 2px;
+}
+
+div.main-body div.history.content {
+    padding-top: 30px;
+    padding-left: 20px;
+}
+
+div.main-body div.history.content td,
+div.main-body div.history.content th {
+    font-size: 10pt;
     padding: 5px 25px;
 }
 

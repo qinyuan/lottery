@@ -1,4 +1,4 @@
-;
+/*;
 (function () {
     // codes about changing password
     var $changePassword = $('#changePassword');
@@ -181,4 +181,4 @@ function hideAndClear($element) {
     $element.hide(200, function () {
         $element.remove();
     });
-}
+}*/

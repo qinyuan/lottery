@@ -2,7 +2,7 @@
 <%@include file="inc-taglib.jsp" %>
 <ul>
     <security:authorize ifAnyGranted="ROLE_NORMAL">
-        <li><a class="text" href="personal-center.html"><security:authentication property="name"/></a></li>
+        <li><a class="text" href="personal-center.html" title="个人中心"><security:authentication property="name"/></a></li>
         <li><a class="text" href="j_spring_security_logout">退出</a></li>
         <%--<li><a class="text" href="personal-center.html">个人中心</a></li>--%>
         <li><a class="text" id="systemInformationNavigation" href="system-info.html">消息</a></li>

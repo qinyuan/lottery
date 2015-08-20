@@ -33,6 +33,12 @@ alter table user add column liveness int;
 alter table user add column serial_key char(200) unique;
 alter table user add column spread_user_id int;
 alter table user add column spread_way char(50);
+alter table user add column real_name char(50);
+alter table user add column gender enum('男','女');
+alter table user add column birthday char(20);
+alter table user add column star_sign char(10);
+alter table user add column hometown char(200);
+alter table user add column residence char(200);
 
 create table virtual_user (
   id int primary key auto_increment,

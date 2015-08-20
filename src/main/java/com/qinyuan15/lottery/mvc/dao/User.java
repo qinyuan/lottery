@@ -11,10 +11,15 @@ public class User extends com.qinyuan.lib.mvc.security.User {
     private String email;
     private String tel;
     private Boolean active;
-    //private Integer liveness;
     private String serialKey;
     private Integer spreadUserId;
     private String spreadWay;
+    private String realName;
+    private String gender;
+    private String birthday;
+    private String starSign;
+    private String hometown;
+    private String residence;
 
     public String getEmail() {
         return email;
@@ -31,10 +36,6 @@ public class User extends com.qinyuan.lib.mvc.security.User {
     public String getSerialKey() {
         return serialKey;
     }
-
-    /*public Integer getLiveness() {
-        return liveness;
-    }*/
 
     public Integer getSpreadUserId() {
         return spreadUserId;
@@ -56,10 +57,6 @@ public class User extends com.qinyuan.lib.mvc.security.User {
         this.active = active;
     }
 
-    /*public void setLiveness(Integer liveness) {
-        this.liveness = liveness;
-    }*/
-
     public void setSerialKey(String serialKey) {
         this.serialKey = serialKey;
     }
@@ -70,5 +67,53 @@ public class User extends com.qinyuan.lib.mvc.security.User {
 
     public void setSpreadWay(String spreadWay) {
         this.spreadWay = spreadWay;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getStarSign() {
+        return starSign;
+    }
+
+    public void setStarSign(String starSign) {
+        this.starSign = starSign;
+    }
+
+    public String getHometown() {
+        return hometown;
+    }
+
+    public void setHometown(String hometown) {
+        this.hometown = hometown;
+    }
+
+    public String getResidence() {
+        return residence;
+    }
+
+    public void setResidence(String residence) {
+        this.residence = residence;
     }
 }

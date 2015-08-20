@@ -15,6 +15,68 @@
             </div>
         </div>
         <div class="right">
+            <div class="title setting">帐户设置</div>
+            <div class="content setting">
+                <form id="additionalInfoForm">
+                    <div class="row">
+                        <span class="left">帐号：</span>
+                        <span class="right">${user.username}</span>
+                    </div>
+                    <div class="row">
+                        <span class="left">姓名：</span>
+                        <span class="right">${user.realName}</span>
+                    </div>
+                    <div class="row">
+                        <span class="left">邮箱：</span>
+                        <span class="right">${user.email}</span>
+                    </div>
+                    <div class="row">
+                        <span class="left">电话：</span>
+                        <span class="right">${user.tel}</span>
+                    </div>
+                    <div class="row">
+                        <span class="left">性别：</span>
+                    <span class="right">
+                        <select id="genderSelect" name="gender">
+                            <c:if test="${user.gender == null}">
+                                <option value="" selected>(未填写)</option>
+                            </c:if>
+                            <option value="男"<c:if test="${user.gender == '男'}"> selected</c:if>>男</option>
+                            <option value="女"<c:if test="${user.gender == '女'}"> selected</c:if>>女</option>
+                        </select>
+                    </span>
+                    </div>
+                    <div class="row">
+                        <span class="left">出生日期：</span>
+                        <span class="right"></span>
+                    </div>
+                    <div class="row">
+                        <span class="left">星座：</span>
+                    <span class="right">
+                        <select id="startSignSelect" name="startSign">
+                            <option value="0"></option>
+                            <option value="1"></option>
+                        </select>
+                    </span>
+                    </div>
+                    <div class="row">
+                        <span class="left">家乡：</span>
+                    <span class="right">
+                        <input type="text" class="form-control" name="hometown" value="${user.hometown}"/>
+                    </span>
+                    </div>
+                    <div class="row">
+                        <span class="left">现居住地：</span>
+                    <span class="right">
+                        <input type="text" class="form-control" name="residence" value="${user.residence}"/>
+                    </span>
+                    </div>
+                    <div class="submit">
+                        <button id="submitButton" type="submit">保存</button>
+                    </div>
+                </form>
+            </div>
+            <%--
             <table class="user-info">
                 <tbody>
                 <tr>
@@ -42,10 +104,9 @@
                     <td colspan="2"><span class="liveness-icon">&nbsp;</span>爱心(活跃度)：${liveness}</td>
                 </tr>
                 </tbody>
-            </table>
-            <div class="login-history">
-                <h4>登录历史</h4>
-
+            </table>--%>
+            <div class="history title">登录历史</div>
+            <div class="history content">
                 <div style="font-size: 10pt;color:#999;">
                     以下为您最近20次登录记录，若存在异常情况，请在核实后尽快
                     <a id="changePassword2" href="javascript:void(0)">修改密码</a>
@@ -74,6 +135,7 @@
         </div>
     </div>
 </div>
+<%--
 <q:handlebars-template id="changePasswordTemplate">
     <tr class="change-password temporary">
         <td colspan="2">
@@ -144,5 +206,5 @@
         <br/><br/>未收到邮件？ <a href="javascript:void(0)" class="resend">点此重发一封</a>
         <span class="resend-success">发送成功！</span><span class="resend-fail"></span>
     </div>
-</q:handlebars-template>
+</q:handlebars-template>--%>
 <%@include file="inc-footer.jsp" %>

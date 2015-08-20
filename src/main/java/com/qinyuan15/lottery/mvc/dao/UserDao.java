@@ -154,6 +154,27 @@ public class UserDao extends SimpleUserDao {
         }
     }
 
+    public void updateRealName(Integer id, String realName) {
+        User user = getInstance(id);
+        if (user != null) {
+            user.setRealName(realName);
+            HibernateUtils.update(realName);
+        }
+    }
+
+    public void updateAdditionalInfo(Integer id, String gender, String birthday, String starSign,
+                                     String hometown, String residence) {
+        User user = getInstance(id);
+        if (user != null) {
+            user.setGender(gender);
+            user.setBirthday(birthday);
+            user.setStarSign(starSign);
+            user.setHometown(hometown);
+            user.setResidence(residence);
+            HibernateUtils.update(user);
+        }
+    }
+
     public String getNameById(Integer id) {
         if (!IntegerUtils.isPositive(id)) {
             return null;
