@@ -52,9 +52,9 @@
         <property name="authenticationSuccessHandler" ref="ajaxSuccessHandler"/>
         <property name="requiresAuthenticationRequestMatcher" ref="ajaxLoginRequestMatcher"/>
     </bean>
-    <bean id="ajaxFailureHandler" class="com.qinyuan15.utils.security.AjaxAuthenticationFailureHandler"/>
+    <bean id="ajaxFailureHandler" class="com.qinyuan.lib.mvc.security.AjaxAuthenticationFailureHandler"/>
     <bean id="ajaxSuccessHandler" class="com.qinyuan15.lottery.mvc.controller.AjaxLoginSuccessHandler"/>
-    <bean id="ajaxLoginRequestMatcher" class="com.qinyuan15.utils.security.ServletPathRequestMatcher">
+    <bean id="ajaxLoginRequestMatcher" class="com.qinyuan.lib.mvc.security.ServletPathRequestMatcher">
         <constructor-arg value="/j_spring_security_ajax_check"/>
     </bean>
 
@@ -63,10 +63,10 @@
     </security:authentication-manager>
 
     <bean id="userDao" class="com.qinyuan15.lottery.mvc.dao.UserDao"/>
-    <bean id="customUserDetailsService" class="com.qinyuan15.utils.security.CustomUserDetailsService">
+    <bean id="customUserDetailsService" class="com.qinyuan.lib.mvc.security.CustomUserDetailsService">
         <constructor-arg ref="userDao"/>
     </bean>
-    <bean id="securitySearcher" class="com.qinyuan15.utils.security.SecuritySearcher">
+    <bean id="securitySearcher" class="com.qinyuan.lib.mvc.security.SecuritySearcher">
         <constructor-arg ref="userDao"/>
     </bean>
 </beans>

@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean class="com.qinyuan15.utils.config.ImageConfig">
+    <bean class="com.qinyuan.lib.config.ImageConfig">
         <property name="directory" value="/var/www/html/lottery"/>
         <property name="port" value="${imageServerPort}"/>
         <property name="protocal" value="http"/>

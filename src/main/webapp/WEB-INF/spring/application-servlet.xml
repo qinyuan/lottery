@@ -13,7 +13,7 @@
 
     <!-- Spring MVC configuration start -->
     <context:component-scan base-package="com.qinyuan15.lottery.mvc.controller"/>
-    <context:component-scan base-package="com.qinyuan15.utils.mvc.controller"/>
+    <context:component-scan base-package="com.qinyuan.lib.mvc.controller"/>
 
     <mvc:annotation-driven>
         <mvc:async-support default-timeout="10000"/>
@@ -53,7 +53,7 @@
         <property name="urlMap">
             <map>
                 <entry key="/identity-code">
-                    <bean class="com.qinyuan15.utils.mvc.controller.IdentityCodeController"/>
+                    <bean class="com.qinyuan.lib.mvc.controller.IdentityCodeController"/>
                 </entry>
             </map>
         </property>
