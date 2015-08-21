@@ -17,14 +17,24 @@
         <div class="right">
             <div class="title setting">帐户设置</div>
             <div class="content setting">
-                <form id="additionalInfoForm">
+                <form id="additionalInfoForm" method="post" action="personal-center-update-additional-info">
                     <div class="row">
                         <span class="left">帐号：</span>
                         <span class="right">${user.username}</span>
                     </div>
                     <div class="row">
                         <span class="left">姓名：</span>
-                        <span class="right">${user.realName}</span>
+                        <span class="right">
+                            <c:choose>
+                                <c:when test="${user.realName != null}">
+                                    <span class="real-name">${user.realName}</span>
+                                    <span id="editRealName">[<a href="javascript:void(0)">修改</a>]</span>
+                                </c:when>
+                                <c:otherwise>
+                                    [<a id="addRealName" href="javascript:void(0)">设置</a>]
+                                </c:otherwise>
+                            </c:choose>
+                        </span>
                     </div>
                     <div class="row">
                         <span class="left">邮箱：</span>
@@ -37,27 +47,18 @@
                     <div class="row">
                         <span class="left">性别：</span>
                     <span class="right">
-                        <select id="genderSelect" name="gender">
-                            <c:if test="${user.gender == null}">
-                                <option value="" selected>(未填写)</option>
-                            </c:if>
-                            <option value="男"<c:if test="${user.gender == '男'}"> selected</c:if>>男</option>
-                            <option value="女"<c:if test="${user.gender == '女'}"> selected</c:if>>女</option>
-                        </select>
+                        <q:gender-select id="genderSelect" name="gender" value="${user.gender}"/>
                     </span>
                     </div>
                     <div class="row">
                         <span class="left">出生日期：</span>
-                        <span class="right"></span>
+                        <span class="right birthday"><q:birthday-select prefix="birthday"
+                                                                        value="${user.birthday}"/></span>
                     </div>
                     <div class="row">
                         <span class="left">星座：</span>
-                    <span class="right">
-                        <select id="startSignSelect" name="startSign">
-                            <option value="0"></option>
-                            <option value="1"></option>
-                        </select>
-                    </span>
+                        <span class="right"><q:constellation-select id="constellationSelect" name="constellation"
+                                                                    value="${user.constellation}"/></span>
                     </div>
                     <div class="row">
                         <span class="left">家乡：</span>

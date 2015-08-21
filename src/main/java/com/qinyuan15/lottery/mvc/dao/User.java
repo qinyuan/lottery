@@ -1,5 +1,7 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan.lib.lang.DateUtils;
+
 /**
  * User with email and tel
  * Created by qinyuan on 15-6-29.
@@ -17,7 +19,7 @@ public class User extends com.qinyuan.lib.mvc.security.User {
     private String realName;
     private String gender;
     private String birthday;
-    private String starSign;
+    private String constellation;
     private String hometown;
     private String residence;
 
@@ -86,19 +88,19 @@ public class User extends com.qinyuan.lib.mvc.security.User {
     }
 
     public String getBirthday() {
-        return birthday;
+        return DateUtils.trimMilliSecond(birthday);
     }
 
     public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
-    public String getStarSign() {
-        return starSign;
+    public String getConstellation() {
+        return constellation;
     }
 
-    public void setStarSign(String starSign) {
-        this.starSign = starSign;
+    public void setConstellation(String constellation) {
+        this.constellation = constellation;
     }
 
     public String getHometown() {

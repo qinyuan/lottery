@@ -3,6 +3,7 @@ package com.qinyuan15.lottery.mvc.controller;
 import com.qinyuan.lib.contact.mail.MailAddressValidator;
 import com.qinyuan.lib.contact.tel.TelValidator;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
+import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.LoginRecord;
 import com.qinyuan.lib.mvc.security.LoginRecordDao;
@@ -50,6 +51,69 @@ public class PersonalCenterController extends ImageController {
         addCss("personal-center-frame");
         addCssAndJs("personal-center");
         return "personal-center";
+    }
+
+    @RequestMapping("/personal-center-update-additional-info")
+    public String updateAdditionalInfo(@RequestParam(value = "gender", required = true) String gender,
+                                       @RequestParam(value = "birthdayYear", required = false) Integer birthdayYear,
+                                       @RequestParam(value = "birthdayMonth", required = false) Integer birthdayMonth,
+                                       @RequestParam(value = "birthdayDay", required = false) Integer birthdayDay,
+                                       @RequestParam(value = "constellation", required = true) String constellation,
+                                       @RequestParam(value = "hometown", required = true) String hometown,
+                                       @RequestParam(value = "residence", required = true) String residence) {
+        final String index = "personal-center";
+
+        Integer userId = securitySearcher.getUserId();
+        if (!IntegerUtils.isPositive(userId)) {
+            return redirect(index, "用户未登录");
+        }
+
+
+        if (!StringUtils.hasText(gender)) {
+            gender = null;
+        }
+        if (!StringUtils.hasText(constellation)) {
+            constellation = null;
+        }
+        if (!StringUtils.hasText(hometown)) {
+            hometown = null;
+        }
+        if (!StringUtils.hasText(residence)) {
+            residence = null;
+        }
+
+        String birthday = null;
+        if (IntegerUtils.isPositive(birthdayYear) && IntegerUtils.isPositive(birthdayMonth)
+                && IntegerUtils.isPositive(birthdayDay)) {
+            birthday = birthdayYear + "-" + birthdayMonth + "-" + birthdayDay;
+        }
+
+        try {
+            new UserDao().updateAdditionalInfo(userId, gender, birthday, constellation, hometown, residence);
+            return redirect(index);
+        } catch (Exception e) {
+            LOGGER.error("Fail to update additional information, info: {}", e);
+            return redirect(index, "数据库操作失败");
+        }
+    }
+
+    @RequestMapping("/personal-center-update-real-name.json")
+    @ResponseBody
+    public String updateRealName(@RequestParam(value = "realName") String realName) {
+        User user = getUser();
+        if (user.getRealName() != null && user.getRealName().equals(realName)) {
+            return fail("新姓名与原姓名相同，未作修改");
+        }
+
+        try {
+            user.setRealName(realName);
+            HibernateUtils.update(user);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("Fail to update real name of user, userId: {}, realName: {}, info: {}",
+                    user.getId(), realName, e);
+            return failByDatabaseError();
+        }
     }
 
     @RequestMapping("/personal-center-update-password.json")

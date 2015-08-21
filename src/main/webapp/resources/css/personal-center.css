@@ -153,6 +153,11 @@ div.main-body div.right div.content.setting span.right input {
 div.main-body div.right div.content.setting span.right select {
     background-color: #ffffff;
     border: 1px solid #808080;
+    cursor: pointer;
+}
+
+div.main-body div.right div.content.setting span.right.birthday {
+    letter-spacing: 5px;
 }
 
 div.main-body div.right div.content.setting div.submit {
@@ -170,8 +175,6 @@ div.main-body div.right div.content.setting div.submit button {
 
 div.main-body div.history.title {
     margin-top: 60px;
-    /*padding-top: 15px;*/
-    /*border-top: 1px dashed #dfdfdf;*/
     border-bottom: 1px solid #D8DFEA;
     font-weight: bold;
     padding: 5px 30px 20px;

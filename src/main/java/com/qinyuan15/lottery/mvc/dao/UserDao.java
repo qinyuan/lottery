@@ -162,13 +162,13 @@ public class UserDao extends SimpleUserDao {
         }
     }
 
-    public void updateAdditionalInfo(Integer id, String gender, String birthday, String starSign,
+    public void updateAdditionalInfo(Integer id, String gender, String birthday, String constellation,
                                      String hometown, String residence) {
         User user = getInstance(id);
         if (user != null) {
             user.setGender(gender);
             user.setBirthday(birthday);
-            user.setStarSign(starSign);
+            user.setConstellation(constellation);
             user.setHometown(hometown);
             user.setResidence(residence);
             HibernateUtils.update(user);

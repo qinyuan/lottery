@@ -49,7 +49,7 @@
         <property name="realName" column="real_name"/>
         <property name="gender"/>
         <property name="birthday"/>
-        <property name="starSign" column="star_sign"/>
+        <property name="constellation"/>
         <property name="hometown"/>
         <property name="residence"/>
     </class>

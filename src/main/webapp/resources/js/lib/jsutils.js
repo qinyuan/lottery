@@ -229,6 +229,65 @@ var JSUtils = {
         }
         return template(data);
     },
+    _getPromptDiv: function (zIndex, callback) {
+        var id = 'bootstrapStylePrompt';
+        var $div = $('#' + id);
+        if ($div.size() == 0) {
+            var html = '<div>';
+            html += '<div class="title"></div>';
+            html += '<div class="content"><input type="text" class="form-control"/></div>';
+            html += '<div class="submit">';
+            html += '<button class="btn btn-success ok" id="promptSubmitButton" type="button">确定</button>';
+            html += '<button class="btn btn-default cancel" type="button">取消</button>';
+            html += '</div>';
+            html += '</div>';
+            $div = $(html).css({
+                'padding': '20px',
+                'min-width': '400px',
+                'margin-left': '-200px'
+            });
+            $div.find('>div').css({'margin': '5px 0'});
+            $div.find('div.title').css({'font-size': '12pt', 'font-weight': 'bold', 'padding-left': '2px'});
+            $div.find('div.submit').css({'margin-top': '20px', 'text-align': 'center'})
+                .find('button').css('margin-right', '10px');
+            var self = this;
+            $div.find('button.cancel').click(function () {
+                self.hidePrompt();
+            });
+            $div.find('button.ok').click(function () {
+                var input = $div.find('div.content input').val();
+                if (callback) {
+                    callback(input);
+                }
+            });
+            $div.setDefaultButton('promptSubmitButton');
+            if (zIndex) {
+                $div.css('z-index', zIndex);
+            }
+            return $div.addClass('float-panel').attr('id', id).appendTo('body');
+        } else {
+            if (zIndex) {
+                $div.css('z-index', zIndex);
+            }
+            return $div;
+        }
+    },
+    hidePrompt: function () {
+        var self = this;
+        this._getPromptDiv(10).fadeOut(200, function () {
+            self.hideTransparentBackground();
+        });
+    },
+    showPrompt: function (title, defaultValue, callback) {
+        this.showTransparentBackground(10);
+        var $prompt = this._getPromptDiv(11, callback);
+        JSUtils.scrollToVerticalCenter($prompt);
+        $prompt.find('div.title').text(title);
+        $prompt.fadeIn(200).find('div.content input').val(defaultValue).focusOrSelect();
+    },
+    focusPrompt: function () {
+        $('#bootstrapStylePrompt').find('input').focusOrSelect();
+    },
     _getTransparentBackgroundDiv: function (zIndex) {
         var $transparentBackground = $('#transparentBackground');
         if ($transparentBackground.size() == 0) {
@@ -563,6 +622,42 @@ var JSUtils = {
             return href;
         } else {
             return location.href;
+        }
+    },
+    /**
+     * Get the constellation of given day
+     */
+    getConstellation: function (month, day) {
+        function isBetweenDate(startMonth, startDay, endMonth, endDay) {
+            return date >= new Date(2012, startMonth - 1, startDay) &&
+                date <= new Date(2012, endMonth - 1, endDay);
+        }
+
+        var date = new Date(2012, month - 1, day);
+        if (isBetweenDate(3, 21, 4, 19)) {
+            return '白羊座';
+        } else if (isBetweenDate(4, 20, 5, 20)) {
+            return '金牛座';
+        } else if (isBetweenDate(5, 21, 6, 21)) {
+            return '双子座';
+        } else if (isBetweenDate(6, 22, 7, 22)) {
+            return '巨蟹座';
+        } else if (isBetweenDate(7, 23, 8, 22)) {
+            return '狮子座';
+        } else if (isBetweenDate(8, 23, 9, 22)) {
+            return '处女座';
+        } else if (isBetweenDate(9, 23, 10, 23)) {
+            return '天秤座';
+        } else if (isBetweenDate(10, 24, 11, 22)) {
+            return '天蝎座';
+        } else if (isBetweenDate(11, 23, 12, 21)) {
+            return '射手座';
+        } else if (isBetweenDate(12, 22, 12, 31) || isBetweenDate(1, 1, 1, 19)) {
+            return '魔羯座';
+        } else if (isBetweenDate(1, 20, 2, 18)) {
+            return '水瓶座';
+        } else if (isBetweenDate(2, 19, 3, 20)) {
+            return '双鱼座';
         }
     }
 };
