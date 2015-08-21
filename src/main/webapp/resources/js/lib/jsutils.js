@@ -653,7 +653,7 @@ var JSUtils = {
         } else if (isBetweenDate(11, 23, 12, 21)) {
             return '射手座';
         } else if (isBetweenDate(12, 22, 12, 31) || isBetweenDate(1, 1, 1, 19)) {
-            return '魔羯座';
+            return '摩羯座';
         } else if (isBetweenDate(1, 20, 2, 18)) {
             return '水瓶座';
         } else if (isBetweenDate(2, 19, 3, 20)) {
