@@ -142,12 +142,16 @@ div.main-body div.right div.content.setting span.left {
     font-size: 9pt;
 }
 
-div.main-body div.right div.content.setting span.right input {
+div.main-body div.right div.content.setting span.right input,
+.float-panel input {
     padding: 2px 5px;
     height: 25px;
-    width: 140px;
     border-radius: 0;
     border-color: #808080;
+}
+
+div.main-body div.right div.content.setting span.right input {
+    width: 140px;
 }
 
 div.main-body div.right div.content.setting span.right select {
@@ -165,12 +169,23 @@ div.main-body div.right div.content.setting div.submit {
     padding-left: 60px;
 }
 
-div.main-body div.right div.content.setting div.submit button {
-    background: url("images/login-button-back.png") 0 0 repeat-x;
+div.main-body div.right div.content.setting div.submit button,
+.float-panel button.btn.btn-success,
+.float-panel button.btn.btn-default {
     height: 30px;
     width: 70px;
     border-radius: 3px;
+}
+
+div.main-body div.right div.content.setting div.submit button,
+.float-panel button.btn.btn-success {
+    background: url("images/login-button-back.png") 0 0 repeat-x;
     color: #fff;
+}
+
+.float-panel button.btn.btn-default {
+    background-color: #fff;
+    color: #000;
 }
 
 div.main-body div.history.title {
@@ -192,3 +207,20 @@ div.main-body div.history.content th {
     padding: 5px 25px;
 }
 
+#passwordEditForm {
+    margin-left: -162px;
+    padding: 10px 20px;
+}
+
+#passwordEditForm td {
+    padding: 5px;
+    text-align: right;
+}
+
+#passwordEditForm td.submit {
+    text-align: center;
+}
+
+#passwordEditForm td.submit button {
+    margin: 0 5px;
+}

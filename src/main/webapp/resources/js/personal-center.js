@@ -268,3 +268,18 @@
         JSUtils.showPrompt('请输入修改后的真实姓名：', getOldRealName(), submitRealName);
     });
 })();
+(function () {
+    // code about editing password
+    var password = ({
+        $form: $('#passwordEditForm'),
+        show: function () {
+            JSUtils.showTransparentBackground(1);
+            JSUtils.scrollToVerticalCenter(this.$form);
+            this.$form.fadeIn(200);
+        },
+        init: function(){
+            return this;
+        }
+    }).init();
+    password.show();
+})();
