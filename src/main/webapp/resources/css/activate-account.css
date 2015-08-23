@@ -9,6 +9,7 @@ div.main-body {
 div.main-body > div {
     background-color: #ffffff;
     padding: 20px;
+    min-height: 500px;
 }
 
 div.main-body span.email {

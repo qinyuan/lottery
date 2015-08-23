@@ -237,7 +237,7 @@ var JSUtils = {
             html += '<div class="title"></div>';
             html += '<div class="content"><input type="text" class="form-control"/></div>';
             html += '<div class="submit">';
-            html += '<button class="btn btn-success ok" id="promptSubmitButton" type="button">确定</button>';
+            html += '<button class="btn btn-success ok" type="button">确定</button>';
             html += '<button class="btn btn-default cancel" type="button">取消</button>';
             html += '</div>';
             html += '</div>';
@@ -251,31 +251,31 @@ var JSUtils = {
             $div.find('div.submit').css({'margin-top': '20px', 'text-align': 'center'})
                 .find('button').css('margin-right', '10px');
             var self = this;
-            $div.find('button.cancel').click(function () {
+            $div.find('button.cancel').unbind('click').click(function () {
                 self.hidePrompt();
             });
-            $div.find('button.ok').click(function () {
-                var input = $div.find('div.content input').val();
-                if (callback) {
-                    callback(input);
-                }
-            });
-            $div.setDefaultButtonById('promptSubmitButton');
-            if (zIndex) {
-                $div.css('z-index', zIndex);
-            }
-            return $div.addClass('float-panel').attr('id', id).appendTo('body');
+            $div.setDefaultButtonByClass('ok');
+            $div.addClass('float-panel').attr('id', id).appendTo('body');
         } else {
-            if (zIndex) {
-                $div.css('z-index', zIndex);
-            }
-            return $div;
+            $div.find('button.ok').text('确定');
         }
+        $div.find('button.ok').unbind('click').click(function () {
+            var input = $div.find('div.content input').val();
+            if (callback) {
+                callback(input, $div);
+            }
+        });
+        if (zIndex) {
+            $div.css('z-index', zIndex);
+        }
+        return $div;
     },
-    hidePrompt: function () {
+    hidePrompt: function (remainTransparentBackground) {
         var self = this;
         this._getPromptDiv(10).fadeOut(200, function () {
-            self.hideTransparentBackground();
+            if (!remainTransparentBackground) {
+                self.hideTransparentBackground();
+            }
         });
     },
     showPrompt: function (title, defaultValue, callback) {
@@ -665,8 +665,7 @@ var JSUtils = {
         var floatPanel = ({
             show: function () {
                 utils.showTransparentBackground(1);
-                utils.scrollToVerticalCenter(this.$floatPanel);
-                this.$floatPanel.fadeIn(200).focusFirstTextInput();
+                utils.scrollToVerticalCenter(this.$floatPanel.fadeIn(200).focusFirstTextInput());
             },
             init: function () {
                 this.$floatPanel.setDefaultButtonByClass('ok');
@@ -873,7 +872,7 @@ jQuery.fn.setDefaultButtonByClass = function (elementClass) {
 };
 
 jQuery.fn.setDefaultButtonById = function (elementId) {
-    return this.setDefaultButtonByJQueryElement($('#' + elementId).trigger('click'));
+    return this.setDefaultButtonByJQueryElement($('#' + elementId));
 };
 
 jQuery.fn.scrollToTop = function () {

@@ -178,7 +178,7 @@ div.main-body div.right div.content.setting div.submit button,
 .float-panel button.btn.btn-success,
 .float-panel button.btn.btn-default {
     height: 30px;
-    width: 70px;
+    min-width: 70px;
     border-radius: 3px;
 }
 
@@ -228,4 +228,15 @@ div.main-body div.history.content th {
 
 #passwordEditForm td.submit button {
     margin: 0 5px;
+}
+
+#changeEmailResult {
+    font-size: 10pt;
+    padding: 25px;
+    margin-left: -204px;
+}
+
+#changeEmailResult span.resend-success, #changeEmailResult span.resend-fail {
+    color: #FFA457;
+    display: none;
 }

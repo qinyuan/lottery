@@ -319,3 +319,72 @@
         password.show();
     });
 })();
+(function () {
+    // code about editing email
+    function sendResetEmail(email, successCallback, failCallback) {
+        var updateUrl = 'personal-center-update-email.json';
+        $.post(updateUrl, {'email': email}, function (data) {
+            if (data['success']) {
+                successCallback();
+            } else {
+                failCallback(data['detail']);
+            }
+        });
+    }
+
+    $('#editEmail').click(function () {
+        JSUtils.showPrompt('请输入新的邮箱地址：', '', function (input, $div) {
+            if ($.trim(input) == '') {
+                alert('邮箱不能为空');
+                JSUtils.focusPrompt();
+                return;
+            }
+            if (!JSUtils.validateEmail(input)) {
+                alert('邮箱格式错误');
+                JSUtils.focusPrompt();
+                return;
+            }
+
+            var $okButton = $div.find('button.ok');
+            $okButton.text('正在处理...');
+
+            sendResetEmail(input, function () {
+                JSUtils.hidePrompt(true);
+                changeEmailResult.show(input);
+            }, function (info) {
+                $okButton.text('确定');
+                alert(info);
+            });
+        });
+    });
+    var changeEmailResult = ({
+        $floatPanel: $('#changeEmailResult'),
+        get$TargetEmail: function () {
+            return  this.$floatPanel.find('a.target-email');
+        },
+        show: function (email) {
+            JSUtils.showTransparentBackground(1);
+            JSUtils.scrollToVerticalCenter(this.$floatPanel.fadeIn(200));
+            var loginPage = JSUtils.getEmailLoginPage(email);
+            this.get$TargetEmail().text(email).attr('href', loginPage);
+            this.$floatPanel.find('a.to-login').attr('href', loginPage);
+        },
+        hide: function () {
+            this.$floatPanel.fadeOut(200, function () {
+                JSUtils.hideTransparentBackground();
+            });
+        },
+        init: function () {
+            var self = this;
+            $('a.resend').click(function () {
+                var email = self.get$TargetEmail().trimText();
+                sendResetEmail(email, function () {
+                    self.$floatPanel.find('span.resend-success').showForAWhile(3000);
+                }, function (info) {
+                    self.$floatPanel.find('span.resend-fail').text(info).showForAWhile(3000);
+                });
+            });
+            return this;
+        }
+    }).init();
+})();

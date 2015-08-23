@@ -22,7 +22,7 @@
                         <span class="left">帐号：</span>
                         <span class="right">
                             ${user.username}
-                            <span id="editPassword">[<a href="javascript:void(0)">修改密码</a>]</span>
+                            <span>[<a id="editPassword" href="javascript:void(0)">修改密码</a>]</span>
                         </span>
                     </div>
                     <div class="row">
@@ -31,7 +31,7 @@
                             <c:choose>
                                 <c:when test="${user.realName != null}">
                                     <span class="real-name">${user.realName}</span>
-                                    <span id="editRealName">[<a href="javascript:void(0)">修改</a>]</span>
+                                    <span>[<a id="editRealName" href="javascript:void(0)">修改</a>]</span>
                                 </c:when>
                                 <c:otherwise>
                                     [<a id="addRealName" href="javascript:void(0)">设置</a>]
@@ -41,7 +41,10 @@
                     </div>
                     <div class="row">
                         <span class="left">邮箱：</span>
-                        <span class="right">${user.email}</span>
+                        <span class="right">
+                            ${user.email}
+                            <span>[<a id="editEmail" href="javascript:void(0)">修改</a>]</span>
+                        </span>
                     </div>
                     <div class="row">
                         <span class="left">电话：</span>
@@ -56,7 +59,8 @@
                     <div class="row">
                         <span class="left">出生日期：</span>
                         <span class="right">
-                            <span class="birthday"><q:birthday-select prefix="birthday" value="${user.birthday}"/></span>
+                            <span class="birthday"><q:birthday-select prefix="birthday"
+                                                                      value="${user.birthday}"/></span>
                             <input type="checkbox" name="lunarBirthday"<c:if
                                     test="${user.lunarBirthday}"> checked</c:if>/>我过农历生日
                         </span>
@@ -166,6 +170,14 @@
         </tbody>
     </table>
 </form>
+<div class="float-panel" id="changeEmailResult">
+    验证邮件已经发送至新邮箱：
+    <a target="_blank" href="javascript:void(0)" class="target-email"></a>
+    <br/>您还需要通过该邮箱完成完成邮箱修改，
+    <a target="_blank" href="javascript:void(0)" class="to-login">单击此处登录新邮箱</a>
+    <br/><br/>未收到邮件？ <a href="javascript:void(0)" class="resend">点此重发一封</a>
+    <span class="resend-success">发送成功！</span><span class="resend-fail"></span>
+</div>
 <%--
 <q:handlebars-template id="changePasswordTemplate">
     <tr class="change-password temporary">
