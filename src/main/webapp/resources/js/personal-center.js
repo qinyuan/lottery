@@ -56,7 +56,7 @@
  $html.find('button[name=cancel]').click(function () {
  hideAndClear($html);
  });
- $html.setDefaultButton('changePasswordSubmit');
+ $html.setDefaultButtonById('changePasswordSubmit');
  });
  $('#changePassword2').click(function () {
  $changePassword.trigger('click');
@@ -107,7 +107,7 @@
  $html.find('button[name=cancel]').click(function () {
  hideAndClear($html);
  });
- $html.setDefaultButton('changeTelSubmit');
+ $html.setDefaultButtonById('changeTelSubmit');
  });
  })();
  (function () {
@@ -174,7 +174,7 @@
  $html.find('button[name=cancel]').click(function () {
  hideAndClear($html);
  });
- $html.setDefaultButton('changeTelSubmit');
+ $html.setDefaultButtonById('changeTelSubmit');
  });
  })();
  function hideAndClear($element) {
@@ -270,16 +270,64 @@
 })();
 (function () {
     // code about editing password
-    var password = ({
-        $form: $('#passwordEditForm'),
-        show: function () {
-            JSUtils.showTransparentBackground(1);
-            JSUtils.scrollToVerticalCenter(this.$form);
-            this.$form.fadeIn(200);
+    /*var password = ({
+     $floatPanel: $('#passwordEditForm'),
+     show: function () {
+     JSUtils.showTransparentBackground(1);
+     JSUtils.scrollToVerticalCenter(this.$form);
+     this.$form.fadeIn(200).focusFirstTextInput();
+     },
+     init: function () {
+     this.$form.setDefaultButtonByClass('ok');
+     return this;
+     }
+     }).init();*/
+    var password = JSUtils.buildFloatPanel({
+        $floatPanel: $('#passwordEditForm'),
+        validateInput: function () {
+            var $oldPassword = this.$floatPanel.getInputByName('oldPassword');
+            var oldPassword = $oldPassword.val();
+            if (oldPassword == '') {
+                alert('原密码不能为空');
+                $oldPassword.focusOrSelect();
+                return false;
+            }
+
+            var $newPassword = this.$floatPanel.getInputByName('newPassword');
+            var newPassword = $newPassword.val();
+            if (newPassword == '') {
+                alert('新密码不能为空');
+                $newPassword.focusOrSelect();
+                return false;
+            }
+
+            if (newPassword.length < 6) {
+                alert('新密码不得少于6位字符');
+                $newPassword.focusOrSelect();
+                return false;
+            }
+
+            if (newPassword == oldPassword) {
+                alert('新密码不能与原密码相同');
+                $newPassword.focusOrSelect();
+                return false;
+            }
+
+            var $newPassword2 = this.$floatPanel.getInputByName('newPassword2');
+            var newPassword2 = $newPassword2.val();
+            if (newPassword != newPassword2) {
+                alert('两次输入的密码不相等');
+                $newPassword2.focusOrSelect();
+                return false;
+            }
+            return true;
         },
-        init: function(){
-            return this;
+        doSubmit: function () {
+            var url = 'personal-center-update-password.json';
+            $.post(url, this.$floatPanel.serialize(), JSUtils.normalAjaxCallback);
         }
-    }).init();
-    password.show();
+    });
+    $('#editPassword').click(function () {
+        password.show();
+    });
 })();

@@ -105,7 +105,7 @@
             this.$form.fadeIn(200).focusFirstTextInput();
         },
         init: function () {
-            this.$form.setDefaultButton('addEditOk');
+            this.$form.setDefaultButtonById('addEditOk');
 
             var self = this;
             this.$cancelButton.click(function () {

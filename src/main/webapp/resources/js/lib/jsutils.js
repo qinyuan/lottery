@@ -260,7 +260,7 @@ var JSUtils = {
                     callback(input);
                 }
             });
-            $div.setDefaultButton('promptSubmitButton');
+            $div.setDefaultButtonById('promptSubmitButton');
             if (zIndex) {
                 $div.css('z-index', zIndex);
             }
@@ -659,6 +659,50 @@ var JSUtils = {
         } else if (isBetweenDate(2, 19, 3, 20)) {
             return '双鱼座';
         }
+    },
+    buildFloatPanel: function (options) {
+        var utils = this;
+        var floatPanel = ({
+            show: function () {
+                utils.showTransparentBackground(1);
+                utils.scrollToVerticalCenter(this.$floatPanel);
+                this.$floatPanel.fadeIn(200).focusFirstTextInput();
+            },
+            init: function () {
+                this.$floatPanel.setDefaultButtonByClass('ok');
+                var self = this;
+                this.$floatPanel.find('button.ok').click(function (e) {
+                    e.preventDefault();
+                    if (!self['doSubmit']) {
+                        console.log('no submit');
+                        return false;
+                    }
+                    if (self['validateInput']) {
+                        if (self['validateInput']()) {
+                            self['doSubmit']();
+                        }
+                    } else {
+                        self['doSubmit']();
+                    }
+                    return false;
+                });
+                this.$floatPanel.find('button.cancel').click(function (e) {
+                    self.$floatPanel.fadeOut(200, function () {
+                        utils.hideTransparentBackground();
+                    });
+                });
+                if (this['postInit']) {
+                    this['postInit']();
+                }
+            }
+        });
+        for (var key in options) {
+            if (options.hasOwnProperty(key)) {
+                floatPanel[key] = options[key];
+            }
+        }
+        floatPanel.init();
+        return floatPanel;
     }
 };
 
@@ -811,13 +855,25 @@ jQuery.fn.setInputValue = function (inputName, inputValue) {
     return this;
 };
 
-jQuery.fn.setDefaultButton = function (elementId) {
-    this.find('input[type=text],input[type=password]').keydown(function (e) {
+jQuery.fn.getVisible$Input = function () {
+    return this.find('input[type=text],input[type=password]');
+};
+
+jQuery.fn.setDefaultButtonByJQueryElement = function ($element) {
+    this.getVisible$Input().keydown(function (e) {
         if (JSUtils.isEnterKeyCode(e.keyCode)) {
-            $('#' + elementId).trigger('click');
+            $element.trigger('click');
         }
     });
     return this;
+};
+
+jQuery.fn.setDefaultButtonByClass = function (elementClass) {
+    return this.setDefaultButtonByJQueryElement(this.find('button.' + elementClass));
+};
+
+jQuery.fn.setDefaultButtonById = function (elementId) {
+    return this.setDefaultButtonByJQueryElement($('#' + elementId).trigger('click'));
 };
 
 jQuery.fn.scrollToTop = function () {
@@ -826,9 +882,7 @@ jQuery.fn.scrollToTop = function () {
 };
 
 jQuery.fn.focusFirstTextInput = function () {
-    this.find('input').filter(function () {
-        return this.type == 'text' || this.type == 'password';
-    }).first().focusOrSelect();
+    this.getVisible$Input().first().focusOrSelect();
     return this;
 };
 

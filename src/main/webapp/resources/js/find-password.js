@@ -8,7 +8,7 @@
             return this.$form.getInputByName('identityCode');
         },
         init: function () {
-            this.$form.setDefaultButton('usernameInputSubmit');
+            this.$form.setDefaultButtonById('usernameInputSubmit');
             var self = this;
             $('#usernameInputSubmit').click(function () {
                 if (self.get$Username().trimVal() == '') {

@@ -139,7 +139,7 @@
         }
     };
 
-    var $linkInputDiv = $('#linkInputDiv').setDefaultButton('addSubmit');
+    var $linkInputDiv = $('#linkInputDiv').setDefaultButtonById('addSubmit');
     $linkInputDiv.get$Id = function () {
         return $('#mapId');
     };

@@ -62,7 +62,7 @@
             return confirm("确定发送？");
         },
         init: function () {
-            this.$form.setDefaultButton('submitMail');
+            this.$form.setDefaultButtonById('submitMail');
             var self = this;
             this.$cancelMail.click(function () {
                 self.hide();
@@ -140,7 +140,7 @@
             return confirm("确定发送？");
         },
         init: function () {
-            this.$form.setDefaultButton('submitSystemInfo');
+            this.$form.setDefaultButtonById('submitSystemInfo');
             var self = this;
             this.$cancelSystemInfo.click(function () {
                 self.hide();
@@ -299,7 +299,7 @@
         $.post(url, {filterLotteryActivityId: id}, JSUtils.normalAjaxCallback);
     });
 
-    var $livenessFilter = $('div.user-filter div.content div.liveness').setDefaultButton('livenessFilterSubmit');
+    var $livenessFilter = $('div.user-filter div.content div.liveness').setDefaultButtonById('livenessFilterSubmit');
     var $livenessFilterButton = $livenessFilter.find('button').click(function () {
         var minLiveness = $livenessFilterInput.val();
         if (JSUtils.isNumberString(minLiveness)) {

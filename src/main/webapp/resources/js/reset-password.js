@@ -25,7 +25,7 @@
             return this.$form.getInputByName('password2');
         },
         init: function () {
-            this.$form.setDefaultButton('resetPasswordSubmit');
+            this.$form.setDefaultButtonById('resetPasswordSubmit');
             var self = this;
             $('#resetPasswordSubmit').click(function (e) {
                 e.preventDefault();

@@ -144,20 +144,20 @@
         <tbody>
         <tr>
             <td>现密码：</td>
-            <td><input type="password" name="oldPassword" class="form-control"/></td>
+            <td><input type="password" name="oldPassword" class="form-control" maxlength="20"/></td>
         </tr>
         <tr>
             <td>新密码：</td>
-            <td><input type="password" name="newPassword" class="form-control"/></td>
+            <td><input type="password" name="newPassword" class="form-control" maxlength="20"/></td>
         </tr>
         <tr>
             <td>确认新密码：</td>
-            <td><input type="password" name="newPassword2" class="form-control"/></td>
+            <td><input type="password" name="newPassword2" class="form-control" maxlength="20"/></td>
         </tr>
         <tr>
             <td colspan="2" class="submit">
-                <button type="button" class="btn btn-success" id="changePasswordSubmit">确定</button>
-                <button type="button" class="btn btn-default">取消</button>
+                <button type="button" class="btn btn-success ok">确定</button>
+                <button type="button" class="btn btn-default cancel">取消</button>
             </td>
         </tr>
         </tbody>

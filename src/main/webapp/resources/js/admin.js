@@ -48,7 +48,7 @@
             return true;
         },
         init: function () {
-            this.$form.setDefaultButton('addEmailSubmit');
+            this.$form.setDefaultButtonById('addEmailSubmit');
             var self = this;
             $('#addEmailSubmit').click(function (e) {
                 e.preventDefault();
