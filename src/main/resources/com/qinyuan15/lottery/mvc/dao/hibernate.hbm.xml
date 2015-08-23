@@ -52,6 +52,7 @@
         <property name="constellation"/>
         <property name="hometown"/>
         <property name="residence"/>
+        <property name="lunarBirthday" column="lunar_birthday"/>
     </class>
     <class name="HelpGroup" table="help_group">
         <id name="id" column="id">

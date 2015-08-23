@@ -270,18 +270,6 @@
 })();
 (function () {
     // code about editing password
-    /*var password = ({
-     $floatPanel: $('#passwordEditForm'),
-     show: function () {
-     JSUtils.showTransparentBackground(1);
-     JSUtils.scrollToVerticalCenter(this.$form);
-     this.$form.fadeIn(200).focusFirstTextInput();
-     },
-     init: function () {
-     this.$form.setDefaultButtonByClass('ok');
-     return this;
-     }
-     }).init();*/
     var password = JSUtils.buildFloatPanel({
         $floatPanel: $('#passwordEditForm'),
         validateInput: function () {

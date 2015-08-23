@@ -55,8 +55,11 @@
                     </div>
                     <div class="row">
                         <span class="left">出生日期：</span>
-                        <span class="right birthday"><q:birthday-select prefix="birthday"
-                                                                        value="${user.birthday}"/></span>
+                        <span class="right">
+                            <span class="birthday"><q:birthday-select prefix="birthday" value="${user.birthday}"/></span>
+                            <input type="checkbox" name="lunarBirthday"<c:if
+                                    test="${user.lunarBirthday}"> checked</c:if>/>我过农历生日
+                        </span>
                     </div>
                     <div class="row">
                         <span class="left">星座：</span>

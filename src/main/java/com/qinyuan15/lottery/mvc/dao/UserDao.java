@@ -163,7 +163,7 @@ public class UserDao extends SimpleUserDao {
     }
 
     public void updateAdditionalInfo(Integer id, String gender, String birthday, String constellation,
-                                     String hometown, String residence) {
+                                     String hometown, String residence, Boolean lunarBirthday) {
         User user = getInstance(id);
         if (user != null) {
             user.setGender(gender);
@@ -171,6 +171,7 @@ public class UserDao extends SimpleUserDao {
             user.setConstellation(constellation);
             user.setHometown(hometown);
             user.setResidence(residence);
+            user.setLunarBirthday(lunarBirthday);
             HibernateUtils.update(user);
         }
     }

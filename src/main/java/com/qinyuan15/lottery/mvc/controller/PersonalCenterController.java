@@ -60,7 +60,8 @@ public class PersonalCenterController extends ImageController {
                                        @RequestParam(value = "birthdayDay", required = false) Integer birthdayDay,
                                        @RequestParam(value = "constellation", required = true) String constellation,
                                        @RequestParam(value = "hometown", required = true) String hometown,
-                                       @RequestParam(value = "residence", required = true) String residence) {
+                                       @RequestParam(value = "residence", required = true) String residence,
+                                       @RequestParam(value = "lunarBirthday", required = false) String lunarBirthdayString) {
         final String index = "personal-center";
 
         Integer userId = securitySearcher.getUserId();
@@ -88,8 +89,11 @@ public class PersonalCenterController extends ImageController {
             birthday = birthdayYear + "-" + birthdayMonth + "-" + birthdayDay;
         }
 
+        Boolean lunarBirthday = StringUtils.hasText(lunarBirthdayString);
+
         try {
-            new UserDao().updateAdditionalInfo(userId, gender, birthday, constellation, hometown, residence);
+            new UserDao().updateAdditionalInfo(userId, gender, birthday, constellation, hometown, residence,
+                    lunarBirthday);
             return redirect(index);
         } catch (Exception e) {
             LOGGER.error("Fail to update additional information, info: {}", e);

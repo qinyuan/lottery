@@ -22,6 +22,7 @@ public class User extends com.qinyuan.lib.mvc.security.User {
     private String constellation;
     private String hometown;
     private String residence;
+    private Boolean lunarBirthday;
 
     public String getEmail() {
         return email;
@@ -117,5 +118,13 @@ public class User extends com.qinyuan.lib.mvc.security.User {
 
     public void setResidence(String residence) {
         this.residence = residence;
+    }
+
+    public Boolean getLunarBirthday() {
+        return lunarBirthday;
+    }
+
+    public void setLunarBirthday(Boolean lunarBirthday) {
+        this.lunarBirthday = lunarBirthday;
     }
 }
