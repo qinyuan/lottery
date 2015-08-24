@@ -245,3 +245,36 @@ div.main-body div.history.content th {
     margin-top: 20px;
     text-align: center;
 }
+
+#changeTelForm {
+    width: 300px;
+    margin-left: -150px;
+    padding: 20px;
+}
+
+#changeTelForm div.input {
+    margin-bottom: 20px;
+}
+
+#changeTelForm div.submit, #changeTelForm div.conflict {
+    text-align: center;
+}
+
+#changeTelForm div.submit button, #changeTelForm div.conflict button {
+    margin: 0 5px;
+}
+
+#changeTelForm div.wait-for-validation, #changeTelForm div.validate-error {
+    position: absolute;
+    right: 30px;
+    top: 43px;
+    display: none;
+}
+
+#changeTelForm div.wait-for-validation {
+    color: #2FA242;
+}
+
+#changeTelForm div.validate-error {
+    color: #FF0000;
+}

@@ -660,17 +660,32 @@ var JSUtils = {
             return '双鱼座';
         }
     },
+    /**
+     * useful keys of options include:
+     * $floatPanel, beforeShow, doSubmit, validateInput, postInit
+     * @param options
+     * @returns {{show: show, init: init}}
+     */
     buildFloatPanel: function (options) {
         var utils = this;
         var floatPanel = ({
+            get$OkButton: function () {
+                return this.$floatPanel.find('button.ok');
+            },
+            get$CancelButton: function () {
+                return this.$floatPanel.find('button.cancel');
+            },
             show: function () {
+                if (this['beforeShow']) {
+                    this['beforeShow']();
+                }
                 utils.showTransparentBackground(1);
                 utils.scrollToVerticalCenter(this.$floatPanel.fadeIn(200).focusFirstTextInput());
             },
             init: function () {
                 this.$floatPanel.setDefaultButtonByClass('ok');
                 var self = this;
-                this.$floatPanel.find('button.ok').click(function (e) {
+                this.get$OkButton().click(function (e) {
                     e.preventDefault();
                     if (!self['doSubmit']) {
                         console.log('no submit');
@@ -685,10 +700,11 @@ var JSUtils = {
                     }
                     return false;
                 });
-                this.$floatPanel.find('button.cancel').click(function (e) {
+                this.get$CancelButton().click(function (e) {
                     self.$floatPanel.fadeOut(200, function () {
                         utils.hideTransparentBackground();
                     });
+                    e.preventDefault();
                 });
                 if (this['postInit']) {
                     this['postInit']();
@@ -759,6 +775,34 @@ jQuery.fn.parseIntegerInId = function () {
     } else {
         return null;
     }
+};
+
+/**
+ * In Chinese input method, keyup event is invalid.
+ * in this case, we can use this method to catch value change event
+ * @param callback method to call after value change
+ */
+jQuery.fn.monitorValue = function (callback) {
+    var time = null;
+    var self = this;
+    var oldValue = self.val();
+    this.focus(function () {
+        if (time) {
+            clearInterval(time);
+        }
+        time = setInterval(function () {
+            if (self.val() != oldValue) {
+                oldValue = self.val();
+                callback(oldValue);
+            }
+        }, 200);
+    });
+    this.blur(function () {
+        if (time) {
+            clearInterval(time);
+            time = null;
+        }
+    });
 };
 
 jQuery.fn.focusOrSelect = function () {

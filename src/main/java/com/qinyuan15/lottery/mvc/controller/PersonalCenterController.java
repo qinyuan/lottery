@@ -161,11 +161,11 @@ public class PersonalCenterController extends ImageController {
         }
 
         if (!StringUtils.hasText(tel)) {
-            return fail("电话号码不能为空！");
+            return fail("电话号码不能为空");
         }
 
         if (!new TelValidator().validate(tel)) {
-            return fail("电话号码必须为11位数字！");
+            return fail("电话号码必须为11位数字");
         }
 
         try {
@@ -174,6 +174,34 @@ public class PersonalCenterController extends ImageController {
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to update tel, tel: {}, info {}", tel, e);
+            return failByDatabaseError();
+        }
+    }
+
+    @RequestMapping("/personal-center-validate-tel.json")
+    @ResponseBody
+    public String validateTel(@RequestParam(value = "tel", required = true) String tel) {
+        User user = getUser();
+        if (user == null) {
+            return failByInvalidParam();
+        }
+
+        if (!StringUtils.hasText(tel)) {
+            return fail("电话号码不能为空");
+        }
+
+        if (!new TelValidator().validate(tel)) {
+            return fail("电话号码必须为11位数字");
+        }
+
+        try {
+            if (new UserDao().hasTel(tel)) {
+                return fail("号码已被使用");
+            } else {
+                return success();
+            }
+        } catch (Exception e) {
+            LOGGER.error("Fail to validate tel, tel: {}, info: {}", tel, e);
             return failByDatabaseError();
         }
     }

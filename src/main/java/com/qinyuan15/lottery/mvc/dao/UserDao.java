@@ -42,6 +42,10 @@ public class UserDao extends SimpleUserDao {
         return getInstanceByEmail(email) != null;
     }
 
+    public boolean hasTel(String tel) {
+        return getInstanceByTel(tel) != null;
+    }
+
     /**
      * Query user by username, email or tel
      *

@@ -318,6 +318,9 @@
     $('#editPassword').click(function () {
         password.show();
     });
+    $('#editPassword2').click(function () {
+        password.show();
+    });
 })();
 (function () {
     // code about editing email
@@ -383,7 +386,7 @@
         },
         init: function () {
             var self = this;
-           this.$floatPanel.find('a.resend').click(function () {
+            this.$floatPanel.find('a.resend').click(function () {
                 var email = self.get$TargetEmail().trimText();
                 sendResetEmail(email, function () {
                     self.$floatPanel.find('span.resend-success').showForAWhile(3000);
@@ -391,10 +394,94 @@
                     self.$floatPanel.find('span.resend-fail').text(info).showForAWhile(3000);
                 });
             });
-            this.$floatPanel.find('div.submit button').click(function(){
+            this.$floatPanel.find('div.submit button').click(function () {
                 self.hide();
             });
             return this;
         }
     }).init();
 })();
+(function () {
+    // codes about editing tel
+    var tel = JSUtils.buildFloatPanel({
+        $floatPanel: $('#changeTelForm'),
+        get$Input: function () {
+            return this.$floatPanel.find('input');
+        },
+        get$Submit: function () {
+            return this.$floatPanel.find('div.submit');
+        },
+        get$Conflict: function () {
+            return this.$floatPanel.find('div.conflict');
+        },
+        beforeShow: function () {
+            this.toSubmitMode();
+            this.get$Input().val('');
+            this.get$OkButton().attr('disabled', true);
+        },
+        postInit: function () {
+            var self = this;
+            this.get$Input().monitorValue(function (newTel) {
+                self.toSubmitMode();
+                if (JSUtils.validateTel(newTel)) {
+                    self._validateDuplicateTel(newTel);
+                } else {
+                    self.get$OkButton().attr('disabled', true);
+                    self.get$WaitForValidation().hide();
+                    self.get$ValidateError().hide();
+                }
+            });
+            this.get$Conflict().find('button.clear').click(function () {
+                self.get$Input().val('').focusOrSelect();
+                self.toSubmitMode();
+            });
+        },
+        toConflictMode: function () {
+            this.get$Submit().hide();
+            this.get$Conflict().show();
+        },
+        toSubmitMode: function () {
+            this.get$Conflict().hide();
+            this.get$Submit().show();
+        },
+        _validateDuplicateTel: function (newTel) {
+            var url = 'personal-center-validate-tel.json';
+            var self = this;
+
+            this.get$WaitForValidation().show();
+            $.post(url, {'tel': newTel}, function (data) {
+                self.get$WaitForValidation().hide();
+                if (data['success']) {
+                    self.get$OkButton().attr('disabled', false);
+                } else {
+                    self.get$OkButton().attr('disabled', true);
+                    var detail = data['detail'];
+                    self.get$ValidateError().text(detail).show();
+                    if (detail.indexOf('被使用') >= 0) {
+                        self.toConflictMode();
+                    }
+                }
+            });
+        },
+        get$WaitForValidation: function () {
+            return this.$floatPanel.find('div.wait-for-validation');
+        },
+        get$ValidateError: function () {
+            return this.$floatPanel.find('div.validate-error');
+        },
+        doSubmit: function () {
+            var newTel = this.get$Input().val();
+            if (JSUtils.validateTel(newTel)) {
+                $.post('personal-center-update-tel.json', {'tel': newTel}, JSUtils.normalAjaxCallback);
+            } else {
+                alert('电话号码应为11位数字');
+                this.get$Input().focusOrSelect();
+                this.toSubmitMode();
+            }
+        }
+    });
+    $('#editTel').click(function () {
+        tel.show();
+    });
+})
+();

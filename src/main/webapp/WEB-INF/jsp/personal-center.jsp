@@ -48,7 +48,10 @@
                     </div>
                     <div class="row">
                         <span class="left">电话：</span>
-                        <span class="right">${user.tel}</span>
+                        <span class="right">
+                            <span class="tel">${user.tel}</span>
+                            <span>[<a id="editTel" href="javascript:void(0)">修改</a>]</span>
+                        </span>
                     </div>
                     <div class="row">
                         <span class="left">性别：</span>
@@ -120,7 +123,7 @@
             <div class="history content">
                 <div style="font-size: 10pt;color:#999;">
                     以下为您最近20次登录记录，若存在异常情况，请在核实后尽快
-                    <a id="changePassword2" href="javascript:void(0)">修改密码</a>
+                    <a id="editPassword2" href="javascript:void(0)">修改密码</a>
                 </div>
                 <table class="normal">
                     <thead>
@@ -177,10 +180,27 @@
     <a target="_blank" href="javascript:void(0)" class="to-login">单击此处登录新邮箱</a>
     <br/><br/>未收到邮件？ <a href="javascript:void(0)" class="resend">点此重发一封</a>
     <span class="resend-success">发送成功！</span><span class="resend-fail"></span>
+
     <div class="submit">
         <button type="button" class="btn btn-success">关闭</button>
     </div>
 </div>
+<form class="float-panel" id="changeTelForm">
+    <div class="input">
+        请输入新的联系手机号码：
+        <input type="text" class="form-control" maxlength="11"/>
+    </div>
+    <div class="submit">
+        <button type="submit" class="btn btn-success ok">确定</button>
+        <button type="button" class="btn btn-default cancel">取消</button>
+    </div>
+    <div class="conflict">
+        <button type="button" class="btn btn-default clear">重新输入</button>
+        <button type="button" class="btn btn-default validate">验证</button>
+    </div>
+    <div class="wait-for-validation">正在验证...</div>
+    <div class="validate-error">hello</div>
+</form>
 <%--
 <q:handlebars-template id="changePasswordTemplate">
     <tr class="change-password temporary">
