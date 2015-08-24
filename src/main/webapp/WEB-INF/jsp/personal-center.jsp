@@ -49,8 +49,16 @@
                     <div class="row">
                         <span class="left">电话：</span>
                         <span class="right">
-                            <span class="tel">${user.tel}</span>
-                            <span>[<a id="editTel" href="javascript:void(0)">修改</a>]</span>
+                            <c:choose>
+                                <c:when test="${user.tel != null}"     >
+                                    <span class="tel">${user.tel}</span>
+                                    <span>[<a id="editTel" href="javascript:void(0)">修改</a>]</span>
+                                </c:when>
+                                <c:otherwise>
+                                    [<a id="addTel" href="javascript:void(0)">设置</a>]
+                                </c:otherwise>
+                            </c:choose>
+
                         </span>
                     </div>
                     <div class="row">
@@ -187,7 +195,7 @@
 </div>
 <form class="float-panel" id="changeTelForm">
     <div class="input">
-        请输入新的联系手机号码：
+        <span class="title">请输入新的联系手机号码：</span>
         <input type="text" class="form-control" maxlength="11"/>
     </div>
     <div class="submit">

@@ -450,10 +450,13 @@
             this.get$Submit().show();
         },
         _validateDuplicateTel: function (newTel) {
-            var oldTel = $('span.tel:first').text();
-            if (oldTel == newTel) {
-                this.get$ValidateError().text('与原号码相同').show();
-                return;
+            var $oldTel = $('span.tel');
+            if ($oldTel.size() > 0) {
+                var oldTel = $oldTel.eq(0).text();
+                if (oldTel == newTel) {
+                    this.get$ValidateError().text('与原号码相同').show();
+                    return;
+                }
             }
 
             var url = 'personal-center-validate-tel.json';
@@ -493,9 +496,17 @@
             var newTel = this.get$Input().val();
             $.post('personal-center-update-tel.json', {'tel': newTel}, JSUtils.normalAjaxCallback);
 
+        },
+        get$Title: function () {
+            return this.$floatPanel.find('span.title');
         }
     });
     $('#editTel').click(function () {
+        tel.get$Title().text('请输入新的联系手机号码：');
+        tel.show();
+    });
+    $('#addTel').click(function () {
+        tel.get$Title().text('请输入联系手机号码：');
         tel.show();
     });
 })
