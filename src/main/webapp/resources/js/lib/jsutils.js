@@ -904,7 +904,7 @@ jQuery.fn.getVisible$Input = function () {
 
 jQuery.fn.setDefaultButtonByJQueryElement = function ($element) {
     this.getVisible$Input().keydown(function (e) {
-        if (JSUtils.isEnterKeyCode(e.keyCode)) {
+        if (JSUtils.isEnterKeyCode(e.keyCode) && !$element.attr('disabled')) {
             $element.trigger('click');
         }
     });

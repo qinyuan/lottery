@@ -516,4 +516,16 @@ public class AppConfig {
         dao.save(LOTTERY_RULE_KEY, lotteryRule);
     }
     ///////////////////////////// lottery rule end ///////////////////////////////
+
+    ///////////////////////////// tel validate description page start //////////////////////////
+    private final static String TEL_VALIDATE_DESCRIPTION_PAGE_KEY = "telValidateDescriptionPage";
+
+    public static String getTelValidateDescriptionPage() {
+        return dao.get(TEL_VALIDATE_DESCRIPTION_PAGE_KEY);
+    }
+
+    public static void updateTelValidateDescriptionPage(String telValidateDescriptionPage) {
+        dao.save(TEL_VALIDATE_DESCRIPTION_PAGE_KEY, telValidateDescriptionPage);
+    }
+    ///////////////////////////// tel validate description page end //////////////////////////
 }

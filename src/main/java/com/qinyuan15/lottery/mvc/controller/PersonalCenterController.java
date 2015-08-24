@@ -8,6 +8,7 @@ import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.LoginRecord;
 import com.qinyuan.lib.mvc.security.LoginRecordDao;
 import com.qinyuan.lib.mvc.security.SecuritySearcher;
+import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
@@ -45,6 +46,8 @@ public class PersonalCenterController extends ImageController {
             loginRecord.setIp(loginRecord.getIp().replaceAll("\\d+\\.\\d+$", "*.*"));
         }
         setAttribute("loginRecords", loginRecords);
+
+        addJavaScriptData("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
 
         setTitle("个人中心");
         addJs("lib/handlebars.min-v1.3.0");

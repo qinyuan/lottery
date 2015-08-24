@@ -43,6 +43,8 @@ public class AdminController extends ImageController {
         setAttribute("resetEmailMailContentTemplate", AppConfig.getResetEmailMailContentTemplate());
         addJavaScriptData("currentResetEmailMailAccountId", AppConfig.getResetEmailMailAccountId());
 
+        setAttribute("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
+
         setAttribute("mails", new MailAccountDao().getInstances());
         setAttribute("mailSelectFormItems", new MailSelectFormItemBuilder().build());
 
@@ -134,7 +136,8 @@ public class AdminController extends ImageController {
                          @RequestParam(value = "resetPasswordMailContentTemplate", required = true) String resetPasswordMailContentTemplate,
                          @RequestParam(value = "resetEmailMailAccountId", required = true) Integer resetEmailMailAccountId,
                          @RequestParam(value = "resetEmailMailSubjectTemplate", required = true) String resetEmailMailSubjectTemplate,
-                         @RequestParam(value = "resetEmailMailContentTemplate", required = true) String resetEmailMailContentTemplate) {
+                         @RequestParam(value = "resetEmailMailContentTemplate", required = true) String resetEmailMailContentTemplate,
+                         @RequestParam(value = "telValidateDescriptionPage", required = true) String telValidateDescriptionPage) {
 
         final String redirectPage = "admin";
 
@@ -202,6 +205,8 @@ public class AdminController extends ImageController {
         AppConfig.updateResetEmailMailAccountId(resetEmailMailAccountId);
         AppConfig.updateResetEmailMailSubjectTemplate(resetEmailMailSubjectTemplate);
         AppConfig.updateResetEmailMailContentTemplate(resetEmailMailContentTemplate);
+
+        AppConfig.updateTelValidateDescriptionPage(telValidateDescriptionPage);
 
         new NavigationLinkDao().clearAndSave(buildNavigationLinks(headerLinkTitles, headerLinkHrefs));
 

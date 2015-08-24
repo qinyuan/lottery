@@ -435,6 +435,11 @@
                 self.get$Input().val('').focusOrSelect();
                 self.toSubmitMode();
             });
+
+            var telValidateDescriptionPage = window['telValidateDescriptionPage'];
+            if (telValidateDescriptionPage != null && $.trim(telValidateDescriptionPage) != '') {
+                this.$floatPanel.find('a.validate').attr('href', telValidateDescriptionPage);
+            }
         },
         toConflictMode: function () {
             this.get$Submit().hide();
@@ -445,9 +450,14 @@
             this.get$Submit().show();
         },
         _validateDuplicateTel: function (newTel) {
+            var oldTel = $('span.tel:first').text();
+            if (oldTel == newTel) {
+                this.get$ValidateError().text('与原号码相同').show();
+                return;
+            }
+
             var url = 'personal-center-validate-tel.json';
             var self = this;
-
             this.get$WaitForValidation().show();
             $.post(url, {'tel': newTel}, function (data) {
                 self.get$WaitForValidation().hide();
@@ -469,15 +479,20 @@
         get$ValidateError: function () {
             return this.$floatPanel.find('div.validate-error');
         },
-        doSubmit: function () {
+        validateInput: function () {
             var newTel = this.get$Input().val();
-            if (JSUtils.validateTel(newTel)) {
-                $.post('personal-center-update-tel.json', {'tel': newTel}, JSUtils.normalAjaxCallback);
-            } else {
+            if (!JSUtils.validateTel(newTel)) {
                 alert('电话号码应为11位数字');
                 this.get$Input().focusOrSelect();
                 this.toSubmitMode();
+                return false;
             }
+            return true;
+        },
+        doSubmit: function () {
+            var newTel = this.get$Input().val();
+            $.post('personal-center-update-tel.json', {'tel': newTel}, JSUtils.normalAjaxCallback);
+
         }
     });
     $('#editTel').click(function () {

@@ -196,7 +196,9 @@
     </div>
     <div class="conflict">
         <button type="button" class="btn btn-default clear">重新输入</button>
-        <button type="button" class="btn btn-default validate">验证</button>
+        <a href="javascript:void(0)" target="_blank" class="validate">
+            <button type="button" class="btn btn-default validate">验证</button>
+        </a>
     </div>
     <div class="wait-for-validation">正在验证...</div>
     <div class="validate-error">hello</div>

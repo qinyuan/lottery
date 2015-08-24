@@ -132,6 +132,22 @@
     </div>
 </div>
 <div class="edit-unit">
+    <div class="title">手机号验证说明页面设置</div>
+    <div class="content">
+        <table>
+            <tbody>
+            <tr>
+                <td class="title">页面链接</td>
+                <td class="input">
+                    <input type="text" class="form-control" name="telValidateDescriptionPage"
+                           value="${telValidateDescriptionPage}"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="edit-unit">
     <div class="title">邮箱帐户</div>
     <div class="content" id="emailList">
         <div>
