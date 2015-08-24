@@ -42,7 +42,7 @@
                     <div class="row">
                         <span class="left">邮箱：</span>
                         <span class="right">
-                            ${user.email}
+                            <span class="email">${user.email}</span>
                             <span>[<a id="editEmail" href="javascript:void(0)">修改</a>]</span>
                         </span>
                     </div>
@@ -177,6 +177,9 @@
     <a target="_blank" href="javascript:void(0)" class="to-login">单击此处登录新邮箱</a>
     <br/><br/>未收到邮件？ <a href="javascript:void(0)" class="resend">点此重发一封</a>
     <span class="resend-success">发送成功！</span><span class="resend-fail"></span>
+    <div class="submit">
+        <button type="button" class="btn btn-success">关闭</button>
+    </div>
 </div>
 <%--
 <q:handlebars-template id="changePasswordTemplate">

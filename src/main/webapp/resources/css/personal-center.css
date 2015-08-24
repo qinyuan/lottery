@@ -240,3 +240,8 @@ div.main-body div.history.content th {
     color: #FFA457;
     display: none;
 }
+
+#changeEmailResult div.submit {
+    margin-top: 20px;
+    text-align: center;
+}

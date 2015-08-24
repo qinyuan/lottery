@@ -344,6 +344,12 @@
                 JSUtils.focusPrompt();
                 return;
             }
+            var oldEmail = $('span.email').text();
+            if (oldEmail == input) {
+                alert('新邮箱不能与原邮箱相同');
+                JSUtils.focusPrompt();
+                return;
+            }
 
             var $okButton = $div.find('button.ok');
             $okButton.text('正在处理...');
@@ -354,6 +360,7 @@
             }, function (info) {
                 $okButton.text('确定');
                 alert(info);
+                JSUtils.focusPrompt();
             });
         });
     });
@@ -376,13 +383,16 @@
         },
         init: function () {
             var self = this;
-            $('a.resend').click(function () {
+           this.$floatPanel.find('a.resend').click(function () {
                 var email = self.get$TargetEmail().trimText();
                 sendResetEmail(email, function () {
                     self.$floatPanel.find('span.resend-success').showForAWhile(3000);
                 }, function (info) {
                     self.$floatPanel.find('span.resend-fail').text(info).showForAWhile(3000);
                 });
+            });
+            this.$floatPanel.find('div.submit button').click(function(){
+                self.hide();
             });
             return this;
         }
