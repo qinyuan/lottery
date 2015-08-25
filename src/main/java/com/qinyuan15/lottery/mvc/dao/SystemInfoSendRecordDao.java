@@ -58,7 +58,7 @@ public class SystemInfoSendRecordDao extends AbstractDao<SystemInfoSendRecord> {
 
         @Override
         protected HibernateListBuilder getListBuilder() {
-            HibernateListBuilder listBuilder = super.getListBuilder();
+            HibernateListBuilder listBuilder = super.getListBuilder().addOrder("id", false);
             if (IntegerUtils.isPositive(userId)) {
                 listBuilder.addEqualFilter("userId", userId);
             }

@@ -41,11 +41,7 @@ public class SystemInfoController extends ImageController {
                 .setUnread(true).getInstances()));
         addJavaScriptData("readSystemInfoItems", toInfoItems(SystemInfoSendRecordDao.factory().setUserId(userId)
                 .setUnread(false).getInstances()));*/
-        /*setAttribute("systemInfoItems", toInfoItems(SystemInfoSendRecordDao.factory()
-                .setUserId(userId).getInstances()));*/
-        final String key = "systemInfoItems";
-        new PaginationAttributeAdder(new Factory(userId), request).setRowItemsName(key).add();
-        //toInfoItems((List) request.getAttribute(key));
+        new PaginationAttributeAdder(new Factory(userId), request).setRowItemsName("systemInfoItems").add();
 
         // bootstrap switch
         addCss("resources/js/lib/bootstrap/css/bootstrap-switch.min", false);

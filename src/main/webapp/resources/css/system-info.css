@@ -43,8 +43,11 @@ div.main-body div.right div.content > div div.text {
     font-size: 10pt;
 }
 
-div.main-body div.right div.content > div div.text div.time {
+div.main-body div.right div.content > div div.text > div {
     width: 530px;
+}
+
+div.main-body div.right div.content > div div.text div.time {
     text-align: right;
     color: #999999;
 }
