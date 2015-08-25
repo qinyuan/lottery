@@ -5,9 +5,11 @@ import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.activity.LivenessIncreaseSystemInfoSender;
 import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
 import com.qinyuan15.lottery.mvc.activity.NewLotteryChanceSystemInfoSender;
 import com.qinyuan15.lottery.mvc.mail.NewLotteryChanceMailSender;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,10 +88,20 @@ public class LotteryLivenessDao {
         ll.setRegisterBefore(registerBefore);
         Integer id = HibernateUtils.save(ll);
 
-        // send email to user
+        // send email or system information to user
+        Boolean remindLivenessIncreaseBySystemInfo = AppConfig.getRemindLivenessIncreaseBySystemInfo();
+        if (BooleanUtils.toBoolean(remindLivenessIncreaseBySystemInfo)) {
+            try {
+                new LivenessIncreaseSystemInfoSender().send(ll);
+            } catch (Exception e) {
+                LOGGER.error("Fail to send liveness increase system info, activityId: {}, userId: {}, info: {}",
+                        activityId, spreadUserId, e);
+            }
+        }
+
         if (new LotteryLotCounter().getAvailableLotCount(activityId, spreadUserId) > 0) {
             Boolean remindNewLotteryChanceByMail = AppConfig.getRemindNewLotteryChanceByMail();
-            if (remindNewLotteryChanceByMail != null && remindNewLotteryChanceByMail) {
+            if (BooleanUtils.toBoolean(remindNewLotteryChanceByMail)) {
                 try {
                     new NewLotteryChanceMailSender().send(spreadUserId, activityId);
                 } catch (Exception e) {
@@ -99,7 +111,7 @@ public class LotteryLivenessDao {
             }
 
             Boolean remindNewLotteryChanceBySystemInfo = AppConfig.getRemindNewLotteryChanceBySystemInfo();
-            if (remindNewLotteryChanceBySystemInfo != null && remindNewLotteryChanceBySystemInfo) {
+            if (BooleanUtils.toBoolean(remindNewLotteryChanceBySystemInfo)) {
                 try {
                     new NewLotteryChanceSystemInfoSender().send(spreadUserId, activityId);
                 } catch (Exception e) {

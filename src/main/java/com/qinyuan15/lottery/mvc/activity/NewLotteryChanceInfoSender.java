@@ -36,11 +36,11 @@ public abstract class NewLotteryChanceInfoSender {
 
     protected abstract void doSend(User user, LotteryActivity activity, PlaceholderConverter placeholderConverter);
 
-    protected class PlaceholderConverter implements MailPlaceholderConverter {
+    protected static class PlaceholderConverter implements MailPlaceholderConverter {
         final String username;
         final int commodityId;
 
-        private PlaceholderConverter(String username, int commodityId) {
+        PlaceholderConverter(String username, int commodityId) {
             this.username = username;
             this.commodityId = commodityId;
         }
