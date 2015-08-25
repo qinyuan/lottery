@@ -82,16 +82,52 @@
             <tr>
                 <td class="title">是否分享图片</td>
                 <td class="input boolean">
-                            <span><input type="radio" name="qzoneIncludePicture" value="true"
-                                         <c:if test="${qzoneIncludePicture}">checked</c:if>>是</span>
-                            <span><input type="radio" name="qzoneIncludePicture" value="false"
-                                         <c:if test="${!qzoneIncludePicture}">checked</c:if>>否</span>
+                    <span><input type="radio" name="qzoneIncludePicture" value="true"
+                                 <c:if test="${qzoneIncludePicture}">checked</c:if>>是</span>
+                    <span><input type="radio" name="qzoneIncludePicture" value="false"
+                                 <c:if test="${!qzoneIncludePicture}">checked</c:if>>否</span>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
+
+<div class="edit-unit">
+    <div class="title">用户爱心增加后的通知设置</div>
+    <div class="content">
+        <table>
+            <tbody>
+            <tr>
+                <td class="title">通知方式</td>
+                <td class="input">
+                    <input type="checkbox" name="remindLivenessIncreaseBySystemInfo"
+                           <c:if test="${remindLivenessIncreaseBySystemInfo}">checked</c:if>/>系统消息
+                </td>
+            </tr>
+            <tr class="system-info-config"<c:if
+                    test="${!remindLivenessIncreaseBySystemInfo}"> style="display:none;"</c:if>>
+                <td class="title">系统消息模板
+                    <div class="comment">
+                        注：<br/>
+                        {{user}}指代用户名；<br/>
+                        {{invitee}}指代被邀请者；<br/>
+                        {{add_l}}指代增加的爱心；<br/>
+                        {{liveness}}指代总爱心；<br/>
+                        {{url}}指代抽奖链接。
+                    </div>
+                </td>
+                <td class="input">
+                    <textarea name="livenessIncreaseSystemInfoTemplate"
+                              class="ckeditor">${livenessIncreaseSystemInfoTemplate}</textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
 <div class="edit-unit">
     <div class="title">用户获得新抽奖机会的通知设置</div>
     <div class="content">

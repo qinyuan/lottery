@@ -35,13 +35,17 @@ public class AdminLotteryConfigController extends ImageController {
         setAttribute("remindNewLotteryChanceBySystemInfo", AppConfig.getRemindNewLotteryChanceBySystemInfo());
         setAttribute("newLotteryChanceSystemInfoTemplate", AppConfig.getNewLotteryChanceSystemInfoTemplate());
 
+        // data about liveness
+        setAttribute("newLotLiveness", AppConfig.getNewLotLiveness());
+        setAttribute("shareSucceedLiveness", AppConfig.getShareSucceedLiveness());
+        setAttribute("remindLivenessIncreaseBySystemInfo", AppConfig.getRemindLivenessIncreaseBySystemInfo());
+        setAttribute("livenessIncreaseSystemInfoTemplate", AppConfig.getLivenessIncreaseSystemInfoTemplate());
+
         // data about mail account
         setAttribute("mailSelectFormItems", new MailSelectFormItemBuilder().build());
 
         // other data
         setAttribute("lotteryAnnouncementTemplate", AppConfig.getLotteryAnnouncementTemplate());
-        setAttribute("newLotLiveness", AppConfig.getNewLotLiveness());
-        setAttribute("shareSucceedLiveness", AppConfig.getShareSucceedLiveness());
         setAttribute("lotteryRule", AppConfig.getLotteryRule());
 
         setTitle("抽奖配置");
@@ -71,7 +75,9 @@ public class AdminLotteryConfigController extends ImageController {
                          @RequestParam(value = "newLotteryChanceMailContentTemplate", required = true) String newLotteryChanceMailContentTemplate,
                          @RequestParam(value = "lotteryAnnouncementTemplate", required = true) String lotteryAnnouncementTemplate,
                          @RequestParam(value = "remindNewLotteryChanceBySystemInfo", required = false) String remindNewLotteryChanceBySystemInfo,
-                         @RequestParam(value = "newLotteryChanceSystemInfoTemplate", required = true) String newLotteryChanceSystemInfoTemplate) {
+                         @RequestParam(value = "newLotteryChanceSystemInfoTemplate", required = true) String newLotteryChanceSystemInfoTemplate,
+                         @RequestParam(value = "remindLivenessIncreaseBySystemInfo", required = false) String remindLivenessIncreaseBySystemInfo,
+                         @RequestParam(value = "livenessIncreaseSystemInfoTemplate", required = true) String livenessIncreaseSystemInfoTemplate) {
 
         AppConfig.updateLotterySinaWeiboTitle(sinaWeiboTitle);
         AppConfig.updateLotterySinaWeiboIncludePicture(sinaWeiboIncludePicture);
@@ -100,6 +106,13 @@ public class AdminLotteryConfigController extends ImageController {
             AppConfig.updateNewLotteryChanceSystemInfoTemplate(newLotteryChanceSystemInfoTemplate);
         } else {
             AppConfig.updateRemindNewLotteryChanceBySystemInfo(false);
+        }
+
+        if (remindLivenessIncreaseBySystemInfo != null) {
+            AppConfig.updateRemindLivenessIncreaseBySystemInfo(true);
+            AppConfig.updateLivenessIncreaseSystemInfoTemplate(livenessIncreaseSystemInfoTemplate);
+        } else {
+            AppConfig.updateRemindLivenessIncreaseBySystemInfo(false);
         }
 
         return redirect("admin-lottery-config");

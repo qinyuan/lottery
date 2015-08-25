@@ -12,7 +12,7 @@
             return true;
         }
     });
-    $('table.email-template input[name=remindNewLotteryChanceByMail]').click(function () {
+    $('input[name=remindNewLotteryChanceByMail]').click(function () {
         var $mailConfig = $(this).getParentByTagName('table').find('tr.mail-config');
         if (this.checked) {
             $mailConfig.show(200);
@@ -20,7 +20,7 @@
             $mailConfig.hide(200)
         }
     });
-    $('table.email-template input[name=remindNewLotteryChanceBySystemInfo]').click(function () {
+    $('input[name=remindNewLotteryChanceBySystemInfo],input[name=remindLivenessIncreaseBySystemInfo]').click(function () {
         var $systemInfoConfig = $(this).getParentByTagName('table').find('tr.system-info-config');
         if (this.checked) {
             $systemInfoConfig.show(200);

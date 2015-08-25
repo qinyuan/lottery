@@ -493,6 +493,28 @@ public class AppConfig {
     }
     ///////////////////////////// new lottery chance end //////////////////////////////
 
+    ////////////////////////////// liveness increase start ////////////////////////////////
+    private final static String REMIND_LIVENESS_INCREASE_BY_SYSTEM_INFO_KEY = "remindLivenessIncreaseBySystemInfo";
+
+    public static Boolean getRemindLivenessIncreaseBySystemInfo() {
+        return dao.getBoolean(REMIND_LIVENESS_INCREASE_BY_SYSTEM_INFO_KEY);
+    }
+
+    public static void updateRemindLivenessIncreaseBySystemInfo(Boolean remindLivenessIncreaseBySystemInfo) {
+        dao.saveBoolean(REMIND_LIVENESS_INCREASE_BY_SYSTEM_INFO_KEY, remindLivenessIncreaseBySystemInfo);
+    }
+
+    private final static String LIVENESS_INCREASE_SYSTEM_INFO_TEMPLATE_KEY = "livenessIncreaseSystemInfoTemplate";
+
+    public static String getLivenessIncreaseSystemInfoTemplate() {
+        return dao.get(LIVENESS_INCREASE_SYSTEM_INFO_TEMPLATE_KEY);
+    }
+
+    public static void updateLivenessIncreaseSystemInfoTemplate(String template) {
+        dao.save(LIVENESS_INCREASE_SYSTEM_INFO_TEMPLATE_KEY, template);
+    }
+    ////////////////////////////// liveness increase end /////////////////////////////////
+
     ///////////////////////////// lottery announcement template start ////////////////////////////
     private final static String LOTTERY_ANNOUNCEMENT_TEMPLATE_KEY = "lotteryAnnouncementTemplateKey";
 
