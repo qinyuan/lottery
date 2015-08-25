@@ -25,3 +25,7 @@ admin.jsp中，邮箱帐户未选择时，应该提示为未选择
 增加图片清理功能
 
 当float-panel中的ok按钮为submit时，可能会提交两次，一次是由于submit，一次由于trigger('click')
+
+管理员可以修改普通用户的信息
+
+邮件中包含退订链接

@@ -5,6 +5,7 @@ import com.qinyuan.lib.database.hibernate.AbstractDao;
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.mvc.controller.AbstractPaginationItemFactory;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class SystemInfoSendRecordDao extends AbstractDao<SystemInfoSendRecord> {
         return new Factory();
     }
 
-    public static class Factory {
+    public static class Factory extends AbstractPaginationItemFactory<SystemInfoSendRecord> {
         private Integer userId;
         private Boolean unread;
 
@@ -55,17 +56,16 @@ public class SystemInfoSendRecordDao extends AbstractDao<SystemInfoSendRecord> {
             return this;
         }
 
-        public List<SystemInfoSendRecord> getInstances() {
-            HibernateListBuilder listBuilder = new HibernateListBuilder();
+        @Override
+        protected HibernateListBuilder getListBuilder() {
+            HibernateListBuilder listBuilder = super.getListBuilder();
             if (IntegerUtils.isPositive(userId)) {
                 listBuilder.addEqualFilter("userId", userId);
             }
-
             if (unread != null) {
                 listBuilder.addEqualFilter("unread", unread);
             }
-
-            return listBuilder.build(SystemInfoSendRecord.class);
+            return listBuilder;
         }
     }
 }

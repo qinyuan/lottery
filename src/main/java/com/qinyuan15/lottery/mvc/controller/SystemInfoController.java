@@ -2,6 +2,8 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
+import com.qinyuan.lib.mvc.controller.PaginationAttributeAdder;
+import com.qinyuan.lib.mvc.controller.PaginationItemFactory;
 import com.qinyuan.lib.mvc.security.SecuritySearcher;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
@@ -25,6 +27,7 @@ public class SystemInfoController extends ImageController {
     @Autowired
     private SecuritySearcher securitySearcher;
 
+    @SuppressWarnings("unchecked")
     @RequestMapping("/system-info")
     public String index() {
         IndexHeaderUtils.setHeaderParameters(this);
@@ -34,10 +37,15 @@ public class SystemInfoController extends ImageController {
         setAttribute("livenesses", livenessDao.getInstances(userId));
         setAttribute("livenessCount", livenessDao.getLiveness(userId));
 
-        addJavaScriptData("unreadSystemInfoItems", toInfoItems(SystemInfoSendRecordDao.factory().setUserId(userId)
+        /*addJavaScriptData("unreadSystemInfoItems", toInfoItems(SystemInfoSendRecordDao.factory().setUserId(userId)
                 .setUnread(true).getInstances()));
         addJavaScriptData("readSystemInfoItems", toInfoItems(SystemInfoSendRecordDao.factory().setUserId(userId)
-                .setUnread(false).getInstances()));
+                .setUnread(false).getInstances()));*/
+        /*setAttribute("systemInfoItems", toInfoItems(SystemInfoSendRecordDao.factory()
+                .setUserId(userId).getInstances()));*/
+        final String key = "systemInfoItems";
+        new PaginationAttributeAdder(new Factory(userId), request).setRowItemsName(key).add();
+        //toInfoItems((List) request.getAttribute(key));
 
         // bootstrap switch
         addCss("resources/js/lib/bootstrap/css/bootstrap-switch.min", false);
@@ -50,7 +58,23 @@ public class SystemInfoController extends ImageController {
         return "system-info";
     }
 
-    private List<InfoItem> toInfoItems(List<SystemInfoSendRecord> records) {
+    /*private void adjustSystemInfoSendRecords(List<SystemInfoSendRecord> records) {
+        String username = SecurityUtils.getUsername();
+        for (SystemInfoSendRecord record : records) {
+            String content = record.getContent();
+            if (content != null)  {
+            }
+            item.content = record.getContent();
+            if (item.content != null) {
+                item.content = item.content.replace("{{user}}", username);
+            }
+            item.buildTime = record.getBuildTime();
+            item.unread = record.getUnread();
+            infoItems.add(item);
+        }
+    }*/
+
+    /*private List<InfoItem> toInfoItems(List<SystemInfoSendRecord> records) {
         String username = SecurityUtils.getUsername();
         List<InfoItem> infoItems = new ArrayList<>();
         for (SystemInfoSendRecord record : records) {
@@ -65,6 +89,43 @@ public class SystemInfoController extends ImageController {
             infoItems.add(item);
         }
         return infoItems;
+    }*/
+
+    private static class Factory implements PaginationItemFactory<InfoItem> {
+        final Integer userId;
+
+        Factory(Integer userId) {
+            this.userId = userId;
+        }
+
+        SystemInfoSendRecordDao.Factory getFactory() {
+            return SystemInfoSendRecordDao.factory().setUserId(userId);
+        }
+
+        @Override
+        public int getCount() {
+            return getFactory().getCount();
+        }
+
+        @Override
+        public List<InfoItem> getInstances(int firstResult, int maxResults) {
+            List<SystemInfoSendRecord> items = getFactory().getInstances(firstResult, maxResults);
+
+            String username = SecurityUtils.getUsername();
+            List<InfoItem> infoItems = new ArrayList<>();
+            for (SystemInfoSendRecord record : items) {
+                InfoItem item = new InfoItem();
+                item.id = record.getId();
+                item.content = record.getContent();
+                if (item.content != null) {
+                    item.content = item.content.replace("{{user}}", username);
+                }
+                item.buildTime = record.getBuildTime();
+                item.unread = record.getUnread();
+                infoItems.add(item);
+            }
+            return infoItems;
+        }
     }
 
     public static class InfoItem {
@@ -72,6 +133,22 @@ public class SystemInfoController extends ImageController {
         public String content;
         public String buildTime;
         public boolean unread;
+
+        public int getId() {
+            return id;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public String getBuildTime() {
+            return buildTime;
+        }
+
+        public boolean isUnread() {
+            return unread;
+        }
     }
 
     @RequestMapping("/system-info-mark-as-read.json")

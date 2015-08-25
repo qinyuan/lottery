@@ -1,3 +1,6 @@
+div.main-body div.right {
+    padding-bottom: 100px;
+}
 
 div.main-body div.right table.liveness td,
 div.main-body div.right table.liveness th {
@@ -5,6 +8,60 @@ div.main-body div.right table.liveness th {
     padding: 5px 10px;
 }
 
+div.main-body div.right div.title {
+    border-bottom: 1px solid #D8DFEA;
+    font-weight: bold;
+    padding-left: 32px;
+    padding-bottom: 20px;
+    background: url("images/system-info-mail.png") no-repeat;
+}
+
+div.main-body div.right div.content {
+    margin-top: 15px;
+    padding-left: 10px;
+}
+
+div.main-body div.right div.content > div {
+    overflow: hidden;
+    border-bottom: 1px solid #D8DFEA;
+    padding: 10px 0;
+}
+
+div.main-body div.right div.content > div > div {
+    float: left;
+}
+
+div.main-body div.right div.content > div div.icon {
+    background: url("images/system-info-tv.png") center center no-repeat;
+    width: 100px;
+    height: 100px;
+    border-right: 1px dotted #D8DEEA;
+}
+
+div.main-body div.right div.content > div div.text {
+    padding: 0 20px;
+    font-size: 10pt;
+}
+
+div.main-body div.right div.content > div div.text div.time {
+    width: 530px;
+    text-align: right;
+    color: #999999;
+}
+
+div.main-body div.right div.content > div div.text div.info {
+    vertical-align: middle;
+    padding-top: 20px;
+}
+
+div.main-body div.right ul.pagination {
+    position: relative;
+    left: 50%;
+    margin-left: -100px;
+    display: none;
+}
+
+/*
 div.main-body div.right div.system-info {
     border-top: 1px dashed #dfdfdf;
     margin-top: 30px;
@@ -48,4 +105,4 @@ div.main-body div.right div.system-info div.info div.info-item div.foot span.tim
 
 div.main-body div.right div.system-info div.info div.info-item div.foot a {
     margin-left: 10px;
-}
+}*/
