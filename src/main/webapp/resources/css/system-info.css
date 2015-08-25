@@ -54,7 +54,7 @@ div.main-body div.right div.content > div div.text div.time {
 
 div.main-body div.right div.content > div div.text div.info {
     vertical-align: middle;
-    padding-top: 20px;
+    padding: 20px 0 10px;
 }
 
 div.main-body div.right ul.pagination {
