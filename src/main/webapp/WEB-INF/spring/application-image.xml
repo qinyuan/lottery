@@ -17,7 +17,7 @@
     <bean id="redundantImageValidator" class="com.qinyuan.lib.image.DatabaseRedundantImageValidator">
         <property name="columns">
             <list>
-                <value>AppConfig.propertyValu</value>
+                <value>AppConfig.propertyValue</value>
                 <value>Commodity.snapshot</value>
                 <value>Commodity.detailImage</value>
                 <value>Commodity.backImage</value>
