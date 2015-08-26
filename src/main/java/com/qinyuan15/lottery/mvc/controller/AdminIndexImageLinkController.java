@@ -24,7 +24,7 @@ public class AdminIndexImageLinkController extends ImageController {
         if (indexImage == null) {
             return BLANK_PAGE;
         }
-        indexImage.setPath(this.pathToUrl(indexImage.getPath()));
+        IndexHeaderUtils.adapt(this, indexImage);
 
         setAttribute("image", indexImage.getPath());
         setAttributeAndJavaScriptData("imageMaps", new ImageMapDao(ImageMapType.INDEX)

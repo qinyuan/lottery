@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:task="http://www.springframework.org/schema/task"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans.xsd">
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/task
+            http://www.springframework.org/schema/task/spring-task.xsd">
 
     <bean class="com.qinyuan.lib.config.ImageConfig">
-        <property name="directory" value="/var/www/html/lottery"/>
+        <property name="directory" value="${imageDir}"/>
         <property name="port" value="${imageServerPort}"/>
         <property name="protocal" value="http"/>
         <property name="context" value="lottery"/>
     </bean>
+
+    <bean id="redundantImageValidator" class="com.qinyuan.lib.image.DatabaseRedundantImageValidator">
+        <property name="columns">
+            <list>
+                <value>AppConfig.propertyValu</value>
+                <value>Commodity.snapshot</value>
+                <value>Commodity.detailImage</value>
+                <value>Commodity.backImage</value>
+                <value>HelpItem.icon</value>
+                <value>IndexImage.path</value>
+                <value>IndexImage.backPath</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="imageCleaner" class="com.qinyuan.lib.image.RedundantImageCleaner">
+        <property name="debugMode" value="true"/>
+        <property name="baseDir" value="${imageDir}"/>
+        <property name="redundantImageValidator" ref="redundantImageValidator"/>
+    </bean>
+
+    <task:scheduled-tasks>
+        <task:scheduled ref="imageCleaner" method="clean" cron="0 * * * * ?"/>
+    </task:scheduled-tasks>
 
 </beans>

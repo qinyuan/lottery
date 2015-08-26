@@ -29,10 +29,15 @@ public class IndexHeaderUtils {
     static List<IndexImageGroup> adapt(ImageController controller, List<IndexImageGroup> indexImageGroups) {
         for (IndexImageGroup indexImageGroup : indexImageGroups) {
             for (IndexImage indexImage : indexImageGroup.getIndexImages()) {
-                indexImage.setPath(controller.pathToUrl(indexImage.getPath()));
-                indexImage.setBackPath(controller.pathToUrl(indexImage.getBackPath()));
+                adapt(controller, indexImage);
             }
         }
         return indexImageGroups;
+    }
+
+    static IndexImage adapt(ImageController controller, IndexImage indexImage) {
+        indexImage.setPath(controller.pathToUrl(indexImage.getPath()));
+        indexImage.setBackPath(controller.pathToUrl(indexImage.getBackPath()));
+        return indexImage;
     }
 }
