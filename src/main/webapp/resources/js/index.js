@@ -12,7 +12,9 @@
     function changePoster($posterDiv, indexImage) {
         $posterDiv.css('min-height', $posterDiv.height() + 'px');
         var $backgroundDiv = $posterDiv.find('div.background');
-        $backgroundDiv.hide().css('background-image', 'url("' + indexImage['backPath'] + '")');
+
+
+        $backgroundDiv.hide().setBackgroundImage(indexImage['backPath']);
         $backgroundDiv.find('img').attr('src', indexImage['path'])
             .attr('usemap', '#indexMap' + indexImage['id']);
         $backgroundDiv.fadeIn(1000, function () {

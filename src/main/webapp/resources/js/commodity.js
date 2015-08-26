@@ -45,7 +45,8 @@
                 id: imageId
             }, function (data) {
                 var commodity = data['commodity'];
-                $detail.css('background-image', 'url("' + commodity['backImage'] + '")');
+                $detail.setBackgroundImage(commodity['backImage']);
+                //$detail.css('background-image', 'url("' + commodity['backImage'] + '")');
                 $img.attr('src', commodity['detailImage']);
                 $img.fadeIn(500, function () {
                     participantCount.update(getSelectedCommodityId());

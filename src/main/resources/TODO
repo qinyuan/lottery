@@ -29,5 +29,3 @@ admin.jsp中，邮箱帐户未选择时，应该提示为未选择
 自有商品有什么用
 
 实现“开启抽奖邮件提醒”功能
-
-index.js中的changePoster由于改变useMap，而useMap又是'#'开头，会造成重复访问index页面

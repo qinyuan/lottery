@@ -29,7 +29,7 @@
     </bean>
 
     <bean id="imageCleaner" class="com.qinyuan.lib.image.RedundantImageCleaner">
-        <property name="debugMode" value="true"/>
+        <property name="debugMode" value="false"/>
         <property name="baseDir" value="${imageDir}"/>
         <property name="redundantImageValidator" ref="redundantImageValidator"/>
     </bean>

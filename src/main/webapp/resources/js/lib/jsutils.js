@@ -951,6 +951,14 @@ jQuery.fn.showForAWhile = function (milliSeconds) {
     }, milliSeconds)
 };
 
+jQuery.fn.setBackgroundImage = function (backgroundImage) {
+    if (backgroundImage == null || $.trim(backgroundImage) == '') {
+        this.css('background-image', 'none');
+    } else {
+        this.css('background-image', 'url("' + backgroundImage + '")');
+    }
+};
+
 if (JSUtils.isFirefox()) {
     /*
      * Patch of bug of firefox.
