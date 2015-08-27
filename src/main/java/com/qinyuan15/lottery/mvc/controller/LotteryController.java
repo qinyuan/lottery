@@ -1,8 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan.lib.contact.tel.TelValidator;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
-import com.qinyuan.lib.lang.DateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
@@ -17,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,39 +45,26 @@ public class LotteryController extends ImageController {
             return failByInvalidParam();
         }
 
-        // if current commodity has no lottery
         if (!new CommodityDao().hasLottery(commodityId)) {
             return fail("noLottery");
+        } else if (!SecurityUtils.hasAuthority(User.NORMAL)) {
+            return getNoPrivilegeResult();
+        } else if (SecurityUtils.getUsername() == null) {
+            return fail("noLogin");
         }
 
+        Map<String, Object> result = new HashMap<>();
         // if all lotteries of current commodity are expired
         LotteryActivity activity = new LotteryActivityDao().getActiveInstanceByCommodityId(commodityId);
         if (activity == null) {
             return fail("activityExpire");
         }
 
-        // if visitor has not login
-        if (SecurityUtils.getUsername() == null) {
-            return fail("noLogin");
-        }
-
-        Map<String, Object> result = new HashMap<>();
+        // user parameters
         User user = new UserDao().getInstance(securitySearcher.getUserId());
         result.put("username", user.getUsername());
-
-        // if no privilege to take lottery
-        if (!SecurityUtils.hasAuthority(User.NORMAL)) {
-            result.put(SUCCESS, false);
-            result.put(DETAIL, "noPrivilege");
-            return toJson(result);
-        }
-
-        // if tel has not been provided
-        if (!StringUtils.hasText(user.getTel())) {
-            result.put(SUCCESS, false);
-            result.put(DETAIL, "noTel");
-            return toJson(result);
-        }
+        result.put("receiveMail", user.getReceiveMail());
+        result.put("tel", user.getTel());
 
         // get serial numbers
         LotteryLotCreator.CreateResult lotteryLotCreateResult = new LotteryLotCreator(
@@ -99,21 +83,28 @@ public class LotteryController extends ImageController {
         result.put("maxLiveness", maxLivnessInfo.liveness);
         result.put("maxLivenessUsers", maxLivnessInfo.users);
 
+        // commodity
+        Commodity commodity = new CommodityUrlAdapter(this).adapt(new CommodityDao().getInstance(commodityId));
+        result.put("commodity", commodity);
+
+        // activity
+        // TODO change mock data to real data
+        result.put("activityDescription", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
         // share urls
         if (user.getSerialKey() == null) {
             user.setSerialKey(RandomStringUtils.randomAlphanumeric(UserDao.SERIAL_KEY_LENGTH));
             HibernateUtils.update(user);
         }
-        LotteryShareUrlBuilder lotteryShareUrlBuilder = new LotteryShareUrlBuilder(user.getSerialKey(), AppConfig.getAppHost(),
-                new CommodityUrlAdapter(this).adapt(new CommodityDao().getInstance(commodityId)));
+        LotteryShareUrlBuilder lotteryShareUrlBuilder = new LotteryShareUrlBuilder(
+                user.getSerialKey(), AppConfig.getAppHost(), commodity);
         result.put("sinaWeiboShareUrl", lotteryShareUrlBuilder.getSinaShareUrl());
         result.put("qqShareUrl", lotteryShareUrlBuilder.getQQShareUrl());
         result.put("qzoneShareUrl", lotteryShareUrlBuilder.getQzoneShareUrl());
 
         // participants data
         result.put("participantCount", new LotteryLotCounter().count(activity));
-        result.put("remainingSeconds", getRemainingSeconds(activity));
-
+        //result.put("remainingSeconds", getRemainingSeconds(activity));
 
         return toJson(result);
     }
@@ -131,39 +122,21 @@ public class LotteryController extends ImageController {
         return serialNumbers;
     }
 
-    private int getRemainingSeconds(LotteryActivity lotteryActivity) {
+    private String getNoPrivilegeResult() {
+        Map<String, Object> result = new HashMap<>();
+        result.put(SUCCESS, false);
+        result.put(DETAIL, "noPrivilege");
+        return toJson(result);
+    }
+
+    /*private int getRemainingSeconds(LotteryActivity lotteryActivity) {
         String expectEndTime = lotteryActivity.getExpectEndTime();
         if (!StringUtils.hasText(expectEndTime)) {
             return 0;
         }
         long remainingSeconds = DateUtils.newDate(expectEndTime).getTime() - System.currentTimeMillis();
         return remainingSeconds < 0 ? 0 : (int) (remainingSeconds / 1000);
-    }
-
-    @RequestMapping("/update-tel.json")
-    @ResponseBody
-    public String updateTel(@RequestParam(value = "tel", required = true) String tel,
-                            @RequestParam(value = "identityCode", required = true) String identityCode) {
-        if (!validateIdentityCode(identityCode)) {
-            return fail("验证码输入错误！");
-        }
-
-        if (!StringUtils.hasText(tel)) {
-            return fail("电话号码不能为空！");
-        }
-
-        if (!new TelValidator().validate(tel)) {
-            return fail("电话号码必须为11为数字");
-        }
-
-        try {
-            new UserDao().updateTel(securitySearcher.getUserId(), tel);
-            return success();
-        } catch (Exception e) {
-            LOGGER.error("Fail to update tel");
-            return failByDatabaseError();
-        }
-    }
+    }*/
 
     @RequestMapping("/participant-count.json")
     @ResponseBody
@@ -175,5 +148,24 @@ public class LotteryController extends ImageController {
         Map<String, Integer> map = new HashMap<>();
         map.put("participantCount", new LotteryLotCounter().count(activity));
         return toJson(map);
+    }
+
+
+    @RequestMapping("/update-receive-mail.json")
+    @ResponseBody
+    public String updateReceiveMail(@RequestParam(value = "receiveMail", required = true) Boolean receiveMail) {
+        User user = new UserDao().getInstance(securitySearcher.getUserId());
+        if (user == null) {
+            return fail("请重新登录");
+        }
+
+        user.setReceiveMail(receiveMail);
+        try {
+            HibernateUtils.update(user);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("fail to update receive mail, info: {}", e);
+            return failByDatabaseError();
+        }
     }
 }

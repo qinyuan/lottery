@@ -20,7 +20,8 @@
                 <div class="name">${snapshot.name}</div>
                 <div class="price"><c:if test="${!snapshot.inLottery}">${snapshot.price}元</c:if></div>
                 <c:if test="${snapshot.inLottery}">
-                    <div class="in-lottery-icon mediumTransparent" title="抽奖中"><img src="resources/css/images/commodity/in-lottery.png"/></div>
+                    <div class="in-lottery-icon mediumTransparent" title="抽奖中"><img
+                            src="resources/css/images/commodity/in-lottery.png"/></div>
                 </c:if>
             </div>
         </c:forEach>
@@ -46,7 +47,7 @@
           target="_blank"/>
     {{/each}}
 </q:handlebars-template>
-<form class="float-panel" id="telInputForm">
+<%--<form class="float-panel" id="telInputForm">
     <jsp:include page="commodity-float-panel-title.jsp">
         <jsp:param name="title" value="补全信息"/>
     </jsp:include>
@@ -78,6 +79,7 @@
         </div>
     </div>
 </form>
+--%>
 <div class="float-panel" id="noPrivilegePrompt">
     <jsp:include page="commodity-float-panel-title.jsp">
         <jsp:param name="title" value="提示信息"/>
@@ -105,6 +107,7 @@
         </div>
     </div>
 </div>
+<%--
 <div class="float-panel" id="lotteryResult">
     <jsp:include page="commodity-float-panel-title.jsp">
         <jsp:param name="title" value="抽奖结果"/>
@@ -136,9 +139,9 @@
             </div>
         </div>
         <div class="prompt">
-            <%--<div class="no-chance">
+            <!--<div class="no-chance">
                 您已抽过奖，需要通过积累爱心再次获取抽奖机会
-            </div>--%>
+            </div>-->
             <div class="spread">
                 您的爱心不足N，请努力传播！
                 <div class="spread-method">
@@ -158,9 +161,129 @@
         </div>
     </div>
 </div>
+--%>
+
+<div class="float-panel" id="lotteryResult">
+    <jsp:include page="commodity-float-panel-title.jsp">
+        <jsp:param name="title" value="<span class='text'></span>"/>
+    </jsp:include>
+    <div class="body">
+        <div class="remind-me top">
+            <span class="update-fail"></span>
+            <span class="update-success">更新成功</span>
+            <input type="checkbox" name="remindMe"/>
+            开启抽奖邮件提醒
+        </div>
+        <div class="activity">
+            <div class="image"><img/></div>
+            <div class="description break-word"></div>
+        </div>
+        <div class="lot">
+            <div class="tel">
+                联系手机号码：<input type="text" class="form-control" name="tel" maxlength="11"/>
+
+                <div class="comment">
+                    手机号码是兑奖的唯一依据，请填写正确的号码
+                </div>
+                <div class="modify"><a href="javascript:void(0)">修改联系号码 ></a></div>
+                <div class="validate-error"></div>
+                <div class="buttons">
+                    <div class="submit">
+                        <button type="submit" class="btn btn-success ok">确定</button>
+                        <button type="button" class="btn btn-default cancel">取消</button>
+                    </div>
+                    <div class="conflict">
+                        <button type="button" class="btn btn-default clear">重新输入</button>
+                        <a href="${telValidateDescriptionPage ? 'javascript:void(0)' : telValidateDescriptionPage}"
+                           target="_blank" class="validate">
+                            <button type="button" class="btn btn-default validate">验证</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="liveness">爱心数：<span class="liveness"></span><span class="icon lightTransparent"></span></div>
+            <div class="serial">抽奖号：<span class="serial"></span></div>
+        </div>
+        <div class="insufficient-liveness">您的爱心数不足，无法参与抽奖！！！</div>
+        <div class="activity-expire">
+            本期抽奖已结束，请关注下抽奖活动
+            <a href="lottery-history.html" target="_blank">抽奖结果请查看活动历史</a>
+        </div>
+        <div class="bottom">
+            <div class="share">
+                <span class="title">分享到<span class="caret"></span></span>
+
+                <div class="list">
+                    <ul>
+                        <li><a class="sina" href="javascript:void(0)" target="_blank"
+                                ><span class="icon">&nbsp;</span>新浪微博</a></li>
+                        <li><a class="qq" href="javascript:void(0)" target="_blank"
+                                ><span class="icon">&nbsp;</span>QQ</a></li>
+                        <li><a class="qzone" href="javascript:void(0)" target="_blank"
+                                ><span class="icon">&nbsp;</span>QQ空间</a></li>
+                    </ul>
+                </div>
+                <div class="triangle outer"></div>
+                <div class="triangle inner"></div>
+            </div>
+            <div class="rule">
+                <a href="javascript:void(0)">抽奖规则>>></a>
+            </div>
+        </div>
+        <%--
+        <div class="activity-info">
+            <div class="participant-count">参与人数：<span></span></div>
+            <div class="deadline">
+                <span class="icon"></span>
+                距活动结束还有：
+                <span class="day">0</span>天
+                <span class="hour">0</span>时
+                <span class="minute">0</span>分
+                <span class="second">0</span>秒
+            </div>
+        </div>
+        <div class="my-lottery">
+            <div class="number">
+                <div class="text">我的抽奖号：</div>
+                <div class="number-list"></div>
+            </div>
+            <div class="liveness">
+                <div class="mine">
+                    我的爱心<span class="icon"></span>：<span class="my-liveness"></span>
+                </div>
+                <div class="max">
+                    最高爱心：<span class="max-liveness"></span>
+                </div>
+            </div>
+        </div>
+        <div class="prompt">
+            <div class="spread">
+                您的爱心不足N，请努力传播！
+                <div class="spread-method">
+                    <a href="javascript:void(showLotteryRule('lotteryResult'))">如何提高爱心？</a>
+                </div>
+            </div>
+        </div>
+        <div class="lottery-again">
+            <button class="green-submit-button" id="takeLotteryAgain">再抽一次</button>
+            <span class="split"></span>
+            <a href="javascript:void(showLotteryRule('lotteryResult'))">抽奖规则</a>
+        </div>
+        <div class="share">
+            <a href="javascript:void(0)" target="_blank" class="sina"></a>
+            <a href="javascript:void(0)" target="_blank" class="qq"></a>
+            <a href="javascript:void(0)" target="_blank" class="qzone"></a>
+        </div>--%>
+    </div>
+</div>
+
 <div class="float-panel" id="lotteryRule">
-    <div class="title">抽奖规则<div class="close-icon"><span></span></div></div>
+    <div class="title">抽奖规则
+        <div class="close-icon"><span></span></div>
+    </div>
     <div class="body">${lotteryRule}</div>
-    <div class="button"><button type="button">我已了解</button></div>
+    <div class="button">
+        <button type="button">我已了解</button>
+    </div>
 </div>
 <%@include file="inc-footer.jsp" %>

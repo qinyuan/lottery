@@ -40,6 +40,7 @@ alter table user add column constellation char(10);
 alter table user add column hometown char(200);
 alter table user add column residence char(200);
 alter table user add column lunar_birthday boolean;
+alter table user add column receive_mail boolean not null default true;
 
 create table virtual_user (
   id int primary key auto_increment,

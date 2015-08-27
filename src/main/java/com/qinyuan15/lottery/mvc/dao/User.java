@@ -23,6 +23,7 @@ public class User extends com.qinyuan.lib.mvc.security.User {
     private String hometown;
     private String residence;
     private Boolean lunarBirthday;
+    private Boolean receiveMail;
 
     public String getEmail() {
         return email;
@@ -126,5 +127,13 @@ public class User extends com.qinyuan.lib.mvc.security.User {
 
     public void setLunarBirthday(Boolean lunarBirthday) {
         this.lunarBirthday = lunarBirthday;
+    }
+
+    public Boolean getReceiveMail() {
+        return receiveMail;
+    }
+
+    public void setReceiveMail(Boolean receiveMail) {
+        this.receiveMail = receiveMail;
     }
 }

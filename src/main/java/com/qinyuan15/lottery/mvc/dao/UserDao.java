@@ -31,6 +31,7 @@ public class UserDao extends SimpleUserDao {
         // set default value
         user.setActive(false);
         user.setSerialKey(RandomStringUtils.randomAlphanumeric(SERIAL_KEY_LENGTH));
+        user.setReceiveMail(true);
         return HibernateUtils.save(user);
     }
 

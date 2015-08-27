@@ -11,6 +11,12 @@
     border: 0;
 }
 
+.break-word {
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
 a {
     text-decoration: none;
 }

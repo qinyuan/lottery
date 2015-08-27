@@ -790,6 +790,7 @@ jQuery.fn.monitorValue = function (callback) {
         if (time) {
             clearInterval(time);
         }
+        oldValue = self.val();
         time = setInterval(function () {
             if (self.val() != oldValue) {
                 oldValue = self.val();
@@ -803,6 +804,7 @@ jQuery.fn.monitorValue = function (callback) {
             time = null;
         }
     });
+    return this;
 };
 
 jQuery.fn.focusOrSelect = function () {

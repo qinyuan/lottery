@@ -42,7 +42,7 @@ public class CommodityController extends ImageController {
             } else {
                 setTitle("参与抽奖");
             }
-            setAttribute("commodity", getUrlAdapter().adapt(commodity));
+            //setAttribute("commodity", getUrlAdapter().adapt(commodity));
             addJavaScriptData("selectedCommodityId", commodity.getId());
             addJavaScriptData("commodityMaps", mapDao.getInstancesByRelateId(commodity.getId()));
         }
@@ -53,8 +53,10 @@ public class CommodityController extends ImageController {
 
         setAttribute("snapshots", buildSnapshots());
         setAttribute("lotteryRule", AppConfig.getLotteryRule());
+        setAttribute("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
 
-        addJs("resources/js/lib/handlebars.min-v1.3.0", false);
+        addJs("lib/handlebars.min-v1.3.0", false);
+        addHeadJs("lib/image-adjust");
         addCssAndJs("commodity");
         return "commodity";
     }

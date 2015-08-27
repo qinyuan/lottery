@@ -275,7 +275,7 @@
                 }
             }
 
-            var url = 'personal-center-validate-tel.json';
+            var url = 'tel-validate.json';
             var self = this;
             this.get$WaitForValidation().show();
             $.post(url, {'tel': newTel}, function (data) {
@@ -310,8 +310,7 @@
         },
         doSubmit: function () {
             var newTel = this.get$Input().val();
-            $.post('personal-center-update-tel.json', {'tel': newTel}, JSUtils.normalAjaxCallback);
-
+            $.post('update-tel.json', {'tel': newTel}, JSUtils.normalAjaxCallback);
         },
         get$Title: function () {
             return this.$floatPanel.find('span.title');
