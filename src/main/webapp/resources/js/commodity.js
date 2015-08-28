@@ -605,7 +605,7 @@
         $.post('take-lottery.json', {
             'commodityId': getSelectedCommodityId()
         }, function (data) {
-            data.detail = 'activityExpire'; //TODO just for testing
+            console.log(data);
             if (data.success || data.detail == 'activityExpire' || data.detail == 'alreadyAttended') {
                 lotteryResult.show(data);
             } else if (data.detail == 'noLottery') {
@@ -642,7 +642,6 @@
              */
         });
     };
-    getLotteryLot();// TODO remove this
 })();
 var getLotteryLot, showLotteryRule;
 function getSelectedCommodityId() {

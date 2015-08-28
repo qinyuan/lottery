@@ -15,6 +15,10 @@ public abstract class AbstractActivityDao<T extends AbstractActivity> extends Ab
         return getFactory().setCommodityId(commodityId).setExpire(false).getFirstInstance();
     }
 
+    public T getInstanceByCommodityId(Integer commodityId) {
+        return getFactory().setCommodityId(commodityId).getFirstInstance();
+    }
+
     public T getLastInstance() {
         return getFactory().getFirstInstance(); // factory order by id desc
     }

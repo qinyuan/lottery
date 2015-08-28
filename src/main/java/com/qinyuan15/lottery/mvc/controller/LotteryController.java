@@ -47,17 +47,19 @@ public class LotteryController extends ImageController {
 
         if (!new CommodityDao().hasLottery(commodityId)) {
             return fail("noLottery");
-        } else if (!SecurityUtils.hasAuthority(User.NORMAL)) {
-            return getNoPrivilegeResult();
         } else if (SecurityUtils.getUsername() == null) {
             return fail("noLogin");
+        } else if (!SecurityUtils.hasAuthority(User.NORMAL)) {
+            return getNoPrivilegeResult();
         }
 
         Map<String, Object> result = new HashMap<>();
+
         // if all lotteries of current commodity are expired
         LotteryActivity activity = new LotteryActivityDao().getActiveInstanceByCommodityId(commodityId);
         if (activity == null) {
-            return fail("activityExpire");
+            result.put(DETAIL, "activityExpire");
+            activity = new LotteryActivityDao().getInstanceByCommodityId(commodityId);
         }
 
         // user parameters
@@ -66,22 +68,24 @@ public class LotteryController extends ImageController {
         result.put("receiveMail", user.getReceiveMail());
         result.put("tel", user.getTel());
 
-        // get serial numbers
-        LotteryLotCreator.CreateResult lotteryLotCreateResult = new LotteryLotCreator(
-                activity.getId(), activity.getContinuousSerialLimit(), user.getId()).create();
-        result.put("serialNumbers", getSerialNumbersFromLotteryLots(lotteryLotCreateResult.getLots()));
-        if (lotteryLotCreateResult.hasNewLot()) {
-            result.put(SUCCESS, true);
-        } else {
-            result.put(SUCCESS, false);
-            result.put(DETAIL, "alreadyAttended");
-        }
+        if (!result.containsKey(DETAIL)) {
+            // get serial numbers
+            LotteryLotCreator.CreateResult lotteryLotCreateResult = new LotteryLotCreator(
+                    activity.getId(), activity.getContinuousSerialLimit(), user.getId()).create();
+            result.put("serialNumbers", getSerialNumbersFromLotteryLots(lotteryLotCreateResult.getLots()));
+            if (lotteryLotCreateResult.hasNewLot()) {
+                result.put(SUCCESS, true);
+            } else {
+                result.put(SUCCESS, false);
+                result.put(DETAIL, "alreadyAttended");
+            }
 
-        // liveness parameter
-        result.put("liveness", new LotteryLivenessDao().getLiveness(user.getId()/*, activity.getId()*/));
-        LivenessQuerier.LivenessInfo maxLivnessInfo = new LivenessQuerier().queryMax(activity);
-        result.put("maxLiveness", maxLivnessInfo.liveness);
-        result.put("maxLivenessUsers", maxLivnessInfo.users);
+            // liveness parameter
+            result.put("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
+            LivenessQuerier.LivenessInfo maxLivnessInfo = new LivenessQuerier().queryMax(activity);
+            result.put("maxLiveness", maxLivnessInfo.liveness);
+            result.put("maxLivenessUsers", maxLivnessInfo.users);
+        }
 
         // commodity
         Commodity commodity = new CommodityUrlAdapter(this).adapt(new CommodityDao().getInstance(commodityId));
@@ -127,6 +131,10 @@ public class LotteryController extends ImageController {
         result.put(SUCCESS, false);
         result.put(DETAIL, "noPrivilege");
         return toJson(result);
+    }
+
+    private void putUserParameters(Map<String, Object> result) {
+
     }
 
     /*private int getRemainingSeconds(LotteryActivity lotteryActivity) {
