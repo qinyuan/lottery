@@ -11,16 +11,17 @@
     var $virtualLiveness = $form.getInputByName('virtualLiveness');
     var $virtualLivenessUsers = $form.getInputByName('virtualLivenessUsers');
     var $dualColoredBallTerm = $form.getInputByName(('dualColoredBallTerm'));
+    var $description = $form.find('textarea[name=description]');
     var $okButton = $form.getButtonByName('ok');
     var $cancelButton = $form.getButtonByName('cancel');
     var $editImages = $('table.normal img.edit');
     var $addButton = $('#addLotteryActivityButton');
     var $livenessRow = $form.find('tr.liveness');
 
-    function showForm(displayLivness) {
+    function showForm(displayLiveness) {
         JSUtils.showTransparentBackground(1);
 
-        if (displayLivness) {
+        if (displayLiveness) {
             $livenessRow.show();
         } else {
             $livenessRow.hide();
@@ -192,6 +193,7 @@
         $virtualLivenessUsers.val($tr.find('td.virtual-liveness-users').text());
         $continuousSerialLimit.val($tr.find('td.continuous-serial-limit').text());
         $expectParticipantCount.val($tr.find('td.expect-participant-count').text());
+        $description.val($tr.find('input.description').val());
 
         JSUtils.loadSelectFormValue($commoditySelect, $tr.find('td.commodity').dataOptions('commodityId'));
     });

@@ -92,8 +92,7 @@ public class LotteryController extends ImageController {
         result.put("commodity", commodity);
 
         // activity
-        // TODO change mock data to real data
-        result.put("activityDescription", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        result.put("activityDescription", activity.getDescription());
 
         // share urls
         if (user.getSerialKey() == null) {

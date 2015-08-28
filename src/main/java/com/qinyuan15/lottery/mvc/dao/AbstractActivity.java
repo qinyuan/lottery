@@ -12,6 +12,7 @@ abstract class AbstractActivity extends PersistObject {
     private Integer expectParticipantCount;
     private String announcement;
     private String winners;
+    private String description;
 
     public Integer getCommodityId() {
         return commodityId;
@@ -67,6 +68,14 @@ abstract class AbstractActivity extends PersistObject {
 
     public void setWinners(String winners) {
         this.winners = winners;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     //////////////////////////// derivative fields /////////////////////////////////

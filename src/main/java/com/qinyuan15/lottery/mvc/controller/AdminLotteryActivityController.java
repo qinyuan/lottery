@@ -46,7 +46,8 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                           @RequestParam(value = "expectParticipantCount", required = true) Integer expectParticipantCount,
                           @RequestParam(value = "virtualLiveness", required = true) Integer virtualLiveness,
                           @RequestParam(value = "virtualLivenessUsers", required = true) String virtualLivenessUsers,
-                          @RequestParam(value = "dualColoredBallTerm", required = true) Integer dualColoredBallTerm) {
+                          @RequestParam(value = "dualColoredBallTerm", required = true) Integer dualColoredBallTerm,
+                          @RequestParam(value = "description", required = true) String description) {
         if (StringUtils.hasText(autoStartTime)) {
             startTime = DateUtils.nowString();
         } else {
@@ -86,7 +87,8 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
             LotteryActivityDao dao = new LotteryActivityDao();
             if (IntegerUtils.isPositive(id)) {
                 dao.update(id, term, commodityId, startTime, expectEndTime, continuousSerialLimit,
-                        expectParticipantCount, virtualLiveness, virtualLivenessUsers, dualColoredBallTerm);
+                        expectParticipantCount, virtualLiveness, virtualLivenessUsers, dualColoredBallTerm,
+                        description);
             } else {
                 CommodityDao commodityDao = new CommodityDao();
                 if (commodityDao.hasActiveSeckill(commodityId)) {
@@ -97,7 +99,7 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                     return fail("第" + term + "期抽奖已经存在，请填写别的期数！");
                 }
                 dao.add(term, commodityId, startTime, expectEndTime, continuousSerialLimit,
-                        expectParticipantCount, dualColoredBallTerm);
+                        expectParticipantCount, dualColoredBallTerm, description);
             }
             return success();
         } catch (Exception e) {

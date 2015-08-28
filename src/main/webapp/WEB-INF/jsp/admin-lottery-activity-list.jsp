@@ -48,13 +48,14 @@
     <tbody>
     <c:forEach var="activity" items="${activities}" varStatus="status">
         <tr data-options="id:${activity.id}">
+            <input type="hidden" class="description" value="${activity.description}"/>
             <td>${status.index + rowStartIndex}</td>
             <td class="term">${activity.term}</td>
             <td class="commodity" data-options="commodityId: ${activity.commodity.id}">${activity.commodity.name}</td>
-            <td class="start-time">${fn:replace(activity.startTime, ' ', '<br/>')}</td>
+            <td class="start-time">${fn:replace(activity.startTime, ' ', '<br/> ')}</td>
             <td class="${listExpire ? 'end-time' : 'expect-end-time'}"
                 <c:if test="${!listExpire}">data-options="dualColoredBallTerm:${activity.dualColoredBallTerm}"</c:if>
-                    >${fn:replace((listExpire ? activity.endTime : activity.expectEndTime), ' ', '<br/>')}</td>
+                    >${fn:replace((listExpire ? activity.endTime : activity.expectEndTime), ' ', '<br/> ')}</td>
             <td class="expect-participant-count">${activity.expectParticipantCount}</td>
             <td>${activity.participantCount}</td>
             <td>${activity.realParticipantCount}</td>

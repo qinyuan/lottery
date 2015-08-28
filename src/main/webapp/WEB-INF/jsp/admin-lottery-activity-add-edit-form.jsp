@@ -11,6 +11,14 @@
                         第<input style="width:160px;margin:0 8px;" type="text" name="term" class="form-control"
                                 value="${nextTerm}" placeholder="数字格式，如'123'等"/>期
                     </td>
+                    <td class="title">开始时间<span class="required">*</span></td>
+                    <td class="content" style="width:300px;">
+                        <input type="text" name="startTime" class="form-control"
+                               placeholder="格式如'2015-01-01 09:00:00'" disabled/>
+                        <span style="padding-left:10px;">
+                            <input type="checkbox" name="autoStartTime" tabindex="-1" checked>自动生成
+                        </span>
+                    </td>
                 </tr>
                 <tr>
                     <td class="title">奖品<span class="required">*</span></td>
@@ -20,26 +28,23 @@
                         <c:set var="selectFormName" value="commodityId"/>
                         <%@include file="widget-select-form.jsp" %>
                     </td>
-                    <td class="title">开始时间<span class="required">*</span></td>
-                    <td class="content" style="width:300px;">
-                        <input type="text" name="startTime" class="form-control"
-                               placeholder="格式如'2015-01-01 09:00:00'" disabled/>
-                        <span style="padding-left:10px;">
-                            <input type="checkbox" name="autoStartTime" checked>自动生成
-                        </span>
-                    </td>
-                </tr>
-                <tr>
                     <td class="title">绑定双色球<span class="required">*</span></td>
                     <td class="content">
                         第<input style="width:160px;margin:0 8px;" type="text" name="dualColoredBallTerm"
                                 class="form-control" value="${nextDualColoredBallTerm}"
                                 maxlength="7" placeholder="格式如'2015077'等"/>期
                     </td>
+                </tr>
+                <tr>
                     <td class="title">预计结束时间<span class="required">*</span></td>
                     <td class="content">
                         <input type="text" name="expectEndTime" class="form-control"
                                placeholder="格式如'2015-03-03 19:00:00'"/>
+                    </td>
+                    <td class="title">预计参加人数</td>
+                    <td class="content">
+                        <input type="text" name="expectParticipantCount" class="form-control"
+                               value="10000" placeholder="输入预计参数人数"/>
                     </td>
                 </tr>
                 <tr class="liveness">
@@ -55,15 +60,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="title">预计参加人数</td>
-                    <td class="content">
-                        <input type="text" name="expectParticipantCount" class="form-control"
-                               value="10000" placeholder="输入预计参数人数"/>
-                    </td>
                     <td class="title">抽奖号最大连续个数</td>
                     <td class="content">
                         <input type="text" name="continuousSerialLimit" class="form-control"
                                value="5" placeholder="输入抽奖号最大连续个数"/>
+                    </td>
+                    <td class="title">活动说明</td>
+                    <td class="content">
+                        <textarea name="description" class="form-control" rows="3"></textarea>
                     </td>
                 </tr>
                 </tbody>

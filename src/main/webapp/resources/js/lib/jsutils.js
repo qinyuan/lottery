@@ -718,6 +718,25 @@ var JSUtils = {
         }
         floatPanel.init();
         return floatPanel;
+    },
+    /**
+     * Patch of bug of firefox.
+     * In firefox, if we use "javascript:void(XXX)" in map area,
+     * problem will happen
+     */
+    patchMapAreaBug: function () {
+        if (JSUtils.isFirefox()) {
+            $('map area').filter(function () {
+                return this.href != null && this.href.match(/^javascript:void\(/);
+            }).click(function (e) {
+                e.preventDefault();
+                var code = this.href.substring("javascript:void(".length, this.href.length - 1);
+                if (code.match(/\(\)$/)) {
+                    code = code.replace(/\(\)$/, '');
+                    window[code]();
+                }
+            });
+        }
     }
 };
 
@@ -960,27 +979,3 @@ jQuery.fn.setBackgroundImage = function (backgroundImage) {
         this.css('background-image', 'url("' + backgroundImage + '")');
     }
 };
-
-if (JSUtils.isFirefox()) {
-    /*
-     * Patch of bug of firefox.
-     * In firefox, if we use "javascript:void(XXX)" in map area,
-     * problem will happen
-     */
-    setTimeout(function () {
-        /*
-         * this code run by 1 seconds delay, ensure that all map area is loaded
-         * before this code run
-         */
-        $('map area').filter(function () {
-            return this.href != null && this.href.match(/^javascript:void\(/);
-        }).click(function (e) {
-            e.preventDefault();
-            var code = this.href.substring("javascript:void(".length, this.href.length - 1);
-            if (code.match(/\(\)$/)) {
-                code = code.replace(/\(\)$/, '');
-                window[code]();
-            }
-        });
-    }, 1000);
-}

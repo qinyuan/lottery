@@ -85,6 +85,10 @@ div.form div.list-type {
     line-height: 40px;
 }
 
+#lotteryActivityForm td {
+    vertical-align: top;
+}
+
 #lotteryActivityForm td.title {
     text-align: right;
     font-weight: bold;

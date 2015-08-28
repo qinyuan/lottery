@@ -61,6 +61,7 @@
         loadCommodityMap: function (commodityMaps) {
             var mapHtml = JSUtils.handlebars('mapTemplate', {'commodityMaps': commodityMaps});
             $('#commodityMap').html(mapHtml);
+            JSUtils.patchMapAreaBug();
         },
         $prevIcon: $('div.main-body div.snapshots div.prev'),
         $nextIcon: $('div.main-body div.snapshots div.next'),
@@ -605,7 +606,6 @@
         $.post('take-lottery.json', {
             'commodityId': getSelectedCommodityId()
         }, function (data) {
-            console.log(data);
             if (data.success || data.detail == 'activityExpire' || data.detail == 'alreadyAttended') {
                 lotteryResult.show(data);
             } else if (data.detail == 'noLottery') {

@@ -28,7 +28,8 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
     }
 
     public Integer add(Integer term, Integer commodityId, String startTime, String expectEndTime,
-                       Integer continuousSerialLimit, Integer expectParticipantCount, Integer dualColoredBallTerm) {
+                       Integer continuousSerialLimit, Integer expectParticipantCount, Integer dualColoredBallTerm,
+                       String description) {
         LotteryActivity activity = new LotteryActivity();
         activity.setTerm(term);
         activity.setCommodityId(commodityId);
@@ -37,6 +38,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         activity.setContinuousSerialLimit(continuousSerialLimit);
         activity.setExpectParticipantCount(expectParticipantCount);
         activity.setDualColoredBallTerm(dualColoredBallTerm);
+        activity.setDescription(description);
 
         // set default values
         activity.setMaxSerialNumber(0);
@@ -62,7 +64,8 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
 
     public void update(Integer id, Integer term, Integer commodityId, String startTime, String expectEndTime,
                        Integer continuousSerialLimit, Integer expectParticipantCount,
-                       Integer virutalLiveness, String virtualLivenessUsers, Integer dualColoredBallTerm) {
+                       Integer virutalLiveness, String virtualLivenessUsers, Integer dualColoredBallTerm,
+                       String description) {
         LotteryActivity activity = getInstance(id);
         activity.setTerm(term);
         activity.setCommodityId(commodityId);
@@ -73,6 +76,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         activity.setVirtualLiveness(virutalLiveness);
         activity.setVirtualLivenessUsers(virtualLivenessUsers);
         activity.setDualColoredBallTerm(dualColoredBallTerm);
+        activity.setDescription(description);
         HibernateUtils.update(activity);
     }
 

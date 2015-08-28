@@ -91,6 +91,7 @@
         <property name="maxSerialNumber" column="max_serial_number"/>
         <property name="dualColoredBallTerm" column="dual_colored_ball_term"/>
         <property name="winners"/>
+        <property name="description"/>
     </class>
     <class name="LotteryLot" table="lottery_lot">
         <id name="id" column="id">
