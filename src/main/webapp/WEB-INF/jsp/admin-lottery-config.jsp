@@ -198,18 +198,18 @@
     <div class="content">
         <table>
             <tbody>
-            <tr>
+            <%--<tr>
                 <td class="wide title">获取一次新抽奖机会所需爱心</td>
                 <td class="input narrow">
                     <input type="text" class="form-control" name="newLotLiveness"
                            value="${newLotLiveness}" placeholder="在此输入每次新抽奖机会所需要的爱心数"/>
                 </td>
-            </tr>
+            </tr>--%>
             <tr>
                 <td class="wide title">分享给好友且好友注册或登录后增加的爱心</td>
                 <td class="input narrow">
                     <input type="text" class="form-control" name="shareSucceedLiveness"
-                           value="${shareSucceedLiveness}" placeholder="在此输入每次新抽奖机会所需要的爱心数"/>
+                           value="${shareSucceedLiveness}" placeholder="在此输入分享成功增加的爱心数"/>
                 </td>
             </tr>
             </tbody>

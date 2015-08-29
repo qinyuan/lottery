@@ -33,4 +33,9 @@ public class LotteryActivityDaoTest {
     public void testGetLatestDescription() {
         System.out.println(dao.getLatestDescription());
     }
+
+    @Test
+    public void testGetLatestMinLivenessToParticipate() {
+        System.out.println(dao.getLatestMinLivenessToParticipate());
+    }
 }

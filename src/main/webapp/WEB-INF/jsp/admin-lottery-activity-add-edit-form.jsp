@@ -75,7 +75,15 @@
                     <td class="title">活动说明</td>
                     <td class="content description">
                         <input type="hidden" name="description" value="${latestDescription}"/>
+
                         <div class="description">${latestDescription}<a href="javascript:void(0)">编辑</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">最少需要的爱心数</td>
+                    <td class="content">
+                        <input type="text" name="minLivenessToParticipate" class="form-control"
+                                value="${latestMinLivenessToParticipate}" placeholder="输入参与抽奖最少需要的爱心"/>
                     </td>
                 </tr>
                 </tbody>

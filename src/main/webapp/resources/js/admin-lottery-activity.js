@@ -95,6 +95,9 @@
         get$Id: function () {
             return this.$floatPanel.find('input[name=id]');
         },
+        get$MinLivenessToParticipate: function () {
+            return this.$floatPanel.find('input[name=minLivenessToParticipate]');
+        },
         validateDualColoredBall: function () {
             var dualColoredBallTerm = this.get$DualColoredBallTerm().val();
             if (dualColoredBallTerm.length != 7
@@ -183,10 +186,20 @@
             }
             return true;
         },
+        validateMinLivenessToParticipate: function () {
+            var minLivenessToParticipate = this.get$MinLivenessToParticipate().val();
+            if (minLivenessToParticipate != '' && !JSUtils.isNumberString(minLivenessToParticipate)) {
+                alert('最少需要的爱心数只能为数字格式！');
+                this.get$MinLivenessToParticipate().focusOrSelect();
+                return false;
+            }
+            return true;
+        },
         validateInput: function () {
             return this.validateTerm() && this.validateStartTime() && this.validateDualColoredBall()
                 && this.validateExpectEndTime() && this.validateContinuousSerialLimit()
-                && this.validateLiveness() && this.validateParticipantCount();
+                && this.validateLiveness() && this.validateParticipantCount()
+                && this.validateMinLivenessToParticipate();
         },
         beforeShow: function (args) {
             var displayLiveness = args[0];
@@ -270,6 +283,7 @@
         lotteryActivity.get$ContinuousSerialLimit().val($tr.find('td.continuous-serial-limit').text());
         lotteryActivity.get$ExpectParticipantCount().val($tr.find('td.expect-participant-count').text());
         lotteryActivity.setDescriptionHtml($tr.find('input.description').val());
+        lotteryActivity.get$MinLivenessToParticipate().val($tr.find('input.min-liveness-to-participate').val());
 
         JSUtils.loadSelectFormValue(lotteryActivity.get$CommoditySelect(), $tr.find('td.commodity').dataOptions('commodityId'));
     });

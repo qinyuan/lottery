@@ -1,7 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity;
 
 import com.qinyuan.lib.lang.IntegerUtils;
-import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
@@ -10,7 +9,7 @@ import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
 /**
  * Class to count lottery lot of certain lottery activity
  */
-public class LotteryLotCounter implements LotCounter{
+public class LotteryLotCounter implements LotCounter {
     /**
      * count the total lot number of certain lottery activity,
      * including virtual lot and real lot
@@ -83,7 +82,17 @@ public class LotteryLotCounter implements LotCounter{
      * @return available lot number
      */
     private int getMaxLotCount(int activityId, int userId) {
-        Integer newLotLivness = AppConfig.getNewLotLiveness();
+        LotteryActivity activity = new LotteryActivityDao().getInstance(activityId);
+        if (activity == null) {
+            return 0;
+        }
+
+        //Integer newLotLivness = AppConfig.getNewLotLiveness();
+        /*if (!IntegerUtils.isPositive(newLotLivness)) {
+            return 0;
+        }*/
+
+        Integer newLotLivness = activity.getMinLivenessToParticipate();
         if (!IntegerUtils.isPositive(newLotLivness)) {
             return 0;
         }

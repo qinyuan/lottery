@@ -13,6 +13,7 @@ public class LotteryActivity extends AbstractActivity {
     private String virtualLivenessUsers;
     private Integer maxSerialNumber;
     private Integer dualColoredBallTerm;
+    private Integer minLivenessToParticipate;
 
     public String getExpectEndTime() {
         return DateUtils.trimMilliSecond(expectEndTime);
@@ -76,6 +77,14 @@ public class LotteryActivity extends AbstractActivity {
 
     public void setDualColoredBallTerm(Integer dualColoredBallTerm) {
         this.dualColoredBallTerm = dualColoredBallTerm;
+    }
+
+    public Integer getMinLivenessToParticipate() {
+        return minLivenessToParticipate;
+    }
+
+    public void setMinLivenessToParticipate(Integer minLivenessToParticipate) {
+        this.minLivenessToParticipate = minLivenessToParticipate;
     }
 
     //////////////////////////// derivative fields /////////////////////////////////

@@ -29,7 +29,10 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
         DualColoredBallRecord latestRecord = new DualColoredBallRecordDao().getLatestInstance();
         setAttribute("nextDualColoredBallTerm", latestRecord.getYear() +
                 new DecimalFormat("000").format(latestRecord.getTerm() + 1));
-        setAttribute("latestDescription", new LotteryActivityDao().getLatestDescription());
+
+        LotteryActivityDao activityDao = new LotteryActivityDao();
+        setAttribute("latestDescription", activityDao.getLatestDescription());
+        setAttribute("latestMinLivenessToParticipate", activityDao.getLatestMinLivenessToParticipate());
 
         return super.index(listType, "admin-lottery-activity");
     }
@@ -48,7 +51,8 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                           @RequestParam(value = "virtualLiveness", required = true) Integer virtualLiveness,
                           @RequestParam(value = "virtualLivenessUsers", required = true) String virtualLivenessUsers,
                           @RequestParam(value = "dualColoredBallTerm", required = true) Integer dualColoredBallTerm,
-                          @RequestParam(value = "description", required = true) String description) {
+                          @RequestParam(value = "description", required = true) String description,
+                          @RequestParam(value = "minLivenessToParticipate", required = true) Integer minLivenessToParticipate) {
         if (StringUtils.hasText(autoStartTime)) {
             startTime = DateUtils.nowString();
         } else {
@@ -84,12 +88,16 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
             virtualLivenessUsers = null;
         }
 
+        if (minLivenessToParticipate == null) {
+            minLivenessToParticipate = 0;
+        }
+
         try {
             LotteryActivityDao dao = new LotteryActivityDao();
             if (IntegerUtils.isPositive(id)) {
                 dao.update(id, term, commodityId, startTime, expectEndTime, continuousSerialLimit,
                         expectParticipantCount, virtualLiveness, virtualLivenessUsers, dualColoredBallTerm,
-                        description);
+                        description, minLivenessToParticipate);
             } else {
                 CommodityDao commodityDao = new CommodityDao();
                 if (commodityDao.hasActiveSeckill(commodityId)) {
@@ -100,7 +108,7 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                     return fail("第" + term + "期抽奖已经存在，请填写别的期数！");
                 }
                 dao.add(term, commodityId, startTime, expectEndTime, continuousSerialLimit,
-                        expectParticipantCount, dualColoredBallTerm, description);
+                        expectParticipantCount, dualColoredBallTerm, description, minLivenessToParticipate);
             }
             return success();
         } catch (Exception e) {

@@ -289,7 +289,7 @@ public class AppConfig {
     }
     ///////////////////////// seckill qzone share link end ////////////////////////////////
 
-    ///////////////////////// new lot liveness start ///////////////////////////////
+    /*///////////////////////// new lot liveness start ///////////////////////////////
     private final static String NEW_LOT_LIVENESS_KEY = "newLotLiveness";
 
     public static Integer getNewLotLiveness() {
@@ -299,7 +299,7 @@ public class AppConfig {
     public static void updateNewLotLiveness(Integer newLotLiveness) {
         dao.saveInteger(NEW_LOT_LIVENESS_KEY, newLotLiveness);
     }
-    ///////////////////////// new lot liveness end ///////////////////////////////
+    ///////////////////////// new lot liveness end ///////////////////////////////*/
 
     ///////////////////////// share succeed liveness start /////////////////////
     private final static String SHARE_SUCCEED_LIVENESS_KEY = "shareSucceedLiveness";

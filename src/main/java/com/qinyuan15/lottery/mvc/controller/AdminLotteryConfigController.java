@@ -36,7 +36,7 @@ public class AdminLotteryConfigController extends ImageController {
         setAttribute("newLotteryChanceSystemInfoTemplate", AppConfig.getNewLotteryChanceSystemInfoTemplate());
 
         // data about liveness
-        setAttribute("newLotLiveness", AppConfig.getNewLotLiveness());
+        //setAttribute("newLotLiveness", AppConfig.getNewLotLiveness());
         setAttribute("shareSucceedLiveness", AppConfig.getShareSucceedLiveness());
         setAttribute("remindLivenessIncreaseBySystemInfo", AppConfig.getRemindLivenessIncreaseBySystemInfo());
         setAttribute("livenessIncreaseSystemInfoTemplate", AppConfig.getLivenessIncreaseSystemInfoTemplate());
@@ -66,7 +66,7 @@ public class AdminLotteryConfigController extends ImageController {
                          @RequestParam(value = "qzoneTitle", required = true) String qzoneTitle,
                          @RequestParam(value = "qzoneSummary", required = true) String qzoneSummary,
                          @RequestParam(value = "qzoneIncludePicture", required = true) Boolean qzoneIncludePicture,
-                         @RequestParam(value = "newLotLiveness", required = true) Integer newLotLiveness,
+                         //@RequestParam(value = "newLotLiveness", required = true) Integer newLotLiveness,
                          @RequestParam(value = "shareSucceedLiveness", required = true) Integer shareSucceedLiveness,
                          @RequestParam(value = "lotteryRule", required = true) String lotteryRule,
                          @RequestParam(value = "remindNewLotteryChanceByMail", required = false) String remindNewLotteryChanceByMail,
@@ -87,7 +87,7 @@ public class AdminLotteryConfigController extends ImageController {
         AppConfig.updateLotteryQzoneTitle(qzoneTitle);
         AppConfig.updateLotteryQzoneSummary(qzoneSummary);
         AppConfig.updateLotteryQzoneIncludePicture(qzoneIncludePicture);
-        AppConfig.updateNewLotLiveness(newLotLiveness);
+        //AppConfig.updateNewLotLiveness(newLotLiveness);
         AppConfig.updateShareSucceedLiveness(shareSucceedLiveness);
         AppConfig.updateLotteryRule(lotteryRule);
         AppConfig.updateLotteryAnnouncementTemplate(lotteryAnnouncementTemplate);

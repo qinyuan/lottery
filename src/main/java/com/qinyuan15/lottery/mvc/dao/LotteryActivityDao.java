@@ -29,7 +29,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
 
     public Integer add(Integer term, Integer commodityId, String startTime, String expectEndTime,
                        Integer continuousSerialLimit, Integer expectParticipantCount, Integer dualColoredBallTerm,
-                       String description) {
+                       String description, Integer minLivenessToParticipant) {
         LotteryActivity activity = new LotteryActivity();
         activity.setTerm(term);
         activity.setCommodityId(commodityId);
@@ -39,6 +39,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         activity.setExpectParticipantCount(expectParticipantCount);
         activity.setDualColoredBallTerm(dualColoredBallTerm);
         activity.setDescription(description);
+        activity.setMinLivenessToParticipate(minLivenessToParticipant);
 
         // set default values
         activity.setMaxSerialNumber(0);
@@ -65,7 +66,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
     public void update(Integer id, Integer term, Integer commodityId, String startTime, String expectEndTime,
                        Integer continuousSerialLimit, Integer expectParticipantCount,
                        Integer virutalLiveness, String virtualLivenessUsers, Integer dualColoredBallTerm,
-                       String description) {
+                       String description, Integer minLivenessToParticipant) {
         LotteryActivity activity = getInstance(id);
         activity.setTerm(term);
         activity.setCommodityId(commodityId);
@@ -77,6 +78,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         activity.setVirtualLivenessUsers(virtualLivenessUsers);
         activity.setDualColoredBallTerm(dualColoredBallTerm);
         activity.setDescription(description);
+        activity.setMinLivenessToParticipate(minLivenessToParticipant);
         HibernateUtils.update(activity);
     }
 
@@ -111,5 +113,10 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
     public String getLatestDescription() {
         return (String) new HibernateListBuilder().addFilter("description IS NOT NULL AND description<>''")
                 .addOrder("id", false).getFirstItem("SELECT description FROM " + LotteryActivity.class.getSimpleName());
+    }
+
+    public Integer getLatestMinLivenessToParticipate() {
+        return (Integer) new HibernateListBuilder().addOrder("id", false)
+                .getFirstItem("SELECT minLivenessToParticipate FROM " + LotteryActivity.class.getSimpleName());
     }
 }

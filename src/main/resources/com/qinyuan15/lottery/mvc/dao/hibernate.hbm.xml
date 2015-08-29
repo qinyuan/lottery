@@ -92,6 +92,7 @@
         <property name="dualColoredBallTerm" column="dual_colored_ball_term"/>
         <property name="winners"/>
         <property name="description"/>
+        <property name="minLivenessToParticipate" column="min_liveness_to_participate"/>
     </class>
     <class name="LotteryLot" table="lottery_lot">
         <id name="id" column="id">
