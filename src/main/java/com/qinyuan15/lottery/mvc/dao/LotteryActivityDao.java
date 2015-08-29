@@ -107,4 +107,9 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         return (Integer) new HibernateListBuilder().addEqualFilter("id", activityId)
                 .getFirstItem("SELECT maxSerialNumber FROM LotteryActivity");
     }
+
+    public String getLatestDescription() {
+        return (String) new HibernateListBuilder().addFilter("description IS NOT NULL AND description<>''")
+                .addOrder("id", false).getFirstItem("SELECT description FROM " + LotteryActivity.class.getSimpleName());
+    }
 }

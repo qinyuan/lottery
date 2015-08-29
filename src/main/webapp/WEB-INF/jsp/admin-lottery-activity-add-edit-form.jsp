@@ -1,4 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<div id="descriptionEditor" class="float-panel shadow">
+    <div><textarea id="descriptionInput"></textarea></div>
+    <div class="submit">
+        <button type="submit" class="btn btn-primary ok">确定</button>
+        <button type="button" class="btn btn-cancel cancel">取消</button>
+    </div>
+</div>
 <form id="lotteryActivityForm" class="float-panel shadow">
     <c:choose>
         <c:when test="${fn:length(allCommodities)>0}">
@@ -66,15 +73,16 @@
                                value="5" placeholder="输入抽奖号最大连续个数"/>
                     </td>
                     <td class="title">活动说明</td>
-                    <td class="content">
-                        <textarea name="description" class="form-control" rows="3"></textarea>
+                    <td class="content description">
+                        <input type="hidden" name="description" value="${latestDescription}"/>
+                        <div class="description">${latestDescription}<a href="javascript:void(0)">编辑</a></div>
                     </td>
                 </tr>
                 </tbody>
             </table>
             <div class="submit">
-                <button type="submit" name="ok" class="btn btn-primary">确定</button>
-                <button type="button" name="cancel" class="btn btn-cancel">取消</button>
+                <button type="submit" class="btn btn-primary ok">确定</button>
+                <button type="button" class="btn btn-cancel cancel">取消</button>
                 <span style="color: #4EB13F">注：带“<span class="required">*</span>”的为必填项</span>
             </div>
         </c:when>

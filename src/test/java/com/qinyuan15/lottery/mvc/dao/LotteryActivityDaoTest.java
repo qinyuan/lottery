@@ -26,6 +26,11 @@ public class LotteryActivityDaoTest {
 
     @Test
     public void testGetMaxTerm() {
-        System.out.println(new LotteryActivityDao().getMaxTerm());
+        System.out.println(dao.getMaxTerm());
+    }
+
+    @Test
+    public void testGetLatestDescription() {
+        System.out.println(dao.getLatestDescription());
     }
 }

@@ -29,6 +29,7 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
         DualColoredBallRecord latestRecord = new DualColoredBallRecordDao().getLatestInstance();
         setAttribute("nextDualColoredBallTerm", latestRecord.getYear() +
                 new DecimalFormat("000").format(latestRecord.getTerm() + 1));
+        setAttribute("latestDescription", new LotteryActivityDao().getLatestDescription());
 
         return super.index(listType, "admin-lottery-activity");
     }

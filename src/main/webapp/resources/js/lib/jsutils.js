@@ -677,7 +677,7 @@ var JSUtils = {
             },
             show: function () {
                 if (this['beforeShow']) {
-                    this['beforeShow']();
+                    this['beforeShow'](arguments);
                 }
                 utils.showTransparentBackground(1);
                 utils.scrollToVerticalCenter(this.$floatPanel.fadeIn(200).focusFirstTextInput());
