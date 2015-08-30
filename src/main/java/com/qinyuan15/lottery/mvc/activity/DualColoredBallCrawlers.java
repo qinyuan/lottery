@@ -39,15 +39,18 @@ public class DualColoredBallCrawlers {
         @Override
         public void run() {
             while (true) {
+                // build crawl thread for each active lottery activity
                 List<LotteryActivity> activities = LotteryActivityDao.factory().setExpire(false).getInstances();
                 for (LotteryActivity activity : activities) {
                     CrawlThread thread = threads.get(activity.getId());
 
                     if (thread == null) {
+                        // if related thread not exists, create and run it
                         thread = new CrawlThread(activity);
                         threads.put(activity.getId(), thread);
                         thread.start();
                     } else {
+                        // if related thread already exists, just update activity data of it
                         thread.activity = activity;
                     }
                 }
@@ -70,9 +73,6 @@ public class DualColoredBallCrawlers {
                     break;
                 }
 
-                Date expectEndTime = DateUtils.newDate(activity.getExpectEndTime());
-                Date now = DateUtils.now();
-                long timeDiff = Math.abs(expectEndTime.getTime() - now.getTime());
                 try {
                     DualColoredBallCrawler.Result result = getResult();
                     if (result != null) {
@@ -81,6 +81,8 @@ public class DualColoredBallCrawlers {
                         new DualColoredBallRecordDao().add(activity.getDualColoredBallTerm(),
                                 result.drawTime, result.result);
                         new LotteryResultUpdater(lotNumberFormat).update(activity.getId(), result.result);
+
+                        // remove related thread after success
                         threads.remove(activity.getId());
                         break;
                     }
@@ -88,7 +90,15 @@ public class DualColoredBallCrawlers {
                     e.printStackTrace();
                     LOGGER.error("Fail to crawl activity whose id is {}, info: {}", activity.getId(), e);
                 }
-                ThreadUtils.sleep(((double) timeDiff) / 1000 / 3);
+
+                // sleep time becomes less and less on coming of expect end time
+                Date expectEndTime = DateUtils.newDate(activity.getExpectEndTime());
+                long timeDiff = expectEndTime.getTime() - System.currentTimeMillis();
+                if (timeDiff > 100) {
+                    ThreadUtils.sleep(((double) timeDiff) / 1000 / 3);
+                } else {
+                    ThreadUtils.sleep(500);
+                }
             }
         }
 

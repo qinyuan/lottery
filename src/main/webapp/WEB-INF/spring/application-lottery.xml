@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:task="http://www.springframework.org/schema/task"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans.xsd">
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/task
+            http://www.springframework.org/schema/task/spring-task.xsd">
+
     <bean id="lotNumberFormat" class="java.text.DecimalFormat">
         <constructor-arg value="000000"/>
     </bean>
@@ -15,4 +19,12 @@
             </list>
         </property>
     </bean>
+
+    <bean id="dualColoredBallResultDownloader"
+          class="com.qinyuan15.lottery.mvc.activity.DualColoredBallResultDownloader"/>
+
+    <task:scheduled-tasks>
+        <!-- run in 22 o'clock of each day -->
+        <task:scheduled ref="dualColoredBallResultDownloader" method="download" cron="0 0 22 * * ?"/>
+    </task:scheduled-tasks>
 </beans>

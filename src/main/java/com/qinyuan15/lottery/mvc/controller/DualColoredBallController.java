@@ -2,10 +2,8 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.lang.DateUtils;
 import com.qinyuan.lib.mvc.controller.BaseController;
-import com.qinyuan15.lottery.mvc.activity.BaiduLecaiCrawler;
 import com.qinyuan15.lottery.mvc.activity.DualColoredBallCalculator;
-import com.qinyuan15.lottery.mvc.activity.DualColoredBallCrawler;
-import com.qinyuan15.lottery.mvc.activity.DualColoredBallTerm;
+import com.qinyuan15.lottery.mvc.activity.DualColoredBallResultDownloader;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecord;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
 import org.springframework.stereotype.Controller;
@@ -36,27 +34,14 @@ public class DualColoredBallController extends BaseController {
             return "{}";
         }
 
-        DualColoredBallRecordDao dao = new DualColoredBallRecordDao();
-        int term = 1;
-        while (dao.hasTerm(year, term) || downloadResult(year, term)) {
-            term++;
-        }
+        new DualColoredBallResultDownloader().download(year);
 
-
-        List<DualColoredBallRecord> records = dao.getInstancesByYear(year);
+        List<DualColoredBallRecord> records = new DualColoredBallRecordDao().getInstancesByYear(year);
         for (DualColoredBallRecord record : records) {
             record.setId(null);
         }
         return toJson(records);
     }
 
-    private boolean downloadResult(int year, int term) {
-        DualColoredBallCrawler.Result result = new BaiduLecaiCrawler().getResult(DualColoredBallTerm.toFullTerm(year, term));
-        if (result == null || result.result == null || result.drawTime == null) {
-            return false;
-        } else {
-            new DualColoredBallRecordDao().add(year, term, result.drawTime, result.result);
-            return true;
-        }
-    }
+
 }
