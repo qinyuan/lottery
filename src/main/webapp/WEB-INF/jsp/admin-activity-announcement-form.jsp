@@ -4,10 +4,10 @@
     <table>
         <tbody>
         <tr>
-            <td class="title">中奖号码</td>
+            <td class="title">中奖${param.winnerType}</td>
             <td class="content">
                 <input type="text" name="winners" class="form-control"
-                       placeholder="在此输入中奖号码，多个号码间用英文逗号分隔"/>
+                       placeholder="在此输入中奖${param.winnerType}，多个${param.winnerType}间用英文逗号分隔"/>
             </td>
         </tr>
         <tr>

@@ -12,6 +12,11 @@
         <%@include file="admin-seckill-activity-list.jsp" %>
     </div>
 </div>
+<%@include file="admin-activity-description-form.jsp"%>
 <%@include file="admin-seckill-activity-add-edit-form.jsp" %>
-<%@include file="admin-seckill-activity-announcement-form.jsp" %>
+<c:if test="${listExpire}">
+    <jsp:include page="admin-activity-announcement-form.jsp">
+        <jsp:param name="winnerType" value="用户"/>
+    </jsp:include>
+</c:if>
 <%@include file="inc-footer.jsp" %>

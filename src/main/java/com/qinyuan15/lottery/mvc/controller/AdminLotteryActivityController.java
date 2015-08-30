@@ -134,7 +134,7 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                                      @RequestParam(value = "announcement", required = true) String announcement) {
         if (StringUtils.hasText(winners)) {
             for (String winner : winners.split(",")) {
-                if (!IntegerUtils.isPositive(winner)) {
+                if (!winner.matches("^0+$") && !IntegerUtils.isPositive(winner)) {
                     return fail("'" + winner + "'不是有效的抽奖号");
                 }
             }

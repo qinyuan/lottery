@@ -12,6 +12,11 @@
         <%@include file="admin-lottery-activity-list.jsp" %>
     </div>
 </div>
+<%@include file="admin-activity-description-form.jsp"%>
 <%@include file="admin-lottery-activity-add-edit-form.jsp" %>
-<%@include file="admin-lottery-activity-announcement-form.jsp" %>
+<c:if test="${listExpire}">
+    <jsp:include page="admin-activity-announcement-form.jsp">
+        <jsp:param name="winnerType" value="号码"/>
+    </jsp:include>
+</c:if>
 <%@include file="inc-footer.jsp" %>

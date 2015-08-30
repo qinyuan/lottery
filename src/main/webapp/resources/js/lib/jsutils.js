@@ -833,7 +833,6 @@ jQuery.fn.focusOrSelect = function () {
     } else {
         this.focus();
     }
-    JSUtils.scrollTop(this);
     return this;
 };
 

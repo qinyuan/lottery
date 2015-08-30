@@ -32,7 +32,7 @@ abstract class AbstractActivityAdminController extends ImageController {
         addJs("lib/bootstrap/js/bootstrap.min", false);
         addJs("lib/ckeditor/ckeditor", false);
         addCss("admin-form");
-        addCss("admin-activity");
+        addCssAndJs("admin-activity");
         addCssAndJs(indexPage);
         return indexPage;
     }
