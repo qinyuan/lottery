@@ -65,11 +65,11 @@
                         <input type="text" name="continuousSerialLimit" class="form-control"
                                value="5" placeholder="输入抽奖号最大连续个数"/>
                     </td>
-                    <td class="title">活动说明</td>
+                    <td class="title">活动说明<a class="edit-description" href="javascript:void(0)">编辑</a></td>
                     <td class="content description">
                         <input type="hidden" name="description" value="${latestDescription}"/>
 
-                        <div class="description">${latestDescription}<a href="javascript:void(0)">编辑</a></div>
+                        <div class="description">${latestDescription}</div>
                     </td>
                 </tr>
                 <tr>

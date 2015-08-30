@@ -57,9 +57,9 @@ public class AdminSeckillActivityController extends AbstractActivityAdminControl
             } else {
                 CommodityDao commodityDao = new CommodityDao();
                 if (commodityDao.hasActiveSeckill(commodityId)) {
-                    return fail("此商品的上一期抽奖还未结束，正在抽奖的商品不能添加秒杀！");
-                } else if (commodityDao.hasActiveLottery(commodityId)) {
                     return fail("此商品的上一期秒杀还未结束，不能重复添加秒杀！");
+                } else if (commodityDao.hasActiveLottery(commodityId)) {
+                    return fail("此商品的上一期抽奖还未结束，正在抽奖的商品不能添加秒杀！");
                 } else if (dao.hasTerm(term)) {
                     return fail("第" + term + "期秒杀已经存在，请填写别的期数！");
                 }

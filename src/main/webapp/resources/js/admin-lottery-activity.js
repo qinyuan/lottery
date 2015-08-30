@@ -1,45 +1,7 @@
 ;
 (function () {
     // codes about lottery activity form
-    var descriptionEditor = ({
-        $floatPanel: $('#descriptionEditor'),
-        show: function () {
-            lotteryActivity.$floatPanel.hide();
-            this.$floatPanel.fadeIn(300);
-            JSUtils.scrollToVerticalCenter(this.$floatPanel);
-
-            var description = lotteryActivity.getDescriptionHtml();
-            this.editor.setData(description);
-
-            var self = this;
-            setTimeout(function () {
-                self.editor.focus();
-            }, 200);
-        },
-        hide: function () {
-            this.$floatPanel.hide();
-            lotteryActivity.$floatPanel.fadeIn(300);
-        },
-        editor: null,
-        init: function () {
-            var self = this;
-            this.$floatPanel.find('button.ok').click(function () {
-                var data = $.trim(self.editor.getData());
-                if (data.indexOf('<p>') == 0 && data.lastIndexOf('</p>') == data.length - 4) {
-                    data = data.substring(3, data.length - 4);
-                }
-                lotteryActivity.setDescriptionHtml(data);
-                self.hide();
-            });
-            this.$floatPanel.find('button.cancel').click(function () {
-                self.hide();
-            });
-            this.editor = CKEDITOR.replace('descriptionInput');
-            return this;
-        }
-    }).init();
-
-    var lotteryActivity = JSUtils.buildFloatPanel({
+    var lotteryActivity = buildAddEditFloatPanel({
         $floatPanel: $('#lotteryActivityForm'),
         get$LivenessRow: function () {
             return this.$floatPanel.find('tr.liveness');
@@ -47,14 +9,8 @@
         get$DualColoredBallTerm: function () {
             return this.$floatPanel.getInputByName('dualColoredBallTerm');
         },
-        get$Term: function () {
-            return this.$floatPanel.getInputByName('term');
-        },
         get$AutoStartTime: function () {
             return this.$floatPanel.getInputByName('autoStartTime');
-        },
-        get$StartTime: function () {
-            return this.$floatPanel.getInputByName('startTime');
         },
         get$ExpectEndTime: function () {
             return this.$floatPanel.getInputByName('expectEndTime');
@@ -68,33 +24,6 @@
         get$VirtualLivenessUsers: function () {
             return this.$floatPanel.getInputByName('virtualLivenessUsers');
         },
-        get$ExpectParticipantCount: function () {
-            return this.$floatPanel.getInputByName('expectParticipantCount');
-        },
-        get$CommoditySelect: function () {
-            return this.$floatPanel.find('div.commodity-select');
-        },
-        get$Description: function () {
-            return this.$floatPanel.find('td.description div.description');
-        },
-        _bindDescriptionEvent: function () {
-            this.get$Description().find('a:last').unbind('click').click(function () {
-                descriptionEditor.show();
-            });
-        },
-        getDescriptionHtml: function () {
-            return this.$floatPanel.getInputByName('description').val();
-        },
-        setDescriptionHtml: function (html) {
-            var $html = $('<div>' + html + '</div>');
-            $html.append('<a href="javascript:void(0)">编辑</a>');
-            this.get$Description().empty().html($html.html());
-            this.$floatPanel.getInputByName('description').val(html);
-            this._bindDescriptionEvent();
-        },
-        get$Id: function () {
-            return this.$floatPanel.find('input[name=id]');
-        },
         get$MinLivenessToParticipate: function () {
             return this.$floatPanel.find('input[name=minLivenessToParticipate]');
         },
@@ -105,34 +34,6 @@
                 alert('双色球期数应为19或20开头的7位数字！');
                 this.get$DualColoredBallTerm().focusOrSelect();
                 return false;
-            }
-            return true;
-        },
-        validateTerm: function () {
-            var $term = this.get$Term();
-            if ($term.trimVal() == '') {
-                alert('期数不能为空！');
-                $term.focusOrSelect();
-                return false;
-            } else if (!JSUtils.isNumberString($term.val())) {
-                alert('期数必须为数字格式！');
-                $term.focusOrSelect();
-                return false;
-            }
-            return true;
-        },
-        validateStartTime: function () {
-            if (!this.get$AutoStartTime().get(0).checked) {
-                var startTime = this.get$StartTime().trimVal();
-                if (startTime == '') {
-                    alert('开始时间未填写！');
-                    this.get$StartTime().focusOrSelect();
-                    return false;
-                } else if (!JSUtils.isDateOrDateTimeString(startTime)) {
-                    alert('开始时间格式错误！');
-                    this.get$StartTime().focusOrSelect();
-                    return false;
-                }
             }
             return true;
         },
@@ -177,15 +78,6 @@
             }
             return true;
         },
-        validateParticipantCount: function () {
-            var expectParticipantCount = this.get$ExpectParticipantCount().val();
-            if (expectParticipantCount != '' && !JSUtils.isNumberString(expectParticipantCount)) {
-                alert('预期参与人数只能为数字格式！');
-                this.get$ExpectParticipantCount().focusOrSelect();
-                return false;
-            }
-            return true;
-        },
         validateMinLivenessToParticipate: function () {
             var minLivenessToParticipate = this.get$MinLivenessToParticipate().val();
             if (minLivenessToParticipate != '' && !JSUtils.isNumberString(minLivenessToParticipate)) {
@@ -194,21 +86,6 @@
                 return false;
             }
             return true;
-        },
-        validateInput: function () {
-            return this.validateTerm() && this.validateStartTime() && this.validateDualColoredBall()
-                && this.validateExpectEndTime() && this.validateContinuousSerialLimit()
-                && this.validateLiveness() && this.validateParticipantCount()
-                && this.validateMinLivenessToParticipate();
-        },
-        beforeShow: function (args) {
-            var displayLiveness = args[0];
-            if (displayLiveness) {
-                this.get$LivenessRow().show();
-            } else {
-                this.get$LivenessRow().hide();
-            }
-            this._bindDescriptionEvent();
         },
         updateExpectEndDateByDualColoredBallTerm: function () {
             var self = this;
@@ -244,31 +121,17 @@
                 }
             });
         },
-        doSubmit: function () {
-            var self = this;
-            $.post('admin-lottery-activity-add-edit.json', this.$floatPanel.serialize(), function (data) {
-                if (!data.success) {
-                    alert(data.detail);
-                    return;
-                }
-                if (self.$floatPanel.getInputByName('id').val()) {
-                    // if edit, just reload
-                    location.reload();
-                } else {
-                    // if add, go to first page
-                    location.href = 'admin-lottery-activity.html';
-                }
-            });
-        }
+        addOrEditUrl: 'admin-lottery-activity-add-edit.json'
     });
 
     $('#addLotteryActivityButton').click(function () {
         lotteryActivity.$floatPanel.setInputValue('id', null);
+        lotteryActivity.get$LivenessRow().hide();
         lotteryActivity.show();
     });
-    JSUtils.loadSelectFormEvents(lotteryActivity.get$CommoditySelect());
     $('table.normal img.edit').click(function () {
-        lotteryActivity.show(true);
+        lotteryActivity.get$LivenessRow().show();
+        lotteryActivity.show();
 
         var $tr = $(this).getParentByTagName('tr');
         lotteryActivity.get$Id().val($tr.dataOptions('id'));
@@ -285,7 +148,8 @@
         lotteryActivity.setDescriptionHtml($tr.find('input.description').val());
         lotteryActivity.get$MinLivenessToParticipate().val($tr.find('input.min-liveness-to-participate').val());
 
-        JSUtils.loadSelectFormValue(lotteryActivity.get$CommoditySelect(), $tr.find('td.commodity').dataOptions('commodityId'));
+        JSUtils.loadSelectFormValue(lotteryActivity.get$CommoditySelect(), $tr.find('td.commodity')
+            .dataOptions('commodityId'));
     });
 })();
 var stopUrl = 'admin-lottery-activity-stop.json';

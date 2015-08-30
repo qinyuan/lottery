@@ -43,8 +43,10 @@ form.float-panel.activity td.content.description {
     border: 1px solid #c0c0c0;
 }
 
-form.float-panel.activity td.content.description div.description a {
-    margin-left: 10px;
+form.float-panel.activity a.edit-description {
+    margin-left: 5px;
+    font-size: 9pt;
+    font-weight: normal;
 }
 
 form.float-panel.activity td.content input[type=text] {

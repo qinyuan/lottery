@@ -709,15 +709,23 @@ var JSUtils = {
                 if (this['postInit']) {
                     this['postInit']();
                 }
+                return this;
             }
         });
-        for (var key in options) {
-            if (options.hasOwnProperty(key)) {
-                floatPanel[key] = options[key];
+        return this.extendsObject(floatPanel, options).init();
+    },
+    /**
+     * method to extends certain object
+     * @param object object to extend
+     * @param properties properties that will be added to object
+     */
+    extendsObject: function (object, properties) {
+        for (var key in properties) {
+            if (properties.hasOwnProperty(key)) {
+                object[key] = properties[key];
             }
         }
-        floatPanel.init();
-        return floatPanel;
+        return object;
     },
     /**
      * Patch of bug of firefox.

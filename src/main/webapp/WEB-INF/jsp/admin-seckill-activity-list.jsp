@@ -40,6 +40,7 @@
     <tbody>
     <c:forEach var="activity" items="${activities}" varStatus="status">
         <tr data-options="id:${activity.id}">
+            <input type="hidden" class="description" value="${activity.description}"/>
             <td>${status.index + rowStartIndex}</td>
             <td class="term">${activity.term}</td>
             <td class="commodity" data-options="commodityId: ${activity.commodity.id}">${activity.commodity.name}</td>
