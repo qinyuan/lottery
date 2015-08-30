@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<form id="seckillActivityForm" class="float-panel shadow">
+<form id="seckillActivityForm" class="float-panel shadow activity">
     <c:choose>
         <c:when test="${fn:length(allCommodities)>0}">
             <input type="hidden" name="id"/>
@@ -38,8 +38,10 @@
                         <input type="text" name="winners" class="form-control" placeholder="输入虚拟的最终获胜者"/>
                     </td>
                     <td class="title">活动说明</td>
-                    <td class="content">
-                        <textarea name="description" class="form-control" rows="3"></textarea>
+                    <td class="content description">
+                        <input type="hidden" name="description" value="${latestDescription}"/>
+
+                        <div class="description">${latestDescription}<a href="javascript:void(0)">编辑</a></div>
                     </td>
                 </tr>
                 </tbody>

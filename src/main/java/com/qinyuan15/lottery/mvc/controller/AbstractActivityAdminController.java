@@ -27,10 +27,12 @@ abstract class AbstractActivityAdminController extends ImageController {
         setAttribute("allCommodities", new SelectFormItemsBuilder().build(new CommodityDao().getInstances(), "name"));
 
         setAttribute("nextTerm", getActivityDao().getMaxTerm() + 1);
+        setAttribute("latestDescription", getActivityDao().getLatestDescription());
 
         addJs("lib/bootstrap/js/bootstrap.min", false);
         addJs("lib/ckeditor/ckeditor", false);
         addCss("admin-form");
+        addCss("admin-activity");
         addCssAndJs(indexPage);
         return indexPage;
     }

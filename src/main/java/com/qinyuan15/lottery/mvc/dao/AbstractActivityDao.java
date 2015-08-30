@@ -68,4 +68,10 @@ public abstract class AbstractActivityDao<T extends AbstractActivity> extends Ab
             super.delete(id);
         }
     }
+
+    public String getLatestDescription() {
+        return (String) new HibernateListBuilder()
+                .addFilter("description IS NOT NULL AND description<>''").addOrder("id", false)
+                .getFirstItem("SELECT description FROM " + getPersistClass().getSimpleName());
+    }
 }

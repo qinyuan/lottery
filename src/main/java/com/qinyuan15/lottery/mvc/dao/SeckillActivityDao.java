@@ -40,4 +40,6 @@ public class SeckillActivityDao extends AbstractActivityDao<SeckillActivity> {
         activity.setWinners(winners);
         HibernateUtils.update(activity);
     }
+
+
 }

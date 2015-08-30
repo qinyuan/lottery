@@ -6,7 +6,7 @@
         <button type="button" class="btn btn-cancel cancel">取消</button>
     </div>
 </div>
-<form id="lotteryActivityForm" class="float-panel shadow">
+<form id="lotteryActivityForm" class="float-panel shadow activity">
     <c:choose>
         <c:when test="${fn:length(allCommodities)>0}">
             <input type="hidden" name="id"/>

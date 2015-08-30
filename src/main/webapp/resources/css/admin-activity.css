@@ -1,0 +1,106 @@
+/************************ list table start ****************************/
+div.form table.normal td {
+    vertical-align: middle;
+}
+
+div.form div.list-type {
+    padding-top: 10px;
+}
+
+/************************ list table end ******************************/
+
+/************************ add or edit form start ***************************/
+form.float-panel.activity {
+    padding: 15px;
+    margin-left: -410px;
+    top: 50px;
+}
+
+form.float-panel.activity tr {
+    line-height: 40px;
+}
+
+form.float-panel.activity td {
+    vertical-align: top;
+}
+
+form.float-panel.activity td.title {
+    text-align: right;
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+form.float-panel.activity span.required {
+    padding-left: 3px;
+    color: #ff0000;
+}
+
+form.float-panel.activity td.content {
+    width: 250px;
+}
+
+form.float-panel.activity td.content.description {
+    border: 1px solid #c0c0c0;
+}
+
+form.float-panel.activity td.content.description div.description a {
+    margin-left: 10px;
+}
+
+form.float-panel.activity td.content input[type=text] {
+    width: 210px;
+}
+
+form.float-panel.activity div.submit {
+    padding: 15px 0 15px 300px;
+}
+
+form.float-panel.activity div.submit button {
+    margin: 0 5px;
+}
+
+/************************ add or edit form end ***************************/
+
+/************************ announceEditForm start *****************************/
+#announceEditForm {
+    padding: 20px;
+    margin-top: -126px;
+    width: 760px;
+    margin-left: -380px;
+}
+
+#announceEditForm td {
+    vertical-align: top;
+}
+
+#announceEditForm td.title {
+    padding: 8px 10px 0 0;
+}
+
+#announceEditForm td.content {
+    padding-bottom: 15px;
+}
+
+#announceEditForm div.submit {
+    text-align: center;
+}
+
+/************************ announceEditForm end *****************************/
+
+/******************* description edit form start *****************************/
+#descriptionEditor {
+    width: 700px;
+    margin-left: -350px;
+    padding: 15px;
+}
+
+#descriptionEditor div.submit {
+    padding: 5px;
+    text-align: center;
+}
+
+#descriptionEditor div.submit button {
+    margin: 0 5px;
+}
+
+/******************* description edit form end *******************************/

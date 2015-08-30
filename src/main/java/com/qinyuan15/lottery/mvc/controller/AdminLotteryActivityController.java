@@ -30,9 +30,7 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
         setAttribute("nextDualColoredBallTerm", latestRecord.getYear() +
                 new DecimalFormat("000").format(latestRecord.getTerm() + 1));
 
-        LotteryActivityDao activityDao = new LotteryActivityDao();
-        setAttribute("latestDescription", activityDao.getLatestDescription());
-        setAttribute("latestMinLivenessToParticipate", activityDao.getLatestMinLivenessToParticipate());
+        setAttribute("latestMinLivenessToParticipate", new LotteryActivityDao().getLatestMinLivenessToParticipate());
 
         return super.index(listType, "admin-lottery-activity");
     }

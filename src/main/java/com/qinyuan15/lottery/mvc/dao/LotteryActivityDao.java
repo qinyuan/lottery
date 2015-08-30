@@ -110,11 +110,6 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
                 .getFirstItem("SELECT maxSerialNumber FROM LotteryActivity");
     }
 
-    public String getLatestDescription() {
-        return (String) new HibernateListBuilder().addFilter("description IS NOT NULL AND description<>''")
-                .addOrder("id", false).getFirstItem("SELECT description FROM " + LotteryActivity.class.getSimpleName());
-    }
-
     public Integer getLatestMinLivenessToParticipate() {
         return (Integer) new HibernateListBuilder().addOrder("id", false)
                 .getFirstItem("SELECT minLivenessToParticipate FROM " + LotteryActivity.class.getSimpleName());

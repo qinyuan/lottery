@@ -19,7 +19,6 @@
             return false;
         }
         return true;
-
         /*var $newLotLiveness = $form.getInputByName('newLotLiveness');
          if (!JSUtils.isNumberString($newLotLiveness.val())) {
          e.preventDefault();
