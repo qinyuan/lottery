@@ -41,6 +41,7 @@ form.float-panel.activity td.content {
 
 form.float-panel.activity td.content.description {
     border: 1px solid #c0c0c0;
+    cursor: pointer;
 }
 
 form.float-panel.activity a.edit-description {

@@ -120,6 +120,9 @@ function buildAddEditFloatPanel(options) {
             this.$floatPanel.find('a.edit-description').unbind('click').click(function () {
                 descriptionEditor.show();
             });
+            this.$floatPanel.find('td.content.description').unbind('click').click(function () {
+                descriptionEditor.show();
+            });
             /*this.get$Description().find('a:last').unbind('click').click(function () {
              descriptionEditor.show();
              });*/

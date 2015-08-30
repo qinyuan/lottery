@@ -37,12 +37,7 @@
                     <td class="content">
                         <input type="text" name="winners" class="form-control" placeholder="输入虚拟的最终获胜者"/>
                     </td>
-                    <td class="title">活动说明<a class="edit-description" href="javascript:void(0)">编辑</a></td>
-                    <td class="content description">
-                        <input type="hidden" name="description" value="${latestDescription}"/>
-
-                        <div class="description">${latestDescription}</div>
-                    </td>
+                    <%@include file="admin-activity-description-input.jsp" %>
                 </tr>
                 </tbody>
             </table>
