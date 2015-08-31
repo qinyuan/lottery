@@ -102,4 +102,11 @@ div.main-body div.image div.demoRectangle {
 
 #linkInputDiv div.build-in-href span {
     margin-right: 10px;
+    display: block;
+    float: left;
+}
+
+#linkInputDiv > div {
+    clear: both;
+    overflow: hidden;
 }

@@ -23,6 +23,10 @@
                     <div class="in-lottery-icon mediumTransparent" title="抽奖中"><img
                             src="resources/css/images/commodity/in-lottery.png"/></div>
                 </c:if>
+                <c:if test="${snapshot.inSeckill}">
+                    <div class="in-seckill-icon mediumTransparent" title="准备秒杀"><img
+                            src="resources/css/images/commodity/in-seckill.png"/></div>
+                </c:if>
             </div>
         </c:forEach>
         <div class="next lightTransparent"></div>

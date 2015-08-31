@@ -89,6 +89,7 @@ public class CommodityController extends ImageController {
         private String price;
         private String snapshot;
         private boolean inLottery;
+        private boolean inSeckill;
 
         public int getId() {
             return id;
@@ -109,6 +110,10 @@ public class CommodityController extends ImageController {
         public boolean isInLottery() {
             return inLottery;
         }
+
+        public boolean isInSeckill() {
+            return inSeckill;
+        }
     }
 
     private List<CommoditySnapshot> buildSnapshots() {
@@ -127,6 +132,7 @@ public class CommodityController extends ImageController {
             snapshot.price = commodity.getFormattedPrice();
             snapshot.snapshot = commodity.getSnapshot();
             snapshot.inLottery = dao.hasActiveLottery(commodity.getId());
+            snapshot.inSeckill = dao.hasActiveSeckill(commodity.getId());
 
             snapshots.add(snapshot);
         }
