@@ -92,13 +92,13 @@ public class LotteryLotCounter implements LotCounter {
             return 0;
         }*/
 
-        Integer newLotLivness = activity.getMinLivenessToParticipate();
-        if (!IntegerUtils.isPositive(newLotLivness)) {
-            return 0;
+        Integer minLivenessToParticipate = activity.getMinLivenessToParticipate();
+        if (!IntegerUtils.isPositive(minLivenessToParticipate)) {
+            return 1;
         }
 
         int livenesss = new LotteryLivenessDao().getLiveness(userId);
-        return livenesss >= newLotLivness ? 1 : 0;
+        return livenesss >= minLivenessToParticipate ? 1 : 0;
         /*
         int count = 1;
 

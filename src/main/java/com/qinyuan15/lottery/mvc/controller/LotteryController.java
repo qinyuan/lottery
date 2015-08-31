@@ -71,7 +71,7 @@ public class LotteryController extends ImageController {
         if (!result.containsKey(DETAIL)) {
             // get serial numbers
             LotteryLotCreator.CreateResult lotteryLotCreateResult = new LotteryLotCreator(
-                    activity.getId(), activity.getContinuousSerialLimit(), user.getId()).create();
+                    activity, user.getId()).create();
             result.put("serialNumbers", getSerialNumbersFromLotteryLots(lotteryLotCreateResult.getLots()));
             if (lotteryLotCreateResult.hasNewLot()) {
                 result.put(SUCCESS, true);
@@ -81,6 +81,7 @@ public class LotteryController extends ImageController {
             }
 
             // liveness parameter
+            result.put("minLivenessToParticipate", activity.getMinLivenessToParticipate());
             result.put("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
             LivenessQuerier.LivenessInfo maxLivnessInfo = new LivenessQuerier().queryMax(activity);
             result.put("maxLiveness", maxLivnessInfo.liveness);

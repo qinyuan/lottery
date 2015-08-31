@@ -455,6 +455,16 @@ div.main-body > div.detail > div.participant-count {
     margin-top: 80px;
 }
 
+#lotteryResult div.insufficient-liveness div.status {
+    padding: 20px 0 0 0;
+    color: #808080;
+    font-size: 10pt;
+}
+
+#lotteryResult div.insufficient-liveness div.status > span {
+    color: #FF0066;
+}
+
 #lotteryResult div.activity-expire {
     margin-top: 60px;
 }

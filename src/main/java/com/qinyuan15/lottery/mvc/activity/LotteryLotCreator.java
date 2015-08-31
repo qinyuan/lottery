@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity;
 
+import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryLot;
 import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
 
@@ -14,9 +15,9 @@ public class LotteryLotCreator {
     private final Integer continuousSerialLimit;
     private final int userId;
 
-    public LotteryLotCreator(Integer activityId, Integer continuousSerialLimit, int userId) {
-        this.activityId = activityId;
-        this.continuousSerialLimit = continuousSerialLimit;
+    public LotteryLotCreator(LotteryActivity activity, int userId) {
+        this.activityId = activity.getId();
+        this.continuousSerialLimit = activity.getContinuousSerialLimit();
         this.userId = userId;
     }
 

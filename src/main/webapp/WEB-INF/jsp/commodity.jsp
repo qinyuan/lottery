@@ -208,7 +208,15 @@
             <div class="liveness">爱心数：<span class="liveness"></span><span class="icon lightTransparent"></span></div>
             <div class="serial">抽奖号：<span class="serial"></span></div>
         </div>
-        <div class="insufficient-liveness">您的爱心数不足，无法参与抽奖！！！</div>
+        <div class="insufficient-liveness">
+            您的爱心数不足，无法参与抽奖！！！
+            <div class="status">
+                参加活动需要的爱心为：
+                <span class="min-liveness-to-participate"></span>
+                ，您目前的爱心为：
+                <span class="liveness"></span>
+            </div>
+        </div>
         <div class="activity-expire">
             本期抽奖已结束，请关注下抽奖活动
             <a href="lottery-history.html" target="_blank">抽奖结果请查看活动历史</a>

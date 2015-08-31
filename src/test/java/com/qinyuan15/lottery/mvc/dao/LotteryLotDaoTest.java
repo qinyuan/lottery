@@ -21,4 +21,11 @@ public class LotteryLotDaoTest {
         System.out.println(serialNumbers.size());
         System.out.println(serialNumbers);
     }
+
+    @Test
+    public void testGetInstances() {
+        List<LotteryLot> lots = LotteryLotDao.factory()
+                .setActivityId(11).setUserId(2).getInstances();
+        System.out.println(lots.size());
+    }
 }

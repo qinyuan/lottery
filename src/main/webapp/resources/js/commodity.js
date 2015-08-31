@@ -435,7 +435,11 @@
                     this.get$InsufficientLivnessDiv().hide();
                 } else {
                     this.get$LotDiv().hide();
-                    this.get$InsufficientLivnessDiv().show();
+                    var $insufficientLiveness = this.get$InsufficientLivnessDiv();
+                    $insufficientLiveness.find('span.min-liveness-to-participate')
+                        .text(options['minLivenessToParticipate']);
+                    $insufficientLiveness.find('span.liveness').text(options['liveness']);
+                    $insufficientLiveness.show();
                 }
                 this.get$ActivityExpire().hide();
             }
