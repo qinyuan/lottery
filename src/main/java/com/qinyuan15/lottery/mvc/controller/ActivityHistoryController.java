@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.text.DecimalFormat;
 
 @Controller
-public class LotteryHistoryController extends ImageController {
+public class ActivityHistoryController extends ImageController {
     @Autowired
     private DecimalFormat lotNumberFormat;
 
-    @RequestMapping("/lottery-history")
+    @RequestMapping("/activity-history")
     public String index() {
         IndexHeaderUtils.setHeaderParameters(this);
 
@@ -23,9 +23,9 @@ public class LotteryHistoryController extends ImageController {
         setAttribute("lotteryHistoryTable", table);
         new PaginationAttributeAdder(table, request).setRowItemsName("lotteryHistories").setPageSize(10).add();
 
-        setTitle("抽奖历史");
-        addCssAndJs("lottery-history");
-        return "lottery-history";
+        setTitle("活动历史");
+        addCssAndJs("activity-history");
+        return "activity-history";
     }
 
     private DatabaseTable getTable() {

@@ -227,17 +227,18 @@ div.main-body > div.detail > div.participant-count {
     font-size: 12pt;
 }
 
-#lotteryExceptionPrompt, #telInputForm, #lotteryResult {
+#exceptionPrompt, /*#telInputForm,*/
+#lotteryResult {
     width: 484px;
     margin-left: -242px;
 }
 
-#lotteryExceptionPrompt, #telInputForm {
+#exceptionPrompt/*, #telInputForm*/ {
     height: 350px;
     margin-top: -175px;
 }
 
-#telInputForm div.body {
+/*#telInputForm div.body {
     padding-top: 40px;
 }
 
@@ -251,15 +252,15 @@ div.main-body > div.detail > div.participant-count {
     color: #838383;
     font-size: 9pt;
     margin: 5px 0 20px;
-}
+}*/
 
-#telInputForm div.body td.content input.identity-code {
+/*#telInputForm div.body td.content input.identity-code {
     width: 110px;
 }
 
 #telInputForm div.body div.submit {
     padding: 17px 0 0 130px;
-}
+}*/
 
 /*#telInputForm div.body div.submit button {
     background: url('images/login-button-back.png') repeat-x;
@@ -290,7 +291,7 @@ div.main-body > div.detail > div.participant-count {
     color: #838383;
 }
 
-#lotteryExceptionPrompt div.body div.info {
+#exceptionPrompt div.body div.info {
     position: absolute;
     top: 115px;
     width: 100%;
@@ -298,7 +299,7 @@ div.main-body > div.detail > div.participant-count {
     font-size: 12pt;
 }
 
-#lotteryExceptionPrompt div.body div.links {
+#exceptionPrompt div.body div.links {
     position: absolute;
     top: 180px;
     left: 315px;

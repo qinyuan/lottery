@@ -248,15 +248,15 @@
         $noPrivilegePrompt.fadeIn(300);
     }
 
-    var $lotteryExceptionPrompt = $('#lotteryExceptionPrompt');
-    setCloseIconEvent($lotteryExceptionPrompt, function () {
+    var $exceptionPrompt = $('#exceptionPrompt');
+    setCloseIconEvent($exceptionPrompt, function () {
         JSUtils.hideTransparentBackground();
-        $lotteryExceptionPrompt.hide();
+        $exceptionPrompt.hide();
     });
     function showLotteryExceptionPrompt(username, info) {
         JSUtils.showTransparentBackground(1);
-        setFloatPanelUsername($lotteryExceptionPrompt, username);
-        $lotteryExceptionPrompt.fadeIn(300).find('div.body div.info').text(info);
+        setFloatPanelUsername($exceptionPrompt, username);
+        $exceptionPrompt.fadeIn(300).find('div.body div.info').text(info);
     }
 
     /*var $lotteryResult = $('#lotteryResult');

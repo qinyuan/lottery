@@ -6,7 +6,7 @@
         <li><a class="text" href="j_spring_security_logout">退出</a></li>
         <%--<li><a class="text" href="personal-center.html">个人中心</a></li>--%>
         <li><a class="text" id="systemInformationNavigation" href="system-info.html">消息</a></li>
-        <li><a class="text" id="lotteryHistoryNavigation" href="lottery-history.html">活动历史</a></li>
+        <li><a class="text" id="lotteryHistoryNavigation" href="activity-history.html">活动历史</a></li>
     </security:authorize>
     <security:authorize ifAnyGranted="ROLE_ADMIN">
         <li><a class="text" href="admin.html"><security:authentication property="name"/></a></li>

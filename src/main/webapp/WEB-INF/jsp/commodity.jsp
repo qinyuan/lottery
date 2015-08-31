@@ -99,7 +99,7 @@
         </div>
     </div>
 </div>
-<div class="float-panel" id="lotteryExceptionPrompt">
+<div class="float-panel" id="exceptionPrompt">
     <jsp:include page="commodity-float-panel-title.jsp">
         <jsp:param name="title" value="提示信息"/>
     </jsp:include>
@@ -107,7 +107,7 @@
         <div class="info"></div>
 
         <div class="links">
-            <a target="_blank" href="lottery-history.html">查看我的抽奖历史</a>
+            <a target="_blank" href="activity-history.html">查看我的活动历史</a>
         </div>
     </div>
 </div>
@@ -219,7 +219,7 @@
         </div>
         <div class="activity-expire">
             本期抽奖已结束，请关注下抽奖活动
-            <a href="lottery-history.html" target="_blank">抽奖结果请查看活动历史</a>
+            <a href="activity-history.html" target="_blank">抽奖结果请查看活动历史</a>
         </div>
         <div class="bottom">
             <div class="share">

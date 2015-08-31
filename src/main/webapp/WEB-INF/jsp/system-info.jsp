@@ -11,7 +11,7 @@
             </div>
             <div class="link">
                 <a href="personal-center.html">个人中心</a>
-                <a href="lottery-history.html">抽奖历史</a>
+                <a href="activity-history.html">活动历史</a>
             </div>
         </div>
         <div class="right">
