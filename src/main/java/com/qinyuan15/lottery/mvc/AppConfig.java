@@ -516,7 +516,7 @@ public class AppConfig {
     ////////////////////////////// liveness increase end /////////////////////////////////
 
     ///////////////////////////// lottery announcement template start ////////////////////////////
-    private final static String LOTTERY_ANNOUNCEMENT_TEMPLATE_KEY = "lotteryAnnouncementTemplateKey";
+    private final static String LOTTERY_ANNOUNCEMENT_TEMPLATE_KEY = "lotteryAnnouncementTemplate";
 
     public static String getLotteryAnnouncementTemplate() {
         return dao.get(LOTTERY_ANNOUNCEMENT_TEMPLATE_KEY);
@@ -526,6 +526,18 @@ public class AppConfig {
         dao.save(LOTTERY_ANNOUNCEMENT_TEMPLATE_KEY, template);
     }
     ///////////////////////////// lottery announcement template end //////////////////////////////
+
+    //////////////////////////// seckill announcement template start ////////////////////////////
+    private final static String SECKILL_ANNOUNCEMENT_TEMPLATE_KEY = "seckillAnnouncementTemplate";
+
+    public static String getSeckillAnnouncementTemplate() {
+        return dao.get(SECKILL_ANNOUNCEMENT_TEMPLATE_KEY);
+    }
+
+    public static void updateSeckillAnnouncementTemplate(String template) {
+        dao.save(SECKILL_ANNOUNCEMENT_TEMPLATE_KEY, template);
+    }
+    //////////////////////////// seckill announcement template end //////////////////////////////
 
     ///////////////////////////// lottery rule start ///////////////////////////////
     private final static String LOTTERY_RULE_KEY = "lotteryRule";

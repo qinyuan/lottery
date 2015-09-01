@@ -1,20 +1,18 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
+import com.qinyuan.lib.lang.DateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.lottery.mvc.activity.LivenessQuerier;
-import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
-import com.qinyuan15.lottery.mvc.activity.LotteryLotCreator;
-import com.qinyuan15.lottery.mvc.activity.LotteryShareUrlBuilder;
+import com.qinyuan15.lottery.mvc.activity.*;
 import com.qinyuan15.lottery.mvc.dao.*;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,8 +28,8 @@ import java.util.Map;
  * Created by qinyuan on 15-7-10.
  */
 @Controller
-public class LotteryController extends ImageController {
-    private final static Logger LOGGER = LoggerFactory.getLogger(LotteryController.class);
+public class LotController extends ImageController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(LotController.class);
     private final static String SUCCESS = "success";
     private final static String DETAIL = "detail";
 
@@ -41,16 +39,9 @@ public class LotteryController extends ImageController {
     @RequestMapping("/take-lottery.json")
     @ResponseBody
     public String takeLottery(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
-        if (!IntegerUtils.isPositive(commodityId)) {
-            return failByInvalidParam();
-        }
-
-        if (!new CommodityDao().hasLottery(commodityId)) {
-            return fail("noLottery");
-        } else if (SecurityUtils.getUsername() == null) {
-            return fail("noLogin");
-        } else if (!SecurityUtils.hasAuthority(User.NORMAL)) {
-            return getNoPrivilegeResult();
+        String validation = validateCommodityToTakeLot(commodityId);
+        if (validation != null) {
+            return validation;
         }
 
         Map<String, Object> result = new HashMap<>();
@@ -89,17 +80,14 @@ public class LotteryController extends ImageController {
         }
 
         // commodity
-        Commodity commodity = new CommodityUrlAdapter(this).adapt(new CommodityDao().getInstance(commodityId));
+        Commodity commodity = getCommodity(commodityId);
         result.put("commodity", commodity);
 
         // activity
         result.put("activityDescription", activity.getDescription());
 
         // share urls
-        if (user.getSerialKey() == null) {
-            user.setSerialKey(RandomStringUtils.randomAlphanumeric(UserDao.SERIAL_KEY_LENGTH));
-            HibernateUtils.update(user);
-        }
+        new UserDao().updateSerialKeyIfNecessary(user);
         LotteryShareUrlBuilder lotteryShareUrlBuilder = new LotteryShareUrlBuilder(
                 user.getSerialKey(), AppConfig.getAppHost(), commodity);
         result.put("sinaWeiboShareUrl", lotteryShareUrlBuilder.getSinaShareUrl());
@@ -111,6 +99,69 @@ public class LotteryController extends ImageController {
         //result.put("remainingSeconds", getRemainingSeconds(activity));
 
         return toJson(result);
+    }
+
+    @RequestMapping("/take-seckill.json")
+    @ResponseBody
+    public String takeSeckill(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
+        String validation = validateCommodityToTakeLot(commodityId);
+        if (validation != null) {
+            return validation;
+        }
+
+        Map<String, Object> result = new HashMap<>();
+
+        // if all lotteries of current commodity are expired
+        SeckillActivity activity = new SeckillActivityDao().getActiveInstanceByCommodityId(commodityId);
+        if (activity == null) {
+            result.put(DETAIL, "activityExpire");
+            activity = new SeckillActivityDao().getInstanceByCommodityId(commodityId);
+        } else {
+            result.put(SUCCESS, true);
+        }
+
+        // user parameters
+        User user = new UserDao().getInstance(securitySearcher.getUserId());
+        result.put("username", user.getUsername());
+
+        // commodity
+        Commodity commodity = getCommodity(commodityId);
+        result.put("commodity", commodity);
+
+        // activity
+        result.put("activityDescription", activity.getDescription());
+
+        // share urls
+        new UserDao().updateSerialKeyIfNecessary(user);
+        SeckillShareUrlBuilder seckillShareUrlBuilder = new SeckillShareUrlBuilder(
+                user.getSerialKey(), AppConfig.getAppHost(), commodity);
+        result.put("sinaWeiboShareUrl", seckillShareUrlBuilder.getSinaShareUrl());
+        result.put("qqShareUrl", seckillShareUrlBuilder.getQQShareUrl());
+        result.put("qzoneShareUrl", seckillShareUrlBuilder.getQzoneShareUrl());
+
+        // participants data
+        result.put("participantCount", new SeckillLotCounter().countReal(activity.getId()));
+
+        result.put("remainingSeconds", getRemainingSeconds(activity));
+        return toJson(result);
+    }
+
+    private Commodity getCommodity(Integer commodityId) {
+        return new CommodityUrlAdapter(this).adapt(new CommodityDao().getInstance(commodityId));
+    }
+
+    private String validateCommodityToTakeLot(Integer commodityId) {
+        if (!IntegerUtils.isPositive(commodityId)) {
+            return failByInvalidParam();
+        } else if (!new CommodityDao().hasLottery(commodityId)) {
+            return fail("noLottery");
+        } else if (SecurityUtils.getUsername() == null) {
+            return fail("noLogin");
+        } else if (!SecurityUtils.hasAuthority(User.NORMAL)) {
+            return getNoPrivilegeResult();
+        } else {
+            return null;
+        }
     }
 
     private List<String> getSerialNumbersFromLotteryLots(List<LotteryLot> lotteryLots) {
@@ -133,18 +184,14 @@ public class LotteryController extends ImageController {
         return toJson(result);
     }
 
-    private void putUserParameters(Map<String, Object> result) {
-
-    }
-
-    /*private int getRemainingSeconds(LotteryActivity lotteryActivity) {
-        String expectEndTime = lotteryActivity.getExpectEndTime();
-        if (!StringUtils.hasText(expectEndTime)) {
+    private int getRemainingSeconds(SeckillActivity activity) {
+        String startTime = activity.getStartTime();
+        if (!StringUtils.hasText(startTime)) {
             return 0;
         }
-        long remainingSeconds = DateUtils.newDate(expectEndTime).getTime() - System.currentTimeMillis();
+        long remainingSeconds = DateUtils.newDate(startTime).getTime() - System.currentTimeMillis();
         return remainingSeconds < 0 ? 0 : (int) (remainingSeconds / 1000);
-    }*/
+    }
 
     @RequestMapping("/participant-count.json")
     @ResponseBody

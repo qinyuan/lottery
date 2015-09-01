@@ -2,10 +2,13 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.hibernate.AbstractDao;
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
+import com.qinyuan.lib.database.hibernate.HibernateUpdater;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.lang.DateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.AbstractPaginationItemFactory;
+
+import java.util.List;
 
 public class SeckillLotDao extends AbstractDao<SeckillLot> {
     public Integer add(Integer activityId, Integer userId) {
@@ -54,5 +57,20 @@ public class SeckillLotDao extends AbstractDao<SeckillLot> {
 
     public static Factory factory() {
         return new Factory();
+    }
+
+    public void updateWinnerBySerialNumbers(Integer activityId, List<String> winners) {
+        if (!IntegerUtils.isPositive(activityId)) {
+            return;
+        }
+
+        String hql = "UPDATE SeckillLot SET win=null WHERE activityId=" + activityId;
+        HibernateUtils.executeUpdate(hql);
+
+        for (String winner : winners) {
+            new HibernateUpdater().addEqualFilter("activityId", activityId)
+                    .addFilter("userId in (SELECT id FROM User WHERE username=:username)")
+                    .addArgument("username", winner).update(SeckillLot.class, "win=true");
+        }
     }
 }

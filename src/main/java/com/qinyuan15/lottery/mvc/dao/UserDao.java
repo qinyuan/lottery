@@ -159,11 +159,10 @@ public class UserDao extends SimpleUserDao {
         }
     }
 
-    public void updateRealName(Integer id, String realName) {
-        User user = getInstance(id);
-        if (user != null) {
-            user.setRealName(realName);
-            HibernateUtils.update(realName);
+    public void updateSerialKeyIfNecessary(User user) {
+        if (user != null && user.getSerialKey() == null) {
+            user.setSerialKey(RandomStringUtils.randomAlphanumeric(UserDao.SERIAL_KEY_LENGTH));
+            HibernateUtils.update(user);
         }
     }
 

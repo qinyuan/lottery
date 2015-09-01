@@ -1,44 +1,21 @@
 package com.qinyuan15.lottery.mvc.activity;
 
+import com.qinyuan.lib.sns.QQShareUrlBuilder;
+import com.qinyuan.lib.sns.QzoneShareUrlBuilder;
+import com.qinyuan.lib.sns.SinaWeiboShareUrlBuilder;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 
-public class LotteryShareUrlBuilder extends AbstractShareUrlBuilder {
-    public LotteryShareUrlBuilder(String userSerialKey, String host, Commodity commodity) {
-        super(userSerialKey, host, commodity);
-    }
+import java.util.ArrayList;
+import java.util.List;
 
-    @Override
-    protected String getSinaWeiboTitleTemplate() {
-        return AppConfig.getLotterySinaWeiboTitle();
-    }
-
-    @Override
-    protected String getQQTitleTemplate() {
-        return AppConfig.getLotteryQQTitle();
-    }
-
-    @Override
-    protected String getQQSummaryTemplate() {
-        return AppConfig.getLotteryQQSummary();
-    }
-
-    @Override
-    protected String getQzoneTitleTemplate() {
-        return AppConfig.getLotteryQzoneTitle();
-    }
-
-    @Override
-    protected String getQzoneSummaryTemplate() {
-        return AppConfig.getLotteryQzoneSummary();
-    }
-
-    /*private final static String PAGE = "commodity.html";
+abstract class AbstractShareUrlBuilder {
+    private final static String PAGE = "commodity.html";
 
     private final String pictureUrl;
     private final String targetUrl;
 
-    public LotteryShareUrlBuilder(String userSerialKey, String host, Commodity commodity) {
+    protected AbstractShareUrlBuilder(String userSerialKey, String host, Commodity commodity) {
         this.pictureUrl = commodity.getSnapshot();
         if (!host.contains("/")) {
             host += "/";
@@ -47,25 +24,35 @@ public class LotteryShareUrlBuilder extends AbstractShareUrlBuilder {
     }
 
     public String getSinaShareUrl() {
-        String title = AppConfig.getLotterySinaWeiboTitle();
+        String title = getSinaWeiboTitleTemplate();
         return new SinaWeiboShareUrlBuilder(getFinalTargetUrl(ShareMedium.SINA_WEIBO.en), title,
                 getPictures(AppConfig.getLotterySinaWeiboIncludePicture())).build();
     }
 
+    protected abstract String getSinaWeiboTitleTemplate();
+
     public String getQQShareUrl() {
-        String title = AppConfig.getLotteryQQTitle();
-        String summary = AppConfig.getLotteryQQSummary();
+        String title = getQQTitleTemplate();
+        String summary = getQQSummaryTemplate();
         return new QQShareUrlBuilder(getFinalTargetUrl(ShareMedium.QQ.en), title, summary,
                 getPictures(AppConfig.getLotteryQQIncludePicture())).build();
     }
 
+    protected abstract String getQQTitleTemplate();
+
+    protected abstract String getQQSummaryTemplate();
+
     public String getQzoneShareUrl() {
-        String title = AppConfig.getLotteryQzoneTitle();
-        String summary = AppConfig.getLotteryQzoneSummary();
+        String title = getQzoneTitleTemplate();
+        String summary = getQzoneSummaryTemplate();
         Boolean includePicture = AppConfig.getLotteryQzoneIncludePicture();
         String picture = (includePicture != null && includePicture) ? pictureUrl : null;
         return new QzoneShareUrlBuilder(getFinalTargetUrl(ShareMedium.QZONE.en), title, summary, picture).build();
     }
+
+    protected abstract String getQzoneTitleTemplate();
+
+    protected abstract String getQzoneSummaryTemplate();
 
     private String getFinalTargetUrl(String medium) {
         return targetUrl + "&medium=" + medium;
@@ -78,5 +65,4 @@ public class LotteryShareUrlBuilder extends AbstractShareUrlBuilder {
         }
         return pictures;
     }
-    */
 }

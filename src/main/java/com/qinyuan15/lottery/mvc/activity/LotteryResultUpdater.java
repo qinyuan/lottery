@@ -41,7 +41,7 @@ public class LotteryResultUpdater {
         if (!StringUtils.hasText(announcementTemplate)) {
             return;
         }
-        String announcement = new AnnouncementPlaceholderConverter(
+        String announcement = new LotteryAnnouncementPlaceholderConverter(
                 phase, dualColoredBallResult, winnerString, participantCount).convert(announcementTemplate);
         new LotteryActivityDao().updateResult(activityId, winnerString, announcement);
     }

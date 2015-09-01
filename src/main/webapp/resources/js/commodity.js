@@ -168,10 +168,6 @@
     }).init();
 })();
 (function () {
-    // codes about receive mail
-
-})();
-(function () {
     // codes about lottery
     function setFloatPanelUsername($floatPanel, username) {
         $floatPanel.find('div.title div.text span.username').text(username);
@@ -179,11 +175,6 @@
 
     function setCloseIconEvent($floatPanel, event) {
         $floatPanel.find('div.title div.close-icon').click(event);
-    }
-
-    function afterLoginSuccess() {
-        hideLoginForm();
-        getLotteryLot();
     }
 
     /*var $telInputForm = $('#telInputForm');
@@ -232,28 +223,52 @@
      $telInputForm.fadeIn(300).focusFirstTextInput();
      }*/
 
-    var $noPrivilegePrompt = $('#noPrivilegePrompt');
-    setCloseIconEvent($noPrivilegePrompt, function () {
-        JSUtils.hideTransparentBackground();
-        $noPrivilegePrompt.hide();
-        //location.reload();
-    });
-    $noPrivilegePrompt.find('a.toLogin').click(function () {
-        $noPrivilegePrompt.hide();
-        showLoginForm(afterLoginSuccess);
-    });
-    function showNoPrivilegeForm(username) {
-        JSUtils.showTransparentBackground(1);
-        setFloatPanelUsername($noPrivilegePrompt, username);
-        $noPrivilegePrompt.fadeIn(300);
-    }
+    /*
+     var $noPrivilegePrompt = $('#noPrivilegePrompt');
+     setCloseIconEvent($noPrivilegePrompt, function () {
+     JSUtils.hideTransparentBackground();
+     $noPrivilegePrompt.hide();
+     });
+     $noPrivilegePrompt.find('a.toLogin').click(function () {
+     $noPrivilegePrompt.hide();
+     showLoginForm(afterLoginSuccess);
+     });
+     function showNoPrivilegeForm(username) {
+     JSUtils.showTransparentBackground(1);
+     setFloatPanelUsername($noPrivilegePrompt, username);
+     $noPrivilegePrompt.fadeIn(300);
+     }
+     */
+    var noPrivilege = ({
+        $div: $('#noPrivilegePrompt'),
+        show: function (username, toLoginCallback) {
+            JSUtils.showTransparentBackground(1);
+            setFloatPanelUsername(this.$div, username);
+            this.$div.fadeIn(300);
+
+            var self = this;
+            this.$div.find('a.toLogin').click(function () {
+                self.$div.hide();
+                showLoginForm(toLoginCallback);
+            });
+        },
+        init: function () {
+            var self = this;
+            setCloseIconEvent(self.$div, function () {
+                JSUtils.hideTransparentBackground();
+                self.$div.hide();
+            });
+            return this;
+        }
+    }).init();
+
 
     var $exceptionPrompt = $('#exceptionPrompt');
     setCloseIconEvent($exceptionPrompt, function () {
         JSUtils.hideTransparentBackground();
         $exceptionPrompt.hide();
     });
-    function showLotteryExceptionPrompt(username, info) {
+    function showExceptionPrompt(username, info) {
         JSUtils.showTransparentBackground(1);
         setFloatPanelUsername($exceptionPrompt, username);
         $exceptionPrompt.fadeIn(300).find('div.body div.info').text(info);
@@ -402,8 +417,6 @@
         show: function (options) {
             // title
             this.$div.find('div.title div.text span.text').text('抽奖详情：0元抽 ' + options['commodity']['name']);
-            this.$div.find('div.body div.activity-info div.participant-count span')
-                .text(options['participantCount']);
 
             // remind me
             this.get$RemindMeCheckbox().get(0).checked = options['receiveMail'];
@@ -412,7 +425,7 @@
             var $image = this.$div.find('div.activity div.image img');
             $image.attr('src', options['commodity']['snapshot']);
             adjustImage($image.get(0), 110, 70);
-            this.$div.find('div.activity div.description').text(options['activityDescription']);
+            this.$div.find('div.activity div.description').html(options['activityDescription']);
 
             if (options['detail'] == 'activityExpire') {
                 this.get$ActivityExpire().show();
@@ -607,18 +620,22 @@
     };
 
     getLotteryLot = function () {
+        var toLoginCallback = function () {
+            hideLoginForm();
+            getLotteryLot();
+        };
         $.post('take-lottery.json', {
             'commodityId': getSelectedCommodityId()
         }, function (data) {
             if (data.success || data.detail == 'activityExpire' || data.detail == 'alreadyAttended') {
                 lotteryResult.show(data);
             } else if (data.detail == 'noLottery') {
-                showLotteryExceptionPrompt(data.username, '本商品暂时没有抽奖，敬请关注其他商品的抽奖！');
+                showExceptionPrompt(data.username, '本商品暂时没有抽奖，敬请关注其他商品的抽奖！');
             } else if (data.detail == 'noLogin') {
                 JSUtils.showTransparentBackground(1);
-                showLoginForm(afterLoginSuccess);
+                showLoginForm(toLoginCallback);
             } else if (data.detail == 'noPrivilege') {
-                showNoPrivilegeForm(data.username);
+                noPrivilege.show(data.username, toLoginCallback);
             } else {
                 alert(data.detail);
             }
@@ -627,7 +644,7 @@
              lotteryResult.show(data);
              } else {
              if (data.detail == 'noLottery') {
-             showLotteryExceptionPrompt(data.username, '本商品暂时没有抽奖，敬请关注其他商品的抽奖！');
+             showExceptionPrompt(data.username, '本商品暂时没有抽奖，敬请关注其他商品的抽奖！');
              } else if (data.detail == 'noLogin') {
              JSUtils.showTransparentBackground(1);
              showLoginForm(afterLoginSuccess);
@@ -636,7 +653,7 @@
              } else if (data.detail == 'noTel') {
              //showTelInputForm(data.username);
              } else if (data.detail == 'activityExpire') {
-             showLotteryExceptionPrompt(data.username, '本期抽奖已结束，敬请关注下期抽奖！');
+             showExceptionPrompt(data.username, '本期抽奖已结束，敬请关注下期抽奖！');
              } else if (data.detail == 'alreadyAttended') {
              lotteryResult.show(data);
              } else {
@@ -646,6 +663,126 @@
              */
         });
     };
+
+    var seckillResult = ({
+        $div: $('#seckillResult'),
+        get$LotDiv: function () {
+            return this.$div.find('div.body div.lot');
+        },
+        clearRemainingTimeUpdater: function () {
+            if (this.remainingTimeUpdaters) {
+                for (var i = 0, len = this.remainingTimeUpdaters.length; i < len; i++) {
+                    clearInterval(this.remainingTimeUpdaters[i]);
+                }
+            }
+            this.remainingTimeUpdaters = [];
+        },
+        updateRemainingTime: function (remainingSeconds) {
+            var startTimestamp = new Date().getTime();
+            var secondsInDay = 3600 * 24;
+            var $remainingTime = this.$div.find('div.body div.remaining-time');
+            var $day = $remainingTime.find('span.day');
+            var $hour = $remainingTime.find('span.hour');
+            var $minute = $remainingTime.find('span.minute');
+            var $second = $remainingTime.find('span.second');
+
+            updateHTML();
+            this.clearRemainingTimeUpdater();
+            this.remainingTimeUpdaters.push(setInterval(function () {
+                updateHTML();
+            }, 1000));
+
+            function updateHTML() {
+                var seconds = remainingSeconds + parseInt((startTimestamp - new Date().getTime()) / 1000);
+                if (seconds <= 0) {
+                    seconds = 0;
+                }
+                var days = parseInt(seconds / secondsInDay);
+                seconds -= days * secondsInDay;
+                var hours = parseInt(seconds / 3600);
+                seconds -= hours * 3600;
+                var minutes = parseInt(seconds / 60);
+                seconds -= minutes * 60;
+
+                if (hours < 10) {
+                    hours = '0' + hours;
+                }
+                if (minutes < 10) {
+                    minutes = '0' + minutes;
+                }
+                if (seconds < 10) {
+                    seconds = '0' + seconds;
+                }
+
+                if (days > 0) {
+                    $day.text(days + '天');
+                } else {
+                    $day.text('');
+                }
+                $hour.text(hours);
+                $minute.text(minutes);
+                $second.text(seconds);
+            }
+        },
+        show: function (options) {
+            console.log(options);
+            // remaining time
+            this.updateRemainingTime(options['remainingSeconds']);
+
+            // title
+            this.$div.find('div.title div.text span.text').text('秒杀详情：0元秒 ' + options['commodity']['name']);
+
+            // commodity and activity
+            var $image = this.$div.find('div.activity div.image img');
+            $image.attr('src', options['commodity']['snapshot']);
+            adjustImage($image.get(0), 110, 70);
+            this.$div.find('div.activity div.description').html(options['activityDescription']);
+
+            // share url
+            var $share = this.$div.find('div.bottom div.share div.list ul');
+            $share.find('a.sina').attr('href', options['sinaWeiboShareUrl']);
+            $share.find('a.qq').attr('href', options['qqShareUrl']);
+            $share.find('a.qzone').attr('href', options['qzoneShareUrl']);
+
+            // show float panel
+            JSUtils.showTransparentBackground(1);
+            this.$div.fadeIn(300);
+            JSUtils.scrollToVerticalCenter(this.$div);
+        },
+        init: function () {
+            var self = this;
+            setCloseIconEvent(this.$div, function () {
+                JSUtils.hideTransparentBackground();
+                self.$div.hide();
+                self.clearRemainingTimeUpdater();
+            });
+            return this;
+        }
+    }).init();
+
+    getSeckillLot = function () {
+        var toLoginCallback = function () {
+            hideLoginForm();
+            getSeckillLot();
+        };
+        $.post('take-seckill.json', {
+            'commodityId': getSelectedCommodityId()
+        }, function (data) {
+            if (data.success || data.detail == 'activityExpire') {
+                seckillResult.show(data);
+            } else if (data.detail == 'noLottery') {
+                showExceptionPrompt(data.username, '本商品暂时没有秒杀，敬请关注其他商品的秒杀！');
+            } else if (data.detail == 'noLogin') {
+                JSUtils.showTransparentBackground(1);
+                showLoginForm(toLoginCallback);
+            } else if (data.detail == 'noPrivilege') {
+                noPrivilege.show(data.username, toLoginCallback);
+            } else {
+                alert(data.detail);
+            }
+        });
+    };
+    getSeckillLot();
 })();
 var getLotteryLot, showLotteryRule;
 function getSelectedCommodityId() {

@@ -7,10 +7,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DualColoredBallCrawlersTest {
+public class LotteryActivityTerminatorTest {
     @Test
     public void testInit() throws Exception {
-        DualColoredBallCrawlers crawlers = new DualColoredBallCrawlers(new DecimalFormat("000000"));
+        LotteryActivityTerminator crawlers = new LotteryActivityTerminator(new DecimalFormat("000000"));
 
         List<DualColoredBallCrawler> crawlerList = new ArrayList<>();
         crawlerList.add(new BaiduLecaiCrawler());

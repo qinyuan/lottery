@@ -2,7 +2,7 @@ package com.qinyuan15.lottery.mvc.activity;
 
 import org.springframework.util.StringUtils;
 
-class AnnouncementPlaceholderConverter {
+class LotteryAnnouncementPlaceholderConverter {
     public final static String BALL_PHASE_PLACEHOLDER = "{{b_phase}}";
     public final static String BALL_NUMBER = "{{b_number}}";
     public final static String WINNER_NUMBER = "{{p_number}}";
@@ -13,7 +13,7 @@ class AnnouncementPlaceholderConverter {
     private final String winner;
     private final int participantCount;
 
-    AnnouncementPlaceholderConverter(int fullTerm, String dualColoredBallResult, String winner, int participantCount) {
+    LotteryAnnouncementPlaceholderConverter(int fullTerm, String dualColoredBallResult, String winner, int participantCount) {
         this.fullTerm = fullTerm;
         this.dualColoredBallResult = dualColoredBallResult;
         this.winner = winner;

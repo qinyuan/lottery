@@ -167,7 +167,7 @@
 </div>
 --%>
 
-<div class="float-panel" id="lotteryResult">
+<div class="float-panel activity-result" id="lotteryResult">
     <jsp:include page="commodity-float-panel-title.jsp">
         <jsp:param name="title" value="<span class='text'></span>"/>
     </jsp:include>
@@ -222,22 +222,9 @@
             <a href="activity-history.html" target="_blank">抽奖结果请查看活动历史</a>
         </div>
         <div class="bottom">
-            <div class="share">
-                <span class="title">分享到<span class="caret"></span></span>
-
-                <div class="list">
-                    <ul>
-                        <li><a class="sina" href="javascript:void(0)" target="_blank"
-                                ><span class="icon">&nbsp;</span>新浪微博</a></li>
-                        <li><a class="qq" href="javascript:void(0)" target="_blank"
-                                ><span class="icon">&nbsp;</span>QQ</a></li>
-                        <li><a class="qzone" href="javascript:void(0)" target="_blank"
-                                ><span class="icon">&nbsp;</span>QQ空间</a></li>
-                    </ul>
-                </div>
-                <div class="triangle outer"></div>
-                <div class="triangle inner"></div>
-            </div>
+            <jsp:include page="commodity-activity-share.jsp">
+                <jsp:param name="title" value="分享到"/>
+            </jsp:include>
             <div class="rule">
                 <a href="javascript:void(0)">抽奖规则>>></a>
             </div>
@@ -298,4 +285,33 @@
         <button type="button">我已了解</button>
     </div>
 </div>
+
+<div class="float-panel activity-result" id="seckillResult">
+    <jsp:include page="commodity-float-panel-title.jsp">
+        <jsp:param name="title" value="<span class='text'></span>"/>
+    </jsp:include>
+    <div class="body">
+        <div class="activity">
+            <div class="image"><img/></div>
+            <div class="description break-word"></div>
+        </div>
+        <div class="lot">
+        </div>
+        <div class="activity-expire">
+            本期秒杀已结束，请关注下秒杀活动
+            <a href="activity-history.html" target="_blank">秒杀结果请查看活动历史</a>
+        </div>
+        <div class="remaining-time">
+            距离活动开始
+            <span class="day">00天</span>
+            <span class="hour">00</span>:<span class="minute">00</span>:<span class="second">01</span>
+        </div>
+        <div class="bottom">
+            <jsp:include page="commodity-activity-share.jsp">
+                <jsp:param name="title" value="告诉小伙伴一起抢"/>
+            </jsp:include>
+        </div>
+    </div>
+</div>
+
 <%@include file="inc-footer.jsp" %>

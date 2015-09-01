@@ -15,13 +15,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DualColoredBallCrawlers {
-    private final static Logger LOGGER = LoggerFactory.getLogger(DualColoredBallCrawlers.class);
+public class LotteryActivityTerminator {
+    private final static Logger LOGGER = LoggerFactory.getLogger(LotteryActivityTerminator.class);
     private Map<Integer, CrawlThread> threads = new HashMap<>();
     private List<DualColoredBallCrawler> crawlers;
     private final DecimalFormat lotNumberFormat;
 
-    public DualColoredBallCrawlers(DecimalFormat lotNumberFormat) {
+    public LotteryActivityTerminator(DecimalFormat lotNumberFormat) {
         this.lotNumberFormat = lotNumberFormat;
     }
 

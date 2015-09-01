@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.google.common.collect.Lists;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
 
 public class SeckillActivityDao extends AbstractActivityDao<SeckillActivity> {
@@ -41,5 +42,11 @@ public class SeckillActivityDao extends AbstractActivityDao<SeckillActivity> {
         HibernateUtils.update(activity);
     }
 
+    @Override
+    public void updateResult(Integer id, String winners, String announcement) {
+        String[] winnerArray = winners.split(",");
+        new SeckillLotDao().updateWinnerBySerialNumbers(id, Lists.newArrayList(winnerArray));
 
+        super.updateResult(id, winners, announcement);
+    }
 }
