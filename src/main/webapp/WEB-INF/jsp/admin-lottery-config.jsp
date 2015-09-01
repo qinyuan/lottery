@@ -220,10 +220,10 @@
                 <td class="title">抽奖结果公告
                     <div class="comment">
                         注：<br/>
-                        <%=LotteryAnnouncementPlaceholderConverter.BALL_PHASE%>指代双色球期数<br/>
-                        <%=LotteryAnnouncementPlaceholderConverter.BALL_NUMBER%>指代双色球开奖结果<br/>
-                        <%=LotteryAnnouncementPlaceholderConverter.WINNER_NUMBER%>指代获奖者的抽奖号<br/>
-                        <%=LotteryAnnouncementPlaceholderConverter.PARTICIPANT_COUNT%>指代总参与人数
+                        <%=LotteryAnnouncementPlaceholderConverter.BALL_PHASE_PLACEHOLDER%>指代双色球期数<br/>
+                        <%=LotteryAnnouncementPlaceholderConverter.BALL_NUMBER_PLACEHOLDER%>指代双色球开奖结果<br/>
+                        <%=LotteryAnnouncementPlaceholderConverter.WINNER_NUMBER_PLACEHOLDER%>指代获奖者的抽奖号<br/>
+                        <%=LotteryAnnouncementPlaceholderConverter.PARTICIPANT_COUNT_PLACEHOLDER%>指代总参与人数
                     </div>
                 </td>
                 <td class="input">

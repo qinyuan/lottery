@@ -131,8 +131,8 @@
                         <td class="title">抽奖结果公告
                             <div class="comment">
                                 注：<br/>
-                                <%=SeckillAnnouncementPlaceholderConverter.WINNERS%>指代获奖者<br/>
-                                <%=SeckillAnnouncementPlaceholderConverter.PARTICIPANT_COUNT%>指代总参与人数
+                                <%=SeckillAnnouncementPlaceholderConverter.WINNERS_PLACEHOLDER%>指代获奖者<br/>
+                                <%=SeckillAnnouncementPlaceholderConverter.PARTICIPANT_COUNT_PLACEHOLDER%>指代总参与人数
                             </div>
                         </td>
                         <td class="input">

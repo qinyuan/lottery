@@ -218,7 +218,7 @@
             </div>
         </div>
         <div class="activity-expire">
-            本期抽奖已结束，请关注下抽奖活动
+            本期抽奖已结束，请关注下期抽奖活动
             <a href="activity-history.html" target="_blank">抽奖结果请查看活动历史</a>
         </div>
         <div class="bottom">
@@ -298,13 +298,13 @@
         <div class="lot">
         </div>
         <div class="activity-expire">
-            本期秒杀已结束，请关注下秒杀活动
+            本期秒杀已结束，请关注下期秒杀活动
             <a href="activity-history.html" target="_blank">秒杀结果请查看活动历史</a>
         </div>
         <div class="remaining-time">
             距离活动开始
             <span class="day">00天</span>
-            <span class="hour">00</span>:<span class="minute">00</span>:<span class="second">01</span>
+            <span class="hour">00</span>:<span class="minute">00</span>:<span class="second">00</span>
         </div>
         <div class="bottom">
             <jsp:include page="commodity-activity-share.jsp">

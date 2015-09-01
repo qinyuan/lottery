@@ -2,7 +2,7 @@
 <%@include file="inc-taglib.jsp" %>
 <table class="normal">
     <colgroup>
-        <col class="index"/>
+        <%--<col class="index"/>--%>
         <col class="term"/>
         <col class="commodity"/>
         <col class="start-time"/>
@@ -24,7 +24,7 @@
         <col class="action"/>
     </colgroup>
     <thead>
-    <th>序号</th>
+    <%--<th>序号</th>--%>
     <th>期数</th>
     <th>奖品</th>
     <th>开始时间</th>
@@ -50,7 +50,7 @@
         <tr data-options="id:${activity.id}">
             <input type="hidden" class="description" value="${activity.description}"/>
             <input type="hidden" class="min-liveness-to-participate" value="${activity.minLivenessToParticipate}"/>
-            <td>${status.index + rowStartIndex}</td>
+            <%--<td>${status.index + rowStartIndex}</td>--%>
             <td class="term">${activity.term}</td>
             <td class="commodity" data-options="commodityId: ${activity.commodity.id}">${activity.commodity.name}</td>
             <td class="start-time">${fn:replace(activity.startTime, ' ', '<br/> ')}</td>

@@ -140,7 +140,7 @@ public class LotController extends ImageController {
         result.put("qzoneShareUrl", seckillShareUrlBuilder.getQzoneShareUrl());
 
         // participants data
-        result.put("participantCount", new SeckillLotCounter().countReal(activity.getId()));
+        //result.put("participantCount", new SeckillLotCounter().count(activity));
 
         result.put("remainingSeconds", getRemainingSeconds(activity));
         return toJson(result);

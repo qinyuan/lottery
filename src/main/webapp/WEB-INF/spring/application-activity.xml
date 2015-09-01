@@ -20,6 +20,8 @@
         </property>
     </bean>
 
+    <bean class="com.qinyuan15.lottery.mvc.activity.SeckillActivityTerminator" init-method="init"/>
+
     <bean id="dualColoredBallResultDownloader"
           class="com.qinyuan15.lottery.mvc.activity.DualColoredBallResultDownloader"/>
 

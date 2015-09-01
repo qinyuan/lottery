@@ -405,7 +405,7 @@
         get$TelInput: function () {
             return this.$div.find('div.body div.lot div.tel input');
         },
-        get$LotDiv: function () {
+        get$Lot: function () {
             return this.$div.find('div.body div.lot');
         },
         get$InsufficientLivnessDiv: function () {
@@ -429,7 +429,7 @@
 
             if (options['detail'] == 'activityExpire') {
                 this.get$ActivityExpire().show();
-                this.get$LotDiv().hide();
+                this.get$Lot().hide();
                 this.get$InsufficientLivnessDiv().hide();
             } else {
                 // serial number
@@ -444,10 +444,10 @@
                     // liveness
                     this.$div.find('div.lot div.liveness span.liveness').text(options['liveness']);
 
-                    this.get$LotDiv().show();
+                    this.get$Lot().show();
                     this.get$InsufficientLivnessDiv().hide();
                 } else {
-                    this.get$LotDiv().hide();
+                    this.get$Lot().hide();
                     var $insufficientLiveness = this.get$InsufficientLivnessDiv();
                     $insufficientLiveness.find('span.min-liveness-to-participate')
                         .text(options['minLivenessToParticipate']);
@@ -666,7 +666,7 @@
 
     var seckillResult = ({
         $div: $('#seckillResult'),
-        get$LotDiv: function () {
+        get$Lot: function () {
             return this.$div.find('div.body div.lot');
         },
         clearRemainingTimeUpdater: function () {
@@ -677,10 +677,16 @@
             }
             this.remainingTimeUpdaters = [];
         },
+        get$ActivityExpire: function () {
+            return this.$div.find('div.body div.activity-expire');
+        },
+        get$RemainingTime: function(){
+            return this.$div.find('div.body div.remaining-time');
+        },
         updateRemainingTime: function (remainingSeconds) {
             var startTimestamp = new Date().getTime();
             var secondsInDay = 3600 * 24;
-            var $remainingTime = this.$div.find('div.body div.remaining-time');
+            var $remainingTime = this.get$RemainingTime().show();
             var $day = $remainingTime.find('span.day');
             var $hour = $remainingTime.find('span.hour');
             var $minute = $remainingTime.find('span.minute');
@@ -725,9 +731,14 @@
             }
         },
         show: function (options) {
-            console.log(options);
-            // remaining time
-            this.updateRemainingTime(options['remainingSeconds']);
+            if (options['detail'] == 'activityExpire') {
+                this.get$ActivityExpire().show();
+                this.get$Lot().hide();
+                this.get$RemainingTime().hide();
+            } else {
+                // remaining time
+                this.updateRemainingTime(options['remainingSeconds']);
+            }
 
             // title
             this.$div.find('div.title div.text span.text').text('秒杀详情：0元秒 ' + options['commodity']['name']);

@@ -5,7 +5,6 @@ import com.qinyuan15.lottery.mvc.dao.SeckillActivity;
 import com.qinyuan15.lottery.mvc.dao.SeckillActivityDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 /**
  * Class to update result of lottery automatically
@@ -21,16 +20,9 @@ public class SeckillResultUpdater {
             return;
         }
 
-        int participantCount = new SeckillLotCounter().countReal(activityId);
-        if (participantCount == 0) {
-            return;
-        }
-
+        int participantCount = new SeckillLotCounter().count(activity);
         String winners = activity.getWinners();
         String announcementTemplate = AppConfig.getSeckillAnnouncementTemplate();
-        if (!StringUtils.hasText(announcementTemplate)) {
-            return;
-        }
         String announcement = new SeckillAnnouncementPlaceholderConverter(
                 winners, participantCount).convert(announcementTemplate);
         new SeckillActivityDao().updateResult(activityId, winners, announcement);
