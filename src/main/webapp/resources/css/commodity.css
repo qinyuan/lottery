@@ -233,7 +233,7 @@ div.activity-result {
     margin-left: -242px;
 }
 
-#exceptionPrompt/*, #telInputForm*/        {
+#exceptionPrompt/*, #telInputForm*/                  {
     height: 350px;
     margin-top: -175px;
 }
@@ -445,6 +445,67 @@ div.activity-result div.body div.lot div.liveness span.icon {
     margin-left: 4px;
     padding: 4px 13px;
     background: url("images/lottery-result.png") no-repeat -18px 0;
+}
+
+div.activity-result div.body div.lot div.pokers div.poker {
+    position: relative;
+    float: left;
+    margin: 10px 19px;
+    height: 140px;
+    width: 90px;
+}
+
+div.activity-result div.body div.lot div.pokers div.poker img {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+
+div.activity-result div.body div.lot div.pokers div.poker img.positive {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+    -webkit-animation: rotate-animation 0.5s;
+    -moz-animation: rotate-animation 0.5s;
+    animation: rotate-animation 0.5s;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+}
+
+div.activity-result div.body div.lot div.pokers div.poker img.negative {
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    -o-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+    -webkit-animation: rotate-inverse-animation 0.5s;
+    -moz-animation: rotate-inverse-animation 0.5s;
+    animation: rotate-inverse-animation 0.5s;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+}
+
+div.activity-result div.body div.lot div.result {
+    font-size: 11pt;
+    text-align: center;
+    display:none;
+}
+
+div.activity-result div.body div.lot div.result.success {
+    color: #009900;
+}
+
+div.activity-result div.body div.lot div.result.fail {
+    color: #CC0033;
 }
 
 div.activity-result div.insufficient-liveness, div.activity-result div.activity-expire {

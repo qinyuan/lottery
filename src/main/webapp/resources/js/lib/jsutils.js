@@ -968,6 +968,10 @@ jQuery.fn.twinkle = function (times) {
     }
 };
 
+jQuery.fn.onAnimationEnd = function (callback) {
+    this.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', callback);
+};
+
 /**
  * show an element for several seconds, then hide it again
  * @param milliSeconds how many milliSeconds to show element

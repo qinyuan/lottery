@@ -51,6 +51,9 @@ public class CommodityController extends ImageController {
             livenessAdder.addLiveness(true);
         }
 
+        setAttribute("pokerFrontSide", pathToUrl(AppConfig.getSeckillPokerFrontSide()));
+        setAttribute("pokerBackSide", pathToUrl(AppConfig.getSeckillPokerBackSide()));
+
         setAttribute("snapshots", buildSnapshots());
         setAttribute("lotteryRule", AppConfig.getLotteryRule());
         setAttribute("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());

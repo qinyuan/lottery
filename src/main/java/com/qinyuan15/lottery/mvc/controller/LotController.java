@@ -146,6 +146,16 @@ public class LotController extends ImageController {
         return toJson(result);
     }
 
+    @RequestMapping("/do-seckill-action.json")
+    @ResponseBody
+    public String doSeckillAction(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
+        if (new SeckillActivityDao().getActiveInstanceByCommodityId(commodityId) == null) {
+            return fail("over");
+        } else {
+            return fail("notStart");
+        }
+    }
+
     private Commodity getCommodity(Integer commodityId) {
         return new CommodityUrlAdapter(this).adapt(new CommodityDao().getInstance(commodityId));
     }

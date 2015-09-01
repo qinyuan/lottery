@@ -296,6 +296,18 @@
             <div class="description break-word"></div>
         </div>
         <div class="lot">
+            <div class="pokers">
+                <c:forEach var="index" begin="1" end="3">
+                    <div class="poker" data-options="index:1">
+                        <img class="back" src="${pokerBackSide}"/>
+                        <img class="front link" src="${pokerFrontSide}"/>
+                    </div>
+                </c:forEach>
+            </div>
+            <div class="success result">恭喜您，秒杀成功！</div>
+            <div class="not-start fail result">秒杀尚未开始！</div>
+            <div class="over fail result">很遗憾，速度了差一点，秒杀失败！</div>
+            <div class="unknown fail result">出现未知错误！</div>
         </div>
         <div class="activity-expire">
             本期秒杀已结束，请关注下期秒杀活动

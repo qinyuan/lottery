@@ -405,9 +405,6 @@
         get$TelInput: function () {
             return this.$div.find('div.body div.lot div.tel input');
         },
-        get$Lot: function () {
-            return this.$div.find('div.body div.lot');
-        },
         get$InsufficientLivnessDiv: function () {
             return this.$div.find('div.body div.insufficient-liveness');
         },
@@ -429,7 +426,7 @@
 
             if (options['detail'] == 'activityExpire') {
                 this.get$ActivityExpire().show();
-                this.get$Lot().hide();
+                this.$lot.hide();
                 this.get$InsufficientLivnessDiv().hide();
             } else {
                 // serial number
@@ -444,10 +441,10 @@
                     // liveness
                     this.$div.find('div.lot div.liveness span.liveness').text(options['liveness']);
 
-                    this.get$Lot().show();
+                    this.$lot.show();
                     this.get$InsufficientLivnessDiv().hide();
                 } else {
-                    this.get$Lot().hide();
+                    this.$lot.hide();
                     var $insufficientLiveness = this.get$InsufficientLivnessDiv();
                     $insufficientLiveness.find('span.min-liveness-to-participate')
                         .text(options['minLivenessToParticipate']);
@@ -496,6 +493,7 @@
             this.get$Buttons().hide();
         },
         init: function () {
+            this.$lot = this.$div.find('div.body div.lot');
             var self = this;
             setCloseIconEvent(this.$div, function () {
                 JSUtils.hideTransparentBackground();
@@ -666,9 +664,6 @@
 
     var seckillResult = ({
         $div: $('#seckillResult'),
-        get$Lot: function () {
-            return this.$div.find('div.body div.lot');
-        },
         clearRemainingTimeUpdater: function () {
             if (this.remainingTimeUpdaters) {
                 for (var i = 0, len = this.remainingTimeUpdaters.length; i < len; i++) {
@@ -680,17 +675,11 @@
         get$ActivityExpire: function () {
             return this.$div.find('div.body div.activity-expire');
         },
-        get$RemainingTime: function(){
-            return this.$div.find('div.body div.remaining-time');
-        },
         updateRemainingTime: function (remainingSeconds) {
+            var self = this;
             var startTimestamp = new Date().getTime();
             var secondsInDay = 3600 * 24;
-            var $remainingTime = this.get$RemainingTime().show();
-            var $day = $remainingTime.find('span.day');
-            var $hour = $remainingTime.find('span.hour');
-            var $minute = $remainingTime.find('span.minute');
-            var $second = $remainingTime.find('span.second');
+            this.$remainingTime.show();
 
             updateHTML();
             this.clearRemainingTimeUpdater();
@@ -721,20 +710,20 @@
                 }
 
                 if (days > 0) {
-                    $day.text(days + '天');
+                    self.$remainingDay.text(days + '天');
                 } else {
-                    $day.text('');
+                    self.$remainingDay.text('');
                 }
-                $hour.text(hours);
-                $minute.text(minutes);
-                $second.text(seconds);
+                self.$remainingHour.text(hours);
+                self.$remainingMinute.text(minutes);
+                self.$remainingSecond.text(seconds);
             }
         },
         show: function (options) {
             if (options['detail'] == 'activityExpire') {
                 this.get$ActivityExpire().show();
-                this.get$Lot().hide();
-                this.get$RemainingTime().hide();
+                this.$lot.hide();
+                this.$remainingTime.hide();
             } else {
                 // remaining time
                 this.updateRemainingTime(options['remainingSeconds']);
@@ -760,12 +749,72 @@
             this.$div.fadeIn(300);
             JSUtils.scrollToVerticalCenter(this.$div);
         },
+        _rolloverPoker: function ($poker) {
+            var $front = $poker.find('img.front');
+            var $back = $poker.find('img.back');
+            $front.addClass('positive').onAnimationEnd(function () {
+                $(this).css('z-index', 1).removeClass('positive');
+            });
+            $back.addClass('negative').onAnimationEnd(function () {
+                $(this).css('z-index', 2).removeClass('negative');
+            });
+
+            setTimeout(function () {
+                $front.addClass('negative').onAnimationEnd(function () {
+                    $(this).css('z-index', 2).removeClass('negative');
+                });
+                $back.addClass('positive').onAnimationEnd(function () {
+                    $(this).css('z-index', 1).removeClass('positive');
+                });
+            }, 1500);
+        },
         init: function () {
+            this.$remainingTime = this.$div.find('div.body div.remaining-time');
+            this.$remainingDay = this.$remainingTime.find('span.day');
+            this.$remainingHour = this.$remainingTime.find('span.hour');
+            this.$remainingMinute = this.$remainingTime.find('span.minute');
+            this.$remainingSecond = this.$remainingTime.find('span.second');
+            this.$lot = this.$div.find('div.body div.lot');
+            this.$successResult = this.$lot.find('div.success.result');
+            this.$notStartResult = this.$lot.find('div.not-start.result');
+            this.$overResult = this.$lot.find('div.over.result');
+            this.$unknownResult = this.$lot.find('div.unknown.result');
+
             var self = this;
             setCloseIconEvent(this.$div, function () {
                 JSUtils.hideTransparentBackground();
                 self.$div.hide();
                 self.clearRemainingTimeUpdater();
+            });
+            this.$div.find('div.body div.lot div.pokers div.poker img.front').click(function () {
+                var $this = $(this);
+
+                // when image is on rollover, just exists
+                if ($this.hasClass('negative') || $this.hasClass('positive')) {
+                    return;
+                }
+
+                self.$successResult.hide();
+                self.$notStartResult.hide();
+                self.$overResult.hide();
+                self.$unknownResult.hide();
+
+                if (self.$remainingDay.text() == '' && parseInt(self.$remainingHour.text()) == 0
+                    && parseInt(self.$remainingMinute.text()) == 0 && parseInt(self.$remainingSecond.text()) == 0) {
+                    $.post('do-seckill-action.json', {'commodityId': getSelectedCommodityId()}, function (data) {
+                        if (data.success) {
+                            self.$successResult.twinkle(4);
+                        } else if (data.detail == 'over') {
+                            self.$overResult.twinkle(4);
+                        } else if (data.detail == 'notStart') {
+                            self.$notStartResult.twinkle(4);
+                        } else {
+                            self.$unknownResult.twinkle(4);
+                        }
+                    });
+                } else {
+                    self._rolloverPoker($this.getParentByTagNameAndClass('div', 'poker'));
+                }
             });
             return this;
         }
@@ -793,7 +842,6 @@
             }
         });
     };
-    //getSeckillLot();
 })();
 var getLotteryLot, getSeckillLot, showLotteryRule;
 function getSelectedCommodityId() {

@@ -77,10 +77,12 @@ public class SeckillActivityTerminator {
                 }
 
                 // sleep time becomes less and less on coming of expect end time
-                if (timeDiff > 100) {
+                if (timeDiff > 120000) {
+                    ThreadUtils.sleep(40); // sleep 40 seconds at most
+                } else if (timeDiff > 100) {
                     ThreadUtils.sleep(((double) timeDiff) / 1000 / 3);
                 } else {
-                    ThreadUtils.sleep(500);
+                    ThreadUtils.sleep(0.2);
                 }
             }
         }

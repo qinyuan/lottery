@@ -97,7 +97,7 @@ public class LotteryActivityTerminator {
                 if (timeDiff > 100) {
                     ThreadUtils.sleep(((double) timeDiff) / 1000 / 3);
                 } else {
-                    ThreadUtils.sleep(500);
+                    ThreadUtils.sleep(0.2);
                 }
             }
         }
