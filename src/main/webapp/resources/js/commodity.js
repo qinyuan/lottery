@@ -830,7 +830,7 @@
         }, function (data) {
             if (data.success || data.detail == 'activityExpire') {
                 seckillResult.show(data);
-            } else if (data.detail == 'noLottery') {
+            } else if (data.detail == 'noSeckill') {
                 showExceptionPrompt(data.username, '本商品暂时没有秒杀，敬请关注其他商品的秒杀！');
             } else if (data.detail == 'noLogin') {
                 JSUtils.showTransparentBackground(1);

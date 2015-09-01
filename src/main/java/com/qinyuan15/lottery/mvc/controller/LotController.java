@@ -39,9 +39,14 @@ public class LotController extends ImageController {
     @RequestMapping("/take-lottery.json")
     @ResponseBody
     public String takeLottery(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
-        String validation = validateCommodityToTakeLot(commodityId);
-        if (validation != null) {
-            return validation;
+        if (!IntegerUtils.isPositive(commodityId)) {
+            return failByInvalidParam();
+        } else if (!new CommodityDao().hasLottery(commodityId)) {
+            return fail("noLottery");
+        } else if (SecurityUtils.getUsername() == null) {
+            return fail("noLogin");
+        } else if (!SecurityUtils.hasAuthority(User.NORMAL)) {
+            return getNoPrivilegeResult();
         }
 
         Map<String, Object> result = new HashMap<>();
@@ -104,9 +109,14 @@ public class LotController extends ImageController {
     @RequestMapping("/take-seckill.json")
     @ResponseBody
     public String takeSeckill(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
-        String validation = validateCommodityToTakeLot(commodityId);
-        if (validation != null) {
-            return validation;
+        if (!IntegerUtils.isPositive(commodityId)) {
+            return failByInvalidParam();
+        } else if (!new CommodityDao().hasSeckill(commodityId)) {
+            return fail("noSeckill");
+        } else if (SecurityUtils.getUsername() == null) {
+            return fail("noLogin");
+        } else if (!SecurityUtils.hasAuthority(User.NORMAL)) {
+            return getNoPrivilegeResult();
         }
 
         Map<String, Object> result = new HashMap<>();
@@ -160,7 +170,7 @@ public class LotController extends ImageController {
         return new CommodityUrlAdapter(this).adapt(new CommodityDao().getInstance(commodityId));
     }
 
-    private String validateCommodityToTakeLot(Integer commodityId) {
+    /*private String validateCommodityToTakeLot(Integer commodityId) {
         if (!IntegerUtils.isPositive(commodityId)) {
             return failByInvalidParam();
         } else if (!new CommodityDao().hasLottery(commodityId)) {
@@ -172,7 +182,7 @@ public class LotController extends ImageController {
         } else {
             return null;
         }
-    }
+    }*/
 
     private List<String> getSerialNumbersFromLotteryLots(List<LotteryLot> lotteryLots) {
         List<String> serialNumbers = new ArrayList<>();
