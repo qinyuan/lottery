@@ -1,3 +1,4 @@
+<%@ page import="com.qinyuan15.lottery.mvc.activity.SeckillAnnouncementPlaceholderConverter" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="inc-header.jsp" %>
 <%@include file="index-header.jsp" %>
@@ -121,6 +122,29 @@
                 </table>
             </div>
         </div>
+        <div class="edit-unit">
+            <div class="title">其他设置</div>
+            <div class="content">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="title">抽奖结果公告
+                            <div class="comment">
+                                注：<br/>
+                                <%=SeckillAnnouncementPlaceholderConverter.WINNERS%>指代获奖者<br/>
+                                <%=SeckillAnnouncementPlaceholderConverter.PARTICIPANT_COUNT%>指代总参与人数
+                            </div>
+                        </td>
+                        <td class="input">
+                            <textarea name="seckillAnnouncementTemplate"
+                                      class="ckeditor">${seckillAnnouncementTemplate}</textarea>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <div class="submit">
             <button id="submitButton" type="submit" class="btn btn-success">确定</button>
         </div>

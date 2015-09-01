@@ -782,9 +782,9 @@
             }
         });
     };
-    getSeckillLot();
+    //getSeckillLot();
 })();
-var getLotteryLot, showLotteryRule;
+var getLotteryLot, getSeckillLot, showLotteryRule;
 function getSelectedCommodityId() {
     var $selectedSnapshot = $('div.main-body div.snapshots div.snapshot.selected');
     return $selectedSnapshot.dataOptions('id');

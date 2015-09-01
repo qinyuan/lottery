@@ -1,3 +1,4 @@
+<%@ page import="com.qinyuan15.lottery.mvc.activity.LotteryAnnouncementPlaceholderConverter" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="inc-header.jsp" %>
 <%@include file="index-header.jsp" %>
@@ -198,13 +199,6 @@
     <div class="content">
         <table>
             <tbody>
-            <%--<tr>
-                <td class="wide title">获取一次新抽奖机会所需爱心</td>
-                <td class="input narrow">
-                    <input type="text" class="form-control" name="newLotLiveness"
-                           value="${newLotLiveness}" placeholder="在此输入每次新抽奖机会所需要的爱心数"/>
-                </td>
-            </tr>--%>
             <tr>
                 <td class="wide title">分享给好友且好友注册或登录后增加的爱心</td>
                 <td class="input narrow">
@@ -226,10 +220,10 @@
                 <td class="title">抽奖结果公告
                     <div class="comment">
                         注：<br/>
-                        {{b_phase}}指代双色球期数<br/>
-                        {{b_number}}指代双色球开奖结果<br/>
-                        {{p_number}}指代获奖者的抽奖号<br/>
-                        {{p_count}}指代总参与人数
+                        <%=LotteryAnnouncementPlaceholderConverter.BALL_PHASE%>指代双色球期数<br/>
+                        <%=LotteryAnnouncementPlaceholderConverter.BALL_NUMBER%>指代双色球开奖结果<br/>
+                        <%=LotteryAnnouncementPlaceholderConverter.WINNER_NUMBER%>指代获奖者的抽奖号<br/>
+                        <%=LotteryAnnouncementPlaceholderConverter.PARTICIPANT_COUNT%>指代总参与人数
                     </div>
                 </td>
                 <td class="input">

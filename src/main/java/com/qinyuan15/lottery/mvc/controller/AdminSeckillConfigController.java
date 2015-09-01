@@ -35,7 +35,11 @@ public class AdminSeckillConfigController extends ImageController {
         setAttribute("pokerFrontSide", pathToUrl(AppConfig.getSeckillPokerFrontSide()));
         setAttribute("pokerBackSide", pathToUrl(AppConfig.getSeckillPokerBackSide()));
 
+        // announcement template
+        setAttribute("seckillAnnouncementTemplate", AppConfig.getSeckillAnnouncementTemplate());
+
         setTitle("秒杀配置");
+        addJs("lib/ckeditor/ckeditor", false);
         addCss("admin-form");
         addCss("admin");
         addHeadJs("lib/image-adjust.js");
@@ -55,7 +59,8 @@ public class AdminSeckillConfigController extends ImageController {
                          @RequestParam(value = "pokerFrontSide", required = true) String pokerFrontSide,
                          @RequestParam(value = "pokerFrontSideFile", required = true) MultipartFile pokerFrontSideFile,
                          @RequestParam(value = "pokerBackSide", required = true) String pokerBackSide,
-                         @RequestParam(value = "pokerBackSideFile", required = true) MultipartFile pokerBackSideFile) {
+                         @RequestParam(value = "pokerBackSideFile", required = true) MultipartFile pokerBackSideFile,
+                         @RequestParam(value = "seckillAnnouncementTemplate", required = true) String seckillAnnouncementTemplate) {
 
         final String redirectPage = "admin-seckill-config";
         String pokerFrontSidePath = null, pokerBackSidePath = null;
@@ -83,6 +88,7 @@ public class AdminSeckillConfigController extends ImageController {
         AppConfig.updateSeckillQzoneIncludePicture(qzoneIncludePicture);
         AppConfig.updateSeckillPokerFrontSide(pokerFrontSidePath);
         AppConfig.updateSeckillPokerBackSide(pokerBackSidePath);
+        AppConfig.updateSeckillAnnouncementTemplate(seckillAnnouncementTemplate);
 
         return redirect(redirectPage);
     }

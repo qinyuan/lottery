@@ -2,8 +2,8 @@ package com.qinyuan15.lottery.mvc.activity;
 
 import org.springframework.util.StringUtils;
 
-class SeckillAnnouncementPlaceholderConverter {
-    public final static String WINNER_NUMBER = "{{p_number}}";
+public class SeckillAnnouncementPlaceholderConverter {
+    public final static String WINNERS = "{{winners}}";
     public final static String PARTICIPANT_COUNT = "{{p_count}}";
 
     private final String winners;
@@ -19,7 +19,7 @@ class SeckillAnnouncementPlaceholderConverter {
             return announcement;
         }
 
-        announcement = announcement.replace(WINNER_NUMBER, winners);
+        announcement = announcement.replace(WINNERS, winners);
         announcement = announcement.replace(PARTICIPANT_COUNT, String.valueOf(participantCount));
 
         return announcement;
