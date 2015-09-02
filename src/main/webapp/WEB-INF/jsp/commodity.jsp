@@ -31,14 +31,8 @@
         </c:forEach>
         <div class="next lightTransparent"></div>
     </div>
-    <!--<div class="detail">
-        <div class="participant-count"><span class="participant-count"></span>人抽奖</div>
-        <%--<img src="${commodity.detailImage}" usemap="#commodityMap"/>--%>
-        <img usemap="#commodityMap"/>
-    </div>-->
 </div>
 <div class="main-body">
-    <%--<div class="detail" style="background-image:url('${commodity.backImage}')">--%>
     <div class="detail">
         <div class="participant-count"><span class="participant-count"></span>人抽奖</div>
         <img usemap="#commodityMap"/>
@@ -51,39 +45,6 @@
           target="_blank"/>
     {{/each}}
 </q:handlebars-template>
-<%--<form class="float-panel" id="telInputForm">
-    <jsp:include page="commodity-float-panel-title.jsp">
-        <jsp:param name="title" value="补全信息"/>
-    </jsp:include>
-    <div class="body">
-        <table>
-            <tbody>
-            <tr>
-                <td class="title">手机号码</td>
-                <td class="content">
-                    <input style="width: 260px;" name="tel" type="text" class="form-control"
-                           placeholder="在此输入11位数的手机号" maxlength="11"/>
-
-                    <div class="comment">请输入常用手机号码，用于中奖后联系使用！</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="title">验证码</td>
-                <td class="content">
-                    <jsp:include page="widget-identity-code.jsp">
-                        <jsp:param name="placeholder" value="输入验证码"/>
-                    </jsp:include>
-                    <div class="comment">请输入图中的字母或数字，不区分大小写</div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <div class="submit">
-            <button class="green-submit-button" type="submit" name="ok">参与抽奖</button>
-        </div>
-    </div>
-</form>
---%>
 <div class="float-panel" id="noPrivilegePrompt">
     <jsp:include page="commodity-float-panel-title.jsp">
         <jsp:param name="title" value="提示信息"/>
@@ -111,62 +72,6 @@
         </div>
     </div>
 </div>
-<%--
-<div class="float-panel" id="lotteryResult">
-    <jsp:include page="commodity-float-panel-title.jsp">
-        <jsp:param name="title" value="抽奖结果"/>
-    </jsp:include>
-    <div class="body">
-        <div class="activity-info">
-            <div class="participant-count">参与人数：<span></span></div>
-            <div class="deadline">
-                <span class="icon"></span>
-                距活动结束还有：
-                <span class="day">0</span>天
-                <span class="hour">0</span>时
-                <span class="minute">0</span>分
-                <span class="second">0</span>秒
-            </div>
-        </div>
-        <div class="my-lottery">
-            <div class="number">
-                <div class="text">我的抽奖号：</div>
-                <div class="number-list"></div>
-            </div>
-            <div class="liveness">
-                <div class="mine">
-                    我的爱心<span class="icon"></span>：<span class="my-liveness"></span>
-                </div>
-                <div class="max">
-                    最高爱心：<span class="max-liveness"></span>
-                </div>
-            </div>
-        </div>
-        <div class="prompt">
-            <!--<div class="no-chance">
-                您已抽过奖，需要通过积累爱心再次获取抽奖机会
-            </div>-->
-            <div class="spread">
-                您的爱心不足N，请努力传播！
-                <div class="spread-method">
-                    <a href="javascript:void(showLotteryRule('lotteryResult'))">如何提高爱心？</a>
-                </div>
-            </div>
-        </div>
-        <div class="lottery-again">
-            <button class="green-submit-button" id="takeLotteryAgain">再抽一次</button>
-            <span class="split"></span>
-            <a href="javascript:void(showLotteryRule('lotteryResult'))">抽奖规则</a>
-        </div>
-        <div class="share">
-            <a href="javascript:void(0)" target="_blank" class="sina"></a>
-            <a href="javascript:void(0)" target="_blank" class="qq"></a>
-            <a href="javascript:void(0)" target="_blank" class="qzone"></a>
-        </div>
-    </div>
-</div>
---%>
-
 <div class="float-panel activity-result" id="lotteryResult">
     <jsp:include page="commodity-float-panel-title.jsp">
         <jsp:param name="title" value="<span class='text'></span>"/>
@@ -229,50 +134,6 @@
                 <a href="javascript:void(0)">抽奖规则>>></a>
             </div>
         </div>
-        <%--
-        <div class="activity-info">
-            <div class="participant-count">参与人数：<span></span></div>
-            <div class="deadline">
-                <span class="icon"></span>
-                距活动结束还有：
-                <span class="day">0</span>天
-                <span class="hour">0</span>时
-                <span class="minute">0</span>分
-                <span class="second">0</span>秒
-            </div>
-        </div>
-        <div class="my-lottery">
-            <div class="number">
-                <div class="text">我的抽奖号：</div>
-                <div class="number-list"></div>
-            </div>
-            <div class="liveness">
-                <div class="mine">
-                    我的爱心<span class="icon"></span>：<span class="my-liveness"></span>
-                </div>
-                <div class="max">
-                    最高爱心：<span class="max-liveness"></span>
-                </div>
-            </div>
-        </div>
-        <div class="prompt">
-            <div class="spread">
-                您的爱心不足N，请努力传播！
-                <div class="spread-method">
-                    <a href="javascript:void(showLotteryRule('lotteryResult'))">如何提高爱心？</a>
-                </div>
-            </div>
-        </div>
-        <div class="lottery-again">
-            <button class="green-submit-button" id="takeLotteryAgain">再抽一次</button>
-            <span class="split"></span>
-            <a href="javascript:void(showLotteryRule('lotteryResult'))">抽奖规则</a>
-        </div>
-        <div class="share">
-            <a href="javascript:void(0)" target="_blank" class="sina"></a>
-            <a href="javascript:void(0)" target="_blank" class="qq"></a>
-            <a href="javascript:void(0)" target="_blank" class="qzone"></a>
-        </div>--%>
     </div>
 </div>
 
