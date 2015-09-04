@@ -58,6 +58,7 @@ public class CommodityController extends ImageController {
         setAttribute("lotteryRule", AppConfig.getLotteryRule());
         setAttribute("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
 
+        addJs("lib/jsutils.digit", false);
         addJs("lib/handlebars.min-v1.3.0", false);
         addHeadJs("lib/image-adjust");
         addCssAndJs("commodity");

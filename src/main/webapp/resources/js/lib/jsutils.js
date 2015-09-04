@@ -3,13 +3,12 @@
  */
 var JSUtils = {
     /**
-     * notice that we can use new Date("2012-01-01") in IE8,
+     * notice that we can not use new Date("2012-01-01") in IE8,
      * so we use this function to ensure compatibility to IE8
      * @param arg date string or timestamp
      * @returns {Date}
      */
-    newDate: function
-        (arg) {
+    newDate: function (arg) {
         if (this.isNumber(arg)) {
             return new Date(arg);
         }
@@ -19,6 +18,43 @@ var JSUtils = {
         var month = parseInt(dateArr[1] - 1);
         var day = parseInt(dateArr[2]);
         return new Date(year, month, day);
+    },
+    remainingTimeRecorder: function (remainingSeconds) {
+        var startTimestamp = new Date().getTime();
+        return {
+            _startTimestamp: startTimestamp,
+            getRemainingSeconds: function () {
+                return remainingSeconds + parseInt((this._startTimestamp - new Date().getTime()) / 1000);
+            },
+            getRemainingTime: function () {
+                function pad(value) {
+                    return value < 10 ? '0' + value : '' + value;
+                }
+
+                var secondsInDay = 3600 * 24;
+                var seconds = this.getRemainingSeconds();
+                if (seconds <= 0) {
+                    seconds = 0;
+                }
+                var days = parseInt(seconds / secondsInDay);
+                seconds -= days * secondsInDay;
+                var hours = parseInt(seconds / 3600);
+                seconds -= hours * 3600;
+                var minutes = parseInt(seconds / 60);
+                seconds -= minutes * 60;
+
+                return {
+                    'days': pad(days),
+                    'hours': pad(hours),
+                    'minutes': pad(minutes),
+                    'seconds': pad(seconds)
+                };
+            },
+            getRemainingTimeString: function () {
+                var time = this.getRemainingTime();
+                return time.days + time.hours + time.minutes + time.seconds;
+            }
+        };
     },
     getWindowHeight: function () {
         return $(window).height();

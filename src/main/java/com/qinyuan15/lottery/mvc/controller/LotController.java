@@ -152,7 +152,7 @@ public class LotController extends ImageController {
         // participants data
         //result.put("participantCount", new SeckillLotCounter().count(activity));
 
-        result.put("remainingSeconds", getRemainingSeconds(activity));
+        //result.put("remainingSeconds", getRemainingSeconds(activity));
         return toJson(result);
     }
 
@@ -165,6 +165,56 @@ public class LotController extends ImageController {
             return fail("notStart");
         }
     }
+
+    @RequestMapping("/activity-remaining-seconds.json")
+    @ResponseBody
+    public String getActivityRemainingSeconds(@RequestParam(value = "commodityId", required = true) Integer commodityId,
+                                              @RequestParam(value = "activityType", required = true) String activityType) {
+        if (!StringUtils.hasText(activityType) || !IntegerUtils.isPositive(commodityId)) {
+            return failByInvalidParam();
+        }
+
+        switch (activityType) {
+            case "lottery": {
+                LotteryActivity activity = new LotteryActivityDao().getActiveInstanceByCommodityId(commodityId);
+                if (activity == null || activity.getExpire()) {
+                    return fail("noActivity");
+                }
+                return getRemainingSecondsJson(activity.getExpectEndTime());
+            }
+            case "seckill": {
+                SeckillActivity activity = new SeckillActivityDao().getActiveInstanceByCommodityId(commodityId);
+                if (activity == null || activity.getExpire()) {
+                    return fail("noActivity");
+                }
+                return getRemainingSecondsJson(activity.getStartTime());
+            }
+            default:
+                return failByInvalidParam();
+        }
+    }
+
+    private String getRemainingSecondsJson(String time) {
+        Map<String, Object> map = new HashMap<>();
+        if (!StringUtils.hasText(time)) {
+            map.put("seconds", 0);
+            return toJson(map);
+        }
+        long remainingSeconds = DateUtils.newDate(time).getTime() - System.currentTimeMillis();
+        map.put("seconds", remainingSeconds < 0 ? 0 : (int) (remainingSeconds / 1000));
+        return toJson(map);
+    }
+
+    /*
+    private int getRemainingSeconds(SeckillActivity activity) {
+        String startTime = activity.getStartTime();
+        if (!StringUtils.hasText(startTime)) {
+            return 0;
+        }
+        long remainingSeconds = DateUtils.newDate(startTime).getTime() - System.currentTimeMillis();
+        return remainingSeconds < 0 ? 0 : (int) (remainingSeconds / 1000);
+    }
+    */
 
     private Commodity getCommodity(Integer commodityId) {
         return new CommodityUrlAdapter(this).adapt(new CommodityDao().getInstance(commodityId));
@@ -204,16 +254,8 @@ public class LotController extends ImageController {
         return toJson(result);
     }
 
-    private int getRemainingSeconds(SeckillActivity activity) {
-        String startTime = activity.getStartTime();
-        if (!StringUtils.hasText(startTime)) {
-            return 0;
-        }
-        long remainingSeconds = DateUtils.newDate(startTime).getTime() - System.currentTimeMillis();
-        return remainingSeconds < 0 ? 0 : (int) (remainingSeconds / 1000);
-    }
 
-    @RequestMapping("/participant-count.json")
+    @RequestMapping("/lottery-participant-count.json")
     @ResponseBody
     public String participantCount(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
         LotteryActivity activity = new LotteryActivityDao().getActiveInstanceByCommodityId(commodityId);

@@ -180,13 +180,31 @@ div.main-body div.detail {
     background: no-repeat top center;
 }
 
+div.main-body > div.detail > div.remaining-time {
+    position: absolute;
+    top: 5px;
+    right: 175px;
+    display: none;
+}
+
+div.main-body > div.detail > div.remaining-time > div {
+    float: left;
+}
+
+div.main-body > div.detail > div.remaining-time div.title {
+    font-size: 11pt;
+    padding-top: 7px;
+}
+
 div.main-body > div.detail > div.participant-count {
     position: absolute;
-    top: 15px;
+    /*top: 15px;
     left: 50%;
-    margin-left: 200px;
+    margin-left: 200px;*/
+    top: 45px;
+    right: 180px;
     font-size: 12pt;
-    color: #909090;
+    /*color: #909090;*/
     display: none;
 }
 

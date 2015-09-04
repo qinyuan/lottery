@@ -18,7 +18,8 @@
             <div class="snapshot" title="单击切换到该商品" data-options="id:${snapshot.id}">
                 <div class="image" style="background-image: url('${snapshot.snapshot}')"></div>
                 <div class="name">${snapshot.name}</div>
-                <div class="price"><c:if test="${!snapshot.inLottery}">${snapshot.price}元</c:if></div>
+                <div class="price"><c:if
+                        test="${!snapshot.inLottery && !snapshot.inSeckill}">${snapshot.price}元</c:if></div>
                 <c:if test="${snapshot.inLottery}">
                     <div class="in-lottery-icon mediumTransparent" title="抽奖中"><img
                             src="resources/css/images/commodity/in-lottery.png"/></div>
@@ -34,7 +35,12 @@
 </div>
 <div class="main-body">
     <div class="detail">
-        <div class="participant-count"><span class="participant-count"></span>人抽奖</div>
+        <div class="remaining-time">
+            <div class="title">剩余时间：</div>
+            <div class="clock"></div>
+        </div>
+        <!--<div class="participant-count"><span class="participant-count"></span>人抽奖</div>-->
+        <div class="participant-count">已参与人数：<span class="participant-count"></span></div>
         <img usemap="#commodityMap"/>
     </div>
 </div>
@@ -186,5 +192,4 @@
         </div>
     </div>
 </div>
-
 <%@include file="inc-footer.jsp" %>

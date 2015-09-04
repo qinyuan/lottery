@@ -1,32 +1,32 @@
 ;
 (function () {
-    // codes about participant count and snapshot
     var participantCount = ({
-        get$Div: function () {
-            return $('div.main-body > div.detail > div.participant-count');
-        },
-        update: function (commodityId) {
-            var self = this;
-            $.post('participant-count.json', {
-                commodityId: commodityId
-            }, function (data) {
-                var $participantCountDiv = self.get$Div();
-                if (data['participantCount']) {
-                    $participantCountDiv.find("span.participant-count").text(data['participantCount']);
-                    $participantCountDiv.show();
-                } else {
-                    $participantCountDiv.hide();
-                }
-            });
+        update: function () {
+            var commodity = getSelectedCommodity();
+            var $participantCountDiv = this.$div;
+            if (commodity.inLottery) {
+                $.post('lottery-participant-count.json', {
+                    commodityId: commodity.id
+                }, function (data) {
+                    if (data['participantCount']) {
+                        $participantCountDiv.find("span.participant-count").text(data['participantCount']);
+                        $participantCountDiv.show();
+                    } else {
+                        $participantCountDiv.hide();
+                    }
+                });
+            } else {
+                $participantCountDiv.hide();
+            }
         },
         hide: function () {
-            this.get$Div().hide();
+            this.$div.hide();
         },
         init: function () {
-            //this.update(window['selectedCommodityId']);
+            this.$div = $('div.main-body > div.detail > div.participant-count');
             var self = this;
             setInterval(function () {
-                self.update(getSelectedCommodityId());
+                self.update();
             }, 3000); // refresh each three seconds
             return this;
         }
@@ -35,8 +35,7 @@
     var snapshots = ({
         $divs: $('div.main-body div.snapshots div.snapshot'),
         loadDetail: function (imageId) {
-            //location.href = JSUtils.updateUrlParam('id', imageId);
-            participantCount.get$Div().hide();
+            participantCount.hide();
             var $detail = $('div.main-body div.detail');
             var $img = $detail.find('img');
             $img.hide();
@@ -47,10 +46,10 @@
             }, function (data) {
                 var commodity = data['commodity'];
                 $detail.setBackgroundImage(commodity['backImage']);
-                //$detail.css('background-image', 'url("' + commodity['backImage'] + '")');
                 $img.attr('src', commodity['detailImage']);
                 $img.fadeIn(500, function () {
-                    participantCount.update(getSelectedCommodityId());
+                    participantCount.update();
+                    remainingTime.init();
                 });
                 self.loadCommodityMap(data['commodityMaps']);
             })
@@ -166,9 +165,66 @@
             return this;
         }
     }).init();
-})();
-(function () {
-    // codes about lottery
+
+    var remainingTime = {
+        $remainingTime: $('div.main-body > div.detail > div.remaining-time'),
+        getRemainingTimeString: function () {
+            return this._remainingTimeRecorder == null ? null : this._remainingTimeRecorder.getRemainingTimeString();
+        },
+        getRemainingTimeObject: function () {
+            return this._remainingTimeRecorder.getRemainingTime();
+        },
+        _stopRemainingTimeDigitClockUpdateTimer: function () {
+            if (this._updateTimer) {
+                clearInterval(this._updateTimer);
+            }
+        },
+        updateRemainingTimeDigitClock: function () {
+            this.$remainingTime.show();
+            var $click = this.$remainingTime.find('div.clock');
+            var digitClock = JSUtils.digitClock($click, {
+                'backgroundImage': 'resources/css/images/commodity/digit.png',
+                'initValue': this.getRemainingTimeString()
+            });
+
+            var self = this;
+            this._stopRemainingTimeDigitClockUpdateTimer();
+            this._updateTimer = setInterval(function () {
+                digitClock.to(self.getRemainingTimeString());
+            }, 1000);
+        },
+        init: function () {
+            var self = this;
+
+            function clear() {
+                self._stopRemainingTimeDigitClockUpdateTimer();
+                self._remainingTimeRecorder = null;
+                self.$remainingTime.hide();
+            }
+
+            var commodity = getSelectedCommodity();
+            var params = {'commodityId': commodity.id};
+            if (commodity.inLottery) {
+                params['activityType'] = 'lottery';
+            } else if (commodity.inSeckill) {
+                params['activityType'] = 'seckill';
+            } else {
+                clear();
+                return;
+            }
+
+            $.post('activity-remaining-seconds.json', params, function (data) {
+                if (data['seconds']) {
+                    self._remainingTimeRecorder = JSUtils.remainingTimeRecorder(data['seconds']);
+                    self.updateRemainingTimeDigitClock();
+                } else {
+                    clear();
+                }
+            });
+            return this;
+        }
+    };
+
     function setFloatPanelUsername($floatPanel, username) {
         $floatPanel.find('div.title div.text span.username').text(username);
     }
@@ -473,10 +529,8 @@
         get$ActivityExpire: function () {
             return this.$div.find('div.body div.activity-expire');
         },
-        updateRemainingTime: function (remainingSeconds) {
+        updateRemainingTime: function () {
             var self = this;
-            var startTimestamp = new Date().getTime();
-            var secondsInDay = 3600 * 24;
             this.$remainingTime.show();
 
             updateHTML();
@@ -486,35 +540,15 @@
             }, 1000));
 
             function updateHTML() {
-                var seconds = remainingSeconds + parseInt((startTimestamp - new Date().getTime()) / 1000);
-                if (seconds <= 0) {
-                    seconds = 0;
-                }
-                var days = parseInt(seconds / secondsInDay);
-                seconds -= days * secondsInDay;
-                var hours = parseInt(seconds / 3600);
-                seconds -= hours * 3600;
-                var minutes = parseInt(seconds / 60);
-                seconds -= minutes * 60;
-
-                if (hours < 10) {
-                    hours = '0' + hours;
-                }
-                if (minutes < 10) {
-                    minutes = '0' + minutes;
-                }
-                if (seconds < 10) {
-                    seconds = '0' + seconds;
-                }
-
-                if (days > 0) {
-                    self.$remainingDay.text(days + '天');
+                var time = remainingTime.getRemainingTimeObject();
+                if (parseInt(time.days) > 0) {
+                    self.$remainingDay.text(time.days + '天');
                 } else {
                     self.$remainingDay.text('');
                 }
-                self.$remainingHour.text(hours);
-                self.$remainingMinute.text(minutes);
-                self.$remainingSecond.text(seconds);
+                self.$remainingHour.text(time.hours);
+                self.$remainingMinute.text(time.minutes);
+                self.$remainingSecond.text(time.seconds);
             }
         },
         show: function (options) {
@@ -524,7 +558,7 @@
                 this.$remainingTime.hide();
             } else {
                 // remaining time
-                this.updateRemainingTime(options['remainingSeconds']);
+                this.updateRemainingTime();
             }
 
             // title
@@ -640,9 +674,19 @@
             }
         });
     };
+
+    function getSelectedCommodityId() {
+        return getSelectedCommodity()['id'];
+    }
+
+    function getSelectedCommodity() {
+        var $selectedSnapshot = $('div.main-body div.snapshots div.snapshot.selected');
+        var id = $selectedSnapshot.dataOptions('id');
+        return {
+            'id': id,
+            'inLottery': $selectedSnapshot.find('div.in-lottery-icon').size() > 0,
+            'inSeckill': $selectedSnapshot.find('div.in-seckill-icon').size() > 0
+        }
+    }
 })();
 var getLotteryLot, getSeckillLot, showLotteryRule;
-function getSelectedCommodityId() {
-    var $selectedSnapshot = $('div.main-body div.snapshots div.snapshot.selected');
-    return $selectedSnapshot.dataOptions('id');
-}
