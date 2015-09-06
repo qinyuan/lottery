@@ -88,6 +88,7 @@ public class LotteryActivity extends AbstractActivity {
     }
 
     //////////////////////////// derivative fields /////////////////////////////////
+    @Override
     public int getParticipantCount() {
         return virtualParticipants == null ? getRealParticipantCount() :
                 getRealParticipantCount() + virtualParticipants;

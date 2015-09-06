@@ -159,7 +159,18 @@ public class LotController extends ImageController {
     @RequestMapping("/do-seckill-action.json")
     @ResponseBody
     public String doSeckillAction(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
-        if (new SeckillActivityDao().getActiveInstanceByCommodityId(commodityId) == null) {
+        Integer userId = securitySearcher.getUserId();
+        if (!IntegerUtils.isPositive(userId)) {
+            return fail("noLogin");
+        }
+
+        SeckillActivityDao activityDao = new SeckillActivityDao();
+        SeckillActivity activity = activityDao.getActiveInstanceByCommodityId(commodityId);
+        if (activity == null) {
+            activity = activityDao.getInstanceByCommodityId(commodityId);
+            if (activity != null) {
+                new SeckillLotDao().add(activity.getId(), userId);
+            }
             return fail("over");
         } else {
             return fail("notStart");

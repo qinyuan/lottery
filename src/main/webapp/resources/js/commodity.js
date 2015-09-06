@@ -640,6 +640,9 @@
                             self.$overResult.twinkle(4);
                         } else if (data.detail == 'notStart') {
                             self.$notStartResult.twinkle(4);
+                        } else if (data.detail == 'noLogin') {
+                            alert('请重新登录');
+                            location.reload();
                         } else {
                             self.$unknownResult.twinkle(4);
                         }

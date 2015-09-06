@@ -8,4 +8,11 @@ public class SeckillActivity extends AbstractActivity {
     protected LotCounter getLotCounter() {
         return new SeckillLotCounter();
     }
+
+    @Override
+    public int getParticipantCount() {
+        Integer expectCount = getExpectParticipantCount();
+        int realCount = getRealParticipantCount();
+        return expectCount == null || expectCount < realCount ? realCount : expectCount;
+    }
 }

@@ -13,8 +13,13 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
     public static class Factory extends AbstractActivityPaginationItemFactory<LotteryActivity> {
         @Override
         protected void addOrders(HibernateListBuilder listBuilder) {
-            listBuilder.addOrder("expire", false).addOrder("endTime", false)
+            listBuilder.addOrder("expire", true).addOrder("endTime", false)
                     .addOrder("startTime", false).addOrder("id", false);
+        }
+
+        @Override
+        protected Class<? extends AbstractLot> getLotClass() {
+            return LotteryLot.class;
         }
     }
 

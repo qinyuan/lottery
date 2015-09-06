@@ -6,6 +6,10 @@ import org.apache.commons.lang3.StringUtils;
 
 public class SeckillActivityDao extends AbstractActivityDao<SeckillActivity> {
     public static class Factory extends AbstractActivityPaginationItemFactory<SeckillActivity> {
+        @Override
+        protected Class<? extends AbstractLot> getLotClass() {
+            return SeckillLot.class;
+        }
     }
 
     public static Factory factory() {

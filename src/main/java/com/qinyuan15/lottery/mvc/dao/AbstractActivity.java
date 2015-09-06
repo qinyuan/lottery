@@ -97,5 +97,7 @@ abstract class AbstractActivity extends PersistObject {
         return realParticipantCountCache;
     }
 
+    public abstract int getParticipantCount();
+
     protected abstract LotCounter getLotCounter();
 }
