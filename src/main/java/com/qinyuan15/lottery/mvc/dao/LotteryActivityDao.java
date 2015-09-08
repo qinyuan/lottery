@@ -54,7 +54,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         return HibernateUtils.save(activity);
     }
 
-    public void updateMaxSerialNumber(Integer id, int serialNumber) {
+    /*public void updateMaxSerialNumber(Integer id, int serialNumber) {
         String hql = "UPDATE LotteryActivity SET maxSerialNumber=" + serialNumber + " WHERE id=" + id;
         HibernateUtils.executeUpdate(hql);
     }
@@ -66,7 +66,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
     public void increaseMaxSerialNumber(Integer id, int n) {
         String hql = "UPDATE LotteryActivity SET maxSerialNumber=maxSerialNumber+" + n + " WHERE id=" + id;
         HibernateUtils.executeUpdate(hql);
-    }
+    }*/
 
     public void update(Integer id, Integer term, Integer commodityId, String startTime, String expectEndTime,
                        Integer continuousSerialLimit, Integer expectParticipantCount,
@@ -110,10 +110,10 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         super.updateResult(id, winners, announcement);
     }
 
-    public Integer getMaxSerialNumber(Integer activityId) {
+    /*public Integer getMaxSerialNumber(Integer activityId) {
         return (Integer) new HibernateListBuilder().addEqualFilter("id", activityId)
                 .getFirstItem("SELECT maxSerialNumber FROM LotteryActivity");
-    }
+    }*/
 
     public Integer getLatestMinLivenessToParticipate() {
         return (Integer) new HibernateListBuilder().addOrder("id", false)

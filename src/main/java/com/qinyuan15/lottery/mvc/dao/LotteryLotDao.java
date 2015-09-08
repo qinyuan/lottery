@@ -89,16 +89,26 @@ public class LotteryLotDao extends AbstractDao<LotteryLot> {
         return new Factory();
     }
 
-    public int countBySerialNumberRange(int activityId, int startSerialNumber, int endSerialNumber) {
+    @SuppressWarnings("unchecked")
+    public List<Integer> getSerialNumbers(int activityId, int startSerialNumber, int endSerialNumber) {
+        return new HibernateListBuilder()
+                .addEqualFilter("activityId", activityId)
+                .addFilter("serialNumber BETWEEN :startSerialNumber AND :endSerialNumber")
+                .addArgument("startSerialNumber", startSerialNumber)
+                .addArgument("endSerialNumber", endSerialNumber)
+                .build("SELECT serialNumber FROM " + LotteryLot.class.getSimpleName());
+    }
+
+    /*public int countBySerialNumberRange(int activityId, int startSerialNumber, int endSerialNumber) {
         return new HibernateListBuilder()
                 .addEqualFilter("activityId", activityId)
                 .addFilter("serialNumber BETWEEN :startSerialNumber AND :endSerialNumber")
                 .addArgument("startSerialNumber", startSerialNumber)
                 .addArgument("endSerialNumber", endSerialNumber)
                 .count(LotteryLot.class);
-    }
+    }*/
 
-    public List<Integer> getSerialNumbersByActivityId(Integer activityId) {
+    public List<Integer> getSerialNumbers(Integer activityId) {
         @SuppressWarnings("unchecked")
         List<Integer> serialNumbers = (List) new HibernateListBuilder().addEqualFilter("activityId", activityId)
                 .build("SELECT serialNumber FROM LotteryLot");

@@ -13,11 +13,11 @@ public class LotteryActivityDaoTest {
         System.out.println(factory.getFirstInstance().getId());
     }
 
-    @Test
+    /*@Test
     public void testGetMaxSerialNumber() throws Exception {
         System.out.println(dao.getMaxSerialNumber(25));
         System.out.println(dao.getMaxSerialNumber(26));
-    }
+    }*/
 
     @Test
     public void testIncreaseMaxSerialNumber() {

@@ -12,6 +12,7 @@ public class LotteryActivity extends AbstractActivity {
     private Integer virtualLiveness;
     private String virtualLivenessUsers;
     private Integer maxSerialNumber;
+    private Integer minSerialNumber;
     private Integer dualColoredBallTerm;
     private Integer minLivenessToParticipate;
 
@@ -69,6 +70,14 @@ public class LotteryActivity extends AbstractActivity {
 
     public void setMaxSerialNumber(Integer maxSerialNumber) {
         this.maxSerialNumber = maxSerialNumber;
+    }
+
+    public Integer getMinSerialNumber() {
+        return minSerialNumber;
+    }
+
+    public void setMinSerialNumber(Integer minSerialNumber) {
+        this.minSerialNumber = minSerialNumber;
     }
 
     public Integer getDualColoredBallTerm() {

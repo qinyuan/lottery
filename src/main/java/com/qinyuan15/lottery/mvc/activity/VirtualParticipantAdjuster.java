@@ -24,7 +24,7 @@ public class VirtualParticipantAdjuster {
         }
 
         // get real participants and their serial number
-        List<Integer> lots = new LotteryLotDao().getSerialNumbersByActivityId(activityId);
+        List<Integer> lots = new LotteryLotDao().getSerialNumbers(activityId);
 
         // calculate total participant numbers
         Integer count = virtualParticipantCount + lots.size();

@@ -81,6 +81,7 @@ create table lottery_activity(
   virtual_liveness int,
   virtual_liveness_users char(200),
   max_serial_number int not null default 0,
+  min_serial_number int not null default 0,
   dual_colored_ball_term int not null,
   winners char(100),
   description varchar(2000),

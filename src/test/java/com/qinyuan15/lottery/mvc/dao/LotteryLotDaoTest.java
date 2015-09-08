@@ -17,7 +17,7 @@ public class LotteryLotDaoTest {
 
     @Test
     public void testGetSerialNumbersByActivityId() {
-        List<Integer> serialNumbers = dao.getSerialNumbersByActivityId(23);
+        List<Integer> serialNumbers = dao.getSerialNumbers(23);
         System.out.println(serialNumbers.size());
         System.out.println(serialNumbers);
     }
@@ -27,5 +27,11 @@ public class LotteryLotDaoTest {
         List<LotteryLot> lots = LotteryLotDao.factory()
                 .setActivityId(11).setUserId(2).getInstances();
         System.out.println(lots.size());
+    }
+
+    @Test
+    public void testGetSerialNumberByRange() {
+        List<Integer> integers = new LotteryLotDao().getSerialNumbers(1, 3000, 5000);
+        System.out.println(integers);
     }
 }
