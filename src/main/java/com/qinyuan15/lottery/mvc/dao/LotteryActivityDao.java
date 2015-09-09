@@ -3,6 +3,7 @@ package com.qinyuan15.lottery.mvc.dao;
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.lang.DateUtils;
+import com.qinyuan.lib.lang.IntegerRange;
 import com.qinyuan.lib.lang.IntegerUtils;
 import org.springframework.util.StringUtils;
 
@@ -34,7 +35,8 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
 
     public Integer add(Integer term, Integer commodityId, String startTime, String expectEndTime,
                        Integer continuousSerialLimit, Integer expectParticipantCount, Integer dualColoredBallTerm,
-                       String description, Integer minLivenessToParticipant) {
+                       String description, Integer minLivenessToParticipant, Integer minSerialNumber,
+                       Integer maxSerialNumber) {
         LotteryActivity activity = new LotteryActivity();
         activity.setTerm(term);
         activity.setCommodityId(commodityId);
@@ -45,12 +47,14 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         activity.setDualColoredBallTerm(dualColoredBallTerm);
         activity.setDescription(description);
         activity.setMinLivenessToParticipate(minLivenessToParticipant);
+        activity.setMinSerialNumber(minSerialNumber);
+        activity.setMaxSerialNumber(maxSerialNumber);
 
         // set default values
-        activity.setMaxSerialNumber(0);
+        //activity.setMaxSerialNumber(0);
         activity.setVirtualParticipants(0);
-
         activity.setExpire(false);
+
         return HibernateUtils.save(activity);
     }
 
@@ -71,8 +75,10 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
     public void update(Integer id, Integer term, Integer commodityId, String startTime, String expectEndTime,
                        Integer continuousSerialLimit, Integer expectParticipantCount,
                        Integer virutalLiveness, String virtualLivenessUsers, Integer dualColoredBallTerm,
-                       String description, Integer minLivenessToParticipant) {
+                       String description, Integer minLivenessToParticipant, Integer minSerialNumber,
+                       Integer maxSerialNumber) {
         LotteryActivity activity = getInstance(id);
+
         activity.setTerm(term);
         activity.setCommodityId(commodityId);
         activity.setStartTime(startTime);
@@ -84,6 +90,9 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         activity.setDualColoredBallTerm(dualColoredBallTerm);
         activity.setDescription(description);
         activity.setMinLivenessToParticipate(minLivenessToParticipant);
+        activity.setMinSerialNumber(minSerialNumber);
+        activity.setMaxSerialNumber(maxSerialNumber);
+
         HibernateUtils.update(activity);
     }
 
@@ -118,5 +127,26 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
     public Integer getLatestMinLivenessToParticipate() {
         return (Integer) new HibernateListBuilder().addOrder("id", false)
                 .getFirstItem("SELECT minLivenessToParticipate FROM " + LotteryActivity.class.getSimpleName());
+    }
+
+    private final static String DEFAULT_SERIAL_NUMBER_RANGE = "10~100000";
+
+    public String getLatestSerialNumberRange() {
+        LotteryActivity activity = new HibernateListBuilder().addOrder("id", false).getFirstItem(LotteryActivity.class);
+        if (activity == null) {
+            return DEFAULT_SERIAL_NUMBER_RANGE;
+        }
+
+        Integer minSerialNumber = activity.getMinSerialNumber();
+        if (!IntegerUtils.isPositive(minSerialNumber)) {
+            return DEFAULT_SERIAL_NUMBER_RANGE;
+        }
+
+        Integer maxSerialNumber = activity.getMaxSerialNumber();
+        if (!IntegerUtils.isPositive(maxSerialNumber)) {
+            return DEFAULT_SERIAL_NUMBER_RANGE;
+        }
+
+        return new IntegerRange(minSerialNumber, maxSerialNumber).toString();
     }
 }

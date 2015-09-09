@@ -32,7 +32,6 @@ public class LotteryLotCreator {
                 newLot);
     }
 
-
     public static class CreateResult {
         private List<LotteryLot> lots;
         private boolean newLot;

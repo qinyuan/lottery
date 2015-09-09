@@ -60,12 +60,16 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="title">抽奖号取值范围<span class="required">*</span></td>
+                    <td class="content">
+                        <input type="text" name="serialNumberRange" class="form-control" value="10~100000"
+                               placeholder="格式如：'10~100000'"/>
+                    </td>
                     <td class="title">抽奖号最大连续个数</td>
                     <td class="content">
                         <input type="text" name="continuousSerialLimit" class="form-control"
                                value="5" placeholder="输入抽奖号最大连续个数"/>
                     </td>
-                    <%@include file="admin-activity-description-input.jsp" %>
                 </tr>
                 <tr>
                     <td class="title">最少需要的爱心数</td>
@@ -73,6 +77,7 @@
                         <input type="text" name="minLivenessToParticipate" class="form-control"
                                value="${latestMinLivenessToParticipate}" placeholder="输入参与抽奖最少需要的爱心"/>
                     </td>
+                    <%@include file="admin-activity-description-input.jsp" %>
                 </tr>
                 </tbody>
             </table>

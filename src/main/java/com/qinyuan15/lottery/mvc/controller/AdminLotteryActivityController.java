@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.lang.DateUtils;
+import com.qinyuan.lib.lang.IntegerRange;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan15.lottery.mvc.activity.DualColoredBallTermValidator;
 import com.qinyuan15.lottery.mvc.dao.*;
@@ -31,10 +32,10 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                 new DecimalFormat("000").format(latestRecord.getTerm() + 1));
 
         setAttribute("latestMinLivenessToParticipate", new LotteryActivityDao().getLatestMinLivenessToParticipate());
+        setAttribute("latestSerialNumberRange", new LotteryActivityDao().getLatestSerialNumberRange());
 
         return super.index(listType, "admin-lottery-activity");
     }
-
 
     @RequestMapping("/admin-lottery-activity-add-edit.json")
     @ResponseBody
@@ -50,7 +51,9 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                           @RequestParam(value = "virtualLivenessUsers", required = true) String virtualLivenessUsers,
                           @RequestParam(value = "dualColoredBallTerm", required = true) Integer dualColoredBallTerm,
                           @RequestParam(value = "description", required = true) String description,
-                          @RequestParam(value = "minLivenessToParticipate", required = true) Integer minLivenessToParticipate) {
+                          @RequestParam(value = "minLivenessToParticipate", required = true) Integer minLivenessToParticipate,
+                          @RequestParam(value = "serialNumberRange", required = true) String serialNumberRangeString) {
+
         if (StringUtils.hasText(autoStartTime)) {
             startTime = DateUtils.nowString();
         } else {
@@ -78,6 +81,11 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
             return fail("预计结束时间格式错误！");
         }
 
+        if (!StringUtils.hasText(serialNumberRangeString) ||
+                !IntegerRange.validate(serialNumberRangeString)) {
+            return fail("抽奖号取值范围的正确格式如'10~100000'");
+        }
+
         if (!IntegerUtils.isPositive(virtualLiveness)) {
             virtualLiveness = null;
         }
@@ -91,11 +99,13 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
         }
 
         try {
+            IntegerRange serialNumberRange = new IntegerRange(serialNumberRangeString);
             LotteryActivityDao dao = new LotteryActivityDao();
             if (IntegerUtils.isPositive(id)) {
                 dao.update(id, term, commodityId, startTime, expectEndTime, continuousSerialLimit,
                         expectParticipantCount, virtualLiveness, virtualLivenessUsers, dualColoredBallTerm,
-                        description, minLivenessToParticipate);
+                        description, minLivenessToParticipate, serialNumberRange.getStart(),
+                        serialNumberRange.getEnd());
             } else {
                 CommodityDao commodityDao = new CommodityDao();
                 if (commodityDao.hasActiveSeckill(commodityId)) {
@@ -106,7 +116,8 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                     return fail("第" + term + "期抽奖已经存在，请填写别的期数！");
                 }
                 dao.add(term, commodityId, startTime, expectEndTime, continuousSerialLimit,
-                        expectParticipantCount, dualColoredBallTerm, description, minLivenessToParticipate);
+                        expectParticipantCount, dualColoredBallTerm, description, minLivenessToParticipate,
+                        serialNumberRange.getStart(), serialNumberRange.getEnd());
             }
             return success();
         } catch (Exception e) {

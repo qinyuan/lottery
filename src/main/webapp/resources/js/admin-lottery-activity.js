@@ -27,6 +27,9 @@
         get$MinLivenessToParticipate: function () {
             return this.$floatPanel.find('input[name=minLivenessToParticipate]');
         },
+        get$SerialNumberRange: function () {
+            return this.$floatPanel.find('input[name=serialNumberRange]');
+        },
         validateDualColoredBall: function () {
             var dualColoredBallTerm = this.get$DualColoredBallTerm().val();
             if (dualColoredBallTerm.length != 7
@@ -83,6 +86,20 @@
             if (minLivenessToParticipate != '' && !JSUtils.isNumberString(minLivenessToParticipate)) {
                 alert('最少需要的爱心数只能为数字格式！');
                 this.get$MinLivenessToParticipate().focusOrSelect();
+                return false;
+            }
+            return true;
+        },
+        validateSerialNumberRange: function () {
+            var serialNumberRange = this.get$SerialNumberRange().val();
+            if ($.trim(serialNumberRange) == '') {
+                alert('抽奖号取值范围未填写！');
+                this.get$SerialNumberRange().focusOrSelect();
+                return false;
+            }
+            if (!serialNumberRange.match(/^\d+~\d+$/)) {
+                alert('抽奖号取值范围格式错误，正确格式如"10~100000"');
+                this.get$SerialNumberRange().focusOrSelect();
                 return false;
             }
             return true;
@@ -147,6 +164,7 @@
         lotteryActivity.get$ExpectParticipantCount().val($tr.find('td.expect-participant-count').text());
         lotteryActivity.setDescriptionHtml($tr.find('input.description').val());
         lotteryActivity.get$MinLivenessToParticipate().val($tr.find('input.min-liveness-to-participate').val());
+        lotteryActivity.get$SerialNumberRange().val($tr.find('input.serial-number-range').val());
 
         JSUtils.loadSelectFormValue(lotteryActivity.get$CommoditySelect(), $tr.find('td.commodity')
             .dataOptions('commodityId'));

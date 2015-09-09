@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.lang.DateUtils;
+import com.qinyuan.lib.lang.IntegerRange;
 import com.qinyuan15.lottery.mvc.activity.LotCounter;
 import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
 
@@ -106,5 +107,18 @@ public class LotteryActivity extends AbstractActivity {
     @Override
     protected LotCounter getLotCounter() {
         return new LotteryLotCounter();
+    }
+
+    public String getSerialNumberRange() {
+        String range = IntegerRange.SEPARATOR;
+
+        if (minSerialNumber != null) {
+            range = minSerialNumber + range;
+        }
+        if (maxSerialNumber != null) {
+            range = range + maxSerialNumber;
+        }
+
+        return range;
     }
 }

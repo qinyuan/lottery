@@ -50,6 +50,7 @@
         <tr data-options="id:${activity.id}">
             <input type="hidden" class="description" value="${activity.description}"/>
             <input type="hidden" class="min-liveness-to-participate" value="${activity.minLivenessToParticipate}"/>
+            <input type="hidden" class="serial-number-range" value="${activity.serialNumberRange}"/>
             <%--<td>${status.index + rowStartIndex}</td>--%>
             <td class="term">${activity.term}</td>
             <td class="commodity" data-options="commodityId: ${activity.commodity.id}">${activity.commodity.name}</td>
