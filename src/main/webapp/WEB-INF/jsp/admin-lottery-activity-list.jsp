@@ -48,10 +48,9 @@
     <tbody>
     <c:forEach var="activity" items="${activities}" varStatus="status">
         <tr data-options="id:${activity.id}">
-            <input type="hidden" class="description" value="${activity.description}"/>
-            <input type="hidden" class="min-liveness-to-participate" value="${activity.minLivenessToParticipate}"/>
-            <input type="hidden" class="serial-number-range" value="${activity.serialNumberRange}"/>
-            <%--<td>${status.index + rowStartIndex}</td>--%>
+            <q:hidden cssClass="description" value="${activity.description}"/>
+            <q:hidden cssClass="min-liveness-to-participate" value="${activity.minLivenessToParticipate}"/>
+            <q:hidden cssClass="serial-number-range" value="${activity.serialNumberRange}"/>
             <td class="term">${activity.term}</td>
             <td class="commodity" data-options="commodityId: ${activity.commodity.id}">${activity.commodity.name}</td>
             <td class="start-time">${fn:replace(activity.startTime, ' ', '<br/> ')}</td>

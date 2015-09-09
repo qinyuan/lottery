@@ -1,4 +1,8 @@
 /********************* seckill list table start ************************/
+div.form table.normal col.commodity {
+    width: 150px;
+}
+
 div.form table.normal col.start-time {
     width: 138px;
 }
@@ -8,16 +12,12 @@ div.form table.normal col.real-participant-count {
     width: 95px;
 }
 
-div.form table.normal col.commodity {
-    width: 150px;
-}
-
 div.form table.normal col.winners {
     width: 70px;
 }
 
-div.form table.normal col.announcement {
-    width: 200px;
+div.form table.normal col.announcement, div.form table.normal col.description {
+    width: 280px;
 }
 
 /*********************** seckill list table end *********************/
