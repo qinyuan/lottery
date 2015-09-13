@@ -11,7 +11,8 @@ import java.io.IOException;
 
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+            throws ServletException, IOException {
         super.onAuthenticationSuccess(request, response, authentication);
         new LivenessAdder(request.getSession()).addLiveness(true);
         new LoginRecordAdder().add(request.getRemoteAddr());

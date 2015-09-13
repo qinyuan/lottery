@@ -598,7 +598,7 @@
                 $back.addClass('positive').onAnimationEnd(function () {
                     $(this).css('z-index', 1).removeClass('positive');
                 });
-            }, 1500);
+            }, 700);
         },
         init: function () {
             this.$remainingTime = this.$div.find('div.body div.remaining-time');

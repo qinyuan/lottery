@@ -115,8 +115,8 @@ public class AdminController extends ImageController {
     @RequestMapping("/admin-submit")
     public String submit(@RequestParam(value = "indexHeaderLeftLogo", required = true) String indexHeaderLeftLogo,
                          @RequestParam(value = "indexHeaderLeftLogoFile", required = true) MultipartFile indexHeaderLeftLogoFile,
-                         @RequestParam(value = "indexHeaderRightLogo", required = true) String indexHeaderRightLogo,
-                         @RequestParam(value = "indexHeaderRightLogoFile", required = true) MultipartFile indexHeaderRightLogoFile,
+                         /*@RequestParam(value = "indexHeaderRightLogo", required = true) String indexHeaderRightLogo,
+                         @RequestParam(value = "indexHeaderRightLogoFile", required = true) MultipartFile indexHeaderRightLogoFile,*/
                          @RequestParam(value = "indexHeaderSlogan", required = true) String indexHeaderSlogan,
                          @RequestParam(value = "indexHeaderSloganFile", required = true) MultipartFile indexHeaderSloganFile,
                          @RequestParam(value = "headerLinkTitles", required = true) String[] headerLinkTitles,
@@ -141,7 +141,7 @@ public class AdminController extends ImageController {
 
         final String redirectPage = "admin";
 
-        String indexHeaderLeftLogoPath = null, indexHeaderRightLogoPath = null,
+        String indexHeaderLeftLogoPath = null, /*indexHeaderRightLogoPath = null,*/
                 indexHeaderSloganPath = null, footerPosterPath = null,
                 commodityHeaderLeftLogoPath = null, faviconPath = null;
         try {
@@ -151,12 +151,12 @@ public class AdminController extends ImageController {
             redirect(redirectPage, "主页页头左图标处理失败！");
         }
 
-        try {
+        /*try {
             indexHeaderRightLogoPath = getSavePath(indexHeaderRightLogo, indexHeaderRightLogoFile);
         } catch (Exception e) {
             LOGGER.error("error in getting save path of indexHeaderRightLogo: {}", e);
             redirect(redirectPage, "主页页头右图标处理失败！");
-        }
+        }*/
 
         try {
             indexHeaderSloganPath = getSavePath(indexHeaderSlogan, indexHeaderSloganFile);
@@ -187,7 +187,7 @@ public class AdminController extends ImageController {
         }
 
         AppConfig.updateIndexHeaderLeftLogo(indexHeaderLeftLogoPath);
-        AppConfig.updateIndexHeaderRightLogo(indexHeaderRightLogoPath);
+        //AppConfig.updateIndexHeaderRightLogo(indexHeaderRightLogoPath);
         AppConfig.updateIndexHeaderSlogan(indexHeaderSloganPath);
         AppConfig.updateFooterPoster(footerPosterPath);
         AppConfig.updateFooterText(footerText);

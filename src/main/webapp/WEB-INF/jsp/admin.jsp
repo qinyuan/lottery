@@ -3,7 +3,7 @@
 <%@include file="index-header.jsp" %>
 <div class="page-width form">
     <q:multipart-form action="admin-submit">
-        <%@include file="admin-form.jsp" %>
+        <%@include file="admin-form.jsp"%>
     </q:multipart-form>
 </div>
 <q:handlebars-template id="link-template">

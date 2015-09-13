@@ -81,7 +81,7 @@ div.header > div.content > div.right-navigation > ul li a.text.emphasize {
 div.main-body div.snapshots {
     margin-top: 30px;
     border-bottom: 1px solid #DBDBDB;
-    padding: 0 40px;
+    padding: 0 17px;
     height: 170px;
     overflow: hidden;
     position: relative;
@@ -98,7 +98,7 @@ div.main-body div.snapshots div.snapshot {
     display: none;
     color: #696969;
     font-size: 9pt;
-    margin: 0 16px;
+    margin: 0 20px;
 }
 
 div.main-body div.snapshots div.snapshot.selected,
@@ -110,6 +110,10 @@ div.main-body div.snapshots div.snapshot > div.name {
     margin-top: 3px;
 }
 
+div.main-body div.snapshots div.snapshot > div.name.in-activity {
+    margin-top: 12px;
+}
+
 div.main-body div.snapshots div.snapshot > div.price {
     margin-top: 3px;
 }
@@ -119,6 +123,7 @@ div.main-body div.snapshots div.snapshot > div.in-seckill-icon {
     position: absolute;
     right: 0;
     bottom: 50px;
+    display: none;
 }
 
 div.main-body div.snapshots div.snapshot:hover > div.in-lottery-icon,
@@ -454,9 +459,9 @@ div.activity-result div.body div.lot div.pokers div.poker img.positive {
     -ms-transform: rotateY(180deg);
     -o-transform: rotateY(180deg);
     transform: rotateY(180deg);
-    -webkit-animation: rotate-animation 0.5s;
-    -moz-animation: rotate-animation 0.5s;
-    animation: rotate-animation 0.5s;
+    -webkit-animation: rotate-animation 0.4s;
+    -moz-animation: rotate-animation 0.4s;
+    animation: rotate-animation 0.4s;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
@@ -469,9 +474,9 @@ div.activity-result div.body div.lot div.pokers div.poker img.negative {
     -ms-transform: rotateY(0deg);
     -o-transform: rotateY(0deg);
     transform: rotateY(0deg);
-    -webkit-animation: rotate-inverse-animation 0.5s;
-    -moz-animation: rotate-inverse-animation 0.5s;
-    animation: rotate-inverse-animation 0.5s;
+    -webkit-animation: rotate-inverse-animation 0.4s;
+    -moz-animation: rotate-inverse-animation 0.4s;
+    animation: rotate-inverse-animation 0.4s;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;

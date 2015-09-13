@@ -17,17 +17,23 @@
         <c:forEach var="snapshot" items="${snapshots}">
             <div class="snapshot" title="单击切换到该商品" data-options="id:${snapshot.id}">
                 <div class="image" style="background-image: url('${snapshot.snapshot}')"></div>
-                <div class="name">${snapshot.name}</div>
-                <div class="price"><c:if
-                        test="${!snapshot.inLottery && !snapshot.inSeckill}">${snapshot.price}元</c:if></div>
-                <c:if test="${snapshot.inLottery}">
-                    <div class="in-lottery-icon mediumTransparent" title="抽奖中"><img
-                            src="resources/css/images/commodity/in-lottery.png"/></div>
-                </c:if>
-                <c:if test="${snapshot.inSeckill}">
-                    <div class="in-seckill-icon mediumTransparent" title="准备秒杀"><img
-                            src="resources/css/images/commodity/in-seckill.png"/></div>
-                </c:if>
+                <c:choose>
+                    <c:when test="${snapshot.inLottery || snapshot.inSeckill}">
+                        <div class="name in-activity">${snapshot.name}</div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="name">${snapshot.name}</div>
+                        <div class="price">${snapshot.price}元</div>
+                    </c:otherwise>
+                </c:choose>
+                    <c:if test="${snapshot.inLottery}">
+                        <div class="in-lottery-icon mediumTransparent" title="抽奖中"><img
+                                src="resources/css/images/commodity/in-lottery.png"/></div>
+                    </c:if>
+                    <c:if test="${snapshot.inSeckill}">
+                        <div class="in-seckill-icon mediumTransparent" title="准备秒杀"><img
+                                src="resources/css/images/commodity/in-seckill.png"/></div>
+                    </c:if>
             </div>
         </c:forEach>
         <div class="next lightTransparent"></div>

@@ -11,7 +11,8 @@ import java.io.IOException;
 
 public class AjaxLoginSuccessHandler extends AjaxAuthenticationSuccessHandler {
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+            throws IOException, ServletException {
         super.onAuthenticationSuccess(request, response, authentication);
         new LivenessAdder(request.getSession()).addLiveness(true);
         new LoginRecordAdder().add(request.getRemoteAddr());
