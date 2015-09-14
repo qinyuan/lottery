@@ -27,12 +27,14 @@ import java.util.TreeSet;
 public class AdminUserListController extends TableController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminUserListController.class);
 
-    private final static String MIN_LIVENESS_SESSION_KEY = "admin-user-list-min-liveness";
+    private final static String MIN_LIVENESS_SESSION_KEY = "admin-user-list-list-mode-min-liveness";
+    private final static String SEARCH_WORD_KEY = "admin-user-list-list-mode-search-word";
     private final static String FILTER_LOTTERY_ACTIVITY_IDS_SESSION_KEY = "admin-user-list-filter-lottery-activity-ids";
 
     @RequestMapping("/admin-user-list")
     public String index(@RequestParam(value = "displayMode", required = false) String displayMode,
-                        @RequestParam(value = "minLiveness", required = false) Integer minLiveness) {
+                        @RequestParam(value = "minLiveness", required = false) Integer minLiveness,
+                        @RequestParam(value = "keyword", required = false) String searchWord) {
         IndexHeaderUtils.setHeaderParameters(this);
 
         if (displayMode != null && displayMode.equals("table")) {
@@ -51,6 +53,11 @@ public class AdminUserListController extends TableController {
             }
             setAttribute("minLiveness", getMinLiveness());
 
+            if (searchWord != null) {
+                session.setAttribute(SEARCH_WORD_KEY, searchWord);
+            }
+            setAttribute("keyword", getSearchWord());
+
             List<LotteryActivity> selectedActivities = new ArrayList<>();
             List<LotteryActivity> unselectedActivities = new ArrayList<>();
             Set<Integer> filterLotteryActivityIds = getFilterLotteryActivityIds();
@@ -64,7 +71,7 @@ public class AdminUserListController extends TableController {
             setAttribute("selectedLotteryActivities", selectedActivities);
             setAttribute("unselectedLotteryActivities", unselectedActivities);
 
-            setAttribute("users", getSimpleTable(getMinLiveness(), filterLotteryActivityIds));
+            setAttribute("users", getSimpleTable(filterLotteryActivityIds));
             setAttribute("locationCounts", new RegisterLocationCounter().count());
 
             addCss("resources/js/lib/font-awesome/css/font-awesome.min", false);
@@ -86,6 +93,11 @@ public class AdminUserListController extends TableController {
         addCss("admin-form");
         addCssAndJs("admin-user-list");
         return "admin-user-list";
+    }
+
+    private String getSearchWord() {
+        Object searchWordFromSession = session.getAttribute(SEARCH_WORD_KEY);
+        return searchWordFromSession == null ? null : searchWordFromSession.toString();
     }
 
     private int getMinLiveness() {
@@ -214,15 +226,27 @@ public class AdminUserListController extends TableController {
         return "user AS u LEFT JOIN (" + livenessTable + ") AS l ON u.id=l.spread_user_id";
     }
 
-    private List<Object[]> getSimpleTable(int minLiveness, Set<Integer> activityIds) {
+    private List<Object[]> getSimpleTable(Set<Integer> activityIds) {
+        HibernateListBuilder listBuilder = new HibernateListBuilder();
         String loginRecordTable = "SELECT MAX(login_time) AS last_login_time,user_id FROM login_record GROUP BY user_id";
         String sql = "SELECT u.id,u.username,l.sum_liveness,DATE_FORMAT(lr.last_login_time,'%Y-%m-%d %T') FROM " +
                 getBaseTableName() + " LEFT JOIN (" + loginRecordTable + ") AS lr ON u.id=lr.user_id";
 
         String whereClause = " WHERE u.role='" + User.NORMAL + "'";
+
+        // filtered by min liveness
+        int minLiveness = getMinLiveness();
         if (minLiveness > 0) {
             whereClause += " AND l.sum_liveness>=" + minLiveness;
         }
+
+        // filtered by search word
+        String keyword = getSearchWord();
+        if (StringUtils.hasText(keyword)) {
+            whereClause += " AND (username LIKE :keyword OR email LIKE :keyword OR tel LIKE :keyword)";
+            listBuilder.addArgument("keyword", "%" + keyword + "%");
+        }
+
         for (Integer activityId : activityIds) {
             if (!IntegerUtils.isPositive(activityId)) {
                 continue;
@@ -231,7 +255,8 @@ public class AdminUserListController extends TableController {
         }
         sql += whereClause + " ORDER BY u.id ASC";
 
-        return new HibernateListBuilder().buildBySQL(sql);
+        //return new HibernateListBuilder().buildBySQL(sql);
+        return listBuilder.buildBySQL(sql);
     }
 
     protected DatabaseTable getTable() {

@@ -2,5 +2,5 @@
 <td class="title">活动说明<a class="edit-description" href="javascript:void(0)">编辑</a></td>
 <td class="content description" title="单击编辑">
     <q:hidden name="description" value="${latestDescription}"/>
-    <div class="description">${latestDescription}</div>
+    <div class="description break-word">${latestDescription}</div>
 </td>

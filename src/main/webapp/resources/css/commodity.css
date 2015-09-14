@@ -335,6 +335,10 @@ div.activity-result div.body div.activity {
     margin: 0 20px;
 }
 
+#seckillResult div.body div.activity {
+    padding-top: 20px;
+}
+
 div.activity-result div.body div.activity div.image {
     float: left;
 }
@@ -344,6 +348,7 @@ div.activity-result div.body div.activity div.description {
     float: right;
     margin-right: 10px;
     padding-top: 5px;
+    line-height: 28px;
 }
 
 div.activity-result div.body div.lot {

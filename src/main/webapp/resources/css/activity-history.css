@@ -3,6 +3,10 @@ div.gray-back {
     padding: 20px 0;
 }
 
+div.main-body {
+    overflow: visible;
+}
+
 /*div.main-body {
     background-color: #ffffff;
     padding: 10px;

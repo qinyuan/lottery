@@ -174,7 +174,7 @@
         $checkboxes: $('input.select-user'),
         $selectAll: $('input.select-all'),
         get$SelectedCheckboxes: function () {
-            return  this.$checkboxes.filter(function () {
+            return this.$checkboxes.filter(function () {
                 return this.checked;
             });
         },
@@ -369,5 +369,12 @@
             $this.parent().find('input[type=checkbox]').trigger('click');
         }
     });
+})();
+(function () {
+    // code about user filter
+    $('div.user-list form.search div.icon img').click(function () {
+        $(this).getParentByTagName('form').get(0).submit();
+    });
+    $('div.user-list form.search input').focusOrSelect();
 })();
 $('#statisticLink').addClass('emphasize');

@@ -11,6 +11,10 @@
         用户列表
         <span class="comment">列表格式：用户名 爱心数 最后登录时间</span>
     </div>
+    <form class="search">
+        <input type="text" class="form-control" name="keyword" placeholder="输入需要搜索的用户名、邮箱或密码" value="${keyword}"/>
+        <div class="icon"><img class="link" title="确定" src="resources/css/images/search.png"/></div>
+    </form>
     <div class="content">
         <div class="user-filter">
             <div class="title">筛选：</div>
@@ -59,7 +63,7 @@
     <div class="locations">
         <c:forEach var="locationCount" items="${locationCounts}">
             <div class="location">
-                ${locationCount.left}: ${locationCount.right}
+                    ${locationCount.left}: ${locationCount.right}
             </div>
         </c:forEach>
         <c:if test="${fn:length(locationCounts) == 0}">
