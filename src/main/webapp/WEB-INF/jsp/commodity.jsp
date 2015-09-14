@@ -63,7 +63,7 @@
           target="_blank"/>
     {{/each}}
 </q:handlebars-template>
-<div class="float-panel" id="noPrivilegePrompt">
+<div class="float-panel shadow" id="noPrivilegePrompt">
     <jsp:include page="commodity-float-panel-title.jsp">
         <jsp:param name="title" value="提示信息"/>
     </jsp:include>
@@ -78,7 +78,7 @@
         </div>
     </div>
 </div>
-<div class="float-panel" id="exceptionPrompt">
+<div class="float-panel shadow" id="exceptionPrompt">
     <jsp:include page="commodity-float-panel-title.jsp">
         <jsp:param name="title" value="提示信息"/>
     </jsp:include>
@@ -90,7 +90,7 @@
         </div>
     </div>
 </div>
-<div class="float-panel activity-result" id="lotteryResult">
+<div class="float-panel shadow activity-result" id="lotteryResult">
     <jsp:include page="commodity-float-panel-title.jsp">
         <jsp:param name="title" value="<span class='text'></span>"/>
     </jsp:include>
@@ -155,7 +155,7 @@
     </div>
 </div>
 
-<div class="float-panel" id="lotteryRule">
+<div class="float-panel shadow" id="lotteryRule">
     <div class="title">抽奖规则
         <div class="close-icon"><span></span></div>
     </div>
@@ -165,7 +165,7 @@
     </div>
 </div>
 
-<div class="float-panel activity-result" id="seckillResult">
+<div class="float-panel shadow activity-result" id="seckillResult">
     <jsp:include page="commodity-float-panel-title.jsp">
         <jsp:param name="title" value="<span class='text'></span>"/>
     </jsp:include>
