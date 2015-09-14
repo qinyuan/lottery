@@ -167,7 +167,7 @@
     }).init();
 
     var remainingTime = {
-        $remainingTime: $('div.main-body > div.detail > div.remaining-time'),
+        $remainingTime: $('div.main-body div.remaining-time div.body'),
         getRemainingTimeString: function () {
             return this._remainingTimeRecorder == null ? null : this._remainingTimeRecorder.getRemainingTimeString();
         },

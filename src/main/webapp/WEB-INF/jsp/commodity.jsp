@@ -26,25 +26,31 @@
                         <div class="price">${snapshot.price}元</div>
                     </c:otherwise>
                 </c:choose>
-                    <c:if test="${snapshot.inLottery}">
-                        <div class="in-lottery-icon mediumTransparent" title="抽奖中"><img
-                                src="resources/css/images/commodity/in-lottery.png"/></div>
-                    </c:if>
-                    <c:if test="${snapshot.inSeckill}">
-                        <div class="in-seckill-icon mediumTransparent" title="准备秒杀"><img
-                                src="resources/css/images/commodity/in-seckill.png"/></div>
-                    </c:if>
+                <c:if test="${snapshot.inLottery}">
+                    <div class="in-lottery-icon mediumTransparent" title="抽奖中"><img
+                            src="resources/css/images/commodity/in-lottery.png"/></div>
+                </c:if>
+                <c:if test="${snapshot.inSeckill}">
+                    <div class="in-seckill-icon mediumTransparent" title="准备秒杀"><img
+                            src="resources/css/images/commodity/in-seckill.png"/></div>
+                </c:if>
             </div>
         </c:forEach>
         <div class="next lightTransparent"></div>
     </div>
 </div>
 <div class="main-body">
-    <div class="detail">
-        <div class="remaining-time">
+    <div class="remaining-time page-width">
+        <div class="body">
             <div class="title">剩余时间：</div>
             <div class="clock"></div>
         </div>
+    </div>
+    <div class="detail">
+        <%--<div class="remaining-time">
+            <div class="title">剩余时间：</div>
+            <div class="clock"></div>
+        </div>--%>
         <!--<div class="participant-count"><span class="participant-count"></span>人抽奖</div>-->
         <div class="participant-count">已参与人数：<span class="participant-count"></span></div>
         <img usemap="#commodityMap"/>
