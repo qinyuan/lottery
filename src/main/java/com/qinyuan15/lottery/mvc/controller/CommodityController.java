@@ -128,7 +128,7 @@ public class CommodityController extends ImageController {
                 dao.getInstances() : dao.getVisibleInstances();
 
         for (Commodity commodity : commodities) {
-            getUrlAdapter().adapt(commodity);
+            getUrlAdapter().adaptToSmall(commodity);
 
             CommoditySnapshot snapshot = new CommoditySnapshot();
             snapshot.id = commodity.getId();
@@ -148,7 +148,7 @@ public class CommodityController extends ImageController {
     @ResponseBody
     public String json(@RequestParam(value = "id", required = true) Integer id) {
         CommodityInfo commodityInfo = new CommodityInfo(
-                getUrlAdapter().adapt(new CommodityDao().getInstance(id)),
+                getUrlAdapter().adaptToSmall(new CommodityDao().getInstance(id)),
                 mapDao.getInstancesByRelateId(id)
         );
         return toJson(commodityInfo);

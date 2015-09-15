@@ -40,19 +40,17 @@
     </div>
 </div>
 <div class="main-body">
-    <div class="remaining-time page-width">
-        <div class="body">
-            <div class="title">剩余时间：</div>
-            <div class="clock"></div>
+    <div class="summary page-width">
+        <div class="right">
+            <div class="remaining-time">
+                <div class="title">剩余时间：</div>
+                <div class="clock"></div>
+            </div>
+            <div class="participant-count">已参与人数：<span class="participant-count"></span></div>
         </div>
     </div>
     <div class="detail">
-        <%--<div class="remaining-time">
-            <div class="title">剩余时间：</div>
-            <div class="clock"></div>
-        </div>--%>
-        <!--<div class="participant-count"><span class="participant-count"></span>人抽奖</div>-->
-        <div class="participant-count">已参与人数：<span class="participant-count"></span></div>
+        <!--<div class="participant-count">已参与人数：<span class="participant-count"></span></div>-->
         <img usemap="#commodityMap"/>
     </div>
 </div>

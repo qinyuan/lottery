@@ -32,6 +32,11 @@
         <property name="debugMode" value="false"/>
         <property name="baseDir" value="${imageDir}"/>
         <property name="redundantImageValidator" ref="redundantImageValidator"/>
+        <property name="excludeDirs">
+            <list>
+                <value>ckeditor-upload</value>
+            </list>
+        </property>
     </bean>
 
     <task:scheduled-tasks>

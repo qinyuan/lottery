@@ -3,27 +3,32 @@
     var participantCount = ({
         update: function () {
             var commodity = getSelectedCommodity();
-            var $participantCountDiv = this.$div;
+            var $parent = this.$div.getParentByTagNameAndClass('div', 'right');
+            var self = this;
+            //var $participantCountDiv = this.$div;
             if (commodity.inLottery) {
                 $.post('lottery-participant-count.json', {
                     commodityId: commodity.id
                 }, function (data) {
                     if (data['participantCount']) {
-                        $participantCountDiv.find("span.participant-count").text(data['participantCount']);
-                        $participantCountDiv.show();
+                        self.$div.find("span.participant-count").text(data['participantCount']);
+                        self.$div.show();
+                        $parent.addClass('two-rows');
                     } else {
-                        $participantCountDiv.hide();
+                        self.$div.hide();
+                        $parent.removeClass('two-rows');
                     }
                 });
             } else {
-                $participantCountDiv.hide();
+                self.$div.hide();
+                $parent.removeClass('two-rows');
             }
         },
         hide: function () {
             this.$div.hide();
         },
         init: function () {
-            this.$div = $('div.main-body > div.detail > div.participant-count');
+            this.$div = $('div.main-body > div.summary div.participant-count');
             var self = this;
             setInterval(function () {
                 self.update();
@@ -32,9 +37,72 @@
         }
     }).init();
 
+    var remainingTime = {
+        $remainingTime: $('div.main-body div.summary div.remaining-time'),
+        getRemainingTimeString: function () {
+            return this._remainingTimeRecorder == null ? null : this._remainingTimeRecorder.getRemainingTimeString();
+        },
+        getRemainingTimeObject: function () {
+            return this._remainingTimeRecorder.getRemainingTime();
+        },
+        _stopRemainingTimeDigitClockUpdateTimer: function () {
+            if (this._updateTimer) {
+                clearInterval(this._updateTimer);
+            }
+        },
+        updateRemainingTimeDigitClock: function () {
+            this.$remainingTime.show();
+            var $click = this.$remainingTime.find('div.clock');
+            var digitClock = JSUtils.digitClock($click, {
+                'backgroundImage': 'resources/css/images/commodity/digit.png',
+                'initValue': this.getRemainingTimeString()
+            });
+
+            var self = this;
+            this._stopRemainingTimeDigitClockUpdateTimer();
+            this._updateTimer = setInterval(function () {
+                digitClock.to(self.getRemainingTimeString());
+            }, 1000);
+        },
+        hide: function () {
+            this.$remainingTime.hide();
+        },
+        init: function () {
+            var self = this;
+
+            function clear() {
+                self._stopRemainingTimeDigitClockUpdateTimer();
+                self._remainingTimeRecorder = null;
+                self.hide();
+            }
+
+            var commodity = getSelectedCommodity();
+            var params = {'commodityId': commodity.id};
+            if (commodity.inLottery) {
+                params['activityType'] = 'lottery';
+            } else if (commodity.inSeckill) {
+                params['activityType'] = 'seckill';
+            } else {
+                clear();
+                return;
+            }
+
+            $.post('activity-remaining-seconds.json', params, function (data) {
+                if (data['seconds']) {
+                    self._remainingTimeRecorder = JSUtils.remainingTimeRecorder(data['seconds']);
+                    self.updateRemainingTimeDigitClock();
+                } else {
+                    clear();
+                }
+            });
+            return this;
+        }
+    };
+
     var snapshots = ({
         $divs: $('div.main-body div.snapshots div.snapshot'),
         loadDetail: function (imageId) {
+            remainingTime.hide();
             participantCount.hide();
             var $detail = $('div.main-body div.detail');
             var $img = $detail.find('img');
@@ -165,65 +233,6 @@
             return this;
         }
     }).init();
-
-    var remainingTime = {
-        $remainingTime: $('div.main-body div.remaining-time div.body'),
-        getRemainingTimeString: function () {
-            return this._remainingTimeRecorder == null ? null : this._remainingTimeRecorder.getRemainingTimeString();
-        },
-        getRemainingTimeObject: function () {
-            return this._remainingTimeRecorder.getRemainingTime();
-        },
-        _stopRemainingTimeDigitClockUpdateTimer: function () {
-            if (this._updateTimer) {
-                clearInterval(this._updateTimer);
-            }
-        },
-        updateRemainingTimeDigitClock: function () {
-            this.$remainingTime.show();
-            var $click = this.$remainingTime.find('div.clock');
-            var digitClock = JSUtils.digitClock($click, {
-                'backgroundImage': 'resources/css/images/commodity/digit.png',
-                'initValue': this.getRemainingTimeString()
-            });
-
-            var self = this;
-            this._stopRemainingTimeDigitClockUpdateTimer();
-            this._updateTimer = setInterval(function () {
-                digitClock.to(self.getRemainingTimeString());
-            }, 1000);
-        },
-        init: function () {
-            var self = this;
-
-            function clear() {
-                self._stopRemainingTimeDigitClockUpdateTimer();
-                self._remainingTimeRecorder = null;
-                self.$remainingTime.hide();
-            }
-
-            var commodity = getSelectedCommodity();
-            var params = {'commodityId': commodity.id};
-            if (commodity.inLottery) {
-                params['activityType'] = 'lottery';
-            } else if (commodity.inSeckill) {
-                params['activityType'] = 'seckill';
-            } else {
-                clear();
-                return;
-            }
-
-            $.post('activity-remaining-seconds.json', params, function (data) {
-                if (data['seconds']) {
-                    self._remainingTimeRecorder = JSUtils.remainingTimeRecorder(data['seconds']);
-                    self.updateRemainingTimeDigitClock();
-                } else {
-                    clear();
-                }
-            });
-            return this;
-        }
-    };
 
     function setFloatPanelUsername($floatPanel, username) {
         $floatPanel.find('div.title div.text span.username').text(username);

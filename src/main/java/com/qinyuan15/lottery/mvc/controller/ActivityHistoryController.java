@@ -93,7 +93,7 @@ public class ActivityHistoryController extends ImageController {
     private Activity buildActivityByLottery(LotteryActivity lotteryActivity) {
         Activity activity = new Activity();
         activity.term = lotteryActivity.getTerm();
-        Commodity commodity = new CommodityUrlAdapter(this).adapt(lotteryActivity.getCommodity());
+        Commodity commodity = new CommodityUrlAdapter(this).adaptToMiddle(lotteryActivity.getCommodity());
         activity.snapshot = commodity.getSnapshot();
         activity.name = commodity.getName();
         activity.participantCount = lotteryActivity.getParticipantCount();
@@ -106,7 +106,7 @@ public class ActivityHistoryController extends ImageController {
     private Activity buildActivityBySeckill(SeckillActivity seckillActivity) {
         Activity activity = new Activity();
         activity.term = seckillActivity.getTerm();
-        Commodity commodity = new CommodityUrlAdapter(this).adapt(seckillActivity.getCommodity());
+        Commodity commodity = new CommodityUrlAdapter(this).adaptToMiddle(seckillActivity.getCommodity());
         activity.snapshot = commodity.getSnapshot();
         activity.name = commodity.getName();
         activity.participantCount = seckillActivity.getParticipantCount();

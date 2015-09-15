@@ -185,37 +185,41 @@ div.main-body div.detail {
     background: no-repeat top center;
 }
 
-div.main-body > div.remaining-time {
+div.main-body > div.summary {
     position: relative;
     height: 70px;
 }
 
-div.main-body > div.remaining-time div.body {
+div.main-body > div.summary div.right {
     position: absolute;
-    top: 25px;
+    top: 22px;
     right: 0;
+}
+
+div.main-body > div.summary div.right.two-rows {
+    top: 10px;
+}
+
+div.main-body > div.summary div.remaining-time {
     display: none;
 }
 
-div.main-body > div.remaining-time div.body > div {
+div.main-body > div.summary div.remaining-time > div {
     float: left;
 }
 
-div.main-body > div.remaining-time div.body div.title {
+div.main-body > div.summary div.remaining-time div.title {
     font-size: 11pt;
     padding-top: 7px;
 }
 
-div.main-body > div.detail > div.participant-count {
-    position: absolute;
-    /*top: 15px;
-    left: 50%;
-    margin-left: 200px;*/
-    top: 45px;
-    right: 180px;
-    font-size: 12pt;
-    /*color: #909090;*/
+div.main-body > div.summary div.participant-count {
+    clear: both;
     display: none;
+}
+
+div.main-body > div.summary div.participant-count span.participant-count {
+    font-size: 12pt;
 }
 
 .float-panel div.title {

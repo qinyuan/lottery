@@ -228,7 +228,7 @@ public class LotController extends ImageController {
     */
 
     private Commodity getCommodity(Integer commodityId) {
-        return new CommodityUrlAdapter(this).adapt(new CommodityDao().getInstance(commodityId));
+        return new CommodityUrlAdapter(this).adaptToSmall(new CommodityDao().getInstance(commodityId));
     }
 
     /*private String validateCommodityToTakeLot(Integer commodityId) {
