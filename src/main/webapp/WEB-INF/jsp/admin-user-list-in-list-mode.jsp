@@ -13,6 +13,7 @@
     </div>
     <form class="search">
         <input type="text" class="form-control" name="keyword" placeholder="输入需要搜索的用户名、邮箱或密码" value="${keyword}"/>
+
         <div class="icon"><img class="link" title="确定" src="resources/css/images/search.png"/></div>
     </form>
     <div class="content">
@@ -41,6 +42,11 @@
                     <div class="username" title="姓名">${user[1]}</div>
                     <div class="liveness" title="爱心">${user[2] == null ? 0 : user[2]}</div>
                     <div class="login-time" title="最后一次登录时间">${user[3]}</div>
+                    <div class="edit" title="编辑">
+                        <a href="personal-center.html?id=${user[0]}" target="_blank">
+                            <img class="mediumTransparent" src="resources/css/images/pencil.png"/>
+                        </a>
+                    </div>
                 </div>
             </c:forEach>
             <c:choose>

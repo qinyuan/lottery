@@ -7,7 +7,7 @@
             <div class="image">
                 <img src="resources/css/images/user.jpg"/>
 
-                <div>qinyuan15</div>
+                <div>${user.username}</div>
             </div>
             <div class="link">
                 <a href="system-info.html">系统消息</a>

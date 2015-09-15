@@ -138,24 +138,33 @@ div.user-filter > div.content div.liveness button {
 
 div.user-list div.content div.list-body div.user {
     float: left;
-    margin: 4px 6px;
-    border: 1px solid #cccccc;
+    margin: 4px 20px 4px 0;
     cursor: pointer;
 }
 
-div.user-list div.content div.list-body div.user:hover {
+div.user-list div.content div.list-body div.user > div.mouse-over {
     background-color: #e5e5e5;
 }
 
 div.user-list div.content div.list-body div.user > div {
     float: left;
     padding: 4px 6px;
-    border-left: 1px solid #cccccc;
+    border: 1px solid #cccccc;
+    border-right: none;
 }
 
 div.user-list div.content div.list-body div.user > div.id {
-    border-left: none;
     padding-bottom: 1px;
+}
+
+div.user-list div.content div.list-body div.user > div.edit {
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+}
+
+div.user-list div.content div.list-body div.user > div.edit img:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=100);
 }
 
 div.user-list div.content div.list-body div.buttons {

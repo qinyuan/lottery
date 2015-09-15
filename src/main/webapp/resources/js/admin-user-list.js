@@ -363,11 +363,21 @@
     $('div.user-filter > div.content div.activity button').click(function () {
         activityFilterForm.show();
     });
-    $('div.user-list div.content div.list-body div.user > div').click(function () {
-        var $this = $(this);
-        if (!$this.hasClass('id')) {
-            $this.parent().find('input[type=checkbox]').trigger('click');
+
+    $('div.user-list div.content div.list-body div.user > div').filter(function () {
+        return !$(this).hasClass('edit');
+    }).click(function (e) {
+        if (!$(e.target).is('input')) {
+            $(this).parent().find('input[type=checkbox]').trigger('click');
         }
+    }).hover(function () {
+        $(this).getParentByTagNameAndClass('div', 'user').find('>div').filter(function () {
+            return !$(this).hasClass('edit');
+        }).addClass('mouse-over');
+    }, function () {
+        $(this).getParentByTagNameAndClass('div', 'user').find('>div').filter(function () {
+            return !$(this).hasClass('edit');
+        }).removeClass('mouse-over');
     });
 })();
 (function () {
