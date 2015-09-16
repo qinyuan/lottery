@@ -13,7 +13,7 @@ public class PersonalCenterController extends AbstractUserController {
 
     @RequestMapping("/personal-center")
     public String index() {
-        return super.index(getUser());
+        return super.index(getUser(), "个人中心", "personal-center");
     }
 
     @RequestMapping("/personal-center-update-additional-info")
@@ -38,14 +38,14 @@ public class PersonalCenterController extends AbstractUserController {
     @RequestMapping("/personal-center-update-real-name.json")
     @ResponseBody
     public String updateRealName(@RequestParam(value = "realName") String realName) {
-        return super.updateRealName(getUser(), realName) ;
+        return super.updateRealName(getUser(), realName);
     }
 
     @RequestMapping("/personal-center-update-password.json")
     @ResponseBody
     public String updatePassword(@RequestParam(value = "oldPassword", required = true) String oldPassword,
                                  @RequestParam(value = "newPassword", required = true) String newPassword) {
-        return super.updatePassword(getUser(), oldPassword, newPassword) ;
+        return super.updatePassword(getUser(), oldPassword, newPassword);
     }
 
     @RequestMapping("/personal-center-update-email.json")

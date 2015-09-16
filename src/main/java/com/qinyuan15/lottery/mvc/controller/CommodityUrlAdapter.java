@@ -49,7 +49,6 @@ public class CommodityUrlAdapter {
         if (commodity == null) {
             return null;
         }
-        System.out.println(controller.pathToUrl(snapshot));
         commodity.setSnapshot(controller.pathToUrl(snapshot));
         commodity.setDetailImage(controller.pathToUrl(commodity.getDetailImage()));
         commodity.setBackImage(controller.pathToUrl(commodity.getBackImage()));
