@@ -27,294 +27,305 @@ var angularUtils = {
     }
 })();
 (function () {
-    function showRegisterForm() {
-        $registerForm.get$Inputs().each(function () {
-            resetRegisterInput(this);
-        });
-        $registerForm.find('form').get(0).reset();
-        $registerForm.find('img.identity-code').trigger('click');
-        $registerForm.fadeIn(500).focusFirstTextInput();
-    }
+    var login = ({
+        show: function (loginSuccessCallback) {
+            this.$div.find('form').get(0).reset();
+            this.$errorInfo.hide();
+            this.$div.fadeIn(500).focusFirstTextInput();
+            this.loginSuccessCallback = loginSuccessCallback;
+        },
+        hide: function () {
+            this.$div.hide();
+            this.loginSuccessCallback = null;
+        },
+        init: function () {
+            var self = this;
 
-    function resetRegisterInput(element) {
-        var $this = $(element);
-        $this.next().removeClass('success').removeClass('fail');
-        var $comment = $this.parent().next();
-        var $info = $comment.find('span.info');
-        var $error = $comment.find('span.error');
-        $error.hide();
-        $info.show();
-    }
+            this.$div = $('#springLoginForm');
+            this.$div.find('div.body div.rememberLogin span').click(function () {
+                var checkBox = $(this).parent().find('input[type=checkbox]').get(0);
+                checkBox.checked = !checkBox.checked;
+            });
+            this.$div.find('div.title div.close-icon').click(function () {
+                self.hide();
+                JSUtils.hideTransparentBackground(1);
+            });
+            this.$div.find('#switchToRegister').click(function () {
+                self.hide();
+                register.show();
+            });
 
-    function showRegisterSuccess(email) {
-        $registerSuccess.find('span.email').text(email);
-        var mailLoginPage = JSUtils.getEmailLoginPage(email);
-        $registerSuccess.find('a.to-mail-page').attr('href', mailLoginPage);
-        $registerSuccess.fadeIn(500);
-    }
+            this.$submitButton = this.$div.find('button[name=loginSubmit]');
+            this.$submitButton.click(function (e) {
+                e.preventDefault();
 
-    function showActivateRemind(email) {
-        JSUtils.showTransparentBackground();
-        $activateRemind.find('span.email').text(email);
-        $activateRemind.find('a.to-mail-page').attr('href', JSUtils.getEmailLoginPage(email));
-        $activateRemind.fadeIn(500);
-    }
+                var $username = self.$div.find('input[name=j_username]');
+                if ($username.trimVal() == '') {
+                    alert('帐号未填写');
+                    $username.focusOrSelect();
+                    return false;
+                }
+                var $password = self.$div.find('input[name=j_password]');
+                if ($password.trimVal() == '') {
+                    alert('密码未填写');
+                    $password.focusOrSelect();
+                    return false;
+                }
 
-    showLoginForm = function (loginSuccessCallback) {
-        $springLoginForm.find('form').get(0).reset();
-        $springLoginForm.get$ErrorInfo().hide();
-        $springLoginForm.fadeIn(500).focusFirstTextInput();
-        $springLoginForm.loginSuccessCallback = loginSuccessCallback;
-    };
+                var formData = self.$div.find('form').serialize();
+                $.post('j_spring_security_ajax_check', formData, function (data) {
+                    if (data.success) {
+                        if (self.loginSuccessCallback && typeof(self.loginSuccessCallback) == 'function') {
+                            self.loginSuccessCallback();
+                        } else {
+                            location.reload();
+                        }
+                    } else {
+                        self.$errorInfo.twinkle(3);
+                    }
+                });
+                return false;
+            });
+            this.$errorInfo = this.$div.find('div.error-info');
 
-    hideLoginForm = function () {
-        $springLoginForm.hide();
-        $springLoginForm.loginSuccessCallback = null;
-    };
+            showLoginForm = this.show;
+            hideLoginForm = this.hide;
 
-    // actions of navigation link
+            return this;
+        }
+    } ).init();
+
     $('#loginNavigationLink').click(function () {
         JSUtils.showTransparentBackground(1);
-        showLoginForm();
-    });
-    $('#registerNavigationLink').click(function () {
-        JSUtils.showTransparentBackground(1);
-        showRegisterForm();
-    });
-
-    // actions of login form
-    var $springLoginForm = $('#springLoginForm');
-    $springLoginForm.find('div.body div.rememberLogin span').click(function () {
-        var checkBox = $(this).parent().find('input[type=checkbox]').get(0);
-        checkBox.checked = !checkBox.checked;
-    });
-    $springLoginForm.find('div.title div.close-icon').click(function () {
-        hideLoginForm();
-        JSUtils.hideTransparentBackground(1);
-    });
-    $springLoginForm.find('#switchToRegister').click(function () {
-        hideLoginForm();
-        showRegisterForm();
-    });
-    $springLoginForm.get$SubmitButton = function () {
-        return $springLoginForm.find('button[name=loginSubmit]');
-    };
-    $springLoginForm.get$ErrorInfo = function () {
-        return $springLoginForm.find('div.error-info');
-    };
-    $springLoginForm.get$SubmitButton().click(function (e) {
-        e.preventDefault();
-        var $username = $springLoginForm.find('input[name=j_username]');
-        if ($username.trimVal() == '') {
-            alert('帐号未填写');
-            $username.focusOrSelect();
-            return false;
-        }
-        var $password = $springLoginForm.find('input[name=j_password]');
-        if ($password.trimVal() == '') {
-            alert('密码未填写');
-            $password.focusOrSelect();
-            return false;
-        }
-
-        var formData = $springLoginForm.find('form').serialize();
-        $.post('j_spring_security_ajax_check', formData, function (data) {
-            if (data.success) {
-                if ($springLoginForm.loginSuccessCallback) {
-                    $springLoginForm.loginSuccessCallback();
-                } else {
-                    location.reload();
-                }
-            } else {
-                $springLoginForm.get$ErrorInfo().twinkle(3);
-            }
-        });
-        return false;
+        login.show();
     });
 
     // actions of registerForm
-    var $registerForm = $('#registerForm');
-    $registerForm.showValidationByInput = function ($input, errorInfo) {
-        var $parent = $input.parent();
-        var $iconSpan = $parent.find('span.validate');
-        var $comment = $parent.next();
-        var $info = $comment.find('span.info');
-        var $error = $comment.find('span.error');
-        if (errorInfo) {
-            $info.hide();
-            $error.html(errorInfo).show();
-            $iconSpan.removeClass('success').addClass('fail');
-        } else {
+    var register = ({
+        show: function () {
+            this.$div.find('img.identity-code').trigger('click');
+            var self = this;
+            this.$inputs.each(function () {
+                self.resetInput(this);
+            });
+            this.$div.find('form').get(0).reset();
+            this.$div.fadeIn(500).focusFirstTextInput();
+        },
+        resetInput: function (element) {
+            var $this = $(element);
+            $this.parent().find('span.validate').removeClass('success').removeClass('fail');
+            var $comment = $this.parent().next();
+            var $info = $comment.find('span.info');
+            var $error = $comment.find('span.error');
             $error.hide();
             $info.show();
-            $iconSpan.removeClass('fail').addClass('success');
-        }
-    };
-    $registerForm.get$Email = function () {
-        return $registerForm.find('input[name=email]');
-    };
-    $registerForm.validateEmail = function (callback) {
-        var $email = $registerForm.get$Email();
-        var email = $email.val();
-        if (!email) {
-            $registerForm.showValidationByInput($email, '请输入您的常用邮箱');
-            $registerForm.valid = false;
-            typeof(callback) == 'function' && callback();
-        } else if (!JSUtils.validateEmail(email)) {
-            $registerForm.showValidationByInput($email, '请输入有效有邮箱地址');
-            $registerForm.valid = false;
-            typeof(callback) == 'function' && callback();
-        } else {
-            $.get('validate-email.json', {
-                'email': email
-            }, function (data) {
-                if (data.success) {
-                    $registerForm.showValidationByInput($email);
-                } else {
-                    $registerForm.showValidationByInput($email, data.detail);
-                }
+        },
+        showValidationByInput: function ($input, errorInfo) {
+            var $parent = $input.parent();
+            var $iconSpan = $parent.find('span.validate');
+            var $comment = $parent.next();
+            var $info = $comment.find('span.info');
+            var $error = $comment.find('span.error');
+            if (errorInfo) {
+                $info.hide();
+                $error.html(errorInfo).show();
+                $iconSpan.removeClass('success').addClass('fail');
+            } else {
+                $error.hide();
+                $info.show();
+                $iconSpan.removeClass('fail').addClass('success');
+            }
+        },
+        validateEmail: function (callback) {
+            var email = this.$email.val();
+            var self = this;
+            if (!email) {
+                this.showValidationByInput(this.$email, '请输入您的常用邮箱');
+                this.valid = false;
                 typeof(callback) == 'function' && callback();
-            });
-        }
-    };
-    $registerForm.get$Email().blur($registerForm.validateEmail);
-    $registerForm.get$Username = function () {
-        return $registerForm.find('input[name=username]');
-    };
-    $registerForm.validateUsername = function (callback) {
-        var $username = $registerForm.get$Username();
-        var username = $username.val();
-        if (!username) {
-            $registerForm.showValidationByInput($username, '请输入您的用户名');
-            $registerForm.valid = false;
-            typeof(callback) == 'function' && callback();
-        } else if (username.length < 2) {
-            $registerForm.showValidationByInput($username, '用户名至少使用2个字符');
-            $registerForm.valid = false;
-            typeof(callback) == 'function' && callback();
-        } else {
-            $.get('validate-username.json', {
-                'username': username
-            }, function (data) {
-                if (data.success) {
-                    $registerForm.showValidationByInput($username);
-                } else {
-                    $registerForm.showValidationByInput($username, data.detail);
-                }
+            } else if (!JSUtils.validateEmail(email)) {
+                this.showValidationByInput(this.$email, '请输入有效有邮箱地址');
+                this.valid = false;
                 typeof(callback) == 'function' && callback();
+            } else {
+                $.get('validate-email.json', {
+                    'email': email
+                }, function (data) {
+                    if (data.success) {
+                        self.showValidationByInput(self.$email);
+                    } else {
+                        self.showValidationByInput(self.$email, data.detail);
+                    }
+                    typeof(callback) == 'function' && callback();
+                });
+            }
+        },
+        validateUsername: function (callback) {
+            var username = this.$username.val();
+            var self = this;
+            if (!username) {
+                this.showValidationByInput(this.$username, '请输入您的用户名');
+                this.valid = false;
+                typeof(callback) == 'function' && callback();
+            } else if (username.length < 2) {
+                this.showValidationByInput(this.$username, '用户名至少使用2个字符');
+                this.valid = false;
+                typeof(callback) == 'function' && callback();
+            } else {
+                $.get('validate-username.json', {
+                    'username': username
+                }, function (data) {
+                    if (data.success) {
+                        self.showValidationByInput(self.$username);
+                    } else {
+                        self.showValidationByInput(self.$username, data.detail);
+                    }
+                    typeof(callback) == 'function' && callback();
+                });
+            }
+        },
+        validatePassword: function (callback) {
+            var password = this.$password.val();
+            if (!password || password.length < 6) {
+                this.showValidationByInput(this.$password, '密码应为6-20个字符，区分大小写');
+                this.valid = false;
+            } else {
+                this.showValidationByInput(this.$password);
+            }
+            typeof(callback) == 'function' && callback();
+        },
+        validatePassword2: function (callback) {
+            var password2 = this.$password2.val();
+            if (!password2) {
+                this.showValidationByInput(this.$password2, '确认密码不能为空');
+                this.valid = false;
+            } else if (password2 != this.$password.val()) {
+                this.showValidationByInput(this.$password2, '两次输入的密码不一样，请重新输入');
+                this.valid = false;
+            } else {
+                this.showValidationByInput(this.$password2);
+            }
+            typeof(callback) == 'function' && callback();
+        },
+        validateIdentityCode: function (callback) {
+            var identityCode = this.$identityCode.val();
+            if (!identityCode || identityCode.length != 4) {
+                this.showValidationByInput(this.$identityCode, '请正确填写验证码');
+                this.valid = false;
+            } else {
+                this.showValidationByInput(this.$identityCode);
+            }
+            typeof(callback) == 'function' && callback();
+        },
+        init: function () {
+            var self = this;
+            this.$div = $('#registerForm');
+
+            this.$email = this.$div.find('input[name=email]');
+            this.$email.blur(function () {
+                self.validateEmail();
             });
-        }
-    };
-    $registerForm.get$Username().blur($registerForm.validateUsername);
-    $registerForm.get$Password = function () {
-        return $registerForm.find('input[name=password]');
-    };
-    $registerForm.validatePassword = function (callback) {
-        var $password = $registerForm.get$Password();
-        var password = $password.val();
-        if (!password || password.length < 6) {
-            $registerForm.showValidationByInput($password, '密码应为6-20个字符，区分大小写');
-            $registerForm.valid = false;
-        } else {
-            $registerForm.showValidationByInput($password);
-        }
-        typeof(callback) == 'function' && callback();
-    };
-    $registerForm.get$Password().blur($registerForm.validatePassword);
-    $registerForm.get$Password2 = function () {
-        return $registerForm.find('input[name=password2]');
-    };
-    $registerForm.validatePassword2 = function (callback) {
-        var $password2 = $registerForm.get$Password2();
-        var password2 = $password2.val();
-        if (!password2) {
-            $registerForm.showValidationByInput($password2, '确认密码不能为空');
-            $registerForm.valid = false;
-        } else if (password2 != $registerForm.get$Password().val()) {
-            $registerForm.showValidationByInput($password2, '两次输入的密码不一样，请重新输入');
-            $registerForm.valid = false;
-        } else {
-            $registerForm.showValidationByInput($password2);
-        }
-        typeof(callback) == 'function' && callback();
-    };
-    $registerForm.get$Password2().blur($registerForm.validatePassword2);
-    $registerForm.get$IdentityCode = function () {
-        return $registerForm.find('input[name=identityCode]');
-    };
-    $registerForm.validateIdentityCode = function (callback) {
-        var $identityCode = $registerForm.get$IdentityCode();
-        var identityCode = $identityCode.val();
-        if (!identityCode || identityCode.length != 4) {
-            $registerForm.showValidationByInput($identityCode, '请正确填写验证码');
-            $registerForm.valid = false;
-        } else {
-            $registerForm.showValidationByInput($identityCode);
-        }
-        typeof(callback) == 'function' && callback();
-    };
-    $registerForm.get$IdentityCode().blur($registerForm.validateIdentityCode);
-    $registerForm.get$Inputs = function () {
-        return $registerForm.find('input[type=text],input[type=password]');
-    };
-    $registerForm.get$Inputs().focus(function () {
-        resetRegisterInput(this);
-    });
-    $registerForm.get$Inputs().trigger('focus');
-    $registerForm.find('button[name=loginSubmit]').click(function () {
-        $registerForm.valid = true;
-        $registerForm.validateEmail(function () {
-            $registerForm.validateUsername(function () {
-                $registerForm.validatePassword(function () {
-                    $registerForm.validatePassword2(function () {
-                        $registerForm.validateIdentityCode(function () {
-                            if ($registerForm.valid) {
-                                registerSubmit();
-                            }
+
+            this.$username = this.$div.find('input[name=username]');
+            this.$username.blur(function () {
+                self.validateUsername();
+            });
+
+            this.$password = this.$div.find('input[name=password]');
+            this.$password.blur(function () {
+                self.validatePassword();
+            });
+
+            this.$password2 = this.$div.find('input[name=password2]');
+            this.$password2.blur(function () {
+                self.validatePassword2();
+            });
+
+            this.$identityCode = this.$div.find('input[name=identityCode]');
+            this.$identityCode.blur(function () {
+                self.validateIdentityCode();
+            });
+
+            this.$inputs = this.$div.find('input[type=text],input[type=password]');
+            this.$inputs.focus(function () {
+                self.resetInput(this);
+            });
+            this.$inputs.trigger('focus');
+
+            this.$div.find('button[name=loginSubmit]').click(function () {
+                self.valid = true;
+                self.validateEmail(function () {
+                    self.validateUsername(function () {
+                        self.validatePassword(function () {
+                            self.validatePassword2(function () {
+                                self.validateIdentityCode(function () {
+                                    if (self.valid) {
+                                        registerSubmit();
+                                    }
+                                })
+                            });
                         })
                     });
-                })
+                });
+                function registerSubmit() {
+                    self.$div.find('form').ajaxSubmit({
+                        success: function (data) {
+                            if (data['success']) {
+                                JSUtils.showTransparentBackground(1);
+                                self.$div.hide();
+                                registerSuccess.show(register.$email.val());
+                                self.$div.find('form').get(0).reset();
+                            } else {
+                                alert(data['detail']);
+                                self.$div.find('div.body div.right div.input.identity-code img').trigger('click');
+                            }
+                        },
+                        resetForm: false,
+                        dataType: 'json'
+                    });
+                }
             });
-        });
-        function registerSubmit() {
-            $registerForm.find('form').ajaxSubmit({
-                success: function (data) {
-                    if (data['success']) {
-                        JSUtils.showTransparentBackground(1);
-                        $registerForm.hide();
-                        showRegisterSuccess($registerForm.get$Email().val());
-                        $registerForm.find('form').get(0).reset();
-                    } else {
-                        alert(data['detail']);
-                        $registerForm.find('div.body div.right div.input.identity-code img').trigger('click');
-                    }
-                },
-                resetForm: false,
-                dataType: 'json'
+            this.$div.find('form').submit(function () {
+                return false;
             });
+            this.$div.find('div.title div.close-icon').click(function () {
+                self.$div.hide();
+                JSUtils.hideTransparentBackground();
+            });
+            switchToLogin = function () {
+                self.$div.hide();
+                login.show();
+            };
+            this.$div.find('#switchToLogin').click(switchToLogin);
+
+            return this;
         }
+    }).init();
+    $('#registerNavigationLink').click(function () {
+        JSUtils.showTransparentBackground(1);
+        register.show();
     });
-    $registerForm.find('form').submit(function () {
-        return false;
-    });
-    $registerForm.find('div.title div.close-icon').click(function () {
-        $registerForm.hide();
-        JSUtils.hideTransparentBackground();
-    });
-    switchToLogin = function () {
-        $registerForm.hide();
-        showLoginForm();
-    };
-    $registerForm.find('#switchToLogin').click(switchToLogin);
 
     // actions of registerSuccess
-    var $registerSuccess = $('#registerSuccess');
-    $registerSuccess.find('div.title div.close-icon').click(function () {
-        $registerSuccess.hide();
-        JSUtils.hideTransparentBackground();
-    });
+    var registerSuccess = ({
+        show: function (email) {
+            this.$div.find('span.email').text(email);
+            var mailLoginPage = JSUtils.getEmailLoginPage(email);
+            this.$div.find('a.to-mail-page').attr('href', mailLoginPage);
+            this.$div.fadeIn(500);
+        },
+        init: function () {
+            var self = this;
+            this.$div = $('#registerSuccess');
+            this.$div.find('div.title div.close-icon').click(function () {
+                self.$div.hide();
+                JSUtils.hideTransparentBackground();
+            });
+            return this;
+        }
+    }).init();
 
-    // remind activation
+    // resend activate email
     $('div.activate-remind div.body a.resend').click(function () {
         var $body = $(this).parent();
         if ($body.size() > 0 && !$body.hasClass('body')) {
@@ -332,15 +343,6 @@ var angularUtils = {
         });
     });
 
-    var $activateRemind = $('#activateRemind');
-    $activateRemind.find('div.title div.close-icon').click(function () {
-        $activateRemind.hide();
-        JSUtils.hideTransparentBackground();
-    });
-    if (window['unactivatedEmail']) {
-        showActivateRemind(window['unactivatedEmail']);
-    }
-
     // refresh identity code
     $('img.identity-code').click(function () {
         this.src = 'identity-code?id=' + new Date().getTime();
@@ -348,5 +350,24 @@ var angularUtils = {
     }).next().click(function () {
         $(this).prev().trigger('click');
     });
+})();
+(function () {
+    // remind activation
+    var $activateRemind = $('#activateRemind');
+    $activateRemind.find('div.title div.close-icon').click(function () {
+        $activateRemind.hide();
+        JSUtils.hideTransparentBackground();
+    });
+
+    if (window['unactivatedEmail']) {
+        showActivateRemind(window['unactivatedEmail']);
+    }
+
+    function showActivateRemind(email) {
+        JSUtils.showTransparentBackground();
+        $activateRemind.find('span.email').text(email);
+        $activateRemind.find('a.to-mail-page').attr('href', JSUtils.getEmailLoginPage(email));
+        $activateRemind.fadeIn(500);
+    }
 })();
 var switchToLogin, showLoginForm, hideLoginForm;

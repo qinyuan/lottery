@@ -454,7 +454,7 @@ div.activate-remind div.title div.close-icon:hover {
     padding-left: 92px;
 }
 
-#registerForm div.body div.right div.input.identity-code {
+#registerForm div.body div.right div.input.identity-code a {
     font-size: 9pt;
 }
 
