@@ -59,7 +59,7 @@ public class AdminSystemInfoListController extends TableController {
                 return targetValue == null ? null : HtmlUtils.toText(targetValue.toString());
             }
         });
-        table.addField("状态", "CASE WHEN unread=TRUE THEN '未读' ELSE '已读' END", "status");
+        //table.addField("状态", "CASE WHEN unread=TRUE THEN '未读' ELSE '已读' END", "status");
         return table;
     }
 }
