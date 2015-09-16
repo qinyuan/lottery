@@ -37,5 +37,4 @@
         <%@include file="widget-pagination.jsp" %>
     </div>
 </div>
-
 <%@include file="inc-footer.jsp" %>

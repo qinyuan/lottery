@@ -1,12 +1,12 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.contact.mail.MailAddressValidator;
-import com.qinyuan.lib.contact.tel.TelValidator;
 import com.qinyuan.lib.mvc.controller.BaseController;
 import com.qinyuan15.lottery.mvc.account.NewUserValidator;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.lottery.mvc.mail.ActivateMailSender;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -46,24 +46,10 @@ public class RegisterController extends BaseController {
             return fail("该邮箱已经被注册！");
         }
 
-        if (!StringUtils.hasText(username)) {
-            return fail("用户名不能为空！");
+        Pair<Boolean, String> userValidation = new NewUserValidator().validateUsername(username);
+        if (!userValidation.getLeft()) {
+            return fail(userValidation.getRight());
         }
-
-        if (username.contains("@")) {
-            return fail("用户名不能包含'@'字符！");
-        }
-
-        if (new TelValidator().validate(username)) {
-            return fail("用户名不能为电话号码！");
-        }
-
-        if (new NewUserValidator().hasUsername(username)) {
-            return fail("该用户名已经被注册！");
-        }
-        /*if (userDao.hasUsername(username)) {
-            return fail("该用户名已经存在！");
-        }*/
 
         if (!StringUtils.hasText(password)) {
             return fail("密码不能为空！");
@@ -131,24 +117,15 @@ public class RegisterController extends BaseController {
     @RequestMapping(value = "validate-username.json", method = RequestMethod.GET)
     @ResponseBody
     public String validateUsername(@RequestParam(value = "username", required = true) String username) {
-        if (!StringUtils.hasText(username)) {
-            return fail("请输入您的用户名");
-        }
-        if (username.length() < 2) {
-            return fail("用户名至少使用2个字符");
-        }
-        if (username.contains("@")) {
-            return fail("用户名不能包含'@'字符");
-        }
-        if (new TelValidator().validate(username)) {
-            return fail("用户名不能为电话号码");
-        }
-
-        //if (userDao.hasUsername(username)) {
-        if (new NewUserValidator().hasUsername(username)) {
-            return fail("用户名已经被使用，" + TO_LOGIN_HTML);
-        } else {
+        Pair<Boolean, String> validation = new NewUserValidator().validateUsername(username);
+        if (validation.getLeft()) {
             return success();
+        } else {
+            String reason = validation.getRight();
+            if (reason.equals(NewUserValidator.REGISTERED)) {
+                return reason + TO_LOGIN_HTML;
+            }
+            return fail(reason);
         }
     }
 }

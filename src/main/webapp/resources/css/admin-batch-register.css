@@ -1,0 +1,18 @@
+
+div.form > div {
+    padding: 20px 30px;
+}
+
+div.form form div.input input {
+    width: 200px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+div.form form div.submit {
+    margin-top: 20px;
+}
+
+div.form form div.submit button {
+    margin: 0 10px;
+}

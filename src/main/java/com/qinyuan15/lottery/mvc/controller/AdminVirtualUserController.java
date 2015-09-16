@@ -4,6 +4,7 @@ import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan15.lottery.mvc.account.NewUserValidator;
 import com.qinyuan15.lottery.mvc.dao.VirtualUserDao;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,8 +73,11 @@ public class AdminVirtualUserController extends ImageController {
         }
 
         try {
-            if (isReduplicated(id, username)) {
-                return fail("该用户名已经被使用，请换另一个用户名！");
+            if (!(IntegerUtils.isPositive(id) && new VirtualUserDao().getInstance(id).getUsername().equals(username))) {
+                Pair<Boolean, String> validation = new NewUserValidator().validateUsername(username);
+                if (!validation.getLeft()) {
+                    return fail(validation.getRight());
+                }
             }
             if (IntegerUtils.isPositive(id)) {
                 new VirtualUserDao().update(id, username, telPrefix, telSuffix, mailPrefix, mailSuffix);
@@ -84,11 +88,6 @@ public class AdminVirtualUserController extends ImageController {
         } catch (Exception e) {
             return failByDatabaseError();
         }
-    }
-
-    private boolean isReduplicated(Integer id, String username) {
-        return !(IntegerUtils.isPositive(id) && new VirtualUserDao().getInstance(id).getUsername().equals(username))
-                && new NewUserValidator().hasUsername(username);
     }
 
     @RequestMapping("/admin-virtual-user-delete.json")
