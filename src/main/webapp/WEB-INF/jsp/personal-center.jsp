@@ -100,7 +100,7 @@
             </div>
             <div class="history title">登录历史</div>
             <div class="history content">
-                <div style="font-size: 10pt;color:#999;">
+                <div class="title" style="font-size: 10pt;color:#999;">
                     以下为您最近20次登录记录，若存在异常情况，请在核实后尽快
                     <a id="editPassword2" href="javascript:void(0)">修改密码</a>
                 </div>

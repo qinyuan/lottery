@@ -12,7 +12,10 @@ public class AdminPersonalCenterController extends AbstractUserController {
 
     @RequestMapping("/admin-personal-center")
     public String index(@RequestParam(value = "id", required = true) Integer userId) {
-        return super.index(getUser(userId), "修改用户信息", "admin-personal-center");
+        setAttribute("noFooter", true);
+        String result = super.index(getUser(userId), "修改用户信息");
+        addJs("admin-personal-center");
+        return result;
     }
 
     @RequestMapping("/admin-personal-center-update-additional-info")
@@ -25,7 +28,7 @@ public class AdminPersonalCenterController extends AbstractUserController {
                                        @RequestParam(value = "hometown", required = true) String hometown,
                                        @RequestParam(value = "residence", required = true) String residence,
                                        @RequestParam(value = "lunarBirthday", required = false) String lunarBirthdayString) {
-        final String index = "admin-personal-center";
+        final String index = "admin-personal-center?id=" + userId;
         return super.updateAdditionalInfo(userId, index, gender, birthdayYear, birthdayMonth, birthdayDay,
                 constellation, hometown, residence, lunarBirthdayString);
     }

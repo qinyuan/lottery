@@ -13,7 +13,7 @@ public class PersonalCenterController extends AbstractUserController {
 
     @RequestMapping("/personal-center")
     public String index() {
-        return super.index(getUser(), "个人中心", "personal-center");
+        return super.index(getUser(), "个人中心");
     }
 
     @RequestMapping("/personal-center-update-additional-info")

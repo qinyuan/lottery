@@ -21,7 +21,7 @@ public class AbstractUserController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AbstractUserController.class);
     private final static int LOGIN_RECORD_SIZE = 20;
 
-    protected String index(User user, String title, String page) {
+    protected String index(User user, String title) {
         IndexHeaderUtils.setHeaderParameters(this);
 
         setAttribute("user", user);
@@ -40,7 +40,7 @@ public class AbstractUserController extends ImageController {
         addJs("lib/handlebars.min-v1.3.0");
         addCss("personal-center-frame");
         addCssAndJs("personal-center");
-        return page;
+        return "personal-center";
     }
 
     protected String updateAdditionalInfo(int userId, String redirectIndex, String gender, Integer birthdayYear,

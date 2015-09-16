@@ -73,7 +73,7 @@
             alert('新姓名与原姓名相同，未作修改');
             JSUtils.focusPrompt();
         } else {
-            $.post('personal-center-update-real-name.json', {'realName': input}, JSUtils.normalAjaxCallback);
+            $.post(realNameUpdateUrl, {'realName': input}, JSUtils.normalAjaxCallback);
         }
     }
 
@@ -127,8 +127,7 @@
             return true;
         },
         doSubmit: function () {
-            var url = 'personal-center-update-password.json';
-            $.post(url, this.$floatPanel.serialize(), JSUtils.normalAjaxCallback);
+            $.post(passwordUpdateUrl, this.$floatPanel.serialize(), JSUtils.normalAjaxCallback);
         }
     });
     $('#editPassword').click(function () {
@@ -141,8 +140,7 @@
 (function () {
     // code about editing email
     function sendResetEmail(email, successCallback, failCallback) {
-        var updateUrl = 'personal-center-update-email.json';
-        $.post(updateUrl, {'email': email}, function (data) {
+        $.post(emailUpdateUrl, {'email': email}, function (data) {
             if (data['success']) {
                 successCallback();
             } else {
@@ -310,7 +308,7 @@
         },
         doSubmit: function () {
             var newTel = this.get$Input().val();
-            $.post('update-tel.json', {'tel': newTel}, JSUtils.normalAjaxCallback);
+            $.post(telUpdateUrl, {'tel': newTel}, JSUtils.normalAjaxCallback);
         },
         get$Title: function () {
             return this.$floatPanel.find('span.title');
@@ -324,5 +322,8 @@
         tel.get$Title().text('请输入联系手机号码：');
         tel.show();
     });
-})
-();
+})();
+var realNameUpdateUrl = 'personal-center-update-real-name.json';
+var passwordUpdateUrl = 'personal-center-update-password.json';
+var emailUpdateUrl = 'personal-center-update-email.json';
+var telUpdateUrl = 'update-tel.json';

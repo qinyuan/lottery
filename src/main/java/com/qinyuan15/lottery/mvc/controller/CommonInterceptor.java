@@ -38,7 +38,7 @@ public class CommonInterceptor implements HandlerInterceptor {
             return;
         }
 
-        ImageUrlAdapter imageUrlAdapter = new ImageUrlAdapter(imageConfig, httpServletRequest.getLocalAddr());
+        ImageUrlAdapter imageUrlAdapter = new ImageUrlAdapter(imageConfig, httpServletRequest.getServerName());
 
         httpServletRequest.setAttribute("footerPoster", imageUrlAdapter.pathToUrl(AppConfig.getFooterPoster()));
         httpServletRequest.setAttribute("footerText", AppConfig.getFooterText());

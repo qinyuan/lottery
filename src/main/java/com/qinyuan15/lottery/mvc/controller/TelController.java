@@ -50,6 +50,18 @@ public class TelController extends BaseController {
     @ResponseBody
     public String updateTel(@RequestParam(value = "tel", required = true) String tel) {
         User user = new UserDao().getInstance(securitySearcher.getUserId());
+        return updateTel(user, tel);
+    }
+
+    @RequestMapping("/admin-update-tel.json")
+    @ResponseBody
+    public String updateTel(@RequestParam(value = "id", required = true) Integer userId,
+                            @RequestParam(value = "tel", required = true) String tel) {
+        User user = new UserDao().getInstance(userId);
+        return updateTel(user, tel);
+    }
+
+    public String updateTel(User user, String tel) {
         if (user == null) {
             return failByInvalidParam();
         }
