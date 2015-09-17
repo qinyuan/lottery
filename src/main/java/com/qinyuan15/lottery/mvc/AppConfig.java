@@ -367,6 +367,38 @@ public class AppConfig {
     }
     ///////////////////////////////////// activate mail end /////////////////////////////////////
 
+    ///////////////////////////////////// register mail start ////////////////////////////////////
+    private final static String REGISTER_MAIL_SUBJECT_TEMPLATE_KEY = "registerMailSubjectTemplate";
+
+    public static String getRegisterMailSubjectTemplate() {
+        return dao.get(REGISTER_MAIL_SUBJECT_TEMPLATE_KEY);
+    }
+
+    public static void updateRegisterMailSubjectTemplate(String template) {
+        dao.save(REGISTER_MAIL_SUBJECT_TEMPLATE_KEY, template);
+    }
+
+    private final static String REGISTER_MAIL_CONTENT_TEMPLATE_KEY = "registerMailContentTemplate";
+
+    public static String getRegisterMailContentTemplate() {
+        return dao.get(REGISTER_MAIL_CONTENT_TEMPLATE_KEY);
+    }
+
+    public static void updateRegisterMailContentTemplate(String template) {
+        dao.save(REGISTER_MAIL_CONTENT_TEMPLATE_KEY, template);
+    }
+
+    private final static String REGISTER_MAIL_ACCOUNT_ID_KEY = "registerMailAccountId";
+
+    public static Integer getRegisterMailAccountId() {
+        return dao.getInteger(ACTIVATE_MAIL_ACCOUNT_ID_KEY);
+    }
+
+    public static void updateRegisterMailAccountId(Integer mailAccountId) {
+        dao.saveInteger(ACTIVATE_MAIL_ACCOUNT_ID_KEY, mailAccountId);
+    }
+    ///////////////////////////////////// register mail end //////////////////////////////////////
+
     //////////////////////////////// reset password mail start //////////////////////////
     private final static String RESET_PASSWORD_MAIL_SUBJECT_TEMPLATE_KEY = "resetPasswordMailSubjectTemplate";
 

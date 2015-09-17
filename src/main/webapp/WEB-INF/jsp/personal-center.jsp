@@ -3,7 +3,7 @@
 <%@include file="index-header.jsp" %>
 <div class="gray-back">
     <div class="page-width main-body">
-        <div class="left">
+        <div class="left shadow">
             <div class="image">
                 <img src="resources/css/images/user.jpg"/>
 
@@ -14,7 +14,7 @@
                 <a href="activity-history.html">活动历史</a>
             </div>
         </div>
-        <div class="right">
+        <div class="right shadow">
             <div class="title setting">帐户设置</div>
             <div class="content setting">
                 <form id="additionalInfoForm" method="post" action="personal-center-update-additional-info">

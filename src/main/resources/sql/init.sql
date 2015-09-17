@@ -51,6 +51,15 @@ create table virtual_user (
   mail_suffix char(50) not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+create table pre_user (
+  id int primary key auto_increment,
+  email char(200) not null,
+  spread_user_id int,
+  spread_way char(50),
+  activity_id int,
+  serial_key char(200) unique not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 create table help_group (
   id int primary key auto_increment,
   title char(100) not null,

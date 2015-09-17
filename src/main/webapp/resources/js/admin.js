@@ -82,7 +82,8 @@
 })();
 (function () {
     // codes about mail account
-    JSUtils.loadSelectFormEventsAndValue($('div.activate-mail-select'), window['currentActivateMailAccountId']);
+    //JSUtils.loadSelectFormEventsAndValue($('div.activate-mail-select'), window['currentActivateMailAccountId']);
+    JSUtils.loadSelectFormEventsAndValue($('div.register-mail-select'), window['currentRegisterMailAccountId']);
     JSUtils.loadSelectFormEventsAndValue($('div.reset-password-mail-select'), window['currentResetPasswordMailAccountId']);
     JSUtils.loadSelectFormEventsAndValue($('div.reset-email-mail-select'), window['currentResetEmailMailAccountId']);
 })();

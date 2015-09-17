@@ -1,11 +1,13 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.contact.mail.MailAddressValidator;
-import com.qinyuan.lib.mvc.controller.BaseController;
+import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan15.lottery.mvc.account.NewUserValidator;
-import com.qinyuan15.lottery.mvc.dao.User;
+import com.qinyuan15.lottery.mvc.dao.PreUser;
+import com.qinyuan15.lottery.mvc.dao.PreUserDao;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
-import com.qinyuan15.lottery.mvc.mail.ActivateMailSender;
+import com.qinyuan15.lottery.mvc.mail.RegisterMailSender;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +23,80 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by qinyuan on 15-6-29.
  */
 @Controller
-public class RegisterController extends BaseController {
+public class RegisterController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(RegisterController.class);
 
     private UserDao userDao = new UserDao();
 
+    @RequestMapping("/register")
+    public String index(@RequestParam(value = "serial", required = true) String serial) {
+        IndexHeaderUtils.setHeaderParameters(this);
+
+        if (StringUtils.hasText(serial)) {
+            setAttribute("preUser", new PreUserDao().getInstanceBySerialKey(serial));
+        }
+
+        setTitle("完善个人信息");
+        addCss("personal-center-frame");
+        addCss("personal-center");
+        addCssAndJs("register");
+        return "register";
+    }
+
+
     @RequestMapping(value = "register-submit.json", method = RequestMethod.POST)
+    @ResponseBody
+    public String submit(@RequestParam(value = "email", required = true) String email,
+                         @RequestParam(value = "identityCode", required = true) String identityCode) {
+
+        if (!validateIdentityCode(identityCode)) {
+            return fail("验证码输入错误！");
+        }
+
+        return sendRegisterMail(email);
+    }
+
+    @RequestMapping(value = "resend-register-email.json", method = RequestMethod.GET)
+    @ResponseBody
+    public String resendValidateEmail(@RequestParam(value = "email", required = true) String email) {
+        return sendRegisterMail(email);
+    }
+
+    private String sendRegisterMail(String email) {
+        if (!new MailAddressValidator().validate(email)) {
+            return fail("邮箱格式错误！");
+        }
+
+        if (userDao.hasEmail(email)) {
+            return fail("该邮箱已经被注册！");
+        }
+
+        try {
+            String serialKey;
+            PreUserDao dao = new PreUserDao();
+            PreUser preUser = dao.getInstanceByEmail(email);
+            if (preUser == null) {
+                // create a new serial key
+                do {
+                    serialKey = RandomStringUtils.randomAlphanumeric(100);
+                } while (dao.hasSerialKey(serialKey));
+
+                // add pre user instance
+                LivenessAdder livenessAdder = new LivenessAdder(session);
+                dao.add(email, livenessAdder.getSpreadUserId(), livenessAdder.getSpreadWay(), livenessAdder.getActivityId(), serialKey);
+            } else {
+                // get serial key from pre use directly
+                serialKey = preUser.getSerialKey();
+            }
+            new RegisterMailSender().send(email, serialKey);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("fail to register email: {}, info {}", email, e);
+            return failByDatabaseError();
+        }
+    }
+
+    /*@RequestMapping(value = "register-submit.json", method = RequestMethod.POST)
     @ResponseBody
     public String submit(@RequestParam(value = "email", required = true) String email,
                          @RequestParam(value = "username", required = true) String username,
@@ -79,9 +149,11 @@ public class RegisterController extends BaseController {
                     username, password, email, e);
             return failByDatabaseError();
         }
-    }
+    }*/
 
-    @RequestMapping(value = "resend-activate-email.json", method = RequestMethod.GET)
+
+
+    /*@RequestMapping(value = "resend-activate-email.json", method = RequestMethod.GET)
     @ResponseBody
     public String resendValidateEmail(@RequestParam(value = "email", required = true) String email) {
         User user = userDao.getInstanceByEmail(email);
@@ -96,7 +168,7 @@ public class RegisterController extends BaseController {
             LOGGER.error("Fail to resend email to {}, info: {}", email, e);
             return fail("邮件发送失败");
         }
-    }
+    }*/
 
     private final static String TO_LOGIN_HTML = "<a href='javascript:void(0)' onclick='switchToLogin()'>立即登录</a>";
 

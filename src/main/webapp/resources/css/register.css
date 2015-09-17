@@ -1,0 +1,33 @@
+
+div.main-body {
+    background-color: #ffffff;
+    padding: 0;
+}
+
+div.main-body div.left {
+    text-align: right;
+    font-size: 14pt;
+    font-weight: 500;
+    padding-top: 40px;
+    padding-right: 0;
+}
+
+div.main-body div.right {
+    padding: 0;
+}
+
+div.main-body div.right span.required {
+    color: #cc0000;
+}
+
+div.main-body div.right div.submit button {
+    margin-right: 15px;
+}
+
+div.main-body div.right div.submit span.comment {
+    color: #008000;
+}
+
+div.main-body div.right div.content.setting span.right input[type=text] {
+    width: 180px;
+}

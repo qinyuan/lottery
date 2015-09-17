@@ -40,6 +40,7 @@ div.main-body div.right div.content.setting span.right input[type=text],
     height: 25px;
     border-radius: 0;
     border-color: #808080;
+    font-size: 9pt;
 }
 
 div.main-body div.right div.content.setting span.right input[type=text] {

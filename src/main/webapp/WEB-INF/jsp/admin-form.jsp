@@ -169,7 +169,7 @@
         </div>
     </div>
 </div>
-<div class="edit-unit">
+<%--<div class="edit-unit">
     <div class="title">新用户激活邮件设置</div>
     <div class="content">
         <table class="email-template">
@@ -201,6 +201,43 @@
                 <td class="input">
                     <textarea class="ckeditor"
                               name="activateMailContentTemplate">${activateMailContentTemplate}</textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>--%>
+<div class="edit-unit">
+    <div class="title">新用户注册邮件设置</div>
+    <div class="content">
+        <table class="email-template">
+            <tbody>
+            <tr>
+                <td class="title">发件箱</td>
+                <td class="input">
+                    <c:set var="selectFormItems" value="${mailSelectFormItems}"/>
+                    <c:set var="selectFormId" value="register-mail-select"/>
+                    <c:set var="selectFormName" value="registerMailAccountId"/>
+                    <%@include file="widget-select-form.jsp" %>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">邮件标题</td>
+                <td class="input">
+                    <input type="text" name="registerMailSubjectTemplate" class="form-control"
+                           value="${registerMailSubjectTemplate}" placeholder="在此输入邮件的标题"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">邮件正文模板
+                    <div class="comment">
+                        注：<br/>
+                        {{url}}指代激活链接。
+                    </div>
+                </td>
+                <td class="input">
+                    <textarea class="ckeditor"
+                              name="registerMailContentTemplate">${registerMailContentTemplate}</textarea>
                 </td>
             </tr>
             </tbody>

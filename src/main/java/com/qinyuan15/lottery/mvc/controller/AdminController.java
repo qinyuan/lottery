@@ -31,9 +31,12 @@ public class AdminController extends ImageController {
         IndexHeaderUtils.setHeaderParameters(this);
         CommodityHeaderUtils.setHeaderParameters(this);
 
-        setAttribute("activateMailSubjectTemplate", AppConfig.getActivateMailSubjectTemplate());
+        /*setAttribute("activateMailSubjectTemplate", AppConfig.getActivateMailSubjectTemplate());
         setAttribute("activateMailContentTemplate", AppConfig.getActivateMailContentTemplate());
-        addJavaScriptData("currentActivateMailAccountId", AppConfig.getActivateMailAccountId());
+        addJavaScriptData("currentActivateMailAccountId", AppConfig.getActivateMailAccountId());*/
+        setAttribute("registerMailSubjectTemplate", AppConfig.getRegisterMailSubjectTemplate());
+        setAttribute("registerMailContentTemplate", AppConfig.getRegisterMailContentTemplate());
+        addJavaScriptData("currentRegisterMailAccountId", AppConfig.getRegisterMailAccountId());
 
         setAttribute("resetPasswordMailSubjectTemplate", AppConfig.getResetPasswordMailSubjectTemplate());
         setAttribute("resetPasswordMailContentTemplate", AppConfig.getResetPasswordMailContentTemplate());
@@ -128,9 +131,12 @@ public class AdminController extends ImageController {
                          @RequestParam(value = "commodityHeaderLeftLogoFile", required = true) MultipartFile commodityHeaderLeftLogoFile,
                          @RequestParam(value = "favicon", required = true) String favicon,
                          @RequestParam(value = "faviconFile", required = true) MultipartFile faviconFile,
-                         @RequestParam(value = "activateMailAccountId", required = true) Integer activateMailAccountId,
+                         /*@RequestParam(value = "activateMailAccountId", required = true) Integer activateMailAccountId,
                          @RequestParam(value = "activateMailSubjectTemplate", required = true) String activateMailSubjectTemplate,
-                         @RequestParam(value = "activateMailContentTemplate", required = true) String activateMailContentTemplate,
+                         @RequestParam(value = "activateMailContentTemplate", required = true) String activateMailContentTemplate,*/
+                         @RequestParam(value="registerMailAccountId", required = true) Integer registerMailAccountId,
+                         @RequestParam(value="registerMailSubjectTemplate", required = true) String registerMailSubjectTemplate,
+                         @RequestParam(value="registerMailContentTemplate", required = true) String registerMailContentTemplate,
                          @RequestParam(value = "resetPasswordMailAccountId", required = true) Integer resetPasswordMailAccountId,
                          @RequestParam(value = "resetPasswordMailSubjectTemplate", required = true) String resetPasswordMailSubjectTemplate,
                          @RequestParam(value = "resetPasswordMailContentTemplate", required = true) String resetPasswordMailContentTemplate,
@@ -194,9 +200,12 @@ public class AdminController extends ImageController {
         AppConfig.updateCommodityHeaderLeftLogo(commodityHeaderLeftLogoPath);
         AppConfig.updateFavicon(faviconPath);
 
-        AppConfig.updateActivateMailAccountId(activateMailAccountId);
+        /*AppConfig.updateActivateMailAccountId(activateMailAccountId);
         AppConfig.updateActivateMailSubjectTemplate(activateMailSubjectTemplate);
-        AppConfig.updateActivateMailContentTemplate(activateMailContentTemplate);
+        AppConfig.updateActivateMailContentTemplate(activateMailContentTemplate);*/
+        AppConfig.updateRegisterMailAccountId(registerMailAccountId);
+        AppConfig.updateRegisterMailSubjectTemplate(registerMailSubjectTemplate);
+        AppConfig.updateRegisterMailContentTemplate(registerMailContentTemplate);
 
         AppConfig.updateResetPasswordMailAccountId(resetPasswordMailAccountId);
         AppConfig.updateResetPasswordMailSubjectTemplate(resetPasswordMailSubjectTemplate);

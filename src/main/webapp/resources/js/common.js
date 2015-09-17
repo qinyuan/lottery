@@ -223,7 +223,9 @@ var angularUtils = {
 
             this.$email = this.$div.find('input[name=email]');
             this.$email.blur(function () {
-                self.validateEmail();
+                setTimeout(function(){
+                    self.validateEmail();
+                }, 200); // user may has no email then click the link below input, so delay for 200 millisecond
             });
 
             this.$username = this.$div.find('input[name=username]');
@@ -254,17 +256,24 @@ var angularUtils = {
 
             this.$div.find('button[name=loginSubmit]').click(function () {
                 self.valid = true;
+                /*self.validateEmail(function () {
+                 self.validateUsername(function () {
+                 self.validatePassword(function () {
+                 self.validatePassword2(function () {
+                 self.validateIdentityCode(function () {
+                 if (self.valid) {
+                 registerSubmit();
+                 }
+                 })
+                 });
+                 })
+                 });
+                 });*/
                 self.validateEmail(function () {
-                    self.validateUsername(function () {
-                        self.validatePassword(function () {
-                            self.validatePassword2(function () {
-                                self.validateIdentityCode(function () {
-                                    if (self.valid) {
-                                        registerSubmit();
-                                    }
-                                })
-                            });
-                        })
+                    self.validateIdentityCode(function () {
+                        if (self.valid) {
+                            registerSubmit();
+                        }
                     });
                 });
                 function registerSubmit() {
@@ -332,7 +341,7 @@ var angularUtils = {
             $body = $body.parent();
         }
         var email = $body.find('span.email').text();
-        $.get('resend-activate-email.json', {
+        $.get('resend-register-email.json', {
             'email': email
         }, function (data) {
             if (data.success) {

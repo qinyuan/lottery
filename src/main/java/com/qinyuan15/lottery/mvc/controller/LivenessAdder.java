@@ -41,11 +41,14 @@ public class LivenessAdder {
     }
 
     void addLiveness(Integer receiveUserId, boolean registerBefore) {
+        addLiveness(receiveUserId, registerBefore, getSpreadUserId(), getSpreadWay(), getActivityId());
+    }
+
+    static void addLiveness(Integer receiveUserId, boolean registerBefore, Integer spreadUserId, String spreadWay, Integer activityId) {
         if (!IntegerUtils.isPositive(receiveUserId)) {
             return;
         }
 
-        Integer spreadUserId = getSpreadUserId();
         if (spreadUserId == null) {
             return;
         }
@@ -54,7 +57,6 @@ public class LivenessAdder {
             return;
         }
 
-        String spreadWay = getSpreadWay();
         if (!StringUtils.hasText(spreadWay)) {
             return;
         }
@@ -64,17 +66,15 @@ public class LivenessAdder {
             return;
         }
 
-        Integer activityId = getActivityId();
-
         LotteryLivenessDao dao = new LotteryLivenessDao();
-        if (activityId != null) {
-            dao.add(getSpreadUserId(), receiveUserId, liveness, spreadWay, registerBefore, activityId);
+        if (IntegerUtils.isPositive(activityId)) {
+            dao.add(spreadUserId, receiveUserId, liveness, spreadWay, registerBefore, activityId);
         } else {
-            dao.add(getSpreadUserId(), receiveUserId, liveness, spreadWay, registerBefore);
+            dao.add(spreadUserId, receiveUserId, liveness, spreadWay, registerBefore);
         }
     }
 
-    private Integer getActivityId() {
+    Integer getActivityId() {
         Object activityId = session.getAttribute(SPREAD_LOTTERY_ACTIVITY_ID);
         if (activityId != null && activityId instanceof Integer) {
             return (Integer) activityId;
