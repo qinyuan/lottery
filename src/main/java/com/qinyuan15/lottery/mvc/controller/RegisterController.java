@@ -103,9 +103,13 @@ public class RegisterController extends ImageController {
             return fail("两次输入的密码需要一致！");
         }
 
-        Pair<Boolean, String> telValidation = new DatabaseTelValidator().validate(tel);
-        if (!telValidation.getLeft()) {
-            return fail(telValidation.getRight());
+        if (StringUtils.hasText(tel)) {
+            Pair<Boolean, String> telValidation = new DatabaseTelValidator().validate(tel);
+            if (!telValidation.getLeft()) {
+                return fail(telValidation.getRight());
+            }
+        } else {
+            tel = null;
         }
 
         try {
