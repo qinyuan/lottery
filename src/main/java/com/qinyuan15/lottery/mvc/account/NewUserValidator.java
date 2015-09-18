@@ -36,7 +36,7 @@ public class NewUserValidator {
             return Pair.of(false, INVALID_CHAR);
         }
 
-        if (new TelValidator().validate(username)) {
+        if (new TelValidator().validate(username).getLeft()) {
             return Pair.of(false, TEL);
         }
 

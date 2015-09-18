@@ -1,12 +1,20 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.contact.mail.MailAddressValidator;
+import com.qinyuan.lib.database.hibernate.HibernateUtils;
+import com.qinyuan.lib.lang.DateUtils;
+import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
+import com.qinyuan.lib.mvc.security.PasswordValidator;
+import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.account.DatabaseTelValidator;
 import com.qinyuan15.lottery.mvc.account.NewUserValidator;
 import com.qinyuan15.lottery.mvc.dao.PreUser;
 import com.qinyuan15.lottery.mvc.dao.PreUserDao;
+import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.lottery.mvc.mail.RegisterMailSender;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
@@ -33,16 +41,103 @@ public class RegisterController extends ImageController {
         IndexHeaderUtils.setHeaderParameters(this);
 
         if (StringUtils.hasText(serial)) {
-            setAttribute("preUser", new PreUserDao().getInstanceBySerialKey(serial));
+            PreUser preUser = new PreUserDao().getInstanceBySerialKey(serial);
+            setAttribute("preUser", preUser);
+            addJavaScriptData("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
+            if (preUser != null && new UserDao().hasEmail(preUser.getEmail())) {
+                setAttribute("userInfoCompleted", true);
+            }
         }
 
         setTitle("完善个人信息");
         addCss("personal-center-frame");
         addCss("personal-center");
+        addJs("personal-center-birthday");
         addCssAndJs("register");
         return "register";
     }
 
+    @RequestMapping("/register-complete-user-info.json")
+    @ResponseBody
+    public String completeUserInfo(@RequestParam(value = "serialKey", required = true) String serialKey,
+                                   @RequestParam(value = "username", required = true) String username,
+                                   @RequestParam(value = "password", required = true) String password,
+                                   @RequestParam(value = "password2", required = true) String password2,
+                                   @RequestParam(value = "realName", required = true) String realName,
+                                   @RequestParam(value = "tel", required = true) String tel,
+                                   @RequestParam(value = "gender", required = true) String gender,
+                                   @RequestParam(value = "birthdayYear", required = false) Integer birthdayYear,
+                                   @RequestParam(value = "birthdayMonth", required = false) Integer birthdayMonth,
+                                   @RequestParam(value = "birthdayDay", required = false) Integer birthdayDay,
+                                   @RequestParam(value = "constellation", required = true) String constellation,
+                                   @RequestParam(value = "hometown", required = true) String hometown,
+                                   @RequestParam(value = "residence", required = true) String residence,
+                                   @RequestParam(value = "lunarBirthday", required = false) String lunarBirthdayString) {
+
+        if (!StringUtils.hasText(serialKey)) {
+            return failByInvalidParam();
+        }
+
+        PreUser preUser = new PreUserDao().getInstanceBySerialKey(serialKey);
+        if (preUser == null) {
+            return failByInvalidParam();
+        }
+
+        UserDao userDao = new UserDao();
+        String email = preUser.getEmail();
+        if (userDao.hasEmail(email)) {
+            return fail("该邮箱已经被注册！");
+        }
+
+        Pair<Boolean, String> usernameValidation = new NewUserValidator().validateUsername(username);
+        if (!usernameValidation.getLeft()) {
+            return fail(usernameValidation.getRight());
+        }
+
+        Pair<Boolean, String> passwordValidation = new PasswordValidator().validate(password);
+        if (!passwordValidation.getLeft()) {
+            return fail(passwordValidation.getRight());
+        }
+
+        if (!password.equals(password2)) {
+            return fail("两次输入的密码需要一致！");
+        }
+
+        Pair<Boolean, String> telValidation = new DatabaseTelValidator().validate(tel);
+        if (!telValidation.getLeft()) {
+            return fail(telValidation.getRight());
+        }
+
+        try {
+            Integer spreadUserId = preUser.getSpreadUserId();
+            String spreadWay = preUser.getSpreadWay();
+            Integer userId;
+            if (IntegerUtils.isPositive(spreadUserId) && StringUtils.hasText(spreadWay)) {
+                userId = userDao.addNormal(username, password, email, spreadUserId, spreadWay);
+                LivenessAdder.addLiveness(userId, false, spreadUserId, spreadWay, preUser.getActivityId());
+            } else {
+                userId = userDao.addNormal(username, password, email);
+            }
+
+            User user = userDao.getInstance(userId);
+            user.setRealName(StringUtils.hasText(realName) ? realName : null);
+            user.setTel(tel);
+            user.setGender(StringUtils.hasText(gender) ? gender : null);
+            user.setBirthday(DateUtils.buildDateString(birthdayYear, birthdayMonth, birthdayDay));
+            user.setConstellation(StringUtils.hasText(constellation) ? constellation : null);
+            user.setHometown(StringUtils.hasText(hometown) ? hometown : null);
+            user.setResidence(StringUtils.hasText(residence) ? residence : null);
+            user.setLunarBirthday(StringUtils.hasText(lunarBirthdayString));
+            HibernateUtils.update(user);
+
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("fail to add user, username: {}, password: {}, email {}, info {}",
+                    username, password, email, e);
+            return failByDatabaseError();
+        }
+
+    }
 
     @RequestMapping(value = "register-submit.json", method = RequestMethod.POST)
     @ResponseBody
@@ -188,14 +283,15 @@ public class RegisterController extends ImageController {
 
     @RequestMapping(value = "validate-username.json", method = RequestMethod.GET)
     @ResponseBody
-    public String validateUsername(@RequestParam(value = "username", required = true) String username) {
+    public String validateUsername(@RequestParam(value = "username", required = true) String username,
+                                   @RequestParam(value = "withoutLink", required = false) Boolean withoutLink) {
         Pair<Boolean, String> validation = new NewUserValidator().validateUsername(username);
         if (validation.getLeft()) {
             return success();
         } else {
             String reason = validation.getRight();
-            if (reason.equals(NewUserValidator.REGISTERED)) {
-                return reason + TO_LOGIN_HTML;
+            if (reason.equals(NewUserValidator.REGISTERED) && !BooleanUtils.toBoolean(withoutLink)) {
+                return fail(reason + TO_LOGIN_HTML);
             }
             return fail(reason);
         }

@@ -50,7 +50,7 @@
                         <span class="left">电话：</span>
                         <span class="right">
                             <c:choose>
-                                <c:when test="${user.tel != null}"     >
+                                <c:when test="${user.tel != null}">
                                     <span class="tel">${user.tel}</span>
                                     <span>[<a id="editTel" href="javascript:void(0)">修改</a>]</span>
                                 </c:when>
@@ -58,41 +58,9 @@
                                     [<a id="addTel" href="javascript:void(0)">设置</a>]
                                 </c:otherwise>
                             </c:choose>
-
                         </span>
                     </div>
-                    <div class="row">
-                        <span class="left">性别：</span>
-                    <span class="right">
-                        <q:gender-select id="genderSelect" name="gender" value="${user.gender}"/>
-                    </span>
-                    </div>
-                    <div class="row">
-                        <span class="left">出生日期：</span>
-                        <span class="right">
-                            <span class="birthday"><q:birthday-select prefix="birthday"
-                                                                      value="${user.birthday}"/></span>
-                            <input type="checkbox" name="lunarBirthday"<c:if
-                                    test="${user.lunarBirthday}"> checked</c:if>/>我过农历生日
-                        </span>
-                    </div>
-                    <div class="row">
-                        <span class="left">星座：</span>
-                        <span class="right"><q:constellation-select id="constellationSelect" name="constellation"
-                                                                    value="${user.constellation}"/></span>
-                    </div>
-                    <div class="row">
-                        <span class="left">家乡：</span>
-                    <span class="right">
-                        <input type="text" class="form-control" name="hometown" value="${user.hometown}"/>
-                    </span>
-                    </div>
-                    <div class="row">
-                        <span class="left">现居住地：</span>
-                    <span class="right">
-                        <input type="text" class="form-control" name="residence" value="${user.residence}"/>
-                    </span>
-                    </div>
+                    <%@include file="personal-center-additional-info.jsp" %>
                     <div class="submit">
                         <button id="submitButton" type="submit">保存</button>
                     </div>
@@ -128,7 +96,7 @@
         </div>
     </div>
 </div>
-<form class="float-panel" id="passwordEditForm">
+<form class="float-panel eidt" id="passwordEditForm">
     <table>
         <tbody>
         <tr>
@@ -152,7 +120,7 @@
         </tbody>
     </table>
 </form>
-<div class="float-panel" id="changeEmailResult">
+<div class="float-panel edit" id="changeEmailResult">
     验证邮件已经发送至新邮箱：
     <a target="_blank" href="javascript:void(0)" class="target-email"></a>
     <br/>您还需要通过该邮箱完成完成邮箱修改，
@@ -164,7 +132,7 @@
         <button type="button" class="btn btn-success">关闭</button>
     </div>
 </div>
-<form class="float-panel" id="changeTelForm">
+<form class="float-panel edit" id="changeTelForm">
     <div class="input">
         <span class="title">请输入新的联系手机号码：</span>
         <input type="text" class="form-control" maxlength="11"/>

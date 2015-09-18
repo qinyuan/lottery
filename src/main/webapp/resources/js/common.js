@@ -29,6 +29,7 @@ var angularUtils = {
 (function () {
     var login = ({
         show: function (loginSuccessCallback) {
+            JSUtils.showTransparentBackground(1);
             this.$div.find('form').get(0).reset();
             this.$errorInfo.hide();
             this.$div.fadeIn(500).focusFirstTextInput();
@@ -96,7 +97,6 @@ var angularUtils = {
     } ).init();
 
     $('#loginNavigationLink').click(function () {
-        JSUtils.showTransparentBackground(1);
         login.show();
     });
 
@@ -172,9 +172,7 @@ var angularUtils = {
                 this.valid = false;
                 typeof(callback) == 'function' && callback();
             } else {
-                $.get('validate-username.json', {
-                    'username': username
-                }, function (data) {
+                $.get('validate-username.json', {'username': username }, function (data) {
                     if (data.success) {
                         self.showValidationByInput(self.$username);
                     } else {
@@ -223,7 +221,7 @@ var angularUtils = {
 
             this.$email = this.$div.find('input[name=email]');
             this.$email.blur(function () {
-                setTimeout(function(){
+                setTimeout(function () {
                     self.validateEmail();
                 }, 200); // user may has no email then click the link below input, so delay for 200 millisecond
             });
@@ -301,11 +299,13 @@ var angularUtils = {
                 self.$div.hide();
                 JSUtils.hideTransparentBackground();
             });
-            switchToLogin = function () {
+            switchToLogin = function (loginSuccessCallback) {
                 self.$div.hide();
-                login.show();
+                login.show(loginSuccessCallback);
             };
-            this.$div.find('#switchToLogin').click(switchToLogin);
+            this.$div.find('#switchToLogin').click(function () {
+                switchToLogin();
+            });
 
             return this;
         }

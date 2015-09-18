@@ -3,47 +3,28 @@
 <%@include file="index-header.jsp" %>
 <div class="gray-back">
     <div class="main-body page-width shadow">
-        <%--<c:choose>
-            <c:when test="${email == null}">
-                <span class="invalid">此链接已经失效！！！</span>
+        <c:choose>
+            <c:when test="${preUser != null}">
+                <c:choose>
+                    <c:when test="${userInfoCompleted}">
+                        <div class="completed">邮箱 <span class="email">${preUser.email}</span> 已经成功注册</div>
+                        <div class="completed-link">
+                            <span style="margin-right:20px;">您现在可以： </span>
+                            <a href="javascript:void(0)" class="to-login">登录</a>
+                            或
+                            <a href="find-password.html" target="_blank">找回密码</a>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <%@include file="register-form.jsp" %>
+                    </c:otherwise>
+                </c:choose>
             </c:when>
             <c:otherwise>
-                邮箱<span class="email">${email}</span>验证成功！
+                <div class="invalid-link">本链接已经失效！！！</div>
+                <div class="re-register">您现在可以：<a style="margin-left:10px;" href="javascript:void(0)">重新注册</a></div>
             </c:otherwise>
-        </c:choose>--%>
-        <div class="left">完善个人信息</div>
-        <div class="right">
-            <div class="content setting">
-                <div class="row">
-                    <span class="left">邮箱</span>
-                    <span class="right">${preUser.email}</span>
-                </div>
-                <div class="row">
-                    <span class="left">账号<span class="required">*</span></span>
-                    <span class="right"><input type="text" class="form-control" name="username"
-                                               placeholder="2-14个字符: 英文、数字或中文" maxlength="14"/></span>
-                </div>
-                <div class="row">
-                    <span class="left">密码<span class="required">*</span></span>
-                    <span class="right"><input type="text" class="form-control" name="password"
-                                               placeholder="6-20个字符，区分大小写" maxlength="20"/></span>
-                </div>
-                <div class="row">
-                    <span class="left">确认密码<span class="required">*</span></span>
-                    <span class="right"><input type="text" class="form-control" name="password"
-                                               placeholder="再次输入密码" maxlength="20"/></span>
-                </div>
-                <div class="row">
-                    <span class="left">手机号</span>
-                    <span class="right"><input type="text" class="form-control" name="tel"
-                                               placeholder="输入11位数字" maxlength="11"/></span>
-                </div>
-                <div class="submit">
-                    <button id="submitButton" type="submit">完成注册</button>
-                    <span class="comment">(注：带<span class="required">*</span>的为必填项)</span>
-                </div>
-            </div>
-        </div>
+        </c:choose>
     </div>
 </div>
 <%@include file="inc-footer.jsp" %>

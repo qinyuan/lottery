@@ -18,7 +18,7 @@
                 </div>
                 <div class="rememberLogin">
                     <q:spring-remember-login/><span>下次自动登录</span>
-                    <a href="find-password" target="_blank">忘记密码?</a>
+                    <a href="find-password.html" target="_blank">忘记密码?</a>
                 </div>
                 <div class="submit">
                     <button type="submit" name="loginSubmit">立即登录</button>

@@ -2,7 +2,7 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.contact.mail.MailAddressValidator;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
-import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.lang.DateUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.LoginRecord;
 import com.qinyuan.lib.mvc.security.LoginRecordDao;
@@ -39,6 +39,7 @@ public class AbstractUserController extends ImageController {
         setTitle(title);
         addJs("lib/handlebars.min-v1.3.0");
         addCss("personal-center-frame");
+        addJs("personal-center-birthday");
         addCssAndJs("personal-center");
         return "personal-center";
     }
@@ -46,30 +47,16 @@ public class AbstractUserController extends ImageController {
     protected String updateAdditionalInfo(int userId, String redirectIndex, String gender, Integer birthdayYear,
                                           Integer birthdayMonth, Integer birthdayDay, String constellation, String hometown,
                                           String residence, String lunarBirthdayString) {
-        if (!StringUtils.hasText(gender)) {
-            gender = null;
-        }
-        if (!StringUtils.hasText(constellation)) {
-            constellation = null;
-        }
-        if (!StringUtils.hasText(hometown)) {
-            hometown = null;
-        }
-        if (!StringUtils.hasText(residence)) {
-            residence = null;
-        }
-
-        String birthday = null;
-        if (IntegerUtils.isPositive(birthdayYear) && IntegerUtils.isPositive(birthdayMonth)
-                && IntegerUtils.isPositive(birthdayDay)) {
-            birthday = birthdayYear + "-" + birthdayMonth + "-" + birthdayDay;
-        }
-
-        Boolean lunarBirthday = StringUtils.hasText(lunarBirthdayString);
-
         try {
-            new UserDao().updateAdditionalInfo(userId, gender, birthday, constellation, hometown, residence,
-                    lunarBirthday);
+            new UserDao().updateAdditionalInfo(
+                    userId,
+                    StringUtils.hasText(gender) ? gender : null,
+                    DateUtils.buildDateString(birthdayYear, birthdayMonth, birthdayDay),
+                    StringUtils.hasText(constellation) ? constellation : null,
+                    StringUtils.hasText(hometown) ? hometown : null,
+                    StringUtils.hasText(residence) ? residence : null,
+                    StringUtils.hasText(lunarBirthdayString)
+            );
             return redirect(redirectIndex);
         } catch (Exception e) {
             LOGGER.error("Fail to update additional information, info: {}", e);

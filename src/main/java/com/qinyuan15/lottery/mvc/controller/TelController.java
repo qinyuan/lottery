@@ -1,14 +1,14 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan.lib.contact.tel.TelValidator;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.mvc.controller.BaseController;
+import com.qinyuan15.lottery.mvc.account.DatabaseTelValidator;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,26 +23,19 @@ public class TelController extends BaseController {
         User user = new UserDao().getInstance(securitySearcher.getUserId());
         if (user == null) {
             return fail("请重新登录");
-            //return failByInvalidParam();
         }
 
-        if (!StringUtils.hasText(tel)) {
-            return fail("电话号码不能为空");
-        }
+        return validateTelWithoutLogin(tel);
+    }
 
-        if (!new TelValidator().validate(tel)) {
-            return fail("电话号码必须为11位数字");
-        }
-
-        try {
-            if (new UserDao().hasTel(tel)) {
-                return fail("号码已被使用");
-            } else {
-                return success();
-            }
-        } catch (Exception e) {
-            LOGGER.error("Fail to validate tel, tel: {}, info: {}", tel, e);
-            return failByDatabaseError();
+    @RequestMapping("/validate-tel-without-login.json")
+    @ResponseBody
+    public String validateTelWithoutLogin(@RequestParam(value = "tel", required = true) String tel) {
+        Pair<Boolean, String> telValidation = new DatabaseTelValidator().validate(tel);
+        if (telValidation.getLeft()) {
+            return success();
+        } else {
+            return fail(telValidation.getRight());
         }
     }
 
@@ -66,12 +59,9 @@ public class TelController extends BaseController {
             return failByInvalidParam();
         }
 
-        if (!StringUtils.hasText(tel)) {
-            return fail("电话号码不能为空");
-        }
-
-        if (!new TelValidator().validate(tel)) {
-            return fail("电话号码必须为11位数字");
+        Pair<Boolean, String> telValidation = new DatabaseTelValidator().validate(tel);
+        if (!telValidation.getLeft()) {
+            return fail(telValidation.getRight());
         }
 
         try {

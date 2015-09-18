@@ -113,6 +113,18 @@ img.link {
     filter: alpha(opacity=70);
 }
 
+span.validate.success {
+    background: url("images/register-image.png") -187px -5px;
+}
+
+span.validate.fail {
+    background: url("images/register-image.png") -187px -31px;
+}
+
+span.validate {
+    padding: 1px 10px;
+}
+
 @-webkit-keyframes rotate-animation {
     0% {
         -webkit-transform: perspective(800px) rotateY(0deg);
@@ -418,18 +430,6 @@ div.activate-remind div.title div.close-icon:hover {
 #registerForm div.body div.right div.input input[type=text],
 #registerForm div.body div.right div.input input[type=password] {
     width: 260px;
-}
-
-#registerForm div.body div.right div.input span.validate {
-    padding: 1px 10px;
-}
-
-#registerForm div.body div.right div.input span.validate.success {
-    background: url("images/register-image.png") -187px -5px;
-}
-
-#registerForm div.body div.right div.input span.validate.fail {
-    background: url("images/register-image.png") -187px -31px;
 }
 
 #registerForm div.body div.right label {

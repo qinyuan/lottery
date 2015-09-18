@@ -34,8 +34,13 @@ div.main-body div.right div.content.setting span.left {
     font-size: 9pt;
 }
 
+div.main-body div.right div.content.setting span.right {
+    min-width: 500px;
+}
+
 div.main-body div.right div.content.setting span.right input[type=text],
-.float-panel input {
+div.main-body div.right div.content.setting span.right input[type=password],
+.float-panel.edit input {
     padding: 2px 5px;
     height: 25px;
     border-radius: 0;
@@ -43,7 +48,8 @@ div.main-body div.right div.content.setting span.right input[type=text],
     font-size: 9pt;
 }
 
-div.main-body div.right div.content.setting span.right input[type=text] {
+div.main-body div.right div.content.setting span.right input[type=text],
+div.main-body div.right div.content.setting span.right input[type=password] {
     width: 140px;
 }
 
@@ -68,20 +74,20 @@ div.main-body div.right div.content.setting div.submit {
 }
 
 div.main-body div.right div.content.setting div.submit button,
-.float-panel button.btn.btn-success,
-.float-panel button.btn.btn-default {
+.float-panel.edit button.btn.btn-success,
+.float-panel.edit button.btn.btn-default {
     height: 30px;
     min-width: 70px;
     border-radius: 3px;
 }
 
 div.main-body div.right div.content.setting div.submit button,
-.float-panel button.btn.btn-success {
+.float-panel.edit button.btn.btn-success {
     background: url("images/login-button-back.png") 0 0 repeat-x;
     color: #fff;
 }
 
-.float-panel button.btn.btn-default {
+.float-panel.edit button.btn.btn-default {
     background-color: #fff;
     color: #000;
 }

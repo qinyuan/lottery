@@ -26,6 +26,9 @@
                 <span id="rememberMeLabel">记住我</span>
                 <button type="submit" class="btn btn-primary" id="loginSubmit">登录</button>
             </div>
+            <div style="position:absolute;bottom:23px;right:92px;">
+                <a target="_blank" style="font-size:10pt;" href="find-password.html">忘记密码?</a>
+            </div>
         </q:spring-login-form>
     </div>
 </div>
