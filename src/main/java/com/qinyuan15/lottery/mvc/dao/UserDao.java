@@ -5,6 +5,7 @@ import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.security.SimpleUserDao;
+import com.qinyuan.lib.mvc.security.UserRole;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.util.StringUtils;
 
@@ -93,7 +94,7 @@ public class UserDao extends SimpleUserDao {
     }
 
     public Integer addAdmin(String username, String password) {
-        return add(username, password, User.ADMIN, null, null, null, null);
+        return add(username, password, UserRole.ADMIN, null, null, null, null);
     }
 
     public void activate(Integer id) {
@@ -107,7 +108,7 @@ public class UserDao extends SimpleUserDao {
     }
 
     public Integer addNormal(String username, String password, String email, Integer spreadUserId, String spreadWay) {
-        return add(username, password, User.NORMAL, email, null, spreadUserId, spreadWay);
+        return add(username, password, UserRole.NORMAL, email, null, spreadUserId, spreadWay);
     }
 
     public void updateTel(Integer id, String tel) {
@@ -149,7 +150,7 @@ public class UserDao extends SimpleUserDao {
     }
 
     private HibernateListBuilder getNormalUserListBuilder() {
-        return new HibernateListBuilder().addEqualFilter("role", User.NORMAL);
+        return new HibernateListBuilder().addEqualFilter("role", UserRole.NORMAL);
     }
 
     public void updatePassword(Integer id, String password) {

@@ -125,9 +125,7 @@
         var tel = $tel.val();
         if (tel.length == 0) {
             validation.showSuccessIcon($tel, successCallback);
-        }
-
-        if (JSUtils.validateTel(tel)) {
+        } else if (JSUtils.validateTel(tel)) {
             $.post('validate-tel-without-login.json', {tel: tel}, function (data) {
                 if (data.success) {
                     validation.showSuccessIcon($tel, successCallback);

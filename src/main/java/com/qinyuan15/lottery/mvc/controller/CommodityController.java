@@ -5,6 +5,7 @@ import com.qinyuan.lib.image.ImageMapDao;
 import com.qinyuan.lib.lang.DoubleUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
+import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.ImageMapType;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
@@ -69,7 +70,7 @@ public class CommodityController extends ImageController {
         CommodityDao dao = new CommodityDao();
         Commodity commodity = dao.getInstance(commodityId);
 
-        if (SecurityUtils.hasAuthority(User.ADMIN)) {
+        if (SecurityUtils.hasAuthority(UserRole.ADMIN)) {
             if (commodity == null) {
                 commodity = dao.getFirstInstance();
             }
@@ -124,7 +125,7 @@ public class CommodityController extends ImageController {
         List<CommoditySnapshot> snapshots = new ArrayList<>();
 
         CommodityDao dao = new CommodityDao();
-        List<Commodity> commodities = SecurityUtils.hasAuthority(User.ADMIN) ?
+        List<Commodity> commodities = SecurityUtils.hasAuthority(UserRole.ADMIN) ?
                 dao.getInstances() : dao.getVisibleInstances();
 
         for (Commodity commodity : commodities) {

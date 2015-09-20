@@ -4,6 +4,7 @@ import com.qinyuan.lib.config.ImageConfig;
 import com.qinyuan.lib.mvc.controller.ImageUrlAdapter;
 import com.qinyuan.lib.mvc.security.SecuritySearcher;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
+import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
@@ -46,7 +47,7 @@ public class CommonInterceptor implements HandlerInterceptor {
 
         UserDao userDao = new UserDao();
         SecuritySearcher searcher = new SecuritySearcher(userDao);
-        if (SecurityUtils.hasAuthority(User.NORMAL)) {
+        if (SecurityUtils.hasAuthority(UserRole.NORMAL)) {
             User user = userDao.getInstance(searcher.getUserId());
             if (!user.getActive()) {
                 httpServletRequest.setAttribute("unactivatedEmail", user.getEmail());

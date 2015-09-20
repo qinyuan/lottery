@@ -5,6 +5,7 @@ import com.qinyuan.lib.lang.DateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
+import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.activity.*;
 import com.qinyuan15.lottery.mvc.dao.*;
@@ -45,7 +46,7 @@ public class LotController extends ImageController {
             return fail("noLottery");
         } else if (SecurityUtils.getUsername() == null) {
             return fail("noLogin");
-        } else if (!SecurityUtils.hasAuthority(User.NORMAL)) {
+        } else if (!SecurityUtils.hasAuthority(UserRole.NORMAL)) {
             return getNoPrivilegeResult();
         }
 
@@ -115,7 +116,7 @@ public class LotController extends ImageController {
             return fail("noSeckill");
         } else if (SecurityUtils.getUsername() == null) {
             return fail("noLogin");
-        } else if (!SecurityUtils.hasAuthority(User.NORMAL)) {
+        } else if (!SecurityUtils.hasAuthority(UserRole.NORMAL)) {
             return getNoPrivilegeResult();
         }
 

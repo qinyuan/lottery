@@ -2,6 +2,7 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
+import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan15.lottery.mvc.RichHelpGroup;
 import com.qinyuan15.lottery.mvc.dao.HelpGroup;
 import com.qinyuan15.lottery.mvc.dao.HelpGroupDao;
@@ -26,7 +27,7 @@ public class AdminHelpController extends HelpController {
     @RequestMapping("/admin-help")
     @Override
     public String index() {
-        if (SecurityUtils.hasAuthority(User.ADMIN)) {
+        if (SecurityUtils.hasAuthority(UserRole.ADMIN)) {
             setAttribute("editMode", true);
         }
 

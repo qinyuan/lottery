@@ -6,6 +6,7 @@ import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.DatabaseTable;
 import com.qinyuan.lib.mvc.controller.TableController;
+import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan15.lottery.mvc.account.RegisterLocationCounter;
 import com.qinyuan15.lottery.mvc.dao.*;
 import com.qinyuan15.lottery.mvc.mail.NormalMailSender;
@@ -232,7 +233,7 @@ public class AdminUserListController extends TableController {
         String sql = "SELECT u.id,u.username,l.sum_liveness,DATE_FORMAT(lr.last_login_time,'%Y-%m-%d %T') FROM " +
                 getBaseTableName() + " LEFT JOIN (" + loginRecordTable + ") AS lr ON u.id=lr.user_id";
 
-        String whereClause = " WHERE u.role='" + User.NORMAL + "'";
+        String whereClause = " WHERE u.role='" + UserRole.NORMAL + "'";
 
         // filtered by min liveness
         int minLiveness = getMinLiveness();
@@ -289,7 +290,7 @@ public class AdminUserListController extends TableController {
         table.addField("最近一次抽奖", "lot.last_lot_time", "lot_time");
         table.addField("邀请了谁", "idu.invited_users", "invited_users");
         table.addField("被请邀请", "iu.username", "invite_user");
-        table.addEqualFilter("u.role", User.NORMAL);
+        table.addEqualFilter("u.role", UserRole.NORMAL);
         return table;
     }
 }

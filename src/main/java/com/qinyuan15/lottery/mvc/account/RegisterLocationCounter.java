@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.account;
 
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
+import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import org.apache.commons.lang3.tuple.Pair;
@@ -24,7 +25,7 @@ public class RegisterLocationCounter {
     public List<Pair<String, Integer>> count(boolean includeAdmin) {
         String orderedRecordTable = "SELECT * FROM login_record ";
         if (!includeAdmin) {
-            orderedRecordTable += "WHERE user_id in (SELECT id FROM user WHERE role='" + User.NORMAL + "') ";
+            orderedRecordTable += "WHERE user_id in (SELECT id FROM user WHERE role='" + UserRole.NORMAL + "') ";
         }
         orderedRecordTable += "ORDER BY login_time ASC";
         String groupedRecordTable = "SELECT * FROM (" + orderedRecordTable + ") t GROUP BY user_id";

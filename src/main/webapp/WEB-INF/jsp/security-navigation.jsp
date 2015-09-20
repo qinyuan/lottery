@@ -35,7 +35,7 @@
                 <li><a class="text" href="admin-user-list.html">用户列表</a></li>
                 <li><a class="text" href="admin-mail-list.html">邮件列表</a></li>
                 <li><a class="text" href="admin-system-info-list.html">消息列表</a></li>
-                <li><a class="text" href="admin-batch-register.html">批量注册</a></li>
+                <!--<li><a class="text" href="admin-batch-register.html">批量注册</a></li>-->
                 <li class="footer"></li>
             </ul>
         </li>
