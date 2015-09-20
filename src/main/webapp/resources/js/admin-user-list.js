@@ -283,6 +283,15 @@
         'admin-user-list-filter-remove.json');
 })();
 (function () {
+    // delete user
+    $('div.user-list div.content div.list-body div.user > div.edit img.delete').click(function () {
+        var id = $(this).getParentByTagNameAndClass('div', 'user').find('div.id input').val();
+        if (confirm('确定删除？用户一旦删除，将不可撤消！！！')) {
+            $.post('admin-user-list-delete-user.json', {id: id}, JSUtils.normalAjaxCallback);
+        }
+    });
+})();
+(function () {
     // code about display mode
     $('div.display-mode input').iCheck({
         checkboxClass: 'icheckbox_minimal',

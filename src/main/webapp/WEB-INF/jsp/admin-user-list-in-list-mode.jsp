@@ -46,6 +46,9 @@
                         <a href="admin-personal-center.html?id=${user[0]}" target="_blank">
                             <img class="mediumTransparent" src="resources/css/images/pencil.png"/>
                         </a>
+                        <a href="javascript:void(0)">
+                            <img class="mediumTransparent delete" src="resources/css/images/delete.png"/>
+                        </a>
                     </div>
                 </div>
             </c:forEach>

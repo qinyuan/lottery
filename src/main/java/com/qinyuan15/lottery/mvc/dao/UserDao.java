@@ -7,6 +7,8 @@ import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.security.SimpleUserDao;
 import com.qinyuan.lib.mvc.security.UserRole;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.List;
  * Created by qinyuan on 15-6-29.
  */
 public class UserDao extends SimpleUserDao {
+    private final static Logger LOGGER = LoggerFactory.getLogger(UserDao.class);
     public final static int SERIAL_KEY_LENGTH = 100;
 
     private Integer add(String username, String password, String role, String email, String tel,
@@ -117,8 +120,12 @@ public class UserDao extends SimpleUserDao {
         HibernateUtils.update(user);
     }
 
-    public void delete(Integer id) {
-        HibernateDeleter.deleteById(User.class, id);
+    public void deleteNormal(Integer id) {
+        if (IntegerUtils.isPositive(id)) {
+            new HibernateDeleter().addEqualFilter("id", id).addEqualFilter("role", UserRole.NORMAL).delete(User.class);
+        } else {
+            LOGGER.error("id is not positive: {}", id);
+        }
     }
 
     public User getInstance(Integer id) {

@@ -151,10 +151,16 @@ div.user-list div.content div.list-body div.user > div {
     padding: 4px 6px;
     border: 1px solid #cccccc;
     border-right: none;
+    font-size: 10pt;
+    display: inline-block;
+    height: 28px;
 }
 
 div.user-list div.content div.list-body div.user > div.id {
-    padding-bottom: 1px;
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 28px;
+    vertical-align: middle;
 }
 
 div.user-list div.content div.list-body div.user > div.edit {

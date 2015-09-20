@@ -8,7 +8,10 @@ import com.qinyuan.lib.mvc.controller.DatabaseTable;
 import com.qinyuan.lib.mvc.controller.TableController;
 import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan15.lottery.mvc.account.RegisterLocationCounter;
-import com.qinyuan15.lottery.mvc.dao.*;
+import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
+import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
+import com.qinyuan15.lottery.mvc.dao.SystemInfoSendRecordDao;
+import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.lottery.mvc.mail.NormalMailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -217,6 +220,18 @@ public class AdminUserListController extends TableController {
     @ResponseBody
     public String removeFilter() {
         return super.removeFilter();
+    }
+
+    @RequestMapping(value = "/admin-user-list-delete-user.json", method = RequestMethod.POST)
+    @ResponseBody
+    public String delete(@RequestParam(value = "id", required = true) Integer id) {
+        try {
+            new UserDao().deleteNormal(id);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("Fail to delete user, id: {}, info: {}", id, e);
+            return failByDatabaseError();
+        }
     }
 
     private String getBaseTableName() {
