@@ -6,6 +6,10 @@ import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import org.apache.commons.lang3.StringUtils;
 
 public class PreUserDao extends AbstractDao<PreUser> {
+    public Integer add(String email, String serialKey) {
+        return add(email, null, null, null, serialKey);
+    }
+
     public Integer add(String email, Integer spreadUserId, String spreadWay, Integer activityId, String serialKey) {
         PreUser user = new PreUser();
 

@@ -3,10 +3,25 @@
     var $form = $('div.form form');
     $form.setDefaultButtonByClass('ok');
 
-    var insertInput = '<input type="text" name="usernames" class="form-control" placeholder="请输入新的邮箱名"/>';
+    var $prompt = $form.find('div.prompt');
     var $inputDiv = $form.find('div.input');
     $inputDiv.find('img').click(function () {
-        $(insertInput).insertBefore($(this)).focus();
+        var $input = $('<input type="text" name="usernames" class="form-control" placeholder="请输入新的邮箱名"/>');
+        $input.keydown(function (e) {
+            var $this = $(this);
+            if (e.keyCode == 9 && $this.next().is('img')) {
+                e.preventDefault();
+                $this.next().trigger('click');
+                setTimeout(function () {
+                    $this.next().focus();
+                }, 200);
+            }
+        });
+
+        $input.insertBefore($(this)).focus();
+        if ($prompt.css('display') == 'none') {
+            $prompt.show(500);
+        }
     });
 
     $('div.form form div.submit button.cancel').click(function () {
@@ -42,7 +57,30 @@
             alert('至少填写一个有效的邮箱！');
         }
 
-        $inputDiv.find('input');
+        var $this = $(this);
+        $this.text('正在处理...');
+        setTimeout(function () {
+            JSUtils.postArrayParams('admin-batch-register-submit.json', {emails: emails}, function (data) {
+                $this.text('确定');
+                if (data.success) {
+                    alert('批量注册成功，注册邮件已经发送到对应的邮箱');
+                } else if (data.detail == 'invalid') {
+                    var info = "";
+                    if (data['invalidEmails']) {
+                        info += "存在无效邮箱：\n" + data['invalidEmails'];
+                    }
+                    if (data['registeredEmails']) {
+                        if (info.length > 0) {
+                            info += "\n";
+                        }
+                        info += "如下邮箱已经注册\n" + data['registeredEmails'];
+                    }
+                    alert(info);
+                } else {
+                    alert(data.detail);
+                }
+            });
+        }, 100); // delay to let button text change
     });
 
     function get$Inputs() {

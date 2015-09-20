@@ -16,3 +16,9 @@ div.form form div.submit {
 div.form form div.submit button {
     margin: 0 10px;
 }
+
+div.form form div.prompt {
+    margin-top: 5px;
+    color: #006600;
+    display: none;
+}

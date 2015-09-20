@@ -9,13 +9,13 @@ import com.qinyuan.lib.mvc.security.PasswordValidator;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.account.DatabaseTelValidator;
 import com.qinyuan15.lottery.mvc.account.NewUserValidator;
+import com.qinyuan15.lottery.mvc.account.PreUserSerialKeyBuilder;
 import com.qinyuan15.lottery.mvc.dao.PreUser;
 import com.qinyuan15.lottery.mvc.dao.PreUserDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.lottery.mvc.mail.RegisterMailSender;
 import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -175,14 +175,12 @@ public class RegisterController extends ImageController {
             PreUserDao dao = new PreUserDao();
             PreUser preUser = dao.getInstanceByEmail(email);
             if (preUser == null) {
-                // create a new serial key
-                do {
-                    serialKey = RandomStringUtils.randomAlphanumeric(100);
-                } while (dao.hasSerialKey(serialKey));
-
                 // add pre user instance
                 LivenessAdder livenessAdder = new LivenessAdder(session);
-                dao.add(email, livenessAdder.getSpreadUserId(), livenessAdder.getSpreadWay(), livenessAdder.getActivityId(), serialKey);
+
+                serialKey = new PreUserSerialKeyBuilder().build();
+                dao.add(email, livenessAdder.getSpreadUserId(), livenessAdder.getSpreadWay(),
+                        livenessAdder.getActivityId(), serialKey);
             } else {
                 // get serial key from pre use directly
                 serialKey = preUser.getSerialKey();
