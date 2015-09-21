@@ -22,7 +22,7 @@
         if ($prompt.css('display') == 'none') {
             $prompt.show(500);
         }
-    });
+    }).trigger('click');
 
     $('div.form form div.submit button.cancel').click(function () {
         if (confirm('确定消除添加的邮箱？')) {
