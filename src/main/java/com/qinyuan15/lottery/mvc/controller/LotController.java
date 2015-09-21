@@ -46,7 +46,7 @@ public class LotController extends ImageController {
             return fail("noLottery");
         } else if (SecurityUtils.getUsername() == null) {
             return fail("noLogin");
-        } else if (!SecurityUtils.hasAuthority(UserRole.NORMAL)) {
+        } else if (!canTakeLot()) {
             return getNoPrivilegeResult();
         }
 
@@ -116,7 +116,7 @@ public class LotController extends ImageController {
             return fail("noSeckill");
         } else if (SecurityUtils.getUsername() == null) {
             return fail("noLogin");
-        } else if (!SecurityUtils.hasAuthority(UserRole.NORMAL)) {
+        } else if (!canTakeLot()) {
             return getNoPrivilegeResult();
         }
 
@@ -257,6 +257,10 @@ public class LotController extends ImageController {
         }
 
         return serialNumbers;
+    }
+
+    private boolean canTakeLot() {
+        return SecurityUtils.hasAuthority(UserRole.NORMAL) || SecurityUtils.hasAuthority(UserRole.ADMIN);
     }
 
     private String getNoPrivilegeResult() {
