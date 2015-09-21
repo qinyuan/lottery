@@ -660,6 +660,23 @@ var JSUtils = {
             return location.href;
         }
     },
+    updateUrlHash: function (key, value) {
+        var url = location.href;
+        url = url.replace(/#.*$/, '');
+        return url + '#' + encodeURIComponent(key) + '=' + encodeURIComponent(value);
+    },
+    getUrlHash: function (key) {
+        var hash = location.hash;
+        if (hash == '') {
+            return null;
+        }
+        hash = hash.substr(1);
+        if (hash.indexOf(key + '=') == 0) {
+            return decodeURIComponent(hash.substr(key.length + 1));
+        } else {
+            return null;
+        }
+    },
     /**
      * Get the constellation of given day
      */

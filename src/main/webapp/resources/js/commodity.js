@@ -181,6 +181,11 @@
         },
         init: function () {
             var selectedId = window['selectedCommodityId'];
+            var idFromHash = JSUtils.getUrlHash('id');
+            if (JSUtils.isNumberString(idFromHash)) {
+                selectedId = parseInt(idFromHash);
+            }
+
             var snapshotCount = this.$divs.size();
 
             // show snapshot beside selected snapshot
@@ -220,6 +225,7 @@
                 var $this = $(this);
                 $this.addClass('selected');
                 var id = $this.dataOptions('id');
+                location.href = JSUtils.updateUrlHash('id', id);
                 self.loadDetail(id);
             });
             this.$prevIcon.click(function () {
