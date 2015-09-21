@@ -77,6 +77,11 @@ var angularUtils = {
                 $.post('j_spring_security_ajax_check', formData, function (data) {
                     if (data.success) {
                         if (self.loginSuccessCallback && typeof(self.loginSuccessCallback) == 'function') {
+                            $.get('navigation', function (data) {
+                                if (data) {
+                                    $('div.header > div.content > div.right-navigation').empty().html(data);
+                                }
+                            });
                             self.loginSuccessCallback();
                         } else {
                             location.reload();
@@ -89,8 +94,12 @@ var angularUtils = {
             });
             this.$errorInfo = this.$div.find('div.error-info');
 
-            showLoginForm = this.show;
-            hideLoginForm = this.hide;
+            showLoginForm = function (callback) {
+                self.show(callback);
+            };
+            hideLoginForm = function () {
+                self.hide();
+            };
 
             return this;
         }

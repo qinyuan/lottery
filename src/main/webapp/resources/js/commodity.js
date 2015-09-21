@@ -702,3 +702,4 @@
     }
 })();
 var getLotteryLot, getSeckillLot, showLotteryRule;
+

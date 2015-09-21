@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@include file="inc-taglib.jsp" %>
+<%@include file="inc-taglib.jsp" %><!-- this include tag is necessary, because this page may be used directory -->
 <ul>
     <security:authorize ifAnyGranted="ROLE_NORMAL">
         <li><a class="text" href="personal-center.html" title="个人中心"><security:authentication property="name"/></a></li>
