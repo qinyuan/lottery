@@ -43,7 +43,8 @@
     <div class="summary page-width">
         <div class="right">
             <div class="remaining-time">
-                <div class="title">剩余时间：</div>
+                <%--<div class="title">剩余时间：</div>--%>
+                <div class="title">距离活动结束：</div>
                 <div class="clock"></div>
             </div>
             <div class="participant-count">已参与人数：<span class="participant-count"></span></div>
@@ -93,12 +94,12 @@
         <jsp:param name="title" value="<span class='text'></span>"/>
     </jsp:include>
     <div class="body">
-        <div class="remind-me top">
+        <%--<div class="remind-me top">
             <span class="update-fail"></span>
             <span class="update-success">更新成功</span>
             <input type="checkbox" name="remindMe"/>
             开启抽奖邮件提醒
-        </div>
+        </div>--%>
         <div class="activity">
             <div class="image"><img/></div>
             <div class="description break-word"></div>
@@ -161,6 +162,10 @@
     <div class="button">
         <button type="button">我已了解</button>
     </div>
+</div>
+
+<div class="float-panel shadow" id="subscribe">
+    <div class="title">邮件订阅</div>
 </div>
 
 <div class="float-panel shadow activity-result" id="seckillResult">

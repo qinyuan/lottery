@@ -94,7 +94,7 @@ div.main-body div.snapshots div.snapshot {
     float: left;
     text-align: center;
     cursor: pointer;
-    border-bottom: 2px solid transparent;
+    border-bottom: 3px solid transparent;
     display: none;
     color: #696969;
     font-size: 9pt;
@@ -216,6 +216,7 @@ div.main-body > div.summary div.remaining-time div.title {
 div.main-body > div.summary div.participant-count {
     clear: both;
     display: none;
+    line-height: 40px;
 }
 
 div.main-body > div.summary div.participant-count span.participant-count {
@@ -310,7 +311,7 @@ div.activity-result div.body {
     min-height: 344px;
 }
 
-div.activity-result div.body div.remind-me {
+/*div.activity-result div.body div.remind-me {
     width: 100%;
     color: #808080;
     font-size: 10pt;
@@ -335,17 +336,13 @@ div.activity-result div.body div.remind-me span.update-fail {
 div.activity-result div.body div.remind-me input {
     margin: 0;
     vertical-align: middle;
-}
+}*/
 
 div.activity-result div.body div.activity {
     overflow: hidden;
     border-bottom: 1px solid #B7B7B7;
-    padding: 10px 10px 20px;
+    padding: 20px 10px 20px;
     margin: 0 20px;
-}
-
-#seckillResult div.body div.activity {
-    padding-top: 20px;
 }
 
 div.activity-result div.body div.activity div.image {

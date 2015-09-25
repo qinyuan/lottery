@@ -284,9 +284,9 @@
 
     var lotteryResult = ({
         $div: $('#lotteryResult'),
-        get$RemindMeCheckbox: function () {
+        /*get$RemindMeCheckbox: function () {
             return this.$div.find('div.body div.remind-me input');
-        },
+        },*/
         get$TelModifyAnchor: function () {
             return this.$div.find('div.body div.lot div.tel div.modify a');
         },
@@ -307,7 +307,7 @@
             this.$div.find('div.title div.text span.text').text('抽奖详情：0元抽 ' + options['commodity']['name']);
 
             // remind me
-            this.get$RemindMeCheckbox().get(0).checked = options['receiveMail'];
+            //this.get$RemindMeCheckbox().get(0).checked = options['receiveMail'];
 
             // commodity and activity
             var $image = this.$div.find('div.activity div.image img');
@@ -390,7 +390,7 @@
                 JSUtils.hideTransparentBackground();
                 self.$div.hide();
             });
-            this.get$RemindMeCheckbox().click(function () {
+            /*this.get$RemindMeCheckbox().click(function () {
                 var $this = $(this);
                 var checked = $this.get(0).checked;
                 var $remindMeDiv = $this.getParentByTagNameAndClass('div', 'remind-me');
@@ -403,7 +403,7 @@
                         self.checked = !checked;
                     }
                 });
-            });
+            });*/
             this.get$TelModifyAnchor().click(function () {
                 self.get$TelInput().val('').focusOrSelect();
             });
