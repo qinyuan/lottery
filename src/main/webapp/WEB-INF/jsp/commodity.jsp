@@ -154,7 +154,7 @@
     </div>
 </div>
 
-<div class="float-panel shadow" id="lotteryRule">
+<div class="float-panel shadow info" id="lotteryRule">
     <div class="title">抽奖规则
         <div class="close-icon"><span></span></div>
     </div>
@@ -164,8 +164,18 @@
     </div>
 </div>
 
-<div class="float-panel shadow" id="subscribe">
-    <div class="title">邮件订阅</div>
+<div class="float-panel shadow info" id="subscribe">
+    <div class="title">邮件订阅
+        <div class="close-icon"><span></span></div>
+    </div>
+    <q:qqlist nId="5b972069b6f5af7a76ed19a2d6b21c52dae9a544f6218e72">
+        <div class="body">
+            AAAAAAAAAAAAAAAAAA
+        </div>
+        <div class="button">
+            <button type="submit">马上订阅</button>
+        </div>
+    </q:qqlist>
 </div>
 
 <div class="float-panel shadow activity-result" id="seckillResult">

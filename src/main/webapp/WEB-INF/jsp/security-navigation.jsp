@@ -16,6 +16,7 @@
                 <li><a class="text" href="admin.html">系统设置</a></li>
                 <li><a class="text" href="admin-index-edit.html">主页设置</a></li>
                 <li><a class="text" href="admin-help.html">帮助设置</a></li>
+                <li><a class="text" href="admin-subscribe-config.html">订阅设置</a></li>
                 <li class="footer"></li>
             </ul>
         </li>

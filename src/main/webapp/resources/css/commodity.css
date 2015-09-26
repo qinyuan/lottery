@@ -656,12 +656,12 @@ div.activity-result div.body div.bottom div.share div.triangle.inner {
 
 /************************************ lottery result end *******************************/
 
-#lotteryRule {
+div.float-panel.info {
     width: 530px;
     margin-left: -265px;
 }
 
-#lotteryRule div.title {
+div.float-panel.info div.title {
     height: 28px;
     background-color: #82c92f;
     color: #ffffff;
@@ -671,7 +671,7 @@ div.activity-result div.body div.bottom div.share div.triangle.inner {
     line-height: 27px;
 }
 
-#lotteryRule div.title div.close-icon {
+div.float-panel.info div.title div.close-icon {
     position: absolute;
     right: 10px;
     top: 0;
@@ -682,21 +682,21 @@ div.activity-result div.body div.bottom div.share div.triangle.inner {
     line-height: 20px;
 }
 
-#lotteryRule div.title div.close-icon span {
+div.float-panel.info div.title div.close-icon span {
     padding: 0 7px;
     background: url("images/register-image.png") -164px -34px;
 }
 
-#lotteryRule div.body {
+div.float-panel.info div.body {
     padding: 20px;
 }
 
-#lotteryRule div.button {
+div.float-panel.info div.button {
     padding: 0 0 20px 0;
     text-align: center;
 }
 
-#lotteryRule div.button button {
+div.float-panel.info div.button button {
     color: #ffffff;
     background: url('images/lottery-rule-button-back.png') repeat-x;
     height: 36px;

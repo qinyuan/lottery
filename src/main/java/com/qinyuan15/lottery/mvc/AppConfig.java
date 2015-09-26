@@ -583,6 +583,29 @@ public class AppConfig {
     }
     ///////////////////////////// lottery rule end ///////////////////////////////
 
+    ////////////////////////////// qqlist start ////////////////////////////////////
+    private final static String QQ_LIST_ID_KEY = "qqlistId";
+
+    public static String getQQListId() {
+        return dao.get(QQ_LIST_ID_KEY);
+    }
+
+    public static void updateQQListId(String qqlistId) {
+        dao.save(QQ_LIST_ID_KEY, qqlistId);
+    }
+
+    private final static String QQ_LIST_DESCRIPTION_KEY = "qqlistDescription";
+
+    public static String getQqListDescription() {
+        return dao.get(QQ_LIST_DESCRIPTION_KEY);
+    }
+
+    public static void updateQQListDescription(String qqlistDescription) {
+        dao.save(QQ_LIST_DESCRIPTION_KEY, qqlistDescription);
+    }
+
+    ////////////////////////////// qqlist end //////////////////////////////////////
+
     ///////////////////////////// tel validate description page start //////////////////////////
     private final static String TEL_VALIDATE_DESCRIPTION_PAGE_KEY = "telValidateDescriptionPage";
 

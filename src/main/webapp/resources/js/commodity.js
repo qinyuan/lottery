@@ -508,6 +508,40 @@
         lotteryRule.show(parentId);
     };
 
+    var subscribe = ({
+        $div: $('#subscribe'),
+        $parent: null,
+        show: function (parentId) {
+            JSUtils.showTransparentBackground(1);
+            this.$div.fadeIn(200);
+            JSUtils.scrollToVerticalCenter(this.$div);
+            if (parentId) {
+                this.$parent = $('#' + parentId);
+                this.$parent.hide();
+            }
+        },
+        hide: function () {
+            this.$div.hide();
+            if (this.$parent) {
+                this.$parent.show();
+                this.$parent = null;
+            } else {
+                JSUtils.hideTransparentBackground();
+            }
+        },
+        init: function () {
+            var self = this;
+            this.$div.find('div.close-icon').click(function () {
+                self.hide();
+            });
+            this.$div.find('div.button button').click(function () {
+                self.hide();
+            });
+            return this;
+        }
+    }).init();
+    subscribe.show();
+
     getLotteryLot = function () {
         var toLoginCallback = function () {
             hideLoginForm();
