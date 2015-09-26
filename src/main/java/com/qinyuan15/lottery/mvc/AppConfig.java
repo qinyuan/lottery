@@ -596,7 +596,7 @@ public class AppConfig {
 
     private final static String QQ_LIST_DESCRIPTION_KEY = "qqlistDescription";
 
-    public static String getQqListDescription() {
+    public static String getQQListDescription() {
         return dao.get(QQ_LIST_DESCRIPTION_KEY);
     }
 

@@ -112,6 +112,9 @@ var JSUtils = {
 
         array.splice(index, 1);
     },
+    isFunction: function (arg) {
+        return (typeof arg) == 'function';
+    },
     isString: function (arg) {
         return (typeof arg) == 'string';
     },
@@ -765,20 +768,32 @@ var JSUtils = {
                 return this;
             }
         });
-        return this.extendsObject(floatPanel, options).init();
+        return this.extendObject(floatPanel, options).init();
     },
     /**
-     * method to extends certain object
+     * method to extend certain object
      * @param object object to extend
      * @param properties properties that will be added to object
      */
-    extendsObject: function (object, properties) {
+    extendObject: function (object, properties) {
         for (var key in properties) {
             if (properties.hasOwnProperty(key)) {
                 object[key] = properties[key];
             }
         }
         return object;
+    },
+    cloneAndExtendObject: function (object, properties) {
+        return this.extendObject(this.cloneObject(object), properties);
+    },
+    cloneObject: function (object) {
+        var newObject = {};
+        for (var key in object) {
+            if (object.hasOwnProperty(key)) {
+                newObject[key] = object[key];
+            }
+        }
+        return newObject;
     },
     /**
      * Patch of bug of firefox.

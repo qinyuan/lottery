@@ -52,12 +52,17 @@ public class CommodityController extends ImageController {
             livenessAdder.addLiveness(true);
         }
 
+        // seckill poker
         setAttribute("pokerFrontSide", pathToUrl(AppConfig.getSeckillPokerFrontSide()));
         setAttribute("pokerBackSide", pathToUrl(AppConfig.getSeckillPokerBackSide()));
 
         setAttribute("snapshots", buildSnapshots());
         setAttribute("lotteryRule", AppConfig.getLotteryRule());
         setAttribute("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
+
+        // qqlist
+        setAttribute("qqlistId", AppConfig.getQQListId());
+        setAttribute("qqlistDescription", AppConfig.getQQListDescription());
 
         addJs("lib/jsutils.digit", false);
         addJs("lib/handlebars.min-v1.3.0", false);

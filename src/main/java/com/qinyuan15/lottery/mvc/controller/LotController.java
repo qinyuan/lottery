@@ -1,6 +1,5 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.lang.DateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
@@ -30,7 +29,7 @@ import java.util.Map;
  */
 @Controller
 public class LotController extends ImageController {
-    private final static Logger LOGGER = LoggerFactory.getLogger(LotController.class);
+    //private final static Logger LOGGER = LoggerFactory.getLogger(LotController.class);
     private final static String SUCCESS = "success";
     private final static String DETAIL = "detail";
 
@@ -63,6 +62,7 @@ public class LotController extends ImageController {
         User user = new UserDao().getInstance(securitySearcher.getUserId());
         result.put("username", user.getUsername());
         result.put("receiveMail", user.getReceiveMail());
+        result.put("email", user.getEmail());
         result.put("tel", user.getTel());
 
         if (!result.containsKey(DETAIL)) {
@@ -270,7 +270,6 @@ public class LotController extends ImageController {
         return toJson(result);
     }
 
-
     @RequestMapping("/lottery-participant-count.json")
     @ResponseBody
     public String participantCount(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
@@ -281,24 +280,5 @@ public class LotController extends ImageController {
         Map<String, Integer> map = new HashMap<>();
         map.put("participantCount", new LotteryLotCounter().count(activity));
         return toJson(map);
-    }
-
-
-    @RequestMapping("/update-receive-mail.json")
-    @ResponseBody
-    public String updateReceiveMail(@RequestParam(value = "receiveMail", required = true) Boolean receiveMail) {
-        User user = new UserDao().getInstance(securitySearcher.getUserId());
-        if (user == null) {
-            return fail("请重新登录");
-        }
-
-        user.setReceiveMail(receiveMail);
-        try {
-            HibernateUtils.update(user);
-            return success();
-        } catch (Exception e) {
-            LOGGER.error("fail to update receive mail, info: {}", e);
-            return failByDatabaseError();
-        }
     }
 }

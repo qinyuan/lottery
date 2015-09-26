@@ -205,7 +205,7 @@ function buildAddEditFloatPanel(options) {
         }
     };
 
-    var activityFloatPanel = JSUtils.buildFloatPanel(JSUtils.extendsObject(obj, options));
+    var activityFloatPanel = JSUtils.buildFloatPanel(JSUtils.extendObject(obj, options));
     activityFloatPanel.bindDescriptionEvent();
     JSUtils.loadSelectFormEvents(activityFloatPanel.get$CommoditySelect());
     return activityFloatPanel;

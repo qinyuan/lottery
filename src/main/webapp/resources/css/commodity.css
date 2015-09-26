@@ -703,3 +703,8 @@ div.float-panel.info div.button button {
     padding: 0 27px;
     border-radius: 3px;
 }
+
+#subscribe div.button {
+    text-align: right;
+    padding: 0 10px 20px 0;
+}

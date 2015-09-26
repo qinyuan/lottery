@@ -285,8 +285,8 @@
     var lotteryResult = ({
         $div: $('#lotteryResult'),
         /*get$RemindMeCheckbox: function () {
-            return this.$div.find('div.body div.remind-me input');
-        },*/
+         return this.$div.find('div.body div.remind-me input');
+         },*/
         get$TelModifyAnchor: function () {
             return this.$div.find('div.body div.lot div.tel div.modify a');
         },
@@ -302,12 +302,15 @@
         get$ActivityExpire: function () {
             return this.$div.find('div.body div.activity-expire');
         },
+        showSubscribe: false,
         show: function (options) {
             // title
             this.$div.find('div.title div.text span.text').text('抽奖详情：0元抽 ' + options['commodity']['name']);
 
             // remind me
             //this.get$RemindMeCheckbox().get(0).checked = options['receiveMail'];
+            subscribe.setEmail(options['email']);
+            this.showSubscribe = !options['receiveMail'];
 
             // commodity and activity
             var $image = this.$div.find('div.activity div.image img');
@@ -387,23 +390,28 @@
             this.$lot = this.$div.find('div.body div.lot');
             var self = this;
             setCloseIconEvent(this.$div, function () {
-                JSUtils.hideTransparentBackground();
-                self.$div.hide();
-            });
-            /*this.get$RemindMeCheckbox().click(function () {
-                var $this = $(this);
-                var checked = $this.get(0).checked;
-                var $remindMeDiv = $this.getParentByTagNameAndClass('div', 'remind-me');
-                var self = this;
-                $.post('update-receive-mail.json', {'receiveMail': checked}, function (data) {
-                    if (data['success']) {
-                        $remindMeDiv.find('span.update-success').showForAWhile(2000);
+                self.$div.fadeOut(300, function () {
+                    if (self.showSubscribe) {
+                        subscribe.show();
                     } else {
-                        $remindMeDiv.find('span.update-fail').text(data['detail']).showForAWhile(2000);
-                        self.checked = !checked;
+                        JSUtils.hideTransparentBackground();
                     }
                 });
-            });*/
+            });
+            /*this.get$RemindMeCheckbox().click(function () {
+             var $this = $(this);
+             var checked = $this.get(0).checked;
+             var $remindMeDiv = $this.getParentByTagNameAndClass('div', 'remind-me');
+             var self = this;
+             $.post('update-receive-mail.json', {'receiveMail': checked}, function (data) {
+             if (data['success']) {
+             $remindMeDiv.find('span.update-success').showForAWhile(2000);
+             } else {
+             $remindMeDiv.find('span.update-fail').text(data['detail']).showForAWhile(2000);
+             self.checked = !checked;
+             }
+             });
+             });*/
             this.get$TelModifyAnchor().click(function () {
                 self.get$TelInput().val('').focusOrSelect();
             });
@@ -472,8 +480,7 @@
         }
     }).init();
 
-    var lotteryRule = ({
-        $div: $('#lotteryRule'),
+    var simpleFloatPanel = {
         $parent: null,
         show: function (parentId) {
             JSUtils.showTransparentBackground(1);
@@ -498,49 +505,42 @@
             this.$div.find('div.close-icon').click(function () {
                 self.hide();
             });
+            JSUtils.isFunction(this.postInit) && this.postInit();
+            return this;
+        }
+    };
+
+    var lotteryRule = (JSUtils.cloneAndExtendObject(simpleFloatPanel, {
+        $div: $('#lotteryRule'),
+        postInit: function () {
+            var self = this;
             this.$div.find('div.button button').click(function () {
                 self.hide();
             });
-            return this;
         }
-    }).init();
+    })).init();
     showLotteryRule = function (parentId) {
         lotteryRule.show(parentId);
     };
 
-    var subscribe = ({
+    var subscribe = (JSUtils.cloneAndExtendObject(simpleFloatPanel, {
         $div: $('#subscribe'),
-        $parent: null,
-        show: function (parentId) {
-            JSUtils.showTransparentBackground(1);
-            this.$div.fadeIn(200);
-            JSUtils.scrollToVerticalCenter(this.$div);
-            if (parentId) {
-                this.$parent = $('#' + parentId);
-                this.$parent.hide();
-            }
+        setEmail: function (email) {
+            this.$to.val(email);
         },
-        hide: function () {
-            this.$div.hide();
-            if (this.$parent) {
-                this.$parent.show();
-                this.$parent = null;
-            } else {
-                JSUtils.hideTransparentBackground();
-            }
+        getEmail: function () {
+            return this.$to.val();
         },
-        init: function () {
+        postInit: function () {
+            this.$to = this.$div.getInputByName('to');
             var self = this;
-            this.$div.find('div.close-icon').click(function () {
-                self.hide();
+            this.$div.find('div.button button[type=submit]').click(function () {
+                if (JSUtils.validateEmail(self.getEmail())) {
+                    $.post('update-receive-mail.json', {'receiveMail': true});
+                }
             });
-            this.$div.find('div.button button').click(function () {
-                self.hide();
-            });
-            return this;
         }
-    }).init();
-    subscribe.show();
+    })).init();
 
     getLotteryLot = function () {
         var toLoginCallback = function () {
@@ -600,6 +600,7 @@
                 self.$remainingSecond.text(time.seconds);
             }
         },
+        showSubscribe: false,
         show: function (options) {
             if (options['detail'] == 'activityExpire') {
                 this.get$ActivityExpire().show();
@@ -612,6 +613,9 @@
 
             // title
             this.$div.find('div.title div.text span.text').text('秒杀详情：0元秒 ' + options['commodity']['name']);
+
+            subscribe.setEmail(options['email']);
+            this.showSubscribe = !options['receiveMail'];
 
             // commodity and activity
             var $image = this.$div.find('div.activity div.image img');
@@ -663,8 +667,13 @@
 
             var self = this;
             setCloseIconEvent(this.$div, function () {
-                JSUtils.hideTransparentBackground();
-                self.$div.hide();
+                self.$div.fadeOut(300, function () {
+                    if (self.showSubscribe) {
+                        subscribe.show();
+                    } else {
+                        JSUtils.hideTransparentBackground();
+                    }
+                });
                 self.clearRemainingTimeUpdater();
             });
             this.$div.find('div.body div.lot div.pokers div.poker img.front').click(function () {
