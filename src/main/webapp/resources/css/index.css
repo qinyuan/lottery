@@ -24,26 +24,30 @@ div.posters div.poster div.dots {
 
 div.posters div.poster div.dots div.dot {
     display: inline-block;
-    width: 15px;
-    height: 15px;
+    width: 13px;
+    height: 13px;
     margin: 0 4px;
     text-indent: -999em;
-    border: 3px solid #fff;
-    border-radius: 9px;
     cursor: pointer;
-    opacity: .4;
+    background: rgba(0, 0, 0, 0.4);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#66000000", endColorstr="#66000000") \9;
+    border: 3px solid #fff;
+    border-color: rgba(255, 255, 255, 0.3);
+    border-radius: 7px;
+    /*opacity: .4;*/
     -webkit-transition: background .5s, opacity .5s;
     -moz-transition: background .5s, opacity .5s;
     transition: background .5s, opacity .5s;
 }
 
 div.posters div.poster div.dots div.dot.selected {
-    border-color: #017CB3;
-    background-color: #017CB3;
-    opacity: 1;
-    -webkit-transition: background 1s, opacity 1s;
-    -moz-transition: background 1s, opacity 1s;
-    transition: background 1s, opacity 1s;
+    /*border-color: #017CB3;
+    background-color: #017CB3;*/
+    /*opacity: 1;*/
+    background-color: rgba(255, 255, 255, 0.4);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e5ffffff", endColorstr="#e5ffffff") \9;
+    border-color: rgb(102, 102, 102);
+    border-color: rgba(0, 0, 0, 0.4);
 }
 
 div.posters div.poster div.dots.unload div.dot {
