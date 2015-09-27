@@ -796,12 +796,12 @@ var JSUtils = {
         return newObject;
     },
     /**
-     * Patch of bug of firefox.
+     * Patch of bug of firefox and ie.
      * In firefox, if we use "javascript:void(XXX)" in map area,
      * problem will happen
      */
     patchMapAreaBug: function () {
-        if (JSUtils.isFirefox()) {
+        if (JSUtils.isFirefox() || JSUtils.isIE()) {
             $('map area').filter(function () {
                 return this.href != null && this.href.match(/^javascript:void\(/);
             }).click(function (e) {
