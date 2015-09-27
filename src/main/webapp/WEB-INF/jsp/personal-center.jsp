@@ -79,6 +79,7 @@
                         <th>登录时间</th>
                         <th>登录地点</th>
                         <th>IP</th>
+                        <th>操作系统</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -88,6 +89,7 @@
                             <td>${loginRecord.loginTime}</td>
                             <td>${loginRecord.location}</td>
                             <td>${loginRecord.ip}</td>
+                            <td>${loginRecord.platform}</td>
                         </tr>
                     </c:forEach>
                     </tbody>

@@ -11,9 +11,9 @@ import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.lottery.mvc.mail.ResetEmailMailSender;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -31,6 +31,10 @@ public class AbstractUserController extends ImageController {
                 .setLimitSize(LOGIN_RECORD_SIZE).getInstances();
         for (LoginRecord loginRecord : loginRecords) {
             loginRecord.setIp(loginRecord.getIp().replaceAll("\\d+\\.\\d+$", "*.*"));
+            if (isMobilePlatform(loginRecord.getPlatform())) {
+                loginRecord.setLocation("移动端登录");
+            }
+            loginRecord.setPlatform(adaptPlatform(loginRecord.getPlatform()));
         }
         setAttribute("loginRecords", loginRecords);
 
@@ -44,18 +48,45 @@ public class AbstractUserController extends ImageController {
         return "personal-center";
     }
 
+    private String adaptPlatform(String platform) {
+        if (StringUtils.isBlank(platform)) {
+            return platform;
+        }
+        switch (platform) {
+            case "ANDROID":
+                return "Android";
+            case "LINUX":
+                return "Linux";
+            case "WINDOWS":
+                return "Windows";
+            case "OTHER":
+                return "其他";
+            default:
+                return platform;
+        }
+    }
+
+    private boolean isMobilePlatform(String platform) {
+        if (StringUtils.isBlank(platform)) {
+            return false;
+        }
+
+        platform = platform.toUpperCase();
+        return platform.equals("ANDROID") || platform.equals("IOS");
+    }
+
     protected String updateAdditionalInfo(int userId, String redirectIndex, String gender, Integer birthdayYear,
                                           Integer birthdayMonth, Integer birthdayDay, String constellation, String hometown,
                                           String residence, String lunarBirthdayString) {
         try {
             new UserDao().updateAdditionalInfo(
                     userId,
-                    StringUtils.hasText(gender) ? gender : null,
+                    StringUtils.isBlank(gender) ? null : gender,
                     DateUtils.buildDateString(birthdayYear, birthdayMonth, birthdayDay),
-                    StringUtils.hasText(constellation) ? constellation : null,
-                    StringUtils.hasText(hometown) ? hometown : null,
-                    StringUtils.hasText(residence) ? residence : null,
-                    StringUtils.hasText(lunarBirthdayString)
+                    StringUtils.isBlank(constellation) ? null : constellation,
+                    StringUtils.isBlank(hometown) ? null : hometown,
+                    StringUtils.isBlank(residence) ? null : residence,
+                    StringUtils.isNotBlank(lunarBirthdayString)
             );
             return redirect(redirectIndex);
         } catch (Exception e) {
@@ -81,11 +112,11 @@ public class AbstractUserController extends ImageController {
     }
 
     protected String updatePassword(User user, String oldPassword, String newPassword) {
-        if (!StringUtils.hasText(oldPassword)) {
+        if (StringUtils.isBlank(oldPassword)) {
             return fail("原密码不能为空！");
         }
 
-        if (!StringUtils.hasText(newPassword)) {
+        if (StringUtils.isBlank(newPassword)) {
             return fail("新密码不能为空！");
         }
 

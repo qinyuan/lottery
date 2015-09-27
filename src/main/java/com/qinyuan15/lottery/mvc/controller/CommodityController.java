@@ -28,6 +28,7 @@ public class CommodityController extends ImageController {
     public String index(@RequestParam(value = "id", required = false) Integer id,
                         @RequestParam(value = "fromUser", required = false) String userSerialKey,
                         @RequestParam(value = "medium", required = false) String medium) {
+
         CommodityHeaderUtils.setHeaderParameters(this);
 
         Commodity commodity = getCommodity(id);
