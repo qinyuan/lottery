@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan.lib.lang.DateUtils;
+import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.mvc.controller.BaseController;
 import com.qinyuan15.lottery.mvc.activity.DualColoredBallCalculator;
 import com.qinyuan15.lottery.mvc.activity.DualColoredBallResultDownloader;

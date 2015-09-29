@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan.lib.lang.DateUtils;
+import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;

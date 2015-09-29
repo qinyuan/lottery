@@ -2,7 +2,7 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
-import com.qinyuan.lib.lang.DateUtils;
+import com.qinyuan.lib.lang.time.DateUtils;
 
 import java.util.List;
 

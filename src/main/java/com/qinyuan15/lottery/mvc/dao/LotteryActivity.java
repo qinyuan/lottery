@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan.lib.lang.DateUtils;
+import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.lang.IntegerRange;
 import com.qinyuan15.lottery.mvc.activity.LotCounter;
 import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;

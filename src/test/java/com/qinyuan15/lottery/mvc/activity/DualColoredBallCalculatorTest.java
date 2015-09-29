@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity;
 
-import com.qinyuan.lib.lang.DateUtils;
+import com.qinyuan.lib.lang.time.DateUtils;
 import org.junit.Test;
 
 import java.sql.Date;

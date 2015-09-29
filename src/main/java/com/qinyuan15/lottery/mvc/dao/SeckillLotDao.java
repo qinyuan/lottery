@@ -4,7 +4,7 @@ import com.qinyuan.lib.database.hibernate.AbstractDao;
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUpdater;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
-import com.qinyuan.lib.lang.DateUtils;
+import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.AbstractPaginationItemFactory;
 

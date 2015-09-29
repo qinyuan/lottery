@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan.lib.lang.DateUtils;
+import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan15.lottery.mvc.dao.AbstractActivityDao;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;

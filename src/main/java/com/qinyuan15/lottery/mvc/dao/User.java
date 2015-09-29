@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan.lib.lang.DateUtils;
+import com.qinyuan.lib.lang.time.DateUtils;
 
 /**
  * User with email and tel
