@@ -1,9 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan.lib.database.hibernate.AbstractRankingDao;
-import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
-import com.qinyuan.lib.database.hibernate.HibernateUtils;
-import com.qinyuan.lib.database.hibernate.ReferenceValidator;
+import com.qinyuan.lib.database.hibernate.*;
 import com.qinyuan.lib.mvc.controller.PaginationItemFactory;
 
 import java.util.List;
@@ -42,9 +39,10 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
 
         // set default field
         commodity.setInLottery(false);
-        commodity.setVisible(true);
+        //commodity.setVisible(true);
+        commodity.setVisible(false);
 
-        return HibernateUtils.save(commodity);
+        return new RankingDao().add(commodity);
     }
 
     public boolean isUsed(Integer id) {

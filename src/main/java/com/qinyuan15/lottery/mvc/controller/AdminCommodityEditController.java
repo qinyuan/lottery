@@ -111,12 +111,12 @@ public class AdminCommodityEditController extends ImageController {
             } else {
                 dao.add(name, price, own, snapshotPath, detailImagePath, backImagePath);
             }
+            return redirect(indexPage);
         } catch (Exception e) {
             LOGGER.error("error in saving or updating commodity: {}", e);
             //e.printStackTrace();
-            redirect(indexPage, "数据库操作失败！");
+            return redirect(indexPage, "数据库操作失败！");
         }
-        return redirect(indexPage);
     }
 
     @RequestMapping("/admin-commodity-update-visible.json")
