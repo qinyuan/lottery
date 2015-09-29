@@ -19,15 +19,18 @@
                     <div class="count">
                         <span class="commodity-count">产品数量：1</span>
                         <span class="participant-count">申请人数：${activity.participantCount}</span>
-                    </div><%--
-                    <div class="icon lightTransparent">
-                        <img src="resources/css/images/commodity/in-${activity.type}.png"/>
-                    </div>--%>
+                    </div>
+                        <%--<div class="icon lightTransparent">
+                            <img src="resources/css/images/commodity/in-${activity.type}.png"/>
+                        </div>--%>
                     <div class="border"></div>
                     <c:choose>
                         <c:when test="${activity.expire}">
                             <div class="status expire">${activity.type == 'lottery' ? '已开奖' : '秒杀结束'}</div>
-                            <div class="announcement">中奖信息：<br/>${activity.announcement}</div>
+                            <div class="announcement">
+                                <c:if test="${activity.serials != null}">抽奖号：${activity.serials}<br/></c:if>
+                                中奖信息：<br/>${activity.announcement}
+                            </div>
                         </c:when>
                         <c:otherwise>
                             <div class="status active">活动进行中</div>

@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.google.common.base.Joiner;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan15.lottery.mvc.dao.*;
@@ -64,7 +65,7 @@ public class ActivityHistoryController extends ImageController {
             if (lotteryIndex >= lotteryActivities.size()) {
                 activities.add(buildActivityBySeckill(seckillActivities.get(seckillIndex++)));
             } else if (seckillIndex >= seckillActivities.size()) {
-                activities.add(buildActivityByLottery(lotteryActivities.get(lotteryIndex++)));
+                activities.add(buildActivityByLottery(lotteryActivities.get(lotteryIndex++), userId));
             } else {
                 LotteryActivity lotteryActivity = lotteryActivities.get(lotteryIndex);
                 SeckillActivity seckillActivity = seckillActivities.get(seckillIndex);
@@ -72,7 +73,7 @@ public class ActivityHistoryController extends ImageController {
                 if (!BooleanUtils.toBoolean(lotteryActivity.getExpire()) &&
                         BooleanUtils.toBoolean(seckillActivity.getExpire())) {
                     // add the active one first
-                    activities.add(buildActivityByLottery(lotteryActivities.get(lotteryIndex++)));
+                    activities.add(buildActivityByLottery(lotteryActivities.get(lotteryIndex++), userId));
                 } else if (!BooleanUtils.toBoolean(seckillActivity.getExpire()) ||
                         BooleanUtils.toBoolean(lotteryActivity.getExpire())) {
                     // add the active one first
@@ -80,7 +81,7 @@ public class ActivityHistoryController extends ImageController {
                 } else {
                     // add the earlier one first
                     if (lotteryActivity.getStartTime().compareTo(seckillActivity.getStartTime()) <= 0) {
-                        activities.add(buildActivityByLottery(lotteryActivities.get(lotteryIndex++)));
+                        activities.add(buildActivityByLottery(lotteryActivities.get(lotteryIndex++), userId));
                     } else {
                         activities.add(buildActivityBySeckill(seckillActivities.get(seckillIndex++)));
                     }
@@ -90,7 +91,7 @@ public class ActivityHistoryController extends ImageController {
         return activities;
     }
 
-    private Activity buildActivityByLottery(LotteryActivity lotteryActivity) {
+    private Activity buildActivityByLottery(LotteryActivity lotteryActivity, Integer userId) {
         Activity activity = new Activity();
         activity.term = lotteryActivity.getTerm();
         Commodity commodity = new CommodityUrlAdapter(this).adaptToMiddle(lotteryActivity.getCommodity());
@@ -100,6 +101,18 @@ public class ActivityHistoryController extends ImageController {
         activity.expire = BooleanUtils.toBoolean(lotteryActivity.getExpire());
         activity.announcement = lotteryActivity.getAnnouncement();
         activity.type = "lottery";
+
+        if (IntegerUtils.isPositive(userId)) {
+            List<LotteryLot> lots = LotteryLotDao.factory().setActivityId(lotteryActivity.getId()).setUserId(userId).getInstances();
+            if (lots.size() > 0) {
+                List<String> serials = new ArrayList<>();
+                for (LotteryLot lot : lots) {
+                    serials.add(lotNumberFormat.format(lot.getSerialNumber()));
+                }
+                activity.serials = Joiner.on(",").join(serials);
+            }
+        }
+
         return activity;
     }
 
@@ -124,6 +137,7 @@ public class ActivityHistoryController extends ImageController {
         private Boolean expire;
         private String announcement;
         private String type;
+        private String serials;
 
         public Integer getTerm() {
             return term;
@@ -151,6 +165,10 @@ public class ActivityHistoryController extends ImageController {
 
         public String getType() {
             return type;
+        }
+
+        public String getSerials() {
+            return serials;
         }
     }
 /*
