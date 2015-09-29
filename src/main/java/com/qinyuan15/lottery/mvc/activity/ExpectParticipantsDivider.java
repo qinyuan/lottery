@@ -1,6 +1,8 @@
 package com.qinyuan15.lottery.mvc.activity;
 
 import com.qinyuan.lib.lang.time.DateUtils;
+import com.qinyuan.lib.lang.time.Time;
+import com.qinyuan.lib.lang.time.WeightedTime;
 
 import java.sql.Date;
 
@@ -33,7 +35,8 @@ public class ExpectParticipantsDivider {
         }
 
         // if haven't start, just return 0
-        long currentTimestamp = System.currentTimeMillis();
+        Date now = DateUtils.now();
+        long currentTimestamp = now.getTime();
         if (currentTimestamp < startTimestamp) {
             return 0;
         }
@@ -43,8 +46,22 @@ public class ExpectParticipantsDivider {
             return this.expectParticipantCount;
         }
 
-        double currentExpectValue = 1.0 * expectParticipantCount * (currentTimestamp - startTimestamp)
-                / (endTimestamp - startTimestamp);
+        long startToNow = getWeightSeconds(startTime, now);
+        long totalTime = getWeightSeconds(startTime, endTime);
+        if (startToNow > totalTime) {
+            startToNow = totalTime;
+        }
+
+        double currentExpectValue = (1.0 * startToNow / totalTime) * expectParticipantCount;
         return (int) currentExpectValue;
+    }
+
+    private static long getWeightSeconds(Date startTime, Date endTime) {
+        WeightedTime weightedTime = new WeightedTime(startTime, endTime);
+
+        // during 10 to 20 o'clock, make adding of virtual participants faster
+        weightedTime.addWeight(new Time(10, 0, 0), new Time(22, 0, 0), 1000);
+
+        return weightedTime.countSeconds();
     }
 }

@@ -22,13 +22,13 @@ public class ExpectParticipantsDividerTest {
         divider = new ExpectParticipantsDivider(startTime, endTime, 1000);
         assertThat(divider.getCurrentExpectValue()).isEqualTo(0);
 
-        startTime = "2015-07-13 08:00:00";
-        endTime = "2015-07-20 12:00:00";
+        startTime = "2015-09-28 10:00:00";
+        endTime = "2015-09-29 22:00:00";
         divider = new ExpectParticipantsDivider(startTime, endTime, 1000);
         System.out.println(divider.getCurrentExpectValue());
 
-        startTime = "2015-07-08 16:40:00";
-        endTime = "2015-07-20 16:40:00";
+        startTime = "2015-09-28 10:00:00";
+        endTime = "2015-09-30 22:00:00";
         divider = new ExpectParticipantsDivider(startTime, endTime, 1000);
         System.out.println(divider.getCurrentExpectValue());
     }
