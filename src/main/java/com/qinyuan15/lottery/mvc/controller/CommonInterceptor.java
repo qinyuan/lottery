@@ -1,12 +1,14 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.config.ImageConfig;
+import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageUrlAdapter;
 import com.qinyuan.lib.mvc.security.SecuritySearcher;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.lottery.mvc.dao.User;
+import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
+import com.qinyuan15.lottery.mvc.dao.SeckillActivityDao;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -48,11 +50,23 @@ public class CommonInterceptor implements HandlerInterceptor {
         UserDao userDao = new UserDao();
         SecuritySearcher searcher = new SecuritySearcher(userDao);
         if (SecurityUtils.hasAuthority(UserRole.NORMAL)) {
-            User user = userDao.getInstance(searcher.getUserId());
+            /*User user = userDao.getInstance(searcher.getUserId());
             if (!user.getActive()) {
                 httpServletRequest.setAttribute("unactivatedEmail", user.getEmail());
-            }
+            }*/
+            Integer userId = searcher.getUserId();
+            httpServletRequest.setAttribute("activityCount", countActivity(userId));
         }
+    }
+
+    private int countActivity(Integer userId) {
+        if (!IntegerUtils.isPositive(userId)) {
+            return 0;
+        }
+
+        int lotteryActivityCount = LotteryActivityDao.factory().setUserId(userId).getCount();
+        int seckillActivityCount = SeckillActivityDao.factory().setUserId(userId).getCount();
+        return lotteryActivityCount + seckillActivityCount;
     }
 
     @Override
