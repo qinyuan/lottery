@@ -9,6 +9,7 @@ import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.SeckillActivityDao;
+import com.qinyuan15.lottery.mvc.dao.SystemInfoSendRecordDao;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -56,6 +57,9 @@ public class CommonInterceptor implements HandlerInterceptor {
             }*/
             Integer userId = searcher.getUserId();
             httpServletRequest.setAttribute("activityCount", countActivity(userId));
+            int unreadSystemInfoCount = SystemInfoSendRecordDao.factory().setUserId(userId).setUnread(true).getCount();
+            httpServletRequest.setAttribute("unreadSystemInfoCount", unreadSystemInfoCount);
+            System.out.println(unreadSystemInfoCount);
         }
     }
 
