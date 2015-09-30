@@ -109,6 +109,8 @@ public class SystemInfoController extends ImageController {
 
             String username = SecurityUtils.getUsername();
             List<InfoItem> infoItems = new ArrayList<>();
+            List<Integer> unreadIds = new ArrayList<>();
+
             for (SystemInfoSendRecord record : items) {
                 InfoItem item = new InfoItem();
                 item.id = record.getId();
@@ -119,6 +121,12 @@ public class SystemInfoController extends ImageController {
                 item.buildTime = record.getBuildTime();
                 item.unread = record.getUnread();
                 infoItems.add(item);
+                if (record.getUnread()) {
+                    unreadIds.add(record.getId());
+                }
+            }
+            if (unreadIds.size() > 0) {
+                new SystemInfoSendRecordDao().read(userId, unreadIds);
             }
             return infoItems;
         }

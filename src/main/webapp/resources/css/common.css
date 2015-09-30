@@ -554,3 +554,7 @@ div.activate-remind div.body span.resend-fail {
     margin-left: 15px;
     display: none;
 }
+
+#systemInformationNavigation span.unread-count {
+    color: #ff0000;
+}

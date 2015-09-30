@@ -59,7 +59,6 @@ public class CommonInterceptor implements HandlerInterceptor {
             httpServletRequest.setAttribute("activityCount", countActivity(userId));
             int unreadSystemInfoCount = SystemInfoSendRecordDao.factory().setUserId(userId).setUnread(true).getCount();
             httpServletRequest.setAttribute("unreadSystemInfoCount", unreadSystemInfoCount);
-            System.out.println(unreadSystemInfoCount);
         }
     }
 

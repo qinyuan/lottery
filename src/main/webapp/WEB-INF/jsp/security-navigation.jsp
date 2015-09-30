@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@include file="inc-taglib.jsp" %><!-- this include tag is necessary, because this page may be used directory -->
+<%@include file="inc-taglib.jsp" %>
+<!-- this include tag is necessary, because this page may be used directory -->
 <ul>
     <security:authorize ifAnyGranted="ROLE_NORMAL">
         <li><a class="text" href="personal-center.html" title="个人中心"><security:authentication property="name"/></a></li>
         <li><a class="text" href="j_spring_security_logout">退出</a></li>
         <%--<li><a class="text" href="personal-center.html">个人中心</a></li>--%>
-        <li><a class="text" id="systemInformationNavigation" href="system-info.html">消息</a></li>
+        <li><a class="text" id="systemInformationNavigation" href="system-info.html">消息<c:if
+                test="${unreadSystemInfoCount > 0}"> <span
+                class="unread-count">${unreadSystemInfoCount}</span></c:if></a></li>
         <li><a class="text" id="lotteryHistoryNavigation" href="activity-history.html">活动历史 ${activityCount}</a></li>
     </security:authorize>
     <security:authorize ifAnyGranted="ROLE_ADMIN">
