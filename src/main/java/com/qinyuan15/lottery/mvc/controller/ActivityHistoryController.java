@@ -3,6 +3,7 @@ package com.qinyuan15.lottery.mvc.controller;
 import com.google.common.base.Joiner;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
+import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan15.lottery.mvc.dao.*;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +41,20 @@ public class ActivityHistoryController extends ImageController {
         }*/
         setAttribute("activities", getActivities());
 
+        User user = new UserDao().getInstanceByName(SecurityUtils.getUsername());
+        if (user != null && BooleanUtils.isNotTrue(user.getReceiveMail())) {
+            setAttribute("email", user.getEmail());
+            addJavaScriptData("email", user.getEmail());
+            SubscribeHeaderUtils.setHeaderParameters(this);
+        }
+
         setTitle("活动历史");
         //addCss("resources/js/lib/bootstrap/css/bootstrap-switch.min");
         //addJs("lib/bootstrap/js/bootstrap-switch.min");
         addCss("resources/js/lib/icheck/skins/all", false);
         addJs("lib/icheck/icheck.min", false);
 
+        addCssAndJs("subscribe-float-panel");
         addCssAndJs("activity-history");
         return "activity-history";
     }

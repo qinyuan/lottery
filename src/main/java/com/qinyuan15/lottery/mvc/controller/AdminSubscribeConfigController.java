@@ -17,9 +17,7 @@ public class AdminSubscribeConfigController extends ImageController {
     @RequestMapping("/admin-subscribe-config")
     public String index() {
         IndexHeaderUtils.setHeaderParameters(this);
-
-        setAttribute("qqlistId", AppConfig.getQQListId());
-        setAttribute("qqlistDescription", AppConfig.getQQListDescription());
+        SubscribeHeaderUtils.setHeaderParameters(this);
 
         setTitle("订阅邮件配置");
         addCss("admin-form");

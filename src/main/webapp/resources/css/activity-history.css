@@ -30,6 +30,11 @@ div.main-body div.title {
     margin: 15px 0 7px 20px;
 }
 
+div.main-body div.title a.subscribe {
+    margin-left: 15px;
+    font-size: 9pt;
+}
+
 div.main-body div.filter {
     position: absolute;
     left: 150px;

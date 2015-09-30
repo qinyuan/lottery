@@ -10,7 +10,6 @@ import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.ImageMapType;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
-import com.qinyuan15.lottery.mvc.dao.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,13 +60,12 @@ public class CommodityController extends ImageController {
         setAttribute("lotteryRule", AppConfig.getLotteryRule());
         setAttribute("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
 
-        // qqlist
-        setAttribute("qqlistId", AppConfig.getQQListId());
-        setAttribute("qqlistDescription", AppConfig.getQQListDescription());
+        SubscribeHeaderUtils.setHeaderParameters(this);
 
         addJs("lib/jsutils.digit", false);
         addJs("lib/handlebars.min-v1.3.0", false);
         addHeadJs("lib/image-adjust");
+        addCssAndJs("subscribe-float-panel");
         addCssAndJs("commodity");
         return "commodity";
     }

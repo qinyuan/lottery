@@ -3,7 +3,8 @@
 <%@include file="index-header.jsp" %>
 <div class="gray-back">
     <div class="page-width main-body">
-        <div class="title">我参与的活动</div>
+        <div class="title">我参与的活动<c:if test="${email != null}"><a href="javascript:void(0)"
+                                                                  class="subscribe">订阅活动</a></c:if></div>
         <%--<div class="filter">
             <input type="radio" name="activityType" value="lottery"<c:if test="${activityType == 'lottery'}"> checked</c:if>/>
             <span class="text">抽奖</span>
@@ -69,4 +70,7 @@
         --%>
     </div>
 </div>
+<c:if test="${email != null}">
+    <%@include file="subscribe-float-panel.jsp"%>
+</c:if>
 <%@include file="inc-footer.jsp" %>
