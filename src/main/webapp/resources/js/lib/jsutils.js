@@ -813,6 +813,42 @@ var JSUtils = {
                 }
             });
         }
+    },
+    /**
+     * make number changing
+     * @param $target target jquery element
+     */
+    changingNumber: function ($target, interval, finalValue) {
+        // set default value
+        if (finalValue == null) {
+            finalValue = '';
+        }
+
+        var textLength = $target.text().length;
+        var multiplier = Math.pow(10, textLength);
+        var intervalId = setInterval(function () {
+            $target.text(parseInt(Math.random() * multiplier));
+        }, 20);
+        setTimeout(function () {
+            clearInterval(intervalId);
+            $target.text(finalValue);
+        }, interval);
+        /*return {
+         stop: function (text) {
+         clearInterval(intervalId);
+         if (text == null) {
+         text = '';
+         }
+         $target.text(text);
+         }
+         }*/
+    },
+    stringRepeat: function (repeatChar, repeatNumber) {
+        var text = '';
+        for (var i = 0; i < repeatNumber; i++) {
+            text += repeatChar;
+        }
+        return text;
     }
 };
 

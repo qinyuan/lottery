@@ -326,7 +326,14 @@
                 // serial number
                 var serialNumbers = options['serialNumbers'];
                 if (serialNumbers.length > 0) {
-                    this.$div.find('div.lot div.serial span.serial').text(serialNumbers[0]);
+                    var serialNumber = serialNumbers[0];
+                    var $serial = this.$div.find('div.lot div.serial span.serial');
+                    if (options.success) {
+                        $serial.text(Math.pow(10, serialNumber.length - 1));
+                        JSUtils.changingNumber($serial, 800, serialNumber);
+                    } else {
+                        $serial.text(serialNumber);
+                    }
 
                     // tel
                     var tel = options['tel'];
@@ -702,4 +709,3 @@
     }
 })();
 var getLotteryLot, getSeckillLot, showLotteryRule;
-
