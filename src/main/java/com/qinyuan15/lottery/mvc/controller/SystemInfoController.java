@@ -155,7 +155,7 @@ public class SystemInfoController extends ImageController {
         }
 
         try {
-            new SystemInfoSendRecordDao().read(id);
+            new SystemInfoSendRecordDao().read(securitySearcher.getUserId(), id);
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to mark system information as read, SystemInfoSendRecordId: {}, info: {}", id, e);
