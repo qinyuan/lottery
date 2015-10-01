@@ -81,6 +81,7 @@ create table lottery_activity(
   commodity_id int not null,
   start_time datetime not null,
   expect_end_time datetime,
+  close_time datetime not null,
   end_time datetime,
   continuous_serial_limit int,
   expire boolean not null,

@@ -79,6 +79,7 @@
         <property name="term"/>
         <property name="commodityId" column="commodity_id"/>
         <property name="startTime" column="start_time"/>
+        <property name="closeTime" column="close_time"/>
         <property name="expectEndTime" column="expect_end_time"/>
         <property name="endTime" column="end_time"/>
         <property name="continuousSerialLimit" column="continuous_serial_limit"/>

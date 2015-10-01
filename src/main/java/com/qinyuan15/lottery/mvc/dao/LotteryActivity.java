@@ -1,12 +1,13 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.lang.IntegerRange;
+import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan15.lottery.mvc.activity.LotCounter;
 import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
 
 public class LotteryActivity extends AbstractActivity {
     private String expectEndTime;
+    private String closeTime;
     private String endTime;
     private Integer continuousSerialLimit;
     private Integer virtualParticipants;
@@ -23,6 +24,14 @@ public class LotteryActivity extends AbstractActivity {
 
     public void setExpectEndTime(String expectEndTime) {
         this.expectEndTime = expectEndTime;
+    }
+
+    public String getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(String closeTime) {
+        this.closeTime = closeTime;
     }
 
     public String getEndTime() {

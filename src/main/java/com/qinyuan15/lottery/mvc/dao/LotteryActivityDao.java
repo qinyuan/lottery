@@ -2,9 +2,9 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
-import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.lang.IntegerRange;
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.lang.time.DateUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         return factory();
     }
 
-    public Integer add(Integer term, Integer commodityId, String startTime, String expectEndTime,
+    public Integer add(Integer term, Integer commodityId, String startTime, String expectEndTime, String closeTime,
                        Integer continuousSerialLimit, Integer expectParticipantCount, Integer dualColoredBallTerm,
                        String description, Integer minLivenessToParticipant, Integer minSerialNumber,
                        Integer maxSerialNumber) {
@@ -42,6 +42,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         activity.setCommodityId(commodityId);
         activity.setStartTime(startTime);
         activity.setExpectEndTime(expectEndTime);
+        activity.setCloseTime(closeTime);
         activity.setContinuousSerialLimit(continuousSerialLimit);
         activity.setExpectParticipantCount(expectParticipantCount);
         activity.setDualColoredBallTerm(dualColoredBallTerm);
@@ -73,7 +74,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
     }*/
 
     public void update(Integer id, Integer term, Integer commodityId, String startTime, String expectEndTime,
-                       Integer continuousSerialLimit, Integer expectParticipantCount,
+                       String closeTime, Integer continuousSerialLimit, Integer expectParticipantCount,
                        Integer virutalLiveness, String virtualLivenessUsers, Integer dualColoredBallTerm,
                        String description, Integer minLivenessToParticipant, Integer minSerialNumber,
                        Integer maxSerialNumber) {
@@ -83,6 +84,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         activity.setCommodityId(commodityId);
         activity.setStartTime(startTime);
         activity.setExpectEndTime(expectEndTime);
+        activity.setCloseTime(closeTime);
         activity.setContinuousSerialLimit(continuousSerialLimit);
         activity.setExpectParticipantCount(expectParticipantCount);
         activity.setVirtualLiveness(virutalLiveness);

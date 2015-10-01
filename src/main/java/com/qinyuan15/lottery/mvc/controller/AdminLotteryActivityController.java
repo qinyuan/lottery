@@ -1,8 +1,8 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.lang.IntegerRange;
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan15.lottery.mvc.activity.DualColoredBallTermValidator;
 import com.qinyuan15.lottery.mvc.dao.*;
 import org.slf4j.Logger;
@@ -45,6 +45,7 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                           @RequestParam(value = "startTime", required = false) String startTime,
                           @RequestParam(value = "autoStartTime", required = false) String autoStartTime,
                           @RequestParam(value = "expectEndTime", required = true) String expectEndTime,
+                          @RequestParam(value = "closeTime", required = true) String closeTime,
                           @RequestParam(value = "continuousSerialLimit", required = true) Integer continuousSerialLimit,
                           @RequestParam(value = "expectParticipantCount", required = true) Integer expectParticipantCount,
                           @RequestParam(value = "virtualLiveness", required = true) Integer virtualLiveness,
@@ -102,7 +103,7 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
             IntegerRange serialNumberRange = new IntegerRange(serialNumberRangeString);
             LotteryActivityDao dao = new LotteryActivityDao();
             if (IntegerUtils.isPositive(id)) {
-                dao.update(id, term, commodityId, startTime, expectEndTime, continuousSerialLimit,
+                dao.update(id, term, commodityId, startTime, expectEndTime, closeTime, continuousSerialLimit,
                         expectParticipantCount, virtualLiveness, virtualLivenessUsers, dualColoredBallTerm,
                         description, minLivenessToParticipate, serialNumberRange.getStart(),
                         serialNumberRange.getEnd());
@@ -115,7 +116,7 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                 } else if (dao.hasTerm(term)) {
                     return fail("第" + term + "期抽奖已经存在，请填写别的期数！");
                 }
-                dao.add(term, commodityId, startTime, expectEndTime, continuousSerialLimit,
+                dao.add(term, commodityId, startTime, expectEndTime, closeTime, continuousSerialLimit,
                         expectParticipantCount, dualColoredBallTerm, description, minLivenessToParticipate,
                         serialNumberRange.getStart(), serialNumberRange.getEnd());
             }
