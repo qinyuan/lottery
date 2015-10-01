@@ -51,6 +51,7 @@
             <q:hidden cssClass="description" value="${activity.description}"/>
             <q:hidden cssClass="min-liveness-to-participate" value="${activity.minLivenessToParticipate}"/>
             <q:hidden cssClass="serial-number-range" value="${activity.serialNumberRange}"/>
+            <q:hidden cssClass="close-time" value="${activity.closeTime}"/>
             <td class="term">${activity.term}</td>
             <td class="commodity" data-options="commodityId: ${activity.commodity.id}">${activity.commodity.name}</td>
             <td class="start-time">${fn:replace(activity.startTime, ' ', '<br/> ')}</td>

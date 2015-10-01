@@ -27,7 +27,7 @@ public class LotteryActivity extends AbstractActivity {
     }
 
     public String getCloseTime() {
-        return closeTime;
+        return DateUtils.trimMilliSecond(closeTime);
     }
 
     public void setCloseTime(String closeTime) {

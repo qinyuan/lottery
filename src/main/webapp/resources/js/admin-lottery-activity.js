@@ -15,6 +15,9 @@
         get$ExpectEndTime: function () {
             return this.$floatPanel.getInputByName('expectEndTime');
         },
+        get$CloseTime: function () {
+            return this.$floatPanel.getInputByName('closeTime');
+        },
         get$ContinuousSerialLimit: function () {
             return this.$floatPanel.getInputByName('continuousSerialLimit');
         },
@@ -111,6 +114,7 @@
             }, function (data) {
                 if (data['date']) {
                     self.get$ExpectEndTime().val(data['date']);
+                    self.get$CloseTime().val(data['date']);
                 }
             });
         },
@@ -158,6 +162,7 @@
         var $expectEndTimeTd = $tr.find('td.expect-end-time');
         lotteryActivity.get$ExpectEndTime().val($expectEndTimeTd.text());
         lotteryActivity.get$DualColoredBallTerm().val($expectEndTimeTd.dataOptions('dualColoredBallTerm'));
+        lotteryActivity.get$CloseTime().val($tr.find('input.close-time').val());
         lotteryActivity.get$VirtualLiveness().val($tr.find('td.virtual-liveness').text());
         lotteryActivity.get$VirtualLivenessUsers().val($tr.find('td.virtual-liveness-users').text());
         lotteryActivity.get$ContinuousSerialLimit().val($tr.find('td.continuous-serial-limit').text());
