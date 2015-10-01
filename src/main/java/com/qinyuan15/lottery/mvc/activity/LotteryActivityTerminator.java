@@ -1,8 +1,8 @@
 package com.qinyuan15.lottery.mvc.activity;
 
-import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.concurrent.ThreadUtils;
+import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
@@ -77,7 +77,7 @@ public class LotteryActivityTerminator {
                     DualColoredBallCrawler.Result result = getResult();
                     if (result != null) {
                         new LotteryActivityDao().end(activity.getId());
-                        new VirtualParticipantAdjuster().adjustByIncrement(activity.getId(), Long.parseLong(result.result));
+                        new VirtualParticipantAdjuster().adjustByDecrement(activity.getId(), Long.parseLong(result.result));
                         new DualColoredBallRecordDao().add(activity.getDualColoredBallTerm(),
                                 result.drawTime, result.result);
                         new LotteryResultUpdater(lotNumberFormat).update(activity.getId(), result.result);

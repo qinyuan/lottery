@@ -14,6 +14,10 @@ public class VirtualParticipantCreator {
      * @param participantNumber how many participants to create
      */
     public void create(Integer activityId, int participantNumber) {
+        if (participantNumber == 0) {
+            return;
+        }
+
         String hql = "UPDATE LotteryActivity SET virtualParticipants=virtualParticipants+" + participantNumber;
         hql += " WHERE id=" + activityId;
         HibernateUtils.executeUpdate(hql);

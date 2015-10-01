@@ -21,21 +21,6 @@ public class InvalidLotteryLotDao {
         }
 
         return getListBuilder(activity).countBySQL("lottery_lot");
-/*
-        String noTelTable = "(SELECT id FROM user WHERE tel IS NULL OR tel='')";
-        String filter = "activity_id=:activityId AND ((user_id IN " + noTelTable + ")";
-
-        Integer minLivenessToParticipate = activity.getMinLivenessToParticipate();
-        if (IntegerUtils.isPositive(minLivenessToParticipate)) {
-            String insufficientLivenessTable = "(SELECT spread_user_id,SUM(liveness) AS liveness_sum FROM lottery_liveness " +
-                    "GROUP BY spread_user_id HAVING liveness_sum<" + minLivenessToParticipate + ")";
-            insufficientLivenessTable = "(SELECT spread_user_id FROM " + insufficientLivenessTable + " AS t)";
-            filter += " OR (user_id IN " + insufficientLivenessTable + ")";
-        }
-
-        filter += ")";
-        return new HibernateListBuilder().addFilter(filter).addArgument("activityId", activityId)
-                .countBySQL("lottery_lot");*/
     }
 
     private HibernateListBuilder getListBuilder(LotteryActivity activity) {

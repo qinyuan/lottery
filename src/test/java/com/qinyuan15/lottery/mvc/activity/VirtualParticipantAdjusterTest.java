@@ -5,7 +5,7 @@ import org.junit.Test;
 public class VirtualParticipantAdjusterTest {
     @Test
     public void testAdjust() throws Exception {
-        /*long testResult = 132022262831L;
-        new VirtualParticipantAdjuster().adjust(23, testResult);*/
+        long testResult = 132022262831L;
+        new VirtualParticipantAdjuster().adjustByDecrement(15, testResult);
     }
 }
