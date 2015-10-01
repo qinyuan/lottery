@@ -192,7 +192,8 @@ public class LotController extends ImageController {
                 if (activity == null || activity.getExpire()) {
                     return fail("noActivity");
                 }
-                return getRemainingSecondsJson(activity.getExpectEndTime());
+                //return getRemainingSecondsJson(activity.getExpectEndTime());
+                return getRemainingSecondsJson(activity.getCloseTime());
             }
             case "seckill": {
                 SeckillActivity activity = new SeckillActivityDao().getActiveInstanceByCommodityId(commodityId);
