@@ -55,7 +55,6 @@ public class LotteryLivenessDao {
         return Pair.of(Joiner.on(",").join(usernames), liveness == null ? 0 : liveness.intValue());
     }
 
-
     private boolean hasInstance(Integer spreadUserId, Integer receiveUserId) {
         return new HibernateListBuilder().addEqualFilter("spreadUserId", spreadUserId)
                 .addEqualFilter("receiveUserId", receiveUserId)
