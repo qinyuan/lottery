@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.activity;
 
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
@@ -87,28 +88,16 @@ public class LotteryLotCounter implements LotCounter {
             return 0;
         }
 
-        //Integer newLotLivness = AppConfig.getNewLotLiveness();
-        /*if (!IntegerUtils.isPositive(newLotLivness)) {
-            return 0;
-        }*/
-
-        Integer minLivenessToParticipate = activity.getMinLivenessToParticipate();
-        if (!IntegerUtils.isPositive(minLivenessToParticipate)) {
+        if (AppConfig.allocateLotterySerialInAdvance()) {
             return 1;
+        } else {
+            Integer minLivenessToParticipate = activity.getMinLivenessToParticipate();
+            if (!IntegerUtils.isPositive(minLivenessToParticipate)) {
+                return 1;
+            }
+
+            int livenesss = new LotteryLivenessDao().getLiveness(userId);
+            return livenesss >= minLivenessToParticipate ? 1 : 0;
         }
-
-        int livenesss = new LotteryLivenessDao().getLiveness(userId);
-        return livenesss >= minLivenessToParticipate ? 1 : 0;
-        /*
-        int count = 1;
-
-        Integer newLotLivness = AppConfig.getNewLotLiveness();
-        if (!IntegerUtils.isPositive(newLotLivness)) {
-            return count;
-        }
-
-        int livenesss = new LotteryLivenessDao().getLiveness(userId);
-        return count + livenesss / newLotLivness;
-        */
     }
 }

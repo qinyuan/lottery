@@ -4,13 +4,17 @@ import com.qinyuan.lib.config.AppConfigDao;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.file.ClasspathFileUtils;
 
+import java.util.Properties;
+
 /**
  * Application Configuration
  * Created by qinyuan on 15-6-16.
  */
 public class AppConfig {
+    public final static String GLOBAL_CONFIG_PROPS_FILE = "global-config.properties";
+
     public static String getAppHost() {
-        String appHost = ClasspathFileUtils.getProperties("global-config.properties").getProperty("appHost");
+        String appHost = ClasspathFileUtils.getProperties(GLOBAL_CONFIG_PROPS_FILE).getProperty("appHost");
         if (!appHost.endsWith("/")) {
             appHost += "/";
         }
@@ -617,4 +621,12 @@ public class AppConfig {
         dao.save(TEL_VALIDATE_DESCRIPTION_PAGE_KEY, telValidateDescriptionPage);
     }
     ///////////////////////////// tel validate description page end //////////////////////////
+
+    ////////////////////////////// allocate lottery serial number ////////////////////////////////
+    public static boolean allocateLotterySerialInAdvance() {
+        Properties props = ClasspathFileUtils.getProperties("global-config.properties");
+        String value = props.getProperty("allocateLotterySerialInAdvance");
+        return value != null && value.trim().equals("1");
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////
 }
