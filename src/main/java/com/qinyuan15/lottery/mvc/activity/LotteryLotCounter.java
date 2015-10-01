@@ -1,6 +1,5 @@
 package com.qinyuan15.lottery.mvc.activity;
 
-import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
@@ -51,36 +50,6 @@ public class LotteryLotCounter implements LotCounter {
      */
     public int countReal(Integer activityId) {
         return LotteryLotDao.factory().setActivityId(activityId).getCount();
-    }
-
-
-    /**
-     * count invalid lot number of certain lottery activity
-     *
-     * @param activityId id of activity to count
-     * @return invalid lot number of the lottery activity
-     */
-    public int countInvalid(Integer activityId) {
-        // validate activity
-        LotteryActivity activity = new LotteryActivityDao().getInstance(activityId);
-        if (activity == null) {
-            return 0;
-        }
-
-        String noTelTable = "(SELECT id FROM user WHERE tel IS NULL OR tel='')";
-        String filter = "activity_id=:activityId AND ((user_id IN " + noTelTable + ")";
-
-        Integer minLivenessToParticipate = activity.getMinLivenessToParticipate();
-        if (IntegerUtils.isPositive(minLivenessToParticipate)) {
-            String insufficientLivenessTable = "(SELECT spread_user_id,SUM(liveness) AS liveness_sum FROM lottery_liveness " +
-                    "GROUP BY spread_user_id HAVING liveness_sum<" + minLivenessToParticipate + ")";
-            insufficientLivenessTable = "(SELECT spread_user_id FROM " + insufficientLivenessTable + " AS t)";
-            filter += " OR (user_id IN " + insufficientLivenessTable + ")";
-        }
-
-        filter += ")";
-        return new HibernateListBuilder().addFilter(filter).addArgument("activityId", activityId)
-                .countBySQL("lottery_lot");
     }
 
     /**
