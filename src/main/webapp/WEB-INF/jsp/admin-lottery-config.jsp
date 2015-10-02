@@ -1,3 +1,4 @@
+<%@ page import="com.qinyuan15.lottery.mvc.activity.InvalidLotteryLotPlaceholderConverter" %>
 <%@ page import="com.qinyuan15.lottery.mvc.activity.LotteryAnnouncementPlaceholderConverter" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="inc-header.jsp" %>
@@ -192,6 +193,41 @@
     </div>
 </div>
 <div class="edit-unit">
+    <div class="title">无效抽奖号提醒设置</div>
+    <div class="content">
+        <table>
+            <tbody>
+            <tr>
+                <td class="title">手机未填的提醒
+                    <div class="comment">
+                        注：<br/>
+                        <%=InvalidLotteryLotPlaceholderConverter.PHASE_PLACEHOLDER%>指代抽奖的期数
+                    </div>
+                </td>
+                <td class="input">
+                    <textarea name="noTelInvalidLotSystemInfoTemplate"
+                              class="ckeditor">${noTelInvalidLotSystemInfoTemplate}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">爱心不足提醒
+                    <div class="comment">
+                        注：<br/>
+                        <%=InvalidLotteryLotPlaceholderConverter.PHASE_PLACEHOLDER%>指代抽奖的期数<br/>
+                        <%=InvalidLotteryLotPlaceholderConverter.LIVENESS_PLACEHOLDER%>指代用户的爱心数<br/>
+                        <%=InvalidLotteryLotPlaceholderConverter.MIN_LIVENESS_PLACEHOLDER%>指代抽奖要求的最少爱心数
+                    </div>
+                </td>
+                <td class="input">
+                    <textarea name="insufficientLivenessInvalidLotSystemInfoTemplate"
+                              class="ckeditor">${insufficientLivenessInvalidLotSystemInfoTemplate}</textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="edit-unit">
     <div class="title">其他设置</div>
     <div class="content">
         <table>
@@ -226,17 +262,6 @@
                 <td class="input">
                     <textarea name="lotteryAnnouncementTemplate"
                               class="ckeditor">${lotteryAnnouncementTemplate}</textarea>
-                </td>
-            </tr>
-            <tr>
-                <td class="title">无效抽奖号通知
-                    <div class="comment">
-                        注：<br/>
-                        {{phase}}指代抽奖的期数
-                    </div>
-                </td>
-                <td class="input">
-                    <textarea name="invalidLotSystemInfoTemplate" class="ckeditor">${invalidLotSystemInfoTemplate}</textarea>
                 </td>
             </tr>
             </tbody>

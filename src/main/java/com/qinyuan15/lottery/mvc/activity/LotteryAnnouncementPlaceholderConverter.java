@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity;
 
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class LotteryAnnouncementPlaceholderConverter {
     public final static String BALL_PHASE_PLACEHOLDER = "{{b_phase}}";
@@ -21,7 +21,7 @@ public class LotteryAnnouncementPlaceholderConverter {
     }
 
     String convert(String announcement) {
-        if (!StringUtils.hasText(announcement)) {
+        if (StringUtils.isBlank(announcement)) {
             return announcement;
         }
 

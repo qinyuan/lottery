@@ -631,14 +631,24 @@ public class AppConfig {
     //////////////////////////////////////////////////////////////////////////////////////////////
 
     //////////////////////////// invalid lot system info template ////////////////////////////
-    private final static String INVALID_LOT_SYSTEM_INFO_TEMPLATE_KEY = "invalidLotSystemInfoTemplate";
+    private final static String NO_TEL_INVALID_LOT_SYSTEM_INFO_TEMPLATE_KEY = "noTelInvalidLotSystemInfoTemplate";
 
-    public static String getInvalidLotSystemInfoTemplate() {
-        return dao.get(INVALID_LOT_SYSTEM_INFO_TEMPLATE_KEY);
+    public static String getNoTelInvalidLotSystemInfoTemplate() {
+        return dao.get(NO_TEL_INVALID_LOT_SYSTEM_INFO_TEMPLATE_KEY);
     }
 
-    public static void updateInvalidLotSystemInfoTemplate(String template) {
-        dao.save(INVALID_LOT_SYSTEM_INFO_TEMPLATE_KEY, template);
+    public static void updateNoTelInvalidLotSystemInfoTemplate(String template) {
+        dao.save(NO_TEL_INVALID_LOT_SYSTEM_INFO_TEMPLATE_KEY, template);
+    }
+
+    private final static String INSUFFICIENT_LIVENESS_INVALID_LOT_SYSTEM_INFO_TEMPLATE_KEY = "insufficientLivenessInvalidLotSystemInfoTemplate";
+
+    public static String getInsufficientLivenessInvalidLotSystemInfoTemplate() {
+        return dao.get(INSUFFICIENT_LIVENESS_INVALID_LOT_SYSTEM_INFO_TEMPLATE_KEY);
+    }
+
+    public static void updateInsufficientLivenessInvalidLotSystemInfoTemplate(String template) {
+        dao.save(INSUFFICIENT_LIVENESS_INVALID_LOT_SYSTEM_INFO_TEMPLATE_KEY, template);
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////
