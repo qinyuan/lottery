@@ -47,6 +47,7 @@ public class AdminLotteryConfigController extends ImageController {
         // other data
         setAttribute("lotteryAnnouncementTemplate", AppConfig.getLotteryAnnouncementTemplate());
         setAttribute("lotteryRule", AppConfig.getLotteryRule());
+        setAttribute("invalidLotSystemInfoTemplate", AppConfig.getInvalidLotSystemInfoTemplate());
 
         setTitle("抽奖配置");
         addCss("admin-form");
@@ -77,7 +78,8 @@ public class AdminLotteryConfigController extends ImageController {
                          @RequestParam(value = "remindNewLotteryChanceBySystemInfo", required = false) String remindNewLotteryChanceBySystemInfo,
                          @RequestParam(value = "newLotteryChanceSystemInfoTemplate", required = true) String newLotteryChanceSystemInfoTemplate,
                          @RequestParam(value = "remindLivenessIncreaseBySystemInfo", required = false) String remindLivenessIncreaseBySystemInfo,
-                         @RequestParam(value = "livenessIncreaseSystemInfoTemplate", required = true) String livenessIncreaseSystemInfoTemplate) {
+                         @RequestParam(value = "livenessIncreaseSystemInfoTemplate", required = true) String livenessIncreaseSystemInfoTemplate,
+                         @RequestParam(value = "invalidLotSystemInfoTemplate", required = true) String invalidLotSystemInfoTemplate) {
 
         AppConfig.updateLotterySinaWeiboTitle(sinaWeiboTitle);
         AppConfig.updateLotterySinaWeiboIncludePicture(sinaWeiboIncludePicture);
@@ -91,6 +93,7 @@ public class AdminLotteryConfigController extends ImageController {
         AppConfig.updateShareSucceedLiveness(shareSucceedLiveness);
         AppConfig.updateLotteryRule(lotteryRule);
         AppConfig.updateLotteryAnnouncementTemplate(lotteryAnnouncementTemplate);
+        AppConfig.updateInvalidLotSystemInfoTemplate(invalidLotSystemInfoTemplate);
 
         if (remindNewLotteryChanceByMail != null) {
             AppConfig.updateRemindNewLotteryChanceByMail(true);

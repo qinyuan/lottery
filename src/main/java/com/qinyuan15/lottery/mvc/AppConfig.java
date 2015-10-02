@@ -629,4 +629,17 @@ public class AppConfig {
         return value != null && value.trim().equals("1");
     }
     //////////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////// invalid lot system info template ////////////////////////////
+    private final static String INVALID_LOT_SYSTEM_INFO_TEMPLATE_KEY = "invalidLotSystemInfoTemplate";
+
+    public static String getInvalidLotSystemInfoTemplate() {
+        return dao.get(INVALID_LOT_SYSTEM_INFO_TEMPLATE_KEY);
+    }
+
+    public static void updateInvalidLotSystemInfoTemplate(String template) {
+        dao.save(INVALID_LOT_SYSTEM_INFO_TEMPLATE_KEY, template);
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////
 }

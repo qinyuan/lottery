@@ -93,7 +93,6 @@
         </table>
     </div>
 </div>
-
 <div class="edit-unit">
     <div class="title">用户爱心增加后的通知设置</div>
     <div class="content">
@@ -127,8 +126,6 @@
         </table>
     </div>
 </div>
-
-
 <div class="edit-unit">
     <div class="title">用户获得新抽奖机会的通知设置</div>
     <div class="content">
@@ -229,6 +226,17 @@
                 <td class="input">
                     <textarea name="lotteryAnnouncementTemplate"
                               class="ckeditor">${lotteryAnnouncementTemplate}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">无效抽奖号通知
+                    <div class="comment">
+                        注：<br/>
+                        {{phase}}指代抽奖的期数
+                    </div>
+                </td>
+                <td class="input">
+                    <textarea name="invalidLotSystemInfo" class="ckeditor">${invalidLotSystemInfoTemplate}</textarea>
                 </td>
             </tr>
             </tbody>
