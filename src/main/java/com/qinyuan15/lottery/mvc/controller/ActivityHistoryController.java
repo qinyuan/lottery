@@ -8,6 +8,7 @@ import com.qinyuan15.lottery.mvc.dao.*;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -61,7 +62,8 @@ public class ActivityHistoryController extends ImageController {
 
     private List<Activity> getActivities() {
         List<Activity> activities = new ArrayList<>();
-        Integer userId = securitySearcher.getUserId();
+        User user = new UserDao().getInstanceByName(SecurityUtils.getUsername());
+        Integer userId = user.getId();
         if (!IntegerUtils.isPositive(userId)) {
             return activities;
         }
@@ -74,7 +76,7 @@ public class ActivityHistoryController extends ImageController {
             if (lotteryIndex >= lotteryActivities.size()) {
                 activities.add(buildActivityBySeckill(seckillActivities.get(seckillIndex++)));
             } else if (seckillIndex >= seckillActivities.size()) {
-                activities.add(buildActivityByLottery(lotteryActivities.get(lotteryIndex++), userId));
+                activities.add(buildActivityByLottery(lotteryActivities.get(lotteryIndex++), user));
             } else {
                 LotteryActivity lotteryActivity = lotteryActivities.get(lotteryIndex);
                 SeckillActivity seckillActivity = seckillActivities.get(seckillIndex);
@@ -82,7 +84,7 @@ public class ActivityHistoryController extends ImageController {
                 if (!BooleanUtils.toBoolean(lotteryActivity.getExpire()) &&
                         BooleanUtils.toBoolean(seckillActivity.getExpire())) {
                     // add the active one first
-                    activities.add(buildActivityByLottery(lotteryActivities.get(lotteryIndex++), userId));
+                    activities.add(buildActivityByLottery(lotteryActivities.get(lotteryIndex++), user));
                 } else if (!BooleanUtils.toBoolean(seckillActivity.getExpire()) ||
                         BooleanUtils.toBoolean(lotteryActivity.getExpire())) {
                     // add the active one first
@@ -90,7 +92,7 @@ public class ActivityHistoryController extends ImageController {
                 } else {
                     // add the earlier one first
                     if (lotteryActivity.getStartTime().compareTo(seckillActivity.getStartTime()) <= 0) {
-                        activities.add(buildActivityByLottery(lotteryActivities.get(lotteryIndex++), userId));
+                        activities.add(buildActivityByLottery(lotteryActivities.get(lotteryIndex++), user));
                     } else {
                         activities.add(buildActivityBySeckill(seckillActivities.get(seckillIndex++)));
                     }
@@ -100,7 +102,7 @@ public class ActivityHistoryController extends ImageController {
         return activities;
     }
 
-    private Activity buildActivityByLottery(LotteryActivity lotteryActivity, Integer userId) {
+    private Activity buildActivityByLottery(LotteryActivity lotteryActivity, User user) {
         Activity activity = new Activity();
         activity.term = lotteryActivity.getTerm();
         Commodity commodity = new CommodityUrlAdapter(this).adaptToMiddle(lotteryActivity.getCommodity());
@@ -111,18 +113,33 @@ public class ActivityHistoryController extends ImageController {
         activity.announcement = lotteryActivity.getAnnouncement();
         activity.type = "lottery";
 
-        if (IntegerUtils.isPositive(userId)) {
-            List<LotteryLot> lots = LotteryLotDao.factory().setActivityId(lotteryActivity.getId()).setUserId(userId).getInstances();
+        if (user != null && IntegerUtils.isPositive(user.getId())) {
+            List<LotteryLot> lots = LotteryLotDao.factory().setActivityId(lotteryActivity.getId())
+                    .setUserId(user.getId()).getInstances();
             if (lots.size() > 0) {
                 List<String> serials = new ArrayList<>();
                 for (LotteryLot lot : lots) {
                     serials.add(lotNumberFormat.format(lot.getSerialNumber()));
                 }
                 activity.serials = Joiner.on(",").join(serials);
+                activity.invalid = isUserInvalidToTakeLot(user, lotteryActivity);
             }
         }
+        activity.closed = BooleanUtils.isTrue(lotteryActivity.getClosed());
 
         return activity;
+    }
+
+    private boolean isUserInvalidToTakeLot(User user, LotteryActivity lotteryActivity) {
+        if (!StringUtils.hasText(user.getTel())) {
+            return true;
+        }
+        if (!IntegerUtils.isPositive(lotteryActivity.getMinLivenessToParticipate())) {
+            return false;
+
+        }
+        int liveness = new LotteryLivenessDao().getLiveness(user.getId());
+        return liveness < lotteryActivity.getMinLivenessToParticipate();
     }
 
     private Activity buildActivityBySeckill(SeckillActivity seckillActivity) {
@@ -147,6 +164,8 @@ public class ActivityHistoryController extends ImageController {
         private String announcement;
         private String type;
         private String serials;
+        private Boolean closed;
+        private boolean invalid;
 
         public Integer getTerm() {
             return term;
@@ -178,6 +197,14 @@ public class ActivityHistoryController extends ImageController {
 
         public String getSerials() {
             return serials;
+        }
+
+        public Boolean getClosed() {
+            return closed;
+        }
+
+        public boolean isInvalid() {
+            return invalid;
         }
     }
 /*

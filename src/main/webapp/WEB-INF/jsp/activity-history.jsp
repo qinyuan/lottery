@@ -34,8 +34,13 @@
                             </div>
                         </c:when>
                         <c:otherwise>
-                            <div class="status active">活动进行中</div>
-                            <div class="announcement">未开奖</div>
+                            <div class="status active">${activity.closed ? '等待开奖' : '活动进行中'}</div>
+                            <div class="announcement">
+                                <c:if test="${activity.serials != null}">抽奖号：${activity.serials}
+                                    <c:if test="${activity.invalid}"><span
+                                            style="color:#ff0000">(无效)</span></c:if><br/></c:if>
+                                未开奖
+                            </div>
                         </c:otherwise>
                     </c:choose>
                 </div>
@@ -71,6 +76,6 @@
     </div>
 </div>
 <c:if test="${email != null}">
-    <%@include file="subscribe-float-panel.jsp"%>
+    <%@include file="subscribe-float-panel.jsp" %>
 </c:if>
 <%@include file="inc-footer.jsp" %>
