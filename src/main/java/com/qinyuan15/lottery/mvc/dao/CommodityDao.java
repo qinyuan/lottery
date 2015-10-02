@@ -125,6 +125,16 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
     }
 
     /**
+     * validate if certain commodity has active and unClosed lottery activity
+     *
+     * @param commodityId id of commodity
+     * @return true if this commodity has active lottery activity
+     */
+    public boolean hasActiveUnCloseLottery(Integer commodityId) {
+        return LotteryActivityDao.factory().setClosed(false).setCommodityId(commodityId).setExpire(false).getCount() > 0;
+    }
+
+    /**
      * validate if certain commodity has seckill activity
      *
      * @param commodityId id of commodity

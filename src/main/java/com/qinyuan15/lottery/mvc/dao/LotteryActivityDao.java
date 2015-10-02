@@ -12,10 +12,26 @@ import java.util.List;
 
 public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
     public static class Factory extends AbstractActivityPaginationItemFactory<LotteryActivity> {
+        private Boolean closed;
+
+        public Factory setClosed(Boolean closed) {
+            this.closed = closed;
+            return this;
+        }
+
         @Override
         protected void addOrders(HibernateListBuilder listBuilder) {
             listBuilder.addOrder("expire", true).addOrder("endTime", false)
                     .addOrder("startTime", false).addOrder("id", false);
+        }
+
+        @Override
+        protected HibernateListBuilder getListBuilder() {
+            HibernateListBuilder listBuilder = super.getListBuilder();
+            if (closed != null) {
+                listBuilder.addEqualFilter("closed", closed);
+            }
+            return listBuilder;
         }
 
         @Override
@@ -160,6 +176,6 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
     }
 
     public List<LotteryActivity> getUnclosedInstances() {
-        return new HibernateListBuilder().addEqualFilter("closed", false).build(LotteryActivity.class);
+        return factory().setClosed(false).getInstances();
     }
 }

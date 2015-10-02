@@ -140,7 +140,7 @@ public class CommodityController extends ImageController {
             snapshot.name = commodity.getName();
             snapshot.price = commodity.getFormattedPrice();
             snapshot.snapshot = commodity.getSnapshot();
-            snapshot.inLottery = dao.hasActiveLottery(commodity.getId());
+            snapshot.inLottery = dao.hasActiveUnCloseLottery(commodity.getId());
             snapshot.inSeckill = dao.hasActiveSeckill(commodity.getId());
 
             snapshots.add(snapshot);

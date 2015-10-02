@@ -1,15 +1,13 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.activity.*;
 import com.qinyuan15.lottery.mvc.dao.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -56,6 +54,8 @@ public class LotController extends ImageController {
         if (activity == null) {
             result.put(DETAIL, "activityExpire");
             activity = new LotteryActivityDao().getInstanceByCommodityId(commodityId);
+        } else if (activity.getClosed()) {
+            result.put(DETAIL, "activityExpire");
         }
 
         // user parameters
