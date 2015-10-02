@@ -36,9 +36,7 @@
                         <c:otherwise>
                             <div class="status active">${activity.closed ? '等待开奖' : '活动进行中'}</div>
                             <div class="announcement">
-                                <c:if test="${activity.serials != null}">抽奖号：${activity.serials}
-                                    <c:if test="${activity.invalid}"><span
-                                            style="color:#ff0000">(无效)</span></c:if><br/></c:if>
+                                <%@include file="activity-history-serial-number.jsp"%>
                                 未开奖
                             </div>
                         </c:otherwise>

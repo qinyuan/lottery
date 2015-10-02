@@ -236,7 +236,7 @@
                     </div>
                 </td>
                 <td class="input">
-                    <textarea name="invalidLotSystemInfo" class="ckeditor">${invalidLotSystemInfoTemplate}</textarea>
+                    <textarea name="invalidLotSystemInfoTemplate" class="ckeditor">${invalidLotSystemInfoTemplate}</textarea>
                 </td>
             </tr>
             </tbody>
