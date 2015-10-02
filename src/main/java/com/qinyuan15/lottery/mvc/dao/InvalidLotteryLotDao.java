@@ -24,19 +24,47 @@ public class InvalidLotteryLotDao {
     }
 
     private HibernateListBuilder getListBuilder(LotteryActivity activity) {
-        String noTelTable = "(SELECT id FROM user WHERE tel IS NULL OR tel='')";
-        String filter = "activity_id=:activityId AND ((user_id IN " + noTelTable + ")";
-
+        String filter = "((" + getNoTelFilter() + ")";
         Integer minLivenessToParticipate = activity.getMinLivenessToParticipate();
         if (IntegerUtils.isPositive(minLivenessToParticipate)) {
-            String insufficientLivenessTable = "(SELECT spread_user_id,SUM(liveness) AS liveness_sum FROM lottery_liveness " +
-                    "GROUP BY spread_user_id HAVING liveness_sum<" + minLivenessToParticipate + ")";
-            insufficientLivenessTable = "(SELECT spread_user_id FROM " + insufficientLivenessTable + " AS t)";
-            filter += " OR (user_id IN " + insufficientLivenessTable + ")";
+            filter += " OR (" + getInsufficientLivenessFilter(minLivenessToParticipate) + ")";
         }
 
         filter += ")";
-        return new HibernateListBuilder().addFilter(filter).addArgument("activityId", activity.getId());
+        return new HibernateListBuilder().addEqualFilter("activity_id", activity.getId()).addFilter(filter);
+    }
+
+    private String getNoTelFilter() {
+        return "user_id IN (SELECT id FROM user WHERE tel IS NULL OR tel='')";
+    }
+
+    private String getInsufficientLivenessFilter(int minLivenessToParticipate) {
+        String filter = "(SELECT spread_user_id,SUM(liveness) AS liveness_sum FROM lottery_liveness " +
+                "GROUP BY spread_user_id HAVING liveness_sum<" + minLivenessToParticipate + ")";
+        filter = "(SELECT spread_user_id FROM " + filter + " AS t)";
+        filter = "user_id IN (" + filter + ")";
+        return filter;
+    }
+
+    /**
+     * get ids of user who take part in certain activity
+     *
+     * @param activityId id of activity
+     * @return ids of user who take part in certain activity
+     */
+    public List<Integer> getNoTelUserIds(Integer activityId) {
+        return new HibernateListBuilder().addEqualFilter("activity_id", activityId)
+                .addFilter(getNoTelFilter()).buildBySQL("SELECT DISTINCT(user_id) FROM lottery_lot", Integer.class);
+    }
+
+    public List<Integer> getInsufficientLivenessUserIds(Integer activityId) {
+        return getInsufficientLivenessUserIds(new LotteryActivityDao().getInstance(activityId));
+    }
+
+    public List<Integer> getInsufficientLivenessUserIds(LotteryActivity activity) {
+        return new HibernateListBuilder().addEqualFilter("activity_id", activity.getId())
+                .addFilter(getInsufficientLivenessFilter(activity.getMinLivenessToParticipate()))
+                .buildBySQL("SELECT DISTINCT(user_id) FROM lottery_lot", Integer.class);
     }
 
     public List<Integer> getSerialNumbers(Integer activityId) {
@@ -45,11 +73,6 @@ public class InvalidLotteryLotDao {
             return new ArrayList<>();
         }
 
-        List<Integer> serialNumbers = new ArrayList<>();
-        List<Object[]> list = getListBuilder(activity).buildBySQL("SELECT id,serial_number FROM lottery_lot");
-        for (Object[] objects : list) {
-            serialNumbers.add((Integer) objects[1]);
-        }
-        return serialNumbers;
+        return getListBuilder(activity).buildBySQL("SELECT serial_number FROM lottery_lot", Integer.class);
     }
 }
