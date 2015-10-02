@@ -17,6 +17,7 @@ public class LotteryActivity extends AbstractActivity {
     private Integer minSerialNumber;
     private Integer dualColoredBallTerm;
     private Integer minLivenessToParticipate;
+    private Boolean closed;
 
     public String getExpectEndTime() {
         return DateUtils.trimMilliSecond(expectEndTime);
@@ -104,6 +105,14 @@ public class LotteryActivity extends AbstractActivity {
 
     public void setMinLivenessToParticipate(Integer minLivenessToParticipate) {
         this.minLivenessToParticipate = minLivenessToParticipate;
+    }
+
+    public Boolean getClosed() {
+        return closed;
+    }
+
+    public void setClosed(Boolean closed) {
+        this.closed = closed;
     }
 
     //////////////////////////// derivative fields /////////////////////////////////

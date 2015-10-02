@@ -95,7 +95,8 @@ create table lottery_activity(
   dual_colored_ball_term int not null,
   winners char(100),
   description varchar(2000),
-  min_livness_to_participate int not null
+  min_livness_to_participate int not null,
+  closed boolean not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table lottery_lot (

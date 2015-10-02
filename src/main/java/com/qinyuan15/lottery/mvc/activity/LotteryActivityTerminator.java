@@ -17,7 +17,8 @@ import java.util.Map;
 
 public class LotteryActivityTerminator {
     private final static Logger LOGGER = LoggerFactory.getLogger(LotteryActivityTerminator.class);
-    private Map<Integer, CrawlThread> threads = new HashMap<>();
+    private Map<Integer, LotteryEndThread> endThreads = new HashMap<>();
+    private Map<Integer, LotteryCloseThread> closeThreads = new HashMap<>();
     private List<DualColoredBallCrawler> crawlers;
     private final DecimalFormat lotNumberFormat;
 
@@ -26,28 +27,28 @@ public class LotteryActivityTerminator {
     }
 
     public void init() {
-        new LoadActivityThread().start();
+        new EndThreadScheduler().start();
+        new CloseThreadScheduler().start();
     }
 
     public void setCrawlers(List<DualColoredBallCrawler> crawlers) {
         this.crawlers = crawlers;
     }
 
-    private class LoadActivityThread extends Thread {
+    private class CloseThreadScheduler extends Thread {
         final static int INTERVAL = 60; // reload each minute
 
         @Override
         public void run() {
             while (true) {
-                // build crawl thread for each active lottery activity
-                List<LotteryActivity> activities = LotteryActivityDao.factory().setExpire(false).getInstances();
+                // build crawl thread for each unclosed lottery activity
+                List<LotteryActivity> activities = new LotteryActivityDao().getUnclosedInstances();
                 for (LotteryActivity activity : activities) {
-                    CrawlThread thread = threads.get(activity.getId());
-
+                    LotteryCloseThread thread = closeThreads.get(activity.getId());
                     if (thread == null) {
-                        // if related thread not exists, create and run it
-                        thread = new CrawlThread(activity);
-                        threads.put(activity.getId(), thread);
+                        // if related thread not close, create and run it
+                        thread = new LotteryCloseThread(activity);
+                        closeThreads.put(activity.getId(), thread);
                         thread.start();
                     } else {
                         // if related thread already exists, just update activity data of it
@@ -59,10 +60,73 @@ public class LotteryActivityTerminator {
         }
     }
 
-    private class CrawlThread extends Thread {
+    private class EndThreadScheduler extends Thread {
+        final static int INTERVAL = 60; // reload each minute
+
+        @Override
+        public void run() {
+            while (true) {
+                // build crawl thread for each active lottery activity
+                List<LotteryActivity> activities = LotteryActivityDao.factory().setExpire(false).getInstances();
+                for (LotteryActivity activity : activities) {
+                    LotteryEndThread thread = endThreads.get(activity.getId());
+
+                    if (thread == null) {
+                        // if related thread not exists, create and run it
+                        thread = new LotteryEndThread(activity);
+                        endThreads.put(activity.getId(), thread);
+                        thread.start();
+                    } else {
+                        // if related thread already exists, just update activity data of it
+                        thread.activity = activity;
+                    }
+                }
+                ThreadUtils.sleep(INTERVAL);
+            }
+        }
+    }
+
+    private class LotteryCloseThread extends Thread {
         LotteryActivity activity;
 
-        CrawlThread(LotteryActivity activity) {
+        LotteryCloseThread(LotteryActivity activity) {
+            this.activity = activity;
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                if (!DateUtils.isDateOrDateTime(activity.getCloseTime())) {
+                    break;
+                }
+
+                Date closeTime = DateUtils.newDate(activity.getCloseTime());
+                long timeDiff = closeTime.getTime() - System.currentTimeMillis();
+                try {
+                    if (timeDiff <= 0) {
+                        new LotteryActivityDao().close(activity);
+                        closeThreads.remove(activity.getId());
+                        break;
+                    }
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                    LOGGER.error("Fail to crawl activity whose id is {}, info: {}", activity.getId(), e);
+                }
+
+                // sleep time becomes less and less on coming of close time
+                if (timeDiff > 100) {
+                    ThreadUtils.sleep(((double) timeDiff) / 1000 / 3);
+                } else {
+                    ThreadUtils.sleep(0.2);
+                }
+            }
+        }
+    }
+
+    private class LotteryEndThread extends Thread {
+        LotteryActivity activity;
+
+        LotteryEndThread(LotteryActivity activity) {
             this.activity = activity;
         }
 
@@ -83,7 +147,7 @@ public class LotteryActivityTerminator {
                         new LotteryResultUpdater(lotNumberFormat).update(activity.getId(), result.result);
 
                         // remove related thread after success
-                        threads.remove(activity.getId());
+                        endThreads.remove(activity.getId());
                         break;
                     }
                 } catch (Throwable e) {

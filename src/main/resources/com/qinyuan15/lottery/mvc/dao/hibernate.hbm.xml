@@ -95,6 +95,7 @@
         <property name="winners"/>
         <property name="description"/>
         <property name="minLivenessToParticipate" column="min_liveness_to_participate"/>
+        <property name="closed"/>
     </class>
     <class name="LotteryLot" table="lottery_lot">
         <id name="id" column="id">

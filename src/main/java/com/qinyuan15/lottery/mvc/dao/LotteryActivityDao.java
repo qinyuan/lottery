@@ -55,6 +55,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         //activity.setMaxSerialNumber(0);
         activity.setVirtualParticipants(0);
         activity.setExpire(false);
+        activity.setClosed(false);
 
         return HibernateUtils.save(activity);
     }
@@ -106,6 +107,12 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         HibernateUtils.update(activity);
     }
 
+    public void close(LotteryActivity activity) {
+        activity.setClosed(true);
+        HibernateUtils.update(activity);
+        new CommodityDao().updateVisible(activity.getCommodityId(), false);
+    }
+
     @Override
     public void updateResult(Integer id, String winners, String announcement) {
         List<Integer> serialNumbers = new ArrayList<>();
@@ -150,5 +157,9 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         }
 
         return new IntegerRange(minSerialNumber, maxSerialNumber).toString();
+    }
+
+    public List<LotteryActivity> getUnclosedInstances() {
+        return new HibernateListBuilder().addEqualFilter("closed", false).build(LotteryActivity.class);
     }
 }
