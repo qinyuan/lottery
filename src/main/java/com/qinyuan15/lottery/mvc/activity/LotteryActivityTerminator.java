@@ -105,6 +105,8 @@ public class LotteryActivityTerminator {
                 try {
                     if (timeDiff <= 0) {
                         new LotteryActivityDao().close(activity);
+                        new InvalidLotteryLotSystemInfoSender().send(activity);
+
                         closeThreads.remove(activity.getId());
                         break;
                     }

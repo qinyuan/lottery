@@ -17,15 +17,15 @@ public class InvalidLotteryLotPlaceholderConverter {
         this.minLiveness = minLiveness;
     }
 
-    String convert(String announcement) {
-        if (StringUtils.isBlank(announcement)) {
-            return announcement;
+    String convert(String template) {
+        if (StringUtils.isBlank(template)) {
+            return template;
         }
 
-        announcement = announcement.replace(PHASE_PLACEHOLDER, String.valueOf(fullTerm));
-        announcement = announcement.replace(LIVENESS_PLACEHOLDER, String.valueOf(liveness));
-        announcement = announcement.replace(MIN_LIVENESS_PLACEHOLDER, String.valueOf(minLiveness));
+        template = template.replace(PHASE_PLACEHOLDER, String.valueOf(fullTerm));
+        template = template.replace(LIVENESS_PLACEHOLDER, String.valueOf(liveness));
+        template = template.replace(MIN_LIVENESS_PLACEHOLDER, String.valueOf(minLiveness));
 
-        return announcement;
+        return template;
     }
 }
