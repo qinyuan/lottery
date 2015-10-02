@@ -113,12 +113,7 @@ public class LotteryActivityTerminator {
                     LOGGER.error("Fail to crawl activity whose id is {}, info: {}", activity.getId(), e);
                 }
 
-                // sleep time becomes less and less on coming of close time
-                if (timeDiff > 100) {
-                    ThreadUtils.sleep(((double) timeDiff) / 1000 / 3);
-                } else {
-                    ThreadUtils.sleep(0.2);
-                }
+                ActivityTerminatorUtils.sleep(timeDiff);
             }
         }
     }
@@ -158,11 +153,7 @@ public class LotteryActivityTerminator {
                 // sleep time becomes less and less on coming of expect end time
                 Date expectEndTime = DateUtils.newDate(activity.getExpectEndTime());
                 long timeDiff = expectEndTime.getTime() - System.currentTimeMillis();
-                if (timeDiff > 100) {
-                    ThreadUtils.sleep(((double) timeDiff) / 1000 / 3);
-                } else {
-                    ThreadUtils.sleep(0.2);
-                }
+                ActivityTerminatorUtils.sleep(timeDiff);
             }
         }
 

@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.activity;
 
-import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.lang.concurrent.ThreadUtils;
+import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan15.lottery.mvc.dao.SeckillActivity;
 import com.qinyuan15.lottery.mvc.dao.SeckillActivityDao;
 import org.slf4j.Logger;
@@ -76,14 +76,7 @@ public class SeckillActivityTerminator {
                     LOGGER.error("Fail to terminate activity whose id is {}, info: {}", activity.getId(), e);
                 }
 
-                // sleep time becomes less and less on coming of expect end time
-                if (timeDiff > 120000) {
-                    ThreadUtils.sleep(40); // sleep 40 seconds at most
-                } else if (timeDiff > 100) {
-                    ThreadUtils.sleep(((double) timeDiff) / 1000 / 3);
-                } else {
-                    ThreadUtils.sleep(0.2);
-                }
+                ActivityTerminatorUtils.sleep(timeDiff);
             }
         }
     }
