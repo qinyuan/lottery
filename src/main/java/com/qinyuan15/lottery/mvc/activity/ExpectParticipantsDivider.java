@@ -46,8 +46,8 @@ public class ExpectParticipantsDivider {
             return this.expectParticipantCount;
         }
 
-        long startToNow = getWeightSeconds(startTime, now);
-        long totalTime = getWeightSeconds(startTime, endTime);
+        long startToNow = getWeightedSeconds(startTime, now);
+        long totalTime = getWeightedSeconds(startTime, endTime);
         if (startToNow > totalTime) {
             startToNow = totalTime;
         }
@@ -56,7 +56,7 @@ public class ExpectParticipantsDivider {
         return (int) currentExpectValue;
     }
 
-    private static long getWeightSeconds(Date startTime, Date endTime) {
+    private static long getWeightedSeconds(Date startTime, Date endTime) {
         WeightedTime weightedTime = new WeightedTime(startTime, endTime);
 
         // during 10 to 20 o'clock, make adding of virtual participants faster

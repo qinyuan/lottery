@@ -30,8 +30,10 @@ public class LotteryLotCounter implements LotCounter {
             return count;
         }
 
+        /*ExpectParticipantsDivider participantsDivider = new ExpectParticipantsDivider(
+                activity.getStartTime(), activity.getExpectEndTime(), activity.getExpectParticipantCount());*/
         ExpectParticipantsDivider participantsDivider = new ExpectParticipantsDivider(
-                activity.getStartTime(), activity.getExpectEndTime(), activity.getExpectParticipantCount());
+                activity.getStartTime(), activity.getCloseTime(), activity.getExpectParticipantCount());
         int currentExpectParticipantCount = participantsDivider.getCurrentExpectValue();
         if (currentExpectParticipantCount > count && !new LotteryActivityDao().isExpire(activity.getId())) {
             new VirtualParticipantCreator().create(activity.getId(),
