@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.hibernate.*;
-import com.qinyuan.lib.mvc.controller.AbstractPaginationItemFactory;
+import com.qinyuan.lib.mvc.controller.RankingPaginationItemFactory;
 
 import java.util.List;
 
@@ -11,7 +11,11 @@ import java.util.List;
  */
 public class CommodityDao extends AbstractRankingDao<Commodity> {
 
-    public static class Factory extends AbstractPaginationItemFactory<Commodity> {
+    public static class Factory extends RankingPaginationItemFactory<Commodity> {
+        @Override
+        protected HibernateListBuilder getListBuilder() {
+            return super.getListBuilder();
+        }
     }
 
     public static Factory factory() {
@@ -80,7 +84,7 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
         return new HibernateListBuilder().addEqualFilter("visible", true).addOrder("ranking", true);
     }
 
-    private void changeLottery(Integer commodityId, Boolean inLottery) {
+    /*private void changeLottery(Integer commodityId, Boolean inLottery) {
         Commodity commodity = getInstance(commodityId);
         commodity.setInLottery(inLottery);
         HibernateUtils.update(commodity);
@@ -92,7 +96,7 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
 
     public void endLottery(Integer commodityId) {
         changeLottery(commodityId, false);
-    }
+    }*/
 
     /**
      * validate if certain commodity has lottery activity
