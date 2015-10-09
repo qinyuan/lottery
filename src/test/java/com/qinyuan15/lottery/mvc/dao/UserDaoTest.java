@@ -76,6 +76,13 @@ public class UserDaoTest extends DatabaseTestCase {
     }
 
     @Test
+    public void testGetInstanceByName() {
+        assertThat(userDao.getInstanceByName("12345@qq.com")).isNotNull();
+        assertThat(userDao.getInstanceByName("user1")).isNotNull();
+        assertThat(userDao.getInstanceByName("12345test@qq.com")).isNull();
+    }
+
+    @Test
     public void testGetUserIdBySerialKey() {
         assertThat(userDao.getIdBySerialKey("adjfklsajfd")).isNull();
         assertThat(userDao.getIdBySerialKey("abdafdipsuap")).isEqualTo(1);
