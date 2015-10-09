@@ -1,12 +1,13 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan.lib.database.hibernate.AbstractDao;
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan15.lottery.mvc.activity.DualColoredBallTerm;
 
 import java.util.List;
 
-public class DualColoredBallRecordDao {
+public class DualColoredBallRecordDao extends AbstractDao<DualColoredBallRecord> {
     public Integer add(int fullTerm, String publishDate, String result) {
         DualColoredBallTerm term = new DualColoredBallTerm(fullTerm);
         return add(term.year, term.term, publishDate, result);
@@ -23,8 +24,6 @@ public class DualColoredBallRecordDao {
         record.setResult(result);
         return HibernateUtils.save(record);
     }
-
-
 
     public DualColoredBallRecord getNearestInstance(int year, int term) {
         return new HibernateListBuilder().addEqualFilter("year", year)

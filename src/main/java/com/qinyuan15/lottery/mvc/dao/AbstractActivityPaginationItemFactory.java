@@ -26,13 +26,13 @@ public abstract class AbstractActivityPaginationItemFactory<T extends AbstractAc
     }
 
     private void addFilters(HibernateListBuilder listBuilder) {
-        if (IntegerUtils.isPositive(this.commodityId)) {
-            listBuilder.addEqualFilter("commodityId", this.commodityId);
+        if (IntegerUtils.isPositive(commodityId)) {
+            listBuilder.addEqualFilter("commodityId", commodityId);
         }
-        if (this.expire != null) {
-            listBuilder.addEqualFilter("expire", this.expire);
+        if (expire != null) {
+            listBuilder.addEqualFilter("expire", expire);
         }
-        if (this.userId != null) {
+        if (IntegerUtils.isPositive(userId)) {
             listBuilder.addFilter("id IN (SELECT activityId FROM " + getLotClass().getSimpleName()
                     + " WHERE userId=" + userId + ")");
         }

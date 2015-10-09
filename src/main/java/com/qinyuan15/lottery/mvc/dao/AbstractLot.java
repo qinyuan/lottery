@@ -43,7 +43,7 @@ abstract class AbstractLot extends PersistObject {
     ///////////////////////////////// derivative fields ///////////////////////////////////
     private User userCache;
 
-    public User getUser() {
+    public synchronized User getUser() {
         if (userCache == null) {
             userCache = new UserDao().getInstance(userId);
         }

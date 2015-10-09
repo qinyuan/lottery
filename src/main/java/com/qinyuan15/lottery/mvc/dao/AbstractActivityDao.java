@@ -63,7 +63,7 @@ public abstract class AbstractActivityDao<T extends AbstractActivity> extends Ab
 
     public void delete(Integer id) {
         if (isExpire(id)) {
-            throw new RuntimeException("Can not delete activity expired");
+            throw new RuntimeException("Can not delete expire activity");
         } else {
             super.delete(id);
         }

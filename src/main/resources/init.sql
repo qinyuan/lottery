@@ -196,3 +196,6 @@ insert into commodity values(4, 'name4', 14.0, true, true, 'snapshot4', 'detail_
 insert into lottery_activity(commodity_id, term, start_time, expire, virtual_participants, max_serial_number,
   dual_colored_ball_term, min_livness_to_participate, min_serial_number, close_time, closed) values
   (1, 1, '2015-01-01 12:12:12' , false, 1000, 10000, 2015081, 2, 10, '2015-01-02 12:12:12', false);
+
+insert into dual_colored_ball_record(year, term, publish_date, result) values(2015, 80, '2015-07-12', '141725272830'),
+  (2015, 85, '2015-07-23', '020825272829');
