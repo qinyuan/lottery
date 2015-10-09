@@ -187,3 +187,11 @@ insert into user(username, password, role, active) values('normal-user2', 'passw
 insert into user(username, password, role, active, spread_user_id) values('normal-user3', 'password', 'ROLE_NORMAL', true, 2);
 
 insert into virtual_user values(1, 'virtual_user1', 15, 00, 'ai', 'qq.com'), (2, 'virtual_user2', 15, 00, 'ai', 'qq.com');
+
+insert into commodity values(1, 'name1', 11.0, true, true, 'snapshot1', 'detail_image1', 'back_image1', false, 10);
+insert into commodity values(2, 'name2', 12.0, true, true, 'snapshot2', 'detail_image2', 'back_image2', true, 11);
+insert into commodity values(3, 'name3', 13.0, true, true, 'snapshot3', 'detail_image3', 'back_image3', true, 14);
+
+insert into lottery_activity(commodity_id, term, start_time, expire, virtual_participants, max_serial_number,
+  dual_colored_ball_term, min_livness_to_participate, min_serial_number, close_time, closed) values
+  (1, 1, '2015-01-01 12:12:12' , false, 1000, 10000, 2015081, 2, 10, '2015-01-02 12:12:12', false);

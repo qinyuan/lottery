@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.hibernate.*;
-import com.qinyuan.lib.mvc.controller.PaginationItemFactory;
+import com.qinyuan.lib.mvc.controller.AbstractPaginationItemFactory;
 
 import java.util.List;
 
@@ -11,16 +11,7 @@ import java.util.List;
  */
 public class CommodityDao extends AbstractRankingDao<Commodity> {
 
-    public static class Factory implements PaginationItemFactory<Commodity> {
-        @Override
-        public int getCount() {
-            return new HibernateListBuilder().count(Commodity.class);
-        }
-
-        @Override
-        public List<Commodity> getInstances(int firstResult, int maxResults) {
-            return new CommodityDao().getInstances(firstResult, maxResults);
-        }
+    public static class Factory extends AbstractPaginationItemFactory<Commodity> {
     }
 
     public static Factory factory() {
