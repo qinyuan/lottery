@@ -7,9 +7,9 @@ import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.security.SimpleUserDao;
 import com.qinyuan.lib.mvc.security.UserRole;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -33,10 +33,10 @@ public class UserDao extends SimpleUserDao {
         user.setSpreadWay(spreadWay);
 
         // set default value
-        //user.setActive(false);
         user.setActive(true);
-        //user.setSerialKey(RandomStringUtils.randomAlphanumeric(SERIAL_KEY_LENGTH));
+        user.setSerialKey(RandomStringUtils.randomAlphanumeric(SERIAL_KEY_LENGTH));
         user.setReceiveMail(false);
+
         return HibernateUtils.save(user);
     }
 
@@ -74,25 +74,26 @@ public class UserDao extends SimpleUserDao {
     }
 
     public User getInstanceByUsername(String username) {
-        if (!StringUtils.hasText(username)) {
+        if (StringUtils.isBlank(username)) {
             return null;
         }
+
         return new HibernateListBuilder().addEqualFilter("username", username)
                 .getFirstItem(User.class);
     }
 
     public User getInstanceByEmail(String email) {
-        if (!StringUtils.hasText(email)) {
+        if (StringUtils.isBlank(email)) {
             return null;
         }
-        return new HibernateListBuilder().addFilter("LOWER(email)=:email")
+
+        return new HibernateListBuilder().addFilter("LOWER(email)=:email")  /* ignore case */
                 .addArgument("email", email.toLowerCase())
                 .getFirstItem(User.class);
     }
 
     public User getInstanceByTel(String tel) {
-        return new HibernateListBuilder().addFilter("tel=:tel")
-                .addArgument("tel", tel)
+        return new HibernateListBuilder().addEqualFilter("tel", tel)
                 .getFirstItem(User.class);
     }
 
@@ -116,8 +117,10 @@ public class UserDao extends SimpleUserDao {
 
     public void updateTel(Integer id, String tel) {
         User user = getInstance(id);
-        user.setTel(tel);
-        HibernateUtils.update(user);
+        if (user != null) {
+            user.setTel(tel);
+            HibernateUtils.update(user);
+        }
     }
 
     public void deleteNormal(Integer id) {
@@ -170,7 +173,7 @@ public class UserDao extends SimpleUserDao {
 
     public void updateSerialKeyIfNecessary(User user) {
         if (user != null && user.getSerialKey() == null) {
-            user.setSerialKey(RandomStringUtils.randomAlphanumeric(UserDao.SERIAL_KEY_LENGTH));
+            user.setSerialKey(RandomStringUtils.randomAlphanumeric(SERIAL_KEY_LENGTH));
             HibernateUtils.update(user);
         }
     }
@@ -190,16 +193,12 @@ public class UserDao extends SimpleUserDao {
     }
 
     public String getNameById(Integer id) {
-        if (!IntegerUtils.isPositive(id)) {
-            return null;
-        }
-
         User user = getInstance(id);
         return user == null ? null : user.getUsername();
     }
 
     public Integer getIdBySerialKey(String serialKey) {
-        if (!StringUtils.hasText(serialKey)) {
+        if (StringUtils.isBlank(serialKey)) {
             return null;
         }
 

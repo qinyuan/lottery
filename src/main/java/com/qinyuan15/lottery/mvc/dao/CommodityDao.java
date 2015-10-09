@@ -39,7 +39,6 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
 
         // set default field
         commodity.setInLottery(false);
-        //commodity.setVisible(true);
         commodity.setVisible(false);
 
         return new RankingDao().add(commodity);

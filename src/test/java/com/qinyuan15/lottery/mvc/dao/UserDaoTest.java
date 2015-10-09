@@ -33,7 +33,7 @@ public class UserDaoTest extends DatabaseTestCase {
     @Test
     public void testAddNormal() {
         assertThat(userDao.getInstanceByUsername("username")).isNull();
-        userDao.addNormal("username", "password", "12345@qq.com");
+        userDao.addNormal("username", "password", "123456@qq.com");
         assertThat(userDao.getInstanceByUsername("username")).isNotNull();
         assertThat(userDao.getInstanceByUsername("username").getRole()).isEqualTo(UserRole.NORMAL);
     }
@@ -83,8 +83,17 @@ public class UserDaoTest extends DatabaseTestCase {
     }
 
     @Test
+    public void testGetNameById() {
+        assertThat(userDao.getNameById(1)).isEqualTo("user1");
+        assertThat(userDao.getNameById(2)).isEqualTo("admin-user1");
+        assertThat(userDao.getNameById(200)).isNull();
+    }
+
+    private final static String VALID_SERIAL_KEY = "adjfklsajfd";
+
+    @Test
     public void testGetUserIdBySerialKey() {
-        assertThat(userDao.getIdBySerialKey("adjfklsajfd")).isNull();
+        assertThat(userDao.getIdBySerialKey(VALID_SERIAL_KEY)).isNull();
         assertThat(userDao.getIdBySerialKey("abdafdipsuap")).isEqualTo(1);
     }
 }
