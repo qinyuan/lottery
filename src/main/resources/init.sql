@@ -26,21 +26,27 @@ create table commodity (
     ranking int unique not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-alter table user add column email char(200) unique;
-alter table user add column tel char(50);
-alter table user add column active boolean not null default false;
-alter table user add column liveness int;
-alter table user add column serial_key char(200) unique;
-alter table user add column spread_user_id int;
-alter table user add column spread_way char(50);
-alter table user add column real_name char(50);
-alter table user add column gender enum('男','女');
-alter table user add column birthday date;
-alter table user add column constellation char(10);
-alter table user add column hometown char(200);
-alter table user add column residence char(200);
-alter table user add column lunar_birthday boolean;
-alter table user add column receive_mail boolean not null default true;
+CREATE TABLE `user` (
+    `id` int(11) NOT NULL primary key AUTO_INCREMENT,
+    `username` char(50) UNIQUE NOT NULL,
+    `password` char(50) NOT NULL,
+    `role` char(100) DEFAULT NULL,
+    email char(200) unique,
+    tel char(50),
+    active boolean not null default false,
+    liveness int,
+    serial_key char(200) unique,
+    spread_user_id int,
+    spread_way char(50),
+    real_name char(50),
+    gender enum('男','女'),
+    birthday date,
+    constellation char(10),
+    hometown char(200),
+    residence char(200),
+    lunar_birthday boolean,
+    receive_mail boolean not null default true
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table virtual_user (
   id int primary key auto_increment,
@@ -170,3 +176,12 @@ create table system_info_send_record (
   info_id int not null,
   unread boolean not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+
+/************** test data *******************/
+insert into user(username, password, serial_key) values('user1', 'password', 'abdafdipsuap');
+insert into user(username, password, role, email) values('admin-user1', 'password', 'ROLE_ADMIN', '12345@qq.com');
+insert into user(username, password, role, active) values('normal-user1', 'password', 'ROLE_NORMAL', true);
+insert into user(username, password, role, active) values('normal-user2', 'password', 'ROLE_NORMAL', false);
+insert into user(username, password, role, active, spread_user_id) values('normal-user3', 'password', 'ROLE_NORMAL', true, 2);
