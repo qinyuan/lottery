@@ -51,7 +51,7 @@ CREATE TABLE `user` (
 create table virtual_user (
   id int primary key auto_increment,
   username char(50) unique not null,
-  tel_prefix int not null,
+  tel_prefix char(11) not null,
   tel_suffix int not null,
   mail_prefix char(10) not null,
   mail_suffix char(50) not null
@@ -185,3 +185,5 @@ insert into user(username, password, role, email) values('admin-user1', 'passwor
 insert into user(username, password, role, active) values('normal-user1', 'password', 'ROLE_NORMAL', true);
 insert into user(username, password, role, active) values('normal-user2', 'password', 'ROLE_NORMAL', false);
 insert into user(username, password, role, active, spread_user_id) values('normal-user3', 'password', 'ROLE_NORMAL', true, 2);
+
+insert into virtual_user values(1, 'virtual_user1', 15, 00, 'ai', 'qq.com'), (2, 'virtual_user2', 15, 00, 'ai', 'qq.com');
