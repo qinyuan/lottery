@@ -6,4 +6,3 @@ CREATE TABLE `user` (
     `role` char(100) DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-

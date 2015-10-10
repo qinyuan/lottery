@@ -183,6 +183,15 @@ CREATE TABLE `app_config` (
     `property_value` varchar(2000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+create table mail_serial_key (
+  id int primary key auto_increment,
+  user_id int not null,
+  serial_key char(200) unique not null,
+  send_time datetime not null,
+  response_time datetime,
+  mail_type char(50) not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 
 
 /************** test data *******************/
@@ -222,3 +231,7 @@ insert into index_image(path, row_index, back_path) values('path1', 5, 'back_pat
 
 insert into mail_send_record(mail_account_id, user_id, mail_id, send_time) values
   (2, 3, 1, '2015-12-12 19:19:19'), (2, 4, 2, '2015-12-13 18:18:18');
+
+insert into mail_serial_key(user_id, serial_key, send_time, mail_type) values
+  (2, 'fjkdasipaifjdsaoij', '2015-12-12 18:19:20', 'activateAccount'),
+  (2, 'jfdajkjesfioafpakjdsjkfasj', '2015-12-13 18:19:20', 'other');
