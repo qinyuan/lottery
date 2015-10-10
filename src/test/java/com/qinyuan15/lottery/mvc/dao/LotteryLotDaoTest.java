@@ -1,37 +1,68 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan.lib.database.test.DatabaseTestCase;
+import com.qinyuan15.lottery.mvc.activity.LotteryLotSerialGeneratorImpl;
 import org.junit.Test;
 
 import java.util.List;
 
-public class LotteryLotDaoTest {
-    LotteryLotDao dao = new LotteryLotDao();
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class LotteryLotDaoTest extends DatabaseTestCase {
+    private LotteryLotDao dao = new LotteryLotDao();
 
     @Test
-    public void testAdd() throws Exception {
-        /*
-        for (int i = 0; i < 20; i++) {
-            dao.add(26, 2, new LotteryLotSerialGeneratorImpl(26, 5));
-        }*/
-    }
-
-    @Test
-    public void testGetSerialNumbersByActivityId() {
-        List<Integer> serialNumbers = dao.getSerialNumbers(23);
-        System.out.println(serialNumbers.size());
-        System.out.println(serialNumbers);
+    public void testAdd() {
+        assertThat(dao.count()).isEqualTo(2);
+        dao.add(2, 3, new LotteryLotSerialGeneratorImpl(new LotteryActivityDao().getInstance(2)));
+        assertThat(dao.count()).isEqualTo(3);
     }
 
     @Test
     public void testGetInstances() {
-        List<LotteryLot> lots = LotteryLotDao.factory()
-                .setActivityId(11).setUserId(2).getInstances();
-        System.out.println(lots.size());
+        assertThat(dao.getInstances()).hasSize(2);
+        for (LotteryLot lot : dao.getInstances()) {
+            assertThat(lot).isExactlyInstanceOf(LotteryLot.class);
+        }
     }
 
     @Test
-    public void testGetSerialNumberByRange() {
-        List<Integer> integers = new LotteryLotDao().getSerialNumbers(1, 3000, 5000);
-        System.out.println(integers);
+    public void testFactory() {
+        List<LotteryLot> lots = LotteryLotDao.factory()
+                .setActivityId(11).setUserId(2).getInstances();
+        assertThat(lots).isEmpty();
+
+        lots = LotteryLotDao.factory().setActivityId(2).getInstances();
+        assertThat(lots).hasSize(2);
+
+        lots = LotteryLotDao.factory().setActivityId(2).setUserId(3).getInstances();
+        assertThat(lots).hasSize(1);
+    }
+
+    @Test
+    public void testGetSerialNumbers() {
+        List<Integer> integers = dao.getSerialNumbers(2, 3000, 5000);
+        assertThat(integers).isEmpty();
+
+        integers = dao.getSerialNumbers(2, 10000, 20000);
+        assertThat(integers).hasSize(1);
+
+        integers = dao.getSerialNumbers(2, 10000, 900000);
+        assertThat(integers).hasSize(2);
+
+        integers = dao.getSerialNumbers(2, 10000, 500);
+        assertThat(integers).isEmpty();
+
+        integers = dao.getSerialNumbers(1, 10000, 900000);
+        assertThat(integers).isEmpty();
+    }
+
+    @Test
+    public void testGetSerialNumbers2() {
+        List<Integer> serialNumbers = dao.getSerialNumbers(2);
+        assertThat(serialNumbers).hasSize(2);
+
+        serialNumbers = dao.getSerialNumbers(1);
+        assertThat(serialNumbers).isEmpty();
     }
 }

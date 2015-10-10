@@ -207,6 +207,9 @@ insert into lottery_activity(commodity_id, term, start_time, expire, virtual_par
 insert into lottery_liveness(activity_id, spread_user_id, receive_user_id, liveness, spread_way, register_before) values
   (2, 3, 4, 12, 'sina', true), (2, 3, 5, 13, 'qq', true), (2, 4, 5, 13, 'qzone', true);
 
+insert into lottery_lot(activity_id, user_id, lot_time, serial_number) values
+  (2, 3, '2015-12-14 12:13:14', 10257), (2, 4, '2015-12-30 12:30:00', 217892);
+
 insert into dual_colored_ball_record(year, term, publish_date, result) values(2015, 80, '2015-07-12', '141725272830'),
   (2015, 85, '2015-07-23', '020825272829');
 

@@ -18,7 +18,9 @@ public class LotteryLivenessDaoTest extends DatabaseTestCase {
     @Test
     public void testGetLiveness() {
         assertThat(dao.getLiveness(3)).isEqualTo(25);
-        assertThat(dao.getLiveness(4)).isZero();
+        assertThat(dao.getLiveness(4)).isEqualTo(13);
+        assertThat(dao.getLiveness(5)).isZero();
+        assertThat(dao.getLiveness(6)).isZero();    // invalid user id
     }
 
     @Test
