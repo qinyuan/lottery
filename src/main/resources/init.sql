@@ -202,3 +202,6 @@ insert into dual_colored_ball_record(year, term, publish_date, result) values(20
   (2015, 85, '2015-07-23', '020825272829');
 
 insert into help_group(title, ranking) values('title1', 6), ('title2', 8), ('title3', 5);
+
+insert into help_item(group_id, title, content, ranking) values
+  (2, 'title1', 'content1', 6), (2, 'title2', 'content2', 8), (3, 'title3', 'content3', 5);
