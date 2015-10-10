@@ -219,3 +219,6 @@ insert into help_item(group_id, title, content, ranking) values
   (2, 'title1', 'content1', 6), (2, 'title2', 'content2', 8), (3, 'title3', 'content3', 5);
 
 insert into index_image(path, row_index, back_path) values('path1', 5, 'back_path1'), ('path2', 7, 'back_path2');
+
+insert into mail_send_record(mail_account_id, user_id, mail_id, send_time) values
+  (2, 3, 1, '2015-12-12 19:19:19'), (2, 4, 2, '2015-12-13 18:18:18');
