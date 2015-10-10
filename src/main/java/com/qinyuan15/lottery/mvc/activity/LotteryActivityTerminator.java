@@ -103,6 +103,8 @@ public class LotteryActivityTerminator {
                 Date closeTime = DateUtils.newDate(activity.getCloseTime());
                 long timeDiff = closeTime.getTime() - System.currentTimeMillis();
                 try {
+                    new LotteryLotCounter().count(activity);    // force program to update virtual participants
+
                     if (timeDiff <= 0) {
                         new LotteryActivityDao().close(activity);
                         new InvalidLotteryLotSystemInfoSender().send(activity);

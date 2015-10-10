@@ -60,7 +60,7 @@ public class ExpectParticipantsDivider {
         WeightedTime weightedTime = new WeightedTime(startTime, endTime);
 
         // during 10 to 20 o'clock, make adding of virtual participants faster
-        weightedTime.addWeight(new Time(10, 0, 0), new Time(22, 0, 0), 1000);
+        weightedTime.addWeight(new Time(10, 0, 0), new Time(22, 0, 0), 10);
 
         return weightedTime.countSeconds();
     }

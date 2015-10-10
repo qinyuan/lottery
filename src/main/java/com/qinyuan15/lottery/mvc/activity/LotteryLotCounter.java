@@ -30,8 +30,6 @@ public class LotteryLotCounter implements LotCounter {
             return count;
         }
 
-        /*ExpectParticipantsDivider participantsDivider = new ExpectParticipantsDivider(
-                activity.getStartTime(), activity.getExpectEndTime(), activity.getExpectParticipantCount());*/
         ExpectParticipantsDivider participantsDivider = new ExpectParticipantsDivider(
                 activity.getStartTime(), activity.getCloseTime(), activity.getExpectParticipantCount());
         int currentExpectParticipantCount = participantsDivider.getCurrentExpectValue();
