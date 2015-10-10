@@ -68,27 +68,12 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         activity.setMaxSerialNumber(maxSerialNumber);
 
         // set default values
-        //activity.setMaxSerialNumber(0);
         activity.setVirtualParticipants(0);
         activity.setExpire(false);
         activity.setClosed(false);
 
         return HibernateUtils.save(activity);
     }
-
-    /*public void updateMaxSerialNumber(Integer id, int serialNumber) {
-        String hql = "UPDATE LotteryActivity SET maxSerialNumber=" + serialNumber + " WHERE id=" + id;
-        HibernateUtils.executeUpdate(hql);
-    }
-
-    public void increaseMaxSerialNumber(Integer id) {
-        increaseMaxSerialNumber(id, 1);
-    }
-
-    public void increaseMaxSerialNumber(Integer id, int n) {
-        String hql = "UPDATE LotteryActivity SET maxSerialNumber=maxSerialNumber+" + n + " WHERE id=" + id;
-        HibernateUtils.executeUpdate(hql);
-    }*/
 
     public void update(Integer id, Integer term, Integer commodityId, String startTime, String expectEndTime,
                        String closeTime, Integer continuousSerialLimit, Integer expectParticipantCount,
@@ -97,22 +82,24 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
                        Integer maxSerialNumber) {
         LotteryActivity activity = getInstance(id);
 
-        activity.setTerm(term);
-        activity.setCommodityId(commodityId);
-        activity.setStartTime(startTime);
-        activity.setExpectEndTime(expectEndTime);
-        activity.setCloseTime(closeTime);
-        activity.setContinuousSerialLimit(continuousSerialLimit);
-        activity.setExpectParticipantCount(expectParticipantCount);
-        activity.setVirtualLiveness(virutalLiveness);
-        activity.setVirtualLivenessUsers(virtualLivenessUsers);
-        activity.setDualColoredBallTerm(dualColoredBallTerm);
-        activity.setDescription(description);
-        activity.setMinLivenessToParticipate(minLivenessToParticipant);
-        activity.setMinSerialNumber(minSerialNumber);
-        activity.setMaxSerialNumber(maxSerialNumber);
+        if (activity != null) {
+            activity.setTerm(term);
+            activity.setCommodityId(commodityId);
+            activity.setStartTime(startTime);
+            activity.setExpectEndTime(expectEndTime);
+            activity.setCloseTime(closeTime);
+            activity.setContinuousSerialLimit(continuousSerialLimit);
+            activity.setExpectParticipantCount(expectParticipantCount);
+            activity.setVirtualLiveness(virutalLiveness);
+            activity.setVirtualLivenessUsers(virtualLivenessUsers);
+            activity.setDualColoredBallTerm(dualColoredBallTerm);
+            activity.setDescription(description);
+            activity.setMinLivenessToParticipate(minLivenessToParticipant);
+            activity.setMinSerialNumber(minSerialNumber);
+            activity.setMaxSerialNumber(maxSerialNumber);
 
-        HibernateUtils.update(activity);
+            HibernateUtils.update(activity);
+        }
     }
 
     @Override

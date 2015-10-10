@@ -10,7 +10,7 @@ public class DualColoredBallRecordDaoTest extends DatabaseTestCase {
 
     @Test
     public void testCount() {
-        assertThat(dao.count()).isEqualTo(1);
+        assertThat(dao.count()).isEqualTo(2);
     }
 
     @Test

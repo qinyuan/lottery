@@ -101,7 +101,7 @@ create table lottery_activity(
   dual_colored_ball_term int not null,
   winners char(100),
   description varchar(2000),
-  min_livness_to_participate int not null,
+  min_liveness_to_participate int not null,
   closed boolean not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -194,8 +194,9 @@ insert into commodity values(3, 'name3', 13.0, true, true, 'snapshot3', 'detail_
 insert into commodity values(4, 'name4', 14.0, true, true, 'snapshot4', 'detail_image4', 'back_image4', false, 8);
 
 insert into lottery_activity(commodity_id, term, start_time, expire, virtual_participants, max_serial_number,
-  dual_colored_ball_term, min_livness_to_participate, min_serial_number, close_time, closed) values
-  (1, 1, '2015-01-01 12:12:12' , false, 1000, 10000, 2015081, 2, 10, '2015-01-02 12:12:12', false);
+  dual_colored_ball_term, min_liveness_to_participate, min_serial_number, close_time, closed) values
+  (1, 1, '2015-01-01 12:12:12' , false, 1000, 10000, 2015081, 2, 10, '2015-01-02 12:12:12', false),
+  (1, 21, '2014-12-08 12:12:12' , true, 1100, 10000, 2014181, 4, 10, '2014-12-12 12:12:12', true);
 
 insert into dual_colored_ball_record(year, term, publish_date, result) values(2015, 80, '2015-07-12', '141725272830'),
   (2015, 85, '2015-07-23', '020825272829');
