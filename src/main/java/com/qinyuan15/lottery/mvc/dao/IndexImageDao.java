@@ -12,6 +12,7 @@ import java.util.List;
  * Created by qinyuan on 15-6-18.
  */
 public class IndexImageDao extends AbstractDao<IndexImage> {
+
     @Override
     public List<IndexImage> getInstances() {
         return new HibernateListBuilder().addOrder("rowIndex", true).addOrder("id", true)
