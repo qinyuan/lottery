@@ -6,7 +6,7 @@ public class InvalidLotteryLotDaoTest {
     private InvalidLotteryLotDao dao = new InvalidLotteryLotDao();
 
     @Test
-    public void testCount() throws Exception {
+    public void testCount() {
         System.out.println(dao.count(15));
     }
 

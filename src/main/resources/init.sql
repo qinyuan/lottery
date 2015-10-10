@@ -177,6 +177,12 @@ create table system_info_send_record (
   unread boolean not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+CREATE TABLE `app_config` (
+    `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    `property_name` char(50) UNIQUE NOT NULL,
+    `property_value` varchar(2000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 
 
 /************** test data *******************/
@@ -197,6 +203,9 @@ insert into lottery_activity(commodity_id, term, start_time, expire, virtual_par
   dual_colored_ball_term, min_liveness_to_participate, min_serial_number, close_time, closed) values
   (1, 1, '2015-01-01 12:12:12' , false, 1000, 10000, 2015081, 2, 10, '2015-01-02 12:12:12', false),
   (1, 21, '2014-12-08 12:12:12' , true, 1100, 10000, 2014181, 4, 10, '2014-12-12 12:12:12', true);
+
+insert into lottery_liveness(activity_id, spread_user_id, receive_user_id, liveness, spread_way, register_before) values
+  (2, 3, 4, 12, 'sina', true), (2, 3, 5, 13, 'qq', true), (2, 4, 5, 13, 'qzone', true);
 
 insert into dual_colored_ball_record(year, term, publish_date, result) values(2015, 80, '2015-07-12', '141725272830'),
   (2015, 85, '2015-07-23', '020825272829');

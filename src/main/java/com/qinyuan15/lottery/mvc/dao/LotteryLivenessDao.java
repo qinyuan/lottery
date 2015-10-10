@@ -37,7 +37,8 @@ public class LotteryLivenessDao {
         String subSQL = "SELECT spread_user_id,SUM(liveness) AS liveness FROM lottery_liveness " +
                 "GROUP BY spread_user_id";
         String sql = "SELECT u.username,l.liveness FROM user AS u INNER JOIN (" +
-                subSQL + ") AS l ON u.id=l.spread_user_id";
+                subSQL + ") AS l ON u.id=l.spread_user_id " +
+                "WHERE l.liveness=(SELECT MAX(liveness) FROM (" + subSQL + ") AS temp)";
         List<Object[]> list = new HibernateListBuilder().buildBySQL(sql);
         if (list.size() == 0) {
             return null;
