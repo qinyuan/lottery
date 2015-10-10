@@ -200,3 +200,5 @@ insert into lottery_activity(commodity_id, term, start_time, expire, virtual_par
 
 insert into dual_colored_ball_record(year, term, publish_date, result) values(2015, 80, '2015-07-12', '141725272830'),
   (2015, 85, '2015-07-23', '020825272829');
+
+insert into help_group(title, ranking) values('title1', 6), ('title2', 8), ('title3', 5);

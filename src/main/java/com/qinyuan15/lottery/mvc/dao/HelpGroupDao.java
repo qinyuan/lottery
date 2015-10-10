@@ -5,6 +5,7 @@ import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.database.hibernate.RankingDao;
 
 public class HelpGroupDao extends AbstractRankingDao<HelpGroup> {
+
     public Integer add(String title) {
         HelpGroup helpGroup = new HelpGroup();
         helpGroup.setTitle(title);
