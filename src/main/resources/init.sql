@@ -240,3 +240,5 @@ insert into mail_serial_key(user_id, serial_key, send_time, mail_type) values
   (2, 'jfdajkjesfioafpakjdsjkfasj', '2015-12-13 18:19:20', 'other');
 
 insert into navigation_link(title, href) values('title1', 'href1'), ('title2', 'href2'), ('title3', 'href3');
+
+insert into
