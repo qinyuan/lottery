@@ -219,6 +219,9 @@ insert into lottery_liveness(activity_id, spread_user_id, receive_user_id, liven
 insert into lottery_lot(activity_id, user_id, lot_time, serial_number) values
   (2, 3, '2015-12-14 12:13:14', 10257), (2, 4, '2015-12-30 12:30:00', 217892);
 
+insert into seckill_lot(activity_id, user_id, lot_time) values
+  (2, 3, '2015-12-13 19:19:19'), (2, 4, '2015-12-14 18:12:13'), (1, 3, '2015-10-18 12:12:12');
+
 insert into dual_colored_ball_record(year, term, publish_date, result) values(2015, 80, '2015-07-12', '141725272830'),
   (2015, 85, '2015-07-23', '020825272829');
 
