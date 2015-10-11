@@ -1,5 +1,8 @@
 package com.qinyuan15.lottery.mvc;
 
+import com.qinyuan.lib.database.test.DatabaseTestCase;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -8,15 +11,29 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Test AppConfig
  * Created by qinyuan on 15-6-16.
  */
-public class AppConfigTest {
+public class AppConfigTest extends DatabaseTestCase {
+
     @Test
     public void testGetAppHost() {
         assertThat(AppConfig.getAppHost()).isEqualTo("http://qinyuan:8080/lottery/");
     }
 
     @Test
-    public void testGetIndexHeaderLeftLogo() throws Exception {
-        System.out.println(AppConfig.getIndexHeaderLeftLogo());
+    public void testIndexHeaderLeftLogo() {
+        assertThat(AppConfig.getIndexHeaderLeftLogo()).isNull();
+
+        String string = RandomStringUtils.randomAlphanumeric(20);
+        AppConfig.updateIndexHeaderLeftLogo(string);
+        assertThat(AppConfig.getIndexHeaderLeftLogo()).isEqualTo(string);
+    }
+
+    @Test
+    public void testRegisterMailAccountId() {
+        assertThat(AppConfig.getRegisterMailAccountId()).isNull();
+
+        int id = RandomUtils.nextInt(1, 1000);
+        AppConfig.updateRegisterMailAccountId(id);
+        assertThat(AppConfig.getRegisterMailAccountId()).isEqualTo(id);
     }
 
     @Test

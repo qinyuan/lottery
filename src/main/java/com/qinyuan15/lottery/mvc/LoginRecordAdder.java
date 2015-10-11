@@ -36,7 +36,8 @@ public class LoginRecordAdder {
                     new LoginRecordDao().add(userId, ip, platform);
                 }
             } catch (Exception e) {
-                LOGGER.error("Fail to save login record, ip: {}, info: {}", ip, e);
+                LOGGER.error("Fail to save login record, ip: {}, userId: {}, platform: {}, info: {}",
+                        ip, userId, platform, e);
             }
         }
     }

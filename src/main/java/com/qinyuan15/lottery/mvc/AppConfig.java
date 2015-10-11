@@ -293,18 +293,6 @@ public class AppConfig {
     }
     ///////////////////////// seckill qzone share link end ////////////////////////////////
 
-    /*///////////////////////// new lot liveness start ///////////////////////////////
-    private final static String NEW_LOT_LIVENESS_KEY = "newLotLiveness";
-
-    public static Integer getNewLotLiveness() {
-        return dao.getInteger(NEW_LOT_LIVENESS_KEY);
-    }
-
-    public static void updateNewLotLiveness(Integer newLotLiveness) {
-        dao.saveInteger(NEW_LOT_LIVENESS_KEY, newLotLiveness);
-    }
-    ///////////////////////// new lot liveness end ///////////////////////////////*/
-
     ///////////////////////// share succeed liveness start /////////////////////
     private final static String SHARE_SUCCEED_LIVENESS_KEY = "shareSucceedLiveness";
 
@@ -395,11 +383,11 @@ public class AppConfig {
     private final static String REGISTER_MAIL_ACCOUNT_ID_KEY = "registerMailAccountId";
 
     public static Integer getRegisterMailAccountId() {
-        return dao.getInteger(ACTIVATE_MAIL_ACCOUNT_ID_KEY);
+        return dao.getInteger(REGISTER_MAIL_ACCOUNT_ID_KEY);
     }
 
     public static void updateRegisterMailAccountId(Integer mailAccountId) {
-        dao.saveInteger(ACTIVATE_MAIL_ACCOUNT_ID_KEY, mailAccountId);
+        dao.saveInteger(REGISTER_MAIL_ACCOUNT_ID_KEY, mailAccountId);
     }
     ///////////////////////////////////// register mail end //////////////////////////////////////
 
