@@ -241,4 +241,5 @@ insert into mail_serial_key(user_id, serial_key, send_time, mail_type) values
 
 insert into navigation_link(title, href) values('title1', 'href1'), ('title2', 'href2'), ('title3', 'href3');
 
-insert into
+insert into system_info_send_record(user_id, info_id, unread) values
+  (3, 1, true), (4, 1, true), (5, 1, true);
