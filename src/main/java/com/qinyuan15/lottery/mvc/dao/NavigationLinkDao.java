@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan.lib.database.hibernate.AbstractDao;
 import com.qinyuan.lib.database.hibernate.HibernateDeleter;
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
@@ -10,7 +11,7 @@ import java.util.List;
  * Dao of NavigationLink
  * Created by qinyuan on 15-6-17.
  */
-public class NavigationLinkDao {
+public class NavigationLinkDao extends AbstractDao<NavigationLink> {
 
     public List<NavigationLink> getInstances() {
         return new HibernateListBuilder().build(NavigationLink.class);

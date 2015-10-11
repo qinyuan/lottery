@@ -88,6 +88,6 @@ public class ActivateRequestDaoTest extends DatabaseTestCase {
         assertThat(responseTime).isNotNull();
         long responseTimestamp = DateUtils.newDate(DateUtils.trimMilliSecond(responseTime)).getTime();
         assertThat(now - responseTimestamp).isLessThan(1000);
-        System.out.println(now - responseTimestamp);
+        //System.out.println(now - responseTimestamp);
     }
 }

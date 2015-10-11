@@ -235,3 +235,5 @@ insert into mail_send_record(mail_account_id, user_id, mail_id, send_time) value
 insert into mail_serial_key(user_id, serial_key, send_time, mail_type) values
   (2, 'fjkdasipaifjdsaoij', '2015-12-12 18:19:20', 'activateAccount'),
   (2, 'jfdajkjesfioafpakjdsjkfasj', '2015-12-13 18:19:20', 'other');
+
+insert into navigation_link(title, href) values('title1', 'href1'), ('title2', 'href2'), ('title3', 'href3');
