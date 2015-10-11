@@ -444,25 +444,46 @@ var JSUtils = {
         this.loadSelectFormValue($div, initValue);
     },
     loadSelectFormEvents: function ($div) {
-        $div.find('ul.dropdown-menu a').click(function () {
-            var $this = $(this);
-            var id = $this.dataOptions('id');
-            var text = $this.text();
-            var $parent = $this.getParentByTagNameAndClass('div', 'dropdown');
-            $parent.find('button').html(text + ' <span class="caret"></span>');
-            $parent.find('input[type=hidden]:first').val(id);
-        });
+        /*$div.find('ul.dropdown-menu a').click(function () {
+         console.log('click');
+         var $this = $(this);
+         var id = $this.dataOptions('id');
+         var text = $this.text();
+         var $parent = $this.getParentByTagNameAndClass('div', 'dropdown');
+         $parent.find('button').html(text + ' <span class="caret"></span>');
+         $parent.find('input[type=hidden]:first').val(id);
+         });*/
+        $div.find('ul.dropdown-menu a').click(this._selectItemClickEvent);
+    },
+    _selectItemClickEvent: function () {
+        var $this = $(this);
+        var id = $this.dataOptions('id');
+        var text = $this.text();
+        var $parent = $this.getParentByTagNameAndClass('div', 'dropdown');
+        $parent.find('button').html(text + ' <span class="caret"></span>');
+        $parent.find('input[type=hidden]:first').val(id);
     },
     loadSelectFormValue: function ($div, initValue) {
+        var matched = false;
         if (initValue) {
             $div.find('li a').each(function () {
                 var $this = $(this);
                 if ($this.dataOptions('id') == initValue) {
                     $this.trigger('click');
+                    matched = true;
                     return false;
                 }
                 return true;
             });
+        }
+        if (!matched) {
+            var $ul = $div.find('ul.dropdown-menu');
+            var $lis = $ul.find('li');
+            if ($lis.size() > 0) {
+                $lis.eq(0).clone().prependTo($ul);
+                var $a = $ul.find('li:first a');
+                $a.html('(未选择)').dataOptions('id', -1).click(this._selectItemClickEvent).trigger('click');
+            }
         }
     },
     loadTableFilterEvents: function (urlToGetValues, urlToAddFilter, urlToRemoveFilter) {

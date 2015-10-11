@@ -351,7 +351,7 @@ public class AppConfig {
     private final static String ACTIVATE_MAIL_ACCOUNT_ID_KEY = "activateMailAccountId";
 
     public static Integer getActivateMailAccountId() {
-        return dao.getInteger(ACTIVATE_MAIL_ACCOUNT_ID_KEY);
+        return dao.getPositiveInteger(ACTIVATE_MAIL_ACCOUNT_ID_KEY);
     }
 
     public static void updateActivateMailAccountId(Integer mailAccountId) {
@@ -383,7 +383,7 @@ public class AppConfig {
     private final static String REGISTER_MAIL_ACCOUNT_ID_KEY = "registerMailAccountId";
 
     public static Integer getRegisterMailAccountId() {
-        return dao.getInteger(REGISTER_MAIL_ACCOUNT_ID_KEY);
+        return dao.getPositiveInteger(REGISTER_MAIL_ACCOUNT_ID_KEY);
     }
 
     public static void updateRegisterMailAccountId(Integer mailAccountId) {
@@ -415,7 +415,7 @@ public class AppConfig {
     private final static String RESET_PASSWORD_MAIL_ACCOUNT_ID_KEY = "resetPasswordMailAccountId";
 
     public static Integer getResetPasswordMailAccountId() {
-        return dao.getInteger(RESET_PASSWORD_MAIL_ACCOUNT_ID_KEY);
+        return dao.getPositiveInteger(RESET_PASSWORD_MAIL_ACCOUNT_ID_KEY);
     }
 
     public static void updateResetPasswordMailAccountId(Integer mailAccountId) {
@@ -447,7 +447,7 @@ public class AppConfig {
     private final static String RESET_EMAIL_MAIL_ACCOUNT_ID_KEY = "resetEmailMailAccountId";
 
     public static Integer getResetEmailMailAccountId() {
-        return dao.getInteger(RESET_EMAIL_MAIL_ACCOUNT_ID_KEY);
+        return dao.getPositiveInteger(RESET_EMAIL_MAIL_ACCOUNT_ID_KEY);
     }
 
     public static void updateResetEmailMailAccountId(Integer mailAccountId) {
@@ -489,7 +489,7 @@ public class AppConfig {
     private final static String NEW_LOTTERY_CHANCE_MAIL_ACCOUNT_ID_KEY = "newLotteryChanceMailAccountId";
 
     public static Integer getNewLotteryChanceMailAccountId() {
-        return dao.getInteger(NEW_LOTTERY_CHANCE_MAIL_ACCOUNT_ID_KEY);
+        return dao.getPositiveInteger(NEW_LOTTERY_CHANCE_MAIL_ACCOUNT_ID_KEY);
     }
 
     public static void updateNewLotteryChanceMailAccountId(Integer accountId) {
