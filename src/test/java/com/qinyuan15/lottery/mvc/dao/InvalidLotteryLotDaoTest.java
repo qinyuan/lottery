@@ -1,27 +1,68 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan.lib.database.hibernate.HibernateUtils;
+import com.qinyuan.lib.database.test.DatabaseTestCase;
 import org.junit.Test;
 
-public class InvalidLotteryLotDaoTest {
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class InvalidLotteryLotDaoTest extends DatabaseTestCase {
     private InvalidLotteryLotDao dao = new InvalidLotteryLotDao();
 
     @Test
     public void testCount() {
-        System.out.println(dao.count(15));
+        assertThat(dao.count(2)).isEqualTo(2);
+        new UserDao().updateTel(3, "13200000000");
+        assertThat(dao.count(2)).isEqualTo(1);
+        new UserDao().updateTel(4, "14200000000");
+        assertThat(dao.count(2)).isEqualTo(0);
+        changeMinLivenessToParticipate(2, 14);
+        assertThat(dao.count(2)).isEqualTo(1);
+        changeMinLivenessToParticipate(2, 26);
+        assertThat(dao.count(2)).isEqualTo(2);
+
+        assertThat(dao.count(15)).isEqualTo(0);
     }
 
     @Test
     public void testGetSerialNumbers() {
-        System.out.println(dao.getSerialNumbers(15));
+        assertThat(dao.getSerialNumbers(2)).containsExactly(10257, 217892);
+        assertThat(dao.getSerialNumbers(15)).isEmpty();
     }
 
     @Test
     public void getGetNoTelUserIds() {
-        System.out.println(dao.getNoTelUserIds(15));
+        assertThat(dao.getNoTelUserIds(2)).containsExactly(3, 4);
+        new UserDao().updateTel(3, "13200000000");
+        assertThat(dao.getNoTelUserIds(2)).containsExactly(4);
+        new UserDao().updateTel(4, "13700000000");
+        assertThat(dao.getNoTelUserIds(2)).isEmpty();
+
+        assertThat(dao.getNoTelUserIds(15)).isEmpty();
     }
 
     @Test
     public void getInsufficientLivenessUserIds() {
-        System.out.println(dao.getInsufficientLivenessUserIds(15));
+        assertThat(dao.getInsufficientLivenessUserIds(2)).isEmpty();
+
+        changeMinLivenessToParticipate(2, 13);
+        assertThat(dao.getInsufficientLivenessUserIds(2)).isEmpty();
+
+        changeMinLivenessToParticipate(2, 14);
+        assertThat(dao.getInsufficientLivenessUserIds(2)).containsExactly(4);
+
+        changeMinLivenessToParticipate(2, 25);
+        assertThat(dao.getInsufficientLivenessUserIds(2)).containsExactly(4);
+
+        changeMinLivenessToParticipate(2, 26);
+        assertThat(dao.getInsufficientLivenessUserIds(2)).containsExactly(3, 4);
+
+        assertThat(dao.getInsufficientLivenessUserIds(15)).isEmpty();
+    }
+
+    private void changeMinLivenessToParticipate(int activityId, int liveness) {
+        LotteryActivity activity = new LotteryActivityDao().getInstance(activityId);
+        activity.setMinLivenessToParticipate(liveness);
+        HibernateUtils.update(activity);
     }
 }

@@ -15,9 +15,9 @@ public class DualColoredBallRecordDaoTest extends DatabaseTestCase {
 
     @Test
     public void testAdd() {
-        assertThat(dao.count()).isEqualTo(1);
-        dao.add(2015073, "2015-06-25", "010217222627");
         assertThat(dao.count()).isEqualTo(2);
+        dao.add(2015073, "2015-06-25", "010217222627");
+        assertThat(dao.count()).isEqualTo(3);
     }
 
     @Test

@@ -2,11 +2,15 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.lang.IntegerUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class InvalidLotteryLotDao {
+    private final static Logger LOGGER = LoggerFactory.getLogger(InvalidLotteryLotDao.class);
+
     /**
      * count invalid lot number of certain lottery activity
      *
@@ -17,6 +21,7 @@ public class InvalidLotteryLotDao {
         // validate activity
         LotteryActivity activity = new LotteryActivityDao().getInstance(activityId);
         if (activity == null) {
+            LOGGER.error("no activity with id {}", activityId);
             return 0;
         }
 
@@ -58,10 +63,19 @@ public class InvalidLotteryLotDao {
     }
 
     public List<Integer> getInsufficientLivenessUserIds(Integer activityId) {
-        return getInsufficientLivenessUserIds(new LotteryActivityDao().getInstance(activityId));
+        LotteryActivity activity = new LotteryActivityDao().getInstance(activityId);
+        if (activity == null) {
+            LOGGER.error("no activity with id {}", activityId);
+            return new ArrayList<>();
+        }
+        return getInsufficientLivenessUserIds(activity);
     }
 
     public List<Integer> getInsufficientLivenessUserIds(LotteryActivity activity) {
+        if (activity == null) {
+            LOGGER.error("activity is null");
+            return new ArrayList<>();
+        }
         return new HibernateListBuilder().addEqualFilter("activity_id", activity.getId())
                 .addFilter(getInsufficientLivenessFilter(activity.getMinLivenessToParticipate()))
                 .buildBySQL("SELECT DISTINCT(user_id) FROM lottery_lot", Integer.class);
@@ -70,6 +84,7 @@ public class InvalidLotteryLotDao {
     public List<Integer> getSerialNumbers(Integer activityId) {
         LotteryActivity activity = new LotteryActivityDao().getInstance(activityId);
         if (activity == null) {
+            LOGGER.error("no activity with id {}", activityId);
             return new ArrayList<>();
         }
 
