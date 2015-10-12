@@ -17,18 +17,8 @@ abstract class SerialKeyMailSender implements MailSender {
     private final String serialKeyPrefix;
 
     public SerialKeyMailSender(String serialKeyUrl, String serialKeyPrefix) {
+        this.serialKeyUrl = new SerialKeyUrlAdapter().adapt(serialKeyUrl);
         this.serialKeyPrefix = serialKeyPrefix;
-
-        // serial key url must end with '?' or '&', such as 'http://192.168.8.1/lottery.html?'
-        if (serialKeyUrl.contains("?")) {
-            if (serialKeyUrl.endsWith("?")) {
-                this.serialKeyUrl = serialKeyUrl;
-            } else {
-                this.serialKeyUrl = serialKeyUrl + "&";
-            }
-        } else {
-            this.serialKeyUrl = serialKeyUrl + "?";
-        }
     }
 
     public SerialKeyMailSender(String serialKeyUrl) {

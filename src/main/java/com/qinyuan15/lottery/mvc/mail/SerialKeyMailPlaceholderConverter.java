@@ -10,7 +10,7 @@ class SerialKeyMailPlaceholderConverter implements MailPlaceholderConverter {
 
     SerialKeyMailPlaceholderConverter(String username, String serialKeyUrl, String serialKey) {
         this.username = username;
-        this.serialKeyUrl = serialKeyUrl;
+        this.serialKeyUrl = new SerialKeyUrlAdapter().adapt(serialKeyUrl);
         this.serialKey = serialKey;
     }
 
