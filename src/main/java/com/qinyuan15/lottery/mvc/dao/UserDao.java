@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan.lib.contact.mail.MailAddressValidator;
 import com.qinyuan.lib.database.hibernate.HibernateDeleter;
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
@@ -119,6 +120,19 @@ public class UserDao extends SimpleUserDao {
         User user = getInstance(id);
         if (user != null) {
             user.setTel(tel);
+            HibernateUtils.update(user);
+        }
+    }
+
+    public void updateEmail(Integer id, String email) {
+        if (!new MailAddressValidator().validate(email)) {
+            LOGGER.error("invalid email: {}", email);
+            return;
+        }
+
+        User user = getInstance(id);
+        if (user != null) {
+            user.setEmail(email);
             HibernateUtils.update(user);
         }
     }

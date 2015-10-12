@@ -2,6 +2,7 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.test.DatabaseTestCase;
 import com.qinyuan.lib.mvc.security.UserRole;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -95,5 +96,28 @@ public class UserDaoTest extends DatabaseTestCase {
     public void testGetUserIdBySerialKey() {
         assertThat(userDao.getIdBySerialKey(VALID_SERIAL_KEY)).isNull();
         assertThat(userDao.getIdBySerialKey("abdafdipsuap")).isEqualTo(1);
+    }
+
+    @Test
+    public void testUpdateTel() {
+        assertThat(userDao.getInstance(1).getTel()).isNull();
+
+        String tel = RandomStringUtils.randomNumeric(11);
+        userDao.updateTel(1, tel);
+        assertThat(userDao.getInstance(1).getTel()).isEqualTo(tel);
+    }
+
+    @Test
+    public void testUpdateEmail() {
+        assertThat(userDao.getInstance(1).getEmail()).isNull();
+
+        userDao.updateEmail(1, "test");
+        assertThat(userDao.getInstance(1).getEmail()).isNull();
+        userDao.updateEmail(1, "hello@test.com");
+        assertThat(userDao.getInstance(1).getEmail()).isEqualTo("hello@test.com");
+
+        assertThat(userDao.getInstance(2).getEmail()).isEqualTo("12345@qq.com");
+        userDao.updateEmail(2, "test123@sina.com");
+        assertThat(userDao.getInstance(2).getEmail()).isEqualTo("test123@sina.com");
     }
 }

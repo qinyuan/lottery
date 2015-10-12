@@ -1,12 +1,14 @@
 package com.qinyuan15.lottery.mvc.mail;
 
 import com.qinyuan.lib.contact.mail.MailSerialKeyDao;
+import com.qinyuan.lib.network.url.UrlUtils;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.ResetEmailRequestDao;
 import com.qinyuan15.lottery.mvc.dao.User;
+import org.apache.commons.lang3.StringUtils;
 
 /**
- * Class to send reset passsword mail
+ * Class to send reset password mail
  * Created by qinyuan on 15-7-1.
  */
 public class ResetEmailMailSender extends SerialKeyMailSender {
@@ -42,5 +44,20 @@ public class ResetEmailMailSender extends SerialKeyMailSender {
     @Override
     protected String getContentTemplate() {
         return AppConfig.getResetEmailMailContentTemplate();
+    }
+
+    /**
+     * parse new email from serial key
+     *
+     * @param serialKey serial key
+     * @return email
+     */
+    public static String parseNewEmail(String serialKey) {
+        if (StringUtils.isBlank(serialKey)) {
+            return null;
+        }
+        serialKey = UrlUtils.decode(serialKey);
+        int endIndex = serialKey.indexOf(ResetEmailMailSender.PREFIX_END);
+        return endIndex > 0 ? serialKey.substring(0, endIndex) : null;
     }
 }
