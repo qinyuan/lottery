@@ -13,6 +13,9 @@ import java.util.Properties;
 public class AppConfig {
     public final static String GLOBAL_CONFIG_PROPS_FILE = "global-config.properties";
 
+    /**
+     * @return url such as http://192.168.8.1:8080/lotery/, which must end with '/'
+     */
     public static String getAppHost() {
         String appHost = ClasspathFileUtils.getProperties(GLOBAL_CONFIG_PROPS_FILE).getProperty("appHost");
         if (!appHost.endsWith("/")) {
@@ -595,7 +598,6 @@ public class AppConfig {
     public static void updateQQListDescription(String qqlistDescription) {
         dao.save(QQ_LIST_DESCRIPTION_KEY, qqlistDescription);
     }
-
     ////////////////////////////// qqlist end //////////////////////////////////////
 
     ///////////////////////////// tel validate description page start //////////////////////////
@@ -614,7 +616,7 @@ public class AppConfig {
     public static boolean allocateLotterySerialInAdvance() {
         Properties props = ClasspathFileUtils.getProperties("global-config.properties");
         String value = props.getProperty("allocateLotterySerialInAdvance");
-        return value != null && value.trim().equals("1");
+        return value != null && (value.trim().equals("1") || value.trim().toLowerCase().equals("true"));
     }
     //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -638,6 +640,5 @@ public class AppConfig {
     public static void updateInsufficientLivenessInvalidLotSystemInfoTemplate(String template) {
         dao.save(INSUFFICIENT_LIVENESS_INVALID_LOT_SYSTEM_INFO_TEMPLATE_KEY, template);
     }
-
     //////////////////////////////////////////////////////////////////////////////////////////
 }

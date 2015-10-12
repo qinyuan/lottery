@@ -7,14 +7,19 @@ import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
-abstract class SerialKeyMailSender implements MailSender{
+/**
+ * class to send email with serial key
+ */
+abstract class SerialKeyMailSender implements MailSender {
     private final String serialKeyUrl;
     private final String serialKeyPrefix;
 
     public SerialKeyMailSender(String serialKeyUrl, String serialKeyPrefix) {
         this.serialKeyPrefix = serialKeyPrefix;
+
+        // serial key url must end with '?' or '&', such as 'http://192.168.8.1/lottery.html?'
         if (serialKeyUrl.contains("?")) {
             if (serialKeyUrl.endsWith("?")) {
                 this.serialKeyUrl = serialKeyUrl;
@@ -31,11 +36,16 @@ abstract class SerialKeyMailSender implements MailSender{
     }
 
     public void send(Integer userId) {
+        // validate user
+        if (userId == null) {
+            throw new IllegalArgumentException("user id can't be null");
+        }
         User user = new UserDao().getInstance(userId);
         if (user == null) {
-            throw new RuntimeException("User is not exists");
+            throw new IllegalArgumentException("no User with id " + userId);
         }
 
+        // query and validate serial key
         MailSerialKeyDao mailSerialKeyDao = getMailSerialKeyDao();
         MailSerialKey mailSerialKey = mailSerialKeyDao.getInstanceByUserId(userId);
         if (isOldSerialKeyUsable(mailSerialKey)) {
@@ -46,11 +56,13 @@ abstract class SerialKeyMailSender implements MailSender{
             mailSerialKey = mailSerialKeyDao.getInstance(requestId);
         }
 
+        // build email subject and content
         SerialKeyMailPlaceholderConverter placeholderConverter = new SerialKeyMailPlaceholderConverter(
                 user.getUsername(), serialKeyUrl, mailSerialKey.getSerialKey());
         String subject = placeholderConverter.convert(getSubjectTemplate());
         String content = placeholderConverter.convert(getContentTemplate());
 
+        // get email
         new MailSenderBuilder().build(getMailAccountId()).send(getEmail(user), subject, content);
     }
 
@@ -60,8 +72,8 @@ abstract class SerialKeyMailSender implements MailSender{
         }
 
         String serialKeyString = mailSerialKey.getSerialKey();
-        return StringUtils.hasText(serialKeyString) &&
-                (!StringUtils.hasText(serialKeyPrefix) || serialKeyString.startsWith(serialKeyPrefix));
+        return StringUtils.isNotBlank(serialKeyString) &&
+                (StringUtils.isBlank(serialKeyPrefix) || serialKeyString.startsWith(serialKeyPrefix));
     }
 
     protected String getEmail(User user) {

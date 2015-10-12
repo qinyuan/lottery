@@ -29,7 +29,14 @@ public class IndexImageGroup {
         return indexImages;
     }
 
+    /**
+     * convert index image list to map that group index images by row index
+     *
+     * @param indexImages index image list
+     * @return map whose keys are row indexes and values are related index images
+     */
     private static Map<Integer, List<IndexImage>> buildMap(List<IndexImage> indexImages) {
+        // use tree map to ensure map is in order
         Map<Integer, List<IndexImage>> map = new TreeMap<>();
         for (IndexImage indexImage : indexImages) {
             Integer rowIndex = indexImage.getRowIndex();

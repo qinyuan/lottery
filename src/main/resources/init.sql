@@ -32,7 +32,7 @@ CREATE TABLE `user` (
     `password` char(50) NOT NULL,
     `role` char(100) DEFAULT NULL,
     email char(200) unique,
-    tel char(50),
+    tel char(50) unique,
     active boolean not null default false,
     liveness int,
     serial_key char(200) unique,
