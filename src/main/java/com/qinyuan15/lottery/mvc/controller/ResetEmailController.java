@@ -1,10 +1,8 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.contact.mail.MailSerialKey;
-import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan15.lottery.mvc.dao.ResetEmailRequestDao;
-import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.lottery.mvc.mail.ResetEmailMailSender;
 import org.springframework.stereotype.Controller;
@@ -17,6 +15,7 @@ public class ResetEmailController extends ImageController {
 
     @RequestMapping("/reset-email")
     public String index(@RequestParam(value = "serial", required = true) String serial) {
+        String title = "邮箱修改失败";
         if (StringUtils.hasText(serial)) {
             String newEmail = ResetEmailMailSender.parseNewEmail(serial);
             if (newEmail != null) {
@@ -27,16 +26,15 @@ public class ResetEmailController extends ImageController {
 
                     UserDao userDao = new UserDao();
                     userDao.activate(mailSerialKey.getUserId());
-                    User user = userDao.getInstance(mailSerialKey.getUserId());
-                    user.setEmail(newEmail);
-                    HibernateUtils.update(user);
+                    userDao.updateEmail(mailSerialKey.getUserId(), newEmail);
                     setAttribute("newEmail", newEmail);
+                    title = "邮箱修改成功";
                 }
             }
         }
 
         IndexHeaderUtils.setHeaderParameters(this);
-        setTitle("邮箱修改成功");
+        setTitle(title);
         addCss("activate-account");
         return "reset-email";
     }
