@@ -6,6 +6,10 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * class to validate tel from database,
+ * not only validate format but also validate duplication
+ */
 public class DatabaseTelValidator extends TelValidator {
     private final static Logger LOGGER = LoggerFactory.getLogger(DatabaseTelValidator.class);
 
