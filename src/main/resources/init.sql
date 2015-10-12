@@ -243,3 +243,7 @@ insert into navigation_link(title, href) values('title1', 'href1'), ('title2', '
 
 insert into system_info_send_record(user_id, info_id, unread) values
   (3, 1, true), (4, 1, true), (5, 1, true);
+
+insert into pre_user(email, spread_user_id, spread_way, activity_id, serial_key) values
+  ('test12345@sina.com', 4, 'sina', 2, 'fpiaohgiosajfslja'),
+  ('hello001@qq.com', 4, 'sina', 2, 'agohdajfisjk');

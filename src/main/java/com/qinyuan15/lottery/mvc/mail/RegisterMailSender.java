@@ -8,7 +8,8 @@ public class RegisterMailSender {
 
     public void send(String email, String serialKey) {
         SerialKeyMailPlaceholderConverter placeholderConverter = new SerialKeyMailPlaceholderConverter(
-                SerialKeyMailPlaceholderConverter.USER_PLACEHOLDER, SERIAL_KEY_URL, serialKey);
+                SerialKeyMailPlaceholderConverter.USER_PLACEHOLDER/* do not replace {{user}} */, SERIAL_KEY_URL, serialKey);
+
         String subject = placeholderConverter.convert(AppConfig.getRegisterMailSubjectTemplate());
         String content = placeholderConverter.convert(AppConfig.getRegisterMailContentTemplate());
 

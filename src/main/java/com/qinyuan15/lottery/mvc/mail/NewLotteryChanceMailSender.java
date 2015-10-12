@@ -6,9 +6,9 @@ import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.activity.NewLotteryChanceInfoSender;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.User;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 /**
  * Send mail to user if the user has new lottery chance
@@ -25,12 +25,12 @@ public class NewLotteryChanceMailSender extends NewLotteryChanceInfoSender {
             return;
         }
         String subject = AppConfig.getNewLotteryChanceMailSubjectTemplate();
-        if (!StringUtils.hasText(subject)) {
+        if (StringUtils.isBlank(subject)) {
             LOGGER.error("Subject is empty");
             return;
         }
         String content = AppConfig.getNewLotteryChanceMailContentTemplate();
-        if (!StringUtils.hasText(content)) {
+        if (StringUtils.isBlank(content)) {
             LOGGER.error("Content is empty");
             return;
         }

@@ -17,12 +17,11 @@ public class NormalMailSender implements MailSender {
     private final MailSendRecordDao recordDao = new MailSendRecordDao();
 
     public void send(List<Integer> accountIds, List<Integer> userIds, String subject, String content) {
+        // validation
         if (accountIds == null || accountIds.size() == 0) {
             LOGGER.error("accountIds is empty: {}", accountIds);
             return;
-        }
-
-        if (userIds == null || userIds.size() == 0) {
+        } else if (userIds == null || userIds.size() == 0) {
             LOGGER.error("userIds is empty: {}", userIds);
             return;
         }
@@ -31,11 +30,13 @@ public class NormalMailSender implements MailSender {
 
         for (Integer accountId : accountIds) {
             if (!IntegerUtils.isPositive(accountId)) {
+                LOGGER.error("invalid account id: {}", accountId);
                 continue;
             }
 
             for (Integer userId : userIds) {
                 if (!IntegerUtils.isPositive(userId)) {
+                    LOGGER.error("invalid user id: {}", userId);
                     continue;
                 }
 
