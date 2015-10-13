@@ -3,13 +3,13 @@ package com.qinyuan15.lottery.mvc.dao;
 import com.qinyuan.lib.database.hibernate.AbstractDao;
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
-import com.qinyuan15.lottery.mvc.activity.DualColoredBallTerm;
+import com.qinyuan15.lottery.mvc.activity.DualColoredBallPhase;
 
 import java.util.List;
 
 public class DualColoredBallRecordDao extends AbstractDao<DualColoredBallRecord> {
     public Integer add(int fullTerm, String publishDate, String result) {
-        DualColoredBallTerm term = new DualColoredBallTerm(fullTerm);
+        DualColoredBallPhase term = new DualColoredBallPhase(fullTerm);
         return add(term.year, term.term, publishDate, result);
     }
 

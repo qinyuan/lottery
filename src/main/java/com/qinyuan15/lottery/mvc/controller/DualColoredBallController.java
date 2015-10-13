@@ -21,7 +21,7 @@ public class DualColoredBallController extends BaseController {
     @RequestMapping("/dual-colored-ball-query-date.json")
     @ResponseBody
     public String queryDate(@RequestParam(value = "fullTermNumber", required = true) Integer fullTermNumber) {
-        Date date = new DualColoredBallCalculator().getDateTimeByTermNumber(fullTermNumber);
+        Date date = new DualColoredBallCalculator().getDateTimeByPhase(fullTermNumber);
         Map<String, String> map = new HashMap<>();
         map.put("date", DateUtils.toLongString(date));
         return toJson(map);

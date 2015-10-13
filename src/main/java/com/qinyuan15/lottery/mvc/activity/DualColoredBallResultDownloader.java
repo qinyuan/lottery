@@ -26,7 +26,7 @@ public class DualColoredBallResultDownloader {
     }
 
     private boolean downloadResult(int year, int term) {
-        DualColoredBallCrawler.Result result = new BaiduLecaiCrawler().getResult(DualColoredBallTerm.toFullTerm(year, term));
+        DualColoredBallCrawler.Result result = new BaiduLecaiCrawler().getResult(DualColoredBallPhase.toFullPhase(year, term));
         if (result == null || result.result == null || result.drawTime == null) {
             return false;
         } else {

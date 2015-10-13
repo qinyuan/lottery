@@ -4,9 +4,9 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DualColoredBallTermTest {
+public class DualColoredBallPhaseTest {
     @Test
     public void testToFullTerm() throws Exception {
-        assertThat(DualColoredBallTerm.toFullTerm(2015, 13)).isEqualTo(2015013);
+        assertThat(DualColoredBallPhase.toFullPhase(2015, 13)).isEqualTo(2015013);
     }
 }
