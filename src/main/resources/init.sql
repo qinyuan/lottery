@@ -192,6 +192,15 @@ create table mail_serial_key (
   mail_type char(50) not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+CREATE TABLE login_record (
+    id int(11) primary key AUTO_INCREMENT,
+    user_id int not null,
+    login_time  datetime not null,
+    ip char(50) not null,
+    location char(100) not null,
+    platform char(20) not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 
 
 /************** test data *******************/
@@ -247,3 +256,11 @@ insert into system_info_send_record(user_id, info_id, unread) values
 insert into pre_user(email, spread_user_id, spread_way, activity_id, serial_key) values
   ('test12345@sina.com', 4, 'sina', 2, 'fpiaohgiosajfslja'),
   ('hello001@qq.com', 4, 'sina', 2, 'agohdajfisjk');
+
+insert into login_record(user_id, login_time, ip, location, platform) values
+  (2, '2014-12-12 10:10:10', '192.168.8.1', '广东省深圳市 电信', 'android'),
+  (3, '2014-12-12 10:10:10', '192.168.8.1', '中国 华南 广东省 深圳市', 'android'),
+  (3, '2014-12-12 11:10:10', '192.168.8.2', '中国 华南 福建省 厦门市', 'android'),
+  (4, '2014-12-12 11:10:10', '192.168.8.2', '中国 华南 广东省 广州市', 'android'),
+  (111, '2014-12-12 11:10:10', '192.168.8.2', '中国 华南 广东省 广州市', 'android'),
+  (113, '2014-12-12 11:10:10', '192.168.8.2', '中国 华南 广西省 南宁市', 'android');
