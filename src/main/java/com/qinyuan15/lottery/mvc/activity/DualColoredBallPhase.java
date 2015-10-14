@@ -9,7 +9,7 @@ public class DualColoredBallPhase {
         term = fullPhase % 1000;
     }
 
-    public static int toFullPhase(int year, int term) {
-        return year * 1000 + term;
+    public static int toFullPhase(int year, int phase) {
+        return year * 1000 + phase;
     }
 }

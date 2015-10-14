@@ -61,7 +61,7 @@ public class DualColoredBallCalculator {
      * @return date of target phase, whose time part is '00:00:00'
      */
     public Date getDateByPhase(int phase) {
-        if (!new DualColoredBallTermValidator().validate(phase)) {
+        if (!new DualColoredBallPhaseValidator().validate(phase)) {
             throw new RuntimeException("Invalid term number: " + phase);
         }
 

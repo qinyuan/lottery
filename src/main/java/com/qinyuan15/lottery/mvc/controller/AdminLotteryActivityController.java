@@ -3,7 +3,7 @@ package com.qinyuan15.lottery.mvc.controller;
 import com.qinyuan.lib.lang.IntegerRange;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.time.DateUtils;
-import com.qinyuan15.lottery.mvc.activity.DualColoredBallTermValidator;
+import com.qinyuan15.lottery.mvc.activity.DualColoredBallPhaseValidator;
 import com.qinyuan15.lottery.mvc.dao.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,7 +71,7 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
             return fail("商品未选择！");
         }
 
-        if (!new DualColoredBallTermValidator().validate(dualColoredBallTerm)) {
+        if (!new DualColoredBallPhaseValidator().validate(dualColoredBallTerm)) {
             return fail("双色球期数应为19或20开头的7位数字！");
         }
 

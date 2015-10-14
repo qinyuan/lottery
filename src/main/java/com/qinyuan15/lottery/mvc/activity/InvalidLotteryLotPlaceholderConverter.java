@@ -7,12 +7,12 @@ public class InvalidLotteryLotPlaceholderConverter {
     public final static String LIVENESS_PLACEHOLDER = "{{liveness}}";
     public final static String MIN_LIVENESS_PLACEHOLDER = "{{min_liveness}}";
 
-    private final int fullTerm;
+    private final int fullPhase;
     private final int liveness;
     private final int minLiveness;
 
-    InvalidLotteryLotPlaceholderConverter(int fullTerm, int liveness, int minLiveness) {
-        this.fullTerm = fullTerm;
+    InvalidLotteryLotPlaceholderConverter(int fullPhase, int liveness, int minLiveness) {
+        this.fullPhase = fullPhase;
         this.liveness = liveness;
         this.minLiveness = minLiveness;
     }
@@ -22,7 +22,7 @@ public class InvalidLotteryLotPlaceholderConverter {
             return template;
         }
 
-        template = template.replace(PHASE_PLACEHOLDER, String.valueOf(fullTerm));
+        template = template.replace(PHASE_PLACEHOLDER, String.valueOf(fullPhase));
         template = template.replace(LIVENESS_PLACEHOLDER, String.valueOf(liveness));
         template = template.replace(MIN_LIVENESS_PLACEHOLDER, String.valueOf(minLiveness));
 

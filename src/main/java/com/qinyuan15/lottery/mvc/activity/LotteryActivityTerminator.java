@@ -165,7 +165,7 @@ public class LotteryActivityTerminator {
             if (crawlers == null) {
                 return null;
             }
-            if (!new DualColoredBallTermValidator().validate(activity.getDualColoredBallTerm())) {
+            if (!new DualColoredBallPhaseValidator().validate(activity.getDualColoredBallTerm())) {
                 return null;
             }
 
