@@ -9,7 +9,7 @@
 </div>
 <%@include file="inc-register-login-panel.jsp" %>
 </body>
-<q:js src="lib/jquery-1.11.3"/>
+<q:js src="http://libs.baidu.com/jquery/1.10.0/jquery.min.js"/>
 <q:js src="lib/jquery.url"/>
 <q:js src="lib/jquery.cookie"/>
 <q:js src="lib/jquery-form-3.51.0"/>

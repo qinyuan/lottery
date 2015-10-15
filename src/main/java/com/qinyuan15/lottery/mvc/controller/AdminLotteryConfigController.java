@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan.lib.mvc.controller.CDNSource;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.mail.MailSelectFormItemBuilder;
@@ -54,7 +55,7 @@ public class AdminLotteryConfigController extends ImageController {
         addCss("admin-form");
         addCss("admin");
         addJs("lib/ckeditor/ckeditor", false);
-        addJs("lib/bootstrap/js/bootstrap.min", false);
+        addJs(CDNSource.BOOTSTRAP_JS, false);
         addCssAndJs("admin-lottery-config");
         return "admin-lottery-config";
     }

@@ -44,7 +44,7 @@ public class SystemInfoController extends ImageController {
         new PaginationAttributeAdder(new Factory(userId), request).setRowItemsName("systemInfoItems").add();
 
         // bootstrap switch
-        addCss("resources/js/lib/bootstrap/css/bootstrap-switch.min", false);
+        addCss( "resources/js/lib/bootstrap/css/bootstrap-switch.min", false);
         addJs("lib/bootstrap/js/bootstrap-switch.min", false);
 
         setTitle("系统消息");

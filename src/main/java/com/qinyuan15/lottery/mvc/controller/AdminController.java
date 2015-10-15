@@ -4,6 +4,7 @@ import com.qinyuan.lib.config.LinkAdapter;
 import com.qinyuan.lib.contact.mail.MailAccountDao;
 import com.qinyuan.lib.contact.mail.MailAddressValidator;
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.mvc.controller.CDNSource;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.MailAccountReferenceValidator;
@@ -53,9 +54,9 @@ public class AdminController extends ImageController {
 
         setTitle("系统设置");
         addCss("admin-form");
-        addJs("lib/handlebars.min-v1.3.0", false);
+        addJs(CDNSource.HANDLEBARS, false);
         addJs("lib/ckeditor/ckeditor", false);
-        addJs("lib/bootstrap/js/bootstrap.min", false);
+        addJs(CDNSource.BOOTSTRAP_JS, false);
         addHeadJs("lib/image-adjust.js");
         addCssAndJs("admin");
         return "admin";
@@ -134,9 +135,9 @@ public class AdminController extends ImageController {
                          /*@RequestParam(value = "activateMailAccountId", required = true) Integer activateMailAccountId,
                          @RequestParam(value = "activateMailSubjectTemplate", required = true) String activateMailSubjectTemplate,
                          @RequestParam(value = "activateMailContentTemplate", required = true) String activateMailContentTemplate,*/
-                         @RequestParam(value="registerMailAccountId", required = true) Integer registerMailAccountId,
-                         @RequestParam(value="registerMailSubjectTemplate", required = true) String registerMailSubjectTemplate,
-                         @RequestParam(value="registerMailContentTemplate", required = true) String registerMailContentTemplate,
+                         @RequestParam(value = "registerMailAccountId", required = true) Integer registerMailAccountId,
+                         @RequestParam(value = "registerMailSubjectTemplate", required = true) String registerMailSubjectTemplate,
+                         @RequestParam(value = "registerMailContentTemplate", required = true) String registerMailContentTemplate,
                          @RequestParam(value = "resetPasswordMailAccountId", required = true) Integer resetPasswordMailAccountId,
                          @RequestParam(value = "resetPasswordMailSubjectTemplate", required = true) String resetPasswordMailSubjectTemplate,
                          @RequestParam(value = "resetPasswordMailContentTemplate", required = true) String resetPasswordMailContentTemplate,

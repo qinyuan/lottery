@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.mvc.controller.CDNSource;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.controller.PaginationAttributeAdder;
 import com.qinyuan.lib.mvc.controller.SelectFormItemsBuilder;
@@ -29,7 +30,7 @@ abstract class AbstractActivityAdminController extends ImageController {
         setAttribute("nextTerm", getActivityDao().getMaxTerm() + 1);
         setAttribute("latestDescription", getActivityDao().getLatestDescription());
 
-        addJs("lib/bootstrap/js/bootstrap.min", false);
+        addJs(CDNSource.BOOTSTRAP_JS, false);
         addJs("lib/ckeditor/ckeditor", false);
         addCss("admin-form");
         addCssAndJs("admin-activity");
