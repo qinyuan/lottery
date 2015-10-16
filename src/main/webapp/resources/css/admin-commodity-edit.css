@@ -37,8 +37,37 @@ div.form form button {
 }
 
 div.form td.backImage span.no-back {
-    color:#09821D;
+    color: #09821D;
     font-style: italic;
+}
+
+div.form table td.index {
+    overflow: visible;
+}
+
+div.form table td.index div {
+    position: relative;
+    width: 40px;
+    height: 18px;
+    overflow: visible;
+}
+
+div.form table td.index img {
+    height: 13px;
+    width: 13px;
+}
+
+div.form table td.index input {
+    padding: 5px;
+    height: 25px;
+    width: 40px;
+}
+
+div.form table td.index button {
+    display: block;
+    position: absolute;
+    top: 1px;
+    left: 105%;
 }
 
 ul.pagination {

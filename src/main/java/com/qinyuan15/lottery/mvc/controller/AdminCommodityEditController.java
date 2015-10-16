@@ -157,6 +157,9 @@ public class AdminCommodityEditController extends ImageController {
     @RequestMapping("/admin-commodity-rank-up.json")
     @ResponseBody
     public String rankUp(@RequestParam(value = "id", required = true) Integer id) {
+        if (!IntegerUtils.isPositive(id)) {
+            return failByInvalidParam();
+        }
         try {
             new CommodityDao().rankUp(id);
             return success();
@@ -169,11 +172,30 @@ public class AdminCommodityEditController extends ImageController {
     @RequestMapping("/admin-commodity-rank-down.json")
     @ResponseBody
     public String rankDown(@RequestParam(value = "id", required = true) Integer id) {
+        if (!IntegerUtils.isPositive(id)) {
+            return failByInvalidParam();
+        }
         try {
             new CommodityDao().rankDown(id);
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to rank down commodity, id: {}, info: {}", id, e);
+            return failByDatabaseError();
+        }
+    }
+
+    @RequestMapping("/admin-commodity-rank-to.json")
+    @ResponseBody
+    public String rankTo(@RequestParam(value = "id", required = true) Integer id,
+                         @RequestParam(value = "rankIndex", required = true) Integer rankIndex) {
+        if (!IntegerUtils.isPositive(id) || !IntegerUtils.isPositive(rankIndex)) {
+            return failByInvalidParam();
+        }
+        try {
+            new CommodityDao().rankTo(id, rankIndex);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("fail to rank to commodity, id: {}, rankIndex: {}, info: {}", id, rankIndex, e);
             return failByDatabaseError();
         }
     }

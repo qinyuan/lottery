@@ -102,5 +102,57 @@
         $form.focusFirstTextInput();
     });
 })();
+(function () {
+    // code about editing index
+    $('div.form table td.index img').click(editImageClickEvent);
+
+    function editImageClickEvent() {
+        var $div = $(this).getParentByTagName("div");
+        var rankIndex = $div.dataOptions('rankIndex');
+
+        $div.empty();
+
+        var $input = $('<input type="text" class="form-control" value="' + rankIndex + '"/>');
+        $input.appendTo($div);
+
+        var $button = $('<button class="btn btn-success btn-xs">确定</button>');
+        $button.appendTo($div);
+
+        $input.focusOrSelect().blur(function () {
+            var $this = $(this);
+            var newRankIndex = $this.val();
+            var $div = $this.getParentByTagName('div');
+            var oldRankIndex = $div.dataOptions('rankIndex');
+            if (!validateRankIndex(newRankIndex) || newRankIndex == oldRankIndex) {
+                recover($div);
+            } else {
+                var id = $div.getParentByTagName('tr').dataOptions('id');
+                $.post('admin-commodity-rank-to.json', {'id': id, 'rankIndex': newRankIndex}, function (data) {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert(data.detail);
+                        recover($div);
+                    }
+                });
+            }
+        });
+    }
+
+    function recover($div) {
+        var rankIndex = $div.dataOptions('rankIndex');
+        $div.empty().html(rankIndex + ' <img title="编辑" class="link" src="resources/css/images/note_edit.png">');
+        $div.find('img').click(editImageClickEvent);
+    }
+
+    function validateRankIndex(rankIndex) {
+        if (JSUtils.isIntegerString(rankIndex)) {
+            return true;
+        } else {
+            alert('序号必须为整数格式');
+            return false;
+        }
+    }
+})();
 JSUtils.recordScrollStatus();
 $('#commoditySeckillLink').addClass('emphasize');

@@ -72,7 +72,12 @@
             <tbody>
             <c:forEach var="commodity" items="${commodities}" varStatus="status">
                 <tr data-options="id:${commodity.id}">
-                    <td class="index">${status.index + rowStartIndex}</td>
+                    <c:set var="rankIndex" value="${status.index + rowStartIndex}"/>
+                    <td class="index">
+                        <div data-options="rankIndex:${rankIndex}">${rankIndex}
+                            <img title="编辑" class="link" src="resources/css/images/note_edit.png">
+                        </div>
+                    </td>
                     <td class="name">${commodity.name}</td>
                     <td class="price">${commodity.price}</td>
                     <td class="own">${commodity.own ? '是':'否'}</td>

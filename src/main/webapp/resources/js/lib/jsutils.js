@@ -121,6 +121,12 @@ var JSUtils = {
     isNumber: function (arg) {
         return (typeof arg) == 'number';
     },
+    isIntegerString: function (arg) {
+        if (!this.isString(arg)) {
+            return false;
+        }
+        return arg.match(/^\d+$/) != null;
+    },
     isNumberString: function (arg) {
         if (!this.isString(arg)) {
             return false;
