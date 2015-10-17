@@ -40,6 +40,8 @@
     </div>
 </div>
 <div class="main-body">
+    <div class="page-width" id="testDigit">
+    </div>
     <div class="summary page-width">
         <div class="right">
             <div class="remaining-time">
@@ -47,7 +49,7 @@
                 <div class="title">距离活动结束：</div>
                 <div class="clock"></div>
             </div>
-            <div class="participant-count">已参与人数：<span class="participant-count"></span></div>
+            <div class="participant-count">已参与人数：<span class="participant-count"></span>人</div>
         </div>
     </div>
     <div class="detail">

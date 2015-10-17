@@ -53,10 +53,11 @@
         updateRemainingTimeDigitClock: function () {
             this.$remainingTime.show();
             var $click = this.$remainingTime.find('div.clock');
-            var digitClock = JSUtils.digitClock($click, {
+            /*var digitClock = JSUtils.digitClock($click, {
                 'backgroundImage': 'resources/css/images/commodity/digit.png',
                 'initValue': this.getRemainingTimeString()
-            });
+            });*/
+            var digitClock = JSUtils.digitClock360($click, this.getRemainingTimeString());
 
             var self = this;
             this._stopRemainingTimeDigitClockUpdateTimer();

@@ -187,13 +187,16 @@ div.main-body div.detail {
 
 div.main-body > div.summary {
     position: relative;
-    height: 70px;
+    height: 0;
+    overflow: visible;
+    z-index: 1;
 }
 
 div.main-body > div.summary div.right {
     position: absolute;
     top: 22px;
     right: 0;
+    height: 70px;
 }
 
 div.main-body > div.summary div.right.two-rows {
@@ -209,18 +212,17 @@ div.main-body > div.summary div.remaining-time > div {
 }
 
 div.main-body > div.summary div.remaining-time div.title {
-    font-size: 11pt;
-    padding-top: 7px;
+    font-size: 18px;
+    line-height: 26px;
+    margin-right: 5px;
 }
 
 div.main-body > div.summary div.participant-count {
     clear: both;
     display: none;
     line-height: 40px;
-}
-
-div.main-body > div.summary div.participant-count span.participant-count {
-    font-size: 12pt;
+    font-size:14px;
+    text-align: right;
 }
 
 .float-panel div.title {

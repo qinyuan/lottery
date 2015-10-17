@@ -876,6 +876,9 @@ var JSUtils = {
             text += repeatChar;
         }
         return text;
+    },
+    getLastLoadScriptPath: function () {
+        return document.getElementsByTagName('script')[document.getElementsByTagName('script').length - 1].src;
     }
 };
 
@@ -915,7 +918,7 @@ jQuery.fn.dataOptions = function (key, newValue) {
             if (!dataOptions.hasOwnProperty(keyInOptions)) {
                 continue;
             }
-            if (dataOptionsString != null) {
+            if (dataOptionsString != '') {
                 dataOptionsString += ',';
             }
             dataOptionsString += keyInOptions + ':' + dataOptions[keyInOptions];
