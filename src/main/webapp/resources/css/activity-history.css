@@ -7,23 +7,6 @@ div.main-body {
     overflow: visible;
 }
 
-/*div.main-body {
-    background-color: #ffffff;
-    padding: 10px;
-}
-
-div.main-body table.normal col.winners {
-    width: 82px;
-}
-
-div.main-body table.normal col.announcement {
-    width: 200px;
-}
-
-div.main-body tbody tr.expire {
-    color: #449359;
-}*/
-
 div.main-body div.title {
     color: #808080;
     font-size: 13pt;
@@ -35,27 +18,15 @@ div.main-body div.title a.subscribe {
     font-size: 9pt;
 }
 
-div.main-body div.filter {
-    position: absolute;
-    left: 150px;
-    top: 3px;
-    height: 20px;
-    line-height: 20px;
-}
-
-div.main-body div.filter span.text {
-    padding: 0 10px 0 5px;
-}
-
-div.main-body div.filter > div {
-    margin-top: -3px;
+div.main-body div.activities {
+    overflow: hidden;
 }
 
 div.main-body div.activities div.activity {
     width: 310px;
     height: 340px;
     float: left;
-    margin: 10px 8px;
+    margin: 10px 11px;
     background-color: #ffffff;
     overflow: hidden;
     z-index: 0;

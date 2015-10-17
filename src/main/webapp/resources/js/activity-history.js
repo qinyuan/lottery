@@ -1,12 +1,5 @@
 ;
 (function () {
-    /*$('div.main-body tbody tr').each(function () {
-     var $this = $(this);
-     var $td = $this.find('td.status');
-     if ($td.text().indexOf('结束') > 0) {
-     $this.addClass('expire');
-     }
-     });*/
     $('div.main-body div.filter input').iCheck({
         checkboxClass: 'icheckbox_minimal',
         radioClass: 'iradio_minimal'
@@ -17,6 +10,13 @@
     subscribe.setEmail(window['email']);
     $('div.main-body div.title a.subscribe').click(function () {
         subscribe.show();
+    });
+
+    var $activities = $('div.main-body div.activities');
+    var height = $activities.height();
+    $activities.css({
+        'height': height,
+        'overflow': 'visible'
     });
 })();
 $('#lotteryHistoryNavigation').addClass('emphasize');
