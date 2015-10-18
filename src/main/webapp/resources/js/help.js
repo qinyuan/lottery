@@ -52,4 +52,28 @@
     } else {
         $('#helpNavigationLink').prev().addClass('emphasize');
     }
+
+    var $doc = $(document);
+    setTimeout(function () {
+        $doc.scroll(adjustLeftLeftNavigation);
+        adjustLeftLeftNavigation();
+    }, 500);
+
+    function adjustLeftLeftNavigation() {
+        var $left = $('div.main-body > div > div.left');
+        var $right = $('div.main-body > div > div.right');
+        var heightDiff = $right.height() - $left.height() + 20;
+        if (heightDiff < 0) {
+            return;
+        }
+        var scrollTop = $doc.scrollTop();
+        var marginTop = scrollTop - 135;
+        if (marginTop < 0) {
+            marginTop = 0;
+        }
+        if (marginTop > heightDiff) {
+            marginTop = heightDiff;
+        }
+        $left.css('margin-top', marginTop);
+    }
 })();
