@@ -54,9 +54,9 @@
             this.$remainingTime.show();
             var $click = this.$remainingTime.find('div.clock');
             /*var digitClock = JSUtils.digitClock($click, {
-                'backgroundImage': 'resources/css/images/commodity/digit.png',
-                'initValue': this.getRemainingTimeString()
-            });*/
+             'backgroundImage': 'resources/css/images/commodity/digit.png',
+             'initValue': this.getRemainingTimeString()
+             });*/
             var digitClock = JSUtils.digitClock360($click, this.getRemainingTimeString());
 
             var self = this;
@@ -480,26 +480,40 @@
                     }
                 });
             });
-            this.$div.find('div.body div.bottom div.rule a').click(function () {
-                lotteryRule.show(self.$div.attr('id'));
-            });
+            /*this.$div.find('div.body div.bottom div.rule a').click(function () {
+             lotteryRule.show(self.$div.attr('id'));
+             });*/
+            var timer = setInterval(function () {
+                var init = false;
+                $('map area').each(function () {
+                    init = true;
+                    if (this.href == "javascript:void(showLotteryRule())") {
+                        this.href = self.$div.find('div.body div.bottom div.rule a').attr('href');
+                    }
+                });
+                if (init) {
+                    clearInterval(timer);
+                }
+            }, 100);
+
 
             return this;
         }
     }).init();
 
-    var lotteryRule = (JSUtils.cloneAndExtendObject(simpleFloatPanel, {
-        $div: $('#lotteryRule'),
-        postInit: function () {
-            var self = this;
-            this.$div.find('div.button button').click(function () {
-                self.hide();
-            });
-        }
-    })).init();
-    showLotteryRule = function (parentId) {
-        lotteryRule.show(parentId);
-    };
+    /*var lotteryRule = (JSUtils.cloneAndExtendObject(simpleFloatPanel, {
+     $div: $('#lotteryRule'),
+     postInit: function () {
+     var self = this;
+     this.$div.find('div.button button').click(function () {
+     self.hide();
+     });
+     }
+     })).init();
+     showLotteryRule = function (parentId) {
+     lotteryRule.show(parentId);
+     };*/
+
 
     getLotteryLot = function () {
         var toLoginCallback = function () {
@@ -709,4 +723,4 @@
         }
     }
 })();
-var getLotteryLot, getSeckillLot, showLotteryRule;
+var getLotteryLot, getSeckillLot/*, showLotteryRule*/;

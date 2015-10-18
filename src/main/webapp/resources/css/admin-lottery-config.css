@@ -7,10 +7,6 @@ div.form > form div.edit-unit td.input.narrow {
     width: 635px;
 }
 
-div.form > form div.edit-unit td.input.narrow input {
-    width: 220px;
-}
-
 div.form > form div.edit-unit td.input input[type=checkbox] {
     height: 13px;
 }

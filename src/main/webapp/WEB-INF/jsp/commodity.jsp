@@ -150,13 +150,14 @@
                 <jsp:param name="title" value="分享到"/>
             </jsp:include>
             <div class="rule">
-                <a href="javascript:void(0)">抽奖规则>>></a>
+                <a target="_blank" href="${lotteryRuleLink}">抽奖规则>>></a>
+                <%--<a href="javascript:void(0)">抽奖规则>>></a>--%>
             </div>
         </div>
     </div>
 </div>
 
-<div class="float-panel shadow info" id="lotteryRule">
+<%--<div class="float-panel shadow info" id="lotteryRule">
     <div class="title">抽奖规则
         <div class="close-icon"><span></span></div>
     </div>
@@ -164,7 +165,7 @@
     <div class="button">
         <button type="button">我已了解</button>
     </div>
-</div>
+</div>--%>
 
 <%@include file="subscribe-float-panel.jsp"%>
 

@@ -239,16 +239,23 @@
                            value="${shareSucceedLiveness}" placeholder="在此输入分享成功增加的爱心数"/>
                 </td>
             </tr>
+            <tr>
+                <td class="wide title">抽奖规则描述页面链接</td>
+                <td class="input narrow">
+                    <input type="text" class="form-control" name="lotteryRuleLink"
+                           value="${lotteryRuleLink}" placeholder="在此输入帮助中心中的抽奖规则描述链接">
+                </td>
+            </tr>
             </tbody>
         </table>
         <table>
             <tbody>
-            <tr>
+            <%--<tr>
                 <td class="title">抽奖规则</td>
                 <td class="input">
                     <textarea class="ckeditor" name="lotteryRule">${lotteryRule}</textarea>
                 </td>
-            </tr>
+            </tr>--%>
             <tr>
                 <td class="title">抽奖结果公告
                     <div class="comment">

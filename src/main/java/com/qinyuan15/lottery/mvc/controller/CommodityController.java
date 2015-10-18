@@ -57,7 +57,8 @@ public class CommodityController extends ImageController {
         setAttribute("pokerBackSide", pathToUrl(AppConfig.getSeckillPokerBackSide()));
 
         setAttribute("snapshots", buildSnapshots());
-        setAttribute("lotteryRule", AppConfig.getLotteryRule());
+        //setAttribute("lotteryRule", AppConfig.getLotteryRule());
+        setAttribute("lotteryRuleLink", AppConfig.getLotteryRuleLink());
         setAttribute("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
 
         SubscribeHeaderUtils.setHeaderParameters(this);

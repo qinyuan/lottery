@@ -567,7 +567,7 @@ public class AppConfig {
     //////////////////////////// seckill announcement template end //////////////////////////////
 
     ///////////////////////////// lottery rule start ///////////////////////////////
-    private final static String LOTTERY_RULE_KEY = "lotteryRule";
+    /*private final static String LOTTERY_RULE_KEY = "lotteryRule";
 
     public static String getLotteryRule() {
         return dao.get(LOTTERY_RULE_KEY);
@@ -575,6 +575,15 @@ public class AppConfig {
 
     public static void updateLotteryRule(String lotteryRule) {
         dao.save(LOTTERY_RULE_KEY, lotteryRule);
+    }*/
+    private final static String LOTTERY_RULE_LINK = "lotteryRuleLink";
+
+    public static String getLotteryRuleLink() {
+        return dao.get(LOTTERY_RULE_LINK);
+    }
+
+    public static void updateLotteryRuleLink(String lotteryRuleLink) {
+        dao.save(LOTTERY_RULE_LINK, lotteryRuleLink);
     }
     ///////////////////////////// lottery rule end ///////////////////////////////
 
