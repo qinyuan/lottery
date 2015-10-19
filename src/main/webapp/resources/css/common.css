@@ -11,6 +11,10 @@
     border: 0;
 }
 
+body {
+    font-family: "Microsoft Yahei", "微软雅黑", Verdana, SimHei, "Microsoft JhengHei", Tahoma;
+}
+
 .break-word {
     -ms-word-wrap: break-word;
     word-wrap: break-word;
