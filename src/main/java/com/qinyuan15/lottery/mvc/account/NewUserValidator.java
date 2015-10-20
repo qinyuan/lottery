@@ -11,11 +11,14 @@ public class NewUserValidator {
     public final static String TOO_SHORT = "用户名至少使用2个字符！";
     public final static String INVALID_CHAR = "用户名不能包含'@'字符！";
     public final static String TEL = "用户名不能为电话号码！";
+    public final static String SPACE = "用户名不能包含空格！";
     public final static String REGISTERED = "该用户名已经被注册！";
 
     public Pair<Boolean, String> validateUsername(String username) {
         if (StringUtils.isBlank(username)) {
             return Pair.of(false, EMPTY);
+        } else if (username.contains(" ")) {
+            return Pair.of(false, SPACE);
         } else if (username.length() < 2) {
             return Pair.of(false, TOO_SHORT);
         } else if (username.contains("@")) {

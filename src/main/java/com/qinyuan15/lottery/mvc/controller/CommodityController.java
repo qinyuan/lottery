@@ -29,7 +29,6 @@ public class CommodityController extends ImageController {
                         @RequestParam(value = "medium", required = false) String medium) {
 
         CommodityHeaderUtils.setHeaderParameters(this);
-
         Commodity commodity = getCommodity(id);
 
         LivenessAdder livenessAdder = new LivenessAdder(session);
