@@ -108,6 +108,11 @@
                         </table>
                     </div>
                 </c:if>
+                <c:if test="${pageIndex == 3}">
+                    <div class="text">
+                        当前电话 ${user.tel}
+                    </div>
+                </c:if>
             </div>
         </div>
     </div>

@@ -65,6 +65,8 @@ public class SettingController extends ImageController {
                 loginRecord.setPlatform(adaptPlatform(loginRecord.getPlatform()));
             }
             setAttribute("loginRecords", loginRecords);
+        } else if (index == 3) {
+            setAttribute("user", user);
         }
 
         addCssAndJs("setting");
