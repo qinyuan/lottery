@@ -11,8 +11,10 @@ import com.qinyuan.lib.mvc.controller.PaginationItemFactory;
 import com.qinyuan.lib.mvc.security.LoginRecord;
 import com.qinyuan.lib.mvc.security.LoginRecordDao;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
+import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.account.DatabaseTelValidator;
 import com.qinyuan15.lottery.mvc.account.NewUserValidator;
+import com.qinyuan15.lottery.mvc.activity.LotteryShareUrlBuilder;
 import com.qinyuan15.lottery.mvc.dao.*;
 import com.qinyuan15.lottery.mvc.mail.ResetEmailMailSender;
 import org.apache.commons.lang3.StringUtils;
@@ -67,6 +69,15 @@ public class SettingController extends ImageController {
             setAttribute("loginRecords", loginRecords);
         } else if (index == 3 || index == 4) {
             setAttribute("user", user);
+        } else if (index == 5) {
+            setAttribute("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
+            // share urls
+            new UserDao().updateSerialKeyIfNecessary(user);
+            LotteryShareUrlBuilder lotteryShareUrlBuilder = new LotteryShareUrlBuilder(
+                    user.getSerialKey(), AppConfig.getAppHost(), new CommodityDao().getFirstVisibleInstance());
+            setAttribute("sinaWeiboShareUrl", lotteryShareUrlBuilder.getSinaShareUrl());
+            setAttribute("qqShareUrl", lotteryShareUrlBuilder.getQQShareUrl());
+            setAttribute("qzoneShareUrl", lotteryShareUrlBuilder.getQzoneShareUrl());
         }
 
         addCssAndJs("setting");

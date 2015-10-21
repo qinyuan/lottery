@@ -185,6 +185,7 @@
     }
 })();
 (function () {
+    // code about email
     var $email = $('#email').setDefaultButtonByClass('ok');
     var $newEmail = $email.getInputByName('email').blur(function () {
         validateEmail(function () {
@@ -263,6 +264,26 @@
         $result.hide();
         $email.find('span.error').hide();
     }
+})();
+(function () {
+    // code about share
+    var $liveness = $('#liveness');
+    var $sharePanel = $liveness.find('div.share-panel');
+    var $share = $liveness.find('span.share').click(function () {
+        if ($sharePanel.css('display') == 'none') {
+            $sharePanel.fadeIn(500);
+        } else {
+            $sharePanel.fadeOut(500, function () {
+                // patch bug in linux chrome
+                var color = $share.css('color');
+                if (color == 'rgb(153, 153, 153)' || color == '#999999') {
+                    $share.css('color', '#999998');
+                } else {
+                    $share.css('color', '#999999');
+                }
+            });
+        }
+    });
 })();
 function showError($input, errorInfo) {
     $input.focusOrSelect().next().text(errorInfo).twinkle(3);

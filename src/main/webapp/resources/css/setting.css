@@ -157,3 +157,86 @@ div.main-body > div.right div.body div.history td {
     padding: 8px 20px;
     color: #393939;
 }
+
+#liveness span.share {
+    margin-left: 50px;
+    cursor: pointer;
+    color: #999999;
+}
+
+#liveness span.share img {
+    padding-bottom: 3px;
+}
+
+#liveness div.share-panel {
+    position: relative;
+    top: -10px;
+    left: 145px;
+    height: 18px;
+    display: none;
+}
+
+#liveness div.share-panel div.list {
+    position: absolute;
+    background-color: #ffffff;
+    padding-top: 10px;
+    top: 100%;
+    left: -40px;
+    font-size: 11pt;
+}
+
+#liveness div.share-panel ul {
+    border: 7px double #E3DDDA;
+    margin: 0;
+}
+
+#liveness div.share-panel ul li {
+    list-style-type: none;
+    width: 110px;
+    border-bottom: 1px solid #E3DDDA;
+    padding: 12px 0 12px 12px;
+}
+
+#liveness div.share-panel ul li a {
+    color: #666666;
+}
+
+#liveness div.share-panel span.icon {
+    margin-right: 3px;
+    background: url("images/lottery-result.png") no-repeat;
+}
+
+#liveness div.share-panel a.sina span.icon {
+    padding: 2px 8px;
+    background-position: -4px -29px;
+}
+
+#liveness div.share-panel a.qq span.icon {
+    padding: 2px 8px;
+    background-position: -78px -28px;
+}
+
+#liveness div.share-panel a.qzone span.icon {
+    padding: 2px 8px;
+    background-position: -154px -28px;
+}
+
+#liveness div.share-panel div.triangle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 15px;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 6px solid;
+}
+
+#liveness div.share-panel div.triangle.outer {
+    top: 22px;
+    border-bottom-color: #E3DDDA;
+}
+
+#liveness div.share-panel div.triangle.inner {
+    top: 25px;
+    border-bottom-color: #ffffff;
+}
