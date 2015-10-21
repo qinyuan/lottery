@@ -52,9 +52,6 @@
 })();
 (function () {
     // code about security
-    if ($.url.param('index') == 2) {
-        $('body').focusFirstTextInput();
-    }
     var $security = $('#security');
     $security.setDefaultButtonByClass('ok');
     $security.find('input').blur(function () {
@@ -102,13 +99,174 @@
                 alert(data.detail);
             }
         });
+        return true;
     });
 
     function clearError() {
         $security.find('span.error').hide();
     }
+})();
+(function () {
+    // code about tel
+    var $tel = $('#tel');
+    var $newTel = $tel.getInputByName('newTel');
 
-    function showError($input, errorInfo) {
-        $input.focusOrSelect().next().text(errorInfo).twinkle(3);
+    $tel.setDefaultButtonByClass('ok');
+    $tel.find('button.ok').click(function (e) {
+        e.preventDefault();
+
+        clearError();
+        validateTel(function () {
+            var $password = $tel.getInputByName('password');
+            var password = $password.val();
+            if (password == '') {
+                showError($password, '密码不能为空');
+                return;
+            }
+
+            $.post('setting-change-tel.json', {
+                password: password,
+                tel: $newTel.val()
+            }, function (data) {
+                if (data.success) {
+                    alert('手机号码修改成功');
+                    location.reload();
+                } else {
+                    alert(data.detail);
+                }
+            });
+        }, function (info) {
+            showError($newTel, info);
+        });
+    });
+
+    $newTel.blur(function () {
+        validateTel(function () {
+            $newTel.next().hide();
+        }, function (info) {
+            $newTel.next().text(info).twinkle(3);
+        });
+    });
+
+    function validateTel(successCallback, failCallback) {
+        var $newTel = $tel.getInputByName('newTel');
+        var newTel = $newTel.val();
+        if ($.trim(newTel) == '') {
+            failCallback && failCallback('新手机号不能为空');
+            return;
+        } else if (!JSUtils.validateTel(newTel)) {
+            failCallback && failCallback('新手机号格式错误');
+            return;
+        }
+
+        var oldTel = $tel.find('span.old-tel').text();
+        if (oldTel == newTel) {
+            failCallback && failCallback('新手机号未作修改');
+            return false;
+        }
+
+        $.post('setting-validate-tel.json', {'tel': newTel}, function (data) {
+            if (data.success) {
+                successCallback && successCallback();
+                $('#telValidate').slideUp(500);
+            } else {
+                failCallback && failCallback(data.detail);
+                if (data.detail.indexOf('占用')) {
+                    $('#telValidate').slideDown(500);
+                }
+            }
+        });
+        return true;
+    }
+
+    function clearError() {
+        $tel.find('span.error').hide();
+        $('#telValidate').slideUp(500);
     }
 })();
+(function () {
+    var $email = $('#email').setDefaultButtonByClass('ok');
+    var $newEmail = $email.getInputByName('email').blur(function () {
+        validateEmail(function () {
+            clearError();
+        }, function (detail) {
+            $newEmail.next().text(detail).twinkle(3);
+        });
+    });
+    var $result = $email.find('span.result');
+    var $button = $email.find('button.ok').click(function () {
+        clearError();
+        var $this = $(this);
+        $this.text('正在处理...');
+        validateEmail(function () {
+            var $password = $email.getInputByName('password');
+            var password = $password.val();
+            if ($.trim(password) == '') {
+                showError($password, '密码不能为空');
+                recoverButtonText();
+                return false;
+            }
+
+            $.post('setting-update-email.json', {
+                password: password,
+                email: $newEmail.val()
+            }, function (data) {
+                if (data.success) {
+                    var newEmail = $newEmail.val();
+                    var loginPage = JSUtils.getEmailLoginPage($newEmail.val());
+                    $result.find('a').attr('href', loginPage);
+                    $result.find('a.email').text(newEmail);
+                    $result.show();
+                } else {
+                    alert(data.detail);
+                    $result.hide();
+                }
+                $this.text('发送验证邮件');
+            });
+        }, function (detail) {
+            showError($newEmail, detail);
+        });
+    });
+
+    function recoverButtonText() {
+        $button.text('发送验证邮件');
+        $result.hide();
+    }
+
+    function validateEmail(successCallback, failCallback) {
+        var newEmail = $newEmail.val();
+        if ($.trim(newEmail) == '') {
+            failCallback && failCallback('邮箱不能为空');
+            return false;
+        } else if (!JSUtils.validateEmail(newEmail)) {
+            failCallback && failCallback('邮箱格式错误');
+            return false;
+        }
+
+        var $oldEmail = $email.find('span.old-email');
+        var oldEmail = $oldEmail.text();
+        if (oldEmail == newEmail) {
+            failCallback && failCallback('新邮箱与旧邮箱相同');
+            return false;
+        }
+
+        $.post('setting-validate-email.json', {'email': $newEmail.val()}, function (data) {
+            if (data.success) {
+                successCallback && successCallback()
+            } else {
+                failCallback && failCallback(data.detail);
+            }
+        });
+    }
+
+    function clearError() {
+        $result.hide();
+        $email.find('span.error').hide();
+    }
+})();
+function showError($input, errorInfo) {
+    $input.focusOrSelect().next().text(errorInfo).twinkle(3);
+}
+if ($('div.main-body > div.right div.body input').size() > 0) {
+    $('div.main-body > div.right div.body').focusFirstTextInput();
+}

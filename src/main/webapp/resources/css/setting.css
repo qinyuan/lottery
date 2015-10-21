@@ -119,6 +119,24 @@ div.main-body > div.right div.body div.text span.error {
     margin-left: 5px;
 }
 
+#telValidate {
+    margin: 50px 0 50px 20px;
+    display: none;
+}
+
+#telValidate div.text {
+    margin: 15px 0 15px 40px;
+    height: auto;
+}
+
+#email div.edit-submit span.result {
+    display: none;
+}
+
+#email div.edit-submit span.result a {
+    color: #F26522;
+}
+
 div.main-body > div.right div.body ul.pagination {
     position: relative;
     left: 50%;
@@ -139,4 +157,3 @@ div.main-body > div.right div.body div.history td {
     padding: 8px 20px;
     color: #393939;
 }
-
