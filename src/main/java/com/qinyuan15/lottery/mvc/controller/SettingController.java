@@ -31,6 +31,7 @@ import java.util.List;
 public class SettingController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(SettingController.class);
     private final static List<String> titles = Lists.newArrayList("个人资料", "通知", "安全", "绑定手机", "更改邮箱");
+    private final static int LOGIN_RECORD_SIZE = 20;
 
     @RequestMapping("/setting")
     public String index(@RequestParam(value = "index", required = false) Integer index) {
@@ -44,7 +45,7 @@ public class SettingController extends ImageController {
         setAttribute("pageIndex", index);
         setAttribute("titles", titles);
         User user = (User) securitySearcher.getUser();
-        if (index < 0) {
+        if (index <= 0) {
             List<LoginRecord> loginRecords = LoginRecordDao.factory().setAscOrder(false).setLimitSize(1).getInstances();
             if (loginRecords.size() > 0) {
                 setAttribute("location", loginRecords.get(0).getLocation());
@@ -53,8 +54,17 @@ public class SettingController extends ImageController {
             setAttribute("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
         } else if (index == 1) {
             new PaginationAttributeAdder(new SystemInfoFactory(user.getId()), request).setRowItemsName("systemInfoItems").add();
-        } else {
-
+        } else if (index == 2) {
+            List<LoginRecord> loginRecords = LoginRecordDao.factory().setUserId(user.getId())
+                    .setLimitSize(LOGIN_RECORD_SIZE).getInstances();
+            for (LoginRecord loginRecord : loginRecords) {
+                loginRecord.setIp(loginRecord.getIp().replaceAll("\\d+\\.\\d+$", "*.*"));
+                if (isMobilePlatform(loginRecord.getPlatform())) {
+                    loginRecord.setLocation("移动端登录");
+                }
+                loginRecord.setPlatform(adaptPlatform(loginRecord.getPlatform()));
+            }
+            setAttribute("loginRecords", loginRecords);
         }
 
         addCssAndJs("setting");
@@ -89,36 +99,59 @@ public class SettingController extends ImageController {
         }
     }
 
-/*
-    @RequestMapping("/setting-page.json")
+    @RequestMapping("/setting-change-password.json")
     @ResponseBody
-    public String page(@RequestParam(value = "index", required = true) Integer index,
-                       @RequestParam(value = "pageNumber", required = false) Integer pageNumber) {
-        Map<String, Object> map = new HashMap<>();
-        User user = (User) securitySearcher.getUser();
+    public String changePassword(@RequestParam(value = "oldPassword", required = true) String oldPassword,
+                                 @RequestParam(value = "newPassword", required = true) String newPassword) {
 
-        if (index <= 1) {
-            map.put("username", user.getUsername());
-            map.put("email", user.getEmail());
-            map.put("tel", user.getTel());
-
-            List<LoginRecord> loginRecords = LoginRecordDao.factory().setAscOrder(false).setLimitSize(1).getInstances();
-            if (loginRecords.size() > 0) {
-                map.put("location", loginRecords.get(0).getLocation());
-            }
-        } else if (index == 2) {
-            map.put("username", user.getUsername());
-        } else if (index == 3) {
-            if (!IntegerUtils.isPositive(pageNumber)) {
-                pageNumber = 0;
-            }
-            new PaginationAttributeAdder(new SystemInfoFactory(user.getId()), request).setRowItemsName("systemInfoItems").add();
-        } else {
-
+        if (StringUtils.isBlank(oldPassword)) {
+            return fail("原密码不能为空！");
         }
 
-        return toJson(map);
-    }*/
+        if (StringUtils.isBlank(newPassword)) {
+            return fail("新密码不能为空！");
+        }
+
+        try {
+            User user = (User) securitySearcher.getUser();
+            if (!oldPassword.equals(user.getPassword())) {
+                return fail("原密码错误！");
+            }
+            user.setPassword(newPassword);
+            HibernateUtils.update(user);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("Fail to update password, info: {}", e);
+            return failByDatabaseError();
+        }
+    }
+
+    private boolean isMobilePlatform(String platform) {
+        if (StringUtils.isBlank(platform)) {
+            return false;
+        }
+
+        platform = platform.toUpperCase();
+        return platform.equals("ANDROID") || platform.equals("IOS");
+    }
+
+    private String adaptPlatform(String platform) {
+        if (StringUtils.isBlank(platform)) {
+            return platform;
+        }
+        switch (platform) {
+            case "ANDROID":
+                return "Android";
+            case "LINUX":
+                return "Linux";
+            case "WINDOWS":
+                return "Windows";
+            case "OTHER":
+                return "其他";
+            default:
+                return platform;
+        }
+    }
 
     private static class SystemInfoFactory implements PaginationItemFactory<InfoItem> {
         final Integer userId;
