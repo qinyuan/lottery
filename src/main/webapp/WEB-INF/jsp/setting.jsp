@@ -41,7 +41,7 @@
                             <a class="cancel" href="javascript:void(0)">取消</a>
                         </div>
                         <div class="text">邮箱： ${user.email}</div>
-                        <div class="text">手机号： ${user.tel}<a class="edit-icon" href="setting.html?index=4"><img
+                        <div class="text">手机号： ${user.tel}<a class="edit-icon" href="setting.html?index=3"><img
                                 src="resources/css/images/bind-tel.png"/></a></div>
                         <div class="text">常用登录地区： ${location}</div>
                         <div class="text"><span class="liveness-icon lightTransparent"></span>： ${liveness}</div>

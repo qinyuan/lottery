@@ -73,8 +73,9 @@ public class SettingController extends ImageController {
             setAttribute("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
             // share urls
             new UserDao().updateSerialKeyIfNecessary(user);
+            Commodity commodity = new CommodityUrlAdapter(this).adapt(new CommodityDao().getFirstVisibleInstance());
             LotteryShareUrlBuilder lotteryShareUrlBuilder = new LotteryShareUrlBuilder(
-                    user.getSerialKey(), AppConfig.getAppHost(), new CommodityDao().getFirstVisibleInstance());
+                    user.getSerialKey(), AppConfig.getAppHost(), commodity);
             setAttribute("sinaWeiboShareUrl", lotteryShareUrlBuilder.getSinaShareUrl());
             setAttribute("qqShareUrl", lotteryShareUrlBuilder.getQQShareUrl());
             setAttribute("qzoneShareUrl", lotteryShareUrlBuilder.getQzoneShareUrl());
