@@ -370,6 +370,7 @@ div.activity-result div.body div.lot button.create-number {
     background-color: #85C926;
     padding: 5px 25px;
 }
+
 div.activity-result div.body div.lot div.serial-number {
     margin-bottom: 30px;
 }
@@ -537,11 +538,6 @@ div.activity-result div.body div.lot div.result.fail {
     color: #CC0033;
 }
 
-div.activity-result div.insufficient-liveness, div.activity-result div.activity-expire {
-    display: none;
-    text-align: center;
-}
-
 div.activity-result div.insufficient-liveness {
     margin-top: 80px;
 }
@@ -557,6 +553,8 @@ div.activity-result div.insufficient-liveness div.status > span {
 }
 
 div.activity-result div.activity-expire {
+    display: none;
+    text-align: center;
     margin-top: 60px;
 }
 

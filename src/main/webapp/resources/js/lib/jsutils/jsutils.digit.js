@@ -63,6 +63,7 @@
      * 360 style digit clock
      */
     window.JSUtils.digitClock360 = function ($parent, initValue) {
+        $parent.empty();
         var backgroundImage = jsutilsDigitPath.replace(/\/[^/]+$/, '/digits.png');
         var $clock = buildClockHtml({
             numberWidth: 18,

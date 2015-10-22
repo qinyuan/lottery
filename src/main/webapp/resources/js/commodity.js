@@ -52,12 +52,8 @@
         },
         updateRemainingTimeDigitClock: function () {
             this.$remainingTime.show();
-            var $click = this.$remainingTime.find('div.clock');
-            /*var digitClock = JSUtils.digitClock($click, {
-             'backgroundImage': 'resources/css/images/commodity/digit.png',
-             'initValue': this.getRemainingTimeString()
-             });*/
-            var digitClock = JSUtils.digitClock360($click, this.getRemainingTimeString());
+            var $clock = this.$remainingTime.find('div.clock');
+            var digitClock = JSUtils.digitClock360($clock, this.getRemainingTimeString());
 
             var self = this;
             this._stopRemainingTimeDigitClockUpdateTimer();
@@ -285,24 +281,6 @@
 
     var lotteryResult = ({
         $div: $('#lotteryResult'),
-        /*get$RemindMeCheckbox: function () {
-         return this.$div.find('div.body div.remind-me input');
-         },*/
-        get$TelModifyAnchor: function () {
-            return this.$div.find('div.body div.lot div.tel div.modify a');
-        },
-        get$ValidateError: function () {
-            return this.$div.find('div.body div.lot div.tel div.validate-error');
-        },
-        get$TelInput: function () {
-            return this.$div.find('div.body div.lot div.tel input');
-        },
-        get$InsufficientLivnessDiv: function () {
-            return this.$div.find('div.body div.insufficient-liveness');
-        },
-        get$ActivityExpire: function () {
-            return this.$div.find('div.body div.activity-expire');
-        },
         showSubscribe: false,
         showAdditionalLotteryResult: function (options) {
             var success = true;
@@ -337,10 +315,10 @@
             this.$div.find('div.activity div.description').html(options['activityDescription']);
 
             if (options['detail'] == 'activityExpire') {
-                this.get$ActivityExpire().show();
+                this.$activityExpire.show();
                 this.$lot.hide();
-                this.get$InsufficientLivnessDiv().hide();
             } else {
+                this.$lot.show();
                 if (options['success']) {
                     this.$createNumber.show();
                     this.$serialNumber.hide();
@@ -350,36 +328,7 @@
                     this.$serialNumber.show().find('span.number').text(serialNumber);
                     this.$createNumber.hide();
                 }
-                /*
-                 if (serialNumbers.length > 0) {
-                 var serialNumber = serialNumbers[0];
-                 var $serial = this.$div.find('div.lot div.serial span.serial');
-                 if (options.success) {
-                 $serial.text(Math.pow(10, serialNumber.length - 1));
-                 JSUtils.changingNumber($serial, 800, serialNumber);
-                 } else {
-                 $serial.text(serialNumber);
-                 }
-
-                 // tel
-                 var tel = options['tel'];
-                 this.$div.find('div.body div.lot div.tel input').val(tel).dataOptions('tel', tel);
-
-                 // liveness
-                 this.$div.find('div.lot div.liveness span.liveness').text(options['liveness']);
-
-                 this.$lot.show();
-                 this.get$InsufficientLivnessDiv().hide();
-                 } else {
-                 this.$lot.hide();
-                 var $insufficientLiveness = this.get$InsufficientLivnessDiv();
-                 $insufficientLiveness.find('span.min-liveness-to-participate')
-                 .text(options['minLivenessToParticipate']);
-                 $insufficientLiveness.find('span.liveness').text(options['liveness']);
-                 $insufficientLiveness.show();
-                 }
-                 */
-                this.get$ActivityExpire().hide();
+                this.$activityExpire.hide();
             }
 
             // share url
@@ -393,43 +342,18 @@
             this.$div.fadeIn(300);
             JSUtils.scrollToVerticalCenter(this.$div);
         },
-        get$Buttons: function () {
-            return  this.$div.find('div.body div.lot div.tel div.buttons');
-        },
-        get$SubmitButtons: function () {
-            return this.get$Buttons().find('div.submit');
-        },
-        get$ConflictButtons: function () {
-            return this.get$Buttons().find('div.conflict');
-        },
-        get$OkButton: function () {
-            return this.get$SubmitButtons().find('button.ok');
-        },
-        get$CancelButton: function () {
-            return this.get$SubmitButtons().find('button.cancel');
-        },
-        get$ClearButton: function () {
-            return this.get$ConflictButtons().find('button.clear');
-        },
-        showValidateError: function (info) {
-            this.get$TelInput().addClass('error');
-            this.get$ValidateError().text(info).show();
-        },
-        hideValidateError: function () {
-            this.get$TelInput().removeClass('error');
-            this.get$ValidateError().text('').hide();
-            this.get$Buttons().hide();
-        },
         init: function () {
             this.$lot = this.$div.find('div.body div.lot');
+            this.$activityExpire = this.$div.find('div.body div.activity-expire');
             var self = this;
             setCloseIconEvent(this.$div, function () {
                 self.$div.fadeOut(300, function () {
-                    if (self.showSubscribe) {
+                    /*if (self.showSubscribe) {
                         subscribe.show();
                     } else {
                         JSUtils.hideTransparentBackground();
-                    }
+                    }*/
+                    JSUtils.hideTransparentBackground();
                 });
             });
             this.$serialNumber = this.$lot.find('div.serial-number');
@@ -446,66 +370,6 @@
                         self.showAdditionalLotteryResult(data);
                     } else {
                         alert(data.detail);
-                    }
-                });
-            });
-            this.get$TelModifyAnchor().click(function () {
-                self.get$TelInput().val('').focusOrSelect();
-            });
-            this.get$TelInput().monitorValue(function (tel) {
-                if (tel.length < 11) {
-                    self.hideValidateError();
-                    return;
-                }
-
-                if (!JSUtils.validateTel(tel)) {
-                    self.get$Buttons().hide();
-                    self.showValidateError('号码必须是11位数字');
-                    return;
-                }
-
-                if (tel == self.get$TelInput().dataOptions('tel')) {
-                    self.showValidateError('新号码与原号码相同');
-                    return;
-                }
-
-                $.post('tel-validate.json', {'tel': tel}, function (data) {
-                    if (data['success']) {
-                        self.get$SubmitButtons().show();
-                        self.get$ConflictButtons().hide();
-                        self.get$Buttons().show();
-                    } else {
-                        var errorInfo = data['detail'];
-                        self.showValidateError(errorInfo);
-                        if (errorInfo.indexOf('被使用') >= 0) {
-                            self.get$ConflictButtons().show();
-                            self.get$SubmitButtons().hide();
-                            self.get$Buttons().show();
-                        }
-                    }
-                });
-            }).focus(function () {
-                self.get$TelModifyAnchor().parent().hide();
-            }).blur(function () {
-                if (self.get$ValidateError().css('display') == 'none' || self.get$ValidateError().text() == '') {
-                    self.get$TelModifyAnchor().parent().show();
-                }
-            });
-            this.get$CancelButton().click(function () {
-                self.get$Buttons().hide();
-                self.get$TelInput().val(self.get$TelInput().dataOptions('tel'));
-            });
-            this.get$ClearButton().click(function () {
-                self.get$TelModifyAnchor().trigger('click');
-                self.hideValidateError();
-            });
-            this.get$OkButton().click(function () {
-                var tel = self.get$TelInput().val();
-                $.post('update-tel.json', {'tel': tel}, function (data) {
-                    if (data['success']) {
-                        self.get$Buttons().hide();
-                    } else {
-                        alert(data);
                     }
                 });
             });
@@ -571,9 +435,6 @@
             }
             this.remainingTimeUpdaters = [];
         },
-        get$ActivityExpire: function () {
-            return this.$div.find('div.body div.activity-expire');
-        },
         updateRemainingTime: function () {
             var self = this;
             this.$remainingTime.show();
@@ -599,7 +460,7 @@
         showSubscribe: false,
         show: function (options) {
             if (options['detail'] == 'activityExpire') {
-                this.get$ActivityExpire().show();
+                this.$activityExpire.show();
                 this.$lot.hide();
                 this.$remainingTime.hide();
             } else {
@@ -660,6 +521,7 @@
             this.$notStartResult = this.$lot.find('div.not-start.result');
             this.$overResult = this.$lot.find('div.over.result');
             this.$unknownResult = this.$lot.find('div.unknown.result');
+            this.$activityExpire = this.$div.find('div.body div.activity-expire');
 
             var self = this;
             setCloseIconEvent(this.$div, function () {

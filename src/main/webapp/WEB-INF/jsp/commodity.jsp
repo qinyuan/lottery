@@ -177,11 +177,10 @@
                 <a href="setting.html?index=5" target="_blank">增加爱心数</a>
             </div>
         </div>
-        <%--
         <div class="activity-expire">
             本期抽奖已结束，请关注下期抽奖活动
             <a href="activity-history.html" target="_blank">抽奖结果请查看活动历史</a>
-        </div>--%>
+        </div>
         <div class="bottom">
             <jsp:include page="commodity-activity-share.jsp">
                 <jsp:param name="title" value="分享到"/>
