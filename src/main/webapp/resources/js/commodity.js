@@ -304,14 +304,31 @@
             return this.$div.find('div.body div.activity-expire');
         },
         showSubscribe: false,
+        showAdditionalLotteryResult: function (options) {
+            var success = true;
+            if (options['tel'] == null) {
+                this.$tel.show();
+                success = false;
+            } else {
+                this.$tel.hide();
+            }
+            if (parseInt(options['liveness']) < parseInt(options['minLivenessToParticipate'])) {
+                this.$insufficientLivness.show();
+                this.$insufficientLivness.find('span.min-liveness-to-participate').text(options['minLivenessToParticipate']);
+                this.$insufficientLivness.find('a').attr('href', 'setting.html?index=5&commodityId=' + getSelectedCommodityId());
+                success = false;
+            } else {
+                this.$insufficientLivness.hide();
+            }
+            if (success) {
+                this.$lotSuccess.show();
+            } else {
+                this.$lotSuccess.hide();
+            }
+        },
         show: function (options) {
             // title
             this.$div.find('div.title div.text span.text').text('抽奖详情：0元抽 ' + options['commodity']['name']);
-
-            // remind me
-            //this.get$RemindMeCheckbox().get(0).checked = options['receiveMail'];
-            subscribe.setEmail(options['email']);
-            this.showSubscribe = !options['receiveMail'];
 
             // commodity and activity
             var $image = this.$div.find('div.activity div.image img');
@@ -324,35 +341,44 @@
                 this.$lot.hide();
                 this.get$InsufficientLivnessDiv().hide();
             } else {
-                // serial number
-                var serialNumbers = options['serialNumbers'];
-                if (serialNumbers.length > 0) {
-                    var serialNumber = serialNumbers[0];
-                    var $serial = this.$div.find('div.lot div.serial span.serial');
-                    if (options.success) {
-                        $serial.text(Math.pow(10, serialNumber.length - 1));
-                        JSUtils.changingNumber($serial, 800, serialNumber);
-                    } else {
-                        $serial.text(serialNumber);
-                    }
-
-                    // tel
-                    var tel = options['tel'];
-                    this.$div.find('div.body div.lot div.tel input').val(tel).dataOptions('tel', tel);
-
-                    // liveness
-                    this.$div.find('div.lot div.liveness span.liveness').text(options['liveness']);
-
-                    this.$lot.show();
-                    this.get$InsufficientLivnessDiv().hide();
+                if (options['success']) {
+                    this.$createNumber.show();
+                    this.$serialNumber.hide();
                 } else {
-                    this.$lot.hide();
-                    var $insufficientLiveness = this.get$InsufficientLivnessDiv();
-                    $insufficientLiveness.find('span.min-liveness-to-participate')
-                        .text(options['minLivenessToParticipate']);
-                    $insufficientLiveness.find('span.liveness').text(options['liveness']);
-                    $insufficientLiveness.show();
+                    var serialNumber = options['serialNumbers'][0];
+                    this.showAdditionalLotteryResult(options);
+                    this.$serialNumber.show().find('span.number').text(serialNumber);
+                    this.$createNumber.hide();
                 }
+                /*
+                 if (serialNumbers.length > 0) {
+                 var serialNumber = serialNumbers[0];
+                 var $serial = this.$div.find('div.lot div.serial span.serial');
+                 if (options.success) {
+                 $serial.text(Math.pow(10, serialNumber.length - 1));
+                 JSUtils.changingNumber($serial, 800, serialNumber);
+                 } else {
+                 $serial.text(serialNumber);
+                 }
+
+                 // tel
+                 var tel = options['tel'];
+                 this.$div.find('div.body div.lot div.tel input').val(tel).dataOptions('tel', tel);
+
+                 // liveness
+                 this.$div.find('div.lot div.liveness span.liveness').text(options['liveness']);
+
+                 this.$lot.show();
+                 this.get$InsufficientLivnessDiv().hide();
+                 } else {
+                 this.$lot.hide();
+                 var $insufficientLiveness = this.get$InsufficientLivnessDiv();
+                 $insufficientLiveness.find('span.min-liveness-to-participate')
+                 .text(options['minLivenessToParticipate']);
+                 $insufficientLiveness.find('span.liveness').text(options['liveness']);
+                 $insufficientLiveness.show();
+                 }
+                 */
                 this.get$ActivityExpire().hide();
             }
 
@@ -406,20 +432,23 @@
                     }
                 });
             });
-            /*this.get$RemindMeCheckbox().click(function () {
-             var $this = $(this);
-             var checked = $this.get(0).checked;
-             var $remindMeDiv = $this.getParentByTagNameAndClass('div', 'remind-me');
-             var self = this;
-             $.post('update-receive-mail.json', {'receiveMail': checked}, function (data) {
-             if (data['success']) {
-             $remindMeDiv.find('span.update-success').showForAWhile(2000);
-             } else {
-             $remindMeDiv.find('span.update-fail').text(data['detail']).showForAWhile(2000);
-             self.checked = !checked;
-             }
-             });
-             });*/
+            this.$serialNumber = this.$lot.find('div.serial-number');
+            this.$lotSuccess = this.$lot.find('div.success');
+            this.$tel = this.$lot.find('div.tel');
+            this.$insufficientLivness = this.$lot.find('div.insufficient-liveness');
+            this.$createNumber = this.$lot.find('button.create-number').click(function () {
+                $.post('do-lottery-action.json', {commodityId: getSelectedCommodityId()}, function (data) {
+                    if (data.success) {
+                        var serialNumber = data['serialNumbers'][0];
+                        self.$createNumber.hide();
+                        self.$serialNumber.show();
+                        JSUtils.changingNumber(self.$serialNumber.find('span.number'), 1000, serialNumber);
+                        self.showAdditionalLotteryResult(data);
+                    } else {
+                        alert(data.detail);
+                    }
+                });
+            });
             this.get$TelModifyAnchor().click(function () {
                 self.get$TelInput().val('').focusOrSelect();
             });
@@ -480,9 +509,6 @@
                     }
                 });
             });
-            /*this.$div.find('div.body div.bottom div.rule a').click(function () {
-             lotteryRule.show(self.$div.attr('id'));
-             });*/
             var timer = setInterval(function () {
                 var init = false;
                 $('map area').each(function () {
@@ -495,7 +521,6 @@
                     clearInterval(timer);
                 }
             }, 100);
-
 
             return this;
         }
@@ -513,8 +538,6 @@
      showLotteryRule = function (parentId) {
      lotteryRule.show(parentId);
      };*/
-
-
     getLotteryLot = function () {
         var toLoginCallback = function () {
             hideLoginForm();

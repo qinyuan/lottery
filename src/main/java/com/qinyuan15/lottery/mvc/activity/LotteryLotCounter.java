@@ -73,7 +73,7 @@ public class LotteryLotCounter implements LotCounter {
      * @param userId     id of user to count
      * @return real lot number of the lottery activity and user
      */
-    private int countReal(int activityId, int userId) {
+    public int countReal(int activityId, int userId) {
         return LotteryLotDao.factory().setActivityId(activityId).setUserId(userId).getCount();
     }
 

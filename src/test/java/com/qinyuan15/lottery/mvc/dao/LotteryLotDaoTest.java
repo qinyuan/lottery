@@ -4,6 +4,7 @@ import com.qinyuan.lib.database.test.DatabaseTestCase;
 import com.qinyuan15.lottery.mvc.activity.LotteryLotSerialGeneratorImpl;
 import org.junit.Test;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -64,5 +65,18 @@ public class LotteryLotDaoTest extends DatabaseTestCase {
 
         serialNumbers = dao.getSerialNumbers(1);
         assertThat(serialNumbers).isEmpty();
+    }
+
+    @Test
+    public void testGetSerialNumbers3() {
+        List<String> serialNumbers = dao.getSerialNumbers(2, 3);
+        assertThat(serialNumbers).containsExactly("10257");
+    }
+
+    @Test
+    public void testGetSerialNumbers4() {
+        DecimalFormat format = new DecimalFormat("000000");
+        List<String> serialNumbers = dao.getSerialNumbers(2, 3, format);
+        assertThat(serialNumbers).containsExactly("010257");
     }
 }

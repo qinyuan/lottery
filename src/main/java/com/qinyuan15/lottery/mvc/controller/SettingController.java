@@ -36,7 +36,8 @@ public class SettingController extends ImageController {
     private final static int LOGIN_RECORD_SIZE = 20;
 
     @RequestMapping("/setting")
-    public String index(@RequestParam(value = "index", required = false) Integer index) {
+    public String index(@RequestParam(value = "index", required = false) Integer index,
+                        @RequestParam(value = "commodityId", required = false) Integer commodityId) {
         IndexHeaderUtils.setHeaderParameters(this);
 
         if (!IntegerUtils.isPositive(index)) {
@@ -73,7 +74,16 @@ public class SettingController extends ImageController {
             setAttribute("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
             // share urls
             new UserDao().updateSerialKeyIfNecessary(user);
-            Commodity commodity = new CommodityUrlAdapter(this).adapt(new CommodityDao().getFirstVisibleInstance());
+
+            Commodity commodity = null;
+            if (IntegerUtils.isPositive(commodityId)) {
+                commodity = new CommodityDao().getInstance(commodityId);
+            }
+            if (commodity == null) {
+                commodity = new CommodityDao().getFirstVisibleInstance();
+            }
+            new CommodityUrlAdapter(this).adapt(commodity);
+
             LotteryShareUrlBuilder lotteryShareUrlBuilder = new LotteryShareUrlBuilder(
                     user.getSerialKey(), AppConfig.getAppHost(), commodity);
             setAttribute("sinaWeiboShareUrl", lotteryShareUrlBuilder.getSinaShareUrl());

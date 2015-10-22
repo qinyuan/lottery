@@ -221,7 +221,7 @@ div.main-body > div.summary div.participant-count {
     clear: both;
     display: none;
     line-height: 40px;
-    font-size:14px;
+    font-size: 14px;
     text-align: right;
 }
 
@@ -310,7 +310,7 @@ div.main-body > div.summary div.participant-count {
 /**************************** lottery result start ***************************/
 div.activity-result div.body {
     padding-bottom: 5px;
-    min-height: 344px;
+    min-height: 290px;
 }
 
 /*div.activity-result div.body div.remind-me {
@@ -343,7 +343,7 @@ div.activity-result div.body div.remind-me input {
 div.activity-result div.body div.activity {
     overflow: hidden;
     border-bottom: 1px solid #B7B7B7;
-    padding: 20px 10px 20px;
+    padding: 20px 10px 10px;
     margin: 0 20px;
 }
 
@@ -352,16 +352,43 @@ div.activity-result div.body div.activity div.image {
 }
 
 div.activity-result div.body div.activity div.description {
-    width: 280px;
+    width: 320px;
     float: right;
-    margin-right: 10px;
     padding-top: 5px;
     line-height: 28px;
 }
 
 div.activity-result div.body div.lot {
-    margin-top: 20px;
+    margin-top: 55px;
     padding: 0 50px;
+    text-align: center;
+}
+
+div.activity-result div.body div.lot button.create-number {
+    display: none;
+    color: #ffffff;
+    background-color: #85C926;
+    padding: 5px 25px;
+}
+div.activity-result div.body div.lot div.serial-number {
+    margin-bottom: 30px;
+}
+
+div.activity-result div.body div.lot div.serial-number span.number {
+    width: 80px;
+    display: inline-block;
+    margin-left: 20px;
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+div.activity-result div.body div.lot div.success,
+div.activity-result div.body div.lot div.tel,
+div.activity-result div.body div.lot div.insufficient-liveness {
+    display: none;
+    margin-top: 10px;
+    color: #F26522;
+    font-size: 10pt;
 }
 
 div.activity-result div.body div.lot div.tel {
@@ -548,7 +575,7 @@ div.activity-result div.body div.remaining-time {
 
 div.activity-result div.body div.bottom {
     position: absolute;
-    right: 20px;
+    right: 32px;
     bottom: 10px;
     font-size: 10pt;
 }

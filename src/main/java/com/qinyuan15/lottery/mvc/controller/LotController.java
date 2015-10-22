@@ -6,8 +6,13 @@ import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.lottery.mvc.activity.*;
+import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
+import com.qinyuan15.lottery.mvc.activity.LotteryLotCreator;
+import com.qinyuan15.lottery.mvc.activity.LotteryShareUrlBuilder;
+import com.qinyuan15.lottery.mvc.activity.SeckillShareUrlBuilder;
 import com.qinyuan15.lottery.mvc.dao.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -27,7 +32,7 @@ import java.util.Map;
  */
 @Controller
 public class LotController extends ImageController {
-    //private final static Logger LOGGER = LoggerFactory.getLogger(LotController.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(LotController.class);
     private final static String SUCCESS = "success";
     private final static String DETAIL = "detail";
 
@@ -59,30 +64,23 @@ public class LotController extends ImageController {
         }
 
         // user parameters
-        User user = new UserDao().getInstance(securitySearcher.getUserId());
-        result.put("username", user.getUsername());
-        result.put("receiveMail", user.getReceiveMail());
-        result.put("email", user.getEmail());
-        result.put("tel", user.getTel());
-
+        User user = (User) securitySearcher.getUser();
         if (!result.containsKey(DETAIL)) {
-            // get serial numbers
-            LotteryLotCreator.CreateResult lotteryLotCreateResult = new LotteryLotCreator(
-                    activity, user.getId()).create();
-            result.put("serialNumbers", getSerialNumbersFromLotteryLots(lotteryLotCreateResult.getLots()));
-            if (lotteryLotCreateResult.hasNewLot()) {
+            if (new LotteryLotCounter().countReal(activity.getId(), user.getId()) == 0) {
                 result.put(SUCCESS, true);
             } else {
+                result.put("serialNumbers", new LotteryLotDao().getSerialNumbers(activity.getId(), user.getId(), lotNumberFormat));
+                putLotteryLivenessParameters(result, user, activity);
                 result.put(SUCCESS, false);
                 result.put(DETAIL, "alreadyAttended");
             }
 
             // liveness parameter
-            result.put("minLivenessToParticipate", activity.getMinLivenessToParticipate());
+            /*result.put("minLivenessToParticipate", activity.getMinLivenessToParticipate());
             result.put("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
             LivenessQuerier.LivenessInfo maxLivnessInfo = new LivenessQuerier().queryMax(activity);
             result.put("maxLiveness", maxLivnessInfo.liveness);
-            result.put("maxLivenessUsers", maxLivnessInfo.users);
+            result.put("maxLivenessUsers", maxLivnessInfo.users);*/
         }
 
         // commodity
@@ -105,6 +103,34 @@ public class LotController extends ImageController {
         //result.put("remainingSeconds", getRemainingSeconds(activity));
 
         return toJson(result);
+    }
+
+    @RequestMapping("/do-lottery-action.json")
+    @ResponseBody
+    public String doLotteryAction(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
+        User user = (User) securitySearcher.getUser();
+        if (user == null) {
+            return fail("请重新登录");
+        }
+        try {
+            LotteryActivity activity = new LotteryActivityDao().getActiveInstanceByCommodityId(commodityId);
+            Map<String, Object> result = new HashMap<>();
+            LotteryLotCreator.CreateResult lotteryLotCreateResult = new LotteryLotCreator(
+                    activity, securitySearcher.getUserId()).create();
+            result.put("serialNumbers", getSerialNumbersFromLotteryLots(lotteryLotCreateResult.getLots()));
+            putLotteryLivenessParameters(result, user, activity);
+            result.put(SUCCESS, true);
+            return toJson(result);
+        } catch (Exception e) {
+            LOGGER.error("fail to create lot, commodityId: {}, info: {}", commodityId, e);
+            return failByDatabaseError();
+        }
+    }
+
+    private void putLotteryLivenessParameters(Map<String, Object> result, User user, LotteryActivity activity) {
+        result.put("tel", user.getTel());
+        result.put("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
+        result.put("minLivenessToParticipate", activity.getMinLivenessToParticipate());
     }
 
     @RequestMapping("/take-seckill.json")
@@ -150,10 +176,6 @@ public class LotController extends ImageController {
         result.put("qqShareUrl", seckillShareUrlBuilder.getQQShareUrl());
         result.put("qzoneShareUrl", seckillShareUrlBuilder.getQzoneShareUrl());
 
-        // participants data
-        //result.put("participantCount", new SeckillLotCounter().count(activity));
-
-        //result.put("remainingSeconds", getRemainingSeconds(activity));
         return toJson(result);
     }
 
@@ -192,7 +214,6 @@ public class LotController extends ImageController {
                 if (activity == null || activity.getExpire()) {
                     return fail("noActivity");
                 }
-                //return getRemainingSecondsJson(activity.getExpectEndTime());
                 return getRemainingSecondsJson(activity.getCloseTime());
             }
             case "seckill": {

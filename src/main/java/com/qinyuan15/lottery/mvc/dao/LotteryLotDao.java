@@ -4,11 +4,13 @@ import com.google.common.base.Joiner;
 import com.qinyuan.lib.database.hibernate.AbstractDao;
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
-import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.mvc.controller.AbstractPaginationItemFactory;
 import com.qinyuan15.lottery.mvc.activity.LotteryLotSerialGenerator;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LotteryLotDao extends AbstractDao<LotteryLot> {
@@ -99,19 +101,27 @@ public class LotteryLotDao extends AbstractDao<LotteryLot> {
                 .build("SELECT serialNumber FROM " + LotteryLot.class.getSimpleName());
     }
 
-    /*public int countBySerialNumberRange(int activityId, int startSerialNumber, int endSerialNumber) {
-        return new HibernateListBuilder()
-                .addEqualFilter("activityId", activityId)
-                .addFilter("serialNumber BETWEEN :startSerialNumber AND :endSerialNumber")
-                .addArgument("startSerialNumber", startSerialNumber)
-                .addArgument("endSerialNumber", endSerialNumber)
-                .count(LotteryLot.class);
-    }*/
-
     public List<Integer> getSerialNumbers(Integer activityId) {
         @SuppressWarnings("unchecked")
         List<Integer> serialNumbers = (List) new HibernateListBuilder().addEqualFilter("activityId", activityId)
                 .build("SELECT serialNumber FROM LotteryLot");
         return serialNumbers;
+    }
+
+    public List<String> getSerialNumbers(int activityId, int userId, DecimalFormat format) {
+        List<LotteryLot> lots = LotteryLotDao.factory().setActivityId(activityId).setUserId(userId).getInstances();
+        List<String> serialNumbers = new ArrayList<>();
+        for (LotteryLot lot : lots) {
+            if (format == null) {
+                serialNumbers.add(String.valueOf(lot.getSerialNumber()));
+            } else {
+                serialNumbers.add(format.format(lot.getSerialNumber()));
+            }
+        }
+        return serialNumbers;
+    }
+
+    public List<String> getSerialNumbers(int activityId, int userId) {
+        return getSerialNumbers(activityId, userId, null);
     }
 }

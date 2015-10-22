@@ -843,15 +843,18 @@ var JSUtils = {
     },
     /**
      * make number changing
-     * @param $target target jquery element
+     *
+     * @param $target    target jquery element
+     * @param interval milliseconds to change number
+     * @param finalValue final value of jquery element
      */
     changingNumber: function ($target, interval, finalValue) {
         // set default value
         if (finalValue == null) {
             finalValue = '';
         }
-
-        var textLength = $target.text().length;
+        var textLength = finalValue.length;
+        $target.text(Math.pow(10, textLength - 1));
         var multiplier = Math.pow(10, textLength);
         var intervalId = setInterval(function () {
             $target.text(parseInt(Math.random() * multiplier));
@@ -860,15 +863,6 @@ var JSUtils = {
             clearInterval(intervalId);
             $target.text(finalValue);
         }, interval);
-        /*return {
-         stop: function (text) {
-         clearInterval(intervalId);
-         if (text == null) {
-         text = '';
-         }
-         $target.text(text);
-         }
-         }*/
     },
     stringRepeat: function (repeatChar, repeatNumber) {
         var text = '';

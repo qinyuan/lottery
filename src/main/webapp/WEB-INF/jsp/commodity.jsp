@@ -45,7 +45,6 @@
     <div class="summary page-width">
         <div class="right">
             <div class="remaining-time">
-                <%--<div class="title">剩余时间：</div>--%>
                 <div class="title">距离活动结束：</div>
                 <div class="clock"></div>
             </div>
@@ -53,7 +52,6 @@
         </div>
     </div>
     <div class="detail">
-        <!--<div class="participant-count">已参与人数：<span class="participant-count"></span></div>-->
         <img usemap="#commodityMap"/>
     </div>
 </div>
@@ -91,17 +89,13 @@
         </div>
     </div>
 </div>
+
+<%--
 <div class="float-panel shadow activity-result" id="lotteryResult">
     <jsp:include page="commodity-float-panel-title.jsp">
         <jsp:param name="title" value="<span class='text'></span>"/>
     </jsp:include>
     <div class="body">
-        <%--<div class="remind-me top">
-            <span class="update-fail"></span>
-            <span class="update-success">更新成功</span>
-            <input type="checkbox" name="remindMe"/>
-            开启抽奖邮件提醒
-        </div>--%>
         <div class="activity">
             <div class="image"><img/></div>
             <div class="description break-word"></div>
@@ -151,24 +145,51 @@
             </jsp:include>
             <div class="rule">
                 <a target="_blank" href="${lotteryRuleLink}">抽奖规则>>></a>
-                <%--<a href="javascript:void(0)">抽奖规则>>></a>--%>
             </div>
         </div>
     </div>
 </div>
-
-<%--<div class="float-panel shadow info" id="lotteryRule">
-    <div class="title">抽奖规则
-        <div class="close-icon"><span></span></div>
+--%>
+<div class="float-panel shadow activity-result" id="lotteryResult">
+    <jsp:include page="commodity-float-panel-title.jsp">
+        <jsp:param name="title" value="<span class='text'></span>"/>
+    </jsp:include>
+    <div class="body">
+        <div class="activity">
+            <div class="image"><img/></div>
+            <div class="description break-word"></div>
+        </div>
+        <div class="lot">
+            <button class="create-number">获取抽奖号</button>
+            <div class="serial-number">
+                我的抽奖号：<span class="number"></span>
+            </div>
+            <div class="success">
+                参与成功，查看我的
+                <a href="activity-history.html" target="_blank">抽奖历史</a>
+            </div>
+            <div class="tel">
+                手机号码为中奖唯一联系方式，请正确
+                <a href="setting.html?index=3" target="_blank">绑定手机</a>
+            </div>
+            <div class="insufficient-liveness">
+                爱心数还不足<span class="min-liveness-to-participate"></span>，请继续努力
+                <a href="setting.html?index=5" target="_blank">增加爱心数</a>
+            </div>
+        </div>
+        <%--
+        <div class="activity-expire">
+            本期抽奖已结束，请关注下期抽奖活动
+            <a href="activity-history.html" target="_blank">抽奖结果请查看活动历史</a>
+        </div>--%>
+        <div class="bottom">
+            <jsp:include page="commodity-activity-share.jsp">
+                <jsp:param name="title" value="分享到"/>
+            </jsp:include>
+        </div>
     </div>
-    <div class="body">${lotteryRule}</div>
-    <div class="button">
-        <button type="button">我已了解</button>
-    </div>
-</div>--%>
-
-<%@include file="subscribe-float-panel.jsp"%>
-
+</div>
+<%@include file="subscribe-float-panel.jsp" %>
 <div class="float-panel shadow activity-result" id="seckillResult">
     <jsp:include page="commodity-float-panel-title.jsp">
         <jsp:param name="title" value="<span class='text'></span>"/>
