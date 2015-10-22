@@ -1,3 +1,4 @@
+
 div.header > div.back {
     background-color: #E0E0E0;
     width: 100%;
@@ -225,34 +226,6 @@ div.main-body > div.summary div.participant-count {
     text-align: right;
 }
 
-.float-panel div.title {
-    height: 46px;
-    background-color: #F5F9F9;
-    line-height: 46px;
-    vertical-align: middle;
-    font-size: 12pt;
-    padding-left: 18px;
-    border-bottom: #E5E5E5 solid 1px;
-}
-
-.float-panel div.title div.close-icon {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
-    background: url('images/register-image.png') no-repeat -212px -5px;
-}
-
-.float-panel div.title div.close-icon:hover {
-    background-position: -212px -31px;
-}
-
-.float-panel > div {
-    position: relative;
-}
-
 .float-panel button.green-submit-button {
     background: url('images/login-button-back.png') repeat-x;
     color: #ffffff;
@@ -262,14 +235,9 @@ div.main-body > div.summary div.participant-count {
     font-size: 12pt;
 }
 
-#exceptionPrompt, div.activity-result {
+div.activity-result {
     width: 484px;
     margin-left: -242px;
-}
-
-#exceptionPrompt {
-    height: 350px;
-    margin-top: -175px;
 }
 
 #noPrivilegePrompt {
@@ -292,53 +260,11 @@ div.main-body > div.summary div.participant-count {
     color: #838383;
 }
 
-#exceptionPrompt div.body div.info {
-    position: absolute;
-    top: 115px;
-    width: 100%;
-    text-align: center;
-    font-size: 12pt;
-}
-
-#exceptionPrompt div.body div.links {
-    position: absolute;
-    top: 180px;
-    left: 315px;
-    font-size: 10pt;
-}
-
 /**************************** lottery result start ***************************/
 div.activity-result div.body {
     padding-bottom: 5px;
     min-height: 290px;
 }
-
-/*div.activity-result div.body div.remind-me {
-    width: 100%;
-    color: #808080;
-    font-size: 10pt;
-    text-align: right;
-    padding: 5px 15px;
-}
-
-div.activity-result div.body div.remind-me span.update-success,
-div.activity-result div.body div.remind-me span.update-fail {
-    display: none;
-    margin-right: 10px;
-}
-
-div.activity-result div.body div.remind-me span.update-success {
-    color: #009933;
-}
-
-div.activity-result div.body div.remind-me span.update-fail {
-    color: #FF0033;
-}
-
-div.activity-result div.body div.remind-me input {
-    margin: 0;
-    vertical-align: middle;
-}*/
 
 div.activity-result div.body div.activity {
     overflow: hidden;

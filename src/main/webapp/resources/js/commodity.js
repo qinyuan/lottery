@@ -526,11 +526,12 @@
             var self = this;
             setCloseIconEvent(this.$div, function () {
                 self.$div.fadeOut(300, function () {
-                    if (self.showSubscribe) {
+                    /*if (self.showSubscribe) {
                         subscribe.show();
                     } else {
                         JSUtils.hideTransparentBackground();
-                    }
+                    }*/
+                    subscribe.show();
                 });
                 self.clearRemainingTimeUpdater();
             });

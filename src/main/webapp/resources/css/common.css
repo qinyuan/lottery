@@ -238,6 +238,41 @@ input[type=image] {
     background-color: #ffffff;
 }
 
+.float-panel > div.title {
+    position: relative;
+}
+
+.float-panel > div.title {
+    width: 100%;
+    background-color: #F8FBFB;
+    height: 44px;
+    color: #727373;
+    font-size: 12pt;
+    border-bottom: #E5E5E5 solid 1px;
+}
+
+.float-panel > div.title > div {
+    position: absolute;
+}
+
+.float-panel > div.title div.text {
+    left: 26px;
+    top: 10px;
+}
+
+.float-panel > div.title div.close-icon:hover {
+    background-position: -212px -31px;
+}
+
+.float-panel > div.title div.close-icon {
+    top: 14px;
+    right: 14px;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    background: url('images/register-image.png') no-repeat -212px -5px;
+}
+
 div.page-width {
     width: 1000px;
     margin-left: auto;
@@ -269,62 +304,14 @@ input.form-control {
     display: inline-block;
 }
 
-#springLoginForm div.title, #registerForm div.title, div.activate-remind div.title {
-    border-bottom: #E5E5E5 solid 1px;
-}
-
-#springLoginForm div.title > div, #registerForm div.title > div, div.activate-remind div.title > div {
-    position: absolute;
-}
-
-#springLoginForm div.title div.close-icon, #registerForm div.title div.close-icon,
-div.activate-remind div.title div.close-icon {
-    right: 14px;
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
-    background: url('images/register-image.png') no-repeat -212px -5px;
-}
-
-#springLoginForm div.title div.close-icon:hover, #registerForm div.title div.close-icon:hover,
-div.activate-remind div.title div.close-icon:hover {
-    background-position: -212px -31px;
-}
-
 #springLoginForm {
     margin-left: -230px;
     margin-top: -131px;
 }
 
-#springLoginForm div.title,
 #springLoginForm div.body {
     width: 460px;
     position: relative;
-}
-
-#springLoginForm div.title {
-    background: #ffffff url('images/login-title-back.png') repeat-x;
-    height: 53px;
-}
-
-#springLoginForm div.title div.image {
-    bottom: 0;
-    left: 22px;
-}
-
-#springLoginForm div.title div.text {
-    line-height: 40px;
-    font-size: 11pt;
-    left: 120px;
-    color: #7E8081;
-    bottom: 0;
-}
-
-#springLoginForm div.title div.close-icon {
-    top: 17px;
-}
-
-#springLoginForm div.body {
     background-color: #ffffff;
     height: 210px;
     padding-top: 30px;
@@ -388,29 +375,11 @@ div.activate-remind div.title div.close-icon:hover {
 #registerForm {
     margin-left: -265px;
     margin-top: -128px;
-    /*margin-top: -250px;*/
 }
 
-#registerForm div.title,
 #registerForm div.body {
     width: 530px;
     position: relative;
-}
-
-#registerForm div.title {
-    background-color: #F8FBFB;
-    height: 44px;
-    color: #727373;
-    font-size: 12pt;
-}
-
-#registerForm div.title div.text {
-    left: 26px;
-    top: 10px;
-}
-
-#registerForm div.title div.close-icon {
-    top: 14px;
 }
 
 #registerForm div.body {
@@ -509,22 +478,9 @@ div.activate-remind {
     margin-top: -119px;
 }
 
-div.activate-remind div.title,
 div.activate-remind div.body {
     width: 408px;
     position: relative;
-}
-
-div.activate-remind div.title {
-    height: 46px;
-    background-color: #F8FBFB;
-    color: #727373;
-    font-size: 12pt;
-}
-
-div.activate-remind div.title div.text {
-    left: 26px;
-    top: 12px;
 }
 
 div.activate-remind div.body {

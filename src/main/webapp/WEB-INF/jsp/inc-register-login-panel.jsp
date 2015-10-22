@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <security:authorize ifNotGranted="ROLE_NORMAL,ROLE_ADMIN">
     <div class="shadow float-panel" id="springLoginForm">
-        <form>
-            <div class="title">
-                <div class="image"><img src="resources/css/images/login-title-image.png"/></div>
-                <div class="text">欢迎登录</div>
-                <div class="close-icon"></div>
-            </div>
-            <div class="body">
+        <div class="title">
+            <div class="text">欢迎登录</div>
+            <div class="close-icon"></div>
+        </div>
+        <div class="body">
+            <form>
                 <div class="input">
                     <label>帐号</label>
                     <input type="text" class="form-control" name="j_username" placeholder="手机号/用户名/邮箱"/>
@@ -24,17 +23,17 @@
                     <button type="submit" name="loginSubmit">立即登录</button>
                     <a href="javascript:void(0)" id="switchToRegister">注册新帐号</a>
                 </div>
-                <div class="error-info"><!--<img src="resources/css/images/login-error.png"/>-->帐号或密码错误</div>
-            </div>
-        </form>
+                <div class="error-info">帐号或密码错误</div>
+            </form>
+        </div>
     </div>
     <div class="shadow float-panel" id="registerForm">
-        <form action="register-submit.json" method="post">
-            <div class="title">
-                <div class="text">欢迎注册</div>
-                <div class="close-icon"></div>
-            </div>
-            <div class="body">
+        <div class="title">
+            <div class="text">欢迎注册</div>
+            <div class="close-icon"></div>
+        </div>
+        <div class="body">
+            <form action="register-submit.json" method="post">
                 <div class="right">
                     <div class="input">
                         <label>邮箱</label>
@@ -90,8 +89,8 @@
                 </div>
                 <div class="email-icon"><span class="icon"></span><span>邮箱注册</span></div>
                 <div class="switch-login">已有帐号，<a id="switchToLogin" href="javascript:void(0)">立即登录</a></div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
     <div class="shadow float-panel activate-remind" id="registerSuccess">
         <div class="title">
