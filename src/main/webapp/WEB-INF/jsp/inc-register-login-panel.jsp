@@ -84,15 +84,30 @@
                         <span class="error"></span>
                     </div>
                     <div class="submit">
-                        <button type="submit" name="loginSubmit" tabindex="6">立即注册</button>
+                        <button type="submit" name="registerSubmit" tabindex="6">立即注册</button>
                     </div>
                 </div>
                 <div class="email-icon"><span class="icon"></span><span>邮箱注册</span></div>
                 <div class="switch-login">已有帐号，<a id="switchToLogin" href="javascript:void(0)">立即登录</a></div>
             </form>
+            <div class="result">
+                <div class="text">
+                    已向您的邮箱
+                    <span class="email"></span>
+                    发送了一封验证邮件。
+                    <br/>
+                    <a target="_blank">立即进入邮箱 &gt;&gt;</a>
+                </div>
+                <div class="exception">
+                    没收到？<br/>
+                    1. 看是否在邮箱的垃圾箱中<br/>
+                    2. 确认没有收到 <a class="resend" href="javascript:void(0)">再次发送验证邮件 &gt;&gt;</a><span
+                        class="resend-result"></span>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="shadow float-panel activate-remind" id="registerSuccess">
+    <%--<div class="shadow float-panel activate-remind" id="registerSuccess">
         <div class="title">
             <div class="text">消息提示</div>
             <div class="close-icon"></div>
@@ -109,8 +124,9 @@
                 <span class="resend-fail">发送失败！</span>
             </div>
         </div>
-    </div>
+    </div>--%>
 </security:authorize>
+<%--
 <security:authorize ifAnyGranted="ROLE_NORMAL,ROLE_ADMIN">
     <div class="shadow float-panel activate-remind" id="activateRemind">
         <div class="title">
@@ -134,3 +150,4 @@
         <script>var unactivatedEmail = "${unactivatedEmail}";</script>
     </c:if>
 </security:authorize>
+--%>

@@ -112,6 +112,11 @@ var angularUtils = {
     // actions of registerForm
     var register = ({
         show: function () {
+            JSUtils.showTransparentBackground(1);
+            this.setTitle('欢迎注册');
+            this.$registerSubmit.text('立即注册');
+            this.$div.find('form').show();
+            this.$div.find('div.result').hide();
             this.$div.find('img.identity-code').trigger('click');
             var self = this;
             this.$inputs.each(function () {
@@ -119,6 +124,19 @@ var angularUtils = {
             });
             this.$div.find('form').get(0).reset();
             this.$div.fadeIn(500).focusFirstTextInput();
+        },
+        showResult: function () {
+            this.setTitle('消息提示');
+            this.$div.find('form').hide();
+            this.$div.find('div.result').show();
+            this.$resendResult.text('');
+            var email = this.$email.val();
+            this.$div.find('div.result div.text span.email').text(email);
+            var loginPage = JSUtils.getEmailLoginPage(email);
+            this.$div.find('div.result div.text a').attr('href', loginPage);
+        },
+        setTitle: function (title) {
+            this.$div.find('div.title div.text').text(title);
         },
         resetInput: function (element) {
             var $this = $(element);
@@ -261,7 +279,7 @@ var angularUtils = {
             });
             this.$inputs.trigger('focus');
 
-            this.$div.find('button[name=loginSubmit]').click(function () {
+            this.$registerSubmit = this.$div.find('button[name=registerSubmit]').click(function () {
                 self.valid = true;
                 /*self.validateEmail(function () {
                  self.validateUsername(function () {
@@ -284,13 +302,12 @@ var angularUtils = {
                     });
                 });
                 function registerSubmit() {
+                    self.$registerSubmit.text('正在处理...');
                     self.$div.find('form').ajaxSubmit({
                         success: function (data) {
+                            self.$registerSubmit.text('立即注册');
                             if (data['success']) {
-                                JSUtils.showTransparentBackground(1);
-                                self.$div.hide();
-                                registerSuccess.show(register.$email.val());
-                                self.$div.find('form').get(0).reset();
+                                self.showResult();
                             } else {
                                 alert(data['detail']);
                                 self.$div.find('div.body div.right div.input.identity-code img').trigger('click');
@@ -315,51 +332,62 @@ var angularUtils = {
             this.$div.find('#switchToLogin').click(function () {
                 switchToLogin();
             });
+            this.$resendResult = this.$div.find('div.body div.result div.exception span.resend-result');
+            this.$div.find('div.body div.result div.exception a.resend').click(function () {
+                var email = self.$email.val();
+                self.$resendResult.text('正在发送...');
+                $.get('resend-register-email.json', {email: email }, function (data) {
+                    if (data.success) {
+                        self.$resendResult.text('发送成功！').showForAWhile(1500);
+                    } else {
+                        self.$resendResult.text(data.detail + '！').showForAWhile(1500);
+                    }
+                });
+            });
 
             return this;
         }
     }).init();
     $('#registerNavigationLink').click(function () {
-        JSUtils.showTransparentBackground(1);
         register.show();
     });
 
     // actions of registerSuccess
-    var registerSuccess = ({
-        show: function (email) {
-            this.$div.find('span.email').text(email);
-            var mailLoginPage = JSUtils.getEmailLoginPage(email);
-            this.$div.find('a.to-mail-page').attr('href', mailLoginPage);
-            this.$div.fadeIn(500);
-        },
-        init: function () {
-            var self = this;
-            this.$div = $('#registerSuccess');
-            this.$div.find('div.title div.close-icon').click(function () {
-                self.$div.hide();
-                JSUtils.hideTransparentBackground();
-            });
-            return this;
-        }
-    }).init();
+    /*var registerSuccess = ({
+     show: function (email) {
+     this.$div.find('span.email').text(email);
+     var mailLoginPage = JSUtils.getEmailLoginPage(email);
+     this.$div.find('a.to-mail-page').attr('href', mailLoginPage);
+     this.$div.fadeIn(500);
+     },
+     init: function () {
+     var self = this;
+     this.$div = $('#registerSuccess');
+     this.$div.find('div.title div.close-icon').click(function () {
+     self.$div.hide();
+     JSUtils.hideTransparentBackground();
+     });
+     return this;
+     }
+     }).init();*/
 
     // resend activate email
-    $('div.activate-remind div.body a.resend').click(function () {
-        var $body = $(this).parent();
-        if ($body.size() > 0 && !$body.hasClass('body')) {
-            $body = $body.parent();
-        }
-        var email = $body.find('span.email').text();
-        $.get('resend-register-email.json', {
-            'email': email
-        }, function (data) {
-            if (data.success) {
-                $body.find('span.resend-success').showForAWhile(1500);
-            } else {
-                $body.find('span.resend-fail').text(data.detail + '！').showForAWhile(1500);
-            }
-        });
-    });
+    /*$('div.activate-remind div.body a.resend').click(function () {
+     var $body = $(this).parent();
+     if ($body.size() > 0 && !$body.hasClass('body')) {
+     $body = $body.parent();
+     }
+     var email = $body.find('span.email').text();
+     $.get('resend-register-email.json', {
+     'email': email
+     }, function (data) {
+     if (data.success) {
+     $body.find('span.resend-success').showForAWhile(2000);
+     } else {
+     $body.find('span.resend-fail').text(data.detail + '！').showForAWhile(2000);
+     }
+     });
+     });*/
 
     // refresh identity code
     $('img.identity-code').click(function () {
@@ -369,23 +397,23 @@ var angularUtils = {
         $(this).prev().trigger('click');
     });
 })();
-(function () {
-    // remind activation
-    var $activateRemind = $('#activateRemind');
-    $activateRemind.find('div.title div.close-icon').click(function () {
-        $activateRemind.hide();
-        JSUtils.hideTransparentBackground();
-    });
+/*(function () {
+ // remind activation
+ var $activateRemind = $('#activateRemind');
+ $activateRemind.find('div.title div.close-icon').click(function () {
+ $activateRemind.hide();
+ JSUtils.hideTransparentBackground();
+ });
 
-    if (window['unactivatedEmail']) {
-        showActivateRemind(window['unactivatedEmail']);
-    }
+ if (window['unactivatedEmail']) {
+ showActivateRemind(window['unactivatedEmail']);
+ }
 
-    function showActivateRemind(email) {
-        JSUtils.showTransparentBackground();
-        $activateRemind.find('span.email').text(email);
-        $activateRemind.find('a.to-mail-page').attr('href', JSUtils.getEmailLoginPage(email));
-        $activateRemind.fadeIn(500);
-    }
-})();
+ function showActivateRemind(email) {
+ JSUtils.showTransparentBackground();
+ $activateRemind.find('span.email').text(email);
+ $activateRemind.find('a.to-mail-page').attr('href', JSUtils.getEmailLoginPage(email));
+ $activateRemind.fadeIn(500);
+ }
+ })();*/
 var switchToLogin, showLoginForm, hideLoginForm;

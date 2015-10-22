@@ -384,14 +384,13 @@ input.form-control {
 
 #registerForm div.body {
     background-color: #ffffff;
+    height: 256px;
     overflow: hidden;
 }
 
 #registerForm div.body div.right {
     padding-top: 34px;
     border-left: 1px solid #E5E5E5;
-    /*height: 456px;*/
-    height: 256px;
     width: 386px;
     float: right;
 }
@@ -473,7 +472,32 @@ input.form-control {
     color: #707070;
 }
 
-div.activate-remind {
+#registerForm div.body > div.result > div {
+    margin-left: 100px;
+    color: #666666;
+}
+
+#registerForm div.body > div.result div.text {
+    margin-top: 45px;
+    line-height: 35px;
+}
+
+#registerForm div.body > div.result div.exception {
+    margin-top: 30px;
+    font-size: 10pt;
+    line-height: 25px;
+}
+
+#registerForm div.body > div.result div.exception a.resend {
+    margin-left: 10px;
+}
+
+#registerForm div.body > div.result div.exception span.resend-result {
+    margin-left: 10px;
+    color: #FFA457;
+}
+
+/*div.activate-remind {
     margin-left: -204px;
     margin-top: -119px;
 }
@@ -513,7 +537,7 @@ div.activate-remind div.body span.resend-success,
 div.activate-remind div.body span.resend-fail {
     margin-left: 15px;
     display: none;
-}
+}*/
 
 #systemInformationNavigation span.unread-count {
     color: #ff0000;
