@@ -106,6 +106,35 @@
     </div>
 </div>
 <div class="edit-unit">
+    <div class="title">注册页页头设置</div>
+    <div class="content">
+        <table>
+            <tbody>
+            <tr>
+                <td class="title">左图标</td>
+                <td class="input">
+                    <jsp:include page="widget-upload-image.jsp">
+                        <jsp:param name="id" value="registerHeaderLeftLogo"/>
+                        <jsp:param name="value" value="${registerHeaderLeftLogo}"/>
+                        <jsp:param name="snapshot" value="true"/>
+                    </jsp:include>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">右图标</td>
+                <td class="input">
+                    <jsp:include page="widget-upload-image.jsp">
+                        <jsp:param name="id" value="registerHeaderRightLogo"/>
+                        <jsp:param name="value" value="${registerHeaderRightLogo}"/>
+                        <jsp:param name="snapshot" value="true"/>
+                    </jsp:include>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="edit-unit">
     <div class="title">页尾设置</div>
     <div class="content">
         <table>

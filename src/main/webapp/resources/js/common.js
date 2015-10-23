@@ -279,7 +279,8 @@ var angularUtils = {
             });
             this.$inputs.trigger('focus');
 
-            this.$registerSubmit = this.$div.find('button[name=registerSubmit]').click(function () {
+            this.$registerSubmit = this.$div.find('button[name=registerSubmit]').click(function (e) {
+                e.preventDefault();
                 self.valid = true;
                 /*self.validateEmail(function () {
                  self.validateUsername(function () {
@@ -344,6 +345,10 @@ var angularUtils = {
                     }
                 });
             });
+
+            showRegisterForm = function () {
+                register.show();
+            };
 
             return this;
         }
@@ -416,4 +421,4 @@ var angularUtils = {
  $activateRemind.fadeIn(500);
  }
  })();*/
-var switchToLogin, showLoginForm, hideLoginForm;
+var switchToLogin, showLoginForm, hideLoginForm, showRegisterForm;

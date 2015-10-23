@@ -394,6 +394,29 @@ public class AppConfig {
     }
     ///////////////////////////////////// register mail end //////////////////////////////////////
 
+    ////////////////////////////////// register logo start ///////////////////////////////////
+    private final static String REGISTER_HEADER_LEFT_LOGO_KEY = "registerHeaderLeftLogo";
+
+    public static String getRegisterHeaderLeftLogo() {
+        return dao.get(REGISTER_HEADER_LEFT_LOGO_KEY);
+    }
+
+    public static void updateRegisterHeaderLeftLogo(String registerHeaderLeftLogo) {
+        dao.save(REGISTER_HEADER_LEFT_LOGO_KEY, registerHeaderLeftLogo);
+    }
+
+    private final static String REGISTER_HEADER_RIGHT_LOGO_KEY = "registerHeaderRightLogo";
+
+    public static String getRegisterHeaderRightLogo() {
+        return dao.get(REGISTER_HEADER_RIGHT_LOGO_KEY);
+    }
+
+    public static void updateRegisterHeaderRightLogo(String registerHeaderRightLogo) {
+        dao.save(REGISTER_HEADER_RIGHT_LOGO_KEY, registerHeaderRightLogo);
+    }
+
+    ////////////////////////////////// register logo end /////////////////////////////////////
+
     //////////////////////////////// reset password mail start //////////////////////////
     private final static String RESET_PASSWORD_MAIL_SUBJECT_TEMPLATE_KEY = "resetPasswordMailSubjectTemplate";
 

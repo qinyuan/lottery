@@ -1,13 +1,10 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.contact.mail.MailAddressValidator;
-import com.qinyuan.lib.database.hibernate.HibernateUtils;
-import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.PasswordValidator;
 import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.lottery.mvc.account.DatabaseTelValidator;
 import com.qinyuan15.lottery.mvc.account.NewUserValidator;
 import com.qinyuan15.lottery.mvc.account.PreUserSerialKeyBuilder;
 import com.qinyuan15.lottery.mvc.dao.PreUser;
@@ -49,15 +46,65 @@ public class RegisterController extends ImageController {
             }
         }
 
+        setAttribute("registerHeaderLeftLogo", pathToUrl(AppConfig.getRegisterHeaderLeftLogo()));
+        setAttribute("registerHeaderRightLogo", pathToUrl(AppConfig.getRegisterHeaderRightLogo()));
         setTitle("完善个人信息");
-        addCss("personal-center-frame");
-        addCss("personal-center");
-        addJs("personal-center-birthday");
         addCssAndJs("register");
         return "register";
     }
 
+
     @RequestMapping("/register-complete-user-info.json")
+    @ResponseBody
+    public String completeUserInfo(@RequestParam(value = "serialKey", required = true) String serialKey,
+                                   @RequestParam(value = "username", required = true) String username,
+                                   @RequestParam(value = "password", required = true) String password) {
+        if (!StringUtils.hasText(serialKey)) {
+            return failByInvalidParam();
+        }
+
+        PreUser preUser = new PreUserDao().getInstanceBySerialKey(serialKey);
+        if (preUser == null) {
+            return failByInvalidParam();
+        }
+
+        UserDao userDao = new UserDao();
+        String email = preUser.getEmail();
+        if (userDao.hasEmail(email)) {
+            return fail("该邮箱已经被注册！");
+        }
+
+        Pair<Boolean, String> usernameValidation = new NewUserValidator().validateUsername(username);
+        if (!usernameValidation.getLeft()) {
+            return fail(usernameValidation.getRight());
+        }
+
+        Pair<Boolean, String> passwordValidation = new PasswordValidator().validate(password);
+        if (!passwordValidation.getLeft()) {
+            return fail(passwordValidation.getRight());
+        }
+
+        try {
+            Integer spreadUserId = preUser.getSpreadUserId();
+            String spreadWay = preUser.getSpreadWay();
+            Integer userId;
+            if (IntegerUtils.isPositive(spreadUserId) && StringUtils.hasText(spreadWay)) {
+                userId = userDao.addNormal(username, password, email, spreadUserId, spreadWay);
+                LivenessAdder.addLiveness(userId, false, spreadUserId, spreadWay, preUser.getActivityId());
+            } else {
+                userId = userDao.addNormal(username, password, email);
+            }
+            User user = new UserDao().getInstance(userId);
+            login(user.getUsername(), user.getPassword());
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("fail to add user, username: {}, password: {}, email {}, info {}",
+                    username, password, email, e);
+            return failByDatabaseError();
+        }
+    }
+
+    /*@RequestMapping("/register-complete-user-info.json")
     @ResponseBody
     public String completeUserInfo(@RequestParam(value = "serialKey", required = true) String serialKey,
                                    @RequestParam(value = "username", required = true) String username,
@@ -140,8 +187,7 @@ public class RegisterController extends ImageController {
                     username, password, email, e);
             return failByDatabaseError();
         }
-
-    }
+    }*/
 
     @RequestMapping(value = "register-submit.json", method = RequestMethod.POST)
     @ResponseBody

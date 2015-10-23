@@ -38,6 +38,8 @@ public class AdminController extends ImageController {
         setAttribute("registerMailSubjectTemplate", AppConfig.getRegisterMailSubjectTemplate());
         setAttribute("registerMailContentTemplate", AppConfig.getRegisterMailContentTemplate());
         addJavaScriptData("currentRegisterMailAccountId", AppConfig.getRegisterMailAccountId());
+        setAttribute("registerHeaderLeftLogo", pathToUrl(AppConfig.getRegisterHeaderLeftLogo()));
+        setAttribute("registerHeaderRightLogo", pathToUrl(AppConfig.getRegisterHeaderRightLogo()));
 
         setAttribute("resetPasswordMailSubjectTemplate", AppConfig.getResetPasswordMailSubjectTemplate());
         setAttribute("resetPasswordMailContentTemplate", AppConfig.getResetPasswordMailContentTemplate());
@@ -138,6 +140,10 @@ public class AdminController extends ImageController {
                          @RequestParam(value = "registerMailAccountId", required = true) Integer registerMailAccountId,
                          @RequestParam(value = "registerMailSubjectTemplate", required = true) String registerMailSubjectTemplate,
                          @RequestParam(value = "registerMailContentTemplate", required = true) String registerMailContentTemplate,
+                         @RequestParam(value = "registerHeaderLeftLogo", required = true) String registerHeaderLeftLogo,
+                         @RequestParam(value = "registerHeaderLeftLogoFile", required = true) MultipartFile registerHeaderLeftLogoFile,
+                         @RequestParam(value = "registerHeaderRightLogo", required = true) String registerHeaderRightLogo,
+                         @RequestParam(value = "registerHeaderRightLogoFile", required = true) MultipartFile registerHeaderRightLogoFile,
                          @RequestParam(value = "resetPasswordMailAccountId", required = true) Integer resetPasswordMailAccountId,
                          @RequestParam(value = "resetPasswordMailSubjectTemplate", required = true) String resetPasswordMailSubjectTemplate,
                          @RequestParam(value = "resetPasswordMailContentTemplate", required = true) String resetPasswordMailContentTemplate,
@@ -150,7 +156,8 @@ public class AdminController extends ImageController {
 
         String indexHeaderLeftLogoPath = null, /*indexHeaderRightLogoPath = null,*/
                 indexHeaderSloganPath = null, footerPosterPath = null,
-                commodityHeaderLeftLogoPath = null, faviconPath = null;
+                commodityHeaderLeftLogoPath = null, faviconPath = null,
+                registerHeaderLeftLogoPath = null, registerHeaderRightLogoPath = null;
         try {
             indexHeaderLeftLogoPath = getSavePath(indexHeaderLeftLogo, indexHeaderLeftLogoFile);
         } catch (Exception e) {
@@ -187,6 +194,20 @@ public class AdminController extends ImageController {
         }
 
         try {
+            registerHeaderLeftLogoPath = getSavePath(registerHeaderLeftLogo, registerHeaderLeftLogoFile);
+        } catch (Exception e) {
+            LOGGER.error("error in getting save path of registerHeaderLeftLogo");
+            //redirect(redirectPage, "注册页页头左图标处理失败！");
+        }
+
+        try {
+            registerHeaderRightLogoPath = getSavePath(registerHeaderRightLogo, registerHeaderRightLogoFile);
+        } catch (Exception e) {
+            LOGGER.error("error in getting save path of registerHeaderRightLogo");
+            //redirect(redirectPage, "注册页页头右图标处理失败！");
+        }
+
+        try {
             faviconPath = getSavePath(favicon, faviconFile);
         } catch (Exception e) {
             LOGGER.error("error in getting save path of favicon");
@@ -207,6 +228,8 @@ public class AdminController extends ImageController {
         AppConfig.updateRegisterMailAccountId(registerMailAccountId);
         AppConfig.updateRegisterMailSubjectTemplate(registerMailSubjectTemplate);
         AppConfig.updateRegisterMailContentTemplate(registerMailContentTemplate);
+        AppConfig.updateRegisterHeaderLeftLogo(registerHeaderLeftLogoPath);
+        AppConfig.updateRegisterHeaderRightLogo(registerHeaderRightLogoPath);
 
         AppConfig.updateResetPasswordMailAccountId(resetPasswordMailAccountId);
         AppConfig.updateResetPasswordMailSubjectTemplate(resetPasswordMailSubjectTemplate);

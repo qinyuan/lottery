@@ -1,7 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="inc-header.jsp" %>
-<%@include file="index-header.jsp" %>
-<div class="gray-back">
+<%--<%@include file="index-header.jsp" %>--%>
+<div class="header">
+    <div class="logo page-width">
+        <div class="left">
+            <c:if test="${registerHeaderLeftLogo != null}"><img src="${registerHeaderLeftLogo}"/></c:if>
+        </div>
+        <div class="right">
+            <c:if test="${registerHeaderRightLogo != null}"><img src="${registerHeaderRightLogo}"/></c:if>
+        </div>
+    </div>
+    <div class="split"></div>
+</div>
+<div class="white-back">
     <div class="main-body page-width shadow">
         <c:choose>
             <c:when test="${preUser != null}">
