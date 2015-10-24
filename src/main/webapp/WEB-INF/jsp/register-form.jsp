@@ -23,7 +23,7 @@
         <input type="checkbox" name="subscribe"/> 已经认真阅读并同意订阅 <span class="emphasize">《布迪网》</span>
     </div>
     <div class="submit">
-        <q:qqlist nId="<%=AppConfig.getQQListId()%>" email="${preUser.email}">
+        <q:qqlist nId="<%=AppConfig.getQQListId()%>" email="${preUser.email}" newPage="${!isMobile}">
             <button type="submit" class="ok btn btn-success" disabled>创建帐号</button>
         </q:qqlist>
     </div>

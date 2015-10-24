@@ -152,6 +152,21 @@
  $('div.main-body div.right').focusFirstTextInput();*/
 ;
 (function () {
+    var email = $('div.main-body div.form div.email span.email').text();
+    if (window['isMobile'] && JSUtils.validateEmail(email)) {
+        var validateLogin = function () {
+            $.post("isLogin.json", {email: email }, function (data) {
+                if (data.result) {
+                    showSuccessInfo();
+                }
+            });
+        };
+        setInterval(function () {
+            validateLogin();
+        }, 1000);
+        validateLogin();
+    }
+
     var $form = $('div.main-body div.form').focusFirstTextInput();
     $form.setDefaultButtonByClass('ok');
     var $submit = $form.find('div.submit button.ok').click(function (e) {
@@ -162,7 +177,9 @@
                 password: $password.val()
             }, function (data) {
                 if (data.success) {
-                    showSuccessInfo();
+                    if (!window['isMobile']) {
+                        showSuccessInfo();
+                    }
                 } else {
                     alert(data.detail);
                 }

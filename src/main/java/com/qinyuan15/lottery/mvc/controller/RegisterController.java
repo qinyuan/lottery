@@ -46,6 +46,10 @@ public class RegisterController extends ImageController {
             }
         }
 
+        boolean isMobile = isMobileUserAgent();
+        setAttribute("isMobile", isMobile);
+        addJavaScriptData("isMobile", isMobile);
+
         setAttribute("registerHeaderLeftLogo", pathToUrl(AppConfig.getRegisterHeaderLeftLogo()));
         setAttribute("registerHeaderRightLogo", pathToUrl(AppConfig.getRegisterHeaderRightLogo()));
         setTitle("完善个人信息");
