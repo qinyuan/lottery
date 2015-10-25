@@ -45,7 +45,7 @@
                                                     target="_blank">没有邮箱？</a></span>
                         <span class="error"></span>
                     </div>
-                    <!--<div class="input">
+                    <%--<div class="input">
                         <label>用户名</label>
                         <input type="text" class="form-control" name="username" maxlength="14" tabindex="2"/>
                         <span class="validate"></span>
@@ -71,7 +71,7 @@
                     <div class="comment">
                         <span class="info">再次输入密码</span>
                         <span class="error"></span>
-                    </div>-->
+                    </div>--%>
                     <div class="input identity-code">
                         <label>验证码</label>
                         <jsp:include page="widget-identity-code.jsp">
