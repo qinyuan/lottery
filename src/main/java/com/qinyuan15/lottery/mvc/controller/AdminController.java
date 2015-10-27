@@ -1,8 +1,7 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.config.LinkAdapter;
-import com.qinyuan.lib.contact.mail.MailAccountDao;
-import com.qinyuan.lib.contact.mail.MailAddressValidator;
+import com.qinyuan.lib.contact.mail.*;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.CDNSource;
 import com.qinyuan.lib.mvc.controller.ImageController;
@@ -11,10 +10,10 @@ import com.qinyuan15.lottery.mvc.dao.MailAccountReferenceValidator;
 import com.qinyuan15.lottery.mvc.dao.NavigationLink;
 import com.qinyuan15.lottery.mvc.dao.NavigationLinkDao;
 import com.qinyuan15.lottery.mvc.mail.MailSelectFormItemBuilder;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -51,8 +50,10 @@ public class AdminController extends ImageController {
 
         setAttribute("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
 
-        setAttribute("mails", new MailAccountDao().getInstances());
-        setAttribute("mailSelectFormItems", new MailSelectFormItemBuilder().build());
+        List<MailAccount> accounts = new MailAccountDao().getInstances();
+        setAttribute("mails", accounts);
+        //setAttribute("mailSelectFormItems", new MailSelectFormItemBuilder().build());
+        setAttribute("mailSelectFormItems", new MailSelectFormItemBuilder().build(accounts));
 
         setTitle("系统设置");
         addCss("admin-form");
@@ -64,21 +65,53 @@ public class AdminController extends ImageController {
         return "admin";
     }
 
-    @RequestMapping("/admin-add-edit-email.json")
+    @RequestMapping("/admin-query-mail-account.json")
     @ResponseBody
-    public String addEditEmail(@RequestParam(value = "id", required = false) Integer id,
-                               @RequestParam(value = "mailHost", required = true) String host,
-                               @RequestParam(value = "mailUsername", required = false) String username,
-                               @RequestParam(value = "mailPassword", required = true) String password) {
-        if (!StringUtils.hasText(host)) {
+    public String queryMail(@RequestParam(value = "id", required = true) Integer id) {
+        try {
+            return toJson(new MailAccountDao().getReference(id));
+        } catch (Exception e) {
+            return failByDatabaseError();
+        }
+    }
+
+    @RequestMapping("/admin-add-edit-mail-account.json")
+    @ResponseBody
+    public String addEditMailAccount(@RequestParam(value = "id", required = false) Integer id,
+                                     @RequestParam(value = "type", required = true) String type,
+                                     @RequestParam(value = "username", required = true) String username,
+                                     @RequestParam(value = "host", required = true) String host,
+                                     @RequestParam(value = "password", required = true) String password,
+                                     @RequestParam(value = "user", required = true) String user,
+                                     @RequestParam(value = "domainName", required = true) String domainName,
+                                     @RequestParam(value = "apiKey", required = true) String apiKey) {
+        if (StringUtils.isBlank(type)) {
+            return failByInvalidParam();
+        }
+
+        switch (type) {
+            case "SimpleMailAccount":
+                return addEditSimpleMailAccount(id, username, host, password);
+            case "SendCloudAccount":
+                return addEditSendCloudAccount(id, user, domainName, apiKey);
+            default:
+                return failByInvalidParam();
+        }
+    }
+
+    public String addEditSimpleMailAccount(@RequestParam(value = "id", required = false) Integer id,
+                                           @RequestParam(value = "username", required = false) String username,
+                                           @RequestParam(value = "host", required = true) String host,
+                                           @RequestParam(value = "password", required = true) String password) {
+        if (StringUtils.isBlank(host)) {
             return fail("发件箱服务器地址不能为空！");
         }
 
-        MailAccountDao dao = new MailAccountDao();
+        SimpleMailAccountDao dao = new SimpleMailAccountDao();
 
         // if add mail account, validate username
         if (!IntegerUtils.isPositive(id)) {
-            if (!StringUtils.hasText(username)) {
+            if (StringUtils.isBlank(username)) {
                 return fail("发件箱用户名不能为空！");
             } else if (!new MailAddressValidator().validate(username)) {
                 return fail("发件箱用户名必须为有效的邮件地址！");
@@ -87,7 +120,7 @@ public class AdminController extends ImageController {
             }
         }
 
-        if (!StringUtils.hasText(password)) {
+        if (StringUtils.isBlank(password)) {
             return fail("发件箱密码不能为空！");
         }
 
@@ -96,6 +129,37 @@ public class AdminController extends ImageController {
                 dao.update(id, host, password);
             } else {
                 dao.add(host, username, password);
+            }
+            return success();
+        } catch (Exception e) {
+            return failByDatabaseError();
+        }
+    }
+
+    @RequestMapping("/admin-add-edit-send-cloud-account.json")
+    @ResponseBody
+    public String addEditSendCloudAccount(@RequestParam(value = "id", required = false) Integer id,
+                                          @RequestParam(value = "user", required = true) String user,
+                                          @RequestParam(value = "domainName", required = true) String domainName,
+                                          @RequestParam(value = "apiKey", required = true) String apiKey) {
+
+        if (StringUtils.isBlank(user)) {
+            return fail("用户名不能为空！");
+        } else if (user.contains("@")) {
+            return fail("用户名不能包含'@'字符！");
+        } else if (StringUtils.isBlank(domainName)) {
+            return fail("域名不能为空！");
+        } else if (domainName.contains("@")) {
+            return fail("域名不能包含'@'字符！");
+        } else if (StringUtils.isBlank(apiKey)) {
+            return fail("apiKey不能为空！");
+        }
+        try {
+            SendCloudAccountDao dao = new SendCloudAccountDao();
+            if (IntegerUtils.isPositive(id)) {
+                dao.update(id, user, domainName, apiKey);
+            } else {
+                dao.add(user, domainName, apiKey);
             }
             return success();
         } catch (Exception e) {

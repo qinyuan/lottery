@@ -23,6 +23,8 @@
         <mapping resource="com/qinyuan/lib/network/ip/IpLocation.hbm.xml"/>
         <mapping resource="com/qinyuan/lib/contact/mail/Email.hbm.xml"/>
         <mapping resource="com/qinyuan/lib/contact/mail/MailAccount.hbm.xml"/>
+        <mapping resource="com/qinyuan/lib/contact/mail/SimpleMailAccount.hbm.xml"/>
+        <mapping resource="com/qinyuan/lib/contact/mail/SendCloudAccount.hbm.xml"/>
         <mapping resource="com/qinyuan/lib/contact/mail/MailSerialKey.hbm.xml"/>
         <mapping resource="com/qinyuan/lib/image/ImageMap.hbm.xml"/>
         <mapping resource="com/qinyuan15/lottery/mvc/dao/hibernate.hbm.xml"/>

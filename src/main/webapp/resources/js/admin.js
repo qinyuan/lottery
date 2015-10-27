@@ -3,25 +3,34 @@
     // codes about mail
     var emailAddEditForm = ({
         $form: $('#emailAddEditForm'),
-        get$Host: function () {
-            return this.$form.getInputByName('mailHost');
-        },
-        get$Username: function () {
-            return this.$form.getInputByName('mailUsername');
-        },
-        get$Password: function () {
-            return this.$form.getInputByName('mailPassword');
-        },
-        show: function (id, host, username, password) {
+        show: function (options/*id, host, username, password*/) {
+            if (options == null) {
+                options = {};
+            }
             JSUtils.showTransparentBackground(1);
-            this.$form.setInputValue('id', id)
-                .setInputValue('mailHost', host)
-                .setInputValue('mailUsername', username)
-                .setInputValue('mailPassword', password);
-            if (username) {
-                this.$form.getInputByName('mailUsername').attr('disabled', true);
+            this.$form.setInputValue('id', options['id']);
+            if (options['type'] == 'SimpleMailAccount') {
+                this.$form.setInputValue('host', options['host'])
+                    .setInputValue('username', options['username'])
+                    .setInputValue('password', options['password']);
+                if (options['username']) {
+                    this.$form.getInputByName('username').attr('disabled', true);
+                } else {
+                    this.$form.getInputByName('username').attr('disabled', false);
+                }
+
+                this.$simpleMail.removeClass('disable').find('input[type=radio]').trigger('click');
+                this.$sendCloud.addClass('disable').find('input[type=radio');
+            } else if (options['type'] == 'SendCloudAccount') {
+                this.$form.setInputValue('user', options['user'])
+                    .setInputValue('domainName', options['domainName'])
+                    .setInputValue('apiKey', options['apiKey']);
+
+                this.$simpleMail.addClass('disable').find('input[type=radio]');
+                this.$sendCloud.removeClass('disable').find('input[type=radio]').trigger('click');
             } else {
-                this.$form.getInputByName('mailUsername').attr('disabled', false);
+                this.$simpleMail.removeClass('disable').find('input[type=radio]').trigger('click');
+                this.$sendCloud.removeClass('disable').find('input[type=radio]');
             }
             this.$form.show().focusFirstTextInput();
         },
@@ -30,30 +39,90 @@
             JSUtils.hideTransparentBackground();
         },
         validateInput: function () {
-            if (this.get$Host().trimVal() == '') {
-                alert('发件箱服务器地址不能为空！');
-                this.get$Host().focusOrSelect();
+            if (this.getType() == 'SimpleMailAccount') {
+                if (this.$host.trimVal() == '') {
+                    alert('发件箱服务器地址不能为空！');
+                    this.$host.focusOrSelect();
+                    return false;
+                } else if (!JSUtils.validateEmail(this.$username.val())) {
+                    alert('发件箱用户名必须为有效的邮件地址！');
+                    this.$username.focusOrSelect();
+                    return false;
+                } else if (this.$password.trimVal() == '') {
+                    alert('发件箱密码不能为空！');
+                    this.$password.focusOrSelect();
+                    return false;
+                }
+                return true;
+            } else if (this.getType() == 'SendCloudAccount') {
+                var user = this.$user.val();
+                if ($.trim(user) == '') {
+                    alert('sendcloud用户名不能为空！');
+                    this.$user.focusOrSelect();
+                    return false;
+                } else if (user.indexOf('@') >= 0) {
+                    alert('sendcloud用户名不能包含"@"字符！');
+                    this.$user.focusOrSelect();
+                    return false;
+                }
+
+                var domainName = this.$domainName.val();
+                if (domainName == '') {
+                    alert('sendcloud域名不能为空！');
+                    this.$domainName.focusOrSelect();
+                    return false;
+                } else if (domainName.indexOf('@') >= 0) {
+                    alert('sendcloud域名不能包含"@"字符！');
+                    this.$domainName.focusOrSelect();
+                    return false;
+                }
+
+                if (this.$apiKey.trimVal() == '') {
+                    alert('apiKey不能为空！');
+                    this.$apiKey.focusOrSelect();
+                    return false;
+                }
+                return true;
+            } else {
                 return false;
             }
-            if (!JSUtils.validateEmail(this.get$Username().val())) {
-                alert('发件箱用户名必须为有效的邮件地址！');
-                this.get$Username().focusOrSelect();
-                return false;
-            }
-            if (this.get$Password().trimVal() == '') {
-                alert('发件箱密码不能为空！');
-                this.get$Password().focusOrSelect();
-                return false;
-            }
-            return true;
+
+        },
+        getType: function () {
+            return this.$form.find('div.type input[type=radio]').filter(function () {
+                return this.checked;
+            }).val();
         },
         init: function () {
-            this.$form.setDefaultButtonById('addEmailSubmit');
             var self = this;
+            this.$form.setDefaultButtonById('addEmailSubmit');
+
+            this.$host = this.$form.getInputByName('host');
+            this.$username = this.$form.getInputByName('username');
+            this.$password = this.$form.getInputByName('password');
+            this.$user = this.$form.getInputByName('user');
+            this.$domainName = this.$form.getInputByName('domainName');
+            this.$apiKey = this.$form.getInputByName('apiKey');
+
+            this.$simpleMailTable = this.$form.find('table.simple-mail');
+            this.$sendCloudTable = this.$form.find('table.send-cloud');
+
+            this.$simpleMail = this.$form.find('span.simple-mail');
+            this.$simpleMail.find('input[type=radio]').click(function () {
+                self.$sendCloudTable.hide();
+                self.$simpleMailTable.show().focusFirstTextInput();
+            });
+
+            this.$sendCloud = this.$form.find('span.send-cloud');
+            this.$sendCloud.find('input[type=radio]').click(function () {
+                self.$simpleMailTable.hide();
+                self.$sendCloudTable.show().focusFirstTextInput();
+            });
+
             $('#addEmailSubmit').click(function (e) {
                 e.preventDefault();
                 if (self.validateInput()) {
-                    $.post('admin-add-edit-email.json', self.$form.serialize(), JSUtils.normalAjaxCallback);
+                    $.post('admin-add-edit-mail-account.json', self.$form.serialize(), JSUtils.normalAjaxCallback);
                 }
                 return false;
             });
@@ -74,10 +143,14 @@
     $emailListDiv.find('div.edit-image,div.username').click(function () {
         var $parent = $(this).parent();
         var id = $parent.dataOptions('id');
-        var host = $parent.find('input.host').val();
-        var password = $parent.find('input.password').val();
-        var username = $parent.find('div.username').text();
-        emailAddEditForm.show(id, host, username, password);
+        var type = $parent.find('input.type').val();
+        $.post('admin-query-mail-account.json', {id: id}, function (data) {
+            if (type == 'SimpleMailAccount') {
+                emailAddEditForm.show(id, data['host'], data['username'], data['password']);
+            } else if (type = 'SendCloudAccount') {
+                // TODO
+            }
+        });
     });
 })();
 (function () {

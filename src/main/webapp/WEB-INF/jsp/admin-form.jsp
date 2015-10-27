@@ -182,13 +182,22 @@
         <div>
             <c:forEach var="mail" items="${mails}">
                 <div class="mail-item" data-options="id: ${mail.id}">
-                    <input type="hidden" class="host" value="${mail.host}"/>
-                    <input type="hidden" class="password" value="${mail.password}"/>
+                        <%--<input type="hidden" class="host" value="${mail.host}"/>
+                        <input type="hidden" class="password" value="${mail.password}"/>
+
+                        <div class="username" title="单击修改">${mail.username}</div>
+                        <div class="edit-image" title="单击修改"><img class="link"
+                                                                  src="resources/css/images/pencil.png"/></div>
+                        <div class="close-image" title="删除"><img class="link" src="resources/css/images/close.gif"/>
+                        </div>--%>
+                    <input type="hidden" class="type" value="${mail.type}"/>
 
                     <div class="username" title="单击修改">${mail.username}</div>
-                    <div class="edit-image" title="单击修改"><img class="link"
-                                                              src="resources/css/images/pencil.png"/></div>
-                    <div class="close-image" title="删除"><img class="link" src="resources/css/images/close.gif"/>
+                    <div class="edit-image" title="单击修改">
+                        <img class="link" src="resources/css/images/pencil.png"/>
+                    </div>
+                    <div class="close-image" title="删除">
+                        <img class="link" src="resources/css/images/close.gif"/>
                     </div>
                 </div>
             </c:forEach>
@@ -198,44 +207,6 @@
         </div>
     </div>
 </div>
-<%--<div class="edit-unit">
-    <div class="title">新用户激活邮件设置</div>
-    <div class="content">
-        <table class="email-template">
-            <tbody>
-            <tr>
-                <td class="title">发件箱</td>
-                <td class="input">
-                    <c:set var="selectFormItems" value="${mailSelectFormItems}"/>
-                    <c:set var="selectFormId" value="activate-mail-select"/>
-                    <c:set var="selectFormName" value="activateMailAccountId"/>
-                    <%@include file="widget-select-form.jsp" %>
-                </td>
-            </tr>
-            <tr>
-                <td class="title">邮件标题</td>
-                <td class="input">
-                    <input type="text" name="activateMailSubjectTemplate" class="form-control"
-                           value="${activateMailSubjectTemplate}" placeholder="在此输入邮件的标题"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="title">邮件正文模板
-                    <div class="comment">
-                        注：<br/>
-                        {{user}}指代用户名；<br/>
-                        {{url}}指代激活链接。
-                    </div>
-                </td>
-                <td class="input">
-                    <textarea class="ckeditor"
-                              name="activateMailContentTemplate">${activateMailContentTemplate}</textarea>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>--%>
 <div class="edit-unit">
     <div class="title">新用户注册邮件设置</div>
     <div class="content">

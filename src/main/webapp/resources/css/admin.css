@@ -114,7 +114,30 @@ div.edit-unit div.content td.title div.comment {
 #emailAddEditForm {
     margin-left: -227px;
     margin-top: -98px;
-    padding: 10px;
+    padding: 30px;
+    height: 270px;
+    width: 500px;
+}
+
+#emailAddEditForm div.type {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#emailAddEditForm div.type > span {
+    margin: 0 10px;
+}
+
+#emailAddEditForm div.type > span.disable {
+    color: #999999;
+}
+
+#emailAddEditForm table.send-cloud {
+    display: none;
+}
+
+#emailAddEditForm td.title {
+    width: 125px;
 }
 
 #emailAddEditForm td {
@@ -122,7 +145,7 @@ div.edit-unit div.content td.title div.comment {
     padding: 5px;
 }
 
-#emailAddEditForm input {
+#emailAddEditForm td input {
     width: 300px;
 }
 
