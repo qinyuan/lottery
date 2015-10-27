@@ -3,13 +3,18 @@
     // codes about mail
     var emailAddEditForm = ({
         $form: $('#emailAddEditForm'),
-        show: function (options/*id, host, username, password*/) {
+        /**
+         * available options: id, type, host, username, password, user, domainName, apiKey
+         * @param options
+         */
+        show: function (options) {
             if (options == null) {
                 options = {};
             }
             JSUtils.showTransparentBackground(1);
             this.$form.setInputValue('id', options['id']);
-            if (options['type'] == 'SimpleMailAccount') {
+            this.$form.show();
+            if (options['id'] && options['type'] == 'SimpleMailAccount') {
                 this.$form.setInputValue('host', options['host'])
                     .setInputValue('username', options['username'])
                     .setInputValue('password', options['password']);
@@ -19,20 +24,19 @@
                     this.$form.getInputByName('username').attr('disabled', false);
                 }
 
-                this.$simpleMail.removeClass('disable').find('input[type=radio]').trigger('click');
-                this.$sendCloud.addClass('disable').find('input[type=radio');
-            } else if (options['type'] == 'SendCloudAccount') {
+                this.$simpleMail.removeClass('disable').find('input[type=radio]').attr('disabled', false).trigger('click');
+                this.$sendCloud.addClass('disable').find('input[type=radio]').attr('disabled', true);
+            } else if (options['id'] && options['type'] == 'SendCloudAccount') {
                 this.$form.setInputValue('user', options['user'])
                     .setInputValue('domainName', options['domainName'])
                     .setInputValue('apiKey', options['apiKey']);
 
-                this.$simpleMail.addClass('disable').find('input[type=radio]');
-                this.$sendCloud.removeClass('disable').find('input[type=radio]').trigger('click');
+                this.$sendCloud.removeClass('disable').find('input[type=radio]').attr('disabled', false).trigger('click');
+                this.$simpleMail.addClass('disable').find('input[type=radio]').attr('disabled', true);
             } else {
-                this.$simpleMail.removeClass('disable').find('input[type=radio]').trigger('click');
-                this.$sendCloud.removeClass('disable').find('input[type=radio]');
+                this.$simpleMail.removeClass('disable').find('input[type=radio]').attr('disabled', false).trigger('click');
+                this.$sendCloud.removeClass('disable').find('input[type=radio]').attr('disabled', false);
             }
-            this.$form.show().focusFirstTextInput();
         },
         hide: function () {
             this.$form.hide();
@@ -133,7 +137,7 @@
         }
     }).init();
     $('#addEmailButton').click(function () {
-        emailAddEditForm.show();
+        emailAddEditForm.show({});
     });
     var $emailListDiv = $('#emailList');
     $emailListDiv.find('div.close-image').click(function () {
@@ -145,11 +149,9 @@
         var id = $parent.dataOptions('id');
         var type = $parent.find('input.type').val();
         $.post('admin-query-mail-account.json', {id: id}, function (data) {
-            if (type == 'SimpleMailAccount') {
-                emailAddEditForm.show(id, data['host'], data['username'], data['password']);
-            } else if (type = 'SendCloudAccount') {
-                // TODO
-            }
+            data['id'] = id;
+            data['type'] = type;
+            emailAddEditForm.show(data);
         });
     });
 })();

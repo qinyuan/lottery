@@ -52,7 +52,6 @@ public class AdminController extends ImageController {
 
         List<MailAccount> accounts = new MailAccountDao().getInstances();
         setAttribute("mails", accounts);
-        //setAttribute("mailSelectFormItems", new MailSelectFormItemBuilder().build());
         setAttribute("mailSelectFormItems", new MailSelectFormItemBuilder().build(accounts));
 
         setTitle("系统设置");
@@ -79,30 +78,29 @@ public class AdminController extends ImageController {
     @ResponseBody
     public String addEditMailAccount(@RequestParam(value = "id", required = false) Integer id,
                                      @RequestParam(value = "type", required = true) String type,
-                                     @RequestParam(value = "username", required = true) String username,
-                                     @RequestParam(value = "host", required = true) String host,
-                                     @RequestParam(value = "password", required = true) String password,
-                                     @RequestParam(value = "user", required = true) String user,
-                                     @RequestParam(value = "domainName", required = true) String domainName,
-                                     @RequestParam(value = "apiKey", required = true) String apiKey) {
+                                     @RequestParam(value = "username", required = false) String username,
+                                     @RequestParam(value = "host", required = false) String host,
+                                     @RequestParam(value = "password", required = false) String password,
+                                     @RequestParam(value = "user", required = false) String user,
+                                     @RequestParam(value = "domainName", required = false) String domainName,
+                                     @RequestParam(value = "apiKey", required = false) String apiKey) {
+
         if (StringUtils.isBlank(type)) {
             return failByInvalidParam();
         }
 
+        Integer referenceId = new MailAccountDao().getReferenceId(id);
         switch (type) {
             case "SimpleMailAccount":
-                return addEditSimpleMailAccount(id, username, host, password);
+                return addEditSimpleMailAccount(referenceId, username, host, password);
             case "SendCloudAccount":
-                return addEditSendCloudAccount(id, user, domainName, apiKey);
+                return addEditSendCloudAccount(referenceId, user, domainName, apiKey);
             default:
                 return failByInvalidParam();
         }
     }
 
-    public String addEditSimpleMailAccount(@RequestParam(value = "id", required = false) Integer id,
-                                           @RequestParam(value = "username", required = false) String username,
-                                           @RequestParam(value = "host", required = true) String host,
-                                           @RequestParam(value = "password", required = true) String password) {
+    private String addEditSimpleMailAccount(Integer id, String username, String host, String password) {
         if (StringUtils.isBlank(host)) {
             return fail("发件箱服务器地址不能为空！");
         }
@@ -136,12 +134,7 @@ public class AdminController extends ImageController {
         }
     }
 
-    @RequestMapping("/admin-add-edit-send-cloud-account.json")
-    @ResponseBody
-    public String addEditSendCloudAccount(@RequestParam(value = "id", required = false) Integer id,
-                                          @RequestParam(value = "user", required = true) String user,
-                                          @RequestParam(value = "domainName", required = true) String domainName,
-                                          @RequestParam(value = "apiKey", required = true) String apiKey) {
+    private String addEditSendCloudAccount(Integer id, String user, String domainName, String apiKey) {
 
         if (StringUtils.isBlank(user)) {
             return fail("用户名不能为空！");

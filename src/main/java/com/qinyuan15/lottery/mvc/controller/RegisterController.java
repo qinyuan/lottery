@@ -235,7 +235,12 @@ public class RegisterController extends ImageController {
                 // get serial key from pre use directly
                 serialKey = preUser.getSerialKey();
             }
-            new RegisterMailSender().send(email, serialKey);
+            try {
+                new RegisterMailSender().send(email, serialKey);
+            } catch (Exception e) {
+                LOGGER.error("Fail to send email, info: {}", e);
+                return fail("邮件发送失败");
+            }
             return success();
         } catch (Exception e) {
             LOGGER.error("fail to register email: {}, info {}", email, e);
