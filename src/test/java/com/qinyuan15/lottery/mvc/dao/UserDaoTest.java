@@ -16,10 +16,10 @@ public class UserDaoTest extends DatabaseTestCase {
 
     @Test
     public void testAddAdmin() {
-        assertThat(userDao.getInstanceByUsername("username")).isNull();
+        assertThat(userDao.getInstanceByName("username")).isNull();
         userDao.addAdmin("username", "password");
-        assertThat(userDao.getInstanceByUsername("username")).isNotNull();
-        assertThat(userDao.getInstanceByUsername("username").getRole()).isEqualTo(UserRole.ADMIN);
+        assertThat(userDao.getInstanceByName("username")).isNotNull();
+        assertThat(userDao.getInstanceByName("username").getRole()).isEqualTo(UserRole.ADMIN);
     }
 
     @Test
@@ -33,10 +33,10 @@ public class UserDaoTest extends DatabaseTestCase {
 
     @Test
     public void testAddNormal() {
-        assertThat(userDao.getInstanceByUsername("username")).isNull();
+        assertThat(userDao.getInstanceByName("username")).isNull();
         userDao.addNormal("username", "password", "123456@qq.com");
-        assertThat(userDao.getInstanceByUsername("username")).isNotNull();
-        assertThat(userDao.getInstanceByUsername("username").getRole()).isEqualTo(UserRole.NORMAL);
+        assertThat(userDao.getInstanceByName("username")).isNotNull();
+        assertThat(userDao.getInstanceByName("username").getRole()).isEqualTo(UserRole.NORMAL);
     }
 
     @Test
@@ -78,9 +78,25 @@ public class UserDaoTest extends DatabaseTestCase {
 
     @Test
     public void testGetInstanceByName() {
-        assertThat(userDao.getInstanceByName("12345@qq.com")).isNotNull();
+        User user = userDao.getInstanceByName("12345@qq.com");
+        assertThat(user).isNotNull();
+        assertThat(user.getUsername()).isEqualTo("admin-user1");
+
         assertThat(userDao.getInstanceByName("user1")).isNotNull();
+
+        user = userDao.getInstanceByName("User1");
+        assertThat(user).isNotNull();
+        assertThat(user.getUsername()).isEqualTo("user1");
+
         assertThat(userDao.getInstanceByName("12345test@qq.com")).isNull();
+    }
+
+    @Test
+    public void testGetInstanceByEmail() {
+        assertThat(userDao.getInstanceByEmail("12345@qq.com")).isNotNull();
+        assertThat(userDao.getInstanceByEmail("12345@QQ.COM")).isNotNull();
+        assertThat(userDao.getInstanceByEmail("123456@QQ.COM")).isNull();
+        assertThat(userDao.getInstanceByEmail("user1")).isNull();
     }
 
     @Test

@@ -22,6 +22,12 @@ public class UserDao extends SimpleUserDao {
     private final static Logger LOGGER = LoggerFactory.getLogger(UserDao.class);
     public final static int SERIAL_KEY_LENGTH = 100;
 
+    @Deprecated
+    @Override
+    public void setIgnoreCase(boolean ignoreCase) {
+        throw new RuntimeException("not support method");
+    }
+
     private Integer add(String username, String password, String role, String email, String tel,
                         Integer spreadUserId, String spreadWay) {
         User user = new User();
@@ -61,7 +67,7 @@ public class UserDao extends SimpleUserDao {
      */
     @Override
     public User getInstanceByName(String usernameFromLoginForm) {
-        User user = getInstanceByUsername(usernameFromLoginForm);
+        User user = (User) super.getInstanceByName(usernameFromLoginForm);
         if (user != null) {
             return user;
         }
@@ -74,23 +80,12 @@ public class UserDao extends SimpleUserDao {
         return getInstanceByTel(usernameFromLoginForm);
     }
 
-    public User getInstanceByUsername(String username) {
-        if (StringUtils.isBlank(username)) {
-            return null;
-        }
-
-        return new HibernateListBuilder().addEqualFilter("username", username)
-                .getFirstItem(User.class);
-    }
-
     public User getInstanceByEmail(String email) {
         if (StringUtils.isBlank(email)) {
             return null;
         }
 
-        return new HibernateListBuilder().addFilter("LOWER(email)=:email")  /* ignore case */
-                .addArgument("email", email.toLowerCase())
-                .getFirstItem(User.class);
+        return new HibernateListBuilder().addEqualFilterIgnoreCase("email", email).getFirstItem(User.class);
     }
 
     public User getInstanceByTel(String tel) {
