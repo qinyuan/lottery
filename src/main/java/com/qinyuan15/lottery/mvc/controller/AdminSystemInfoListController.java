@@ -27,7 +27,7 @@ public class AdminSystemInfoListController extends TableController {
         addCssAndJs("admin-system-info-list");
         return "admin-system-info-list";
     }
-    
+
     @RequestMapping(value = "/admin-system-info-list-distinct-values.json", method = RequestMethod.GET)
     @ResponseBody
     public String getDistinctValues() {
@@ -59,7 +59,8 @@ public class AdminSystemInfoListController extends TableController {
                 return targetValue == null ? null : HtmlUtils.toText(targetValue.toString());
             }
         });
-        //table.addField("状态", "CASE WHEN unread=TRUE THEN '未读' ELSE '已读' END", "status");
+        table.addField("状态", "CASE WHEN unread=TRUE THEN '未读' ELSE '已读' END", "status");
+        table.addOrder("build_time", false);
         return table;
     }
 }

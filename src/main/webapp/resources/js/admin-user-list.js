@@ -147,7 +147,7 @@
             });
             this.$submitSystemInfo.click(function () {
                 if (self.validate()) {
-                    self.$submitSystemInfo.text('邮件发送中...');
+                    self.$submitSystemInfo.text('消息发送中...');
                     JSUtils.postArrayParams('admin-user-list-send-system-info.json', {
                         'userIds': users.getIds(),
                         'content': self.getContent()
