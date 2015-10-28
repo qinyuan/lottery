@@ -873,8 +873,18 @@ var JSUtils = {
     },
     getLastLoadScriptPath: function () {
         return document.getElementsByTagName('script')[document.getElementsByTagName('script').length - 1].src;
+    },
+    loadDelayImages: function () {
+        $('img.delay').each(function(){
+            var $this = $(this);
+            var src = $this.data('source');
+            $this.attr('src', src).show();
+        });
     }
 };
+setTimeout(function () {
+    JSUtils.loadDelayImages();
+}, 50);
 
 /**
  * query plugins

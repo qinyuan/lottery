@@ -105,6 +105,10 @@ img.link {
     cursor: pointer;
 }
 
+img.delay {
+    display: none;
+}
+
 /* style about transparent */
 .lightTransparent {
     opacity: 0.3;

@@ -349,10 +349,10 @@
             setCloseIconEvent(this.$div, function () {
                 self.$div.fadeOut(300, function () {
                     /*if (self.showSubscribe) {
-                        subscribe.show();
-                    } else {
-                        JSUtils.hideTransparentBackground();
-                    }*/
+                     subscribe.show();
+                     } else {
+                     JSUtils.hideTransparentBackground();
+                     }*/
                     JSUtils.hideTransparentBackground();
                 });
             });
@@ -378,7 +378,12 @@
                 $('map area').each(function () {
                     init = true;
                     if (this.href == "javascript:void(showLotteryRule())") {
-                        this.href = self.$div.find('div.body div.bottom div.rule a').attr('href');
+                        var ruleHref = self.$div.find('div.body div.bottom div.rule a').attr('href');
+                        if (ruleHref) {
+                            this.href = self.$div.find('div.body div.bottom div.rule a').attr('href');
+                        } else {
+                            this.href = "javascript:void(0)";
+                        }
                     }
                 });
                 if (init) {
@@ -527,10 +532,10 @@
             setCloseIconEvent(this.$div, function () {
                 self.$div.fadeOut(300, function () {
                     /*if (self.showSubscribe) {
-                        subscribe.show();
-                    } else {
-                        JSUtils.hideTransparentBackground();
-                    }*/
+                     subscribe.show();
+                     } else {
+                     JSUtils.hideTransparentBackground();
+                     }*/
                     subscribe.show();
                 });
                 self.clearRemainingTimeUpdater();

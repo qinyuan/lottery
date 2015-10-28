@@ -14,8 +14,8 @@
 <q:js src="lib/jquery.cookie"/>
 <q:js src="lib/jquery-form-3.51.0"/>
 <q:js src="lib/underscore-min"/>
-<q:js src="lib/jsutils/jsutils"/>
-<q:js src="common"/>
+<q:js src="lib/jsutils/jsutils" version="true"/>
+<q:js src="common" version="true"/>
 <%---
 <!--[if IE]>
 <script src="resources/js/lib/angular/html5shiv.js"></script>

@@ -20,7 +20,9 @@ abstract class AbstractShareUrlBuilder {
         if (!host.contains("/")) {
             host += "/";
         }
-        this.targetUrl = host + PAGE + "?fromUser=" + userSerialKey + "&id=" + commodity.getId();
+        //this.targetUrl = host + PAGE + "?fromUser=" + userSerialKey + "&id=" + commodity.getId();
+        this.targetUrl = host + PAGE + "?id=" + commodity.getId() + "&fromUser=" + userSerialKey +
+                "&t=" + System.currentTimeMillis();
     }
 
     public String getSinaShareUrl() {

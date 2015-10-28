@@ -4,7 +4,7 @@
     <div class="back"></div>
     <div class="content page-width">
         <div class="left-logo">
-            <a href="index.html" style=""><img src="${commodityHeaderLeftLogo}"/></a>
+            <a href="index.html" style=""><img class="delay" data-source="${commodityHeaderLeftLogo}"/></a>
         </div>
         <div class="right-navigation">
             <%@include file="security-navigation.jsp" %>
@@ -114,8 +114,8 @@
             <div class="pokers">
                 <c:forEach var="index" begin="1" end="3">
                     <div class="poker" data-options="index:1">
-                        <img class="back" src="${pokerBackSide}"/>
-                        <img class="front link" src="${pokerFrontSide}"/>
+                        <img class="back delay" data-source="${pokerBackSide}"/>
+                        <img class="front link delay" data-source="${pokerFrontSide}"/>
                     </div>
                 </c:forEach>
             </div>
@@ -137,6 +137,18 @@
             <jsp:include page="commodity-activity-share.jsp">
                 <jsp:param name="title" value="告诉小伙伴一起抢"/>
             </jsp:include>
+        </div>
+    </div>
+</div>
+<div class="float-panel shadow" id="exceptionPrompt">
+    <jsp:include page="commodity-float-panel-title.jsp">
+        <jsp:param name="title" value="提示信息"/>
+    </jsp:include>
+    <div class="body">
+        <div class="info"></div>
+
+        <div class="links">
+            <a target="_blank" href="activity-history.html">查看我的活动历史</a>
         </div>
     </div>
 </div>
