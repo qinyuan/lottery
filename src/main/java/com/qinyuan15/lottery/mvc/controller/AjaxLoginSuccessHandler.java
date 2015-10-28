@@ -1,6 +1,5 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan.lib.mvc.controller.UserAgent;
 import com.qinyuan.lib.mvc.security.AjaxAuthenticationSuccessHandler;
 import com.qinyuan15.lottery.mvc.LoginRecordAdder;
 import org.springframework.security.core.Authentication;
@@ -16,6 +15,7 @@ public class AjaxLoginSuccessHandler extends AjaxAuthenticationSuccessHandler {
             throws IOException, ServletException {
         super.onAuthenticationSuccess(request, response, authentication);
         new LivenessAdder(request.getSession()).addLiveness(true);
-        new LoginRecordAdder().add(request.getRemoteAddr(), new UserAgent(request).getOS().toString());
+        new LoginRecordAdder().add(request);
+        //new LoginRecordAdder().add(request.getRemoteAddr(), new UserAgent(request).getOS().toString());
     }
 }

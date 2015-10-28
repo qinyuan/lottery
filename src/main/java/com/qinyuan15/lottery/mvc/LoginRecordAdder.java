@@ -1,11 +1,14 @@
 package com.qinyuan15.lottery.mvc;
 
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.mvc.controller.UserAgent;
 import com.qinyuan.lib.mvc.security.LoginRecordDao;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Class to add login record by new thread to prevent from blocking
@@ -13,6 +16,10 @@ import org.slf4j.LoggerFactory;
  */
 public class LoginRecordAdder {
     private final static Logger LOGGER = LoggerFactory.getLogger(LoginRecordAdder.class);
+
+    public void add(HttpServletRequest request) {
+        add(request.getRemoteAddr(), new UserAgent(request).getOS().toString());
+    }
 
     public void add(String ip, String platform) {
         new AddThread(ip, new UserDao().getIdByName(SecurityUtils.getUsername()), platform).start();

@@ -1,6 +1,5 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan.lib.mvc.controller.UserAgent;
 import com.qinyuan15.lottery.mvc.LoginRecordAdder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -16,6 +15,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             throws ServletException, IOException {
         super.onAuthenticationSuccess(request, response, authentication);
         new LivenessAdder(request.getSession()).addLiveness(true);
-        new LoginRecordAdder().add(request.getRemoteAddr(), new UserAgent(request).getOS().toString());
+        new LoginRecordAdder().add(request);
+        //new LoginRecordAdder().add(request.getRemoteAddr(), new UserAgent(request).getOS().toString());
     }
 }

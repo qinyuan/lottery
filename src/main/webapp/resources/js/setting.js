@@ -38,7 +38,7 @@
         });
     });
     $personalInfo.find('a.cancel').click(function () {
-        $personalInfo.find('edit-submit').slideUp(200);
+        $personalInfo.find('div.edit-submit').slideUp(200);
         $personalInfo.find('span.input').hide();
         $personalInfo.find('span.text').show();
     });

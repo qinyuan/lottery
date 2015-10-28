@@ -52,6 +52,8 @@ public class SettingController extends ImageController {
             List<LoginRecord> loginRecords = LoginRecordDao.factory().setAscOrder(false).setLimitSize(1).getInstances();
             if (loginRecords.size() > 0) {
                 setAttribute("location", loginRecords.get(0).getLocation());
+            } else {
+                setAttribute("location", "从未登录");
             }
             setAttribute("user", user);
             setAttribute("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
