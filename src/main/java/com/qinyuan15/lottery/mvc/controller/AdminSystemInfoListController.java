@@ -4,19 +4,26 @@ import com.qinyuan.lib.mvc.controller.DatabaseTable;
 import com.qinyuan.lib.mvc.controller.DatabaseTableColumnPostHandler;
 import com.qinyuan.lib.mvc.controller.TableController;
 import com.qinyuan.lib.network.html.HtmlUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class AdminSystemInfoListController extends TableController {
 
     @RequestMapping("/admin-system-info-list")
-    public String index() {
+    public String index(@RequestParam(value = "orderField", required = false) String orderField) {
+
         IndexHeaderUtils.setHeaderParameters(this);
 
-        getTableUtil().addIndexAttributes(getTable());
+        DatabaseTable table = getTable();
+        if (StringUtils.isBlank(orderField)) {
+            table.addOrder(DEFAULT_ORDER_FIELD, false); // set default order
+        }
+        getTableUtil().addIndexAttributes(table);
         /*//getTableUtil().addIndexAttributes(getTable());
         DatabaseTable table = getTable();
         setAttribute("infoTable", table);
@@ -46,9 +53,11 @@ public class AdminSystemInfoListController extends TableController {
         return super.removeFilter();
     }
 
+    private final static String DEFAULT_ORDER_FIELD = "build_time";
+
     protected DatabaseTable getTable() {
         String tableName = "system_info_send_record AS r LEFT JOIN system_info AS i ON r.info_id=i.id";
-        tableName += " LEFT JOIN user AS u ON r.user_id=u.id";
+        tableName += " INNER JOIN user AS u ON r.user_id=u.id";
 
         DatabaseTable table = new DatabaseTable(tableName, "r.id", DatabaseTable.QueryType.SQL);
         table.addField("时间", "i.build_time", "build_time");
@@ -60,7 +69,6 @@ public class AdminSystemInfoListController extends TableController {
             }
         });
         table.addField("状态", "CASE WHEN unread=TRUE THEN '未读' ELSE '已读' END", "status");
-        table.addOrder("build_time", false);
         return table;
     }
 }

@@ -309,12 +309,9 @@
             this.$div.find('div.title div.text span.text').text('抽奖详情：0元抽 ' + options['commodity']['name']);
 
             // commodity and activity
-            var $image = this.$div.find('div.activity div.image img');
-            var image = $image.get(0);
-            image.width = 0;
-            image.height = 0;
-            $image.attr('src', options['commodity']['snapshot']);
-            adjustImage($image.get(0), 110, 70);
+            var $image = this.$div.find('div.activity div.image').empty();
+            var image = $('<img/>').attr('src', options['commodity']['snapshot']).appendTo($image);
+            adjustImage(image.get(0), 110, 70);
             this.$div.find('div.activity div.description').html(options['activityDescription']);
 
             if (options['detail'] == 'activityExpire') {
@@ -483,12 +480,9 @@
             this.showSubscribe = !options['receiveMail'];
 
             // commodity and activity
-            var $image = this.$div.find('div.activity div.image img');
-            var image = $image.get(0);
-            image.width = 0;
-            image.height = 0;
-            $image.attr('src', options['commodity']['snapshot']);
-            adjustImage($image.get(0), 110, 70);
+            var $image = this.$div.find('div.activity div.image').empty();
+            var image = $('<img/>').attr('src', options['commodity']['snapshot']).appendTo($image);
+            adjustImage(image.get(0), 110, 70);
             this.$div.find('div.activity div.description').html(options['activityDescription']);
 
             // share url
