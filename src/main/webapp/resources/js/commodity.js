@@ -310,6 +310,9 @@
 
             // commodity and activity
             var $image = this.$div.find('div.activity div.image img');
+            var image = $image.get(0);
+            image.width = 0;
+            image.height = 0;
             $image.attr('src', options['commodity']['snapshot']);
             adjustImage($image.get(0), 110, 70);
             this.$div.find('div.activity div.description').html(options['activityDescription']);
@@ -481,6 +484,9 @@
 
             // commodity and activity
             var $image = this.$div.find('div.activity div.image img');
+            var image = $image.get(0);
+            image.width = 0;
+            image.height = 0;
             $image.attr('src', options['commodity']['snapshot']);
             adjustImage($image.get(0), 110, 70);
             this.$div.find('div.activity div.description').html(options['activityDescription']);
