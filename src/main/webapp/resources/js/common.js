@@ -357,43 +357,6 @@ var angularUtils = {
         register.show();
     });
 
-    // actions of registerSuccess
-    /*var registerSuccess = ({
-     show: function (email) {
-     this.$div.find('span.email').text(email);
-     var mailLoginPage = JSUtils.getEmailLoginPage(email);
-     this.$div.find('a.to-mail-page').attr('href', mailLoginPage);
-     this.$div.fadeIn(500);
-     },
-     init: function () {
-     var self = this;
-     this.$div = $('#registerSuccess');
-     this.$div.find('div.title div.close-icon').click(function () {
-     self.$div.hide();
-     JSUtils.hideTransparentBackground();
-     });
-     return this;
-     }
-     }).init();*/
-
-    // resend activate email
-    /*$('div.activate-remind div.body a.resend').click(function () {
-     var $body = $(this).parent();
-     if ($body.size() > 0 && !$body.hasClass('body')) {
-     $body = $body.parent();
-     }
-     var email = $body.find('span.email').text();
-     $.get('resend-register-email.json', {
-     'email': email
-     }, function (data) {
-     if (data.success) {
-     $body.find('span.resend-success').showForAWhile(2000);
-     } else {
-     $body.find('span.resend-fail').text(data.detail + '！').showForAWhile(2000);
-     }
-     });
-     });*/
-
     // refresh identity code
     $('img.identity-code').click(function () {
         this.src = 'identity-code?id=' + new Date().getTime();
@@ -402,23 +365,4 @@ var angularUtils = {
         $(this).prev().trigger('click');
     });
 })();
-/*(function () {
- // remind activation
- var $activateRemind = $('#activateRemind');
- $activateRemind.find('div.title div.close-icon').click(function () {
- $activateRemind.hide();
- JSUtils.hideTransparentBackground();
- });
-
- if (window['unactivatedEmail']) {
- showActivateRemind(window['unactivatedEmail']);
- }
-
- function showActivateRemind(email) {
- JSUtils.showTransparentBackground();
- $activateRemind.find('span.email').text(email);
- $activateRemind.find('a.to-mail-page').attr('href', JSUtils.getEmailLoginPage(email));
- $activateRemind.fadeIn(500);
- }
- })();*/
 var switchToLogin, showLoginForm, hideLoginForm, showRegisterForm;
