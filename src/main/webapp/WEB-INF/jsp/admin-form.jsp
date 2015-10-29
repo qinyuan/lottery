@@ -166,7 +166,7 @@
                 <td class="title">网站简介页面</td>
                 <td class="input">
                     <input type="text" class="form-control" name="websiteIntroductionLink"
-                           value="${websiteintroductionlink}"/>
+                           value="${websiteIntroductionLink}"/>
                 </td>
             </tr>
             </tbody>
@@ -179,14 +179,6 @@
         <div>
             <c:forEach var="mail" items="${mails}">
                 <div class="mail-item" data-options="id: ${mail.id}">
-                        <%--<input type="hidden" class="host" value="${mail.host}"/>
-                        <input type="hidden" class="password" value="${mail.password}"/>
-
-                        <div class="username" title="单击修改">${mail.username}</div>
-                        <div class="edit-image" title="单击修改"><img class="link"
-                                                                  src="resources/css/images/pencil.png"/></div>
-                        <div class="close-image" title="删除"><img class="link" src="resources/css/images/close.gif"/>
-                        </div>--%>
                     <input type="hidden" class="type" value="${mail.type}"/>
 
                     <div class="username" title="单击修改">${mail.username}</div>
