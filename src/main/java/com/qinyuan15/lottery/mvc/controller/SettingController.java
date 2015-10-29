@@ -94,7 +94,6 @@ public class SettingController extends ImageController {
         }
 
         addCssAndJs("setting");
-        addJs(CDNSource.HANDLEBARS);
         return "setting";
     }
 
