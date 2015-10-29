@@ -157,7 +157,6 @@
 })();
 (function () {
     // codes about mail account
-    //JSUtils.loadSelectFormEventsAndValue($('div.activate-mail-select'), window['currentActivateMailAccountId']);
     JSUtils.loadSelectFormEventsAndValue($('div.register-mail-select'), window['currentRegisterMailAccountId']);
     JSUtils.loadSelectFormEventsAndValue($('div.reset-password-mail-select'), window['currentResetPasswordMailAccountId']);
     JSUtils.loadSelectFormEventsAndValue($('div.reset-email-mail-select'), window['currentResetEmailMailAccountId']);
@@ -166,7 +165,6 @@
     JSUtils.recordScrollStatus();
     $('#submitButton').click(function (e) {
         if ((!JSUtils.validateUploadFile('indexHeaderLeftLogo', '左图标未设置'))
-            /*|| (!JSUtils.validateUploadFile('indexHeaderRightLogo', '右图标未设置'))*/
             || (!JSUtils.validateUploadFile('indexHeaderSlogan', '右侧宣传图片未设置'))) {
             e.preventDefault();
             return false;

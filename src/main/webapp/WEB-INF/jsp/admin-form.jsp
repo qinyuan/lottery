@@ -34,16 +34,6 @@
                     </jsp:include>
                 </td>
             </tr>
-            <%--<tr>
-                <td class="title">右图标</td>
-                <td class="input">
-                    <jsp:include page="widget-upload-image.jsp">
-                        <jsp:param name="id" value="indexHeaderRightLogo"/>
-                        <jsp:param name="value" value="${indexHeaderRightLogo}"/>
-                        <jsp:param name="snapshot" value="true"/>
-                    </jsp:include>
-                </td>
-            </tr>--%>
             <tr>
                 <td class="title">右侧宣传图片</td>
                 <td class="input">

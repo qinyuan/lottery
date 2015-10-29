@@ -31,9 +31,6 @@ public class AdminController extends ImageController {
         IndexHeaderUtils.setHeaderParameters(this);
         CommodityHeaderUtils.setHeaderParameters(this);
 
-        /*setAttribute("activateMailSubjectTemplate", AppConfig.getActivateMailSubjectTemplate());
-        setAttribute("activateMailContentTemplate", AppConfig.getActivateMailContentTemplate());
-        addJavaScriptData("currentActivateMailAccountId", AppConfig.getActivateMailAccountId());*/
         setAttribute("registerMailSubjectTemplate", AppConfig.getRegisterMailSubjectTemplate());
         setAttribute("registerMailContentTemplate", AppConfig.getRegisterMailContentTemplate());
         addJavaScriptData("currentRegisterMailAccountId", AppConfig.getRegisterMailAccountId());
@@ -178,8 +175,6 @@ public class AdminController extends ImageController {
     @RequestMapping("/admin-submit")
     public String submit(@RequestParam(value = "indexHeaderLeftLogo", required = true) String indexHeaderLeftLogo,
                          @RequestParam(value = "indexHeaderLeftLogoFile", required = true) MultipartFile indexHeaderLeftLogoFile,
-                         /*@RequestParam(value = "indexHeaderRightLogo", required = true) String indexHeaderRightLogo,
-                         @RequestParam(value = "indexHeaderRightLogoFile", required = true) MultipartFile indexHeaderRightLogoFile,*/
                          @RequestParam(value = "indexHeaderSlogan", required = true) String indexHeaderSlogan,
                          @RequestParam(value = "indexHeaderSloganFile", required = true) MultipartFile indexHeaderSloganFile,
                          @RequestParam(value = "headerLinkTitles", required = true) String[] headerLinkTitles,
@@ -191,9 +186,6 @@ public class AdminController extends ImageController {
                          @RequestParam(value = "commodityHeaderLeftLogoFile", required = true) MultipartFile commodityHeaderLeftLogoFile,
                          @RequestParam(value = "favicon", required = true) String favicon,
                          @RequestParam(value = "faviconFile", required = true) MultipartFile faviconFile,
-                         /*@RequestParam(value = "activateMailAccountId", required = true) Integer activateMailAccountId,
-                         @RequestParam(value = "activateMailSubjectTemplate", required = true) String activateMailSubjectTemplate,
-                         @RequestParam(value = "activateMailContentTemplate", required = true) String activateMailContentTemplate,*/
                          @RequestParam(value = "registerMailAccountId", required = true) Integer registerMailAccountId,
                          @RequestParam(value = "registerMailSubjectTemplate", required = true) String registerMailSubjectTemplate,
                          @RequestParam(value = "registerMailContentTemplate", required = true) String registerMailContentTemplate,
@@ -211,23 +203,15 @@ public class AdminController extends ImageController {
 
         final String redirectPage = "admin";
 
-        String indexHeaderLeftLogoPath = null, /*indexHeaderRightLogoPath = null,*/
-                indexHeaderSloganPath = null, footerPosterPath = null,
-                commodityHeaderLeftLogoPath = null, faviconPath = null,
-                registerHeaderLeftLogoPath = null, registerHeaderRightLogoPath = null;
+        String indexHeaderLeftLogoPath = null, indexHeaderSloganPath = null, footerPosterPath = null,
+                commodityHeaderLeftLogoPath = null, faviconPath = null, registerHeaderLeftLogoPath = null,
+                registerHeaderRightLogoPath = null;
         try {
             indexHeaderLeftLogoPath = getSavePath(indexHeaderLeftLogo, indexHeaderLeftLogoFile);
         } catch (Exception e) {
             LOGGER.error("error in getting save path of indexHeaderLeftLogo: {}", e);
             redirect(redirectPage, "主页页头左图标处理失败！");
         }
-
-        /*try {
-            indexHeaderRightLogoPath = getSavePath(indexHeaderRightLogo, indexHeaderRightLogoFile);
-        } catch (Exception e) {
-            LOGGER.error("error in getting save path of indexHeaderRightLogo: {}", e);
-            redirect(redirectPage, "主页页头右图标处理失败！");
-        }*/
 
         try {
             indexHeaderSloganPath = getSavePath(indexHeaderSlogan, indexHeaderSloganFile);
@@ -254,14 +238,12 @@ public class AdminController extends ImageController {
             registerHeaderLeftLogoPath = getSavePath(registerHeaderLeftLogo, registerHeaderLeftLogoFile);
         } catch (Exception e) {
             LOGGER.error("error in getting save path of registerHeaderLeftLogo");
-            //redirect(redirectPage, "注册页页头左图标处理失败！");
         }
 
         try {
             registerHeaderRightLogoPath = getSavePath(registerHeaderRightLogo, registerHeaderRightLogoFile);
         } catch (Exception e) {
             LOGGER.error("error in getting save path of registerHeaderRightLogo");
-            //redirect(redirectPage, "注册页页头右图标处理失败！");
         }
 
         try {
@@ -272,16 +254,12 @@ public class AdminController extends ImageController {
         }
 
         AppConfig.updateIndexHeaderLeftLogo(indexHeaderLeftLogoPath);
-        //AppConfig.updateIndexHeaderRightLogo(indexHeaderRightLogoPath);
         AppConfig.updateIndexHeaderSlogan(indexHeaderSloganPath);
         AppConfig.updateFooterPoster(footerPosterPath);
         AppConfig.updateFooterText(footerText);
         AppConfig.updateCommodityHeaderLeftLogo(commodityHeaderLeftLogoPath);
         AppConfig.updateFavicon(faviconPath);
 
-        /*AppConfig.updateActivateMailAccountId(activateMailAccountId);
-        AppConfig.updateActivateMailSubjectTemplate(activateMailSubjectTemplate);
-        AppConfig.updateActivateMailContentTemplate(activateMailContentTemplate);*/
         AppConfig.updateRegisterMailAccountId(registerMailAccountId);
         AppConfig.updateRegisterMailSubjectTemplate(registerMailSubjectTemplate);
         AppConfig.updateRegisterMailContentTemplate(registerMailContentTemplate);

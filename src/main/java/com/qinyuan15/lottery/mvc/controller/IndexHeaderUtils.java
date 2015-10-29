@@ -15,7 +15,6 @@ import java.util.List;
 public class IndexHeaderUtils {
     static void setHeaderParameters(ImageController controller) {
         controller.setAttribute("indexHeaderLeftLogo", controller.pathToUrl(AppConfig.getIndexHeaderLeftLogo()));
-        controller.setAttribute("indexHeaderRightLogo", controller.pathToUrl(AppConfig.getIndexHeaderRightLogo()));
         controller.setAttribute("indexHeaderSlogan", controller.pathToUrl(AppConfig.getIndexHeaderSlogan()));
 
         controller.setAttribute("indexHeaderLinks", new NavigationLinkDao().getInstances());

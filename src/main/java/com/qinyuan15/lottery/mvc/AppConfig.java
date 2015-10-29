@@ -38,18 +38,6 @@ public class AppConfig {
     }
     /////////////////////// index header left logo end //////////////////////////
 
-    /////////////////////// index header right logo start //////////////////////////
-    private final static String INDEX_HEADER_RIGHT_LOGO_KEY = "indexHeaderRightLogo";
-
-    public static String getIndexHeaderRightLogo() {
-        return dao.get(INDEX_HEADER_RIGHT_LOGO_KEY);
-    }
-
-    public static void updateIndexHeaderRightLogo(String indexHeaderRightLogo) {
-        dao.save(INDEX_HEADER_RIGHT_LOGO_KEY, indexHeaderRightLogo);
-    }
-    /////////////////////// index header right logo end //////////////////////////
-
     /////////////////////// index header slogan start ////////////////////////////
     private final static String INDEX_HEADER_SLOGAN_KEY = "indexHeaderSlogan";
 
