@@ -151,15 +151,22 @@
     </div>
 </div>
 <div class="edit-unit">
-    <div class="title">手机号验证说明页面设置</div>
+    <div class="title">帮助说明页面链接设置</div>
     <div class="content">
         <table>
             <tbody>
             <tr>
-                <td class="title">页面链接</td>
+                <td class="title">手机号验证说明页面</td>
                 <td class="input">
                     <input type="text" class="form-control" name="telValidateDescriptionPage"
                            value="${telValidateDescriptionPage}"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">网站简介页面</td>
+                <td class="input">
+                    <input type="text" class="form-control" name="websiteIntroductionLink"
+                           value="${websiteintroductionlink}"/>
                 </td>
             </tr>
             </tbody>

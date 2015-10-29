@@ -26,6 +26,19 @@ public class AppConfig {
 
     private final static AppConfigDao dao = new AppConfigDao();
 
+    //////////////////////// website introduction link start ///////////////////////////
+    private final static String WEBSITE_INTRODUCTION_LINK_KEY = "websiteIntroductionLink";
+
+    public static String getWebsiteIntroductionLink() {
+        return dao.get(WEBSITE_INTRODUCTION_LINK_KEY);
+    }
+
+    public static void updateWebsiteIntroductionLink(String websiteIntroductionLink) {
+        dao.save(WEBSITE_INTRODUCTION_LINK_KEY, websiteIntroductionLink);
+    }
+
+    //////////////////////// website introduction link end /////////////////////////////
+
     /////////////////////// index header left logo start //////////////////////////
     private final static String INDEX_HEADER_LEFT_LOGO_KEY = "indexHeaderLeftLogo";
 
@@ -578,15 +591,6 @@ public class AppConfig {
     //////////////////////////// seckill announcement template end //////////////////////////////
 
     ///////////////////////////// lottery rule start ///////////////////////////////
-    /*private final static String LOTTERY_RULE_KEY = "lotteryRule";
-
-    public static String getLotteryRule() {
-        return dao.get(LOTTERY_RULE_KEY);
-    }
-
-    public static void updateLotteryRule(String lotteryRule) {
-        dao.save(LOTTERY_RULE_KEY, lotteryRule);
-    }*/
     private final static String LOTTERY_RULE_LINK = "lotteryRuleLink";
 
     public static String getLotteryRuleLink() {

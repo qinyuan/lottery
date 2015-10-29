@@ -13,11 +13,11 @@ import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.lottery.mvc.mail.RegisterMailSender;
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,10 +37,17 @@ public class RegisterController extends ImageController {
     public String index(@RequestParam(value = "serial", required = true) String serial) {
         IndexHeaderUtils.setHeaderParameters(this);
 
-        if (StringUtils.hasText(serial)) {
+        if (StringUtils.isNotBlank(serial)) {
             PreUser preUser = new PreUserDao().getInstanceBySerialKey(serial);
             setAttribute("preUser", preUser);
             addJavaScriptData("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
+
+            String websiteintroductionlink = AppConfig.getWebsiteIntroductionLink();
+            if (StringUtils.isBlank(websiteintroductionlink)) {
+                websiteintroductionlink = "javascript:void(0)";
+            }
+            setAttribute("websiteintroductionlink", websiteintroductionlink);
+
             if (preUser != null && new UserDao().hasEmail(preUser.getEmail())) {
                 setAttribute("userInfoCompleted", true);
             }
@@ -63,7 +70,7 @@ public class RegisterController extends ImageController {
     public String completeUserInfo(@RequestParam(value = "serialKey", required = true) String serialKey,
                                    @RequestParam(value = "username", required = true) String username,
                                    @RequestParam(value = "password", required = true) String password) {
-        if (!StringUtils.hasText(serialKey)) {
+        if (StringUtils.isBlank(serialKey)) {
             return failByInvalidParam();
         }
 
@@ -92,7 +99,7 @@ public class RegisterController extends ImageController {
             Integer spreadUserId = preUser.getSpreadUserId();
             String spreadWay = preUser.getSpreadWay();
             Integer userId;
-            if (IntegerUtils.isPositive(spreadUserId) && StringUtils.hasText(spreadWay)) {
+            if (IntegerUtils.isPositive(spreadUserId) && StringUtils.isNotBlank(spreadWay)) {
                 userId = userDao.addNormal(username, password, email, spreadUserId, spreadWay);
                 LivenessAdder.addLiveness(userId, false, spreadUserId, spreadWay, preUser.getActivityId());
             } else {

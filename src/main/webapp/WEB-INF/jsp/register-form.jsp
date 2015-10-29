@@ -20,7 +20,7 @@
         <span class="invalid"><span class="icon"></span><span class="text"></span></span>
     </div>
     <div class="subscribe">
-        <input type="checkbox" name="subscribe"/> 已经认真阅读并同意订阅 <span class="emphasize">《布迪网》</span>
+        <input type="checkbox" name="subscribe"/> 已经认真阅读并同意订阅 <a target="_blank" href="${websiteintroductionlink}">《布迪网》</a>
     </div>
     <div class="submit">
         <q:qqlist nId="<%=AppConfig.getQQListId()%>" email="${preUser.email}" newPage="${!isMobile}">

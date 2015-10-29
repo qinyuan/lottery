@@ -46,6 +46,7 @@ public class AdminController extends ImageController {
         addJavaScriptData("currentResetEmailMailAccountId", AppConfig.getResetEmailMailAccountId());
 
         setAttribute("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
+        setAttribute("websiteIntroductionLink", AppConfig.getWebsiteIntroductionLink());
 
         List<MailAccount> accounts = new MailAccountDao().getInstances();
         setAttribute("mails", accounts);
@@ -173,33 +174,34 @@ public class AdminController extends ImageController {
     }
 
     @RequestMapping("/admin-submit")
-    public String submit(@RequestParam(value = "indexHeaderLeftLogo", required = true) String indexHeaderLeftLogo,
-                         @RequestParam(value = "indexHeaderLeftLogoFile", required = true) MultipartFile indexHeaderLeftLogoFile,
-                         @RequestParam(value = "indexHeaderSlogan", required = true) String indexHeaderSlogan,
-                         @RequestParam(value = "indexHeaderSloganFile", required = true) MultipartFile indexHeaderSloganFile,
-                         @RequestParam(value = "headerLinkTitles", required = true) String[] headerLinkTitles,
-                         @RequestParam(value = "headerLinkHrefs", required = true) String[] headerLinkHrefs,
-                         @RequestParam(value = "footerPoster", required = true) String footerPoster,
-                         @RequestParam(value = "footerPosterFile", required = true) MultipartFile footerPosterFile,
-                         @RequestParam(value = "footerText", required = true) String footerText,
-                         @RequestParam(value = "commodityHeaderLeftLogo", required = true) String commodityHeaderLeftLogo,
-                         @RequestParam(value = "commodityHeaderLeftLogoFile", required = true) MultipartFile commodityHeaderLeftLogoFile,
-                         @RequestParam(value = "favicon", required = true) String favicon,
-                         @RequestParam(value = "faviconFile", required = true) MultipartFile faviconFile,
-                         @RequestParam(value = "registerMailAccountId", required = true) Integer registerMailAccountId,
-                         @RequestParam(value = "registerMailSubjectTemplate", required = true) String registerMailSubjectTemplate,
-                         @RequestParam(value = "registerMailContentTemplate", required = true) String registerMailContentTemplate,
-                         @RequestParam(value = "registerHeaderLeftLogo", required = true) String registerHeaderLeftLogo,
-                         @RequestParam(value = "registerHeaderLeftLogoFile", required = true) MultipartFile registerHeaderLeftLogoFile,
-                         @RequestParam(value = "registerHeaderRightLogo", required = true) String registerHeaderRightLogo,
-                         @RequestParam(value = "registerHeaderRightLogoFile", required = true) MultipartFile registerHeaderRightLogoFile,
-                         @RequestParam(value = "resetPasswordMailAccountId", required = true) Integer resetPasswordMailAccountId,
-                         @RequestParam(value = "resetPasswordMailSubjectTemplate", required = true) String resetPasswordMailSubjectTemplate,
-                         @RequestParam(value = "resetPasswordMailContentTemplate", required = true) String resetPasswordMailContentTemplate,
-                         @RequestParam(value = "resetEmailMailAccountId", required = true) Integer resetEmailMailAccountId,
-                         @RequestParam(value = "resetEmailMailSubjectTemplate", required = true) String resetEmailMailSubjectTemplate,
-                         @RequestParam(value = "resetEmailMailContentTemplate", required = true) String resetEmailMailContentTemplate,
-                         @RequestParam(value = "telValidateDescriptionPage", required = true) String telValidateDescriptionPage) {
+    public String submit(@RequestParam("indexHeaderLeftLogo") String indexHeaderLeftLogo,
+                         @RequestParam("indexHeaderLeftLogoFile") MultipartFile indexHeaderLeftLogoFile,
+                         @RequestParam("indexHeaderSlogan") String indexHeaderSlogan,
+                         @RequestParam("indexHeaderSloganFile") MultipartFile indexHeaderSloganFile,
+                         @RequestParam("headerLinkTitles") String[] headerLinkTitles,
+                         @RequestParam("headerLinkHrefs") String[] headerLinkHrefs,
+                         @RequestParam("footerPoster") String footerPoster,
+                         @RequestParam("footerPosterFile") MultipartFile footerPosterFile,
+                         @RequestParam("footerText") String footerText,
+                         @RequestParam("commodityHeaderLeftLogo") String commodityHeaderLeftLogo,
+                         @RequestParam("commodityHeaderLeftLogoFile") MultipartFile commodityHeaderLeftLogoFile,
+                         @RequestParam("favicon") String favicon,
+                         @RequestParam("faviconFile") MultipartFile faviconFile,
+                         @RequestParam("registerMailAccountId") Integer registerMailAccountId,
+                         @RequestParam("registerMailSubjectTemplate") String registerMailSubjectTemplate,
+                         @RequestParam("registerMailContentTemplate") String registerMailContentTemplate,
+                         @RequestParam("registerHeaderLeftLogo") String registerHeaderLeftLogo,
+                         @RequestParam("registerHeaderLeftLogoFile") MultipartFile registerHeaderLeftLogoFile,
+                         @RequestParam("registerHeaderRightLogo") String registerHeaderRightLogo,
+                         @RequestParam("registerHeaderRightLogoFile") MultipartFile registerHeaderRightLogoFile,
+                         @RequestParam("resetPasswordMailAccountId") Integer resetPasswordMailAccountId,
+                         @RequestParam("resetPasswordMailSubjectTemplate") String resetPasswordMailSubjectTemplate,
+                         @RequestParam("resetPasswordMailContentTemplate") String resetPasswordMailContentTemplate,
+                         @RequestParam("resetEmailMailAccountId") Integer resetEmailMailAccountId,
+                         @RequestParam("resetEmailMailSubjectTemplate") String resetEmailMailSubjectTemplate,
+                         @RequestParam("resetEmailMailContentTemplate") String resetEmailMailContentTemplate,
+                         @RequestParam("telValidateDescriptionPage") String telValidateDescriptionPage,
+                         @RequestParam("websiteIntroductionLink") String websiteIntroductionLink) {
 
         final String redirectPage = "admin";
 
@@ -275,6 +277,7 @@ public class AdminController extends ImageController {
         AppConfig.updateResetEmailMailContentTemplate(resetEmailMailContentTemplate);
 
         AppConfig.updateTelValidateDescriptionPage(telValidateDescriptionPage);
+        AppConfig.updateWebsiteIntroductionLink(websiteIntroductionLink);
 
         new NavigationLinkDao().clearAndSave(buildNavigationLinks(headerLinkTitles, headerLinkHrefs));
 
