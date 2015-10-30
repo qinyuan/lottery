@@ -238,6 +238,7 @@ div.main-body > div.summary div.participant-count {
 #exceptionPrompt, div.activity-result {
     width: 484px;
     margin-left: -242px;
+    margin-top: -167px; /* height is 334px */
 }
 
 #exceptionPrompt {

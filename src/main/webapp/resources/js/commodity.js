@@ -340,7 +340,9 @@
             // show float panel
             JSUtils.showTransparentBackground(1);
             this.$div.fadeIn(300);
-            JSUtils.scrollToVerticalCenter(this.$div);
+            if (!window['isMobileUserAgent']) {
+                JSUtils.scrollToVerticalCenter(this.$div);
+            }
         },
         init: function () {
             this.$lot = this.$div.find('div.body div.lot');
@@ -477,7 +479,9 @@
             // show float panel
             JSUtils.showTransparentBackground(1);
             this.$div.fadeIn(300);
-            JSUtils.scrollToVerticalCenter(this.$div);
+            if (!window['isMobileUserAgent']) {
+                JSUtils.scrollToVerticalCenter(this.$div);
+            }
         },
         _rolloverPoker: function ($poker) {
             var $front = $poker.find('img.front');
