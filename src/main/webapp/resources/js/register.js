@@ -1,7 +1,7 @@
 ;
 (function () {
     var email = $('div.main-body div.form div.email span.email').text();
-    if (window['isMobile'] && JSUtils.validateEmail(email)) {
+    if (window['isMobileUserAgent'] && JSUtils.validateEmail(email)) {
         var validateLogin = function () {
             $.post("isLogin.json", {email: email }, function (data) {
                 if (data.result) {
@@ -25,7 +25,7 @@
                 password: $password.val()
             }, function (data) {
                 if (data.success) {
-                    if (!window['isMobile']) {
+                    if (!window['isMobileUserAgent']) {
                         showSuccessInfo();
                     }
                 } else {

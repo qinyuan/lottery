@@ -18,7 +18,7 @@
         已经认真阅读并同意订阅 <a target="_blank" href="${websiteIntroductionLink}">《布迪网》</a>
     </div>
     <div class="submit">
-        <q:qqlist nId="<%=AppConfig.getQQListId()%>" email="${preUser.email}" newPage="${!isMobile}">
+        <q:qqlist nId="<%=AppConfig.getQQListId()%>" email="${preUser.email}" newPage="${!isMobileUserAgent}">
             <button type="submit" class="ok btn btn-success" disabled>创建帐号</button>
         </q:qqlist>
     </div>

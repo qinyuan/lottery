@@ -3,6 +3,8 @@ package com.qinyuan15.lottery.mvc.controller;
 import com.qinyuan.lib.config.ImageConfig;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageUrlAdapter;
+import com.qinyuan.lib.mvc.controller.RequestUtils;
+import com.qinyuan.lib.mvc.controller.UserAgentUtils;
 import com.qinyuan.lib.mvc.security.SecuritySearcher;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan.lib.mvc.security.UserRole;
@@ -48,13 +50,11 @@ public class CommonInterceptor implements HandlerInterceptor {
         httpServletRequest.setAttribute("footerText", AppConfig.getFooterText());
         httpServletRequest.setAttribute("favicon", imageUrlAdapter.pathToUrl(AppConfig.getFavicon()));
 
-        UserDao userDao = new UserDao();
-        SecuritySearcher searcher = new SecuritySearcher(userDao);
+        RequestUtils.addAttributeAndJavaScriptData(httpServletRequest,
+                "isMobileUserAgent", UserAgentUtils.isMobileUserAgent(httpServletRequest));
+
+        SecuritySearcher searcher = new SecuritySearcher(new UserDao());
         if (SecurityUtils.hasAuthority(UserRole.NORMAL)) {
-            /*User user = userDao.getInstance(searcher.getUserId());
-            if (!user.getActive()) {
-                httpServletRequest.setAttribute("unactivatedEmail", user.getEmail());
-            }*/
             Integer userId = searcher.getUserId();
             httpServletRequest.setAttribute("activityCount", countActivity(userId));
             int unreadSystemInfoCount = SystemInfoSendRecordDao.factory().setUserId(userId).setUnread(true).getCount();
