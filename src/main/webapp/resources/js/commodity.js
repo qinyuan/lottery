@@ -348,11 +348,6 @@
             var self = this;
             setCloseIconEvent(this.$div, function () {
                 self.$div.fadeOut(300, function () {
-                    /*if (self.showSubscribe) {
-                     subscribe.show();
-                     } else {
-                     JSUtils.hideTransparentBackground();
-                     }*/
                     JSUtils.hideTransparentBackground();
                 });
             });
@@ -395,18 +390,6 @@
         }
     }).init();
 
-    /*var lotteryRule = (JSUtils.cloneAndExtendObject(simpleFloatPanel, {
-     $div: $('#lotteryRule'),
-     postInit: function () {
-     var self = this;
-     this.$div.find('div.button button').click(function () {
-     self.hide();
-     });
-     }
-     })).init();
-     showLotteryRule = function (parentId) {
-     lotteryRule.show(parentId);
-     };*/
     getLotteryLot = function () {
         var toLoginCallback = function () {
             hideLoginForm();
@@ -531,12 +514,7 @@
             var self = this;
             setCloseIconEvent(this.$div, function () {
                 self.$div.fadeOut(300, function () {
-                    /*if (self.showSubscribe) {
-                     subscribe.show();
-                     } else {
-                     JSUtils.hideTransparentBackground();
-                     }*/
-                    subscribe.show();
+                    JSUtils.hideTransparentBackground();
                 });
                 self.clearRemainingTimeUpdater();
             });

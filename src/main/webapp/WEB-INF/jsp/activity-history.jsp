@@ -3,8 +3,9 @@
 <%@include file="index-header.jsp" %>
 <div class="gray-back">
     <div class="page-width main-body">
-        <div class="title">我参与的活动<c:if test="${email != null}"><a href="javascript:void(0)"
-                                                                  class="subscribe">订阅活动</a></c:if></div>
+        <div class="title">我参与的活动
+            <c:if test="${email != null}"><a href="javascript:void(0)" class="subscribe">订阅活动</a></c:if>
+        </div>
         <div class="activities">
             <c:forEach var="activity" items="${activities}">
                 <div class="activity shadow">
@@ -30,7 +31,7 @@
                         <c:otherwise>
                             <div class="status active">${activity.closed ? '等待开奖' : '活动进行中'}</div>
                             <div class="announcement">
-                                <%@include file="activity-history-serial-number.jsp"%>
+                                <%@include file="activity-history-serial-number.jsp" %>
                                 未开奖
                             </div>
                         </c:otherwise>

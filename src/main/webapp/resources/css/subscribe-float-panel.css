@@ -3,7 +3,7 @@ div.float-panel.info {
     margin-left: -265px;
 }
 
-div.float-panel.info div.title {
+/*div.float-panel.info div.title {
     height: 28px;
     background-color: #82c92f;
     color: #ffffff;
@@ -28,7 +28,7 @@ div.float-panel.info div.title div.close-icon {
 div.float-panel.info div.title div.close-icon span {
     padding: 0 7px;
     background: url("images/register-image.png") -164px -34px;
-}
+}*/
 
 div.float-panel.info div.body {
     padding: 20px;
