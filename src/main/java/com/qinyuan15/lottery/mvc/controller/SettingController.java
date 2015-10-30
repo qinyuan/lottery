@@ -93,6 +93,7 @@ public class SettingController extends ImageController {
         }
 
         addCssAndJs("setting");
+        setAttribute("noFooter", true);
         return "setting";
     }
 

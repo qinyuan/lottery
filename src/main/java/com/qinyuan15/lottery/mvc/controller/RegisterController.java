@@ -61,6 +61,7 @@ public class RegisterController extends ImageController {
         setAttribute("registerHeaderRightLogo", pathToUrl(AppConfig.getRegisterHeaderRightLogo()));
         setTitle("完善个人信息");
         addCssAndJs("register");
+        setAttribute("noFooter", true);
         return "register";
     }
 
