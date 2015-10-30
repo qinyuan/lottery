@@ -5,7 +5,6 @@
     <div>
         <table class="normal">
             <colgroup>
-                <col class="select"/>
                 <col class="index"/>
                 <c:forEach var="alias" items="${table.aliases}">
                     <col class="${alias}"/>

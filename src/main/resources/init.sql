@@ -156,12 +156,49 @@ create table dual_colored_ball_record (
   unique(year, term)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+create table email (
+    id int(11) primary key AUTO_INCREMENT,
+    subject varchar(1000) NOT NULL,
+    content text not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 create table mail_send_record (
   id int primary key auto_increment,
   mail_account_id int not null,
   user_id int not null,
   mail_id int not null,
   send_time datetime not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table mail_account (
+  id int primary key auto_increment,
+  reference_id int not null,
+  type char(50) not null,
+  unique (reference_id, type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table simple_mail_account (
+  id int primary key auto_increment,
+  host char(200) not null,
+  username char(100) unique not null,
+  password char(100) not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table mail_serial_key (
+  id int primary key auto_increment,
+  user_id int not null,
+  serial_key char(200) unique not null,
+  send_time datetime not null,
+  response_time datetime,
+  mail_type char(50) not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table sendcloud_account (
+  id int primary key auto_increment,
+  user char(200) not null,
+  api_key char(200) not null,
+  domain_name char(200) not null,
+  unique(user, domain_name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table system_info (
@@ -177,19 +214,10 @@ create table system_info_send_record (
   unread boolean not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-CREATE TABLE `app_config` (
-    `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `property_name` char(50) UNIQUE NOT NULL,
-    `property_value` varchar(2000) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-create table mail_serial_key (
-  id int primary key auto_increment,
-  user_id int not null,
-  serial_key char(200) unique not null,
-  send_time datetime not null,
-  response_time datetime,
-  mail_type char(50) not null
+CREATE TABLE app_config (
+    id int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    property_name char(50) UNIQUE NOT NULL,
+    property_value varchar(2000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE login_record (
@@ -241,8 +269,19 @@ insert into help_item(group_id, title, content, ranking) values
 
 insert into index_image(path, row_index, back_path) values('path1', 5, 'back_path1'), ('path2', 7, 'back_path2');
 
+insert into email(subject, content) values('subject1', 'content1'), ('subject2', 'content2');
+
+insert into simple_mail_account(host, username, password) values
+  ('host1', 'username1', 'password1'), ('host2', 'username2', 'password2');
+
+insert into sendcloud_account(user, domain_name, api_key) values('user1', 'domain1', 'apiKey1');
+
+insert into mail_account(reference_id, type) values(2, 'SimpleMailAccount'), (1, 'SimpleMailAccount'),
+  (1, 'SendCloudAccount');
+
 insert into mail_send_record(mail_account_id, user_id, mail_id, send_time) values
-  (2, 3, 1, '2015-12-12 19:19:19'), (2, 4, 2, '2015-12-13 18:18:18');
+  (2, 3, 1, '2015-12-12 19:19:19'), (2, 4, 2, '2015-12-13 18:18:18'), (3, 2, 2, '2015-12-21 20:20:20')/*,
+  (2, 111, 1, '2015-12-12 19:19:19')*/;
 
 insert into mail_serial_key(user_id, serial_key, send_time, mail_type) values
   (2, 'fjkdasipaifjdsaoij', '2015-12-12 18:19:20', 'activateAccount'),
