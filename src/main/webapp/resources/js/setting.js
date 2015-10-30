@@ -54,43 +54,32 @@
     // code about security
     var $security = $('#security');
     $security.setDefaultButtonByClass('ok');
-    $security.find('input').blur(function () {
-        clearError();
+    var $oldPassword = $security.find('div.old input').blur(function () {
+        validateOldPassword();
+    });
+    var $newPassword = $security.find('div.new input').blur(function () {
+        validateNewPassword();
+    });
+    var $newPassword2 = $security.find('div.new2 input').blur(function () {
+        validateNewPassword2();
     });
     $security.find('button.ok').click(function (e) {
         e.preventDefault();
-        clearError();
 
-        var $oldPassword = $security.find('div.old input');
-        var oldPassword = $oldPassword.val();
-        if (oldPassword == '') {
-            showError($oldPassword, '原密码不能为空');
+        if (!validateOldPassword()) {
+            $oldPassword.focusOrSelect();
             return false;
-        }
-
-        var $newPassword = $security.find('div.new input');
-        var newPassword = $newPassword.val();
-        if ($.trim(newPassword) == '') {
-            showError($newPassword, '新密码不能为空');
+        } else if (!validateNewPassword()) {
+            $newPassword.focusOrSelect();
             return false;
-        } else if (newPassword.length < 6) {
-            showError($newPassword, '新密码不能少于6位字符');
-            return false;
-        } else if (newPassword == oldPassword) {
-            showError($newPassword, '新密码不能与原密码相同');
-            return false;
-        }
-
-        var $newPassword2 = $security.find('div.new2 input');
-        var newPassword2 = $newPassword2.val();
-        if (newPassword != newPassword2) {
-            showError($newPassword2, '两次输入的密码不一致');
+        } else if (!validateNewPassword2()) {
+            $newPassword2.focusOrSelect();
             return false;
         }
 
         $.post('setting-change-password.json', {
-            oldPassword: oldPassword,
-            newPassword: newPassword
+            oldPassword: $oldPassword.val(),
+            newPassword: $newPassword.val()
         }, function (data) {
             if (data.success) {
                 alert('密码修改成功');
@@ -102,86 +91,123 @@
         return true;
     });
 
-    function clearError() {
-        $security.find('span.error').hide();
+    function validateOldPassword() {
+        var oldPassword = $oldPassword.val();
+        if (oldPassword == '') {
+            $oldPassword.showValidation(false, '原密码不能为空');
+            return false;
+        }
+
+        $oldPassword.showValidation(true);
+        return true;
+    }
+
+    function validateNewPassword() {
+        var newPassword = $newPassword.val();
+        if ($.trim(newPassword) == '') {
+            $newPassword.showValidation(false, '新密码不能为空');
+            return false;
+        } else if (newPassword.length < 6) {
+            $newPassword.showValidation(false, '新密码不能少于6位字符');
+            return false;
+        } else if (newPassword == $oldPassword.val()) {
+            $newPassword.showValidation(false, '新密码不能与原密码相同');
+            return false;
+        }
+
+        $newPassword.showValidation(true);
+        return true;
+    }
+
+    function validateNewPassword2() {
+        var newPassword2 = $newPassword2.val();
+        if ($newPassword.val() != newPassword2) {
+            $newPassword2.showValidation(false, '两次输入的密码不一致');
+            return false;
+        }
+
+        $newPassword2.showValidation(true);
+        return true;
     }
 })();
 (function () {
     // code about tel
     var $tel = $('#tel');
-    var $newTel = $tel.getInputByName('newTel');
+    var $newTel = $tel.getInputByName('newTel').blur(function () {
+        validateTel();
+    });
+    var $password = $tel.getInputByName('password').blur(function () {
+        validatePassword();
+    });
+    var $telValidate = $('#telValidate');
 
     $tel.setDefaultButtonByClass('ok');
     $tel.find('button.ok').click(function (e) {
         e.preventDefault();
 
-        clearError();
+        $telValidate.slideUp(500);
         validateTel(function () {
-            var $password = $tel.getInputByName('password');
-            var password = $password.val();
-            if (password == '') {
-                showError($password, '密码不能为空');
-                return;
-            }
-
-            $.post('setting-change-tel.json', {
-                password: password,
-                tel: $newTel.val()
-            }, function (data) {
-                if (data.success) {
-                    alert('手机号码修改成功');
-                    location.reload();
-                } else {
-                    alert(data.detail);
-                }
+            validatePassword(function () {
+                $.post('setting-change-tel.json', {
+                    password: $password.val(),
+                    tel: $newTel.val()
+                }, function (data) {
+                    if (data.success) {
+                        alert('手机号码修改成功');
+                        location.reload();
+                    } else {
+                        alert(data.detail);
+                    }
+                });
             });
-        }, function (info) {
-            showError($newTel, info);
         });
     });
 
-    $newTel.blur(function () {
-        validateTel(function () {
-            $newTel.next().hide();
-        }, function (info) {
-            $newTel.next().text(info).twinkle(3);
-        });
-    });
+    function validatePassword(successCallback, failCallback) {
+        var password = $password.val();
+        if (password == '') {
+            $password.showValidation(false, '密码不能为空');
+            JSUtils.invokeIfIsFunction(failCallback);
+            return;
+        }
+
+        $password.showValidation(true);
+        JSUtils.invokeIfIsFunction(successCallback);
+    }
 
     function validateTel(successCallback, failCallback) {
-        var $newTel = $tel.getInputByName('newTel');
         var newTel = $newTel.val();
         if ($.trim(newTel) == '') {
-            failCallback && failCallback('新手机号不能为空');
+            $newTel.showValidation(false, '新手机号不能为空');
+            JSUtils.invokeIfIsFunction(failCallback);
             return;
         } else if (!JSUtils.validateTel(newTel)) {
-            failCallback && failCallback('新手机号格式错误');
+            $newTel.showValidation(false, '新手机号格式错误');
+            JSUtils.invokeIfIsFunction(failCallback);
             return;
         }
 
         var oldTel = $tel.find('span.old-tel').text();
         if (oldTel == newTel) {
-            failCallback && failCallback('新手机号未作修改');
+            $newTel.showValidation(false, '新手机号未作修改');
+            JSUtils.invokeIfIsFunction(failCallback);
             return false;
         }
 
         $.post('setting-validate-tel.json', {'tel': newTel}, function (data) {
             if (data.success) {
-                successCallback && successCallback();
-                $('#telValidate').slideUp(500);
+                $newTel.showValidation(true);
+                JSUtils.invokeIfIsFunction(successCallback);
+                $telValidate.slideUp(500);
             } else {
-                failCallback && failCallback(data.detail);
+                $newTel.showValidation(false, data.detail);
+                JSUtils.invokeIfIsFunction(failCallback);
                 if (data.detail.indexOf('占用')) {
-                    $('#telValidate').slideDown(500);
+                    $telValidate.slideDown(500);
                 }
             }
         });
         return true;
-    }
-
-    function clearError() {
-        $tel.find('span.error').hide();
-        $('#telValidate').slideUp(500);
     }
 })();
 (function () {
@@ -273,11 +299,6 @@
         $password.showValidation(true);
         successCallback && successCallback();
     }
-
-    /*function clearError() {
-     $result.hide();
-     $newEmail.clearValidation();
-     }*/
 })();
 (function () {
     // code about share

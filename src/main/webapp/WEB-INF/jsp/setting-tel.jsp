@@ -7,12 +7,12 @@
     <div class="text">
         <span class="title">新手机号</span>
         <input type="text" class="form-control" name="newTel" maxlength="11"/>
-        <span class="error"></span>
+        <%--<span class="error"></span>--%>
     </div>
     <div class="text">
         <span class="title">当前密码</span>
         <input type="password" class="form-control" name="password"/>
-        <span class="error"></span>
+        <%--<span class="error"></span>--%>
     </div>
     <div class="edit-submit" style="margin-left:105px;">
         <button type="button" class="ok">确定</button>

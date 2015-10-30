@@ -5,14 +5,13 @@
     <div>
         <table class="normal">
             <colgroup>
-                <col class="select"/>
                 <col class="index"/>
                 <c:forEach var="alias" items="${table.aliases}">
                     <col class="${alias}"/>
                 </c:forEach>
             </colgroup>
             <thead>
-            <th>序号</th>
+            <th class="index">序号</th>
             <c:forEach var="head" items="${table.heads}" varStatus="status">
                 <th class="${table.aliases[status.index]}">${head}
                     <c:if test="${status.index != 2}">
@@ -26,7 +25,7 @@
             <tbody>
             <c:forEach var="infoRecord" items="${paginationItems}" varStatus="status">
                 <tr data-options="id:${infoRecord.id}">
-                    <td>${status.index + rowStartIndex}</td>
+                    <td class="index">${status.index + rowStartIndex}</td>
                     <c:forEach var="col" items="${infoRecord.cols}" varStatus="innerStatus">
                         <td class="${table.aliases[innerStatus.index]}">${col}</td>
                     </c:forEach>

@@ -1,5 +1,5 @@
 table.normal col.index, table.normal th.index {
-    width: 80px;
+    width: 40px;
 }
 
 table.normal col.build_time, table.normal th.build_time {
@@ -13,4 +13,8 @@ table.normal col.receiver, table.normal th.receiver {
 table.normal td.content, table.normal col.content, table.normal th.content {
     min-width: 300px;
     max-width: 550px;
+}
+
+table.normal td.status, table.normal col.status, table.normal th.status {
+    width: 60px;
 }
