@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.qinyuan.lib.contact.mail.MailAddressValidator;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
-import com.qinyuan.lib.mvc.controller.CDNSource;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.controller.PaginationAttributeAdder;
 import com.qinyuan.lib.mvc.controller.PaginationItemFactory;
