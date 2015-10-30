@@ -1147,6 +1147,8 @@ jQuery.fn.showValidation = function (success, text) {
             background: 'url("' + imagePath + '") no-repeat'
         });
         $next.find('span.text').css({'color': '#FC6608'});
+    } else {
+        $next.show();
     }
 
     $next.find('span.text').text(text == null ? '' : text);
@@ -1158,4 +1160,11 @@ jQuery.fn.showValidation = function (success, text) {
         $next.find('span.icon').css({'background-position-y': '-30px'});
     }
     return this;
+};
+
+jQuery.fn.clearValidation = function () {
+    var $next = this.next();
+    if ($next.size() == 0 || !$next.is('span') || !$next.hasClass('validation')) {
+        $next.hide();
+    }
 };

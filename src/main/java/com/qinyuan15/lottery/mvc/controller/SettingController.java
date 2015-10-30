@@ -243,7 +243,7 @@ public class SettingController extends ImageController {
                 return success();
             }
         } catch (Exception e) {
-            LOGGER.error("fail to validate email, email: {}, info: {}", email, e);
+            LOGGER.error("fail to update email, email: {}, info: {}", email, e);
             return failByDatabaseError();
         }
     }

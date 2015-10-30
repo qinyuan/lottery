@@ -188,44 +188,40 @@
     // code about email
     var $email = $('#email').setDefaultButtonByClass('ok');
     var $newEmail = $email.getInputByName('email').blur(function () {
-        validateEmail(function () {
-            clearError();
-        }, function (detail) {
-            $newEmail.next().text(detail).twinkle(3);
-        });
+        validateEmail();
+    });
+    var $password = $email.getInputByName('password').blur(function () {
+        validatePassword();
     });
     var $result = $email.find('span.result');
     var $button = $email.find('button.ok').click(function () {
-        clearError();
+        //clearError();
+        $result.hide();
         var $this = $(this);
         $this.text('正在处理...');
         validateEmail(function () {
-            var $password = $email.getInputByName('password');
-            var password = $password.val();
-            if ($.trim(password) == '') {
-                showError($password, '密码不能为空');
+            validatePassword(function () {
+                $.post('setting-update-email.json', {
+                    password: $password.val(),
+                    email: $newEmail.val()
+                }, function (data) {
+                    if (data.success) {
+                        var newEmail = $newEmail.val();
+                        var loginPage = JSUtils.getEmailLoginPage($newEmail.val());
+                        $result.find('a').attr('href', loginPage);
+                        $result.find('a.email').text(newEmail);
+                        $result.show();
+                    } else {
+                        alert(data.detail);
+                        $result.hide();
+                    }
+                    $this.text('发送验证邮件');
+                });
+            }, function () {
                 recoverButtonText();
-                return false;
-            }
-
-            $.post('setting-update-email.json', {
-                password: password,
-                email: $newEmail.val()
-            }, function (data) {
-                if (data.success) {
-                    var newEmail = $newEmail.val();
-                    var loginPage = JSUtils.getEmailLoginPage($newEmail.val());
-                    $result.find('a').attr('href', loginPage);
-                    $result.find('a.email').text(newEmail);
-                    $result.show();
-                } else {
-                    alert(data.detail);
-                    $result.hide();
-                }
-                $this.text('发送验证邮件');
             });
-        }, function (detail) {
-            showError($newEmail, detail);
+        }, function () {
+            recoverButtonText();
         });
     });
 
@@ -237,33 +233,51 @@
     function validateEmail(successCallback, failCallback) {
         var newEmail = $newEmail.val();
         if ($.trim(newEmail) == '') {
-            failCallback && failCallback('邮箱不能为空');
+            $newEmail.showValidation(false, '邮箱不能为空');
+            JSUtils.invokeIfIsFunction(failCallback);
             return false;
         } else if (!JSUtils.validateEmail(newEmail)) {
-            failCallback && failCallback('邮箱格式错误');
+            $newEmail.showValidation(false, '邮箱格式错误');
+            JSUtils.invokeIfIsFunction(failCallback);
             return false;
         }
 
         var $oldEmail = $email.find('span.old-email');
         var oldEmail = $oldEmail.text();
         if (oldEmail == newEmail) {
-            failCallback && failCallback('新邮箱与旧邮箱相同');
+            $oldEmail.showValidation(false, '新邮箱与旧邮箱相同');
+            JSUtils.invokeIfIsFunction(failCallback);
             return false;
         }
 
         $.post('setting-validate-email.json', {'email': $newEmail.val()}, function (data) {
             if (data.success) {
-                successCallback && successCallback()
+                $newEmail.showValidation(true);
+                JSUtils.invokeIfIsFunction(successCallback);
             } else {
-                failCallback && failCallback(data.detail);
+                $newEmail.showValidation(false, data.detail);
+                JSUtils.invokeIfIsFunction(failCallback);
             }
         });
     }
 
-    function clearError() {
-        $result.hide();
-        $email.find('span.error').hide();
+    function validatePassword(successCallback, failCallback) {
+        var password = $password.val();
+        if ($.trim(password) == '') {
+            $password.showValidation(false, '密码不能为空');
+            recoverButtonText();
+            failCallback && failCallback();
+            return;
+        }
+
+        $password.showValidation(true);
+        successCallback && successCallback();
     }
+
+    /*function clearError() {
+     $result.hide();
+     $newEmail.clearValidation();
+     }*/
 })();
 (function () {
     // code about share
