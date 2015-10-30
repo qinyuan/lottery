@@ -6,21 +6,16 @@
     <div class="prompt">请输入密码和昵称，创建您的帐号</div>
     <div class="input">
         <input type="text" class="form-control" placeholder="昵称" name="username" maxlength="14"/>
-        <span class="valid"><span class="icon"></span><span class="text"></span></span>
-        <span class="invalid"><span class="icon"></span><span class="text"></span></span>
     </div>
     <div class="input">
         <input type="password" class="form-control" placeholder="密码" name="password" maxlength="20"/>
-        <span class="valid"><span class="icon"></span><span class="text"></span></span>
-        <span class="invalid"><span class="icon"></span><span class="text"></span></span>
     </div>
     <div class="input">
         <input type="password" class="form-control" placeholder="确认密码" name="password2" maxlength="20"/>
-        <span class="valid"><span class="icon"></span><span class="text"></span></span>
-        <span class="invalid"><span class="icon"></span><span class="text"></span></span>
     </div>
     <div class="subscribe">
-        <input type="checkbox" name="subscribe"/> 已经认真阅读并同意订阅 <a target="_blank" href="${websiteintroductionlink}">《布迪网》</a>
+        <input type="checkbox" name="subscribe"/>
+        已经认真阅读并同意订阅 <a target="_blank" href="${websiteIntroductionLink}">《布迪网》</a>
     </div>
     <div class="submit">
         <q:qqlist nId="<%=AppConfig.getQQListId()%>" email="${preUser.email}" newPage="${!isMobile}">
@@ -32,49 +27,3 @@
     <div class="title">邮箱 <span class="email">${preUser.email}</span> 已经注册成功！</div>
     <div class="skip">系统将在<span class="remain"></span>秒后跳转到主页，如果没有请 <a href="index.html">点击手动跳转</a></div>
 </div>
-<%--<form id="userInfo" method="post">
-<div class="left">完善个人信息</div>
-<div class="right">
-    <div class="content setting">
-        <q:hidden name="serialKey" value="${preUser.serialKey}"/>
-
-        <div class="row">
-            <span class="left">邮箱</span>
-            <span class="right">${preUser.email}</span>
-        </div>
-        <div class="row">
-            <span class="left">账号<span class="required">*</span></span>
-                    <span class="right"><input type="text" class="form-control" name="username"
-                                               placeholder="2-14个字符: 英文、数字或中文" maxlength="14"/></span>
-        </div>
-        <div class="row">
-            <span class="left">密码<span class="required">*</span></span>
-                    <span class="right"><input type="password" class="form-control" name="password"
-                                               placeholder="6-20个字符，区分大小写" maxlength="20"/></span>
-        </div>
-        <div class="row">
-            <span class="left">确认密码<span class="required">*</span></span>
-                    <span class="right"><input type="password" class="form-control" name="password2"
-                                               placeholder="再次输入密码" maxlength="20"/></span>
-        </div>
-        <div class="row">
-            <span class="left">姓名</span>
-                    <span class="right"><input type="text" class="form-control" name="realName"
-                                               placeholder="输入您的真实姓名"/></span>
-        </div>
-        <div class="row">
-            <span class="left">手机号</span>
-                    <span class="right"><input type="text" class="form-control" name="tel"
-                                               placeholder="输入11位数字" maxlength="11"/></span>
-        </div>
-        <%@include file="personal-center-additional-info.jsp" %>
-        <div class="submit">
-            <button id="submitButton" type="submit">完成注册</button>
-            <span class="comment">(注：带<span class="required">*</span>的为必填项)</span>
-        </div>
-    </div>
-</div>
-</form>--%>
-<%--<q:qqlist nId="<%=AppConfig.getQQListId()%>" email="qinyuan15@qq.com">
-    <button type="submit">确定</button>
-</q:qqlist>--%>

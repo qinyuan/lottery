@@ -61,7 +61,7 @@ div.main-body div.form div.email {
 div.main-body div.form div.input input {
     width: 300px;
 }
-
+/*
 div.main-body div.form div.input span.icon {
     padding: 3px 0 3px 20px;
     background: url("images/register-image.png") no-repeat;
@@ -82,7 +82,7 @@ div.main-body div.form div.input span.valid span.icon {
 
 div.main-body div.form div.input span.invalid span.icon {
     background-position: -187px -29px;
-}
+}*/
 
 div.main-body div.form div.prompt, div.main-body div.form div.subscribe {
     color: #666666;

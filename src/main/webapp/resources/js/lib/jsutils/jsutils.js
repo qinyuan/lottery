@@ -115,6 +115,9 @@ var JSUtils = {
     isFunction: function (arg) {
         return (typeof arg) == 'function';
     },
+    invokeIfIsFunction: function (arg) {
+        this.isFunction(arg) && arg();
+    },
     isString: function (arg) {
         return (typeof arg) == 'string';
     },
@@ -875,13 +878,15 @@ var JSUtils = {
         return document.getElementsByTagName('script')[document.getElementsByTagName('script').length - 1].src;
     },
     loadDelayImages: function () {
-        $('img.delay').each(function(){
+        $('img.delay').each(function () {
             var $this = $(this);
             var src = $this.data('source');
             $this.attr('src', src).show();
         });
     }
 };
+
+JSUtils.scriptPath = JSUtils.getLastLoadScriptPath();
 setTimeout(function () {
     JSUtils.loadDelayImages();
 }, 50);
@@ -1128,4 +1133,29 @@ jQuery.fn.setBackgroundImage = function (backgroundImage) {
     } else {
         this.css('background-image', 'url("' + backgroundImage + '")');
     }
+};
+
+jQuery.fn.showValidation = function (success, text) {
+    var $next = this.next();
+    if ($next.size() == 0 || !$next.is('span') || !$next.hasClass('validation')) {
+        $next = $('<span class="validation"><span class="icon"></span><span class="text"></span></span>');
+        $next.insertAfter(this);
+
+        var imagePath = JSUtils.scriptPath.replace(/\/[^/]+$/g, '/validation.png');
+        $next.find('span.icon').css({
+            padding: '1px 12px',
+            background: 'url("' + imagePath + '") no-repeat'
+        });
+        $next.find('span.text').css({'color': '#FC6608'});
+    }
+
+    $next.find('span.text').text(text == null ? '' : text);
+    if (success) {
+        $next.addClass('valid').removeClass('invalid');
+        $next.find('span.icon').css({'background-position-y': '-5px'});
+    } else {
+        $next.addClass('invalid').removeClass('valid');
+        $next.find('span.icon').css({'background-position-y': '-30px'});
+    }
+    return this;
 };

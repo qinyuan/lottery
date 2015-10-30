@@ -46,7 +46,7 @@ public class RegisterController extends ImageController {
             if (StringUtils.isBlank(websiteintroductionlink)) {
                 websiteintroductionlink = "javascript:void(0)";
             }
-            setAttribute("websiteintroductionlink", websiteintroductionlink);
+            setAttribute("websiteIntroductionLink", websiteintroductionlink);
 
             if (preUser != null && new UserDao().hasEmail(preUser.getEmail())) {
                 setAttribute("userInfoCompleted", true);
