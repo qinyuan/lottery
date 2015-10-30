@@ -7,6 +7,7 @@ package com.qinyuan15.lottery.mvc;
 public class ImageMapType {
     public final static String INDEX = "index";
     public final static String COMMODITY = "commodity";
+
     private ImageMapType() {
     }
 }
