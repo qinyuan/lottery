@@ -17,12 +17,19 @@ create table commodity (
     id int primary key auto_increment,
     name char(200) not null,
     price double not null,
-    in_lottery boolean not null,
     own boolean not null,
     snapshot varchar(800) not null,
-    detail_image varchar(800) not null,
-    back_image varchar(800),
+    /*detail_image varchar(800) not null,
+    back_image varchar(800),*/
     visible boolean not null default true,
+    ranking int unique not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table commodity_image (
+    id int primary key auto_increment,
+    commodity_id int not null,
+    path varchar(800) not null,
+    back_path varchar(800) not null,
     ranking int unique not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -240,10 +247,17 @@ insert into user(username, password, role, active, spread_user_id) values('norma
 
 insert into virtual_user values(1, 'virtual_user1', 15, 00, 'ai', 'qq.com'), (2, 'virtual_user2', 15, 00, 'ai', 'qq.com');
 
-insert into commodity values(1, 'name1', 11.0, true, true, 'snapshot1', 'detail_image1', 'back_image1', false, 10);
-insert into commodity values(2, 'name2', 12.0, true, true, 'snapshot2', 'detail_image2', 'back_image2', true, 11);
-insert into commodity values(3, 'name3', 13.0, true, true, 'snapshot3', 'detail_image3', 'back_image3', true, 14);
-insert into commodity values(4, 'name4', 14.0, true, true, 'snapshot4', 'detail_image4', 'back_image4', false, 8);
+insert into commodity values
+  (1, 'name1', 11.0, true, 'snapshot1', /*'detail_image1', 'back_image1', */false, 10),
+  (2, 'name2', 12.0, true, 'snapshot2', /*'detail_image2', 'back_image2', */true, 11),
+  (3, 'name3', 13.0, true, 'snapshot3', /*'detail_image3', 'back_image3', */true, 14),
+  (4, 'name4', 14.0, true, 'snapshot4', /*'detail_image4', 'back_image4', */false, 8);
+
+insert into commodity_image values
+  (1, 1, 'path1', 'backPath1', 2),
+  (2, 1, 'path2', 'backPath2', 1),
+  (3, 2, 'path3', 'backPath3', 3);
+
 
 insert into lottery_activity(commodity_id, term, start_time, expire, virtual_participants, max_serial_number,
   dual_colored_ball_term, min_liveness_to_participate, min_serial_number, close_time, closed) values

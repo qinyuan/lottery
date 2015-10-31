@@ -33,7 +33,6 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
         commodity.setBackImage(backImage);
 
         // set default field
-        commodity.setInLottery(false);
         commodity.setVisible(false);
 
         return new RankingDao().add(commodity);
@@ -83,20 +82,6 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
     private HibernateListBuilder getVisibleListBuilder() {
         return new HibernateListBuilder().addEqualFilter("visible", true).addOrder("ranking", true);
     }
-
-    /*private void changeLottery(Integer commodityId, Boolean inLottery) {
-        Commodity commodity = getInstance(commodityId);
-        commodity.setInLottery(inLottery);
-        HibernateUtils.update(commodity);
-    }
-
-    public void startLottery(Integer commodityId) {
-        changeLottery(commodityId, true);
-    }
-
-    public void endLottery(Integer commodityId) {
-        changeLottery(commodityId, false);
-    }*/
 
     /**
      * validate if certain commodity has lottery activity

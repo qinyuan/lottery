@@ -26,7 +26,6 @@
         <property name="price"/>
         <property name="name"/>
         <property name="own"/>
-        <property name="inLottery" column="in_lottery"/>
         <property name="snapshot"/>
         <property name="detailImage" column="detail_image"/>
         <property name="backImage" column="back_image"/>
@@ -192,5 +191,14 @@
         <property name="spreadWay" column="spread_way"/>
         <property name="activityId" column="activity_id"/>
         <property name="serialKey" column="serial_key"/>
+    </class>
+    <class name="CommodityImage" table="commodity_image">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="commodityId" column="commodity_id"/>
+        <property name="path" column="path"/>
+        <property name="backPath" column="back_path"/>
+        <property name="ranking"/>
     </class>
 </hibernate-mapping>

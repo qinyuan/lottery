@@ -10,7 +10,6 @@ import com.qinyuan.lib.lang.CurrencyUtils;
 public class Commodity extends AbstractRanking {
     private Double price;
     private String name;
-    private Boolean inLottery;
     private Boolean own;
     private String snapshot;
     private String detailImage;
@@ -23,10 +22,6 @@ public class Commodity extends AbstractRanking {
 
     public String getName() {
         return name;
-    }
-
-    public Boolean getInLottery() {
-        return inLottery;
     }
 
     public Boolean getOwn() {
@@ -55,10 +50,6 @@ public class Commodity extends AbstractRanking {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setInLottery(Boolean inLottery) {
-        this.inLottery = inLottery;
     }
 
     public void setOwn(Boolean own) {
