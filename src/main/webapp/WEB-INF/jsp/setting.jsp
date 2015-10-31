@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="inc-header.jsp" %>
 <%@include file="index-header.jsp" %>
-<div class="gray-back">
+<div class="white-back">
     <div class="page-width main-body">
         <div class="left">
             <div class="title">设置</div>

@@ -1,12 +1,17 @@
 
-div.gray-back {
-    background-color: rgb(242, 242, 242);
+div.white-back {
+    background-color: #ffffff;
     padding: 20px 0;
+}
+
+div.main-body {
+    background-color: rgb(242, 242, 242);
 }
 
 div.main-body > div.left {
     float: left;
     width: 200px;
+    padding-left: 30px;
 }
 
 div.main-body > div.left div.title {
