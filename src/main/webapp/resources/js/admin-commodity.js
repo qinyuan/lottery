@@ -34,6 +34,58 @@
 })();
 (function () {
     // codes about adding/editing commodity
+    var commodityForm = JSUtils.buildFloatPanel({
+        $floatPanel:  $('#commodityForm'),
+        beforeShow: function(){
+            decreaseSwitchZIndex();
+        },
+        doSubmit: function(){
+            this.$floatPanel.get(0).submit();
+        },
+        postInit: function(){
+            var self = this;
+            this.$addDetail = $('button.add-detail').click(function(){
+                var html = JSUtils.handlebars("detailImageTemplate");
+                var $html = $(html);
+                $html.find('div.delete img').click(function(){
+                    $(this).getParentByTagNameAndClass('div', 'delete').parent().remove();
+                });
+                $html.find('input').attr('id', null);
+                $html.insertBefore(self.$addDetail).focusFirstTextInput();
+            });
+            this.$name= this.$floatPanel.getInputByName('name');
+            this.$price = this.$floatPanel.getInputByName('price');
+            setTimeout(function(){
+                self.$addDetail.trigger('click') ;
+            }, 500);
+        },
+        validateInput: function(){
+            if (this.$name.trimVal() == '') {
+                alert('商品名不能为空');
+                this.$name.focusOrSelect();
+                return false;
+            }
+
+            var priceValue = this.$price.val();
+            if (!JSUtils.isNumberString(priceValue) || parseFloat(priceValue) < 0) {
+                alert('价格必须为不小于零的数字');
+                this.$price.focusOrSelect();
+                return false;
+            }
+
+            return JSUtils.validateUploadFile('snapshot', '商品缩略图未设置');
+        }
+    });
+
+    $('div.form div.add button').click(function(){
+        commodityForm.show();
+    }).trigger('click');
+
+    function decreaseSwitchZIndex(){
+        $('.switch-mini').css('z-index', 1);
+    }
+
+    /*
     var $form = $('#commodityForm').focusFirstTextInput();
     var $okButton = $form.find('button[name=ok]');
     var $cancelButton = $form.find('button[name=cancel]');
@@ -100,7 +152,7 @@
         $form.setInputValue('pageNumber', null);
         $cancelButton.hide();
         $form.focusFirstTextInput();
-    });
+    });*/
 })();
 (function () {
     // code about editing index

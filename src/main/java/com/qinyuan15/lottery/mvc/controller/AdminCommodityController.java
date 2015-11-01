@@ -2,6 +2,7 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.lang.DoubleUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.mvc.controller.CDNSource;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.controller.PaginationAttributeAdder;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
@@ -15,14 +16,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
-public class AdminCommodityEditController extends ImageController {
+public class AdminCommodityController extends ImageController {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(AdminCommodityEditController.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(AdminCommodityController.class);
 
-    @RequestMapping("/admin-commodity-edit")
+    @RequestMapping("/admin-commodity")
     public String index() {
         IndexHeaderUtils.setHeaderParameters(this);
 
@@ -40,30 +42,26 @@ public class AdminCommodityEditController extends ImageController {
         addCss("resources/js/lib/bootstrap/css/bootstrap-switch.min", false);
         addJs("lib/bootstrap/js/bootstrap-switch.min", false);
 
+        addJs(CDNSource.HANDLEBARS);
         addHeadJs("lib/image-adjust.js");
         addCss("admin-form");
-        addCssAndJs("admin-commodity-edit");
-        return "admin-commodity-edit";
+        addCssAndJs("admin-commodity");
+        return "admin-commodity";
     }
 
-    @RequestMapping("/admin-commodity-edit-submit")
-    public String submit(@RequestParam(value = "id", required = true) Integer id,
-                         @RequestParam(value = "name", required = true) String name,
-                         @RequestParam(value = "price", required = true) Double price,
-                         @RequestParam(value = "own", required = false) Boolean own,
-                         @RequestParam(value = "snapshot", required = true) String snapshot,
-                         @RequestParam(value = "snapshotFile", required = true) MultipartFile snapshotFile,
-                         @RequestParam(value = "detailImage", required = true) String detailImage,
-                         @RequestParam(value = "detailImageFile", required = true) MultipartFile detailImageFile,
-                         @RequestParam(value = "backImage", required = true) String backImage,
-                         @RequestParam(value = "backImageFile", required = true) MultipartFile backImageFile,
+    @RequestMapping("/admin-commodity-submit")
+    public String submit(@RequestParam("id") Integer id,
+                         @RequestParam("name") String name,
+                         @RequestParam("price") Double price,
+                         @RequestParam("snapshot") String snapshot,
+                         @RequestParam("snapshotFile") MultipartFile snapshotFile,
+                         @RequestParam("detailImages") String[] detailImages,
+                         @RequestParam("detailImagesFile") MultipartFile[] detailImagesFile,
+                         @RequestParam("backImages") String[] backImages,
+                         @RequestParam("backImagesFile") MultipartFile[] backImagesFile,
                          @RequestParam(value = "pageNumber", required = false) Integer pageNumber) {
-        // adjust own parameter
-        if (own == null) {
-            own = false;
-        }
 
-        String indexPage = "admin-commodity-edit";
+        String indexPage = "admin-commodity";
         if (IntegerUtils.isPositive(pageNumber)) {
             indexPage = indexPage + "?pageNumber=" + pageNumber;
         }
@@ -76,7 +74,7 @@ public class AdminCommodityEditController extends ImageController {
             return redirect(indexPage, "价格必须大于或等于0");
         }
 
-        String snapshotPath = null, detailImagePath = null;
+        String snapshotPath = null;
 
         try {
             snapshotPath = getSavePath(snapshot, snapshotFile);
@@ -85,14 +83,14 @@ public class AdminCommodityEditController extends ImageController {
             redirect(indexPage, "商品缩略图(小图片)处理失败！");
         }
 
-        try {
+        /*try {
             detailImagePath = getSavePath(detailImage, detailImageFile);
         } catch (Exception e) {
             LOGGER.error("error in getting save path of detailImage: {}", e);
             redirect(indexPage, "商品详细图(大图片)处理失败！");
-        }
+        }*/
 
-        String backImagePath;
+        /*String backImagePath;
         if (isUploadFileEmpty(backImageFile) && !StringUtils.hasText(backImage)) {
             backImagePath = "";
         } else {
@@ -102,21 +100,33 @@ public class AdminCommodityEditController extends ImageController {
                 LOGGER.error("error in getting save path of backImage: {}", e);
                 return redirect(indexPage, "背景图片处理失败");
             }
-        }
+        }*/
 
-        try {
+        System.out.println(id);
+        System.out.println(name);
+        System.out.println(price);
+        System.out.println(snapshotPath);
+        System.out.println(Arrays.toString(detailImages));
+        System.out.println(Arrays.toString(backImages));
+        for (MultipartFile file : detailImagesFile) {
+            System.out.println(file.getOriginalFilename());
+        }
+        for (MultipartFile file : backImagesFile) {
+            System.out.println(file.getOriginalFilename());
+        }
+        return redirect(indexPage);
+        /*try {
             CommodityDao dao = new CommodityDao();
             if (IntegerUtils.isPositive(id)) {
-                dao.update(id, name, price, own, snapshotPath, detailImagePath, backImagePath);
+                dao.update(id, name, price, snapshotPath);
             } else {
-                dao.add(name, price, own, snapshotPath, detailImagePath, backImagePath);
+                dao.add(name, price, snapshotPath);
             }
             return redirect(indexPage);
         } catch (Exception e) {
             LOGGER.error("error in saving or updating commodity: {}", e);
-            //e.printStackTrace();
             return redirect(indexPage, "数据库操作失败！");
-        }
+        }*/
     }
 
     @RequestMapping("/admin-commodity-update-visible.json")

@@ -70,7 +70,7 @@ public class CommodityDaoTest extends DatabaseTestCase {
     @Test
     public void testAdd() {
         assertThat(dao.count()).isEqualTo(4);
-        dao.add("name_1", 15.0, true, "snapshot_1", "detail_image1", "back_image1");
+        dao.add("name_1", 15.0, "snapshot_1");
         assertThat(dao.count()).isEqualTo(5);
         assertThat(dao.getInstance(5).getRanking()).isEqualTo(15);
     }

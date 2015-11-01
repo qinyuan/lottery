@@ -27,8 +27,8 @@
         <property name="name"/>
         <property name="own"/>
         <property name="snapshot"/>
-        <property name="detailImage" column="detail_image"/>
-        <property name="backImage" column="back_image"/>
+        <!--<property name="detailImage" column="detail_image"/>
+        <property name="backImage" column="back_image"/>-->
         <property name="visible"/>
         <property name="ranking"/>
     </class>

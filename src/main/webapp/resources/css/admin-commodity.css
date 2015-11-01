@@ -1,0 +1,115 @@
+
+#commodityForm {
+    /*width: 560px;*/
+    margin-left: -280px;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+#commodityForm table td {
+    border: 1px solid #cccccc;
+    padding: 10px;
+}
+
+#commodityForm table td input[type=text] {
+    display: inline-block;
+    width: 200px;
+}
+
+#commodityForm table td.title {
+    vertical-align: middle;
+    font-weight: bold;
+}
+
+#commodityForm table td.content span.title {
+    font-weight: bold;
+    display: inline-block;
+    width: 45px;
+    text-align: right;
+    margin-right: 5px;
+}
+
+#commodityForm table td.content div.image {
+    line-height: 35px;
+    height: 35px;
+    vertical-align: middle;
+}
+
+#commodityForm table td.content input[type=file] {
+    line-height: 28px;
+}
+
+#commodityForm table td.content div.basic {
+    margin-bottom: 5px;
+}
+
+#commodityForm table td.content div.basic input:last-child {
+    width: 140px;
+}
+
+#commodityForm table td.content div.image {
+    display: inline-block;
+}
+
+#commodityForm table td.content.detail-image > div {
+    margin-bottom: 5px;
+    border-bottom: 1px dashed #cccccc;
+}
+
+#commodityForm table td.content.detail-image div.front {
+    margin-bottom: 5px;
+}
+
+#commodityForm table td.content.detail-image div.delete {
+    text-align: right;
+}
+
+#commodityForm table td.buttons {
+    text-align: center;
+}
+
+#commodityForm table td.buttons button {
+    margin: 0 10px;
+}
+
+div.form div.add button {
+    margin-bottom: 10px;
+}
+
+div.form td.backImage span.no-back {
+    color: #09821D;
+    font-style: italic;
+}
+
+div.form table td.index {
+    overflow: visible;
+}
+
+div.form table td.index div {
+    position: relative;
+    width: 40px;
+    height: 18px;
+    overflow: visible;
+}
+
+div.form table td.index img {
+    height: 13px;
+    width: 13px;
+}
+
+div.form table td.index input {
+    padding: 5px;
+    height: 25px;
+    width: 40px;
+}
+
+div.form table td.index button {
+    display: block;
+    position: absolute;
+    top: 1px;
+    left: 105%;
+}
+
+ul.pagination {
+    margin-left: 170px;
+}

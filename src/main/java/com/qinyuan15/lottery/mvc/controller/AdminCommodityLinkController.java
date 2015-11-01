@@ -5,7 +5,8 @@ import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan15.lottery.mvc.ImageMapType;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
-import com.qinyuan15.lottery.mvc.dao.CommodityDao;
+import com.qinyuan15.lottery.mvc.dao.CommodityImage;
+import com.qinyuan15.lottery.mvc.dao.CommodityImageDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,22 +14,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AdminCommodityLinkController extends ImageController {
     @RequestMapping("/admin-commodity-link")
-    public String index(@RequestParam(value = "id", required = true) Integer commodityId) {
+    public String index(@RequestParam(value = "id", required = true) Integer commodityImageId) {
         IndexHeaderUtils.setHeaderParameters(this);
 
-        if (!IntegerUtils.isPositive(commodityId)) {
+        if (!IntegerUtils.isPositive(commodityImageId)) {
             return BLANK_PAGE;
         }
 
-        Commodity commodity = new CommodityDao().getInstance(commodityId);
-        if (commodity == null) {
+        CommodityImage commodityImage = new CommodityImageDao().getInstance(commodityImageId);
+        if (commodityImage == null) {
             return BLANK_PAGE;
         }
-        new CommodityUrlAdapter(this).adapt(commodity);
+        new CommodityImageUrlAdapter(this).adapt(commodityImage);
 
-        setAttribute("image", commodity.getDetailImage());
+        setAttribute("image", commodityImage.getPath());
         setAttributeAndJavaScriptData("imageMaps", new ImageMapDao(ImageMapType.COMMODITY)
-                .getInstancesByRelateId(commodityId));
+                .getInstancesByRelateId(commodityImageId));
         addJavaScriptData("relateType", ImageMapType.COMMODITY);
         setAttribute("buildInHrefs", new AdminImageMapController.BuildInHrefBuilder()
                 .add("javascript:void(getLotteryLot())", "抽奖链接")
@@ -36,7 +37,8 @@ public class AdminCommodityLinkController extends ImageController {
                 .add("javascript:void(getSeckillLot())", "秒杀链接")
                 .build());
 
-        setTitle(commodity.getName() + "_编辑链接");
+        Commodity commodity = commodityImage.getCommodity();
+        setTitle((commodity == null ? "" : commodity.getName()) + "_编辑链接");
         addCssAndJs("admin-image-map");
         return "admin-image-map";
     }

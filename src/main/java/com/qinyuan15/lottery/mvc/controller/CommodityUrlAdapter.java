@@ -50,8 +50,7 @@ public class CommodityUrlAdapter {
             return null;
         }
         commodity.setSnapshot(controller.pathToUrl(snapshot));
-        commodity.setDetailImage(controller.pathToUrl(commodity.getDetailImage()));
-        commodity.setBackImage(controller.pathToUrl(commodity.getBackImage()));
+        new CommodityImageUrlAdapter(controller).adapt(commodity.getImages());
         return commodity;
     }
 

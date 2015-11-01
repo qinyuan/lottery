@@ -30,4 +30,14 @@ public class CommodityImage extends AbstractRanking {
     public void setBackPath(String backPath) {
         this.backPath = backPath;
     }
+
+    ///////////////// derive fields /////////////////////
+    private Commodity commodityCache;
+
+    public synchronized Commodity getCommodity() {
+        if (commodityCache == null) {
+            commodityCache = new CommodityDao().getInstance(commodityId);
+        }
+        return commodityCache;
+    }
 }

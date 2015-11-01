@@ -3,6 +3,8 @@ package com.qinyuan15.lottery.mvc.dao;
 import com.qinyuan.lib.database.hibernate.AbstractRanking;
 import com.qinyuan.lib.lang.CurrencyUtils;
 
+import java.util.List;
+
 /**
  * Class about Commodity
  * Created by qinyuan on 15-6-22.
@@ -12,8 +14,8 @@ public class Commodity extends AbstractRanking {
     private String name;
     private Boolean own;
     private String snapshot;
-    private String detailImage;
-    private String backImage;
+    /*private String detailImage;
+    private String backImage;*/
     private Boolean visible;
 
     public Double getPrice() {
@@ -32,13 +34,13 @@ public class Commodity extends AbstractRanking {
         return snapshot;
     }
 
-    public String getDetailImage() {
+    /*public String getDetailImage() {
         return detailImage;
     }
 
     public String getBackImage() {
         return backImage;
-    }
+    }*/
 
     public Boolean getVisible() {
         return visible;
@@ -60,20 +62,29 @@ public class Commodity extends AbstractRanking {
         this.snapshot = snapshot;
     }
 
-    public void setDetailImage(String detailImage) {
+    /*public void setDetailImage(String detailImage) {
         this.detailImage = detailImage;
     }
 
     public void setBackImage(String backImage) {
         this.backImage = backImage;
-    }
+    }*/
 
     public void setVisible(Boolean visible) {
         this.visible = visible;
     }
 
-    // derivative fields
+    ///////////////////////////// derivative fields //////////////////////////////
     public String getFormattedPrice() {
         return this.price == null ? null : CurrencyUtils.trimUselessDecimal(this.price);
+    }
+
+    private List<CommodityImage> imagesCache;
+
+    public synchronized List<CommodityImage> getImages() {
+        if (imagesCache == null) {
+            imagesCache = new CommodityImageDao().getInstancesByCommodityId(getId());
+        }
+        return imagesCache;
     }
 }

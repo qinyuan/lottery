@@ -19,8 +19,8 @@
             <list>
                 <value>AppConfig.propertyValue</value>
                 <value>Commodity.snapshot</value>
-                <value>Commodity.detailImage</value>
-                <value>Commodity.backImage</value>
+                <value>CommodityImage.path</value>
+                <value>CommodityImage.backPath</value>
                 <value>HelpItem.icon</value>
                 <value>IndexImage.path</value>
                 <value>IndexImage.backPath</value>

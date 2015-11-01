@@ -24,7 +24,7 @@
         </li>
         <li><a id="commoditySeckillLink" class="text" href="javascript:void(0)">商品&活动</a>
             <ul>
-                <li><a class="text" href="admin-commodity-edit.html">商品管理</a></li>
+                <li><a class="text" href="admin-commodity.html">商品管理</a></li>
                 <li><a class="text" href="admin-lottery-config.html">抽奖配置</a></li>
                 <li><a class="text" href="admin-lottery-activity.html">抽奖管理</a></li>
                 <li><a class="text" href="admin-seckill-config.html">秒杀配置</a></li>
