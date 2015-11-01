@@ -101,31 +101,43 @@
         loadDetail: function (imageId) {
             remainingTime.hide();
             participantCount.hide();
-            var $detail = $('div.main-body div.detail');
-            var $img = $detail.find('img');
-            $img.hide();
-
+            var $details = $('div.main-body div.details').empty();
+            this.clearCommodityMap();
             var self = this;
-            $.post('commodity-info.json', {
+            $.post('commodity-images.json', {
                 id: imageId
             }, function (data) {
-                var commodity = data['commodity'];
-                $detail.setBackgroundImage(commodity['backImage']);
-                $img.attr('src', commodity['detailImage']);
-                $img.fadeIn(500, function () {
+                for (var i = 0, len = data.length; i < len; i++) {
+                    var imageWrapper = data[i];
+                    var commodityMaps = imageWrapper['commodityMaps'];
+                    self.loadCommodityMap(i, commodityMaps);
+
+                    var detailImage = imageWrapper['image']['path'];
+                    var backImage = imageWrapper['image']['backPath'];
+                    var $detail = $('<div class="detail"><img/></div>');
+                    $detail.setBackgroundImage(backImage);
+                    $detail.find('img').attr('src', detailImage).attr('usemap', '#commodityMap' + i).hide();
+
+                    $detail.appendTo($details);
+                }
+                JSUtils.patchMapAreaBug();
+
+                $details.find('img').fadeIn(500, function () {
                     participantCount.update();
                     remainingTime.init();
                 });
-                self.loadCommodityMap(data['commodityMaps']);
             })
         },
         displaySize: 6,
         startIndex: 0,
         endIndex: 5,
-        loadCommodityMap: function (commodityMaps) {
+        clearCommodityMap: function () {
+            $('#commodityMaps').empty();
+        },
+        loadCommodityMap: function (index, commodityMaps) {
             var mapHtml = JSUtils.handlebars('mapTemplate', {'commodityMaps': commodityMaps});
-            $('#commodityMap').html(mapHtml);
-            JSUtils.patchMapAreaBug();
+            var $html = $('<map name="commodityMap' + index + '" id="commodityMap' + index + '">' + mapHtml + '</map>');
+            $html.appendTo($('#commodityMaps'));
         },
         $prevIcon: $('div.main-body div.snapshots div.prev'),
         $nextIcon: $('div.main-body div.snapshots div.next'),

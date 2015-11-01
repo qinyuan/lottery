@@ -10,6 +10,8 @@ import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.ImageMapType;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
+import com.qinyuan15.lottery.mvc.dao.CommodityImage;
+import com.qinyuan15.lottery.mvc.dao.CommodityImageDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -149,17 +151,29 @@ public class CommodityController extends ImageController {
     }
 
 
-    @RequestMapping("/commodity-info.json")
+    @RequestMapping("/commodity-images.json")
     @ResponseBody
     public String json(@RequestParam(value = "id", required = true) Integer id) {
-        CommodityInfo commodityInfo = new CommodityInfo(
-                getUrlAdapter().adaptToSmall(new CommodityDao().getInstance(id)),
-                mapDao.getInstancesByRelateId(id)
-        );
-        return toJson(commodityInfo);
+        List<CommodityImage> images = new CommodityImageDao().getInstancesByCommodityId(id);
+        List<CommodityImageWrapper> wrappers = new ArrayList<>();
+        for (CommodityImage image : images) {
+            new CommodityImageUrlAdapter(this).adapt(image);
+            wrappers.add(new CommodityImageWrapper(image, mapDao.getInstancesByRelateId(image.getId())));
+        }
+        return toJson(wrappers);
     }
 
-    private static class CommodityInfo {
+    private static class CommodityImageWrapper {
+        CommodityImage image;
+        List<ImageMap> commodityMaps;
+
+        private CommodityImageWrapper(CommodityImage image, List<ImageMap> commodityMaps) {
+            this.image = image;
+            this.commodityMaps = commodityMaps;
+        }
+    }
+
+    /*private static class CommodityInfo {
         Commodity commodity;
         List<ImageMap> commodityMaps;
 
@@ -167,5 +181,5 @@ public class CommodityController extends ImageController {
             this.commodity = commodity;
             this.commodityMaps = commodityMaps;
         }
-    }
+    }*/
 }
