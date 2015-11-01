@@ -1,7 +1,7 @@
 
 #commodityForm {
-    /*width: 560px;*/
-    margin-left: -280px;
+    width: 554px;
+    margin-left: -277px;
     padding: 20px;
     margin-bottom: 10px;
 }
@@ -41,10 +41,6 @@
 
 #commodityForm table td.content div.basic {
     margin-bottom: 5px;
-}
-
-#commodityForm table td.content div.basic input:last-child {
-    width: 140px;
 }
 
 #commodityForm table td.content div.image {

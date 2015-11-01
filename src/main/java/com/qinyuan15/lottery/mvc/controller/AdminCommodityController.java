@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -55,10 +54,6 @@ public class AdminCommodityController extends ImageController {
                          @RequestParam("price") Double price,
                          @RequestParam("snapshot") String snapshot,
                          @RequestParam("snapshotFile") MultipartFile snapshotFile,
-                         @RequestParam("detailImages") String[] detailImages,
-                         @RequestParam("detailImagesFile") MultipartFile[] detailImagesFile,
-                         @RequestParam("backImages") String[] backImages,
-                         @RequestParam("backImagesFile") MultipartFile[] backImagesFile,
                          @RequestParam(value = "pageNumber", required = false) Integer pageNumber) {
 
         String indexPage = "admin-commodity";
@@ -75,7 +70,6 @@ public class AdminCommodityController extends ImageController {
         }
 
         String snapshotPath = null;
-
         try {
             snapshotPath = getSavePath(snapshot, snapshotFile);
         } catch (Exception e) {
@@ -83,50 +77,17 @@ public class AdminCommodityController extends ImageController {
             redirect(indexPage, "商品缩略图(小图片)处理失败！");
         }
 
-        /*try {
-            detailImagePath = getSavePath(detailImage, detailImageFile);
-        } catch (Exception e) {
-            LOGGER.error("error in getting save path of detailImage: {}", e);
-            redirect(indexPage, "商品详细图(大图片)处理失败！");
-        }*/
-
-        /*String backImagePath;
-        if (isUploadFileEmpty(backImageFile) && !StringUtils.hasText(backImage)) {
-            backImagePath = "";
-        } else {
-            try {
-                backImagePath = getSavePath(backImage, backImageFile);
-            } catch (Exception e) {
-                LOGGER.error("error in getting save path of backImage: {}", e);
-                return redirect(indexPage, "背景图片处理失败");
-            }
-        }*/
-
-        System.out.println(id);
-        System.out.println(name);
-        System.out.println(price);
-        System.out.println(snapshotPath);
-        System.out.println(Arrays.toString(detailImages));
-        System.out.println(Arrays.toString(backImages));
-        for (MultipartFile file : detailImagesFile) {
-            System.out.println(file.getOriginalFilename());
-        }
-        for (MultipartFile file : backImagesFile) {
-            System.out.println(file.getOriginalFilename());
-        }
-        return redirect(indexPage);
-        /*try {
-            CommodityDao dao = new CommodityDao();
+        try {
             if (IntegerUtils.isPositive(id)) {
-                dao.update(id, name, price, snapshotPath);
+                new CommodityDao().update(id, name, price, snapshotPath);
             } else {
-                dao.add(name, price, snapshotPath);
+                new CommodityDao().add(name, price, snapshotPath);
             }
             return redirect(indexPage);
         } catch (Exception e) {
             LOGGER.error("error in saving or updating commodity: {}", e);
             return redirect(indexPage, "数据库操作失败！");
-        }*/
+        }
     }
 
     @RequestMapping("/admin-commodity-update-visible.json")
