@@ -57,17 +57,17 @@
 
     function showSuccessInfo() {
         var $registerSuccess = $('div.main-body div.register-success');
-        var remainSeconds = 5;
-        var $remain = $registerSuccess.find('span.remain').text(remainSeconds);
+        //var remainSeconds = 5;
+        //var $remain = $registerSuccess.find('span.remain').text(remainSeconds);
         $form.hide();
         $registerSuccess.show();
-        setInterval(function () {
-            remainSeconds--;
-            $remain.text(remainSeconds);
-            if (remainSeconds == 0) {
-                location.href = 'index.html';
-            }
-        }, 1000);
+        /*setInterval(function () {
+         remainSeconds--;
+         $remain.text(remainSeconds);
+         if (remainSeconds == 0) {
+         location.href = 'index.html';
+         }
+         }, 1000);*/
     }
 
     function validateUsername(callback) {

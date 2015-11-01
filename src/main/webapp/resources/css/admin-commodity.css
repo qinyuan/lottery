@@ -82,6 +82,10 @@ div.form table td.index button {
     left: 105%;
 }
 
+div.form table th.name, div.form table td.name {
+    width: 150px;
+}
+
 div.form table td.snapshot, div.form table td.detail-image, div.form table td.back-image {
     width: 105px;
     text-align: center;

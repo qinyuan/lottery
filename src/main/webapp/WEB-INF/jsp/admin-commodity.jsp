@@ -9,7 +9,7 @@
         <table class="normal">
             <thead>
             <th>序号</th>
-            <th>名称</th>
+            <th class="name">名称</th>
             <th>价格</th>
             <th>缩略图</th>
             <th>是否显示</th>

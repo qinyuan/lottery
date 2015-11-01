@@ -25,5 +25,7 @@
 </div>
 <div class="register-success">
     <div class="title">邮箱 <span class="email">${preUser.email}</span> 已经注册成功！</div>
-    <div class="skip">系统将在<span class="remain"></span>秒后跳转到主页，如果没有请 <a href="index.html">点击手动跳转</a></div>
+    <%--<div class="skip">系统将在<span class="remain"></span>秒后跳转到主页，如果没有请 <a href="index.html">点击手动跳转</a></div>--%>
+    <div class="skip">邮件订阅已发送，请到邮箱内确认</div>
+    <div class="to-index"><a href="index.html">进入主页</a></div>
 </div>

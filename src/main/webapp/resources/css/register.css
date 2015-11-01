@@ -61,6 +61,7 @@ div.main-body div.form div.email {
 div.main-body div.form div.input input {
     width: 300px;
 }
+
 /*
 div.main-body div.form div.input span.icon {
     padding: 3px 0 3px 20px;
@@ -96,7 +97,7 @@ div.main-body div.form div.subscribe span.emphasize {
     color: #0066B6;
 }
 
-div.main-body div.form div.submit button {
+div.main-body div.form div.submit button, div.main-body div.register-success div.to-index a {
     border-radius: 0;
     color: #ffffff;
     background-color: #85C926;
@@ -107,6 +108,16 @@ div.main-body div.form div.submit button {
 
 div.main-body div.register-success {
     display: none;
+}
+
+div.main-body div.register-success div.to-index {
+    margin-top: 40px;
+    margin-left: 60px;
+}
+
+div.main-body div.register-success div.to-index a {
+    background-color: #AEDA70;
+    border-color: #AEDA70;
 }
 
 div.main-body div.completed, div.main-body div.invalid-link,

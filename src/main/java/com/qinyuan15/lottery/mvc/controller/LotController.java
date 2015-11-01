@@ -74,13 +74,6 @@ public class LotController extends ImageController {
                 result.put(SUCCESS, false);
                 result.put(DETAIL, "alreadyAttended");
             }
-
-            // liveness parameter
-            /*result.put("minLivenessToParticipate", activity.getMinLivenessToParticipate());
-            result.put("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
-            LivenessQuerier.LivenessInfo maxLivnessInfo = new LivenessQuerier().queryMax(activity);
-            result.put("maxLiveness", maxLivnessInfo.liveness);
-            result.put("maxLivenessUsers", maxLivnessInfo.users);*/
         }
 
         // commodity
