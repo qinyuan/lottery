@@ -13,7 +13,8 @@
             <th>价格</th>
             <th>缩略图</th>
             <th>是否显示</th>
-            <th></th>
+            <th>操作</th>
+            <th>详细图/背景图</th>
             </thead>
             <tbody>
             <c:forEach var="commodity" items="${commodities}" varStatus="status">
@@ -31,19 +32,6 @@
                             <img src="${commodity.snapshot}" onload="adjustImage(this, 100, 100);"/>
                         </a>
                     </td>
-                        <%--<td class="detailImage">
-                            <a href="${commodity.detailImage}" target="_blank" title="单击预览">
-                                <img src="${commodity.detailImage}" onload="adjustImage(this, 100, 100);"/></a>
-                        </td>
-                        <td class="backImage">
-                            <c:choose>
-                                <c:when test="${commodity.backImage != null && fn:length(commodity.backImage) > 0}">
-                                    <a href="${commodity.backImage}" target="_blank" title="单击预览">
-                                        <img src="${commodity.backImage}" onload="adjustImage(this, 100, 100);"/></a>
-                                </c:when>
-                                <c:otherwise><span class="no-back">(无)</span></c:otherwise>
-                            </c:choose>
-                        </td>--%>
                     <td class="visible">
                         <div class="switch switch-mini" data-on-label="是" data-off-label="否">
                             <input type="checkbox"<c:if test="${commodity.visible}"> checked</c:if>/>
@@ -53,9 +41,44 @@
                         <jsp:include page="widget-ranking.jsp"/>
                         <a href="commodity.html?id=${commodity.id}" target="_blank"><img
                                 title="预览" src="resources/css/images/preview.gif"/></a>
-                        <a href="admin-commodity-link.html?id=${commodity.id}" target="_blank"><img
-                                title="编辑图片上的链接" src="resources/css/images/link.png"/></a>
                         <jsp:include page="widget-edit-delete.jsp"/>
+                    </td>
+                    <td class="detail-and-back">
+                        <table class="inner">
+                            <tbody>
+                            <c:forEach var="image" items="${commodity.images}">
+                                <tr data-id="${image.id}">
+                                    <td class="detail-image">
+                                        <c:if test="${image.path != null}">
+                                            <a href="${image.path}" target="_blank" title="单击预览">
+                                                <img src="${image.path}" onload="adjustImage(this, 100, 100);"/>
+                                            </a>
+                                        </c:if>
+                                        <c:if test="${image.path == null}">
+                                            <span class="no-image">(无)</span>
+                                        </c:if>
+                                    </td>
+                                    <td class="back-image">
+                                        <c:if test="${image.backPath != null}">
+                                            <a href="${image.backPath}" target="_blank" title="单击预览">
+                                                <img src="${image.backPath}" onload="adjustImage(this, 100, 100);"/>
+                                            </a>
+                                        </c:if>
+                                        <c:if test="${image.backPath == null}">
+                                            <span class="no-image">(无)</span>
+                                        </c:if>
+                                    </td>
+                                    <td>
+                                        <jsp:include page="widget-ranking.jsp"/>
+                                        <a href="admin-commodity-link.html?id=${image.id}" target="_blank"><img
+                                                title="编辑图片上的链接" src="resources/css/images/link.png"/></a>
+                                        <jsp:include page="widget-edit-delete.jsp"/>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                        <img class="link add" title="添加" src="resources/css/images/add.png"/>
                     </td>
                 </tr>
             </c:forEach>
@@ -65,4 +88,5 @@
     </div>
 </div>
 <%@include file="admin-commodity-add-edit-form.jsp" %>
+<%@include file="admin-commodity-image-add-edit-form.jsp" %>
 <%@include file="inc-footer.jsp" %>

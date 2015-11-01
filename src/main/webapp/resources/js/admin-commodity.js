@@ -16,24 +16,39 @@
     });
 })();
 (function () {
-    // codes about deleting/ranking commodity
-    $('table img.delete').click(function () {
+    // codes about deleting/ranking commodity/image
+    $('div.form table td.action img.delete').click(function () {
         var id = $(this).getParentByTagName('tr').dataOptions('id');
         if (confirm('确定删除？')) {
             $.post('admin-commodity-delete.json', {id: id}, JSUtils.normalAjaxCallback);
         }
     });
-    $('table img.rank-up').click(function () {
+    $('div.form table td.action img.rank-up').click(function () {
         var id = $(this).getParentByTagName('tr').dataOptions('id');
         $.post('admin-commodity-rank-up.json', {id: id}, JSUtils.normalAjaxCallback);
     });
-    $('table img.rank-down').click(function () {
+    $('div.form table td.action img.rank-down').click(function () {
         var id = $(this).getParentByTagName('tr').dataOptions('id');
         $.post('admin-commodity-rank-down.json', {id: id}, JSUtils.normalAjaxCallback);
     });
+
+    $('div.form table td.detail-and-back table.inner img.delete').click(function () {
+        var id = $(this).getParentByTagName('tr').data('id');
+        if (confirm('确定删除？')) {
+            $.post('admin-commodity-image-delete.json', {id: id}, JSUtils.normalAjaxCallback);
+        }
+    });
+    $('div.form table td.detail-and-back table.inner img.rank-up').click(function () {
+        var id = $(this).getParentByTagName('tr').data('id');
+        $.post('admin-commodity-image-rank-up.json', {id: id}, JSUtils.normalAjaxCallback);
+    });
+    $('div.form table td.detail-and-back table.inner img.rank-down').click(function () {
+        var id = $(this).getParentByTagName('tr').data('id');
+        $.post('admin-commodity-image-rank-down.json', {id: id}, JSUtils.normalAjaxCallback);
+    });
 })();
 (function () {
-    // codes about adding/editing commodity
+    // codes about adding/editing commodity/image
     var commodityForm = JSUtils.buildFloatPanel({
         $floatPanel: $('#commodityForm'),
         beforeShow: function () {
@@ -68,23 +83,63 @@
             this.$floatPanel.setInputValue('name', name);
             this.$floatPanel.setInputValue('price', price);
             this.$floatPanel.setInputValue('snapshot', snapshot);
+            return this;
         }
     });
 
     $('div.form div.add button').click(function () {
-        commodityForm.setValues();
-        commodityForm.show();
+        commodityForm.setValues().show();
     });
 
-    $('table img.edit').click(function () {
+    $('div.form table td.action img.edit').click(function () {
         var $tr = $(this).getParentByTagName('tr');
-        var id = $tr.dataOptions()['id'];
+        var id = $tr.dataOptions('id');
         var name = $tr.find('td.name').trimText();
         var price = $tr.find('td.price').trimText();
         var snapshot = $tr.find('td.snapshot img').attr('src');
 
-        commodityForm.setValues(id, name, price, snapshot);
-        commodityForm.show();
+        commodityForm.setValues(id, name, price, snapshot).show();
+    });
+
+    var commodityImageForm = JSUtils.buildFloatPanel({
+        $floatPanel: $('#commodityImageForm'),
+        beforeShow: function () {
+            decreaseSwitchZIndex();
+        },
+        doSubmit: function () {
+            this.$floatPanel.get(0).submit();
+        },
+        postInit: function () {
+            this.$floatPanel.setInputValue('pageNumber', $.url.param('pageNumber'));
+        },
+        validateInput: function () {
+            return JSUtils.validateUploadFile('detailImage', '前景图不能为空');
+        },
+        setValues: function (id, commodityId, detailImage, backImage) {
+            this.$floatPanel.setInputValue('id', id);
+            this.$floatPanel.setInputValue('commodityId', commodityId);
+            this.$floatPanel.setInputValue('detailImage', detailImage);
+            this.$floatPanel.setInputValue('backImage', backImage);
+            return this;
+        }
+    });
+
+    $('div.form table td.detail-and-back img.add').click(function () {
+        var commodityId = $(this).getParentByTagName('tr').dataOptions('id');
+        if (commodityId) {
+            commodityImageForm.setValues(null, commodityId).show();
+        }
+    });
+    $('div.form table td.detail-and-back table.inner img.edit').click(function () {
+        var $tr = $(this).getParentByTagName('tr');
+        var id = $tr.data('id');
+        var $detailImageAnchor = $tr.find('td.detail-image a');
+        var detailImage = $detailImageAnchor.size() > 0 ? $detailImageAnchor.attr('href') : '';
+        var $backImageAnchor = $tr.find('td.back-image a');
+        var backImage = $backImageAnchor.size() > 0 ? $backImageAnchor.attr('href') : '';
+        if (id) {
+            commodityImageForm.setValues(id, null, detailImage, backImage).show();
+        }
     });
 
     function decreaseSwitchZIndex() {

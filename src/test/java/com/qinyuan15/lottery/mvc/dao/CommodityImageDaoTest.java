@@ -25,9 +25,9 @@ public class CommodityImageDaoTest extends DatabaseTestCase {
 
     @Test
     public void testUpdate() throws Exception {
-        dao.update(1, 3, "path11", "backPath11");
+        dao.update(1, "path11", "backPath11");
         CommodityImage image = dao.getInstance(1);
-        assertThat(image.getCommodityId()).isEqualTo(3);
+        assertThat(image.getCommodityId()).isEqualTo(1);
         assertThat(image.getPath()).isEqualTo("path11");
         assertThat(image.getBackPath()).isEqualTo("backPath11");
     }

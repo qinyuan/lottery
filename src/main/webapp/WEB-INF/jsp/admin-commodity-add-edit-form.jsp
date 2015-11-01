@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <q:multipart-form id="commodityForm" cssClass="float-panel" action="admin-commodity-submit">
-    <input type="hidden" name="id"/>
-    <input type="hidden" name="pageNumber"/>
+    <q:hidden name="id"/>
+    <q:hidden name="pageNumber"/>
     <table>
         <tbody>
         <tr>

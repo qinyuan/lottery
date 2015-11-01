@@ -1,27 +1,21 @@
 
-#commodityForm {
+.float-panel {
     width: 554px;
     margin-left: -277px;
     padding: 20px;
-    margin-bottom: 10px;
 }
 
-#commodityForm table td {
+.float-panel table td {
     border: 1px solid #cccccc;
     padding: 10px;
 }
 
-#commodityForm table td input[type=text] {
+.float-panel table td input[type=text] {
     display: inline-block;
     width: 200px;
 }
 
-#commodityForm table td.title {
-    vertical-align: middle;
-    font-weight: bold;
-}
-
-#commodityForm table td.content span.title {
+.float-panel table td.content span.title {
     font-weight: bold;
     display: inline-block;
     width: 45px;
@@ -29,52 +23,34 @@
     margin-right: 5px;
 }
 
-#commodityForm table td.content div.image {
+.float-panel table td.content div.image {
     line-height: 35px;
     height: 35px;
     vertical-align: middle;
 }
 
-#commodityForm table td.content input[type=file] {
+.float-panel table td.content input[type=file] {
     line-height: 28px;
 }
 
-#commodityForm table td.content div.basic {
+.float-panel table td.content div.basic, .float-panel table td.content div.detail {
     margin-bottom: 5px;
 }
 
-#commodityForm table td.content div.image {
+.float-panel table td.content div.image {
     display: inline-block;
 }
 
-#commodityForm table td.content.detail-image > div {
-    margin-bottom: 5px;
-    border-bottom: 1px dashed #cccccc;
-}
-
-#commodityForm table td.content.detail-image div.front {
-    margin-bottom: 5px;
-}
-
-#commodityForm table td.content.detail-image div.delete {
-    text-align: right;
-}
-
-#commodityForm table td.buttons {
+.float-panel table td.buttons {
     text-align: center;
 }
 
-#commodityForm table td.buttons button {
+.float-panel table td.buttons button {
     margin: 0 10px;
 }
 
 div.form div.add button {
     margin-bottom: 10px;
-}
-
-div.form td.backImage span.no-back {
-    color: #09821D;
-    font-style: italic;
 }
 
 div.form table td.index {
@@ -104,6 +80,26 @@ div.form table td.index button {
     position: absolute;
     top: 1px;
     left: 105%;
+}
+
+div.form table td.snapshot, div.form table td.detail-image, div.form table td.back-image {
+    width: 105px;
+    text-align: center;
+    max-height: 105px;
+    overflow: hidden;
+}
+
+div.form table td.detail-and-back {
+    padding-left: 50px;
+}
+
+div.form table.inner span.no-image {
+    color: #CC0033;
+    font-style: italic;
+}
+
+div.form table.inner td {
+    border: 1px solid #dddddd;
 }
 
 ul.pagination {

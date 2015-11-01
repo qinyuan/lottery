@@ -7,10 +7,11 @@ import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.controller.PaginationAttributeAdder;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
+import com.qinyuan15.lottery.mvc.dao.CommodityImageDao;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,19 +50,19 @@ public class AdminCommodityController extends ImageController {
     }
 
     @RequestMapping("/admin-commodity-submit")
-    public String submit(@RequestParam("id") Integer id,
-                         @RequestParam("name") String name,
-                         @RequestParam("price") Double price,
-                         @RequestParam("snapshot") String snapshot,
-                         @RequestParam("snapshotFile") MultipartFile snapshotFile,
-                         @RequestParam(value = "pageNumber", required = false) Integer pageNumber) {
+    public String commoditySubmit(@RequestParam(value = "id", required = false) Integer id,
+                                  @RequestParam("name") String name,
+                                  @RequestParam("price") Double price,
+                                  @RequestParam("snapshot") String snapshot,
+                                  @RequestParam(value = "snapshotFile", required = false) MultipartFile snapshotFile,
+                                  @RequestParam(value = "pageNumber", required = false) Integer pageNumber) {
 
         String indexPage = "admin-commodity";
         if (IntegerUtils.isPositive(pageNumber)) {
             indexPage = indexPage + "?pageNumber=" + pageNumber;
         }
 
-        if (!StringUtils.hasText(name)) {
+        if (StringUtils.isBlank(name)) {
             return redirect(indexPage, "名称未填写");
         }
 
@@ -90,6 +91,57 @@ public class AdminCommodityController extends ImageController {
         }
     }
 
+    @RequestMapping("/admin-commodity-image-submit")
+    public String commodityImageSubmit(@RequestParam(value = "id", required = false) Integer id,
+                                       @RequestParam(value = "commodityId", required = false) Integer commodityId,
+                                       @RequestParam("detailImage") String detailImage,
+                                       @RequestParam(value = "detailImageFile", required = false) MultipartFile detailImageFile,
+                                       @RequestParam("backImage") String backImage,
+                                       @RequestParam(value = "backImageFile", required = false) MultipartFile backImageFile,
+                                       @RequestParam(value = "pageNumber", required = false) Integer pageNumber) {
+
+        String indexPage = "admin-commodity";
+        if (IntegerUtils.isPositive(pageNumber)) {
+            indexPage = indexPage + "?pageNumber=" + pageNumber;
+        }
+
+        String detailImagePath = null;
+        try {
+            detailImagePath = getSavePath(detailImage, detailImageFile);
+        } catch (Exception e) {
+            LOGGER.error("error in getting save path of snapshot: {}", e);
+            redirect(indexPage, "商品前景图处理失败！");
+        }
+
+        String backImagePath;
+        if (isUploadFileEmpty(backImageFile) && StringUtils.isBlank(backImage)) {
+            backImagePath = "";
+        } else {
+            try {
+                backImagePath = getSavePath(backImage, backImageFile);
+            } catch (Exception e) {
+                LOGGER.error("error in getting save path of backImage: {}", e);
+                return redirect(indexPage, "背景图片处理失败");
+            }
+        }
+
+        try {
+            if (IntegerUtils.isPositive(id)) {
+                new CommodityImageDao().update(id, detailImagePath, backImagePath);
+            } else {
+                if (IntegerUtils.isPositive(commodityId)) {
+                    new CommodityImageDao().add(commodityId, detailImagePath, backImagePath);
+                } else {
+                    return redirect(indexPage, "商品ID无效");
+                }
+            }
+            return redirect(indexPage);
+        } catch (Exception e) {
+            LOGGER.error("error in saving or updating commodity: {}", e);
+            return redirect(indexPage, "数据库操作失败！");
+        }
+    }
+
     @RequestMapping("/admin-commodity-update-visible.json")
     @ResponseBody
     public String updateVisible(@RequestParam(value = "id", required = true) Integer id,
@@ -108,7 +160,7 @@ public class AdminCommodityController extends ImageController {
 
     @RequestMapping("/admin-commodity-delete.json")
     @ResponseBody
-    public String delete(@RequestParam(value = "id", required = true) Integer id) {
+    public String deleteCommodity(@RequestParam("id") Integer id) {
         if (!IntegerUtils.isPositive(id)) {
             return failByInvalidParam();
         }
@@ -125,9 +177,25 @@ public class AdminCommodityController extends ImageController {
         }
     }
 
+    @RequestMapping("/admin-commodity-image-delete.json")
+    @ResponseBody
+    public String deleteCommodityImage(@RequestParam("id") Integer id) {
+        if (!IntegerUtils.isPositive(id)) {
+            return failByInvalidParam();
+        }
+        try {
+            CommodityImageDao dao = new CommodityImageDao();
+            dao.delete(id);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("Fail to delete commodity image, id: {}, info: {}", id, e);
+            return failByDatabaseError();
+        }
+    }
+
     @RequestMapping("/admin-commodity-rank-up.json")
     @ResponseBody
-    public String rankUp(@RequestParam(value = "id", required = true) Integer id) {
+    public String rankUpCommodity(@RequestParam("id") Integer id) {
         if (!IntegerUtils.isPositive(id)) {
             return failByInvalidParam();
         }
@@ -140,9 +208,24 @@ public class AdminCommodityController extends ImageController {
         }
     }
 
+    @RequestMapping("/admin-commodity-image-rank-up.json")
+    @ResponseBody
+    public String rankUpCommodityImage(@RequestParam("id") Integer id) {
+        if (!IntegerUtils.isPositive(id)) {
+            return failByInvalidParam();
+        }
+        try {
+            new CommodityImageDao().rankUp(id);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("Fail to rank up commodity image, id: {}, info: {}", id, e);
+            return failByDatabaseError();
+        }
+    }
+
     @RequestMapping("/admin-commodity-rank-down.json")
     @ResponseBody
-    public String rankDown(@RequestParam(value = "id", required = true) Integer id) {
+    public String rankDownCommodity(@RequestParam("id") Integer id) {
         if (!IntegerUtils.isPositive(id)) {
             return failByInvalidParam();
         }
@@ -151,6 +234,21 @@ public class AdminCommodityController extends ImageController {
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to rank down commodity, id: {}, info: {}", id, e);
+            return failByDatabaseError();
+        }
+    }
+
+    @RequestMapping("/admin-commodity-image-rank-down.json")
+    @ResponseBody
+    public String rankDownCommodityImage(@RequestParam("id") Integer id) {
+        if (!IntegerUtils.isPositive(id)) {
+            return failByInvalidParam();
+        }
+        try {
+            new CommodityImageDao().rankDown(id);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("Fail to rank down commodity image, id: {}, info: {}", id, e);
             return failByDatabaseError();
         }
     }

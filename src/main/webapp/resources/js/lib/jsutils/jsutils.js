@@ -175,7 +175,17 @@ var JSUtils = {
      * @param $element
      */
     scrollToVerticalCenter: function ($element) {
-        var top = (JSUtils.getWindowHeight() - $element.height()) / 2;
+        var height = $element.height();
+        var paddingTop = parseInt($element.css('padding-top'));
+        if (paddingTop > 0) {
+            height += paddingTop;
+        }
+        var paddingBottom = parseInt($element.css('padding-bottom'));
+        if (paddingBottom > 0) {
+            height += paddingBottom;
+        }
+
+        var top = (JSUtils.getWindowHeight() - height) / 2;
         if (top < 0) {
             top = 0;
         }
