@@ -132,14 +132,8 @@ public class LotController extends ImageController {
             return false;
         }
 
-        Integer noTelLotteryLotCount = AppConfig.getNoTelLotteryLotCount();
-        if (noTelLotteryLotCount == null) {
-            noTelLotteryLotCount = 0;
-        }
-        Double noTelLotteryLotPrice = AppConfig.getNoTelLotteryLotPrice();
-        if (noTelLotteryLotPrice == null) {
-            noTelLotteryLotPrice = 0.0;
-        }
+        int noTelLotteryLotCount = AppConfig.getNoTelLotteryLotCountValue();
+        double noTelLotteryLotPrice = AppConfig.getNoTelLotteryLotPriceValue();
 
         return new LotteryLotCounter().countByUser(user.getId()) > noTelLotteryLotCount ||
                 activity.getCommodity().getPrice() > noTelLotteryLotPrice;

@@ -673,6 +673,11 @@ public class AppConfig {
         return dao.getInteger(NO_TEL_LOTTERY_LOT_COUNT_KEY);
     }
 
+    public static int getNoTelLotteryLotCountValue() {
+        Integer noTelLotteryLotCount = getNoTelLotteryLotCount();
+        return noTelLotteryLotCount == null ? 0 : noTelLotteryLotCount;
+    }
+
     public static void updateNoTelLotteryLotCount(Integer noTelLotteryLotCount) {
         dao.saveInteger(NO_TEL_LOTTERY_LOT_COUNT_KEY, noTelLotteryLotCount);
     }
@@ -681,6 +686,11 @@ public class AppConfig {
 
     public static Double getNoTelLotteryLotPrice() {
         return dao.getDouble(NO_TEL_LOTTERY_LOT_PRICE_KEY);
+    }
+
+    public static double getNoTelLotteryLotPriceValue() {
+        Double noTelLotteryLotPrice = getNoTelLotteryLotPrice();
+        return noTelLotteryLotPrice == null ? 0.0 : noTelLotteryLotPrice;
     }
 
     public static void updateNoTelLotteryLotPrice(Double noTelLotteryLotPrice) {

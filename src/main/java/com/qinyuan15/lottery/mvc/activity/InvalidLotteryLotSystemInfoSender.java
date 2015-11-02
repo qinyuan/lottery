@@ -16,7 +16,7 @@ public class InvalidLotteryLotSystemInfoSender {
     }
 
     public void send(LotteryActivity activity) {
-        List<Integer> noTelUserIds = new InvalidLotteryLotDao().getNoTelUserIds(activity.getId());
+        List<Integer> noTelUserIds = new InvalidLotteryLotDao().getNoTelUserIds(activity);
         if (noTelUserIds.size() > 0) {
             sendNoTelUsers(noTelUserIds, activity.getTerm());
         }

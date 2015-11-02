@@ -32,13 +32,15 @@ public class InvalidLotteryLotDaoTest extends DatabaseTestCase {
 
     @Test
     public void getGetNoTelUserIds() {
-        assertThat(dao.getNoTelUserIds(2)).containsExactly(3, 4);
+        LotteryActivity activity = new LotteryActivityDao().getInstance(2);
+        assertThat(dao.getNoTelUserIds(activity)).containsExactly(3, 4);
         new UserDao().updateTel(3, "13200000000");
-        assertThat(dao.getNoTelUserIds(2)).containsExactly(4);
+        assertThat(dao.getNoTelUserIds(activity)).containsExactly(4);
         new UserDao().updateTel(4, "13700000000");
-        assertThat(dao.getNoTelUserIds(2)).isEmpty();
+        assertThat(dao.getNoTelUserIds(activity)).isEmpty();
 
-        assertThat(dao.getNoTelUserIds(15)).isEmpty();
+        activity = new LotteryActivityDao().getInstance(15);
+        assertThat(dao.getNoTelUserIds(activity)).isEmpty();
     }
 
     @Test
