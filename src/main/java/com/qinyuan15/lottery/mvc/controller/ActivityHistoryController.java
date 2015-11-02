@@ -4,11 +4,11 @@ import com.google.common.base.Joiner;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
+import com.qinyuan15.lottery.mvc.activity.InvalidLotteryLotUtils;
 import com.qinyuan15.lottery.mvc.dao.*;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -131,12 +131,11 @@ public class ActivityHistoryController extends ImageController {
     }
 
     private boolean isUserInvalidToTakeLot(User user, LotteryActivity lotteryActivity) {
-        if (!StringUtils.hasText(user.getTel())) {
+        if (InvalidLotteryLotUtils.isNoTelInvalidLot(user, lotteryActivity)) {
             return true;
         }
         if (!IntegerUtils.isPositive(lotteryActivity.getMinLivenessToParticipate())) {
             return false;
-
         }
         int liveness = new LotteryLivenessDao().getLiveness(user.getId());
         return liveness < lotteryActivity.getMinLivenessToParticipate();

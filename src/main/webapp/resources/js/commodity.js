@@ -101,8 +101,9 @@
         loadDetail: function (imageId) {
             remainingTime.hide();
             participantCount.hide();
-            var $details = $('div.main-body div.details').empty();
+            var $details = $('div.main-body div.details').adjustMinHeightToHeight().empty();
             this.clearCommodityMap();
+            //alert('aaa');
             var self = this;
             $.post('commodity-images.json', {
                 id: imageId
@@ -126,6 +127,8 @@
                     participantCount.update();
                     remainingTime.init();
                 });
+                $details.css('min-height', '0px');
+                //$details.css('min-height', null);
             })
         },
         displaySize: 6,

@@ -1178,3 +1178,14 @@ jQuery.fn.clearValidation = function () {
         $next.hide();
     }
 };
+
+/**
+ * adjust min-height attribute of element as its height
+ */
+jQuery.fn.adjustMinHeightToHeight = function () {
+    var height = this.height();
+    if (height >= 0) {
+        this.css('min-height', height);
+    }
+    return this;
+};

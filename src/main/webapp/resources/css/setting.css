@@ -2,6 +2,7 @@
 div.white-back {
     background-color: #ffffff;
     padding: 20px 0;
+    min-height: 800px;
 }
 
 div.main-body {

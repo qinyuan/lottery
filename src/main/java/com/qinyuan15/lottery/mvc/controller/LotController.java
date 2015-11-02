@@ -6,10 +6,7 @@ import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
-import com.qinyuan15.lottery.mvc.activity.LotteryLotCreator;
-import com.qinyuan15.lottery.mvc.activity.LotteryShareUrlBuilder;
-import com.qinyuan15.lottery.mvc.activity.SeckillShareUrlBuilder;
+import com.qinyuan15.lottery.mvc.activity.*;
 import com.qinyuan15.lottery.mvc.dao.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -122,21 +119,9 @@ public class LotController extends ImageController {
 
     private void putLotteryLivenessParameters(Map<String, Object> result, User user, LotteryActivity activity) {
         result.put("tel", user.getTel());
-        result.put("noTelInvalidLot", isNoTelInvalidLot(user, activity));
+        result.put("noTelInvalidLot", InvalidLotteryLotUtils.isNoTelInvalidLot(user, activity));
         result.put("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
         result.put("minLivenessToParticipate", activity.getMinLivenessToParticipate());
-    }
-
-    private boolean isNoTelInvalidLot(User user, LotteryActivity activity) {
-        if (StringUtils.isNotBlank(user.getTel())) {
-            return false;
-        }
-
-        int noTelLotteryLotCount = AppConfig.getNoTelLotteryLotCountValue();
-        double noTelLotteryLotPrice = AppConfig.getNoTelLotteryLotPriceValue();
-
-        return new LotteryLotCounter().countByUser(user.getId()) > noTelLotteryLotCount ||
-                activity.getCommodity().getPrice() > noTelLotteryLotPrice;
     }
 
     @RequestMapping("/take-seckill.json")

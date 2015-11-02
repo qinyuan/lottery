@@ -87,7 +87,7 @@ div.form table th.name, div.form table td.name {
 }
 
 div.form table td.snapshot, div.form table td.detail-image, div.form table td.back-image {
-    width: 105px;
+    width: 110px;
     text-align: center;
     max-height: 105px;
     overflow: hidden;
