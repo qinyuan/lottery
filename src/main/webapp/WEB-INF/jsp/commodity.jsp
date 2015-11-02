@@ -49,13 +49,9 @@
             <div class="participant-count">已参与人数：<span class="participant-count"></span>人</div>
         </div>
     </div>
-    <%--<div class="detail">
-        <img usemap="#commodityMap"/>
-    </div>--%>
     <div class="details">
     </div>
 </div>
-<%--<map name="commodityMap" id="commodityMap"></map>--%>
 <div id="commodityMaps">
 </div>
 <q:handlebars-template id="mapTemplate">

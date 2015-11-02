@@ -77,8 +77,15 @@
         return ({
             _numberDivs: $parent.find('div.number'),
             _valueSize: 8,
+            _setBackgroundPosition: function ($element, y) {
+                // notice that firefox doesn't support background-position-y
+                $element.css('background-position', '0 ' + y + 'px');
+                $element.css('background-position-y', y + 'px');
+                return $element;
+            },
             setValue: function (index, value) {
-                this._numberDivs.eq(index).css('background-position-y', (parseInt(value) * -26 * 6)).dataOptions('value', value);
+                var y = (parseInt(value) * -26 * 6);
+                this._setBackgroundPosition(this._numberDivs.eq(index), y).dataOptions('value', value);
             },
             transformToValue: function (index, value) {
                 var i = 6;
@@ -88,7 +95,7 @@
                 changeNumber();
                 function changeNumber() {
                     i--;
-                    self._numberDivs.eq(index).css('background-position-y', ((parseInt(value) * 6 + i) * -26));
+                    self._setBackgroundPosition(self._numberDivs.eq(index), ((parseInt(value) * 6 + i) * -26));
                     if (i > 0) {
                         setTimeout(function () {
                             changeNumber()

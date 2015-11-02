@@ -37,3 +37,5 @@ admin.jsp提交的内容不完整时出错
 当通知为空时，显示存在问题
 
 firefox下的数字时钟存在问题
+
+InvalidLotteryLotDao需要进一步测试

@@ -44,10 +44,8 @@ public class InvalidLotteryLotDao {
         String filter = "user_id IN (SELECT id FROM user WHERE tel IS NULL OR tel='')";
 
         if (activity.getCommodity().getPrice() <= AppConfig.getNoTelLotteryLotPriceValue()) {
-            filter += " AND ";
-            int noTelLotteryLotCount = AppConfig.getNoTelLotteryLotCountValue();
-            filter += " user_id IN (SELECT user_id FROM lottery_lot GROUP BY user_id HAVING count(*)>"
-                    + noTelLotteryLotCount + ")";
+            filter += " AND user_id IN (SELECT user_id FROM lottery_lot GROUP BY user_id HAVING count(*)>"
+                    + AppConfig.getNoTelLotteryLotCountValue() + ")";
         }
 
         return filter;

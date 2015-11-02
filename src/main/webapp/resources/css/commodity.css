@@ -177,7 +177,6 @@ div.main-body div.snapshots div.next {
 }
 
 div.main-body div.details {
-    /*margin-bottom: 70px;*/
     overflow-y: hidden;
 }
 
@@ -185,7 +184,6 @@ div.main-body div.detail {
     width: 100%;
     position: relative;
     text-align: center;
-    min-height: 500px;
     overflow-y: hidden;
     background: no-repeat top center;
 }
