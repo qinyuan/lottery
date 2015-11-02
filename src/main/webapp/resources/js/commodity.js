@@ -296,7 +296,7 @@
         showSubscribe: false,
         showAdditionalLotteryResult: function (options) {
             var success = true;
-            if (options['tel'] == null) {
+            if (options['noTelInvalidLot']) {
                 this.$tel.show();
                 success = false;
             } else {

@@ -44,6 +44,16 @@ public class LotteryLotCounter implements LotCounter {
     }
 
     /**
+     * Calculate how many lots has one person taken
+     *
+     * @param userId id of user
+     * @return how many lots that use has taken
+     */
+    public int countByUser(Integer userId) {
+        return LotteryLotDao.factory().setUserId(userId).getCount();
+    }
+
+    /**
      * count the real lot number of certain lottery activity
      *
      * @param activityId id of activity to count

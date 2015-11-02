@@ -45,6 +45,10 @@ public class AdminLotteryConfigController extends ImageController {
         // data about mail account
         setAttribute("mailSelectFormItems", new MailSelectFormItemBuilder().build());
 
+        // no tel lot
+        setAttribute("noTelLotteryLotCount", AppConfig.getNoTelLotteryLotCount());
+        setAttribute("noTelLotteryLotPrice", AppConfig.getNoTelLotteryLotPrice());
+
         // other data
         setAttribute("lotteryAnnouncementTemplate", AppConfig.getLotteryAnnouncementTemplate());
         //setAttribute("lotteryRule", AppConfig.getLotteryRule());
@@ -62,29 +66,31 @@ public class AdminLotteryConfigController extends ImageController {
     }
 
     @RequestMapping("/admin-lottery-config-submit")
-    public String submit(@RequestParam(value = "sinaWeiboTitle", required = true) String sinaWeiboTitle,
-                         @RequestParam(value = "sinaWeiboIncludePicture", required = true) Boolean sinaWeiboIncludePicture,
-                         @RequestParam(value = "qqTitle", required = true) String qqTitle,
-                         @RequestParam(value = "qqSummary", required = true) String qqSummary,
-                         @RequestParam(value = "qqIncludePicture", required = true) Boolean qqIncludePicture,
-                         @RequestParam(value = "qzoneTitle", required = true) String qzoneTitle,
-                         @RequestParam(value = "qzoneSummary", required = true) String qzoneSummary,
-                         @RequestParam(value = "qzoneIncludePicture", required = true) Boolean qzoneIncludePicture,
+    public String submit(@RequestParam("sinaWeiboTitle") String sinaWeiboTitle,
+                         @RequestParam("sinaWeiboIncludePicture") Boolean sinaWeiboIncludePicture,
+                         @RequestParam("qqTitle") String qqTitle,
+                         @RequestParam("qqSummary") String qqSummary,
+                         @RequestParam("qqIncludePicture") Boolean qqIncludePicture,
+                         @RequestParam("qzoneTitle") String qzoneTitle,
+                         @RequestParam("qzoneSummary") String qzoneSummary,
+                         @RequestParam("qzoneIncludePicture") Boolean qzoneIncludePicture,
                          //@RequestParam(value = "newLotLiveness", required = true) Integer newLotLiveness,
-                         @RequestParam(value = "shareSucceedLiveness", required = true) Integer shareSucceedLiveness,
+                         @RequestParam("shareSucceedLiveness") Integer shareSucceedLiveness,
                          //@RequestParam(value = "lotteryRule", required = true) String lotteryRule,
-                         @RequestParam(value = "lotteryRuleLink", required = true) String lotteryRuleLink,
+                         @RequestParam("lotteryRuleLink") String lotteryRuleLink,
                          @RequestParam(value = "remindNewLotteryChanceByMail", required = false) String remindNewLotteryChanceByMail,
-                         @RequestParam(value = "newLotteryChanceMailAccountId", required = true) Integer newLotteryChanceMailAccountId,
-                         @RequestParam(value = "newLotteryChanceMailSubjectTemplate", required = true) String newLotteryChanceMailSubjectTemplate,
-                         @RequestParam(value = "newLotteryChanceMailContentTemplate", required = true) String newLotteryChanceMailContentTemplate,
-                         @RequestParam(value = "lotteryAnnouncementTemplate", required = true) String lotteryAnnouncementTemplate,
+                         @RequestParam("newLotteryChanceMailAccountId") Integer newLotteryChanceMailAccountId,
+                         @RequestParam("newLotteryChanceMailSubjectTemplate") String newLotteryChanceMailSubjectTemplate,
+                         @RequestParam("newLotteryChanceMailContentTemplate") String newLotteryChanceMailContentTemplate,
+                         @RequestParam("lotteryAnnouncementTemplate") String lotteryAnnouncementTemplate,
                          @RequestParam(value = "remindNewLotteryChanceBySystemInfo", required = false) String remindNewLotteryChanceBySystemInfo,
-                         @RequestParam(value = "newLotteryChanceSystemInfoTemplate", required = true) String newLotteryChanceSystemInfoTemplate,
+                         @RequestParam("newLotteryChanceSystemInfoTemplate") String newLotteryChanceSystemInfoTemplate,
                          @RequestParam(value = "remindLivenessIncreaseBySystemInfo", required = false) String remindLivenessIncreaseBySystemInfo,
-                         @RequestParam(value = "livenessIncreaseSystemInfoTemplate", required = true) String livenessIncreaseSystemInfoTemplate,
-                         @RequestParam(value = "noTelInvalidLotSystemInfoTemplate", required = true) String noTelInvalidLotSystemInfoTemplate,
-                         @RequestParam(value = "insufficientLivenessInvalidLotSystemInfoTemplate", required = true) String insufficientLivenessInvalidLotSystemInfoTemplate) {
+                         @RequestParam("livenessIncreaseSystemInfoTemplate") String livenessIncreaseSystemInfoTemplate,
+                         @RequestParam("noTelInvalidLotSystemInfoTemplate") String noTelInvalidLotSystemInfoTemplate,
+                         @RequestParam("insufficientLivenessInvalidLotSystemInfoTemplate") String insufficientLivenessInvalidLotSystemInfoTemplate,
+                         @RequestParam("noTelLotteryLotCount") Integer noTelLotteryLotCount,
+                         @RequestParam("noTelLotteryLotPrice") Double noTelLotteryLotPrice) {
 
         AppConfig.updateLotterySinaWeiboTitle(sinaWeiboTitle);
         AppConfig.updateLotterySinaWeiboIncludePicture(sinaWeiboIncludePicture);
@@ -100,6 +106,8 @@ public class AdminLotteryConfigController extends ImageController {
         AppConfig.updateLotteryAnnouncementTemplate(lotteryAnnouncementTemplate);
         AppConfig.updateNoTelInvalidLotSystemInfoTemplate(noTelInvalidLotSystemInfoTemplate);
         AppConfig.updateInsufficientLivenessInvalidLotSystemInfoTemplate(insufficientLivenessInvalidLotSystemInfoTemplate);
+        AppConfig.updateNoTelLotteryLotCount(noTelLotteryLotCount);
+        AppConfig.updateNoTelLotteryLotPrice(noTelLotteryLotPrice);
 
         if (remindNewLotteryChanceByMail != null) {
             AppConfig.updateRemindNewLotteryChanceByMail(true);

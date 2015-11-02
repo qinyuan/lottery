@@ -665,4 +665,27 @@ public class AppConfig {
         dao.save(INSUFFICIENT_LIVENESS_INVALID_LOT_SYSTEM_INFO_TEMPLATE_KEY, template);
     }
     //////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////// no tel lottery lot start //////////////////////////////////////
+    private final static String NO_TEL_LOTTERY_LOT_COUNT_KEY = "noTelLotteryLotCount";
+
+    public static Integer getNoTelLotteryLotCount() {
+        return dao.getInteger(NO_TEL_LOTTERY_LOT_COUNT_KEY);
+    }
+
+    public static void updateNoTelLotteryLotCount(Integer noTelLotteryLotCount) {
+        dao.saveInteger(NO_TEL_LOTTERY_LOT_COUNT_KEY, noTelLotteryLotCount);
+    }
+
+    private final static String NO_TEL_LOTTERY_LOT_PRICE_KEY = "noTelLotteryLotPrice";
+
+    public static Double getNoTelLotteryLotPrice() {
+        return dao.getDouble(NO_TEL_LOTTERY_LOT_PRICE_KEY);
+    }
+
+    public static void updateNoTelLotteryLotPrice(Double noTelLotteryLotPrice) {
+        dao.saveDouble(NO_TEL_LOTTERY_LOT_PRICE_KEY, noTelLotteryLotPrice);
+    }
+
+    //////////////////////////////////// no tel lot end ////////////////////////////////////////
 }

@@ -11,11 +11,11 @@ import com.qinyuan15.lottery.mvc.activity.LotteryLotCreator;
 import com.qinyuan15.lottery.mvc.activity.LotteryShareUrlBuilder;
 import com.qinyuan15.lottery.mvc.activity.SeckillShareUrlBuilder;
 import com.qinyuan15.lottery.mvc.dao.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -122,8 +122,27 @@ public class LotController extends ImageController {
 
     private void putLotteryLivenessParameters(Map<String, Object> result, User user, LotteryActivity activity) {
         result.put("tel", user.getTel());
+        result.put("noTelInvalidLot", isNoTelInvalidLot(user, activity));
         result.put("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
         result.put("minLivenessToParticipate", activity.getMinLivenessToParticipate());
+    }
+
+    private boolean isNoTelInvalidLot(User user, LotteryActivity activity) {
+        if (StringUtils.isNotBlank(user.getTel())) {
+            return false;
+        }
+
+        Integer noTelLotteryLotCount = AppConfig.getNoTelLotteryLotCount();
+        if (noTelLotteryLotCount == null) {
+            noTelLotteryLotCount = 0;
+        }
+        Double noTelLotteryLotPrice = AppConfig.getNoTelLotteryLotPrice();
+        if (noTelLotteryLotPrice == null) {
+            noTelLotteryLotPrice = 0.0;
+        }
+
+        return new LotteryLotCounter().countByUser(user.getId()) > noTelLotteryLotCount ||
+                activity.getCommodity().getPrice() > noTelLotteryLotPrice;
     }
 
     @RequestMapping("/take-seckill.json")
@@ -197,7 +216,7 @@ public class LotController extends ImageController {
     @ResponseBody
     public String getActivityRemainingSeconds(@RequestParam(value = "commodityId", required = true) Integer commodityId,
                                               @RequestParam(value = "activityType", required = true) String activityType) {
-        if (!StringUtils.hasText(activityType) || !IntegerUtils.isPositive(commodityId)) {
+        if (StringUtils.isBlank(activityType) || !IntegerUtils.isPositive(commodityId)) {
             return failByInvalidParam();
         }
 
@@ -223,7 +242,7 @@ public class LotController extends ImageController {
 
     private String getRemainingSecondsJson(String time) {
         Map<String, Object> map = new HashMap<>();
-        if (!StringUtils.hasText(time)) {
+        if (StringUtils.isBlank(time)) {
             map.put("seconds", 0);
             return toJson(map);
         }

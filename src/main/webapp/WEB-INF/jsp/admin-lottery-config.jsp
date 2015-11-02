@@ -228,6 +228,27 @@
     </div>
 </div>
 <div class="edit-unit">
+    <div class="title">未填手机号时的抽奖限制</div>
+    <div class="content">
+        <table>
+            <tbody>
+            <tr>
+                <td class="title wide">未填手机时最多可参与的抽奖次数</td>
+                <td class="input narrow">
+                    <input type="text" class="form-control" name="noTelLotteryLotCount" value="${noTelLotteryLotCount}"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="title wide">未填手机时最多可参与的抽奖金额</td>
+                <td class="input narrow">
+                    <input type="text" class="form-control" name="noTelLotteryLotPrice" value="${noTelLotteryLotPrice}"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="edit-unit">
     <div class="title">其他设置</div>
     <div class="content">
         <table>
