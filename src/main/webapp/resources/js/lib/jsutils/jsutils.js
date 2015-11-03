@@ -1164,10 +1164,16 @@ jQuery.fn.showValidation = function (success, text) {
     $next.find('span.text').text(text == null ? '' : text);
     if (success) {
         $next.addClass('valid').removeClass('invalid');
-        $next.find('span.icon').css({'background-position-y': '-5px'});
+        $next.find('span.icon').css({
+            'background-position': '0 -5px',
+            'background-position-y': '-5px'
+        });
     } else {
         $next.addClass('invalid').removeClass('valid');
-        $next.find('span.icon').css({'background-position-y': '-30px'});
+        $next.find('span.icon').css({
+            'background-position': '0 -30px',
+            'background-position-y': '-30px'
+        });
     }
     return this;
 };

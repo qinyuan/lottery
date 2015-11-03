@@ -79,8 +79,10 @@
             _valueSize: 8,
             _setBackgroundPosition: function ($element, y) {
                 // notice that firefox doesn't support background-position-y
-                $element.css('background-position', '0 ' + y + 'px');
-                $element.css('background-position-y', y + 'px');
+                $element.css({
+                    'background-position': '0 ' + y + 'px',
+                    'background-position-y': y + 'px'
+                });
                 return $element;
             },
             setValue: function (index, value) {
