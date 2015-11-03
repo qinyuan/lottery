@@ -1,6 +1,7 @@
 div.float-panel.info {
     width: 530px;
     margin-left: -265px;
+    margin-top: -95px; /* height is 190px */
 }
 
 div.float-panel.info div.body {

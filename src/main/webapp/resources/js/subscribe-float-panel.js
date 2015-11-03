@@ -3,7 +3,6 @@ var simpleFloatPanel = {
     show: function (parentId) {
         JSUtils.showTransparentBackground(1);
         this.$div.fadeIn(200);
-        JSUtils.scrollToVerticalCenter(this.$div);
         if (parentId) {
             this.$parent = $('#' + parentId);
             this.$parent.hide();

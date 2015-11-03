@@ -182,6 +182,4 @@
         $html.find('div.clear').css('clear', 'both');
         return $html;
     }
-
-})
-();
+})();
