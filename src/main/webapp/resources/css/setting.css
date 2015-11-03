@@ -204,26 +204,31 @@ div.main-body > div.right div.body div.history td {
 }
 
 #liveness div.share-panel ul li a {
+    display:block;
     color: #666666;
+    line-height: 22px;
+    height: 22px;
+    width: 96px;
 }
 
 #liveness div.share-panel span.icon {
-    margin-right: 3px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    /*padding: 2px 8px;*/
+    margin-right: 5px;
     background: url("images/lottery-result.png") no-repeat;
 }
 
 #liveness div.share-panel a.sina span.icon {
-    padding: 2px 8px;
     background-position: -4px -29px;
 }
 
 #liveness div.share-panel a.qq span.icon {
-    padding: 2px 8px;
     background-position: -78px -28px;
 }
 
 #liveness div.share-panel a.qzone span.icon {
-    padding: 2px 8px;
     background-position: -154px -28px;
 }
 
