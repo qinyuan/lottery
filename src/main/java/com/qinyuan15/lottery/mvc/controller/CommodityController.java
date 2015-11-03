@@ -44,7 +44,6 @@ public class CommodityController extends ImageController {
             } else {
                 setTitle("参与抽奖");
             }
-            //setAttribute("commodity", getUrlAdapter().adapt(commodity));
             addJavaScriptData("selectedCommodityId", commodity.getId());
             addJavaScriptData("commodityMaps", mapDao.getInstancesByRelateId(commodity.getId()));
         }
@@ -58,7 +57,6 @@ public class CommodityController extends ImageController {
         setAttribute("pokerBackSide", pathToUrl(AppConfig.getSeckillPokerBackSide()));
 
         setAttribute("snapshots", buildSnapshots());
-        //setAttribute("lotteryRule", AppConfig.getLotteryRule());
         setAttribute("lotteryRuleLink", AppConfig.getLotteryRuleLink());
         setAttribute("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
 
@@ -150,7 +148,6 @@ public class CommodityController extends ImageController {
         return snapshots;
     }
 
-
     @RequestMapping("/commodity-images.json")
     @ResponseBody
     public String json(@RequestParam(value = "id", required = true) Integer id) {
@@ -172,14 +169,4 @@ public class CommodityController extends ImageController {
             this.commodityMaps = commodityMaps;
         }
     }
-
-    /*private static class CommodityInfo {
-        Commodity commodity;
-        List<ImageMap> commodityMaps;
-
-        private CommodityInfo(Commodity commodity, List<ImageMap> commodityMaps) {
-            this.commodity = commodity;
-            this.commodityMaps = commodityMaps;
-        }
-    }*/
 }

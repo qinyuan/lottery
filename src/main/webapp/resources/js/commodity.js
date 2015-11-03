@@ -5,7 +5,6 @@
             var commodity = getSelectedCommodity();
             var $parent = this.$div.getParentByTagNameAndClass('div', 'right');
             var self = this;
-            //var $participantCountDiv = this.$div;
             if (commodity.inLottery) {
                 $.post('lottery-participant-count.json', {
                     commodityId: commodity.id
@@ -193,7 +192,13 @@
             var selectedId = window['selectedCommodityId'];
             var idFromHash = JSUtils.getUrlHash('id');
             if (JSUtils.isNumberString(idFromHash)) {
-                selectedId = parseInt(idFromHash);
+                this.$divs.each(function () {
+                    // ensure that idFromHash is in snapshot's ids
+                    if (idFromHash == $(this).dataOptions('id')) {
+                        selectedId = parseInt(idFromHash);
+                        return false;
+                    }
+                });
             }
 
             var snapshotCount = this.$divs.size();
@@ -609,4 +614,4 @@
         }
     }
 })();
-var getLotteryLot, getSeckillLot/*, showLotteryRule*/;
+var getLotteryLot, getSeckillLot;
