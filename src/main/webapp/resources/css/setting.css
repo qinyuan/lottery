@@ -1,7 +1,7 @@
 
 div.white-back {
     background-color: #ffffff;
-    padding: 20px 0;
+    border-top: 2px solid #EDEDED;
     min-height: 800px;
 }
 
