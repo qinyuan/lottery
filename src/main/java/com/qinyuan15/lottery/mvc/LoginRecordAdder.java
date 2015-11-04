@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc;
 
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.mvc.controller.RequestUtils;
 import com.qinyuan.lib.mvc.controller.UserAgent;
 import com.qinyuan.lib.mvc.security.LoginRecordDao;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
@@ -18,7 +19,7 @@ public class LoginRecordAdder {
     private final static Logger LOGGER = LoggerFactory.getLogger(LoginRecordAdder.class);
 
     public void add(HttpServletRequest request) {
-        add(request.getRemoteAddr(), new UserAgent(request).getOS().toString());
+        add(RequestUtils.getRealRemoteAddress(request), new UserAgent(request).getOS().toString());
     }
 
     public void add(String ip, String platform) {

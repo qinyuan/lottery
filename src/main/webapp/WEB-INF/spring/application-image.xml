@@ -12,6 +12,7 @@
         <property name="port" value="${imageServerPort}"/>
         <property name="protocal" value="http"/>
         <property name="context" value="lottery"/>
+        <property name="host" value="${imageHost}"/>
     </bean>
 
     <bean id="redundantImageValidator" class="com.qinyuan.lib.image.DatabaseRedundantImageValidator">

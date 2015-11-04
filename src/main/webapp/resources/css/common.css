@@ -16,9 +16,6 @@
     border: 0;
 }
 
-body {
-}
-
 .break-word {
     -ms-word-wrap: break-word;
     word-wrap: break-word;
