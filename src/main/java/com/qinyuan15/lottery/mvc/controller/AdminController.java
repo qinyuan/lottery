@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -304,4 +306,11 @@ public class AdminController extends ImageController {
         }
         return navigationLinks;
     }
+
+    /*@RequestMapping("ckeditor-image-upload2")
+    public void index(HttpServletResponse response) throws Exception {
+        PrintWriter out = response.getWriter();
+        String imageUrl = "https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png";
+        out.print("<script type=\"text/javascript\">window.parent.CKEDITOR.tools.callFunction(1,'" + imageUrl + "','')</script>");
+    }*/
 }
