@@ -8,10 +8,12 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <title>${title}</title>
-    <%--
-    <meta name="keywords" content="<%=seoKeyword==null?"":seoKeyword.getWord()%>">
-    <meta name="description" content="<%=seoKeyword==null?"":seoKeyword.getDescription()%>">
-    --%>
+    <c:if test="${seoKeyword != null}">
+        <meta name="keywords" content="${seoKeyword}">
+    </c:if>
+    <c:if test="${seoDescription != null}">
+        <meta name="description" content="${seoDescription}">
+    </c:if>
     <c:if test="${favicon != null}">
         <link rel="icon" href="${favicon}" type="image/x-icon"/>
         <link rel="shortcut icon" href="${favicon}" type="image/x-icon"/>
@@ -30,3 +32,6 @@
 </script>
 </c:if>
 <body class="ng-app:main" ng-app="main" id="ng-app">
+<c:if test="${seoDescription != null}">
+<div class="seo-description">${seoDescription}</div>
+</c:if>

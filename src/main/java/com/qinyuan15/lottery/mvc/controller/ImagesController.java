@@ -19,7 +19,6 @@ public class ImagesController {
     public void index(HttpServletResponse response, HttpServletRequest request) {
         String relativePath = StringUtils.replaceFirst(request.getServletPath(), "/lottery/", "");
         String absolutePath = imageConfig.getDirectory() + "/" + relativePath;
-        System.out.println(absolutePath);
         ResponseUtils.outputImage(response, absolutePath);
     }
 }

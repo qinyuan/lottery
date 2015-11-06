@@ -2,6 +2,7 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.database.test.DatabaseTestCase;
+import com.qinyuan15.lottery.mvc.AppConfig;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,8 +35,24 @@ public class InvalidLotteryLotDaoTest extends DatabaseTestCase {
     public void getGetNoTelUserIds() {
         LotteryActivity activity = new LotteryActivityDao().getInstance(2);
         assertThat(dao.getNoTelUserIds(activity)).containsExactly(3, 4);
+
+        AppConfig.updateNoTelLotteryLotCount(2);
+        assertThat(dao.getNoTelUserIds(activity)).containsExactly(3, 4);
+
+        double commodityPrice = activity.getCommodity().getPrice();
+        AppConfig.updateNoTelLotteryLotPrice(commodityPrice - 0.01);
+        assertThat(dao.getNoTelUserIds(activity)).containsExactly(3, 4);
+        AppConfig.updateNoTelLotteryLotPrice(commodityPrice);
+        assertThat(dao.getNoTelUserIds(activity)).isEmpty();
+
+        AppConfig.updateNoTelLotteryLotCount(0);
+        assertThat(dao.getNoTelUserIds(activity)).containsExactly(3, 4);
+
+        // give user 3 a tel
         new UserDao().updateTel(3, "13200000000");
         assertThat(dao.getNoTelUserIds(activity)).containsExactly(4);
+
+        // give user 4 a tel
         new UserDao().updateTel(4, "13700000000");
         assertThat(dao.getNoTelUserIds(activity)).isEmpty();
 

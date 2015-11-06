@@ -19,8 +19,6 @@ create table commodity (
     price double not null,
     own boolean not null,
     snapshot varchar(800) not null,
-    /*detail_image varchar(800) not null,
-    back_image varchar(800),*/
     visible boolean not null default true,
     ranking int unique not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

@@ -36,7 +36,8 @@ abstract class AbstractShareUrlBuilder {
     public String getQQShareUrl() {
         String title = getQQTitleTemplate();
         String summary = getQQSummaryTemplate();
-        return new QQShareUrlBuilder(getFinalTargetUrl(ShareMedium.QQ.en), title, summary,
+        String url = getFinalTargetUrl(ShareMedium.QQ.en);
+        return new QQShareUrlBuilder(url, title, summary,
                 getPictures(AppConfig.getLotteryQQIncludePicture())).build();
     }
 

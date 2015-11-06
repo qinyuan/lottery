@@ -149,6 +149,12 @@ div.main-body > div.right div.body ul.pagination {
     display: none;
 }
 
+div.main-body > div.right div.body div.no-info {
+    font-size: 13pt;
+    color: #F26522;
+    margin-left: 5px;
+}
+
 div.main-body > div.right div.body div.history.title {
     font-size: 10pt;
     color: #999;
@@ -204,7 +210,7 @@ div.main-body > div.right div.body div.history td {
 }
 
 #liveness div.share-panel ul li a {
-    display:block;
+    display: block;
     color: #666666;
     line-height: 22px;
     height: 22px;

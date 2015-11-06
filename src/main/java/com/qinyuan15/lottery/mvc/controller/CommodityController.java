@@ -2,18 +2,18 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.image.ImageMap;
 import com.qinyuan.lib.image.ImageMapDao;
-import com.qinyuan.lib.lang.DoubleUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.ImageMapType;
+import com.qinyuan15.lottery.mvc.activity.ShareMedium;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
 import com.qinyuan15.lottery.mvc.dao.CommodityImage;
 import com.qinyuan15.lottery.mvc.dao.CommodityImageDao;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,16 +39,38 @@ public class CommodityController extends ImageController {
             setTitle("未找到相关商品");
         } else {
             livenessAdder.recordSpreader(userSerialKey, medium, commodity.getId());
-            if (DoubleUtils.isPositive(commodity.getPrice())) {
+            /*if (DoubleUtils.isPositive(commodity.getPrice())) {
                 setTitle("商品详细信息");
             } else {
                 setTitle("参与抽奖");
+            }*/
+            setAttribute("seoKeyword", "抽奖,免费," + commodity.getName());
+            String title = null, description = null;
+            if (StringUtils.isNotBlank(medium)) {
+                if (medium.equals(ShareMedium.QQ.en)) {
+                    title = AppConfig.getLotteryQQTitle();
+                    description = AppConfig.getLotteryQQSummary();
+                } else if (medium.equals(ShareMedium.QZONE.en)) {
+                    title = AppConfig.getLotteryQzoneTitle();
+                    description = AppConfig.getLotteryQzoneSummary();
+                } else if (medium.equals(ShareMedium.SINA_WEIBO.en)) {
+                    title = AppConfig.getLotterySinaWeiboTitle();
+                }
             }
+            if (StringUtils.isBlank(title)) {
+                title = "商品详细信息";
+            }
+            if (StringUtils.isBlank(description)) {
+                description = "这里有一个免费的商品抽奖活动，赶快来参加吧！！！";
+            }
+            setTitle(title);
+            setAttribute("seoDescription", description);
+
             addJavaScriptData("selectedCommodityId", commodity.getId());
-            addJavaScriptData("commodityMaps", mapDao.getInstancesByRelateId(commodity.getId()));
+            //addJavaScriptData("commodityMaps", mapDao.getInstancesByRelateId(commodity.getId()));
         }
-        if (StringUtils.hasText(userSerialKey) && StringUtils.hasText(medium)
-                && StringUtils.hasText(SecurityUtils.getUsername())) {
+        if (StringUtils.isNotBlank(userSerialKey) && StringUtils.isNotBlank(medium)
+                && StringUtils.isNotBlank(SecurityUtils.getUsername())) {
             livenessAdder.addLiveness(true);
         }
 

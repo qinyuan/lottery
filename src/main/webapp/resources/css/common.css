@@ -544,6 +544,10 @@ div.activate-remind div.body span.resend-fail {
     display: none;
 }*/
 
+body > div.seo-description {
+    display: none;
+}
+
 #systemInformationNavigation span.unread-count {
     color: #ff0000;
 }
