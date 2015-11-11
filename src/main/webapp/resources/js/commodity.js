@@ -97,36 +97,46 @@
 
     var snapshots = ({
         $divs: $('div.main-body div.snapshots div.snapshot'),
+        $details: $('div.main-body div.details'),
+        imageAndMapsCache: [],
+        loadCommodityImageAndMaps: function (data) {
+            for (var i = 0, len = data.length; i < len; i++) {
+                var imageWrapper = data[i];
+                var commodityMaps = imageWrapper['commodityMaps'];
+                this.loadCommodityMap(i, commodityMaps);
+
+                var detailImage = imageWrapper['image']['path'];
+                var backImage = imageWrapper['image']['backPath'];
+                var $detail = $('<div class="detail"><img/></div>');
+                $detail.setBackgroundImage(backImage);
+                $detail.find('img').attr('src', detailImage).attr('usemap', '#commodityMap' + i).hide();
+
+                $detail.appendTo(this.$details);
+            }
+            JSUtils.patchMapAreaBug();
+
+            this.$details.find('img').fadeIn(500, function () {
+                participantCount.update();
+                remainingTime.init();
+            });
+            this.$details.css('min-height', '500px');
+        },
         loadDetail: function (imageId) {
             remainingTime.hide();
             participantCount.hide();
-            var $details = $('div.main-body div.details').adjustMinHeightToHeight().empty();
+            this.$details.adjustMinHeightToHeight().empty();
             this.clearCommodityMap();
             var self = this;
-            $.post('commodity-images.json', {
-                id: imageId
-            }, function (data) {
-                for (var i = 0, len = data.length; i < len; i++) {
-                    var imageWrapper = data[i];
-                    var commodityMaps = imageWrapper['commodityMaps'];
-                    self.loadCommodityMap(i, commodityMaps);
-
-                    var detailImage = imageWrapper['image']['path'];
-                    var backImage = imageWrapper['image']['backPath'];
-                    var $detail = $('<div class="detail"><img/></div>');
-                    $detail.setBackgroundImage(backImage);
-                    $detail.find('img').attr('src', detailImage).attr('usemap', '#commodityMap' + i).hide();
-
-                    $detail.appendTo($details);
-                }
-                JSUtils.patchMapAreaBug();
-
-                $details.find('img').fadeIn(500, function () {
-                    participantCount.update();
-                    remainingTime.init();
+            if (this.imageAndMapsCache[imageId]) {
+                this.loadCommodityImageAndMaps(this.imageAndMapsCache[imageId]);
+            } else {
+                $.post('commodity-images.json', {
+                    id: imageId
+                }, function (data) {
+                    self.imageAndMapsCache[imageId] = data;
+                    self.loadCommodityImageAndMaps(data);
                 });
-                $details.css('min-height', '500px');
-            })
+            }
         },
         displaySize: 6,
         startIndex: 0,
@@ -250,7 +260,22 @@
                 self.showNextInstances();
             });
 
-            //this.loadCommodityMap(window['commodityMaps']);
+            setInterval(function () {
+                self.$divs.each(function () {
+                    var $div = $(this);
+                    if ($div.css('display') != 'none') {
+                        var id = $div.dataOptions('id');
+                        if (!self.imageAndMapsCache[id]) {
+                            $.post('commodity-images.json', {
+                                id: id
+                            }, function (data) {
+                                self.imageAndMapsCache[id] = data;
+                            });
+                        }
+                    }
+                });
+            }, 60000);   // load cache each minute
+
             return this;
         }
     }).init();
