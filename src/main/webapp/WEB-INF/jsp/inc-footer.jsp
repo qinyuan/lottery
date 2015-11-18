@@ -15,6 +15,10 @@
 <q:js src="lib/jquery-form-3.51.0"/>
 <q:js src="lib/underscore-min"/>
 <q:js src="lib/jsutils/jsutils" version="true"/>
+<%--<script type="text/javascript"
+        src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101264653"
+        data-redirecturi="http://www.bud-vip.com/register-by-qq.html"
+        charset="utf-8"></script>--%>
 <q:js src="common" version="true"/>
 <%---
 <!--[if IE]>

@@ -470,6 +470,12 @@ input.form-control {
     padding-left: 27px;
 }
 
+#registerForm div.body div.login-by-qq {
+    position: absolute;
+    left: 10px;
+    top: 90px;
+}
+
 #registerForm div.body div.switch-login {
     position: absolute;
     left: 10px;

@@ -19,6 +19,26 @@ public class AppConfigTest extends DatabaseTestCase {
     }
 
     @Test
+    public void testGetQQConnectAppId() {
+        assertThat(AppConfig.getQQConnectAppId()).isEqualTo("101264653");
+    }
+
+    @Test
+    public void testGetQQConnectAppKey() {
+        assertThat(AppConfig.getQQConnectAppKey()).isEqualTo("a601a58696ce8658fd42604562eacc73");
+    }
+
+    @Test
+    public void testGetQQConnectRedirectURI() {
+        assertThat(AppConfig.getQQConnectRedirectURI()).isEqualTo("http%3A%2F%2Fwww.bud-vip.com%2Fregister-by-qq.html");
+    }
+
+    @Test
+    public void testGetQQConnectScope() {
+        assertThat(AppConfig.getQQConnectScope()).startsWith("get_user_info,");
+    }
+
+    @Test
     public void testIndexHeaderLeftLogo() {
         assertThat(AppConfig.getIndexHeaderLeftLogo()).isNull();
 

@@ -893,6 +893,24 @@ var JSUtils = {
             var src = $this.data('source');
             $this.attr('src', src).show();
         });
+    },
+    buildWaitingText: function (elementId) {
+        var $element = $('#' + elementId);
+        $element.text('.');
+        var timer = setInterval(function () {
+            var text = $element.text();
+            if (text.length == 6) {
+                $element.text('.');
+            } else {
+                $element.text(text + '.');
+            }
+        }, 750);
+        return {
+            stop: function () {
+                clearInterval(timer);
+                $element.text('');
+            }
+        }
     }
 };
 

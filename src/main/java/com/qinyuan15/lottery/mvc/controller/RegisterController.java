@@ -34,7 +34,7 @@ public class RegisterController extends ImageController {
     private UserDao userDao = new UserDao();
 
     @RequestMapping("/register")
-    public String index(@RequestParam(value = "serial", required = true) String serial) {
+    public String index(@RequestParam("serial") String serial) {
         IndexHeaderUtils.setHeaderParameters(this);
 
         if (StringUtils.isNotBlank(serial)) {
@@ -61,6 +61,11 @@ public class RegisterController extends ImageController {
         return "register";
     }
 
+    @RequestMapping("/register-by-qq")
+    public String registerByQQ() {
+        setAttributeAndJavaScriptData("byQQ", true);
+        return index(null);
+    }
 
     @RequestMapping("/register-complete-user-info.json")
     @ResponseBody
@@ -111,91 +116,6 @@ public class RegisterController extends ImageController {
             return failByDatabaseError();
         }
     }
-
-    /*@RequestMapping("/register-complete-user-info.json")
-    @ResponseBody
-    public String completeUserInfo(@RequestParam(value = "serialKey", required = true) String serialKey,
-                                   @RequestParam(value = "username", required = true) String username,
-                                   @RequestParam(value = "password", required = true) String password,
-                                   @RequestParam(value = "password2", required = true) String password2,
-                                   @RequestParam(value = "realName", required = true) String realName,
-                                   @RequestParam(value = "tel", required = true) String tel,
-                                   @RequestParam(value = "gender", required = true) String gender,
-                                   @RequestParam(value = "birthdayYear", required = false) Integer birthdayYear,
-                                   @RequestParam(value = "birthdayMonth", required = false) Integer birthdayMonth,
-                                   @RequestParam(value = "birthdayDay", required = false) Integer birthdayDay,
-                                   @RequestParam(value = "constellation", required = true) String constellation,
-                                   @RequestParam(value = "hometown", required = true) String hometown,
-                                   @RequestParam(value = "residence", required = true) String residence,
-                                   @RequestParam(value = "lunarBirthday", required = false) String lunarBirthdayString) {
-
-        if (!StringUtils.hasText(serialKey)) {
-            return failByInvalidParam();
-        }
-
-        PreUser preUser = new PreUserDao().getInstanceBySerialKey(serialKey);
-        if (preUser == null) {
-            return failByInvalidParam();
-        }
-
-        UserDao userDao = new UserDao();
-        String email = preUser.getEmail();
-        if (userDao.hasEmail(email)) {
-            return fail("该邮箱已经被注册！");
-        }
-
-        Pair<Boolean, String> usernameValidation = new NewUserValidator().validateUsername(username);
-        if (!usernameValidation.getLeft()) {
-            return fail(usernameValidation.getRight());
-        }
-
-        Pair<Boolean, String> passwordValidation = new PasswordValidator().validate(password);
-        if (!passwordValidation.getLeft()) {
-            return fail(passwordValidation.getRight());
-        }
-
-        if (!password.equals(password2)) {
-            return fail("两次输入的密码需要一致！");
-        }
-
-        if (StringUtils.hasText(tel)) {
-            Pair<Boolean, String> telValidation = new DatabaseTelValidator().validate(tel);
-            if (!telValidation.getLeft()) {
-                return fail(telValidation.getRight());
-            }
-        } else {
-            tel = null;
-        }
-
-        try {
-            Integer spreadUserId = preUser.getSpreadUserId();
-            String spreadWay = preUser.getSpreadWay();
-            Integer userId;
-            if (IntegerUtils.isPositive(spreadUserId) && StringUtils.hasText(spreadWay)) {
-                userId = userDao.addNormal(username, password, email, spreadUserId, spreadWay);
-                LivenessAdder.addLiveness(userId, false, spreadUserId, spreadWay, preUser.getActivityId());
-            } else {
-                userId = userDao.addNormal(username, password, email);
-            }
-
-            User user = userDao.getInstance(userId);
-            user.setRealName(StringUtils.hasText(realName) ? realName : null);
-            user.setTel(tel);
-            user.setGender(StringUtils.hasText(gender) ? gender : null);
-            user.setBirthday(DateUtils.buildDateString(birthdayYear, birthdayMonth, birthdayDay));
-            user.setConstellation(StringUtils.hasText(constellation) ? constellation : null);
-            user.setHometown(StringUtils.hasText(hometown) ? hometown : null);
-            user.setResidence(StringUtils.hasText(residence) ? residence : null);
-            user.setLunarBirthday(StringUtils.hasText(lunarBirthdayString));
-            HibernateUtils.update(user);
-
-            return success();
-        } catch (Exception e) {
-            LOGGER.error("fail to add user, username: {}, password: {}, email {}, info {}",
-                    username, password, email, e);
-            return failByDatabaseError();
-        }
-    }*/
 
     @RequestMapping(value = "register-submit.json", method = RequestMethod.POST)
     @ResponseBody
@@ -251,80 +171,6 @@ public class RegisterController extends ImageController {
             return failByDatabaseError();
         }
     }
-
-    /*@RequestMapping(value = "register-submit.json", method = RequestMethod.POST)
-    @ResponseBody
-    public String submit(@RequestParam(value = "email", required = true) String email,
-                         @RequestParam(value = "username", required = true) String username,
-                         @RequestParam(value = "password", required = true) String password,
-                         @RequestParam(value = "password2", required = true) String password2,
-                         @RequestParam(value = "identityCode", required = true) String identityCode) {
-
-        if (!validateIdentityCode(identityCode)) {
-            return fail("验证码输入错误！");
-        }
-
-        if (!new MailAddressValidator().validate(email)) {
-            return fail("邮箱格式错误！");
-        }
-
-        if (userDao.hasEmail(email)) {
-            return fail("该邮箱已经被注册！");
-        }
-
-        Pair<Boolean, String> userValidation = new NewUserValidator().validateUsername(username);
-        if (!userValidation.getLeft()) {
-            return fail(userValidation.getRight());
-        }
-
-        if (!StringUtils.hasText(password)) {
-            return fail("密码不能为空！");
-        }
-
-        if (password.length() < 6) {
-            return fail("密码至少需要6个字符");
-        }
-
-        if (password.length() > 20) {
-            return fail("密码不得超过20个字符");
-        }
-
-        if (!password.equals(password2)) {
-            return fail("两次输入的密码不一致");
-        }
-
-        try {
-            LivenessAdder livenessAdder = new LivenessAdder(session);
-            Integer userId = userDao.addNormal(username, password, email, livenessAdder.getSpreadUserId(),
-                    livenessAdder.getSpreadWay());
-            livenessAdder.addLiveness(userId, false);
-            new ActivateMailSender().send(userId);
-            return success();
-        } catch (Exception e) {
-            LOGGER.error("fail to add user, username: {}, password: {}, email {}, info {}",
-                    username, password, email, e);
-            return failByDatabaseError();
-        }
-    }*/
-
-
-
-    /*@RequestMapping(value = "resend-activate-email.json", method = RequestMethod.GET)
-    @ResponseBody
-    public String resendValidateEmail(@RequestParam(value = "email", required = true) String email) {
-        User user = userDao.getInstanceByEmail(email);
-        if (user == null) {
-            return fail("用户不存在！");
-        }
-
-        try {
-            new ActivateMailSender().send(user.getId());
-            return success();
-        } catch (Exception e) {
-            LOGGER.error("Fail to resend email to {}, info: {}", email, e);
-            return fail("邮件发送失败");
-        }
-    }*/
 
     private final static String TO_LOGIN_HTML = "<a href='javascript:void(0)' onclick='switchToLogin()'>立即登录</a>";
 

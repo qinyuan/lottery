@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta property="qc:admins" content="0176267377625456106375"/>
     <title>${title}</title>
     <c:if test="${seoKeyword != null}">
         <meta name="keywords" content="${seoKeyword}">
@@ -18,7 +19,6 @@
         <link rel="icon" href="${favicon}" type="image/x-icon"/>
         <link rel="shortcut icon" href="${favicon}" type="image/x-icon"/>
     </c:if>
-    <%--<q:css href="resources/js/lib/bootstrap/css/bootstrap.min"/>--%>
     <q:css href="http://libs.baidu.com/bootstrap/3.3.4/css/bootstrap.min"/>
     <q:css href="common" version="true"/>
     <c:forEach var="css" items="${moreCss}"><q:css href="${css.href}" version="${css.version}"/></c:forEach>

@@ -149,3 +149,37 @@
         showRegisterForm();
     });
 })();
+(function () {
+    // login by qq
+    if (!window['byQQ']) {
+        return;
+    }
+
+    var waiting = JSUtils.buildWaitingText('fetchInfoWaiting');
+    if (!JSUtils.getUrlHash('access_token')) {
+        setTimeout(function () {
+            showQueryError();
+        }, 1000);
+        return;
+    }
+
+    var nickname;
+    QC.api("get_user_info", {}).success(function (s) {
+        nickname = s.data['nickname'];
+        QC.Login.getMe(function (openId, accessToken) {
+            console.log('openId: ' + openId);
+            console.log('accessToken: ' + accessToken);
+        });
+    }).error(function () {
+        showQueryError();
+    }).complete(function () {
+    });
+
+    function showQueryError() {
+        console.log('this');
+        var $fetchQQInfo = $('div.main-body div.fetch-qq-info');
+        waiting.stop();
+        $fetchQQInfo.find('span.waiting').hide();
+        $fetchQQInfo.find('span.error').show();
+    }
+})();

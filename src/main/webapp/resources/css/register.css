@@ -62,29 +62,6 @@ div.main-body div.form div.input input {
     width: 300px;
 }
 
-/*
-div.main-body div.form div.input span.icon {
-    padding: 3px 0 3px 20px;
-    background: url("images/register-image.png") no-repeat;
-}
-
-div.main-body div.form div.input span.text {
-    padding-left: 3px;
-    color: #FC6608;
-}
-
-div.main-body div.form div.input span.valid, div.main-body div.form div.input span.invalid {
-    display: none;
-}
-
-div.main-body div.form div.input span.valid span.icon {
-    background-position: -187px -3px;
-}
-
-div.main-body div.form div.input span.invalid span.icon {
-    background-position: -187px -29px;
-}*/
-
 div.main-body div.form div.prompt, div.main-body div.form div.subscribe {
     color: #666666;
 }
@@ -121,9 +98,14 @@ div.main-body div.register-success div.to-index a {
 }
 
 div.main-body div.completed, div.main-body div.invalid-link,
-div.main-body div.register-success div.title {
+div.main-body div.register-success div.title, div.main-body div.fetch-qq-info {
     font-size: 16pt;
     margin: 60px 60px 20px;
+}
+
+div.main-body div.fetch-qq-info span.error {
+    color: #FF6600;
+    display: none;
 }
 
 div.main-body div.completed-link, div.main-body div.re-register,
@@ -132,68 +114,3 @@ div.main-body div.register-success div.skip {
     font-size: 12pt;
     color: #666666;
 }
-
-/*
-div.main-body div.completed {
-    font-size: 14pt;
-}
-
-div.main-body div.invalid-link {
-    font-size: 16pt;
-}
-
-div.main-body div.invalid-link {
-    color: #ff0000;
-}
-
-div.main-body div.completed span.email {
-    color: #FF6633;
-}
-
-
-
-div.main-body div.completed-link {
-    margin-left: 337px;
-    font-size: 12pt;
-}
-
-div.main-body div.re-register {
-    margin-left: 385px;
-    font-size: 10pt;
-}
-
-div.main-body div.completed-link a {
-    font-style: italic;
-}
-
-div.main-body form div.left {
-    text-align: right;
-    font-size: 14pt;
-    font-weight: 500;
-    padding-top: 40px;
-    padding-right: 0;
-}
-
-div.main-body form div.right {
-    padding: 0;
-}
-
-div.main-body form div.right span.required {
-    color: #cc0000;
-}
-
-div.main-body form div.right div.submit button {
-    margin-right: 15px;
-}
-
-div.main-body form div.right span.error-info {
-    color: #dd0000;
-}
-
-div.main-body form div.right div.submit span.comment {
-    color: #008000;
-}
-
-div.main-body form div.right div.content.setting span.right input[type=text] {
-    width: 180px;
-}*/

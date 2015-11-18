@@ -1,3 +1,4 @@
+<%@ page import="com.qinyuan15.lottery.mvc.AppConfig" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <security:authorize ifNotGranted="ROLE_NORMAL,ROLE_ADMIN">
     <div class="shadow float-panel" id="springLoginForm">
@@ -45,33 +46,33 @@
                                                     target="_blank">没有邮箱？</a></span>
                         <span class="error"></span>
                     </div>
-                    <%--<div class="input">
-                        <label>用户名</label>
-                        <input type="text" class="form-control" name="username" maxlength="14" tabindex="2"/>
-                        <span class="validate"></span>
-                    </div>
-                    <div class="comment">
-                        <span class="info">2-14个字符：英文、数字或中文</span>
-                        <span class="error"></span>
-                    </div>
-                    <div class="input">
-                        <label>密码</label>
-                        <input type="password" class="form-control" name="password" maxlength="20" tabindex="3"/>
-                        <span class="validate"></span>
-                    </div>
-                    <div class="comment">
-                        <span class="info">6-20个字符，区分大小写</span>
-                        <span class="error"></span>
-                    </div>
-                    <div class="input">
-                        <label>确认密码</label>
-                        <input type="password" class="form-control" name="password2" maxlength="20" tabindex="4"/>
-                        <span class="validate"></span>
-                    </div>
-                    <div class="comment">
-                        <span class="info">再次输入密码</span>
-                        <span class="error"></span>
-                    </div>--%>
+                        <%--<div class="input">
+                            <label>用户名</label>
+                            <input type="text" class="form-control" name="username" maxlength="14" tabindex="2"/>
+                            <span class="validate"></span>
+                        </div>
+                        <div class="comment">
+                            <span class="info">2-14个字符：英文、数字或中文</span>
+                            <span class="error"></span>
+                        </div>
+                        <div class="input">
+                            <label>密码</label>
+                            <input type="password" class="form-control" name="password" maxlength="20" tabindex="3"/>
+                            <span class="validate"></span>
+                        </div>
+                        <div class="comment">
+                            <span class="info">6-20个字符，区分大小写</span>
+                            <span class="error"></span>
+                        </div>
+                        <div class="input">
+                            <label>确认密码</label>
+                            <input type="password" class="form-control" name="password2" maxlength="20" tabindex="4"/>
+                            <span class="validate"></span>
+                        </div>
+                        <div class="comment">
+                            <span class="info">再次输入密码</span>
+                            <span class="error"></span>
+                        </div>--%>
                     <div class="input identity-code">
                         <label>验证码</label>
                         <jsp:include page="widget-identity-code.jsp">
@@ -88,6 +89,12 @@
                     </div>
                 </div>
                 <div class="email-icon"><span class="icon"></span><span>邮箱注册</span></div>
+                <div class="login-by-qq"><span id="loginByQQIcon">
+                   <%--<a href="https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101264653&redirect_uri=http%3A%2F%2Fwww.bud-vip.com%2Fregister-by-qq.html&scope=get_user_info"
+                           ><img src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_3.png"/></a>--%>
+                   <a href="<%=AppConfig.getQQConnectAuthenticateUrl()%>"><img
+                           src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_3.png"/></a>
+                </span></div>
                 <div class="switch-login">已有帐号，<a id="switchToLogin" href="javascript:void(0)">立即登录</a></div>
             </form>
             <div class="result">

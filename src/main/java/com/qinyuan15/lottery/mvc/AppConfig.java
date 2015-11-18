@@ -3,6 +3,7 @@ package com.qinyuan15.lottery.mvc;
 import com.qinyuan.lib.config.AppConfigDao;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.file.ClasspathFileUtils;
+import com.qinyuan.lib.network.url.UrlUtils;
 
 import java.util.Properties;
 
@@ -12,16 +13,42 @@ import java.util.Properties;
  */
 public class AppConfig {
     public final static String GLOBAL_CONFIG_PROPS_FILE = "global-config.properties";
+    public final static String QQ_CONNECT_CONFIG_PROPS_FILE = "qqconnectconfig.properties";
+    private final static Properties GLOBAL_CONFIG = ClasspathFileUtils.getProperties(GLOBAL_CONFIG_PROPS_FILE);
+    private final static Properties QQ_CONNECT_CONFIG = ClasspathFileUtils.getProperties(QQ_CONNECT_CONFIG_PROPS_FILE);
 
     /**
      * @return url such as http://192.168.8.1:8080/lotery/, which must end with '/'
      */
     public static String getAppHost() {
-        String appHost = ClasspathFileUtils.getProperties(GLOBAL_CONFIG_PROPS_FILE).getProperty("appHost");
+        String appHost = GLOBAL_CONFIG.getProperty("appHost");
         if (!appHost.endsWith("/")) {
             appHost += "/";
         }
         return appHost;
+    }
+
+    public static String getQQConnectAppId() {
+        return QQ_CONNECT_CONFIG.getProperty("app_ID").trim();
+    }
+
+    public static String getQQConnectAppKey() {
+        return QQ_CONNECT_CONFIG.getProperty("app_KEY").trim();
+    }
+
+    public static String getQQConnectRedirectURI() {
+        return UrlUtils.encode(QQ_CONNECT_CONFIG.getProperty("redirect_URI").trim());
+    }
+
+    public static String getQQConnectScope() {
+        return QQ_CONNECT_CONFIG.getProperty("scope").trim();
+    }
+
+    public static String getQQConnectAuthenticateUrl() {
+        return "https://graph.qq.com/oauth2.0/authorize?response_type=token&client_id=" + getQQConnectAppId()
+                + "&redirect_uri=" + getQQConnectRedirectURI() + "&scope=" + UrlUtils.encode(getQQConnectScope());
+        //"https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101264653&
+        //redirect_uri=http%3A%2F%2Fwww.bud-vip.com%2Fregister-by-qq.html&scope=get_user_info";
     }
 
     private final static AppConfigDao dao = new AppConfigDao();
