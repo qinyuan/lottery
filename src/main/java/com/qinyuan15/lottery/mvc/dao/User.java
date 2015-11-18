@@ -21,6 +21,7 @@ public class User extends com.qinyuan.lib.mvc.security.User {
     private String residence;
     private Boolean lunarBirthday;
     private Boolean receiveMail;
+    private String qqOpenId;
 
     public String getEmail() {
         return email;
@@ -132,5 +133,13 @@ public class User extends com.qinyuan.lib.mvc.security.User {
 
     public void setReceiveMail(Boolean receiveMail) {
         this.receiveMail = receiveMail;
+    }
+
+    public String getQqOpenId() {
+        return qqOpenId;
+    }
+
+    public void setQqOpenId(String qqOpenId) {
+        this.qqOpenId = qqOpenId;
     }
 }

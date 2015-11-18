@@ -50,7 +50,8 @@ CREATE TABLE `user` (
     hometown char(200),
     residence char(200),
     lunar_birthday boolean,
-    receive_mail boolean not null default true
+    receive_mail boolean not null default true,
+    qq_open_id char(200)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table virtual_user (

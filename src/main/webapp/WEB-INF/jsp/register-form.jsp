@@ -2,8 +2,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div class="form">
     <div class="title">创建帐号</div>
-    <div class="email">邮箱验证成功！您的邮箱是：<span class="email">${preUser.email}</span></div>
-    <div class="prompt">请输入密码和昵称，创建您的帐号</div>
+    <c:choose><c:when test="${byQQ}">
+        <q:hidden name="qqOpenId"/>
+        <div class="prompt">请输入邮箱、昵称和密码，创建您的帐号</div>
+        <div class="input">
+            <input type="text" class="form-control" placeholder="邮箱" name="email"/>
+        </div>
+    </c:when><c:otherwise>
+        <div class="email">邮箱验证成功！您的邮箱是：<span class="email">${preUser.email}</span></div>
+        <div class="prompt">请输入昵称和密码，创建您的帐号</div>
+    </c:otherwise></c:choose>
     <div class="input">
         <input type="text" class="form-control" placeholder="昵称" name="username" maxlength="14"/>
     </div>

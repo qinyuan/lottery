@@ -53,6 +53,7 @@
         <property name="residence"/>
         <property name="lunarBirthday" column="lunar_birthday"/>
         <property name="receiveMail" column="receive_mail"/>
+        <property name="qqOpenId" column="qq_open_id"/>
     </class>
     <class name="HelpGroup" table="help_group">
         <id name="id" column="id">

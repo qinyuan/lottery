@@ -40,6 +40,16 @@ public class UserDaoTest extends DatabaseTestCase {
     }
 
     @Test
+    public void testAddNormal2() {
+        assertThat(userDao.getInstanceByName("username")).isNull();
+        userDao.addNormal("username", "password", "123456@qq.com", "testOpenId");
+        User user = userDao.getInstanceByName("username");
+        assertThat(user).isNotNull();
+        assertThat(user.getRole()).isEqualTo(UserRole.NORMAL);
+        assertThat(user.getQqOpenId()).isEqualTo("testOpenId");
+    }
+
+    @Test
     public void testDelete() {
         int count = userDao.countAllUsers();
         userDao.deleteNormal(1);

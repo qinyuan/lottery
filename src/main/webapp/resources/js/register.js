@@ -1,42 +1,36 @@
 ;
 (function () {
-    var email = $('div.main-body div.form div.email span.email').text();
-    if (window['isMobileUserAgent'] && JSUtils.validateEmail(email)) {
-        var validateLogin = function () {
-            $.post("isLogin.json", {email: email }, function (data) {
-                if (data.result) {
-                    showSuccessInfo();
-                }
-            });
-        };
-        setInterval(function () {
+    (function () {
+        // patch mobile agent
+        var email = $('div.main-body div.form div.email span.email').text();
+        if (window['isMobileUserAgent'] && JSUtils.validateEmail(email)) {
+            var validateLogin = function () {
+                $.post("isLogin.json", {email: email }, function (data) {
+                    if (data.result) {
+                        showSuccessInfo();
+                    }
+                });
+            };
+            setInterval(function () {
+                validateLogin();
+            }, 1000);
             validateLogin();
-        }, 1000);
-        validateLogin();
-    }
+        }
+    })();
 
     var $form = $('div.main-body div.form').focusFirstTextInput();
     $form.setDefaultButtonByClass('ok');
     var $submit = $form.find('div.submit button.ok').click(function (e) {
         if (updateSubmitStatus()) {
-            $.post('register-complete-user-info.json', {
-                serialKey: $.url.param('serial'),
-                username: $username.val(),
-                password: $password.val()
-            }, function (data) {
-                if (data.success) {
-                    if (!window['isMobileUserAgent']) {
-                        showSuccessInfo();
-                    }
-                } else {
-                    alert(data.detail);
-                }
-            });
+            submitUserInfo();
             return true;
         } else {
             e.preventDefault();
             return false;
         }
+    });
+    var $email = $form.getInputByName('email').blur(function () {
+        validateEmail();
     });
     var $username = $form.getInputByName('username').blur(function () {
         validateUsername();
@@ -57,17 +51,8 @@
 
     function showSuccessInfo() {
         var $registerSuccess = $('div.main-body div.register-success');
-        //var remainSeconds = 5;
-        //var $remain = $registerSuccess.find('span.remain').text(remainSeconds);
         $form.hide();
         $registerSuccess.show();
-        /*setInterval(function () {
-         remainSeconds--;
-         $remain.text(remainSeconds);
-         if (remainSeconds == 0) {
-         location.href = 'index.html';
-         }
-         }, 1000);*/
     }
 
     function validateUsername(callback) {
@@ -121,6 +106,20 @@
         updateSubmitStatus();
     }
 
+    function validateEmail(callback) {
+        var email = $email.val();
+        if ($.trim(email) == '') {
+            $email.showValidation(false, '邮箱地址不能为空！');
+        } else if (!JSUtils.validateEmail(email)) {
+            $email.showValidation(false, '邮箱地址格式错误！');
+        } else {
+            $email.showValidation(true);
+            $email.getParentByTagNameAndClass('div', 'form').find('form input[name=to]').val(email);
+            JSUtils.invokeIfIsFunction(callback);
+        }
+        updateSubmitStatus();
+    }
+
     function validateSubscribe() {
         return $checkbox.get(0).checked;
     }
@@ -139,6 +138,99 @@
             return false;
         }
     }
+
+    function submitUserInfo() {
+        var serialKey = $.url.param('serial');
+        if (serialKey) {
+            $.post('register-complete-user-info.json', {
+                serialKey: serialKey,
+                username: $username.val(),
+                password: $password.val()
+            }, function (data) {
+                postCallback(data);
+            });
+        } else {
+            $.post('register-complete-user-info-by-qq.json', {
+                qqOpenId: $form.getInputByName('qqOpenId').val(),
+                email: $email.val(),
+                username: $username.val(),
+                password: $password.val()
+            }, function (data) {
+                postCallback(data);
+            });
+        }
+
+        function postCallback(data) {
+            if (data.success) {
+                if (!window['isMobileUserAgent']) {
+                    showSuccessInfo();
+                }
+            } else {
+                alert(data.detail);
+            }
+        }
+    }
+
+    (function () {
+        // login by qq
+        if (!window['byQQ']) {
+            return;
+        }
+
+        var $fetchQQInfo = $('div.main-body div.fetch-qq-info');
+        var waiting = JSUtils.buildWaitingText('fetchInfoWaiting');
+
+        if (!JSUtils.getUrlHash('access_token')) {
+            setTimeout(function () {
+                showQueryError();
+            }, 1000);
+            return;
+        }
+
+        var nickname;
+        QC.api("get_user_info", {}).success(function (s) {
+            nickname = s.data['nickname'];
+            QC.Login.getMe(function (openId, accessToken) {
+                $.post('try-to-login-by-qq-open-id.json', {qqOpenId: openId}, function (data) {
+                    if (data.result) {
+                        toIndex();
+                    } else {
+                        showUserInfoForm(nickname, openId);
+                    }
+                });
+            });
+        }).error(function () {
+            showQueryError();
+        }).complete(function () {
+        });
+
+        function showQueryError() {
+            waiting.stop();
+            $fetchQQInfo.find('span.waiting').hide();
+            $fetchQQInfo.find('span.error').show();
+        }
+
+        function toIndex() {
+            $fetchQQInfo.hide();
+            $('div.main-body div.to-index').show();
+            setTimeout(function () {
+                location.href = "index.html";
+            }, 500);
+        }
+
+        function showUserInfoForm(nickname, qqOpenId) {
+            $fetchQQInfo.hide();
+            var $root = $('div.main-body div.form-wrapper').show();
+            $root.setInputValue('username', nickname);
+            $root.setInputValue('qqOpenId', qqOpenId);
+            validateUsername(function () {
+                $root.focusFirstTextInput();
+            });
+            setTimeout(function () {
+                $root.focusFirstTextInput();
+            }, 500);
+        }
+    })();
 })();
 (function () {
     // code about exception
@@ -148,38 +240,4 @@
     $('div.main-body div.completed-link a.to-login').click(function () {
         showRegisterForm();
     });
-})();
-(function () {
-    // login by qq
-    if (!window['byQQ']) {
-        return;
-    }
-
-    var waiting = JSUtils.buildWaitingText('fetchInfoWaiting');
-    if (!JSUtils.getUrlHash('access_token')) {
-        setTimeout(function () {
-            showQueryError();
-        }, 1000);
-        return;
-    }
-
-    var nickname;
-    QC.api("get_user_info", {}).success(function (s) {
-        nickname = s.data['nickname'];
-        QC.Login.getMe(function (openId, accessToken) {
-            console.log('openId: ' + openId);
-            console.log('accessToken: ' + accessToken);
-        });
-    }).error(function () {
-        showQueryError();
-    }).complete(function () {
-    });
-
-    function showQueryError() {
-        console.log('this');
-        var $fetchQQInfo = $('div.main-body div.fetch-qq-info');
-        waiting.stop();
-        $fetchQQInfo.find('span.waiting').hide();
-        $fetchQQInfo.find('span.error').show();
-    }
 })();

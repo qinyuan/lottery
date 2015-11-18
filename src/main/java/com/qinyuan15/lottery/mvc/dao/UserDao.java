@@ -29,7 +29,7 @@ public class UserDao extends SimpleUserDao {
     }
 
     private Integer add(String username, String password, String role, String email, String tel,
-                        Integer spreadUserId, String spreadWay) {
+                        Integer spreadUserId, String spreadWay, String qqOpenId) {
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
@@ -38,6 +38,7 @@ public class UserDao extends SimpleUserDao {
         user.setTel(tel);
         user.setSpreadUserId(spreadUserId);
         user.setSpreadWay(spreadWay);
+        user.setQqOpenId(qqOpenId);
 
         // set default value
         user.setActive(true);
@@ -59,6 +60,11 @@ public class UserDao extends SimpleUserDao {
         return getInstanceByTel(tel) != null;
     }
 
+    public boolean hasQqOpenId(String qqOpenId) {
+        return StringUtils.isNotBlank(qqOpenId) &&
+                new HibernateListBuilder().addEqualFilter("qqOpenId", qqOpenId).count(User.class) > 0;
+    }
+
     /**
      * Query user by username, email or tel
      *
@@ -67,6 +73,10 @@ public class UserDao extends SimpleUserDao {
      */
     @Override
     public User getInstanceByName(String usernameFromLoginForm) {
+        if (StringUtils.isBlank(usernameFromLoginForm)) {
+            return null;
+        }
+
         User user = (User) super.getInstanceByName(usernameFromLoginForm);
         if (user != null) {
             return user;
@@ -89,12 +99,21 @@ public class UserDao extends SimpleUserDao {
     }
 
     public User getInstanceByTel(String tel) {
-        return new HibernateListBuilder().addEqualFilter("tel", tel)
-                .getFirstItem(User.class);
+        if (StringUtils.isBlank(tel)) {
+            return null;
+        }
+        return new HibernateListBuilder().addEqualFilter("tel", tel).getFirstItem(User.class);
+    }
+
+    public User getInstanceByQqOpenId(String qqOpenId) {
+        if (StringUtils.isBlank(qqOpenId)) {
+            return null;
+        }
+        return new HibernateListBuilder().addEqualFilter("qqOpenId", qqOpenId).getFirstItem(User.class);
     }
 
     public Integer addAdmin(String username, String password) {
-        return add(username, password, UserRole.ADMIN, null, null, null, null);
+        return add(username, password, UserRole.ADMIN, null, null, null, null, null);
     }
 
     public void activate(Integer id) {
@@ -107,8 +126,17 @@ public class UserDao extends SimpleUserDao {
         return addNormal(username, password, email, null, null);
     }
 
+    public Integer addNormal(String username, String password, String email, String qqOpenId) {
+        return addNormal(username, password, email, null, null, qqOpenId);
+    }
+
     public Integer addNormal(String username, String password, String email, Integer spreadUserId, String spreadWay) {
-        return add(username, password, UserRole.NORMAL, email, null, spreadUserId, spreadWay);
+        //return add(username, password, UserRole.NORMAL, email, null, spreadUserId, spreadWay, null);
+        return addNormal(username, password, email, spreadUserId, spreadWay, null);
+    }
+
+    public Integer addNormal(String username, String password, String email, Integer spreadUserId, String spreadWay, String qqOpenId) {
+        return add(username, password, UserRole.NORMAL, email, null, spreadUserId, spreadWay, qqOpenId);
     }
 
     public void updateTel(Integer id, String tel) {
