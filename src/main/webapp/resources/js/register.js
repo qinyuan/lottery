@@ -32,6 +32,9 @@
     var $email = $form.getInputByName('email').blur(function () {
         validateEmail();
     });
+    var $qqNumber = $form.getInputByName('qqNumber').blur(function () {
+        validateQQNumber();
+    });
     var $username = $form.getInputByName('username').blur(function () {
         validateUsername();
     });
@@ -114,10 +117,23 @@
             $email.showValidation(false, '邮箱地址格式错误！');
         } else {
             $email.showValidation(true);
-            $email.getParentByTagNameAndClass('div', 'form').find('form input[name=to]').val(email);
+            $form.setInputValue('to', email);
             JSUtils.invokeIfIsFunction(callback);
         }
         updateSubmitStatus();
+    }
+
+    function validateQQNumber(callback) {
+        var qqNumber = $qqNumber.val();
+        if ($.trim(qqNumber) == '') {
+            $qqNumber.showValidation(false, 'QQ号码不能为空！');
+        } else if (!JSUtils.isNumberString(qqNumber)) {
+            $qqNumber.showValidation(false, 'QQ号码必须为数字！');
+        } else {
+            $qqNumber.showValidation(true);
+            $form.setInputValue('to', qqNumber + "@qq.com");
+            JSUtils.invokeIfIsFunction(callback);
+        }
     }
 
     function validateSubscribe() {
@@ -150,14 +166,22 @@
                 postCallback(data);
             });
         } else {
-            $.post('register-complete-user-info-by-qq.json', {
+            var params = {
                 qqOpenId: $form.getInputByName('qqOpenId').val(),
-                email: $email.val(),
-                username: $username.val(),
-                password: $password.val()
-            }, function (data) {
-                postCallback(data);
-            });
+                username: $username.val()/*,
+                password: $password.val()*/
+            };
+            if (window['numberMode']) {
+                params.qqNumber = $qqNumber.val();
+                $.post('register-complete-user-info-by-qq-number.json', params, function (data) {
+                    postCallback(data);
+                });
+            } else {
+                params.email = $email.val();
+                $.post('register-complete-user-info-by-qq.json', params, function (data) {
+                    postCallback(data);
+                });
+            }
         }
 
         function postCallback(data) {

@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +47,8 @@ public class AdminController extends ImageController {
 
         setAttribute("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
         setAttribute("websiteIntroductionLink", AppConfig.getWebsiteIntroductionLink());
+
+        setAttribute("forumImage", pathToUrl(AppConfig.getForumImage()));
 
         List<MailAccount> accounts = new MailAccountDao().getInstances();
         setAttribute("mails", accounts);
@@ -203,13 +203,15 @@ public class AdminController extends ImageController {
                          @RequestParam("resetEmailMailSubjectTemplate") String resetEmailMailSubjectTemplate,
                          @RequestParam("resetEmailMailContentTemplate") String resetEmailMailContentTemplate,
                          @RequestParam("telValidateDescriptionPage") String telValidateDescriptionPage,
-                         @RequestParam("websiteIntroductionLink") String websiteIntroductionLink) {
+                         @RequestParam("websiteIntroductionLink") String websiteIntroductionLink,
+                         @RequestParam("forumImage") String forumImage,
+                         @RequestParam("forumImageFile") MultipartFile forumImageFile) {
 
         final String redirectPage = "admin";
 
         String indexHeaderLeftLogoPath = null, indexHeaderSloganPath = null, footerPosterPath = null,
                 commodityHeaderLeftLogoPath = null, faviconPath = null, registerHeaderLeftLogoPath = null,
-                registerHeaderRightLogoPath = null;
+                registerHeaderRightLogoPath = null, forumImagePath = null;
         try {
             indexHeaderLeftLogoPath = getSavePath(indexHeaderLeftLogo, indexHeaderLeftLogoFile);
         } catch (Exception e) {
@@ -257,6 +259,13 @@ public class AdminController extends ImageController {
             redirect(redirectPage, "网站图标处理失败！");
         }
 
+        try {
+            forumImagePath = getSavePath(forumImage, forumImageFile);
+        } catch (Exception e) {
+            LOGGER.error("error in getting save path of favicon");
+            redirect(redirectPage, "论坛页图片处理失败！");
+        }
+
         AppConfig.updateIndexHeaderLeftLogo(indexHeaderLeftLogoPath);
         AppConfig.updateIndexHeaderSlogan(indexHeaderSloganPath);
         AppConfig.updateFooterPoster(footerPosterPath);
@@ -280,6 +289,8 @@ public class AdminController extends ImageController {
 
         AppConfig.updateTelValidateDescriptionPage(telValidateDescriptionPage);
         AppConfig.updateWebsiteIntroductionLink(websiteIntroductionLink);
+
+        AppConfig.updateForumImage(forumImagePath);
 
         new NavigationLinkDao().clearAndSave(buildNavigationLinks(headerLinkTitles, headerLinkHrefs));
 

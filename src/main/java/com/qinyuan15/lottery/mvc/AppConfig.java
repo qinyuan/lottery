@@ -723,6 +723,17 @@ public class AppConfig {
     public static void updateNoTelLotteryLotPrice(Double noTelLotteryLotPrice) {
         dao.saveDouble(NO_TEL_LOTTERY_LOT_PRICE_KEY, noTelLotteryLotPrice);
     }
-
     //////////////////////////////////// no tel lot end ////////////////////////////////////////
+
+    //////////////////////////////////// forum image start ///////////////////////////////////////
+    private final static String FORUM_IMAGE_KEY = "forumImage";
+
+    public static String getForumImage() {
+        return dao.get(FORUM_IMAGE_KEY);
+    }
+
+    public static void updateForumImage(String forumImage) {
+        dao.save(FORUM_IMAGE_KEY, forumImage);
+    }
+    //////////////////////////////////// forum image end /////////////////////////////////////////
 }

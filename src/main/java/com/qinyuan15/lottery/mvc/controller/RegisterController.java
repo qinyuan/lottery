@@ -13,6 +13,7 @@ import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import com.qinyuan15.lottery.mvc.mail.RegisterMailSender;
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
@@ -67,6 +68,7 @@ public class RegisterController extends ImageController {
     @RequestMapping("/register-by-qq")
     public String registerByQQ() {
         setAttributeAndJavaScriptData("byQQ", true);
+        setAttributeAndJavaScriptData("numberMode", true);
         return index(null);
     }
 
@@ -110,12 +112,26 @@ public class RegisterController extends ImageController {
         }
     }
 
+    @RequestMapping("/register-complete-user-info-by-qq-number.json")
+    @ResponseBody
+    public String completeUserInfoByQQ(@RequestParam("qqOpenId") String qqOpenId,
+                                       @RequestParam("qqNumber") Integer qqNumber,
+                                       @RequestParam("username") String username/*,
+                                       @RequestParam("password") String password*/) {
+        if (!IntegerUtils.isPositive(qqNumber)) {
+            return fail("QQ号码格式错误");
+        }
+        return completeUserInfoByQQ(qqOpenId, qqNumber + "@qq.com", username/*, password*/);
+    }
+
+
     @RequestMapping("/register-complete-user-info-by-qq.json")
     @ResponseBody
     public String completeUserInfoByQQ(@RequestParam("qqOpenId") String qqOpenId,
                                        @RequestParam("email") String email,
-                                       @RequestParam("username") String username,
-                                       @RequestParam("password") String password) {
+                                       @RequestParam("username") String username/*,
+                                       @RequestParam("password") String password*/) {
+        String password = RandomStringUtils.randomAlphanumeric(18);
         Pair<Boolean, String> userInfoValidation = validateUserInfo(email, username, password);
         if (!userInfoValidation.getLeft()) {
             return fail(userInfoValidation.getRight());

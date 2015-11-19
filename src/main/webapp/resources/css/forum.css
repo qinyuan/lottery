@@ -1,0 +1,39 @@
+
+div.main-body {
+    min-height: 500px;
+    background-color: #ffffff;
+}
+
+div.main-body div.page-width > div {
+    margin-top: 100px;
+    background-color: #F9F9F9;
+}
+
+div.main-body div.error {
+    text-align: center;
+    padding: 150px 0;
+}
+
+div.main-body div.error div.text {
+    color: #808080;
+    font-size: 14pt;
+}
+
+div.main-body div.error div.text span.text {
+    padding-left: 40px;
+}
+
+div.main-body div.error div.text img {
+    vertical-align: bottom;
+}
+
+div.main-body div.error div.text div.to-index {
+    margin-top: 20px;
+}
+
+div.main-body div.error div.text div.to-index a {
+    background: url("images/blue-button-back.png") repeat-x center center;
+    color: #ffffff;
+    padding: 4px 20px;
+    font-size: 10pt;
+}

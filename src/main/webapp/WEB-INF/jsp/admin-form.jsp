@@ -174,6 +174,25 @@
     </div>
 </div>
 <div class="edit-unit">
+    <div class="title">论坛页设置</div>
+    <div class="content">
+        <table>
+            <tbody>
+            <tr>
+                <td class="title">论坛页图片</td>
+                <td class="input">
+                    <jsp:include page="widget-upload-image.jsp">
+                        <jsp:param name="id" value="forumImage"/>
+                        <jsp:param name="value" value="${forumImage}"/>
+                        <jsp:param name="snapshot" value="true"/>
+                    </jsp:include>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="edit-unit">
     <div class="title">邮箱帐户</div>
     <div class="content" id="emailList">
         <div>

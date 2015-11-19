@@ -88,6 +88,7 @@ public class CommodityController extends ImageController {
         addJs("lib/handlebars.min-v1.3.0", false);
         addHeadJs("lib/image-adjust");
         addCssAndJs("subscribe-float-panel");
+        addCss("commodity-header");
         addCssAndJs("commodity");
         return "commodity";
     }
