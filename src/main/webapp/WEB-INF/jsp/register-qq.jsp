@@ -3,7 +3,7 @@
     <span class="waiting">正在获取个人信息 <span id="fetchInfoWaiting"></span></span>
     <span class="error">获取个人信息失败！！！</span>
 </div>
-<div class="to-index">
+<div class="qq-account-created">
     <span>您已经创建过帐号，现在可以： </span>
     <a href="index.html">转到主页</a>
 </div>

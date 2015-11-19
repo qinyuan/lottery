@@ -311,14 +311,14 @@ input.form-control {
 
 #springLoginForm {
     margin-left: -230px;
-    margin-top: -131px;
+    margin-top: -147px;
 }
 
 #springLoginForm div.body {
     width: 460px;
     position: relative;
     background-color: #ffffff;
-    height: 210px;
+    height: 250px;
     padding-top: 30px;
 }
 
@@ -364,6 +364,11 @@ input.form-control {
 
 #springLoginForm div.body div.submit a {
     font-size: 9pt;
+}
+
+#springLoginForm div.body div.login-by-qq {
+    text-align: center;
+    margin-top: 10px;
 }
 
 #springLoginForm div.body div.error-info {

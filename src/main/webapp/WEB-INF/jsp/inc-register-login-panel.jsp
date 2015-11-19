@@ -1,4 +1,3 @@
-<%@ page import="com.qinyuan15.lottery.mvc.AppConfig" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <security:authorize ifNotGranted="ROLE_NORMAL,ROLE_ADMIN">
     <div class="shadow float-panel" id="springLoginForm">
@@ -23,6 +22,9 @@
                 <div class="submit">
                     <button type="submit" name="loginSubmit">立即登录</button>
                     <a href="javascript:void(0)" id="switchToRegister">注册新帐号</a>
+                </div>
+                <div class="login-by-qq">
+                    <%@include file="login-by-qq-icon.jsp" %>
                 </div>
                 <div class="error-info">帐号或密码错误</div>
             </form>
@@ -89,12 +91,9 @@
                     </div>
                 </div>
                 <div class="email-icon"><span class="icon"></span><span>邮箱注册</span></div>
-                <div class="login-by-qq"><span id="loginByQQIcon">
-                   <%--<a href="https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101264653&redirect_uri=http%3A%2F%2Fwww.bud-vip.com%2Fregister-by-qq.html&scope=get_user_info"
-                           ><img src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_3.png"/></a>--%>
-                   <a href="<%=AppConfig.getQQConnectAuthenticateUrl()%>"><img
-                           src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_3.png"/></a>
-                </span></div>
+                <div class="login-by-qq">
+                    <%@include file="login-by-qq-icon.jsp" %>
+                </div>
                 <div class="switch-login">已有帐号，<a id="switchToLogin" href="javascript:void(0)">立即登录</a></div>
             </form>
             <div class="result">

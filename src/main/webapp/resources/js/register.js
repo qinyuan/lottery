@@ -191,7 +191,7 @@
         QC.api("get_user_info", {}).success(function (s) {
             nickname = s.data['nickname'];
             QC.Login.getMe(function (openId, accessToken) {
-                $.post('try-to-login-by-qq-open-id.json', {qqOpenId: openId}, function (data) {
+                $.get('try-to-login-by-qq-open-id.json', {qqOpenId: openId}, function (data) {
                     if (data.result) {
                         toIndex();
                     } else {
@@ -212,7 +212,7 @@
 
         function toIndex() {
             $fetchQQInfo.hide();
-            $('div.main-body div.to-index').show();
+            $('div.main-body div.qq-account-created').show();
             setTimeout(function () {
                 location.href = "index.html";
             }, 500);
