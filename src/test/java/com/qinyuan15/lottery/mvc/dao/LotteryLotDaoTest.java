@@ -1,7 +1,8 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.test.DatabaseTestCase;
-import com.qinyuan15.lottery.mvc.activity.LotteryLotSerialGeneratorImpl;
+import com.qinyuan15.lottery.mvc.activity.CommonLotteryLotSerialGeneratorTest;
+import com.qinyuan15.lottery.mvc.activity.LotteryLotSerialGenerator;
 import org.junit.Test;
 
 import java.text.DecimalFormat;
@@ -15,7 +16,8 @@ public class LotteryLotDaoTest extends DatabaseTestCase {
     @Test
     public void testAdd() {
         assertThat(dao.count()).isEqualTo(2);
-        dao.add(2, 3, new LotteryLotSerialGeneratorImpl(new LotteryActivityDao().getInstance(2)));
+        LotteryLotSerialGenerator serialGenerator = CommonLotteryLotSerialGeneratorTest.getTestInstance();
+        dao.add(2, 3, serialGenerator);
         assertThat(dao.count()).isEqualTo(3);
     }
 

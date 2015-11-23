@@ -347,6 +347,32 @@
                 this.$lotSuccess.hide();
             }
         },
+        showManualSerialNumberCreator: function () {
+            this.hideConcealDivs();
+            this.$manualSerialNumberCreator.fadeIn(250);
+        },
+        getManualSerialNumber: function () {
+            var serialNumber = "";
+            this.$manualSerialNumberCreator.find('select').each(function () {
+                serialNumber += $(this).val();
+            });
+            return parseInt(serialNumber);
+        },
+        hideConcealDivs: function () {
+            this.$div.find('div.conceal').hide();
+        },
+        showSerialNumber: function (serialNumber, changingBeforeShow) {
+            this.hideConcealDivs();
+
+            var $numberSpan = this.$serialNumber.find('span.number');
+            if (changingBeforeShow) {
+                JSUtils.changingNumber($numberSpan, 1000, serialNumber);
+            } else {
+                $numberSpan.text(serialNumber);
+            }
+            this.$serialNumber.show();
+            this.$lot.show();
+        },
         show: function (options) {
             // title
             this.$div.find('div.title div.text span.text').text('抽奖详情：0元抽 ' + options['commodity']['name']);
@@ -358,8 +384,8 @@
             this.$div.find('div.activity div.description').html(options['activityDescription']);
 
             if (options['detail'] == 'activityExpire') {
+                this.hideConcealDivs();
                 this.$activityExpire.show();
-                this.$lot.hide();
             } else {
                 this.$lot.show();
                 if (options['success']) {
@@ -383,9 +409,6 @@
             // show float panel
             JSUtils.showTransparentBackground(1);
             this.$div.fadeIn(300);
-            if (!window['isMobileUserAgent']) {
-                JSUtils.scrollToVerticalCenter(this.$div);
-            }
         },
         init: function () {
             this.$lot = this.$div.find('div.body div.lot');
@@ -400,36 +423,62 @@
             this.$lotSuccess = this.$lot.find('div.success');
             this.$tel = this.$lot.find('div.tel');
             this.$insufficientLivness = this.$lot.find('div.insufficient-liveness');
-            this.$createNumber = this.$lot.find('button.create-number').click(function () {
+            this.$createNumber = this.$div.find('div.body div.create-number');
+            this.$createNumber.find('button.auto').click(function () {
                 $.post('do-lottery-action.json', {commodityId: getSelectedCommodityId()}, function (data) {
                     if (data.success) {
-                        var serialNumber = data['serialNumbers'][0];
-                        self.$createNumber.hide();
-                        self.$serialNumber.show();
-                        JSUtils.changingNumber(self.$serialNumber.find('span.number'), 1000, serialNumber);
-                        self.showAdditionalLotteryResult(data);
+                        self.showSerialNumber(data['serialNumbers'][0], true);
                     } else {
                         alert(data.detail);
                     }
                 });
             });
-            var timer = setInterval(function () {
-                var init = false;
-                $('map area').each(function () {
-                    init = true;
-                    if (this.href == "javascript:void(showLotteryRule())") {
-                        var ruleHref = self.$div.find('div.body div.bottom div.rule a').attr('href');
-                        if (ruleHref) {
-                            this.href = self.$div.find('div.body div.bottom div.rule a').attr('href');
-                        } else {
-                            this.href = "javascript:void(0)";
-                        }
+            this.$manualSerialNumberCreator = this.$div.find('div.body div.manual-number-creator');
+            this.$manualSerialNumberCreator.find('button').click(function () {
+                $.post('do-lottery-action.json', {
+                    commodityId: getSelectedCommodityId(),
+                    serialNumber: self.getManualSerialNumber()
+                }, function (data) {
+                    if (data.success) {
+                        self.showSerialNumber(data['serialNumbers'][0]);
+                    } else {
+                        alert(data.detail);
                     }
                 });
-                if (init) {
-                    clearInterval(timer);
-                }
-            }, 100);
+            });
+            this.$createNumber.find('button.manual').click(function () {
+                self.showManualSerialNumberCreator();
+            });
+            /*this.$createNumber = this.$lot.find('button.create-number').click(function () {
+             $.post('do-lottery-action.json', {commodityId: getSelectedCommodityId()}, function (data) {
+             if (data.success) {
+             var serialNumber = data['serialNumbers'][0];
+             self.$createNumber.hide();
+             self.$serialNumber.show();
+             JSUtils.changingNumber(self.$serialNumber.find('span.number'), 1000, serialNumber);
+             self.showAdditionalLotteryResult(data);
+             } else {
+             alert(data.detail);
+             }
+             });
+             });*/
+            /*var timer = setInterval(function () {
+             var init = false;
+             $('map area').each(function () {
+             init = true;
+             if (this.href == "javascript:void(showLotteryRule())") {
+             var ruleHref = self.$div.find('div.body div.bottom div.rule a').attr('href');
+             if (ruleHref) {
+             this.href = self.$div.find('div.body div.bottom div.rule a').attr('href');
+             } else {
+             this.href = "javascript:void(0)";
+             }
+             }
+             });
+             if (init) {
+             clearInterval(timer);
+             }
+             }, 100);*/
 
             return this;
         }
@@ -457,6 +506,10 @@
             }
         });
     };
+    // TODO just for testing
+    setTimeout(function () {
+        getLotteryLot();
+    }, 500);
 
     var seckillResult = ({
         $div: $('#seckillResult'),
@@ -522,9 +575,6 @@
             // show float panel
             JSUtils.showTransparentBackground(1);
             this.$div.fadeIn(300);
-            if (!window['isMobileUserAgent']) {
-                JSUtils.scrollToVerticalCenter(this.$div);
-            }
         },
         _rolloverPoker: function ($poker) {
             var $front = $poker.find('img.front');

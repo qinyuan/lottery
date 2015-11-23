@@ -117,8 +117,8 @@ create table lottery_lot (
   user_id int not null,
   lot_time datetime not null,
   serial_number int not null,
-  win boolean,
-  unique(activity_id, user_id, serial_number)
+  win boolean/*,
+  unique(activity_id, user_id, serial_number)*/
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table seckill_activity (

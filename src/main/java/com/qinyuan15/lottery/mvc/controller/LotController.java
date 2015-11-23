@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.google.common.collect.Lists;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
@@ -9,6 +10,7 @@ import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.activity.*;
 import com.qinyuan15.lottery.mvc.dao.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,9 @@ public class LotController extends ImageController {
 
     @Autowired
     private DecimalFormat lotNumberFormat;
+
+    @Autowired
+    private LotteryLotNumberValidator lotteryLotNumberValidator;
 
     @RequestMapping("/take-lottery.json")
     @ResponseBody
@@ -90,24 +95,49 @@ public class LotController extends ImageController {
 
         // participants data
         result.put("participantCount", new LotteryLotCounter().count(activity));
-        //result.put("remainingSeconds", getRemainingSeconds(activity));
 
         return toJson(result);
     }
 
     @RequestMapping("/do-lottery-action.json")
     @ResponseBody
-    public String doLotteryAction(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
+    public String doLotteryAction(@RequestParam("commodityId") Integer commodityId,
+                                  @RequestParam(value = "serialNumber", required = false) Integer serialNumber) {
         User user = (User) securitySearcher.getUser();
         if (user == null) {
             return fail("请重新登录");
         }
+        if (true) {
+            Map<String, Object> map = new HashMap<>();
+            if (IntegerUtils.isPositive(serialNumber)) {
+                map.put("serialNumbers", Lists.newArrayList(lotNumberFormat.format(serialNumber)));
+            } else {
+                map.put("serialNumbers", Lists.newArrayList("010203"));
+            }
+
+            map.put("success", true);
+            return toJson(map);
+        }
+
         try {
             LotteryActivity activity = new LotteryActivityDao().getActiveInstanceByCommodityId(commodityId);
+
+            List<String> serialNumbers;
+            if (IntegerUtils.isPositive(serialNumber)) {
+                Pair<Boolean, String> validation = lotteryLotNumberValidator.validate(activity, serialNumber);
+                if (!validation.getLeft()) {
+                    return fail(validation.getRight());
+                }
+                serialNumbers = Lists.newArrayList(lotNumberFormat.format(serialNumber));
+            } else {
+                LotteryLotCreator.CreateResult lotteryLotCreateResult = new LotteryLotCreator(
+                        activity, securitySearcher.getUserId()).setNumberValidator(lotteryLotNumberValidator)
+                        .create();
+                serialNumbers = getSerialNumbersFromLotteryLots(lotteryLotCreateResult.getLots());
+            }
+
             Map<String, Object> result = new HashMap<>();
-            LotteryLotCreator.CreateResult lotteryLotCreateResult = new LotteryLotCreator(
-                    activity, securitySearcher.getUserId()).create();
-            result.put("serialNumbers", getSerialNumbersFromLotteryLots(lotteryLotCreateResult.getLots()));
+            result.put("serialNumbers", serialNumbers);
             putLotteryLivenessParameters(result, user, activity);
             result.put(SUCCESS, true);
             return toJson(result);
@@ -230,34 +260,9 @@ public class LotController extends ImageController {
         return toJson(map);
     }
 
-    /*
-    private int getRemainingSeconds(SeckillActivity activity) {
-        String startTime = activity.getStartTime();
-        if (!StringUtils.hasText(startTime)) {
-            return 0;
-        }
-        long remainingSeconds = DateUtils.newDate(startTime).getTime() - System.currentTimeMillis();
-        return remainingSeconds < 0 ? 0 : (int) (remainingSeconds / 1000);
-    }
-    */
-
     private Commodity getCommodity(Integer commodityId) {
         return new CommodityUrlAdapter(this).adaptToSmall(new CommodityDao().getInstance(commodityId));
     }
-
-    /*private String validateCommodityToTakeLot(Integer commodityId) {
-        if (!IntegerUtils.isPositive(commodityId)) {
-            return failByInvalidParam();
-        } else if (!new CommodityDao().hasLottery(commodityId)) {
-            return fail("noLottery");
-        } else if (SecurityUtils.getUsername() == null) {
-            return fail("noLogin");
-        } else if (!SecurityUtils.hasAuthority(User.NORMAL)) {
-            return getNoPrivilegeResult();
-        } else {
-            return null;
-        }
-    }*/
 
     private List<String> getSerialNumbersFromLotteryLots(List<LotteryLot> lotteryLots) {
         List<String> serialNumbers = new ArrayList<>();

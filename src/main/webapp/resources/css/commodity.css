@@ -159,12 +159,14 @@ div.main-body > div.summary div.participant-count {
 #exceptionPrompt, div.activity-result {
     width: 484px;
     margin-left: -242px;
-    margin-top: -167px; /* height is 334px */
 }
 
 #exceptionPrompt {
-    height: 350px;
-    margin-top: -175px;
+    margin-top: -137px;
+}
+
+#exceptionPrompt div.body {
+    height: 230px;
 }
 
 #exceptionPrompt div.body div.info {
@@ -183,15 +185,19 @@ div.main-body > div.summary div.participant-count {
 }
 
 /**************************** lottery result start ***************************/
+div.activity-result {
+    margin-top: -157px; /* height is 314px */
+}
+
 div.activity-result div.body {
     padding-bottom: 5px;
-    min-height: 290px;
+    min-height: 270px;
 }
 
 div.activity-result div.body div.activity {
     overflow: hidden;
     border-bottom: 1px solid #B7B7B7;
-    padding: 20px 10px 10px;
+    padding: 5px 10px;
     margin: 0 20px;
 }
 
@@ -204,6 +210,35 @@ div.activity-result div.body div.activity div.description {
     float: right;
     padding-top: 5px;
     line-height: 28px;
+}
+
+div.activity-result div.body div.conceal {
+    display: none;
+}
+
+div.activity-result div.body button.blue {
+    background: url("images/blue-button-back.png") repeat-x center center;
+    border-radius: 5px;
+    padding: 8px 20px;
+    color: #ffffff;
+    margin: 0 20px;
+    min-width: 95px;
+}
+
+div.activity-result div.body div.create-number,
+div.activity-result div.body div.manual-number-creator {
+    padding-top: 60px;
+    text-align: center;
+}
+
+div.activity-result div.body div.manual-number-creator select {
+    width: 100px;
+    border: 1px solid #ADADAD;
+    background-color: #ffffff;
+}
+
+div.activity-result div.body div.manual-number-creator div.submit {
+    margin-top: 30px;
 }
 
 div.activity-result div.body div.lot {
@@ -401,25 +436,26 @@ div.activity-result div.insufficient-liveness div.status > span {
 }
 
 div.activity-result div.activity-expire {
-    display: none;
     text-align: center;
     margin-top: 60px;
+    color: #808080;
+    font-size: 12pt;
 }
 
-div.activity-result div.activity-expire a {
+/*div.activity-result div.activity-expire a {
     display: block;
     margin-top: 10px;
     font-size: 10pt;
-}
+}*/
 
-div.activity-result div.body div.remaining-time {
+/*div.activity-result div.body div.remaining-time {
     position: absolute;
     left: 20px;
     bottom: 10px;
     color: #808080;
-}
+}*/
 
-div.activity-result div.body div.bottom {
+/*div.activity-result div.body div.bottom {
     position: absolute;
     right: 32px;
     bottom: 10px;
@@ -531,6 +567,6 @@ div.activity-result div.body div.bottom div.share div.triangle.outer {
 div.activity-result div.body div.bottom div.share div.triangle.inner {
     top: 25px;
     border-bottom-color: #ffffff;
-}
+}*/
 
 /************************************ lottery result end *******************************/

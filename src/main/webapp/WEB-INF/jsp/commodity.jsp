@@ -59,7 +59,34 @@
             <div class="image"><img/></div>
             <div class="description break-word"></div>
         </div>
-        <div class="lot">
+        <div class="create-number conceal">
+            <button class="manual blue" type="button">手动选号</button>
+            <button class="auto blue" type="button">自动选号</button>
+        </div>
+        <div class="manual-number-creator conceal">
+            <c:forEach var="i" begin="1" end="3">
+                <select name="numberPart${i}">
+                    <%
+                        for (int j = 1; j <= 33; j++) {
+                            String optionValue = j < 10 ? "0" + j : "" + j;
+                    %>
+                    <option value="<%=optionValue%>"><%=optionValue%>
+                    </option>
+                    <%
+                        }
+                    %>
+                </select>
+            </c:forEach>
+            <div class="submit">
+                <button class="blue" type="button">确定</button>
+            </div>
+        </div>
+        <div class="lot conceal">
+            <div class="serial-number">
+                您的抽奖号：<span class="number"></span>
+            </div>
+        </div>
+        <%--<div class="lot">
             <button class="create-number">获取抽奖号</button>
             <div class="serial-number">
                 我的抽奖号：<span class="number"></span>
@@ -76,16 +103,17 @@
                 爱心数还不足<span class="min-liveness-to-participate"></span>，请继续努力
                 <a href="setting.html?index=5" target="_blank">增加爱心数</a>
             </div>
+        </div>--%>
+        <div class="activity-expire conceal">
+            活动已结束，敬请留意下次活动开始时间
+            <%--本期抽奖已结束，请关注下期抽奖活动
+            <a href="activity-history.html" target="_blank">抽奖结果请查看活动历史</a>--%>
         </div>
-        <div class="activity-expire">
-            本期抽奖已结束，请关注下期抽奖活动
-            <a href="activity-history.html" target="_blank">抽奖结果请查看活动历史</a>
-        </div>
-        <div class="bottom">
+        <%--<div class="bottom">
             <jsp:include page="commodity-activity-share.jsp">
                 <jsp:param name="title" value="分享到"/>
             </jsp:include>
-        </div>
+        </div>--%>
     </div>
 </div>
 <%@include file="subscribe-float-panel.jsp" %>
@@ -121,11 +149,11 @@
             <span class="day">00天</span>
             <span class="hour">00</span>:<span class="minute">00</span>:<span class="second">00</span>
         </div>
-        <div class="bottom">
+        <%--<div class="bottom">
             <jsp:include page="commodity-activity-share.jsp">
                 <jsp:param name="title" value="告诉小伙伴一起抢"/>
             </jsp:include>
-        </div>
+        </div>--%>
     </div>
 </div>
 <div class="float-panel shadow" id="exceptionPrompt">

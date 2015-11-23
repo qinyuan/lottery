@@ -13,23 +13,37 @@ import java.util.List;
 public class LotteryLotCreator {
     private final LotteryActivity activity;
     private final int userId;
+    private LotteryLotNumberValidator numberValidator;
+    private LotteryLotSerialGenerator serialGenerator;
 
     public LotteryLotCreator(LotteryActivity activity, int userId) {
         this.activity = activity;
         this.userId = userId;
     }
 
+    public LotteryLotCreator setSerialGenerator(LotteryLotSerialGenerator serialGenerator) {
+        this.serialGenerator = serialGenerator;
+        return this;
+    }
+
+    public LotteryLotCreator setNumberValidator(LotteryLotNumberValidator numberValidator) {
+        this.numberValidator = numberValidator;
+        return this;
+    }
+
     public CreateResult create() {
         boolean newLot;
         if (new LotteryLotCounter().getAvailableLotCount(activity.getId(), userId) > 0) {
-            new LotteryLotDao().add(activity.getId(), userId,
-                    new LotteryLotSerialGeneratorImpl(activity));
+            LotteryLotSerialGenerator commonSerialGenerator = new CommonLotteryLotSerialGenerator(
+                    numberValidator, serialGenerator);
+            commonSerialGenerator.setActivity(activity);
+            new LotteryLotDao().add(activity.getId(), userId, commonSerialGenerator);
             newLot = true;
         } else {
             newLot = false;
         }
-        return new CreateResult(LotteryLotDao.factory().setActivityId(activity.getId()).setUserId(userId).getInstances(),
-                newLot);
+        return new CreateResult(LotteryLotDao.factory().setActivityId(
+                activity.getId()).setUserId(userId).getInstances(), newLot);
     }
 
     public static class CreateResult {
