@@ -1,6 +1,5 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan.lib.lang.IntegerRange;
 import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan15.lottery.mvc.activity.LotCounter;
 import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
@@ -13,8 +12,6 @@ public class LotteryActivity extends AbstractActivity {
     private Integer virtualParticipants;
     private Integer virtualLiveness;
     private String virtualLivenessUsers;
-    private Integer maxSerialNumber;
-    private Integer minSerialNumber;
     private Integer dualColoredBallTerm;
     private Integer minLivenessToParticipate;
     private Boolean closed;
@@ -75,22 +72,6 @@ public class LotteryActivity extends AbstractActivity {
         this.virtualLivenessUsers = virtualLivenessUsers;
     }
 
-    public Integer getMaxSerialNumber() {
-        return maxSerialNumber;
-    }
-
-    public void setMaxSerialNumber(Integer maxSerialNumber) {
-        this.maxSerialNumber = maxSerialNumber;
-    }
-
-    public Integer getMinSerialNumber() {
-        return minSerialNumber;
-    }
-
-    public void setMinSerialNumber(Integer minSerialNumber) {
-        this.minSerialNumber = minSerialNumber;
-    }
-
     public Integer getDualColoredBallTerm() {
         return dualColoredBallTerm;
     }
@@ -125,18 +106,5 @@ public class LotteryActivity extends AbstractActivity {
     @Override
     protected LotCounter getLotCounter() {
         return new LotteryLotCounter();
-    }
-
-    public String getSerialNumberRange() {
-        String range = IntegerRange.SEPARATOR;
-
-        if (minSerialNumber != null) {
-            range = minSerialNumber + range;
-        }
-        if (maxSerialNumber != null) {
-            range = range + maxSerialNumber;
-        }
-
-        return range;
     }
 }

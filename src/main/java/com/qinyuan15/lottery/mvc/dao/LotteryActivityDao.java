@@ -2,7 +2,6 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
-import com.qinyuan.lib.lang.IntegerRange;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.time.DateUtils;
 import org.springframework.util.StringUtils;
@@ -64,8 +63,6 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         activity.setDualColoredBallTerm(dualColoredBallTerm);
         activity.setDescription(description);
         activity.setMinLivenessToParticipate(minLivenessToParticipant);
-        activity.setMinSerialNumber(minSerialNumber);
-        activity.setMaxSerialNumber(maxSerialNumber);
 
         // set default values
         activity.setVirtualParticipants(0);
@@ -95,8 +92,6 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
             activity.setDualColoredBallTerm(dualColoredBallTerm);
             activity.setDescription(description);
             activity.setMinLivenessToParticipate(minLivenessToParticipant);
-            activity.setMinSerialNumber(minSerialNumber);
-            activity.setMaxSerialNumber(maxSerialNumber);
 
             HibernateUtils.update(activity);
         }
@@ -141,9 +136,9 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
                 .getFirstItem("SELECT minLivenessToParticipate FROM " + LotteryActivity.class.getSimpleName());
     }
 
-    private final static String DEFAULT_SERIAL_NUMBER_RANGE = "10~100000";
+    //private final static String DEFAULT_SERIAL_NUMBER_RANGE = "10~100000";
 
-    public String getLatestSerialNumberRange() {
+    /*public String getLatestSerialNumberRange() {
         LotteryActivity activity = new HibernateListBuilder().addOrder("id", false).getFirstItem(LotteryActivity.class);
         if (activity == null) {
             return DEFAULT_SERIAL_NUMBER_RANGE;
@@ -160,7 +155,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         }
 
         return new IntegerRange(minSerialNumber, maxSerialNumber).toString();
-    }
+    }*/
 
     public List<LotteryActivity> getUnclosedInstances() {
         return factory().setClosed(false).getInstances();

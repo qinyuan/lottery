@@ -89,8 +89,6 @@
         <property name="virtualParticipants" column="virtual_participants"/>
         <property name="virtualLiveness" column="virtual_liveness"/>
         <property name="virtualLivenessUsers" column="virtual_liveness_users"/>
-        <property name="minSerialNumber" column="min_serial_number"/>
-        <property name="maxSerialNumber" column="max_serial_number"/>
         <property name="dualColoredBallTerm" column="dual_colored_ball_term"/>
         <property name="winners"/>
         <property name="description"/>

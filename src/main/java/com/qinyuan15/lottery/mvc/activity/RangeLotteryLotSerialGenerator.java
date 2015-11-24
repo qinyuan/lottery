@@ -20,8 +20,8 @@ public class RangeLotteryLotSerialGenerator implements LotteryLotSerialGenerator
             minSerialNumber = DEFAULT_MIN_SERIAL_NUMBER;
             maxSerialNumber = DEFAULT_MAX_SERIAL_NUMBER;
         } else {
-            minSerialNumber = activity.getMinSerialNumber();
-            maxSerialNumber = activity.getMaxSerialNumber();
+            /*minSerialNumber = activity.getMinSerialNumber();
+            maxSerialNumber = activity.getMaxSerialNumber();*/
 
             if (!IntegerUtils.isPositive(minSerialNumber)) {
                 minSerialNumber = DEFAULT_MIN_SERIAL_NUMBER;

@@ -102,8 +102,8 @@ create table lottery_activity(
   virtual_participants int not null default 0,
   virtual_liveness int,
   virtual_liveness_users char(200),
-  max_serial_number int not null default 0,
-  min_serial_number int not null default 0,
+  /*max_serial_number int not null default 0,
+  min_serial_number int not null default 0,*/
   dual_colored_ball_term int not null,
   winners char(100),
   description varchar(2000),
@@ -258,10 +258,10 @@ insert into commodity_image values
   (3, 2, 'path3', 'backPath3', 3);
 
 
-insert into lottery_activity(commodity_id, term, start_time, expire, virtual_participants, max_serial_number,
-  dual_colored_ball_term, min_liveness_to_participate, min_serial_number, close_time, closed) values
-  (1, 1, '2015-01-01 12:12:12' , false, 1000, 10000, 2015081, 2, 10, '2015-01-02 12:12:12', false),
-  (1, 21, '2014-12-08 12:12:12' , true, 1100, 10000, 2014181, 4, 10, '2014-12-12 12:12:12', true);
+insert into lottery_activity(commodity_id, term, start_time, expire, virtual_participants,
+  dual_colored_ball_term, min_liveness_to_participate, close_time, closed) values
+  (1, 1, '2015-01-01 12:12:12' , false, 1000, 2015081, 2, '2015-01-02 12:12:12', false),
+  (1, 21, '2014-12-08 12:12:12' , true, 1100, 2014181, 4, '2014-12-12 12:12:12', true);
 
 insert into lottery_liveness(activity_id, spread_user_id, receive_user_id, liveness, spread_way, register_before) values
   (2, 3, 4, 12, 'sina', true), (2, 3, 5, 13, 'qq', true), (2, 4, 5, 13, 'qzone', true);

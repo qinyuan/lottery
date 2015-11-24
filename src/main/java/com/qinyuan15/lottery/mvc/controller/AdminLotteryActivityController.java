@@ -32,7 +32,7 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                 new DecimalFormat("000").format(latestRecord.getTerm() + 1));
 
         setAttribute("latestMinLivenessToParticipate", new LotteryActivityDao().getLatestMinLivenessToParticipate());
-        setAttribute("latestSerialNumberRange", new LotteryActivityDao().getLatestSerialNumberRange());
+        //setAttribute("latestSerialNumberRange", new LotteryActivityDao().getLatestSerialNumberRange());
 
         return super.index(listType, "admin-lottery-activity");
     }
