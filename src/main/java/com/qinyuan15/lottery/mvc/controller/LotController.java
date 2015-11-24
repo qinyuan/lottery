@@ -41,6 +41,9 @@ public class LotController extends ImageController {
     @Autowired
     private LotteryLotNumberValidator lotteryLotNumberValidator;
 
+    @Autowired
+    private DualColoredBallLotteryLotSerialGenerator serialGenerator;
+
     @RequestMapping("/take-lottery.json")
     @ResponseBody
     public String takeLottery(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
@@ -71,7 +74,8 @@ public class LotController extends ImageController {
             if (new LotteryLotCounter().countReal(activity.getId(), user.getId()) == 0) {
                 result.put(SUCCESS, true);
             } else {
-                result.put("serialNumbers", new LotteryLotDao().getSerialNumbers(activity.getId(), user.getId(), lotNumberFormat));
+                result.put("serialNumbers", new LotteryLotDao().getSerialNumbers(activity.getId(), user.getId(),
+                        lotNumberFormat));
                 putLotteryLivenessParameters(result, user, activity);
                 result.put(SUCCESS, false);
                 result.put(DETAIL, "alreadyAttended");
@@ -107,17 +111,6 @@ public class LotController extends ImageController {
         if (user == null) {
             return fail("请重新登录");
         }
-        if (true) {
-            Map<String, Object> map = new HashMap<>();
-            if (IntegerUtils.isPositive(serialNumber)) {
-                map.put("serialNumbers", Lists.newArrayList(lotNumberFormat.format(serialNumber)));
-            } else {
-                map.put("serialNumbers", Lists.newArrayList("010203"));
-            }
-
-            map.put("success", true);
-            return toJson(map);
-        }
 
         try {
             LotteryActivity activity = new LotteryActivityDao().getActiveInstanceByCommodityId(commodityId);
@@ -130,9 +123,11 @@ public class LotController extends ImageController {
                 }
                 serialNumbers = Lists.newArrayList(lotNumberFormat.format(serialNumber));
             } else {
-                LotteryLotCreator.CreateResult lotteryLotCreateResult = new LotteryLotCreator(
-                        activity, securitySearcher.getUserId()).setNumberValidator(lotteryLotNumberValidator)
-                        .create();
+                LotteryLotCreator.CreateResult lotteryLotCreateResult =
+                        new LotteryLotCreator(activity, securitySearcher.getUserId())
+                                .setNumberValidator(lotteryLotNumberValidator)
+                                .setSerialGenerator(serialGenerator)
+                                .create();
                 serialNumbers = getSerialNumbersFromLotteryLots(lotteryLotCreateResult.getLots());
             }
 

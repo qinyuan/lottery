@@ -83,7 +83,7 @@
         </div>
         <div class="lot conceal">
             <div class="serial-number">
-                您的抽奖号：<span class="number"></span>
+                您的抽奖号： <span class="number"><span></span><span></span><span></span></span>
             </div>
         </div>
         <%--<div class="lot">

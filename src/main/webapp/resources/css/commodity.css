@@ -266,6 +266,10 @@ div.activity-result div.body div.lot div.serial-number span.number {
     font-weight: bold;
 }
 
+div.activity-result div.body div.lot div.serial-number span.number span {
+    margin-right: 10px;
+}
+
 div.activity-result div.body div.lot div.success,
 div.activity-result div.body div.lot div.tel,
 div.activity-result div.body div.lot div.insufficient-liveness {
