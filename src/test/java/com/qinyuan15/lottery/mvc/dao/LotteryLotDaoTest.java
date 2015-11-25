@@ -81,4 +81,18 @@ public class LotteryLotDaoTest extends DatabaseTestCase {
         List<String> serialNumbers = dao.getSerialNumbers(2, 3, format);
         assertThat(serialNumbers).containsExactly("010257");
     }
+
+    @Test
+    public void testGetUsernames() {
+        assertThat(dao.getUsernames(2, 10257)).containsExactly("normal-user1");
+        assertThat(dao.getUsernames(2, 10258)).isEmpty();
+        assertThat(dao.getUsernames(1, 10257)).isEmpty();
+    }
+
+    @Test
+    public void testGetUsernames2() {
+        assertThat(dao.getUsernames(2, "010257")).contains("normal-user1");
+        assertThat(dao.getUsernames(2, "10257")).contains("normal-user1");
+        assertThat(dao.getUsernames(2, "10258")).isEmpty();
+    }
 }

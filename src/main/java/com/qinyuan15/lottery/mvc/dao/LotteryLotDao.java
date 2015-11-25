@@ -134,4 +134,15 @@ public class LotteryLotDao extends AbstractDao<LotteryLot> {
     public List<String> getSerialNumbers(int activityId, int userId) {
         return getSerialNumbers(activityId, userId, null);
     }
+
+    public List<String> getUsernames(int activityId, int serialNumber) {
+        String sql = "SELECT username FROM lottery_lot INNER JOIN user ON lottery_lot.user_id=user.id";
+        return new HibernateListBuilder().addEqualFilter("activity_id", activityId)
+                .addEqualFilter("serial_number", serialNumber)
+                .buildBySQL(sql, String.class);
+    }
+
+    public List<String> getUsernames(int activityId, String serialNumber) {
+        return getUsernames(activityId, Integer.parseInt(serialNumber));
+    }
 }
