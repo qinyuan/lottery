@@ -19,12 +19,7 @@ public class LotteryLotCounter implements LotCounter {
      * @return total lot number of the activity
      */
     public int count(LotteryActivity activity) {
-        Integer count = activity.getVirtualParticipants();
-        if (count == null) {
-            count = countReal(activity.getId());
-        } else {
-            count += countReal(activity.getId());
-        }
+        int count = countVirtual(activity) + countReal(activity.getId());
 
         if (activity.getExpire()) {
             return count;
@@ -51,6 +46,15 @@ public class LotteryLotCounter implements LotCounter {
      */
     public int countByUser(Integer userId) {
         return LotteryLotDao.factory().setUserId(userId).getCount();
+    }
+
+    private int countVirtual(LotteryActivity activity) {
+        Integer count = activity.getVirtualParticipants();
+        if (!IntegerUtils.isPositive(count)) {
+            count = 0;
+        }
+        count += LotteryLotDao.factory().setVirtual(true).setActivityId(activity.getId()).getCount();
+        return count;
     }
 
     /**

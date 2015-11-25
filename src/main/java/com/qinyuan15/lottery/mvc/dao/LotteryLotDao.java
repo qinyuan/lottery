@@ -47,6 +47,7 @@ public class LotteryLotDao extends AbstractDao<LotteryLot> {
         private Integer userId;
         private Integer serialNumber;
         private Boolean win;
+        private Boolean virtual = false;
 
         public Factory setActivityId(Integer activityId) {
             this.activityId = activityId;
@@ -68,6 +69,11 @@ public class LotteryLotDao extends AbstractDao<LotteryLot> {
             return this;
         }
 
+        public Factory setVirtual(Boolean virtual) {
+            this.virtual = virtual;
+            return this;
+        }
+
         @Override
         protected HibernateListBuilder getListBuilder() {
             HibernateListBuilder listBuilder = new HibernateListBuilder();
@@ -80,8 +86,12 @@ public class LotteryLotDao extends AbstractDao<LotteryLot> {
             if (IntegerUtils.isPositive(serialNumber)) {
                 listBuilder.addEqualFilter("serialNumber", serialNumber);
             }
+
             if (win != null) {
                 listBuilder.addEqualFilter("win", win);
+            }
+            if (virtual != null) {
+                listBuilder.addEqualFilter("virtual", virtual);
             }
             return listBuilder;
         }
