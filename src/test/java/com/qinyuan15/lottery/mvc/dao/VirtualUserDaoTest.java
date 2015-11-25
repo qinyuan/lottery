@@ -9,6 +9,20 @@ public class VirtualUserDaoTest extends DatabaseTestCase {
     private VirtualUserDao dao = new VirtualUserDao();
 
     @Test
+    public void testAdd() {
+        assertThat(dao.count()).isEqualTo(2);
+        dao.add("test_user", "15", "3248", "ai", "@qq.com");
+        assertThat(dao.count()).isEqualTo(3);
+    }
+
+    @Test
+    public void testAdd1() {
+        assertThat(dao.count()).isEqualTo(2);
+        dao.add("test_user");
+        assertThat(dao.count()).isEqualTo(3);
+    }
+
+    @Test
     public void testHasUsername() throws Exception {
         assertThat(dao.hasUsername("test")).isFalse();
         assertThat(dao.hasUsername("virtual_user1")).isTrue();

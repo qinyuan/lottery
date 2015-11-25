@@ -41,40 +41,19 @@
                         <input type="text" name="expectEndTime" class="form-control"
                                placeholder="格式如'2015-03-03 19:00:00'"/>
                     </td>
-                    <td class="title">页面关闭时间</td>
+                    <td class="title">关闭时间</td>
                     <td class="content">
                         <input type="text" name="closeTime" class="form-control"
                                placeholder="格式如'2015-03-03 19:00:00'"/>
                     </td>
 
                 </tr>
-                <tr class="liveness">
-                    <td class="title">最大爱心数</td>
-                    <td class="content">
-                        <input type="text" name="virtualLiveness" class="form-control"
-                               placeholder="输入最大爱心数，格式为数字"/>
-                    </td>
-                    <td class="title">最大爱心用户</td>
-                    <td class="content">
-                        <input type="text" name="virtualLivenessUsers" class="form-control"
-                               placeholder="若输入多个用户，以“,”作分隔"/>
-                    </td>
-                </tr>
                 <tr>
-                    <td class="title">最少需要的爱心数</td>
-                    <td class="content">
-                        <input type="text" name="minLivenessToParticipate" class="form-control"
-                               value="${latestMinLivenessToParticipate}" placeholder="输入参与抽奖最少需要的爱心"/>
-                    </td>
                     <td class="title">预计参加人数</td>
                     <td class="content">
                         <input type="text" name="expectParticipantCount" class="form-control"
                                value="10000" placeholder="输入预计参数人数"/>
                     </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
                     <%@include file="admin-activity-description-input.jsp" %>
                 </tr>
                 </tbody>

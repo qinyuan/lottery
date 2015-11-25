@@ -56,7 +56,7 @@
             }
             return true;
         },
-        validateContinuousSerialLimit: function () {
+        /*validateContinuousSerialLimit: function () {
             var continuousSerialLimit = this.get$ContinuousSerialLimit().val();
             if (continuousSerialLimit != '' && !JSUtils.isNumberString(continuousSerialLimit)) {
                 alert('抽奖号最大连接个数只能为数字格式！');
@@ -64,8 +64,8 @@
                 return false;
             }
             return true;
-        },
-        validateLiveness: function () {
+        },*/
+        /*validateLiveness: function () {
             if (this.get$LivenessRow().css('display') != 'none') {
                 var virtualLiveness = this.get$VirtualLiveness().val();
                 if (virtualLiveness != '') {
@@ -83,8 +83,8 @@
                 }
             }
             return true;
-        },
-        validateMinLivenessToParticipate: function () {
+        },*/
+        /*validateMinLivenessToParticipate: function () {
             var minLivenessToParticipate = this.get$MinLivenessToParticipate().val();
             if (minLivenessToParticipate != '' && !JSUtils.isNumberString(minLivenessToParticipate)) {
                 alert('最少需要的爱心数只能为数字格式！');
@@ -92,8 +92,8 @@
                 return false;
             }
             return true;
-        },
-        validateSerialNumberRange: function () {
+        },*/
+        /*validateSerialNumberRange: function () {
             var serialNumberRange = this.get$SerialNumberRange().val();
             if ($.trim(serialNumberRange) == '') {
                 alert('抽奖号取值范围未填写！');
@@ -106,7 +106,7 @@
                 return false;
             }
             return true;
-        },
+        },*/
         updateExpectEndDateByDualColoredBallTerm: function () {
             var self = this;
             $.post('dual-colored-ball-query-date.json', {

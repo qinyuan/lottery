@@ -3,9 +3,21 @@ package com.qinyuan15.lottery.mvc.dao;
 import com.qinyuan.lib.database.hibernate.AbstractDao;
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.Random;
+
 public class VirtualUserDao extends AbstractDao<VirtualUser> {
+
+    public Integer add(String username) {
+        String telPrefix = new Random().nextBoolean() ? "15" : "13";
+        String telSuffix = RandomStringUtils.randomNumeric(4);
+        String mailPrefix = RandomStringUtils.randomAlphabetic(2).toLowerCase();
+        String mailSuffix = "@qq.com";
+        return add(username, telPrefix, telSuffix, mailPrefix, mailSuffix);
+    }
+
     public Integer add(String username, String telPrefix, String telSuffix, String mailPrefix, String mailSuffix) {
         VirtualUser user = new VirtualUser();
         user.setUsername(username);

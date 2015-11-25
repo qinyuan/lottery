@@ -101,6 +101,7 @@
         <property name="lotTime" column="lot_time"/>
         <property name="serialNumber" column="serial_number"/>
         <property name="win" column="win"/>
+        <property name="virtual"/>
     </class>
     <class name="SeckillActivity" table="seckill_activity">
         <id name="id" column="id">

@@ -112,7 +112,8 @@ create table lottery_lot (
   user_id int not null,
   lot_time datetime not null,
   serial_number int not null,
-  win boolean/*,
+  win boolean,
+  virtual boolean not null default false/*,
   unique(activity_id, user_id, serial_number)*/
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 

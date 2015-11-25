@@ -12,12 +12,10 @@
         <col class="expect-participant-count"/>
         <col class="participant-count"/>
         <col class="real-participant-count"/>
-        <c:choose>
-            <c:when test="${listExpire}">
-                <col class="winners"/>
-                <col class="announcement"/>
-            </c:when>
-        </c:choose>
+        <c:if test="${listExpire}">
+            <col class="winners"/>
+            <col class="announcement"/>
+        </c:if>
         <col class="action"/>
     </colgroup>
     <thead>
@@ -32,15 +30,10 @@
     <th>预计参与人数</th>
     <th>总参与人数<br/><span style="font-size: 9pt;">(包含虚拟部分)</span></th>
     <th>真实参与人数</th>
-    <c:choose>
-        <c:when test="${listExpire}">
-            <th>中奖号</th>
-            <th>中奖公告</th>
-        </c:when>
-        <c:otherwise>
-            <th>抽奖号码最大连续个数</th>
-        </c:otherwise>
-    </c:choose>
+    <c:if test="${listExpire}">
+        <th>中奖号</th>
+        <th>中奖公告</th>
+    </c:if>
     <th></th>
     </thead>
     <tbody>

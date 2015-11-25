@@ -29,10 +29,7 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
         DualColoredBallRecord latestRecord = new DualColoredBallRecordDao().getLatestInstance();
         setAttribute("nextDualColoredBallTerm", latestRecord.getYear() +
                 new DecimalFormat("000").format(latestRecord.getTerm() + 1));
-
         setAttribute("latestMinLivenessToParticipate", new LotteryActivityDao().getLatestMinLivenessToParticipate());
-        //setAttribute("latestSerialNumberRange", new LotteryActivityDao().getLatestSerialNumberRange());
-
         return super.index(listType, "admin-lottery-activity");
     }
 
@@ -48,7 +45,7 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                           @RequestParam("expectParticipantCount") Integer expectParticipantCount,
                           @RequestParam("dualColoredBallTerm") Integer dualColoredBallTerm,
                           @RequestParam("description") String description,
-                          @RequestParam("minLivenessToParticipate") Integer minLivenessToParticipate) {
+                          @RequestParam(value = "minLivenessToParticipate", required = false) Integer minLivenessToParticipate) {
 
         if (StringUtils.hasText(autoStartTime)) {
             startTime = DateUtils.nowString();
