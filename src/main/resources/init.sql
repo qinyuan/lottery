@@ -102,8 +102,6 @@ create table lottery_activity(
   virtual_participants int not null default 0,
   virtual_liveness int,
   virtual_liveness_users char(200),
-  /*max_serial_number int not null default 0,
-  min_serial_number int not null default 0,*/
   dual_colored_ball_term int not null,
   winners char(100),
   description varchar(2000),
@@ -247,10 +245,10 @@ insert into user(username, password, role, active, spread_user_id) values('norma
 insert into virtual_user values(1, 'virtual_user1', 15, 00, 'ai', 'qq.com'), (2, 'virtual_user2', 15, 00, 'ai', 'qq.com');
 
 insert into commodity values
-  (1, 'name1', 11.0, true, 'snapshot1', /*'detail_image1', 'back_image1', */false, 10),
-  (2, 'name2', 12.0, true, 'snapshot2', /*'detail_image2', 'back_image2', */true, 11),
-  (3, 'name3', 13.0, true, 'snapshot3', /*'detail_image3', 'back_image3', */true, 14),
-  (4, 'name4', 14.0, true, 'snapshot4', /*'detail_image4', 'back_image4', */false, 8);
+  (1, 'name1', 11.0, true, 'snapshot1', false, 10),
+  (2, 'name2', 12.0, true, 'snapshot2', true, 11),
+  (3, 'name3', 13.0, true, 'snapshot3', true, 14),
+  (4, 'name4', 14.0, true, 'snapshot4', false, 8);
 
 insert into commodity_image values
   (1, 1, 'path1', 'backPath1', 2),

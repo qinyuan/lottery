@@ -50,8 +50,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
 
     public Integer add(Integer term, Integer commodityId, String startTime, String expectEndTime, String closeTime,
                        Integer continuousSerialLimit, Integer expectParticipantCount, Integer dualColoredBallTerm,
-                       String description, Integer minLivenessToParticipant, Integer minSerialNumber,
-                       Integer maxSerialNumber) {
+                       String description, Integer minLivenessToParticipant) {
         LotteryActivity activity = new LotteryActivity();
         activity.setTerm(term);
         activity.setCommodityId(commodityId);
@@ -74,9 +73,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
 
     public void update(Integer id, Integer term, Integer commodityId, String startTime, String expectEndTime,
                        String closeTime, Integer continuousSerialLimit, Integer expectParticipantCount,
-                       Integer virutalLiveness, String virtualLivenessUsers, Integer dualColoredBallTerm,
-                       String description, Integer minLivenessToParticipant, Integer minSerialNumber,
-                       Integer maxSerialNumber) {
+                       Integer dualColoredBallTerm, String description, Integer minLivenessToParticipant) {
         LotteryActivity activity = getInstance(id);
 
         if (activity != null) {
@@ -87,8 +84,6 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
             activity.setCloseTime(closeTime);
             activity.setContinuousSerialLimit(continuousSerialLimit);
             activity.setExpectParticipantCount(expectParticipantCount);
-            activity.setVirtualLiveness(virutalLiveness);
-            activity.setVirtualLivenessUsers(virtualLivenessUsers);
             activity.setDualColoredBallTerm(dualColoredBallTerm);
             activity.setDescription(description);
             activity.setMinLivenessToParticipate(minLivenessToParticipant);
@@ -126,36 +121,10 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         super.updateResult(id, winners, announcement);
     }
 
-    /*public Integer getMaxSerialNumber(Integer activityId) {
-        return (Integer) new HibernateListBuilder().addEqualFilter("id", activityId)
-                .getFirstItem("SELECT maxSerialNumber FROM LotteryActivity");
-    }*/
-
     public Integer getLatestMinLivenessToParticipate() {
         return (Integer) new HibernateListBuilder().addOrder("id", false)
                 .getFirstItem("SELECT minLivenessToParticipate FROM " + LotteryActivity.class.getSimpleName());
     }
-
-    //private final static String DEFAULT_SERIAL_NUMBER_RANGE = "10~100000";
-
-    /*public String getLatestSerialNumberRange() {
-        LotteryActivity activity = new HibernateListBuilder().addOrder("id", false).getFirstItem(LotteryActivity.class);
-        if (activity == null) {
-            return DEFAULT_SERIAL_NUMBER_RANGE;
-        }
-
-        Integer minSerialNumber = activity.getMinSerialNumber();
-        if (!IntegerUtils.isPositive(minSerialNumber)) {
-            return DEFAULT_SERIAL_NUMBER_RANGE;
-        }
-
-        Integer maxSerialNumber = activity.getMaxSerialNumber();
-        if (!IntegerUtils.isPositive(maxSerialNumber)) {
-            return DEFAULT_SERIAL_NUMBER_RANGE;
-        }
-
-        return new IntegerRange(minSerialNumber, maxSerialNumber).toString();
-    }*/
 
     public List<LotteryActivity> getUnclosedInstances() {
         return factory().setClosed(false).getInstances();

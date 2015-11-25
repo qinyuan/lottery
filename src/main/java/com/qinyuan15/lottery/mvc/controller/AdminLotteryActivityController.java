@@ -1,6 +1,5 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan.lib.lang.IntegerRange;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan15.lottery.mvc.activity.DualColoredBallPhaseValidator;
@@ -40,20 +39,17 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
     @RequestMapping("/admin-lottery-activity-add-edit.json")
     @ResponseBody
     public String addEdit(@RequestParam(value = "id", required = false) Integer id,
-                          @RequestParam(value = "term", required = true) Integer term,
-                          @RequestParam(value = "commodityId", required = true) Integer commodityId,
+                          @RequestParam("term") Integer term,
+                          @RequestParam(value = "commodityId") Integer commodityId,
                           @RequestParam(value = "startTime", required = false) String startTime,
                           @RequestParam(value = "autoStartTime", required = false) String autoStartTime,
-                          @RequestParam(value = "expectEndTime", required = true) String expectEndTime,
-                          @RequestParam(value = "closeTime", required = true) String closeTime,
-                          @RequestParam(value = "continuousSerialLimit", required = true) Integer continuousSerialLimit,
-                          @RequestParam(value = "expectParticipantCount", required = true) Integer expectParticipantCount,
-                          @RequestParam(value = "virtualLiveness", required = true) Integer virtualLiveness,
-                          @RequestParam(value = "virtualLivenessUsers", required = true) String virtualLivenessUsers,
-                          @RequestParam(value = "dualColoredBallTerm", required = true) Integer dualColoredBallTerm,
-                          @RequestParam(value = "description", required = true) String description,
-                          @RequestParam(value = "minLivenessToParticipate", required = true) Integer minLivenessToParticipate,
-                          @RequestParam(value = "serialNumberRange", required = true) String serialNumberRangeString) {
+                          @RequestParam("expectEndTime") String expectEndTime,
+                          @RequestParam("closeTime") String closeTime,
+                          @RequestParam("continuousSerialLimit") Integer continuousSerialLimit,
+                          @RequestParam("expectParticipantCount") Integer expectParticipantCount,
+                          @RequestParam("dualColoredBallTerm") Integer dualColoredBallTerm,
+                          @RequestParam("description") String description,
+                          @RequestParam("minLivenessToParticipate") Integer minLivenessToParticipate) {
 
         if (StringUtils.hasText(autoStartTime)) {
             startTime = DateUtils.nowString();
@@ -82,31 +78,15 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
             return fail("预计结束时间格式错误！");
         }
 
-        if (!StringUtils.hasText(serialNumberRangeString) ||
-                !IntegerRange.validate(serialNumberRangeString)) {
-            return fail("抽奖号取值范围的正确格式如'10~100000'");
-        }
-
-        if (!IntegerUtils.isPositive(virtualLiveness)) {
-            virtualLiveness = null;
-        }
-
-        if (!StringUtils.hasText(virtualLivenessUsers)) {
-            virtualLivenessUsers = null;
-        }
-
         if (minLivenessToParticipate == null) {
             minLivenessToParticipate = 0;
         }
 
         try {
-            IntegerRange serialNumberRange = new IntegerRange(serialNumberRangeString);
             LotteryActivityDao dao = new LotteryActivityDao();
             if (IntegerUtils.isPositive(id)) {
                 dao.update(id, term, commodityId, startTime, expectEndTime, closeTime, continuousSerialLimit,
-                        expectParticipantCount, virtualLiveness, virtualLivenessUsers, dualColoredBallTerm,
-                        description, minLivenessToParticipate, serialNumberRange.getStart(),
-                        serialNumberRange.getEnd());
+                        expectParticipantCount, dualColoredBallTerm, description, minLivenessToParticipate);
             } else {
                 CommodityDao commodityDao = new CommodityDao();
                 if (commodityDao.hasActiveSeckill(commodityId)) {
@@ -117,8 +97,7 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                     return fail("第" + term + "期抽奖已经存在，请填写别的期数！");
                 }
                 dao.add(term, commodityId, startTime, expectEndTime, closeTime, continuousSerialLimit,
-                        expectParticipantCount, dualColoredBallTerm, description, minLivenessToParticipate,
-                        serialNumberRange.getStart(), serialNumberRange.getEnd());
+                        expectParticipantCount, dualColoredBallTerm, description, minLivenessToParticipate);
             }
             return success();
         } catch (Exception e) {
