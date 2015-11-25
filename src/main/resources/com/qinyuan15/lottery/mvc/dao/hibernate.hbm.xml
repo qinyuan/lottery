@@ -82,13 +82,10 @@
         <property name="closeTime" column="close_time"/>
         <property name="expectEndTime" column="expect_end_time"/>
         <property name="endTime" column="end_time"/>
-        <property name="continuousSerialLimit" column="continuous_serial_limit"/>
         <property name="expire" column="expire"/>
         <property name="expectParticipantCount" column="expect_participant_count"/>
         <property name="announcement" column="announcement"/>
         <property name="virtualParticipants" column="virtual_participants"/>
-        <property name="virtualLiveness" column="virtual_liveness"/>
-        <property name="virtualLivenessUsers" column="virtual_liveness_users"/>
         <property name="dualColoredBallTerm" column="dual_colored_ball_term"/>
         <property name="winners"/>
         <property name="description"/>

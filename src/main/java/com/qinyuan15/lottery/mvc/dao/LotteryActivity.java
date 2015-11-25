@@ -8,10 +8,7 @@ public class LotteryActivity extends AbstractActivity {
     private String expectEndTime;
     private String closeTime;
     private String endTime;
-    private Integer continuousSerialLimit;
     private Integer virtualParticipants;
-/*    private Integer virtualLiveness;
-    private String virtualLivenessUsers;*/
     private Integer dualColoredBallTerm;
     private Integer minLivenessToParticipate;
     private Boolean closed;
@@ -40,14 +37,6 @@ public class LotteryActivity extends AbstractActivity {
         this.endTime = endTime;
     }
 
-    public Integer getContinuousSerialLimit() {
-        return continuousSerialLimit;
-    }
-
-    public void setContinuousSerialLimit(Integer continuousSerialLimit) {
-        this.continuousSerialLimit = continuousSerialLimit;
-    }
-
     public Integer getVirtualParticipants() {
         return virtualParticipants;
     }
@@ -55,22 +44,6 @@ public class LotteryActivity extends AbstractActivity {
     public void setVirtualParticipants(Integer virtualParticipants) {
         this.virtualParticipants = virtualParticipants;
     }
-
-    /*public Integer getVirtualLiveness() {
-        return virtualLiveness;
-    }
-
-    public void setVirtualLiveness(Integer virtualLiveness) {
-        this.virtualLiveness = virtualLiveness;
-    }
-
-    public String getVirtualLivenessUsers() {
-        return virtualLivenessUsers;
-    }
-
-    public void setVirtualLivenessUsers(String virtualLivenessUsers) {
-        this.virtualLivenessUsers = virtualLivenessUsers;
-    }*/
 
     public Integer getDualColoredBallTerm() {
         return dualColoredBallTerm;

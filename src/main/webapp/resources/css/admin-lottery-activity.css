@@ -1,7 +1,8 @@
 /********************* lottery list table start ************************/
 div.form table.normal col.start-time,
 div.form table.normal col.expect-end-time,
-div.form table.normal col.end-time {
+div.form table.normal col.end-time,
+div.form table.normal col.close-time {
     width: 80px;
 }
 

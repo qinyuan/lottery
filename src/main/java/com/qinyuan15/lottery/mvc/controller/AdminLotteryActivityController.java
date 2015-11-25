@@ -45,7 +45,6 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                           @RequestParam(value = "autoStartTime", required = false) String autoStartTime,
                           @RequestParam("expectEndTime") String expectEndTime,
                           @RequestParam("closeTime") String closeTime,
-                          @RequestParam("continuousSerialLimit") Integer continuousSerialLimit,
                           @RequestParam("expectParticipantCount") Integer expectParticipantCount,
                           @RequestParam("dualColoredBallTerm") Integer dualColoredBallTerm,
                           @RequestParam("description") String description,
@@ -85,8 +84,8 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
         try {
             LotteryActivityDao dao = new LotteryActivityDao();
             if (IntegerUtils.isPositive(id)) {
-                dao.update(id, term, commodityId, startTime, expectEndTime, closeTime, continuousSerialLimit,
-                        expectParticipantCount, dualColoredBallTerm, description, minLivenessToParticipate);
+                dao.update(id, term, commodityId, startTime, expectEndTime, closeTime, expectParticipantCount,
+                        dualColoredBallTerm, description, minLivenessToParticipate);
             } else {
                 CommodityDao commodityDao = new CommodityDao();
                 if (commodityDao.hasActiveSeckill(commodityId)) {
@@ -96,8 +95,8 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                 } else if (dao.hasTerm(term)) {
                     return fail("第" + term + "期抽奖已经存在，请填写别的期数！");
                 }
-                dao.add(term, commodityId, startTime, expectEndTime, closeTime, continuousSerialLimit,
-                        expectParticipantCount, dualColoredBallTerm, description, minLivenessToParticipate);
+                dao.add(term, commodityId, startTime, expectEndTime, closeTime, expectParticipantCount,
+                        dualColoredBallTerm, description, minLivenessToParticipate);
             }
             return success();
         } catch (Exception e) {
@@ -108,21 +107,21 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
 
     @RequestMapping("/admin-lottery-activity-delete.json")
     @ResponseBody
-    public String delete(@RequestParam(value = "id", required = true) Integer id) {
+    public String delete(@RequestParam("id") Integer id) {
         return super.delete(id);
     }
 
     @RequestMapping("/admin-lottery-activity-stop.json")
     @ResponseBody
-    public String stop(@RequestParam(value = "id", required = true) Integer id) {
+    public String stop(@RequestParam("id") Integer id) {
         return super.stop(id);
     }
 
     @RequestMapping("/admin-lottery-activity-update-announcement.json")
     @ResponseBody
-    public String updateAnnouncement(@RequestParam(value = "id", required = true) Integer id,
-                                     @RequestParam(value = "winners", required = true) String winners,
-                                     @RequestParam(value = "announcement", required = true) String announcement) {
+    public String updateAnnouncement(@RequestParam("id") Integer id,
+                                     @RequestParam("winners") String winners,
+                                     @RequestParam("announcement") String announcement) {
         if (StringUtils.hasText(winners)) {
             for (String winner : winners.split(",")) {
                 if (!winner.matches("^0+$") && !IntegerUtils.isPositive(winner.replaceAll("^0+", ""))) {

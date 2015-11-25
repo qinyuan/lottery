@@ -49,15 +49,14 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
     }
 
     public Integer add(Integer term, Integer commodityId, String startTime, String expectEndTime, String closeTime,
-                       Integer continuousSerialLimit, Integer expectParticipantCount, Integer dualColoredBallTerm,
-                       String description, Integer minLivenessToParticipant) {
+                       Integer expectParticipantCount, Integer dualColoredBallTerm, String description,
+                       Integer minLivenessToParticipant) {
         LotteryActivity activity = new LotteryActivity();
         activity.setTerm(term);
         activity.setCommodityId(commodityId);
         activity.setStartTime(startTime);
         activity.setExpectEndTime(expectEndTime);
         activity.setCloseTime(closeTime);
-        activity.setContinuousSerialLimit(continuousSerialLimit);
         activity.setExpectParticipantCount(expectParticipantCount);
         activity.setDualColoredBallTerm(dualColoredBallTerm);
         activity.setDescription(description);
@@ -72,8 +71,8 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
     }
 
     public void update(Integer id, Integer term, Integer commodityId, String startTime, String expectEndTime,
-                       String closeTime, Integer continuousSerialLimit, Integer expectParticipantCount,
-                       Integer dualColoredBallTerm, String description, Integer minLivenessToParticipant) {
+                       String closeTime, Integer expectParticipantCount, Integer dualColoredBallTerm,
+                       String description, Integer minLivenessToParticipant) {
         LotteryActivity activity = getInstance(id);
 
         if (activity != null) {
@@ -82,7 +81,6 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
             activity.setStartTime(startTime);
             activity.setExpectEndTime(expectEndTime);
             activity.setCloseTime(closeTime);
-            activity.setContinuousSerialLimit(continuousSerialLimit);
             activity.setExpectParticipantCount(expectParticipantCount);
             activity.setDualColoredBallTerm(dualColoredBallTerm);
             activity.setDescription(description);

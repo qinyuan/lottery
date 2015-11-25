@@ -2,10 +2,12 @@
 <%@include file="inc-taglib.jsp" %>
 <table class="normal">
     <colgroup>
-        <%--<col class="index"/>--%>
         <col class="term"/>
         <col class="commodity"/>
         <col class="start-time"/>
+        <c:if test="${!listExpire}">
+            <col class="close-time"/>
+        </c:if>
         <col class="${listExpire ? 'end-time' : 'expect-end-time'}"/>
         <col class="expect-participant-count"/>
         <col class="participant-count"/>
@@ -15,11 +17,6 @@
                 <col class="winners"/>
                 <col class="announcement"/>
             </c:when>
-            <c:otherwise>
-                <col class="continuous-serial-limit"/>
-                <col class="virtual-liveness"/>
-                <col class="virtual-liveness-users"/>
-            </c:otherwise>
         </c:choose>
         <col class="action"/>
     </colgroup>
@@ -28,6 +25,9 @@
     <th>期数</th>
     <th>奖品</th>
     <th>开始时间</th>
+    <c:if test="${!listExpire}">
+        <th>关闭时间</th>
+    </c:if>
     <th>${listExpire ? '实际' : '预计'}结束时间</th>
     <th>预计参与人数</th>
     <th>总参与人数<br/><span style="font-size: 9pt;">(包含虚拟部分)</span></th>
@@ -39,8 +39,6 @@
         </c:when>
         <c:otherwise>
             <th>抽奖号码最大连续个数</th>
-            <th>最大爱心</th>
-            <th>最大爱心用户</th>
         </c:otherwise>
     </c:choose>
     <th></th>
@@ -49,11 +47,12 @@
     <c:forEach var="activity" items="${activities}" varStatus="status">
         <tr data-options="id:${activity.id}">
             <q:hidden cssClass="description" value="${activity.description}"/>
-            <q:hidden cssClass="min-liveness-to-participate" value="${activity.minLivenessToParticipate}"/>
-            <q:hidden cssClass="close-time" value="${activity.closeTime}"/>
             <td class="term">${activity.term}</td>
             <td class="commodity" data-options="commodityId: ${activity.commodity.id}">${activity.commodity.name}</td>
             <td class="start-time">${fn:replace(activity.startTime, ' ', '<br/> ')}</td>
+            <c:if test="${!listExpire}">
+                <td class="close-time">${fn:replace(activity.closeTime, ' ', '<br/> ')}</td>
+            </c:if>
             <td class="${listExpire ? 'end-time' : 'expect-end-time'}"
                 <c:if test="${!listExpire}">data-options="dualColoredBallTerm:${activity.dualColoredBallTerm}"</c:if>
                     >${fn:replace((listExpire ? activity.endTime : activity.expectEndTime), ' ', '<br/> ')}</td>
@@ -69,9 +68,6 @@
                     </td>
                 </c:when>
                 <c:otherwise>
-                    <td class="continuous-serial-limit">${activity.continuousSerialLimit}</td>
-                    <td class="virtual-liveness">${activity.virtualLiveness}</td>
-                    <td class="virtual-liveness-users">${activity.virtualLivenessUsers}</td>
                     <td>
                         <img class="link stop" title="强行结束" src="resources/css/images/stop.png"/>
                         <jsp:include page="widget-edit-delete.jsp"/>

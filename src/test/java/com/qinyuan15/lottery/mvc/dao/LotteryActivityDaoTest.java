@@ -22,7 +22,7 @@ public class LotteryActivityDaoTest extends DatabaseTestCase {
     public void testAdd() {
         assertThat(dao.count()).isEqualTo(2);
         dao.add(3, 1, "2015-12-12 14:14:14", "2015-12-13 12:12:12", "2015-12-13 12:00:00",
-                5, 1000, 2015081, "hello", 2);
+                1000, 2015081, "hello", 2);
         assertThat(dao.count()).isEqualTo(3);
     }
 
@@ -31,7 +31,7 @@ public class LotteryActivityDaoTest extends DatabaseTestCase {
         assertThat(dao.getInstance(1).getCommodityId()).isEqualTo(1);
         assertThat(dao.getInstance(1).getCommodity()).isNotNull();
         dao.update(1, 3, 123, "2015-12-12 14:14:14", "2015-12-13 12:12:12", "2015-12-13 12:00:00",
-                5, 1000, 2015081, "hello", 2);
+                1000, 2015081, "hello", 2);
         assertThat(dao.getInstance(1).getCommodityId()).isEqualTo(123);
         assertThat(dao.getInstance(1).getCommodity()).isNull();
         assertThat(dao.count()).isEqualTo(2);
