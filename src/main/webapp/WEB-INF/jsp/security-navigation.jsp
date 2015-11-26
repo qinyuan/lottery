@@ -3,7 +3,7 @@
 <%-- this include tag is necessary, because this page may be used directory --%>
 <ul>
     <security:authorize ifAnyGranted="ROLE_NORMAL">
-        <li><a class="text" href="setting.html?index=0" title="个人中心"><security:authentication property="name"/></a></li>
+        <li><a class="text username" href="setting.html?index=0" title="个人中心"><security:authentication property="name"/></a></li>
         <li><a class="text" href="j_spring_security_logout">退出</a></li>
         <li><a class="text" id="systemInformationNavigation" href="setting.html?index=1">消息<c:if
                 test="${unreadSystemInfoCount > 0}"> <span

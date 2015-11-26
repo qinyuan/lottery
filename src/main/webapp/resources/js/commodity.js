@@ -339,7 +339,8 @@
         hideConcealDivs: function () {
             this.$div.find('div.conceal').hide();
         },
-        showSerialNumber: function (serialNumber, changingBeforeShow) {
+        showSerialNumber: function (data, changingBeforeShow) {
+            var serialNumber = data['serialNumbers'][0];
             this.hideConcealDivs();
             var serialNumberComponents = [
                 serialNumber.substr(0, 2), serialNumber.substr(2, 2), serialNumber.substr(4, 2)];
@@ -354,6 +355,26 @@
 
             this.$serialNumber.show();
             this.$lot.show();
+
+            var self = this;
+            setTimeout(function () {
+                self.showSameLotUsers(serialNumber, data['sameLotUsers']);
+            }, 3000);
+        },
+        showSameLotUsers: function (serialNumber, sameLotUsers) {
+            this.hideConcealDivs();
+            var currentUser = $('body div.header div.right-navigation a.username').html();
+            var $tbody = this.$sameLotUsers.find('div.data tbody');
+            for (var i = 0; i < sameLotUsers.length; i++) {
+                var user = sameLotUsers[i];
+                var html = user.username == currentUser ? '<tr class="current">' : '<tr>';
+                html += '<td>' + user.username + '</td>';
+                html += '<td>' + serialNumber + '</td>';
+                html += '<td>' + user.liveness + '</td>';
+                html += '</tr>';
+                $tbody.append(html);
+            }
+            this.$sameLotUsers.show();
         },
         show: function (options) {
             // title
@@ -372,7 +393,7 @@
                 if (options['success']) {
                     this.$createNumber.show();
                 } else {
-                    this.showSerialNumber(options['serialNumbers'][0]);
+                    this.showSerialNumber(options);
                 }
             }
 
@@ -400,7 +421,7 @@
             this.$createNumber.find('button.auto').click(function () {
                 $.post('do-lottery-action.json', {commodityId: getSelectedCommodityId()}, function (data) {
                     if (data.success) {
-                        self.showSerialNumber(data['serialNumbers'][0], true);
+                        self.showSerialNumber(data, true);
                     } else {
                         alert(data.detail);
                     }
@@ -413,7 +434,7 @@
                     serialNumber: self.getManualSerialNumber()
                 }, function (data) {
                     if (data.success) {
-                        self.showSerialNumber(data['serialNumbers'][0]);
+                        self.showSerialNumber(data);
                     } else {
                         alert(data.detail);
                     }
@@ -422,6 +443,7 @@
             this.$createNumber.find('button.manual').click(function () {
                 self.showManualSerialNumberCreator();
             });
+            this.$sameLotUsers = this.$div.find('div.body div.same-lot-users');
             return this;
         }
     }).init();

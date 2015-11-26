@@ -83,16 +83,29 @@ public class LotteryLotDaoTest extends DatabaseTestCase {
     }
 
     @Test
-    public void testGetUsernames() {
-        assertThat(dao.getUsernames(2, 10257)).containsExactly("normal-user1");
-        assertThat(dao.getUsernames(2, 10258)).isEmpty();
-        assertThat(dao.getUsernames(1, 10257)).isEmpty();
+    public void testgetUsers() {
+        List<LotteryLotDao.SimpleUser> simpleUsers = dao.getUsers(2, 10257);
+        assertThat(simpleUsers).hasSize(1);
+        assertThat(simpleUsers.get(0).username).isEqualTo("normal-user1");
+        assertThat(simpleUsers.get(0).liveness).isEqualTo(25);
+
+        new LotteryLotDao().add(2, 4, 10257);
+
+        simpleUsers = dao.getUsers(2, 10257);
+        assertThat(simpleUsers).hasSize(2);
+        assertThat(simpleUsers.get(0).username).isEqualTo("normal-user1");
+        assertThat(simpleUsers.get(0).liveness).isEqualTo(25);
+        assertThat(simpleUsers.get(1).username).isEqualTo("normal-user2");
+        assertThat(simpleUsers.get(1).liveness).isEqualTo(13);
+
+        assertThat(dao.getUsers(2, 10258)).isEmpty();
+        assertThat(dao.getUsers(1, 10257)).isEmpty();
     }
 
     @Test
-    public void testGetUsernames2() {
-        assertThat(dao.getUsernames(2, "010257")).contains("normal-user1");
-        assertThat(dao.getUsernames(2, "10257")).contains("normal-user1");
-        assertThat(dao.getUsernames(2, "10258")).isEmpty();
+    public void testgetUsers2() {
+        assertThat(dao.getUsers(2, "010257")).hasSize(1);
+        assertThat(dao.getUsers(2, "10257")).hasSize(1);
+        assertThat(dao.getUsers(2, "10258")).isEmpty();
     }
 }

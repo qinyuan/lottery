@@ -86,6 +86,41 @@
                 您的抽奖号： <span class="number"><span></span><span></span><span></span></span>
             </div>
         </div>
+        <div class="same-lot-users conceal">
+            <div class="left">
+                <table>
+                    <colgroup>
+                        <col class="username"/>
+                        <col class="number"/>
+                        <col class="liveness"/>
+                    </colgroup>
+                    <thead>
+                    <td>昵称</td>
+                    <td>抽奖号</td>
+                    <td>支持数</td>
+                    </thead>
+                </table>
+                <div class="data">
+                    <table>
+                        <colgroup>
+                            <col class="username"/>
+                            <col class="number"/>
+                            <col class="liveness"/>
+                        </colgroup>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="right">
+                <div class="more-liveness">
+                    <button class="blue">增加更多支持</button>
+                </div>
+                <div class="lottery-rule">
+                    中奖号码若为该号码，中奖者为支持数最高的用户，详见
+                    <a target="_blank" href="<%=AppConfig.getLotteryRuleLink()%>">抽奖规则</a>
+                </div>
+            </div>
+        </div>
         <%--<div class="lot">
             <button class="create-number">获取抽奖号</button>
             <div class="serial-number">

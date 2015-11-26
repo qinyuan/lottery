@@ -241,6 +241,52 @@ div.activity-result div.body div.manual-number-creator div.submit {
     margin-top: 30px;
 }
 
+div.activity-result div.body div.same-lot-users div.left {
+    padding-left: 30px;
+    padding-top: 20px;
+    width: 260px;
+    float: left;
+}
+
+div.activity-result div.body div.same-lot-users div.left col.username {
+    width: 100px;
+}
+
+div.activity-result div.body div.same-lot-users div.left col.number {
+    width: 60px;
+}
+
+div.activity-result div.body div.same-lot-users div.left col.liveness {
+    width: 50px;
+}
+
+div.activity-result div.body div.same-lot-users div.left div.data {
+    height: 125px;
+    border-right: 1px solid #B7B7B7;
+    margin-top: 8px;
+    overflow-y: scroll;
+}
+
+div.activity-result div.body div.same-lot-users div.left div.data tr.current td {
+    color: #F26522;
+}
+
+div.activity-result div.body div.same-lot-users div.right {
+    width: 220px;
+    float: right;
+}
+
+div.activity-result div.body div.same-lot-users div.right div.more-liveness {
+    margin: 50px 0;
+    text-align: center;
+}
+
+div.activity-result div.body div.same-lot-users div.right div.lottery-rule {
+    font-size: 9pt;
+    width: 190px;
+    padding-left: 10px;
+}
+
 div.activity-result div.body div.lot {
     margin-top: 55px;
     padding: 0 50px;

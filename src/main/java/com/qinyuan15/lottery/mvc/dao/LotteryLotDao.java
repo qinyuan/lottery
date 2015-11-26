@@ -11,15 +11,21 @@ import com.qinyuan15.lottery.mvc.activity.LotteryLotSerialGenerator;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class LotteryLotDao extends AbstractDao<LotteryLot> {
     public Integer add(Integer activityId, Integer userId, LotteryLotSerialGenerator serialGenerator) {
+        return add(activityId, userId, serialGenerator.next());
+    }
+
+    public Integer add(Integer activityId, Integer userId, Integer serialNumber) {
         LotteryLot lotteryLot = new LotteryLot();
         lotteryLot.setActivityId(activityId);
         lotteryLot.setUserId(userId);
         lotteryLot.setLotTime(DateUtils.nowString());
-        lotteryLot.setSerialNumber(serialGenerator.next());
+        lotteryLot.setSerialNumber(serialNumber);
         return HibernateUtils.save(lotteryLot);
     }
 
@@ -135,14 +141,43 @@ public class LotteryLotDao extends AbstractDao<LotteryLot> {
         return getSerialNumbers(activityId, userId, null);
     }
 
-    public List<String> getUsernames(int activityId, int serialNumber) {
-        String sql = "SELECT username FROM lottery_lot INNER JOIN user ON lottery_lot.user_id=user.id";
-        return new HibernateListBuilder().addEqualFilter("activity_id", activityId)
+    public List<SimpleUser> getUsers(int activityId, int serialNumber) {
+        // query data from database
+        String sql = "SELECT user.id,username FROM lottery_lot INNER JOIN user ON lottery_lot.user_id=user.id";
+        List<Object[]> list = new HibernateListBuilder().addEqualFilter("activity_id", activityId)
                 .addEqualFilter("serial_number", serialNumber)
-                .buildBySQL(sql, String.class);
+                .buildBySQL(sql);
+
+        // build list
+        List<SimpleUser> simpleUsers = new ArrayList<>();
+        for (Object[] objects : list) {
+            int userId = (Integer) objects[0];
+            String username = (String) objects[1];
+            simpleUsers.add(new SimpleUser(username, new LotteryLivenessDao().getLiveness(userId)));
+        }
+
+        // sort list
+        Collections.sort(simpleUsers, new Comparator<SimpleUser>() {
+            @Override
+            public int compare(SimpleUser o1, SimpleUser o2) {
+                return -(o1.liveness - o2.liveness);
+            }
+        });
+
+        return simpleUsers;
     }
 
-    public List<String> getUsernames(int activityId, String serialNumber) {
-        return getUsernames(activityId, Integer.parseInt(serialNumber));
+    public List<SimpleUser> getUsers(int activityId, String serialNumber) {
+        return getUsers(activityId, Integer.parseInt(serialNumber));
+    }
+
+    public static class SimpleUser {
+        public final String username;
+        public final int liveness;
+
+        public SimpleUser(String username, int liveness) {
+            this.username = username;
+            this.liveness = liveness;
+        }
     }
 }

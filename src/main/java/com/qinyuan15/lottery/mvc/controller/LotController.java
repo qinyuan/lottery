@@ -74,8 +74,10 @@ public class LotController extends ImageController {
             if (new LotteryLotCounter().countReal(activity.getId(), user.getId()) == 0) {
                 result.put(SUCCESS, true);
             } else {
-                result.put("serialNumbers", new LotteryLotDao().getSerialNumbers(activity.getId(), user.getId(),
-                        lotNumberFormat));
+                List<String> serialNumbers = new LotteryLotDao().getSerialNumbers(activity.getId(), user.getId(),
+                        lotNumberFormat);
+                result.put("serialNumbers", serialNumbers);
+                result.put("sameLotUsers", new LotteryLotDao().getUsers(activity.getId(), serialNumbers.get(0)));
                 putLotteryLivenessParameters(result, user, activity);
                 result.put(SUCCESS, false);
                 result.put(DETAIL, "alreadyAttended");
@@ -133,6 +135,7 @@ public class LotController extends ImageController {
 
             Map<String, Object> result = new HashMap<>();
             result.put("serialNumbers", serialNumbers);
+            result.put("sameLotUsers", new LotteryLotDao().getUsers(activity.getId(), serialNumbers.get(0)));
             putLotteryLivenessParameters(result, user, activity);
             result.put(SUCCESS, true);
             return toJson(result);
