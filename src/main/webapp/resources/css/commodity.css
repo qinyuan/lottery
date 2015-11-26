@@ -216,7 +216,7 @@ div.activity-result div.body div.conceal {
     display: none;
 }
 
-div.activity-result div.body button.blue {
+div.activity-result div.body .blue {
     background: url("images/blue-button-back.png") repeat-x center center;
     border-radius: 5px;
     padding: 8px 20px;

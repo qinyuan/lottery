@@ -92,12 +92,12 @@ public class LotController extends ImageController {
         result.put("activityDescription", activity.getDescription());
 
         // share urls
-        new UserDao().updateSerialKeyIfNecessary(user);
+        /*new UserDao().updateSerialKeyIfNecessary(user);
         LotteryShareUrlBuilder lotteryShareUrlBuilder = new LotteryShareUrlBuilder(
                 user.getSerialKey(), AppConfig.getAppHost(), commodity);
         result.put("sinaWeiboShareUrl", lotteryShareUrlBuilder.getSinaShareUrl());
         result.put("qqShareUrl", lotteryShareUrlBuilder.getQQShareUrl());
-        result.put("qzoneShareUrl", lotteryShareUrlBuilder.getQzoneShareUrl());
+        result.put("qzoneShareUrl", lotteryShareUrlBuilder.getQzoneShareUrl());*/
 
         // participants data
         result.put("participantCount", new LotteryLotCounter().count(activity));
@@ -188,12 +188,12 @@ public class LotController extends ImageController {
         result.put("activityDescription", activity.getDescription());
 
         // share urls
-        new UserDao().updateSerialKeyIfNecessary(user);
+        /*new UserDao().updateSerialKeyIfNecessary(user);
         SeckillShareUrlBuilder seckillShareUrlBuilder = new SeckillShareUrlBuilder(
                 user.getSerialKey(), AppConfig.getAppHost(), commodity);
         result.put("sinaWeiboShareUrl", seckillShareUrlBuilder.getSinaShareUrl());
         result.put("qqShareUrl", seckillShareUrlBuilder.getQQShareUrl());
-        result.put("qzoneShareUrl", seckillShareUrlBuilder.getQzoneShareUrl());
+        result.put("qzoneShareUrl", seckillShareUrlBuilder.getQzoneShareUrl());*/
 
         return toJson(result);
     }

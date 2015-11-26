@@ -57,7 +57,7 @@ abstract class AbstractShareUrlBuilder {
 
     protected abstract String getQzoneSummaryTemplate();
 
-    private String getFinalTargetUrl(String medium) {
+    public String getFinalTargetUrl(String medium) {
         return targetUrl + "&medium=" + medium;
     }
 

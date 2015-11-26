@@ -113,7 +113,7 @@
             </div>
             <div class="right">
                 <div class="more-liveness">
-                    <button class="blue">增加更多支持</button>
+                    <a class="blue" href="share.html" target="_blank">增加更多支持</a>
                 </div>
                 <div class="lottery-rule">
                     中奖号码若为该号码，中奖者为支持数最高的用户，详见

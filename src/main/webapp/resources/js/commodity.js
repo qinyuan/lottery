@@ -470,10 +470,6 @@
             }
         });
     };
-    // TODO just for testing
-    setTimeout(function () {
-        getLotteryLot();
-    }, 500);
 
     var seckillResult = ({
         $div: $('#seckillResult'),
