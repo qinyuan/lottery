@@ -1,0 +1,100 @@
+
+div.main-body {
+    background-color: #ffffff;
+    padding-bottom: 50px;
+    border-bottom: 1px solid #ECECEC;
+}
+
+button.blue {
+    background: url("images/blue-button-back.png") repeat-x center center;
+    border-radius: 5px;
+    padding: 8px 20px;
+    color: #ffffff;
+    min-width: 95px;
+}
+
+div.main-body div.left {
+    float: left;
+    width: 520px;
+    background-color: #F9F9F9;
+    padding: 50px 0 50px 50px;
+    color: #666666;
+
+}
+
+div.main-body div.left > div.copy input[type=text] {
+    width: 400px;
+    padding: 8px;
+    margin-top: 17px;
+    margin-bottom: 17px;
+    height: 28px;
+}
+
+div.main-body div.left > div.copy span.info {
+    color: #6CB658;
+    font-size: 10pt;
+    margin-left: 5px;
+    display: none;
+}
+
+div.main-body div.left > div.copy div.submit {
+    float: left;
+    cursor: pointer;
+}
+
+div.main-body div.left > div.title {
+    font-size: 13pt;
+    color: #6CB658;
+    padding-bottom: 40px;
+}
+
+div.main-body div.left > div.share {
+    margin-top: 80px;
+}
+
+div.main-body div.left > div.share ul {
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+div.main-body div.left > div.share ul li {
+    border: 1px solid #E3DDDA;
+    border-right-width: 0;
+    float: left;
+    list-style-type: none;
+    width: 110px;
+    padding: 12px 0 12px 12px;
+}
+
+div.main-body div.left > div.share ul li:last-child {
+    border-right-width: 1px;
+}
+
+div.main-body div.left > div.share ul li a {
+    display: block;
+    color: #666666;
+    line-height: 22px;
+    height: 22px;
+    width: 96px;
+}
+
+div.main-body div.left > div.share span.icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    /*padding: 2px 8px;*/
+    margin-right: 5px;
+    background: url("images/lottery-result.png") no-repeat;
+}
+
+div.main-body div.left > div.share a.sina span.icon {
+    background-position: -4px -29px;
+}
+
+div.main-body div.left > div.share a.qq span.icon {
+    background-position: -78px -28px;
+}
+
+div.main-body div.left > div.share a.qzone span.icon {
+    background-position: -154px -28px;
+}

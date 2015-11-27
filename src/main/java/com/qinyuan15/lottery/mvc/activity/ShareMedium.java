@@ -13,6 +13,7 @@ public class ShareMedium {
     public final static ShareMedium SINA_WEIBO = new ShareMedium("sinaWeibo", "新浪微博");
     public final static ShareMedium QQ = new ShareMedium("qq", "QQ");
     public final static ShareMedium QZONE = new ShareMedium("qzone", "QQ空间");
+    public final static ShareMedium COPY = new ShareMedium("copy", "复制");
 
     public final String en;
     public final String cn;

@@ -33,6 +33,20 @@ public class LotteryLivenessDao {
         return liveness == null ? 0 : liveness.intValue();
     }
 
+    public List<Pair<Integer, String>> getReceiveUsers(Integer spreadUserId) {
+        String sql = "SELECT receive_user_id,username FROM lottery_liveness AS l " +
+                "INNER JOIN user AS u ON l.receive_user_id=u.id";
+        List<Object[]> list = new HibernateListBuilder().addEqualFilter("l.spread_user_id", spreadUserId)
+                .buildBySQL(sql);
+        List<Pair<Integer, String>> users = new ArrayList<>();
+        for (Object[] objects : list) {
+            Integer userId = (Integer) objects[0];
+            String username = (String) objects[1];
+            users.add(Pair.of(userId, username));
+        }
+        return users;
+    }
+
     public Pair<String, Integer> getMaxLivenessUsernames() {
         String subSQL = "SELECT spread_user_id,SUM(liveness) AS liveness FROM lottery_liveness " +
                 "GROUP BY spread_user_id";

@@ -8,14 +8,11 @@
             <div class="nav">
                 <c:forEach var="title" items="${titles}" varStatus="status">
                     <div>
-                        <c:choose>
-                            <c:when test="${status.index == pageIndex}">
-                                <span>${title}</span>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="setting.html?index=${status.index}">${title}</a>
-                            </c:otherwise>
-                        </c:choose>
+                        <c:choose><c:when test="${status.index == pageIndex}">
+                            <span>${title}</span>
+                        </c:when><c:otherwise>
+                            <a href="setting.html?index=${status.index}">${title}</a>
+                        </c:otherwise></c:choose>
                     </div>
                 </c:forEach>
             </div>

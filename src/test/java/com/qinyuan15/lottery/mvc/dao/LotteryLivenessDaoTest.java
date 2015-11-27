@@ -4,10 +4,30 @@ import com.qinyuan.lib.database.test.DatabaseTestCase;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LotteryLivenessDaoTest extends DatabaseTestCase {
     private LotteryLivenessDao dao = new LotteryLivenessDao();
+
+    @Test
+    public void testGetReceiveUsers() {
+        List<Pair<Integer, String>> users = dao.getReceiveUsers(3);
+        assertThat(users).hasSize(2);
+        assertThat(users.get(0).getLeft()).isEqualTo(4);
+        assertThat(users.get(0).getRight()).isEqualTo("normal-user2");
+        assertThat(users.get(1).getLeft()).isEqualTo(5);
+        assertThat(users.get(1).getRight()).isEqualTo("normal-user3");
+
+        users = dao.getReceiveUsers(4);
+        assertThat(users).hasSize(1);
+        assertThat(users.get(0).getLeft()).isEqualTo(5);
+        assertThat(users.get(0).getRight()).isEqualTo("normal-user3");
+
+        users = dao.getReceiveUsers(5);
+        assertThat(users).isEmpty();
+    }
 
     @Test
     public void testGetInstances() {
