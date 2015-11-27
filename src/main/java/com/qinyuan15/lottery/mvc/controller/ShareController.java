@@ -52,7 +52,7 @@ public class ShareController extends ImageController {
         setAttribute("registerHeaderRightLogo", pathToUrl(AppConfig.getRegisterHeaderRightLogo()));
         setAttribute("noFooter", true);
 
-        addJs("lib/jquery-zclip/jquery.zclip.js");
+        addJs("lib/jquery-zclip/jquery.zclip.min");
         addCssAndJs("register");
         addCssAndJs("share");
 
