@@ -35,16 +35,16 @@ public class LivenessAdder {
         }
     }
 
-    void addLiveness(boolean registerBefore) {
+    void addLiveness(boolean alreadyRegistered) {
         Integer userId = new UserDao().getIdByName(SecurityUtils.getUsername());
-        addLiveness(userId, registerBefore);
+        addLiveness(userId, alreadyRegistered);
     }
 
-    void addLiveness(Integer receiveUserId, boolean registerBefore) {
-        addLiveness(receiveUserId, registerBefore, getSpreadUserId(), getSpreadWay(), getActivityId());
+    void addLiveness(Integer receiveUserId, boolean alreadyRegistered) {
+        addLiveness(receiveUserId, alreadyRegistered, getSpreadUserId(), getSpreadWay(), getActivityId());
     }
 
-    static void addLiveness(Integer receiveUserId, boolean registerBefore, Integer spreadUserId, String spreadWay, Integer activityId) {
+    static void addLiveness(Integer receiveUserId, boolean alreadyRegistered, Integer spreadUserId, String spreadWay, Integer activityId) {
         if (!IntegerUtils.isPositive(receiveUserId)) {
             return;
         }
@@ -68,9 +68,9 @@ public class LivenessAdder {
 
         LotteryLivenessDao dao = new LotteryLivenessDao();
         if (IntegerUtils.isPositive(activityId)) {
-            dao.add(spreadUserId, receiveUserId, liveness, spreadWay, registerBefore, activityId);
+            dao.add(spreadUserId, receiveUserId, liveness, spreadWay, alreadyRegistered, activityId);
         } else {
-            dao.add(spreadUserId, receiveUserId, liveness, spreadWay, registerBefore);
+            dao.add(spreadUserId, receiveUserId, liveness, spreadWay, alreadyRegistered);
         }
     }
 

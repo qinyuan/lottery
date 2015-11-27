@@ -29,6 +29,7 @@ public class LotteryLivenessDao {
 
     public int getLiveness(Integer spreadUserId) {
         Long liveness = (Long) new HibernateListBuilder().addEqualFilter("spreadUserId", spreadUserId)
+                .addFilter("receiveUserId IN (SELECT id FROM User)")
                 .getFirstItem("SELECT SUM(liveness) FROM LotteryLiveness");
         return liveness == null ? 0 : liveness.intValue();
     }
@@ -70,7 +71,7 @@ public class LotteryLivenessDao {
         return Pair.of(Joiner.on(",").join(usernames), liveness == null ? 0 : liveness.intValue());
     }
 
-    private boolean hasInstance(Integer spreadUserId, Integer receiveUserId) {
+    public boolean hasInstance(Integer spreadUserId, Integer receiveUserId) {
         return new HibernateListBuilder().addEqualFilter("spreadUserId", spreadUserId)
                 .addEqualFilter("receiveUserId", receiveUserId)
                 .count(LotteryLiveness.class) > 0;

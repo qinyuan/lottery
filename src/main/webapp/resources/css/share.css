@@ -17,16 +17,21 @@ div.main-body div.left {
     float: left;
     width: 520px;
     background-color: #F9F9F9;
-    padding: 50px 0 50px 50px;
+    padding: 56px 0 50px 50px;
     color: #666666;
+}
 
+div.main-body div.left > div.title {
+    font-size: 13pt;
+    color: #6CB658;
+    padding-bottom: 50px;
 }
 
 div.main-body div.left > div.copy input[type=text] {
     width: 400px;
     padding: 8px;
-    margin-top: 17px;
-    margin-bottom: 17px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     height: 28px;
 }
 
@@ -42,18 +47,12 @@ div.main-body div.left > div.copy div.submit {
     cursor: pointer;
 }
 
-div.main-body div.left > div.title {
-    font-size: 13pt;
-    color: #6CB658;
-    padding-bottom: 40px;
-}
-
 div.main-body div.left > div.share {
-    margin-top: 80px;
+    margin-top: 120px;
 }
 
 div.main-body div.left > div.share ul {
-    margin-top: 20px;
+    margin-top: 25px;
     overflow: hidden;
 }
 
@@ -82,7 +81,6 @@ div.main-body div.left > div.share span.icon {
     display: inline-block;
     width: 20px;
     height: 20px;
-    /*padding: 2px 8px;*/
     margin-right: 5px;
     background: url("images/lottery-result.png") no-repeat;
 }
@@ -97,4 +95,84 @@ div.main-body div.left > div.share a.qq span.icon {
 
 div.main-body div.left > div.share a.qzone span.icon {
     background-position: -154px -28px;
+}
+
+div.main-body div.right {
+    float: right;
+    width: 420px;
+}
+
+div.main-body div.right div.title {
+    background: url("images/share-header.png") repeat-x;
+    width: 400px;
+    height: 100px;
+}
+
+div.main-body div.right div.bottom {
+    background: url("images/share-footer.png") repeat-x;
+    width: 400px;
+    height: 120px;
+}
+
+div.main-body div.right div.body {
+    padding-top: 30px;
+    padding-left: 80px;
+    min-height: 300px;
+    font-size: 10pt;
+}
+
+div.main-body div.right div.body div.no-liveness {
+    color: #FF6600;
+    font-size: 11pt;
+}
+
+div.main-body div.right div.body table col.nickname {
+    width: 180px;
+}
+
+div.main-body div.right div.body table col.liveness,
+div.main-body div.right div.body table col.action {
+    width: 60px;
+}
+
+div.main-body div.right div.body table td.nickname,
+div.main-body div.right div.body table td.action {
+    padding-left: 20px;
+}
+
+div.main-body div.right div.body table td.liveness {
+    text-align: center;
+}
+
+div.main-body div.right div.body table thead td {
+    padding-bottom: 10px;
+}
+
+div.main-body div.right div.body table tbody td {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+div.main-body div.right div.body table tbody td.nickname,
+div.main-body div.right div.body table tbody td.liveness {
+    cursor: pointer;
+}
+
+div.main-body div.right div.body table tbody tr.hover td.nickname,
+div.main-body div.right div.body table tbody tr.hover td.liveness {
+    background-color: #43CEFC;
+}
+
+div.main-body div.right div.body table tbody tr.selected td.nickname,
+div.main-body div.right div.body table tbody tr.selected td.liveness {
+    background-color: #3C96D6;
+    color: #ffffff;
+}
+
+div.main-body div.right div.body table td.action {
+    display: none;
+}
+
+div.main-body div.right div.body table tbody tr.selected td.action {
+    display: inline-block;
 }

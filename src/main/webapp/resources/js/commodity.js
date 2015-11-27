@@ -374,6 +374,8 @@
                 html += '</tr>';
                 $tbody.append(html);
             }
+            this.$sameLotUsers.find('div.more-liveness a')
+                .attr('href', 'share.html?commodityId=' + getSelectedCommodityId());
             this.$sameLotUsers.show();
         },
         show: function (options) {

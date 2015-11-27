@@ -30,7 +30,40 @@
             </div>
         </div>
         <div class="right">
-
+            <div class="title"></div>
+            <div class="body">
+                <c:choose><c:when test="${fn:length(receiveUsers)>0}">
+                    <table>
+                        <colgroup>
+                            <col class="nickname"/>
+                            <col class="liveness"/>
+                            <col class="action"/>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <td class="nickname">昵称</td>
+                            <td class="liveness">支持数</td>
+                            <td class="action"></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="receiveUser" items="${receiveUsers}">
+                            <tr data-id="${receiveUser.id}">
+                                <td class="nickname">${receiveUser.username}</td>
+                                <td class="liveness">${receiveUser.liveness}</td>
+                                <td class="action">
+                                    <img class="link add-liveness" title="为ta增加支持"
+                                         src="resources/css/images/add-liveness.png"/>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:when><c:otherwise>
+                    <div class="no-liveness">目前还没有支持您的用户！</div>
+                </c:otherwise></c:choose>
+            </div>
+            <div class="bottom"></div>
         </div>
     </div>
 </div>

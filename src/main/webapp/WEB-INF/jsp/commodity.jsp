@@ -95,9 +95,11 @@
                         <col class="liveness"/>
                     </colgroup>
                     <thead>
-                    <td>昵称</td>
-                    <td>抽奖号</td>
-                    <td>支持数</td>
+                    <tr>
+                        <td>昵称</td>
+                        <td>抽奖号</td>
+                        <td>支持数</td>
+                    </tr>
                     </thead>
                 </table>
                 <div class="data">

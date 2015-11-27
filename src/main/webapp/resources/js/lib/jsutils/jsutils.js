@@ -911,6 +911,24 @@ var JSUtils = {
                 $element.text('');
             }
         }
+    },
+    createBubble: function (event, text, color) {
+        var left = event.pageX;
+        var top = event.pageY - 30;
+
+        var $tip = $('<div>' + text + '</div>').css({
+            'display': 'none',
+            'position': 'absolute',
+            'top': top + 'px',
+            'left': left + 'px',
+            'font-weight': 'bold',
+            'color': color
+        });
+        $tip.appendTo($('body'));
+        $tip.show();
+        $tip.animate({ "opacity": "hide", "top": top - 30 }, 1500, function () {
+            $(this).remove();
+        });
     }
 };
 
