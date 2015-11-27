@@ -93,8 +93,20 @@ div.form table td.snapshot, div.form table td.detail-image, div.form table td.ba
     overflow: hidden;
 }
 
+div.form table td.snapshot {
+    height: 111px;
+}
+
+div.form table td.snapshot a, div.form table td.detail-and-back td.detail-image a,
+div.form table td.detail-and-back td.back-image a {
+    display: block;
+    max-width: 101px;
+    max-height: 101px;
+    overflow: hidden;
+}
+
 div.form table td.detail-and-back {
-    padding-left: 50px;
+    padding-left: 40px;
 }
 
 div.form table.inner span.no-image {

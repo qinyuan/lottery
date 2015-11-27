@@ -28,7 +28,7 @@
     </c:if>
     <th>${listExpire ? '实际' : '预计'}结束时间</th>
     <th>预计参与人数</th>
-    <th>总参与人数<br/><span style="font-size: 9pt;">(包含虚拟部分)</span></th>
+    <th>总参与人数<br/><span style="font-size: 9pt;">(包含虚拟)</span></th>
     <th>真实参与人数</th>
     <c:if test="${listExpire}">
         <th>中奖号</th>

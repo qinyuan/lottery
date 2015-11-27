@@ -89,7 +89,7 @@ public class ShareController extends ImageController {
                 result.put(livenessToAddKey, 0);
                 return toJson(result);
             } else {
-                LivenessAdder.addLiveness(receiveUserId, false, userId, "initiative", activityId);
+                LivenessAdder.addLiveness(receiveUserId, false, userId, ShareMedium.INITIATIVE.en, activityId);
                 result.put(livenessToAddKey, AppConfig.getShareSucceedLiveness());
                 return toJson(result);
             }

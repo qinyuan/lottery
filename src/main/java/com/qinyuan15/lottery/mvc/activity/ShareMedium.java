@@ -14,6 +14,7 @@ public class ShareMedium {
     public final static ShareMedium QQ = new ShareMedium("qq", "QQ");
     public final static ShareMedium QZONE = new ShareMedium("qzone", "QQ空间");
     public final static ShareMedium COPY = new ShareMedium("copy", "复制");
+    public final static ShareMedium INITIATIVE = new ShareMedium("initiative", "主动支持");
 
     public final String en;
     public final String cn;
