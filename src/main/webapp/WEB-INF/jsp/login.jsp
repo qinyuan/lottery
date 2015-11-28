@@ -14,7 +14,6 @@
             <div class="input">
                 <input type="text" id="username" name="j_username" class="form-control" placeholder="在此输入用户名"/>
             </div>
-
             <div class="title">
                 <label>密码</label>
             </div>
@@ -26,12 +25,12 @@
                 <span id="rememberMeLabel">记住我</span>
                 <button type="submit" class="btn btn-primary" id="loginSubmit">登录</button>
             </div>
-            <div class="forget-password" >
+            <div class="forget-password">
                 <a target="_blank" style="font-size:10pt;" href="find-password.html">忘记密码?</a>
             </div>
-            <div class="login-by-qq">
-                <%@include file="login-by-qq-icon.jsp" %>
-            </div>
+            <%--<div class="login-by-qq">
+                <%@include file="register-by-qq-icon.jsp" %>
+            </div>--%>
         </q:spring-login-form>
     </div>
 </div>

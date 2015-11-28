@@ -23,9 +23,9 @@
                     <button type="submit" name="loginSubmit">立即登录</button>
                     <a href="javascript:void(0)" id="switchToRegister">注册新帐号</a>
                 </div>
-                <div class="login-by-qq">
-                    <%@include file="login-by-qq-icon.jsp" %>
-                </div>
+                    <%--<div class="login-by-qq">
+                        <%@include file="register-by-qq-icon.jsp" %>
+                    </div>--%>
                 <div class="error-info">帐号或密码错误</div>
             </form>
         </div>
@@ -37,16 +37,34 @@
         </div>
         <div class="body">
             <form action="register-submit.json" method="post">
+                <q:hidden name="registerType"/>
                 <div class="right">
-                    <div class="input">
-                        <label>邮箱</label>
-                        <input type="text" class="form-control" name="email" tabindex="1"/>
-                        <span class="validate"></span>
+                    <div class="email-input">
+                        <div class="input">
+                            <label>邮箱</label>
+                            <input type="text" class="form-control" name="email" tabindex="1"/>
+                            <span class="validate"></span>
+                        </div>
+                        <div class="comment">
+                            <span class="info">
+                                请输入您的常用邮箱， <a href="http://reg.email.163.com/unireg/call.do?cmd=register.entrance"
+                                              target="_blank">没有邮箱？</a>
+                            </span>
+                            <span class="error"></span>
+                        </div>
                     </div>
-                    <div class="comment">
-                    <span class="info">请输入您的常用邮箱，<a href="http://reg.email.163.com/unireg/call.do?cmd=register.entrance"
-                                                    target="_blank">没有邮箱？</a></span>
-                        <span class="error"></span>
+                    <div class="qq-input">
+                        <div class="input">
+                            <label>QQ号</label>
+                            <input type="text" class="form-control" name="qq" tabindex="1"/>
+                            <span class="validate"></span>
+                        </div>
+                        <div class="comment">
+                            <span class="info">
+                                请输入您的QQ号， <a href="http://zc.qq.com/chs/index.html" target="_blank">没有QQ号？</a>
+                            </span>
+                            <span class="error"></span>
+                        </div>
                     </div>
                         <%--<div class="input">
                             <label>用户名</label>
@@ -90,19 +108,26 @@
                         <button type="submit" name="registerSubmit" tabindex="6">立即注册</button>
                     </div>
                 </div>
-                <div class="email-icon"><span class="icon"></span><span>邮箱注册</span></div>
-                <div class="login-by-qq">
-                    <%@include file="login-by-qq-icon.jsp" %>
+                <div class="register-type">
+                    <div class="by-email selected"><span class="icon"></span>邮箱注册</div>
+                    <div class="by-qq"><span class="icon"></span>QQ号注册</div>
                 </div>
                 <div class="switch-login">已有帐号，<a id="switchToLogin" href="javascript:void(0)">立即登录</a></div>
             </form>
             <div class="result">
-                <div class="text">
+                <div class="text email">
                     已向您的邮箱
                     <span class="email"></span>
                     发送了一封验证邮件。
                     <br/>
                     <a target="_blank">立即进入邮箱 &gt;&gt;</a>
+                </div>
+                <div class="text qq">
+                    已向您的QQ邮箱
+                    <span class="email"></span>
+                    发送了一封验证邮件。
+                    <br/>
+                    <a href="http://mail.qq.com" target="_blank">立即进入QQ邮箱 &gt;&gt;</a>
                 </div>
                 <div class="exception">
                     没收到？<br/>

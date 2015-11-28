@@ -917,6 +917,10 @@ var JSUtils = {
         var top = event.pageY - 30;
 
         var $tip = $('<div>' + text + '</div>').css({
+
+        });
+        $tip.appendTo($('body'));
+        $tip.css({
             'display': 'none',
             'position': 'absolute',
             'top': top + 'px',
@@ -924,7 +928,6 @@ var JSUtils = {
             'font-weight': 'bold',
             'color': color
         });
-        $tip.appendTo($('body'));
         $tip.show();
         $tip.animate({ "opacity": "hide", "top": top - 30 }, 1500, function () {
             $(this).remove();

@@ -128,12 +128,23 @@ var angularUtils = {
         showResult: function () {
             this.setTitle('消息提示');
             this.$div.find('form').hide();
-            this.$div.find('div.result').show();
+
+            this.$result.find('>div.text').hide();
+
+            var email;
+            if (this.$div.getInputByName('registerType').val() == 'email') {
+                this.$result.find('>div.email').show();
+                email = this.$email.val();
+            } else {
+                this.$result.find('>div.qq').show();
+                email = this.$qq.val() + '@qq.com';
+            }
+
+            this.$result.show();
             this.$resendResult.text('');
-            var email = this.$email.val();
-            this.$div.find('div.result div.text span.email').text(email);
+            this.$result.find('div.text span.email').text(email);
             var loginPage = JSUtils.getEmailLoginPage(email);
-            this.$div.find('div.result div.text a').attr('href', loginPage);
+            this.$result.find('div.result div.text a').attr('href', loginPage);
         },
         setTitle: function (title) {
             this.$div.find('div.title div.text').text(title);
@@ -169,21 +180,41 @@ var angularUtils = {
             if (!email) {
                 this.showValidationByInput(this.$email, '请输入您的常用邮箱');
                 this.valid = false;
-                typeof(callback) == 'function' && callback();
+                JSUtils.invokeIfIsFunction(callback);
             } else if (!JSUtils.validateEmail(email)) {
-                this.showValidationByInput(this.$email, '请输入有效有邮箱地址');
+                this.showValidationByInput(this.$email, '请输入有效的邮箱地址');
                 this.valid = false;
-                typeof(callback) == 'function' && callback();
+                JSUtils.invokeIfIsFunction(callback);
             } else {
-                $.get('validate-email.json', {
-                    'email': email
-                }, function (data) {
+                $.get('validate-email.json', {'email': email}, function (data) {
                     if (data.success) {
                         self.showValidationByInput(self.$email);
                     } else {
                         self.showValidationByInput(self.$email, data.detail);
                     }
-                    typeof(callback) == 'function' && callback();
+                    JSUtils.invokeIfIsFunction(callback);
+                });
+            }
+        },
+        validateQQ: function (callback) {
+            var qq = this.$qq.val();
+            var self = this;
+            if (!qq) {
+                this.showValidationByInput(this.$qq, '请输入您的常用QQ');
+                this.valid = false;
+                JSUtils.invokeIfIsFunction(callback);
+            } else if (!qq.match(/^\d+$/g)) {
+                this.showValidationByInput(this.$qq, '请输入有效的QQ号码');
+                this.valid = false;
+                JSUtils.invokeIfIsFunction(callback);
+            } else {
+                $.get('validate-qq.json', {'qq': qq}, function (data) {
+                    if (data.success) {
+                        self.showValidationByInput(self.$qq);
+                    } else {
+                        self.showValidationByInput(self.$qq, data.detail);
+                    }
+                    JSUtils.invokeIfIsFunction(callback);
                 });
             }
         },
@@ -253,6 +284,13 @@ var angularUtils = {
                 }, 200); // user may has no email then click the link below input, so delay for 200 millisecond
             });
 
+            this.$qq = this.$div.find('input[name=qq]');
+            this.$qq.blur(function () {
+                setTimeout(function () {
+                    self.validateQQ();
+                }, 200); // user may has no qq then click the link below input, so delay for 200 millisecond
+            });
+
             this.$username = this.$div.find('input[name=username]');
             this.$username.blur(function () {
                 self.validateUsername();
@@ -295,14 +333,26 @@ var angularUtils = {
                  })
                  });
                  });*/
-                self.validateEmail(function () {
-                    self.validateIdentityCode(function () {
-                        if (self.valid) {
-                            registerSubmit();
-                        }
+                if (self.$emailInput.css('display') != 'none') {
+                    self.validateEmail(function () {
+                        self.validateIdentityCode(function () {
+                            if (self.valid) {
+                                registerSubmit('email');
+                            }
+                        });
                     });
-                });
-                function registerSubmit() {
+                } else if (self.$qqInput.css('display') != 'none') {
+                    self.validateQQ(function () {
+                        self.validateIdentityCode(function () {
+                            if (self.valid) {
+                                registerSubmit('qq');
+                            }
+                        });
+                    });
+                }
+
+                function registerSubmit(registerType) {
+                    self.$div.setInputValue('registerType', registerType);
                     self.$registerSubmit.text('正在处理...');
                     self.$div.find('form').ajaxSubmit({
                         success: function (data) {
@@ -333,17 +383,38 @@ var angularUtils = {
             this.$div.find('#switchToLogin').click(function () {
                 switchToLogin();
             });
-            this.$resendResult = this.$div.find('div.body div.result div.exception span.resend-result');
-            this.$div.find('div.body div.result div.exception a.resend').click(function () {
-                var email = self.$email.val();
+            this.$result = this.$div.find('div.body div.result');
+            this.$resendResult = this.$result.find('div.exception span.resend-result');
+            this.$result.find('div.exception a.resend').click(function () {
+                var email = self.$result.find('span.email').eq(0).text();
                 self.$resendResult.text('正在发送...');
-                $.get('resend-register-email.json', {email: email }, function (data) {
+                $.get('resend-register-email.json', {email: email}, function (data) {
                     if (data.success) {
                         self.$resendResult.text('发送成功！').showForAWhile(1500);
                     } else {
                         self.$resendResult.text(data.detail + '！').showForAWhile(1500);
                     }
                 });
+            });
+
+            this.$qqInput = this.$div.find('div.body div.right div.qq-input');
+            this.$emailInput = this.$div.find('div.body div.right div.email-input');
+            this.$div.find('div.body div.register-type > div').click(function () {
+                var $this = $(this);
+                if ($this.hasClass('selected')) {
+                    return;
+                }
+
+                $this.parent().find('>div.selected').removeClass('selected');
+                $this.addClass('selected');
+
+                if ($this.hasClass('by-email')) {
+                    self.$qqInput.hide();
+                    self.$emailInput.show().focusFirstTextInput();
+                } else if ($this.hasClass('by-qq')) {
+                    self.$emailInput.hide();
+                    self.$qqInput.show().focusFirstTextInput();
+                }
             });
 
             showRegisterForm = function () {

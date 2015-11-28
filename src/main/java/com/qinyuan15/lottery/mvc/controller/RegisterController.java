@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.contact.mail.MailAddressValidator;
+import com.qinyuan.lib.contact.qq.QQValidator;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.PasswordValidator;
@@ -179,14 +180,31 @@ public class RegisterController extends ImageController {
 
     @RequestMapping(value = "register-submit.json", method = RequestMethod.POST)
     @ResponseBody
-    public String submit(@RequestParam(value = "email", required = true) String email,
-                         @RequestParam(value = "identityCode", required = true) String identityCode) {
+    public String submit(@RequestParam("registerType") String registerType,
+                         @RequestParam("identityCode") String identityCode,
+                         @RequestParam(value = "email", required = false) String email,
+                         @RequestParam(value = "qq", required = false) String qq) {
 
         if (!validateIdentityCode(identityCode)) {
             return fail("验证码输入错误！");
+        } else if (StringUtils.isBlank(registerType)) {
+            return failByInvalidParam();
         }
 
-        return sendRegisterMail(email);
+        switch (registerType) {
+            case "email":
+                if (!new MailAddressValidator().validate(email)) {
+                    return fail("邮箱格式错误");
+                }
+                return sendRegisterMail(email);
+            case "qq":
+                if (!new QQValidator().validate(qq)) {
+                    return fail("QQ号格式错误");
+                }
+                return sendRegisterMail(qq + "@qq.com");
+            default:
+                return failByInvalidParam();
+        }
     }
 
     @RequestMapping(value = "resend-register-email.json", method = RequestMethod.GET)
@@ -236,13 +254,28 @@ public class RegisterController extends ImageController {
 
     @RequestMapping(value = "validate-email.json", method = RequestMethod.GET)
     @ResponseBody
-    public String validateEmail(@RequestParam(value = "email", required = true) String email) {
+    public String validateEmail(@RequestParam("email") String email) {
         if (!new MailAddressValidator().validate(email)) {
             return fail("请输入有效的邮箱格式");
         }
 
         if (userDao.hasEmail(email)) {
             return fail("邮箱已被注册，" + TO_LOGIN_HTML);
+        } else {
+            return success();
+        }
+    }
+
+    @RequestMapping(value = "validate-qq.json", method = RequestMethod.GET)
+    @ResponseBody
+    public String validateQQ(@RequestParam("qq") String qq) {
+        if (!new QQValidator().validate(qq)) {
+            return fail("请输入有效的QQ号码");
+        }
+
+        String email = qq + "@qq.com";
+        if (userDao.hasEmail(email)) {
+            return fail("QQ已经被注册，" + TO_LOGIN_HTML);
         } else {
             return success();
         }

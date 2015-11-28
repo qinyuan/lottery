@@ -47,8 +47,6 @@ public class AppConfig {
     public static String getQQConnectAuthenticateUrl() {
         return "https://graph.qq.com/oauth2.0/authorize?response_type=token&client_id=" + getQQConnectAppId()
                 + "&redirect_uri=" + getQQConnectRedirectURI() + "&scope=" + UrlUtils.encode(getQQConnectScope());
-        //"https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101264653&
-        //redirect_uri=http%3A%2F%2Fwww.bud-vip.com%2Fregister-by-qq.html&scope=get_user_info";
     }
 
     private final static AppConfigDao dao = new AppConfigDao();
