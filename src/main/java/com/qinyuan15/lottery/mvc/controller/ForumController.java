@@ -14,6 +14,7 @@ public class ForumController extends ImageController {
 
         setAttribute("forumImage", pathToUrl(AppConfig.getForumImage()));
         setAttribute("noFooter", true);
+        setAttribute("whiteFooter", true);
         setTitle("论坛");
         addCss("commodity-header");
         addCssAndJs("forum");

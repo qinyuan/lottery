@@ -4,7 +4,7 @@
         <div class="page-width" style="background-image: url('${footerPoster}');"></div>
     </div>
 </c:if>
-<div class="footer">
+<div class="${whiteFooter ? 'footer white' : 'footer'}">
     <span>${footerText}</span>
 </div>
 <%@include file="inc-register-login-panel.jsp" %>

@@ -60,7 +60,7 @@
                         </tbody>
                     </table>
                 </c:when><c:otherwise>
-                    <div class="no-liveness">目前还没有支持您的用户！</div>
+                    <div class="no-liveness">暂无好友支持你！</div>
                 </c:otherwise></c:choose>
             </div>
             <div class="bottom"></div>

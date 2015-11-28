@@ -305,6 +305,14 @@ div.footer {
     text-align: center;
 }
 
+div.footer.white {
+    background-color: transparent;
+    color: #999999;
+    border-top: 1px solid #ECECEC;
+    height: 60px;
+    line-height: 60px;
+}
+
 input.form-control {
     display: inline-block;
 }
