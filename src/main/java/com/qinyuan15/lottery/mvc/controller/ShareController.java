@@ -54,7 +54,7 @@ public class ShareController extends ImageController {
         setAttribute("whiteFooter", true);
 
         addJs("lib/jquery-zclip/jquery.zclip.min");
-        addCssAndJs("register");
+        addCss("register-header");
         addCssAndJs("share");
 
         setTitle("增加支持");

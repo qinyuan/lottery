@@ -1,6 +1,7 @@
 
 div.main-body {
     background-color: #ffffff;
+    padding-top: 50px;
     padding-bottom: 50px;
 }
 
@@ -28,10 +29,10 @@ div.main-body div.left > div.title {
 
 div.main-body div.left > div.copy input[type=text] {
     width: 400px;
-    padding: 8px;
+    padding: 2px 8px;
     margin-top: 20px;
     margin-bottom: 20px;
-    height: 28px;
+    height: 30px;
 }
 
 div.main-body div.left > div.copy span.info {
