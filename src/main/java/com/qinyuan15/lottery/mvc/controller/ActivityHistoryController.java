@@ -122,7 +122,8 @@ public class ActivityHistoryController extends ImageController {
                     serials.add(lotNumberFormat.format(lot.getSerialNumber()));
                 }
                 activity.serials = Joiner.on(",").join(serials);
-                activity.invalid = isUserInvalidToTakeLot(user, lotteryActivity);
+                //activity.invalid = isUserInvalidToTakeLot(user, lotteryActivity);
+                activity.invalid = false; // TODO modify this logic
             }
         }
         activity.closed = BooleanUtils.isTrue(lotteryActivity.getClosed());

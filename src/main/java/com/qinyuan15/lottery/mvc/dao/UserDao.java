@@ -245,4 +245,12 @@ public class UserDao extends SimpleUserDao {
         return userId;
 
     }
+
+    public User getInstanceBySerialKey(String serialKey) {
+        if (StringUtils.isBlank(serialKey)) {
+            return null;
+        }
+
+        return new HibernateListBuilder().addEqualFilter("serialKey", serialKey).getFirstItem(User.class);
+    }
 }

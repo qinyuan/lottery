@@ -48,12 +48,15 @@
                         </thead>
                         <tbody>
                         <c:forEach var="receiveUser" items="${receiveUsers}">
-                            <tr data-id="${receiveUser.id}">
+                            <tr>
                                 <td class="nickname">${receiveUser.username}</td>
                                 <td class="liveness">${receiveUser.liveness}</td>
                                 <td class="action">
-                                    <img class="link add-liveness" title="为ta增加支持"
-                                         src="resources/css/images/add-liveness.png"/>
+                                    <a href="support.html?activityId=${activityId}&serial=${receiveUser.serial}&medium=initiative"
+                                       target="_blank">
+                                        <img class="link add-liveness" title="为ta增加支持"
+                                             src="resources/css/images/add-liveness.png"/>
+                                    </a>
                                 </td>
                             </tr>
                         </c:forEach>

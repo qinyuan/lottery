@@ -37,23 +37,23 @@
             $parent.parent().find('tr.selected').removeClass('selected');
             $parent.addClass('selected');
         }
-    }).find('img.add-liveness').click(function (e) {
-        var $tr = $(this).getParentByTagName('tr');
-        var userId = $tr.data('id');
-        $.post('add-liveness-by-share.json', {
-            'userId': userId,
-            'activityId': window['activityId']
-        }, function (data) {
-            if (data.success) {
-                var livenessToAdd = parseInt(data['livenessToAdd']);
-                JSUtils.createBubble(e, '+' + livenessToAdd, '#ff0000');
-                var $liveness = $tr.find('td.liveness');
-                var oldLiveness = parseInt($liveness.text());
-                var newLiveness = oldLiveness + livenessToAdd;
-                $liveness.text(newLiveness);
-            } else {
-                alert(data.detail);
-            }
-        });
-    });
+    })/*.find('img.add-liveness').click(function (e) {
+     var $tr = $(this).getParentByTagName('tr');
+     var userId = $tr.data('id');
+     $.post('add-liveness-by-share.json', {
+     'userId': userId,
+     'activityId': window['activityId']
+     }, function (data) {
+     if (data.success) {
+     var livenessToAdd = parseInt(data['livenessToAdd']);
+     JSUtils.createBubble(e, '+' + livenessToAdd, '#ff0000');
+     var $liveness = $tr.find('td.liveness');
+     var oldLiveness = parseInt($liveness.text());
+     var newLiveness = oldLiveness + livenessToAdd;
+     $liveness.text(newLiveness);
+     } else {
+     alert(data.detail);
+     }
+     });
+     })*/;
 })();
