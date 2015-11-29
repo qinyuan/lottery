@@ -7,6 +7,12 @@ div.main-body {
     position: relative;
 }
 
+div.main-body div.support-text {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
 div.main-body div.support-button {
     position: absolute;
     top: 110px;

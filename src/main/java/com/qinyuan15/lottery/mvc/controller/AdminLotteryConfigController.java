@@ -4,12 +4,17 @@ import com.qinyuan.lib.mvc.controller.CDNSource;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.mail.MailSelectFormItemBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class AdminLotteryConfigController extends ImageController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(AdminLotteryConfigController.class);
+
     @RequestMapping("/admin-lottery-config")
     public String index() {
         IndexHeaderUtils.setHeaderParameters(this);
@@ -56,9 +61,13 @@ public class AdminLotteryConfigController extends ImageController {
         setAttribute("noTelInvalidLotSystemInfoTemplate", AppConfig.getNoTelInvalidLotSystemInfoTemplate());
         setAttribute("insufficientLivenessInvalidLotSystemInfoTemplate", AppConfig.getInsufficientLivenessInvalidLotSystemInfoTemplate());
 
+        setAttribute("supportPageImage", pathToUrl(AppConfig.getSupportPageImage()));
+        setAttribute("supportPageText", AppConfig.getSupportPageText());
+
         setTitle("抽奖配置");
         addCss("admin-form");
         addCss("admin");
+        addHeadJs("lib/image-adjust");
         addJs("lib/ckeditor/ckeditor", false);
         addJs(CDNSource.BOOTSTRAP_JS, false);
         addCssAndJs("admin-lottery-config");
@@ -90,7 +99,21 @@ public class AdminLotteryConfigController extends ImageController {
                          @RequestParam("noTelInvalidLotSystemInfoTemplate") String noTelInvalidLotSystemInfoTemplate,
                          @RequestParam("insufficientLivenessInvalidLotSystemInfoTemplate") String insufficientLivenessInvalidLotSystemInfoTemplate,
                          @RequestParam("noTelLotteryLotCount") Integer noTelLotteryLotCount,
-                         @RequestParam("noTelLotteryLotPrice") Double noTelLotteryLotPrice) {
+                         @RequestParam("noTelLotteryLotPrice") Double noTelLotteryLotPrice,
+                         @RequestParam("supportPageImage") String supportPageImage,
+                         @RequestParam("supportPageImageFile") MultipartFile supportPageImageFile,
+                         @RequestParam("supportPageText") String supportPageText) {
+
+        final String index = "admin-lottery-config";
+
+        String supportPageImagePath = null;
+
+        try {
+            supportPageImagePath = getSavePath(supportPageImage, supportPageImageFile);
+        } catch (Exception e) {
+            LOGGER.error("error in getting save path of supportPageImage: {}", e);
+            redirect(index, "主页页头左图标处理失败！");
+        }
 
         AppConfig.updateLotterySinaWeiboTitle(sinaWeiboTitle);
         AppConfig.updateLotterySinaWeiboIncludePicture(sinaWeiboIncludePicture);
@@ -108,6 +131,8 @@ public class AdminLotteryConfigController extends ImageController {
         AppConfig.updateInsufficientLivenessInvalidLotSystemInfoTemplate(insufficientLivenessInvalidLotSystemInfoTemplate);
         AppConfig.updateNoTelLotteryLotCount(noTelLotteryLotCount);
         AppConfig.updateNoTelLotteryLotPrice(noTelLotteryLotPrice);
+        AppConfig.updateSupportPageImage(supportPageImagePath);
+        AppConfig.updateSupportPageText(supportPageText);
 
         if (remindNewLotteryChanceByMail != null) {
             AppConfig.updateRemindNewLotteryChanceByMail(true);

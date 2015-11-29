@@ -734,4 +734,26 @@ public class AppConfig {
         dao.save(FORUM_IMAGE_KEY, forumImage);
     }
     //////////////////////////////////// forum image end /////////////////////////////////////////
+
+    //////////////////////////////////// support page start /////////////////////////////////
+    private final static String SUPPORT_PAGE_IMAGE_KEY = "supportPageImage";
+
+    public static String getSupportPageImage() {
+        return dao.get(SUPPORT_PAGE_IMAGE_KEY);
+    }
+
+    public static void updateSupportPageImage(String supportPageImage) {
+        dao.save(SUPPORT_PAGE_IMAGE_KEY, supportPageImage);
+    }
+
+    private final static String SUPPORT_PAGE_TEXT_KEY = "supportPageText";
+
+    public static String getSupportPageText() {
+        return dao.get(SUPPORT_PAGE_TEXT_KEY);
+    }
+
+    public static void updateSupportPageText(String supportPageText) {
+        dao.save(SUPPORT_PAGE_TEXT_KEY, supportPageText);
+    }
+    //////////////////////////////////// support page end ///////////////////////////////////
 }

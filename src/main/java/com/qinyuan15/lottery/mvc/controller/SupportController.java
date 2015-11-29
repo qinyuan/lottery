@@ -38,6 +38,9 @@ public class SupportController extends ImageController {
             setTitle("用户不存在");
         }
 
+        setAttribute("supportImage", pathToUrl(AppConfig.getSupportPageImage()));
+        setAttribute("supportText", AppConfig.getSupportPageText());
+
         RegisterHeaderUtils.setParameters(this);
         addCssAndJs("support");
         return "support";

@@ -3,6 +3,10 @@
 <%@include file="register-header.jsp" %>
 <div class="white-back">
     <div class="main-body page-width">
+        <div class="support-image">
+            <c:if test="${supportImage!=null}"><img src="${supportImage}"/></c:if>
+        </div>
+        <div class="support-text">${supportText}</div>
         <div class="support-button">
             <c:choose><c:when test="${alreadySupported}">
                 <div class="text">你已经支持过${username}</div>
