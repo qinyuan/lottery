@@ -7,11 +7,15 @@ import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
 
 public class LivenessAdder {
+    private final static Logger LOGGER = LoggerFactory.getLogger(LivenessAdder.class);
+
     private final HttpSession session;
 
     public LivenessAdder(HttpSession session) {
@@ -46,23 +50,28 @@ public class LivenessAdder {
 
     static void addLiveness(Integer receiveUserId, boolean alreadyRegistered, Integer spreadUserId, String spreadWay, Integer activityId) {
         if (!IntegerUtils.isPositive(receiveUserId)) {
+            LOGGER.info("invalid receiveUserId: {}", receiveUserId);
             return;
         }
 
-        if (spreadUserId == null) {
+        if (!IntegerUtils.isPositive(spreadUserId)) {
+            LOGGER.info("invalid spreadUserId: {}", spreadUserId);
             return;
         }
 
         if (receiveUserId.equals(spreadUserId)) {
+            LOGGER.warn("spreadUserId and receiveUserId are all {}", spreadUserId);
             return;
         }
 
         if (!StringUtils.hasText(spreadWay)) {
+            LOGGER.error("invalid spreadWay: {}", spreadWay);
             return;
         }
 
         Integer liveness = AppConfig.getShareSucceedLiveness();
         if (!IntegerUtils.isPositive(liveness)) {
+            LOGGER.warn("invalid share succeed liveness: {}", liveness);
             return;
         }
 
@@ -70,6 +79,7 @@ public class LivenessAdder {
         if (IntegerUtils.isPositive(activityId)) {
             dao.add(spreadUserId, receiveUserId, liveness, spreadWay, alreadyRegistered, activityId);
         } else {
+            LOGGER.warn("add liveness without activityId");
             dao.add(spreadUserId, receiveUserId, liveness, spreadWay, alreadyRegistered);
         }
     }

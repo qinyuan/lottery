@@ -69,6 +69,7 @@ public class CommodityController extends ImageController {
             addJavaScriptData("selectedCommodityId", commodity.getId());
             //addJavaScriptData("commodityMaps", mapDao.getInstancesByRelateId(commodity.getId()));
         }
+
         if (StringUtils.isNotBlank(userSerialKey) && StringUtils.isNotBlank(medium)
                 && StringUtils.isNotBlank(SecurityUtils.getUsername())) {
             livenessAdder.addLiveness(true);

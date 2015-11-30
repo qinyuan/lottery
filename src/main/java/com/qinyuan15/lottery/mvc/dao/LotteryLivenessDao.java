@@ -78,18 +78,16 @@ public class LotteryLivenessDao {
     }
 
     public Integer add(Integer spreadUserId, Integer receiveUserId, int liveness, String spreadWay,
-                       boolean registerBefore) {
+                       boolean alreadyRegistered) {
         LotteryActivity activity = new LotteryActivityDao().getLastActiveInstance();
-        if (activity != null) {
-            return add(spreadUserId, receiveUserId, liveness, spreadWay, registerBefore, activity.getId());
-        }
-        return null;
+        int activityId = activity == null ? -1 : activity.getId();
+        return add(spreadUserId, receiveUserId, liveness, spreadWay, alreadyRegistered, activityId);
     }
 
     public Integer add(Integer spreadUserId, Integer receiveUserId, int liveness, String spreadWay,
-                       boolean registerBefore, Integer activityId) {
+                       boolean alreadyRegistered, Integer activityId) {
         if (!IntegerUtils.isPositive(spreadUserId) || !IntegerUtils.isPositive(receiveUserId)
-                || spreadUserId.equals(receiveUserId) || !IntegerUtils.isPositive(activityId)
+                || spreadUserId.equals(receiveUserId) || activityId == null
                 || hasInstance(spreadUserId, receiveUserId)) {
             return null;
         }
@@ -100,7 +98,7 @@ public class LotteryLivenessDao {
         ll.setActivityId(activityId);
         ll.setLiveness(liveness);
         ll.setSpreadWay(spreadWay);
-        ll.setRegisterBefore(registerBefore);
+        ll.setRegisterBefore(alreadyRegistered);
         Integer id = HibernateUtils.save(ll);
 
         // send email or system information to user
