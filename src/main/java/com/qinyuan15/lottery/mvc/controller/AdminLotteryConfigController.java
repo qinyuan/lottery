@@ -53,6 +53,10 @@ public class AdminLotteryConfigController extends ImageController {
         // no tel lot
         setAttribute("noTelLotteryLotCount", AppConfig.getNoTelLotteryLotCount());
         setAttribute("noTelLotteryLotPrice", AppConfig.getNoTelLotteryLotPrice());
+        setAttribute("noTelLiveness", AppConfig.getNoTelLiveness());
+
+        // tel modification
+        setAttribute("maxTelModificationTimes", AppConfig.getMaxTelModificationTimes());
 
         // other data
         setAttribute("lotteryAnnouncementTemplate", AppConfig.getLotteryAnnouncementTemplate());
@@ -98,13 +102,15 @@ public class AdminLotteryConfigController extends ImageController {
                          @RequestParam("livenessIncreaseSystemInfoTemplate") String livenessIncreaseSystemInfoTemplate,
                          @RequestParam("noTelInvalidLotSystemInfoTemplate") String noTelInvalidLotSystemInfoTemplate,
                          @RequestParam("insufficientLivenessInvalidLotSystemInfoTemplate") String insufficientLivenessInvalidLotSystemInfoTemplate,
-                         @RequestParam("noTelLotteryLotCount") Integer noTelLotteryLotCount,
-                         @RequestParam("noTelLotteryLotPrice") Double noTelLotteryLotPrice,
+                         /*@RequestParam("noTelLotteryLotCount") Integer noTelLotteryLotCount,
+                         @RequestParam("noTelLotteryLotPrice") Double noTelLotteryLotPrice,*/
+                         @RequestParam("noTelLiveness") Integer noTelLiveness,
+                         @RequestParam("maxTelModificationTimes") Integer maxTelModificationTimes,
                          @RequestParam("supportPageImage") String supportPageImage,
                          @RequestParam("supportPageImageFile") MultipartFile supportPageImageFile,
                          @RequestParam("supportPageText") String supportPageText) {
 
-        final String index = "admin-lottery-config";
+        final String index = "admin-lottery-config.html";
 
         String supportPageImagePath = null;
 
@@ -129,8 +135,10 @@ public class AdminLotteryConfigController extends ImageController {
         AppConfig.updateLotteryAnnouncementTemplate(lotteryAnnouncementTemplate);
         AppConfig.updateNoTelInvalidLotSystemInfoTemplate(noTelInvalidLotSystemInfoTemplate);
         AppConfig.updateInsufficientLivenessInvalidLotSystemInfoTemplate(insufficientLivenessInvalidLotSystemInfoTemplate);
-        AppConfig.updateNoTelLotteryLotCount(noTelLotteryLotCount);
-        AppConfig.updateNoTelLotteryLotPrice(noTelLotteryLotPrice);
+        /*AppConfig.updateNoTelLotteryLotCount(noTelLotteryLotCount);
+        AppConfig.updateNoTelLotteryLotPrice(noTelLotteryLotPrice);*/
+        AppConfig.updateNoTelLiveness(noTelLiveness);
+        AppConfig.updateMaxTelModificationTimes(maxTelModificationTimes);
         AppConfig.updateSupportPageImage(supportPageImagePath);
         AppConfig.updateSupportPageText(supportPageText);
 
@@ -157,6 +165,6 @@ public class AdminLotteryConfigController extends ImageController {
             AppConfig.updateRemindLivenessIncreaseBySystemInfo(false);
         }
 
-        return redirect("admin-lottery-config");
+        return redirect(index);
     }
 }

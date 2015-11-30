@@ -224,11 +224,24 @@
     </div>
 </div>
 <div class="edit-unit">
-    <div class="title">未填手机号时的抽奖限制</div>
+    <div class="title">手机号相关配置</div>
     <div class="content">
         <table>
             <tbody>
             <tr>
+                <td class="title wide">支持超过指定值时必须填写手机号</td>
+                <td class="input narrow">
+                    <input type="text" class="form-control" name="noTelLiveness" value="${noTelLiveness}"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="title wide">一年内可修改手机号的次数</td>
+                <td class="input narrow">
+                    <input type="text" class="form-control" name="maxTelModificationTimes"
+                           value="${maxTelModificationTimes}"/>
+                </td>
+            </tr>
+            <%--<tr>
                 <td class="title wide">未填手机时最多可参与的抽奖次数</td>
                 <td class="input narrow">
                     <input type="text" class="form-control" name="noTelLotteryLotCount"
@@ -241,7 +254,7 @@
                     <input type="text" class="form-control" name="noTelLotteryLotPrice"
                            value="${noTelLotteryLotPrice}"/>
                 </td>
-            </tr>
+            </tr>--%>
             </tbody>
         </table>
     </div>

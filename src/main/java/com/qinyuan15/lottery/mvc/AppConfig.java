@@ -721,7 +721,30 @@ public class AppConfig {
     public static void updateNoTelLotteryLotPrice(Double noTelLotteryLotPrice) {
         dao.saveDouble(NO_TEL_LOTTERY_LOT_PRICE_KEY, noTelLotteryLotPrice);
     }
+
+    private final static String NO_TEL_LIVENESS_KEY = "noTelLiveness";
+
+    public static Integer getNoTelLiveness() {
+        return dao.getInteger(NO_TEL_LIVENESS_KEY);
+    }
+
+    public static void updateNoTelLiveness(Integer noTelLiveness) {
+        dao.saveInteger(NO_TEL_LIVENESS_KEY, noTelLiveness);
+    }
     //////////////////////////////////// no tel lot end ////////////////////////////////////////
+
+    //////////////////////////////////// tel modification limit start ////////////////////////////
+
+    //////////////////////////////////// tel modification limit end //////////////////////////////
+    private final static String MAX_TEL_MODIFICATION_TIMES_KEY = "maxTelModificationTimes";
+
+    public static Integer getMaxTelModificationTimes() {
+        return dao.getInteger(MAX_TEL_MODIFICATION_TIMES_KEY);
+    }
+
+    public static void updateMaxTelModificationTimes(Integer maxTelModificationTimes) {
+        dao.saveInteger(MAX_TEL_MODIFICATION_TIMES_KEY, maxTelModificationTimes);
+    }
 
     //////////////////////////////////// forum image start ///////////////////////////////////////
     private final static String FORUM_IMAGE_KEY = "forumImage";

@@ -427,6 +427,7 @@ var JSUtils = {
      *
      * if no element is given, scroll all screen to top
      * @param $targetElement element to scroll to top
+     * @param speed scroll speed, whose unit is millisecond
      */
     scrollTop: function ($targetElement, speed) {
         if (speed == null) {
