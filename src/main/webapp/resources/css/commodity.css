@@ -156,17 +156,25 @@ div.main-body > div.summary div.participant-count {
     font-size: 12pt;
 }
 
-#exceptionPrompt, div.activity-result {
+#exceptionPrompt, #noTelPrompt, div.activity-result {
     width: 484px;
     margin-left: -242px;
 }
 
-#exceptionPrompt {
+#exceptionPrompt, #noTelPrompt {
     margin-top: -137px;
+}
+
+#exceptionPrompt div.body, #notelprompt div.body {
+    color: #666666;
 }
 
 #exceptionPrompt div.body {
     height: 230px;
+}
+
+#notelprompt div.body {
+    height: 260px;
 }
 
 #exceptionPrompt div.body div.info {
@@ -182,6 +190,21 @@ div.main-body > div.summary div.participant-count {
     top: 180px;
     left: 315px;
     font-size: 10pt;
+}
+
+#noTelPrompt div.body div.info {
+    padding-top: 50px;
+    padding-left: 85px;
+    font-size: 11pt;
+    line-height: 35px;
+}
+
+#noTelPrompt div.body div.bottom {
+    position: absolute;
+    bottom: 15px;
+    font-size: 10pt;
+    width: 100%;
+    text-align: center;
 }
 
 /**************************** lottery result start ***************************/

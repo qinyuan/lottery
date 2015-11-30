@@ -280,19 +280,14 @@
         }
     }).init();
 
-    function setFloatPanelUsername($floatPanel, username) {
-        $floatPanel.find('div.title div.text span.username').text(username);
-    }
-
     function setCloseIconEvent($floatPanel, event) {
         $floatPanel.find('div.title div.close-icon').click(event);
     }
 
     var noPrivilege = ({
         $div: $('#noPrivilegePrompt'),
-        show: function (username, toLoginCallback) {
+        show: function (toLoginCallback) {
             JSUtils.showTransparentBackground(1);
-            setFloatPanelUsername(this.$div, username);
             this.$div.fadeIn(300);
 
             var self = this;
@@ -311,16 +306,46 @@
         }
     }).init();
 
-    var $exceptionPrompt = $('#exceptionPrompt');
-    setCloseIconEvent($exceptionPrompt, function () {
-        JSUtils.hideTransparentBackground();
-        $exceptionPrompt.hide();
-    });
-    function showExceptionPrompt(username, info) {
-        JSUtils.showTransparentBackground(1);
-        setFloatPanelUsername($exceptionPrompt, username);
-        $exceptionPrompt.fadeIn(300).find('div.body div.info').text(info);
-    }
+    var exceptionPrompt = ({
+        $div: $('#exceptionPrompt'),
+        show: function (info) {
+            JSUtils.showTransparentBackground(1);
+            this.$div.fadeIn(300).find('div.body div.info').text(info);
+        },
+        init: function () {
+            var self = this;
+            setCloseIconEvent(this.$div, function () {
+                JSUtils.hideTransparentBackground();
+                self.$div.hide();
+            });
+
+            return this;
+        }
+    }).init();
+
+    var noTelPrompt = ({
+        $div: $('#noTelPrompt'),
+        show: function (options) {
+            this.$username.text(options['username']);
+            this.$noTelLiveness.text(options['noTelLiveness']);
+            this.$maxTelModificationTimes.text(options['maxTelModificationTimes']);
+
+            JSUtils.showTransparentBackground(1);
+            this.$div.fadeIn(300);
+        },
+        init: function () {
+            this.$username = this.$div.find('span.username');
+            this.$noTelLiveness = this.$div.find('span.no-tel-liveness');
+            this.$maxTelModificationTimes = this.$div.find('span.max-tel-modification-times');
+            var self = this;
+            setCloseIconEvent(this.$div, function () {
+                JSUtils.hideTransparentBackground();
+                self.$div.hide();
+            });
+
+            return this;
+        }
+    }).init();
 
     var lotteryResult = ({
         $div: $('#lotteryResult'),
@@ -370,7 +395,7 @@
                 var html = user.username == currentUser ? '<tr class="current">' : '<tr>';
                 html += '<td>' + user.username + '</td>';
                 html += '<td>' + serialNumber + '</td>';
-                html += '<td>' + user.liveness + '</td>';
+                html += '<td>' + user['liveness'] + '</td>';
                 html += '</tr>';
                 $tbody.append(html);
             }
@@ -458,15 +483,22 @@
         $.post('take-lottery.json', {
             'commodityId': getSelectedCommodityId()
         }, function (data) {
+            /*noTelPrompt.show({
+                username: 'testUser',
+                noTelLiveness: 23,
+                maxTelModificationTimes: 24
+            }); // TODO test*/
+            exceptionPrompt.show('本商品暂时没有抽奖，敬请关注其他商品的抽奖！');
+            return;
             if (data.success || data.detail == 'activityExpire' || data.detail == 'alreadyAttended') {
                 lotteryResult.show(data);
             } else if (data.detail == 'noLottery') {
-                showExceptionPrompt(data.username, '本商品暂时没有抽奖，敬请关注其他商品的抽奖！');
+                exceptionPrompt.show('本商品暂时没有抽奖，敬请关注其他商品的抽奖！');
             } else if (data.detail == 'noLogin') {
                 JSUtils.showTransparentBackground(1);
                 showLoginForm(toLoginCallback);
             } else if (data.detail == 'noPrivilege') {
-                noPrivilege.show(data.username, toLoginCallback);
+                noPrivilege.show(toLoginCallback);
             } else {
                 alert(data.detail);
             }
@@ -625,12 +657,12 @@
             if (data.success || data.detail == 'activityExpire') {
                 seckillResult.show(data);
             } else if (data.detail == 'noSeckill') {
-                showExceptionPrompt(data.username, '本商品暂时没有秒杀，敬请关注其他商品的秒杀！');
+                exceptionPrompt.show('本商品暂时没有秒杀，敬请关注其他商品的秒杀！');
             } else if (data.detail == 'noLogin') {
                 JSUtils.showTransparentBackground(1);
                 showLoginForm(toLoginCallback);
             } else if (data.detail == 'noPrivilege') {
-                noPrivilege.show(data.username, toLoginCallback);
+                noPrivilege.show(toLoginCallback);
             } else {
                 alert(data.detail);
             }

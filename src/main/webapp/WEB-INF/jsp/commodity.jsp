@@ -196,13 +196,28 @@
 </div>
 <div class="float-panel shadow" id="exceptionPrompt">
     <jsp:include page="commodity-float-panel-title.jsp">
-        <jsp:param name="title" value="提示信息"/>
+        <jsp:param name="title" value="消息提示"/>
     </jsp:include>
     <div class="body">
         <div class="info"></div>
 
         <div class="links">
             <a target="_blank" href="activity-history.html">查看我的活动历史</a>
+        </div>
+    </div>
+</div>
+<div class="float-panel shadow" id="noTelPrompt">
+    <jsp:include page="commodity-float-panel-title.jsp">
+        <jsp:param name="title" value="消息提示"/>
+    </jsp:include>
+    <div class="body">
+        <div class="info">
+            尊敬的<span class="username"></span><br/>
+            您的支持数已超过<span class="no-tel-liveness"></span>，按照抽奖规则需正确填写手机号<br/>
+            <a target="_blank" href="setting.html?index=3">立刻填写手机号 &gt;&gt;</a>
+        </div>
+        <div class="bottom">
+            手机号一年内只可修改<span class="max-tel-modification-times"></span>次，请正确填写
         </div>
     </div>
 </div>
