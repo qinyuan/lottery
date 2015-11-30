@@ -483,15 +483,10 @@
         $.post('take-lottery.json', {
             'commodityId': getSelectedCommodityId()
         }, function (data) {
-            /*noTelPrompt.show({
-                username: 'testUser',
-                noTelLiveness: 23,
-                maxTelModificationTimes: 24
-            }); // TODO test*/
-            exceptionPrompt.show('本商品暂时没有抽奖，敬请关注其他商品的抽奖！');
-            return;
             if (data.success || data.detail == 'activityExpire' || data.detail == 'alreadyAttended') {
                 lotteryResult.show(data);
+            } else if (data.detail == 'noTel') {
+                noTelPrompt.show(data);
             } else if (data.detail == 'noLottery') {
                 exceptionPrompt.show('本商品暂时没有抽奖，敬请关注其他商品的抽奖！');
             } else if (data.detail == 'noLogin') {

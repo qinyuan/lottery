@@ -7,6 +7,7 @@ import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.account.UserTelUtils;
 import com.qinyuan15.lottery.mvc.activity.*;
 import com.qinyuan15.lottery.mvc.dao.*;
 import org.apache.commons.lang3.StringUtils;
@@ -71,7 +72,12 @@ public class LotController extends ImageController {
         // user parameters
         User user = (User) securitySearcher.getUser();
         if (!result.containsKey(DETAIL)) {
-            if (new LotteryLotCounter().countReal(activity.getId(), user.getId()) == 0) {
+            if (UserTelUtils.hasHighLivenessButNoTel(user)) {
+                result.put(SUCCESS, false);
+                result.put(DETAIL, "noTel");
+                result.put("noTelLiveness", AppConfig.getNoTelLiveness());
+                result.put("maxTelModificationTimes", AppConfig.getMaxTelModificationTimes());
+            } else if (new LotteryLotCounter().countReal(activity.getId(), user.getId()) == 0) {
                 result.put(SUCCESS, true);
             } else {
                 List<String> serialNumbers = new LotteryLotDao().getSerialNumbers(activity.getId(), user.getId(),
@@ -83,6 +89,9 @@ public class LotController extends ImageController {
                 result.put(DETAIL, "alreadyAttended");
             }
         }
+
+        // username
+        result.put("username", user.getUsername());
 
         // commodity
         Commodity commodity = getCommodity(commodityId);

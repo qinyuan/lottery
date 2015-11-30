@@ -165,7 +165,7 @@ div.main-body > div.summary div.participant-count {
     margin-top: -137px;
 }
 
-#exceptionPrompt div.body, #notelprompt div.body {
+#exceptionPrompt div.body, #noTelPrompt div.body {
     color: #666666;
 }
 
@@ -173,7 +173,7 @@ div.main-body > div.summary div.participant-count {
     height: 230px;
 }
 
-#notelprompt div.body {
+#noTelPrompt div.body {
     height: 260px;
 }
 
