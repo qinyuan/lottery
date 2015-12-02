@@ -231,6 +231,14 @@ CREATE TABLE login_record (
     platform char(20) not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+create table tel_change_log (
+    id int primary key auto_increment,
+    user_id int not null,
+    old_tel char(50),
+    new_tel char(50),
+    change_time datetime
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 
 
 /************** test data *******************/
@@ -252,7 +260,6 @@ insert into commodity_image values
   (1, 1, 'path1', 'backPath1', 2),
   (2, 1, 'path2', 'backPath2', 1),
   (3, 2, 'path3', 'backPath3', 3);
-
 
 insert into lottery_activity(commodity_id, term, start_time, expire, virtual_participants,
   dual_colored_ball_term, min_liveness_to_participate, close_time, closed) values
@@ -312,3 +319,6 @@ insert into login_record(user_id, login_time, ip, location, platform) values
   (4, '2014-12-12 11:10:10', '192.168.8.2', '中国 华南 广东省 广州市', 'android'),
   (111, '2014-12-12 11:10:10', '192.168.8.2', '中国 华南 广东省 广州市', 'android'),
   (113, '2014-12-12 11:10:10', '192.168.8.2', '中国 华南 广西省 南宁市', 'android');
+
+insert into tel_change_log(user_id, old_tel, new_tel, change_time) values
+  (2, '13000000000', '15000000000', '2014-12-12 10:10:10');

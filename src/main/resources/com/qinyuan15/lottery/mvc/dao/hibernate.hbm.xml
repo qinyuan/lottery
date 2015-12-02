@@ -198,4 +198,13 @@
         <property name="backPath" column="back_path"/>
         <property name="ranking"/>
     </class>
+    <class name="TelChangeLog" table="tel_change_log">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="userId" column="user_id"/>
+        <property name="oldTel" column="old_tel"/>
+        <property name="newTel" column="new_tel"/>
+        <property name="changeTime" column="change_time"/>
+    </class>
 </hibernate-mapping>
