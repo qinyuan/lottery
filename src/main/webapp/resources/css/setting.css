@@ -83,6 +83,12 @@ div.main-body > div.right div.body div.edit-submit a.cancel {
     text-decoration: underline;
 }
 
+div.main-body > div.right div.body div.edit-submit div.tel-modification-info {
+    color: #666666;
+    margin-top: 20px;
+    font-size: 10pt;
+}
+
 div.main-body > div.right div.body div.text a.edit-icon {
     margin-left: 10px;
 }

@@ -13,7 +13,23 @@
         <input type="password" class="form-control" name="password"/>
     </div>
     <div class="edit-submit" style="margin-left:105px;">
-        <button type="button" class="ok">确定</button>
+        <c:set var="changeable" value="${telModification.infiniteTimes || telModification.remainingTimes > 0}"/>
+
+        <button type="button" class="${changeable ? 'ok' : 'ok deepTransparent'}"
+                <c:if test="${!changeable}"> disabled</c:if>>
+            确定
+        </button>
+        <div class="tel-modification-info">
+            <c:if test="${!telModification.infiniteTimes && telModification.usedTimes > 0}">
+                提示：
+                您最近一年已经修改了${telModification.usedTimes}次号码，
+                <c:choose> <c:when test="${telModification.remainingTimes > 0}">
+                    还可以修改${telModification.remainingTimes}次
+                </c:when><c:otherwise>
+                    暂时不能再修改
+                </c:otherwise></c:choose>
+            </c:if>
+        </div>
     </div>
     <div id="telValidate">
         <div class="text">

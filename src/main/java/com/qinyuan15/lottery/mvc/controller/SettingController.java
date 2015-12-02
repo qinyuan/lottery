@@ -13,6 +13,7 @@ import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.account.DatabaseTelValidator;
 import com.qinyuan15.lottery.mvc.account.NewUserValidator;
+import com.qinyuan15.lottery.mvc.account.RemainingTelChangeTimesCalculator;
 import com.qinyuan15.lottery.mvc.activity.LotteryShareUrlBuilder;
 import com.qinyuan15.lottery.mvc.dao.*;
 import com.qinyuan15.lottery.mvc.mail.ResetEmailMailSender;
@@ -71,6 +72,9 @@ public class SettingController extends ImageController {
             setAttribute("loginRecords", loginRecords);
         } else if (index == 3 || index == 4) {      //show tel and email
             setAttribute("user", user);
+            if (index == 3) { // show tel
+                setAttribute("telModification", new RemainingTelChangeTimesCalculator(user.getId()));
+            }
         } else if (index == 5) {        // show liveness
             setAttribute("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
             // share urls

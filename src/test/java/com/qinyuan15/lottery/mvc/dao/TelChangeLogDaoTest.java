@@ -12,8 +12,18 @@ public class TelChangeLogDaoTest extends DatabaseTestCase {
     @Test
     public void testAdd() throws Exception {
         assertThat(dao.count()).isEqualTo(1);
+
         dao.add(2, "15000000000", "13000000000");
         assertThat(dao.count()).isEqualTo(2);
+
+        dao.add(2, null, "130");
+        assertThat(dao.count()).isEqualTo(3);
+
+        dao.add(2, "150", null);
+        assertThat(dao.count()).isEqualTo(4);
+
+        dao.add(3, null, null);
+        assertThat(dao.count()).isEqualTo(5);
     }
 
     @Test
