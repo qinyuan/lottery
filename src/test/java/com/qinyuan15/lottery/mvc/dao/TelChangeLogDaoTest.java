@@ -18,12 +18,13 @@ public class TelChangeLogDaoTest extends DatabaseTestCase {
 
     @Test
     public void testCount() throws Exception {
-        assertThat(dao.count(DateUtils.newDate("2014-12-12 10:10:09"))).isEqualTo(1);
-        assertThat(dao.count(DateUtils.newDate("2014-12-12 10:10:11"))).isEqualTo(0);
+        assertThat(dao.count(2, DateUtils.newDate("2014-12-12 10:10:09"))).isEqualTo(1);
+        assertThat(dao.count(2, DateUtils.newDate("2014-12-12 10:10:11"))).isZero();
+        assertThat(dao.count(3, DateUtils.newDate("2014-12-12 10:10:09"))).isZero();
     }
 
     @Test
     public void testCountInOneYear() throws Exception {
-        System.out.println(dao.countInOneYear());
+        System.out.println(dao.countInOneYear(2));
     }
 }

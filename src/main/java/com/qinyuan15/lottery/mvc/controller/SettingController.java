@@ -47,7 +47,7 @@ public class SettingController extends ImageController {
         setAttribute("pageIndex", index);
         setAttribute("titles", titles);
         User user = (User) securitySearcher.getUser();
-        if (index <= 0) {
+        if (index <= 0) {   // show personal information
             List<LoginRecord> loginRecords = LoginRecordDao.factory().setAscOrder(false).setLimitSize(1).getInstances();
             if (loginRecords.size() > 0) {
                 setAttribute("location", loginRecords.get(0).getLocation());
@@ -56,9 +56,9 @@ public class SettingController extends ImageController {
             }
             setAttribute("user", user);
             setAttribute("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
-        } else if (index == 1) {
+        } else if (index == 1) {    // show system information
             new PaginationAttributeAdder(new SystemInfoFactory(user.getId()), request).setRowItemsName("systemInfoItems").add();
-        } else if (index == 2) {
+        } else if (index == 2) {    // show security information
             List<LoginRecord> loginRecords = LoginRecordDao.factory().setUserId(user.getId())
                     .setLimitSize(LOGIN_RECORD_SIZE).getInstances();
             for (LoginRecord loginRecord : loginRecords) {
@@ -69,9 +69,9 @@ public class SettingController extends ImageController {
                 loginRecord.setPlatform(adaptPlatform(loginRecord.getPlatform()));
             }
             setAttribute("loginRecords", loginRecords);
-        } else if (index == 3 || index == 4) {
+        } else if (index == 3 || index == 4) {      //show tel and email
             setAttribute("user", user);
-        } else if (index == 5) {
+        } else if (index == 5) {        // show liveness
             setAttribute("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
             // share urls
             new UserDao().updateSerialKeyIfNecessary(user);
@@ -186,12 +186,19 @@ public class SettingController extends ImageController {
             }
 
             User user = (User) securitySearcher.getUser();
+            String oldTel = user.getTel();
+
+            if (tel.equals(oldTel)) {
+                return fail("手机号未作修改");
+            }
+
             if (!password.equals(user.getPassword())) {
                 return fail("密码输入错误");
             }
 
             user.setTel(tel);
             HibernateUtils.update(user);
+            new TelChangeLogDao().add(user.getId(), oldTel, tel);
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to update tel, tel: {}, info {}", tel, e);

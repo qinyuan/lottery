@@ -17,13 +17,15 @@ public class TelChangeLogDao extends AbstractDao<TelChangeLog> {
         return HibernateUtils.save(log);
     }
 
-    public int count(Date startTime) {
-        return new HibernateListBuilder().addFilter("changeTime>=:startTime")
+    public int count(Integer userId, Date startTime) {
+        return new HibernateListBuilder()
+                .addEqualFilter("userId", userId)
+                .addFilter("changeTime>=:startTime")
                 .addArgument("startTime", DateUtils.toLongString(startTime))
                 .count(getPersistClass());
     }
 
-    public int countInOneYear() {
-        return count(DateUtils.oneYearAgo());
+    public int countInOneYear(Integer userId) {
+        return count(userId, DateUtils.oneYearAgo());
     }
 }
