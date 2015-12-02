@@ -7,6 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class NewUserValidator {
+    public final static int MAX_LENGTH = 14;
+    public final static int MIN_LENGTH = 2;
     public final static String EMPTY = "用户名不能为空！";
     public final static String TOO_SHORT = "用户名至少使用2个字符！";
     public final static String INVALID_CHAR = "用户名不能包含'@'字符！";
@@ -19,7 +21,7 @@ public class NewUserValidator {
             return Pair.of(false, EMPTY);
         } else if (username.contains(" ")) {
             return Pair.of(false, SPACE);
-        } else if (username.length() < 2) {
+        } else if (username.length() < MIN_LENGTH) {
             return Pair.of(false, TOO_SHORT);
         } else if (username.contains("@")) {
             return Pair.of(false, INVALID_CHAR);
