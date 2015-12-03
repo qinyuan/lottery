@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.account;
 
 import com.qinyuan.lib.lang.concurrent.ThreadUtils;
+import com.qinyuan.lib.lang.test.TestFileUtils;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
@@ -10,7 +11,7 @@ import java.io.IOException;
 public class BaiduUserCrawlerTest {
     @Test
     public void testRun() throws Exception {
-        final File file = new File("/tmp/users.log");
+        final File file = TestFileUtils.getTempFile("users.log");
         FileUtils.deleteQuietly(file);
         final BaiduUserCrawler crawler = new BaiduUserCrawler(new BaiduUserCrawler.UsernameHandler() {
             @Override
@@ -33,6 +34,5 @@ public class BaiduUserCrawlerTest {
         }).start();
 
         crawler.run();
-        //new HttpClient().getContent("http://tieba.baidu.com/f?kw=%D1%DD%D2%EF");
     }
 }
