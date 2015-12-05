@@ -14,8 +14,9 @@ class ExpectedTrackerCalculator {
             expectedParticipantCount = 0;
         }
 
-        int virtualUsersCount = new VirtualUserDao().count();
-        expectedParticipantCount = Math.min(expectedParticipantCount, virtualUsersCount);
+        int virtualUserCount = new VirtualUserDao().count();
+        int availableVirtualUserCount = (int) (virtualUserCount * 0.8); // keep 20% as reserve virtual users
+        expectedParticipantCount = Math.min(expectedParticipantCount, availableVirtualUserCount);
 
         int currentExpectedParticipantCount = new ExpectParticipantsDivider(
                 activity.getStartTime(), activity.getCloseTime(), expectedParticipantCount)

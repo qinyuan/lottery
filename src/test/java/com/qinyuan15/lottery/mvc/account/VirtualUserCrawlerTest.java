@@ -7,7 +7,7 @@ public class VirtualUserCrawlerTest extends DatabaseTestCase {
     @Test
     public void testRun() throws Exception {
         VirtualUserCrawler crawler = new VirtualUserCrawler();
-        //crawler.setCrawlSize(100);
+        //crawler.setCrawlSize(10000);
         crawler.run();
     }
 }

@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class BaiduUserCrawler {
+class BaiduUserCrawler {
     private final static Logger LOGGER = LoggerFactory.getLogger(BaiduUserCrawler.class);
     private final static String WEB_ROOT = "http://tieba.baidu.com";
     private final static int MAX_STORE_PAGE_SIZE = 100000;
