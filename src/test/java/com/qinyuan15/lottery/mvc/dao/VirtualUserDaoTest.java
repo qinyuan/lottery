@@ -9,6 +9,17 @@ public class VirtualUserDaoTest extends DatabaseTestCase {
     private VirtualUserDao dao = new VirtualUserDao();
 
     @Test
+    public void testDeactivateAndCountInactive() {
+        assertThat(dao.countActive()).isEqualTo(0);
+
+        dao.deactivate(dao.getInstance(1));
+        assertThat(dao.countInactive()).isEqualTo(1);
+
+        dao.deactivate(dao.getInstances());
+        assertThat(dao.countInactive()).isEqualTo(2);
+    }
+
+    @Test
     public void testActivateAndCountActive() {
         assertThat(dao.countActive()).isEqualTo(0);
 

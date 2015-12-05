@@ -9,6 +9,27 @@ import java.util.Random;
 
 public class VirtualUserDao extends AbstractDao<VirtualUser> {
 
+    public int countInactive() {
+        return new HibernateListBuilder().addEqualFilter("active", false).count(getPersistClass());
+    }
+
+    public void deactivate(List<VirtualUser> virtualUsers) {
+        if (virtualUsers == null || virtualUsers.size() == 0) {
+            return;
+        }
+
+        String ids = PersistObjectUtils.getIdsString(virtualUsers);
+        for (VirtualUser virtualUser : virtualUsers) {
+            virtualUser.setActive(false);
+        }
+        new HibernateUpdater().addFilter("id IN (" + ids + ")").update(getPersistClass(), "active=false");
+    }
+
+    public void deactivate(VirtualUser virtualUser) {
+        virtualUser.setActive(false);
+        HibernateUtils.update(virtualUser);
+    }
+
     public int countActive() {
         return new HibernateListBuilder().addEqualFilter("active", true).count(getPersistClass());
     }
