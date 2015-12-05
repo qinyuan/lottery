@@ -18,7 +18,7 @@ public class VirtualUserCrawler {
     public void run() {
         usernames.clear();
         crawler = new BaiduUserCrawler(new UsernameHandler());
-        crawler.setInterval(0.5);
+        crawler.setInterval(0.25);
         crawler.run();
 
         VirtualUserDao dao = new VirtualUserDao();

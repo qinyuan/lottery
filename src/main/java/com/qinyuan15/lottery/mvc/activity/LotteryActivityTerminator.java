@@ -103,8 +103,6 @@ public class LotteryActivityTerminator {
                 Date closeTime = DateUtils.newDate(activity.getCloseTime());
                 long timeDiff = closeTime.getTime() - System.currentTimeMillis();
                 try {
-                    new LotteryLotCounter().count(activity);    // force program to update virtual participants
-
                     if (timeDiff <= 0) {
                         new LotteryActivityDao().close(activity);
                         new InvalidLotteryLotSystemInfoSender().send(activity);
@@ -112,6 +110,7 @@ public class LotteryActivityTerminator {
                         closeThreads.remove(activity.getId());
                         break;
                     }
+                    new LotteryLotCounter().count(activity);    // force program to update virtual participants
                 } catch (Throwable e) {
                     e.printStackTrace();
                     LOGGER.error("Fail to crawl activity whose id is {}, info: {}", activity.getId(), e);

@@ -58,9 +58,12 @@ public class BaiduUserCrawler {
                 LOGGER.warn("error in crawling {}, information: {}", url, e);
             }
 
-            if (urls.size() > MAX_STORE_PAGE_SIZE) {
+            if (crawledPageSize > 0 && crawledPageSize == urls.size()) {
                 break;
             }
+            /*if (urls.size() > MAX_STORE_PAGE_SIZE) {
+                break;
+            }*/
         }
     }
 
@@ -104,7 +107,7 @@ public class BaiduUserCrawler {
                 }
 
                 String href = element.attr("href");
-                if (isValidUrl(href) && !urls.containsKey(href)) {
+                if (urls.size() <= MAX_STORE_PAGE_SIZE && isValidUrl(href) && !urls.containsKey(href)) {
                     urls.put(href, false);
                 }
             }

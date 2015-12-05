@@ -60,7 +60,8 @@ create table virtual_user (
   tel_prefix char(11) not null,
   tel_suffix int not null,
   mail_prefix char(10) not null,
-  mail_suffix char(50) not null
+  mail_suffix char(50) not null,
+  active boolean
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table pre_user (
@@ -248,7 +249,8 @@ insert into user(username, password, role, active) values('normal-user1', 'passw
 insert into user(username, password, role, active) values('normal-user2', 'password', 'ROLE_NORMAL', false);
 insert into user(username, password, role, active, spread_user_id) values('normal-user3', 'password', 'ROLE_NORMAL', true, 2);
 
-insert into virtual_user values(1, 'virtual_user1', 15, 00, 'ai', 'qq.com'), (2, 'virtual_user2', 15, 00, 'ai', 'qq.com');
+insert into virtual_user(username, tel_prefix, tel_suffix, mail_prefix, mail_suffix) values
+  ('virtual_user1', 15, 00, 'ai', 'qq.com'), ('virtual_user2', 15, 00, 'ai', 'qq.com');
 
 insert into commodity values
   (1, 'name1', 11.0, true, 'snapshot1', false, 10),

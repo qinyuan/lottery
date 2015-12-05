@@ -10,7 +10,7 @@ import java.util.List;
  * Filter elements of virtual user list to balance ascii username and other username
  * Created by qinyuan on 15-12-3.
  */
-public class VirtualUserFilter {
+class VirtualUserFilter {
     private final static double DEFAULT_ASCII_RATE = 0.75;
     private double asciiRate = DEFAULT_ASCII_RATE;
 
