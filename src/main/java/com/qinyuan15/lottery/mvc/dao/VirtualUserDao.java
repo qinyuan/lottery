@@ -14,7 +14,14 @@ public class VirtualUserDao extends AbstractDao<VirtualUser> {
     }
 
     public void activate(List<VirtualUser> virtualUsers) {
+        if (virtualUsers == null || virtualUsers.size() == 0) {
+            return;
+        }
+
         String ids = PersistObjectUtils.getIdsString(virtualUsers);
+        for (VirtualUser virtualUser : virtualUsers) {
+            virtualUser.setActive(true);
+        }
         new HibernateUpdater().addFilter("id IN (" + ids + ")").update(getPersistClass(), "active=true");
     }
 

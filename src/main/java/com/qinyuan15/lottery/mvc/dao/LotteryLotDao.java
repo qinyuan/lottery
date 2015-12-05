@@ -21,11 +21,16 @@ public class LotteryLotDao extends AbstractDao<LotteryLot> {
     }
 
     public Integer add(Integer activityId, Integer userId, Integer serialNumber) {
+        return add(activityId, userId, serialNumber, false);
+    }
+
+    public Integer add(Integer activityId, Integer userId, Integer serialNumber, Boolean virtual) {
         LotteryLot lotteryLot = new LotteryLot();
         lotteryLot.setActivityId(activityId);
         lotteryLot.setUserId(userId);
         lotteryLot.setLotTime(DateUtils.nowString());
         lotteryLot.setSerialNumber(serialNumber);
+        lotteryLot.setVirtual(virtual);
         return HibernateUtils.save(lotteryLot);
     }
 
