@@ -8,6 +8,7 @@ public class VirtualUser extends PersistObject {
     private String telSuffix;
     private String mailPrefix;
     private String mailSuffix;
+    private Boolean active;
 
     public String getUsername() {
         return username;
@@ -47,6 +48,14 @@ public class VirtualUser extends PersistObject {
 
     public void setMailSuffix(String mailSuffix) {
         this.mailSuffix = mailSuffix;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     // derivative fields

@@ -1,14 +1,27 @@
 package com.qinyuan15.lottery.mvc.dao;
 
-import com.qinyuan.lib.database.hibernate.AbstractDao;
-import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
-import com.qinyuan.lib.database.hibernate.HibernateUtils;
+import com.qinyuan.lib.database.hibernate.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
 import java.util.Random;
 
 public class VirtualUserDao extends AbstractDao<VirtualUser> {
+
+    public int countActive() {
+        return new HibernateListBuilder().addEqualFilter("active", true).count(getPersistClass());
+    }
+
+    public void activate(List<VirtualUser> virtualUsers) {
+        String ids = PersistObjectUtils.getIdsString(virtualUsers);
+        new HibernateUpdater().addFilter("id IN (" + ids + ")").update(getPersistClass(), "active=true");
+    }
+
+    public void activate(VirtualUser virtualUser) {
+        virtualUser.setActive(true);
+        HibernateUtils.update(virtualUser);
+    }
 
     public Integer add(String username) {
         String telPrefix = new Random().nextBoolean() ? "15" : "13";
