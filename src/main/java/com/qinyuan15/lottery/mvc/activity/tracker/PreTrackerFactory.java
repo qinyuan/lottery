@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.activity.tracker;
 
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
+import com.qinyuan15.lottery.mvc.activity.LotteryLotSerialGenerator;
 import com.qinyuan15.lottery.mvc.dao.VirtualUser;
 import com.qinyuan15.lottery.mvc.dao.VirtualUserDao;
 
@@ -8,9 +9,11 @@ import java.util.List;
 
 class PreTrackerFactory {
     private int activityId;
+    private LotteryLotSerialGenerator serialGenerator;
 
-    PreTrackerFactory(int activityId) {
+    PreTrackerFactory(int activityId, LotteryLotSerialGenerator serialGenerator) {
         this.activityId = activityId;
+        this.serialGenerator = serialGenerator;
     }
 
     private HibernateListBuilder getPreTrackerListBuilder() {
@@ -29,7 +32,7 @@ class PreTrackerFactory {
             activeVirtualUsers.addAll(ambiguousVirtualUsers);
         }
 
-        return PreTracker.build(activeVirtualUsers, activityId);
+        return PreTracker.build(activeVirtualUsers, activityId, serialGenerator);
     }
 
     List<PreTracker> createInactivePreTrackers(int size) {
@@ -43,6 +46,6 @@ class PreTrackerFactory {
             inactiveVirtualUsers.addAll(ambiguousVirtualUsers);
         }
 
-        return PreTracker.build(inactiveVirtualUsers, activityId);
+        return PreTracker.build(inactiveVirtualUsers, activityId, serialGenerator);
     }
 }

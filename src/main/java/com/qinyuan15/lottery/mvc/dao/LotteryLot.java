@@ -21,4 +21,13 @@ public class LotteryLot extends AbstractLot {
     public Boolean getVirtual() {
         return BooleanUtils.isTrue(virtual);
     }
+
+    @Override
+    public synchronized User getUser() {
+        if (virtual) {
+            return null;
+        } else {
+            return super.getUser();
+        }
+    }
 }

@@ -2,6 +2,7 @@ package com.qinyuan15.lottery.mvc.activity.tracker;
 
 import com.qinyuan.lib.database.hibernate.HibernateUpdater;
 import com.qinyuan.lib.database.test.DatabaseTestCase;
+import com.qinyuan15.lottery.mvc.activity.DualColoredBallLotteryLotSerialGenerator;
 import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
 import com.qinyuan15.lottery.mvc.dao.VirtualUser;
 import com.qinyuan15.lottery.mvc.dao.VirtualUserDao;
@@ -10,7 +11,7 @@ import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PreTrackerFactoryTest extends DatabaseTestCase {
-    private PreTrackerFactory factory = new PreTrackerFactory(1);
+    private PreTrackerFactory factory = new PreTrackerFactory(1, new DualColoredBallLotteryLotSerialGenerator());
 
     @Test
     public void testCreateActivePreTrackers() throws Exception {
