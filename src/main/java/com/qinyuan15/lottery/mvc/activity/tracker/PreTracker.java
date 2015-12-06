@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity.tracker;
 
+import com.qinyuan15.lottery.mvc.dao.LotteryLot;
 import com.qinyuan15.lottery.mvc.dao.VirtualUser;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ class PreTracker {
     }
 
     void takeLot() {
+        List<LotteryLot> noTrackLots = new RealLotMonitor(activityId).getNoTrackLots();
     }
 
     static List<PreTracker> build(List<VirtualUser> virtualUsers, int activityId) {
