@@ -6,10 +6,10 @@ import com.qinyuan15.lottery.mvc.dao.VirtualUserDao;
 
 import java.util.List;
 
-class TrackerFactory {
+class PreTrackerFactory {
     private int activityId;
 
-    TrackerFactory(int activityId) {
+    PreTrackerFactory(int activityId) {
         this.activityId = activityId;
     }
 
@@ -29,7 +29,7 @@ class TrackerFactory {
             activeVirtualUsers.addAll(ambiguousVirtualUsers);
         }
 
-        return PreTracker.build(activeVirtualUsers);
+        return PreTracker.build(activeVirtualUsers, activityId);
     }
 
     List<PreTracker> createInactivePreTrackers(int size) {
@@ -43,10 +43,6 @@ class TrackerFactory {
             inactiveVirtualUsers.addAll(ambiguousVirtualUsers);
         }
 
-        return PreTracker.build(inactiveVirtualUsers);
-    }
-
-    List<Tracker> getOnJobActiveTrackers() {
-        return null;
+        return PreTracker.build(inactiveVirtualUsers, activityId);
     }
 }

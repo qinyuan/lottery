@@ -9,8 +9,8 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TrackerFactoryTest extends DatabaseTestCase {
-    private TrackerFactory factory = new TrackerFactory(1);
+public class PreTrackerFactoryTest extends DatabaseTestCase {
+    private PreTrackerFactory factory = new PreTrackerFactory(1);
 
     @Test
     public void testCreateActivePreTrackers() throws Exception {
@@ -29,7 +29,7 @@ public class TrackerFactoryTest extends DatabaseTestCase {
         new VirtualUserDao().add("virtual_user3");
         for (int i = 0; i < 10; i++) {
             assertThat(factory.createActivePreTrackers(2).toString())
-                    .contains("1").contains("2").doesNotContain("3");
+                    .contains("userId:1").contains("userId:2").doesNotContain("userId:3");
         }
 
         /*
@@ -41,13 +41,13 @@ public class TrackerFactoryTest extends DatabaseTestCase {
         for (int i = 0; i < 10; i++) {
             new HibernateUpdater().update(VirtualUser.class, "active=null");
             String trackerString = factory.createActivePreTrackers(2).toString();
-            if (trackerString.contains("1")) {
+            if (trackerString.contains("userId:1")) {
                 trackerOfVirtualUser1Created = true;
             }
-            if (trackerString.contains("2")) {
+            if (trackerString.contains("userId:2")) {
                 trackerOfVirtualUser2Created = true;
             }
-            if (trackerString.contains("3")) {
+            if (trackerString.contains("userId:3")) {
                 trackerOfVirtualUser3Created = true;
             }
         }
@@ -61,7 +61,7 @@ public class TrackerFactoryTest extends DatabaseTestCase {
         new LotteryLotDao().add(1, 3, 1, true);
         for (int i = 0; i < 10; i++) {
             new HibernateUpdater().update(VirtualUser.class, "active=null");
-            assertThat(factory.createActivePreTrackers(2).toString()).doesNotContain("3");
+            assertThat(factory.createActivePreTrackers(2).toString()).doesNotContain("userId:3");
         }
     }
 
@@ -82,7 +82,7 @@ public class TrackerFactoryTest extends DatabaseTestCase {
         new VirtualUserDao().add("virtual_user3");
         for (int i = 0; i < 10; i++) {
             assertThat(factory.createInactivePreTrackers(2).toString())
-                    .contains("1").contains("2").doesNotContain("3");
+                    .contains("userId:1").contains("userId:2").doesNotContain("userId:3");
         }
 
         /*
@@ -94,13 +94,13 @@ public class TrackerFactoryTest extends DatabaseTestCase {
         for (int i = 0; i < 10; i++) {
             new HibernateUpdater().update(VirtualUser.class, "active=null");
             String trackerString = factory.createActivePreTrackers(2).toString();
-            if (trackerString.contains("1")) {
+            if (trackerString.contains("userId:1")) {
                 trackerOfVirtualUser1Created = true;
             }
-            if (trackerString.contains("2")) {
+            if (trackerString.contains("userId:2")) {
                 trackerOfVirtualUser2Created = true;
             }
-            if (trackerString.contains("3")) {
+            if (trackerString.contains("userId:3")) {
                 trackerOfVirtualUser3Created = true;
             }
         }
@@ -114,12 +114,7 @@ public class TrackerFactoryTest extends DatabaseTestCase {
         new LotteryLotDao().add(1, 3, 1, true);
         for (int i = 0; i < 10; i++) {
             new HibernateUpdater().update(VirtualUser.class, "active=null");
-            assertThat(factory.createInactivePreTrackers(2).toString()).doesNotContain("3");
+            assertThat(factory.createInactivePreTrackers(2).toString()).doesNotContain("userId:3");
         }
-    }
-
-    @Test
-    public void testGetOnJobActiveTrackers() throws Exception {
-
     }
 }
