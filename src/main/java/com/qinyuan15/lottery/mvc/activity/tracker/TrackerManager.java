@@ -31,17 +31,24 @@ public class TrackerManager {
         try {
             List<LotteryActivity> activities = LotteryActivityDao.factory().setExpire(false).getInstances();
             for (LotteryActivity activity : activities) {
-                serialGenerator.setActivity(activity);
-                allocateActiveTrackers(activity);
-                allocateInactiveTrackers(activity);
-                runActiveTrackers(activity);
-                runInactiveTrackers(activity);
+                if (isNotExpire(activity)) {
+                    serialGenerator.setActivity(activity);
+                    allocateActiveTrackers(activity);
+                    allocateInactiveTrackers(activity);
+                    runActiveTrackers(activity);
+                    runInactiveTrackers(activity);
+                }
             }
         } catch (Throwable e) {
             LOGGER.error("error in invoking TrackerManager#run, info: {}", e);
         }
 
         running = false;
+    }
+
+    private boolean isNotExpire(LotteryActivity activity) {
+        activity = new LotteryActivityDao().getInstance(activity.getId());
+        return activity != null && !activity.getExpire();
     }
 
     private void allocateActiveTrackers(LotteryActivity activity) {
