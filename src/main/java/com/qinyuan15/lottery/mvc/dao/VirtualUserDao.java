@@ -8,6 +8,14 @@ import java.util.List;
 import java.util.Random;
 
 public class VirtualUserDao extends AbstractDao<VirtualUser> {
+    public void changeLiveness(VirtualUser virtualUser, int newLivensss) {
+        if (virtualUser.getLiveness() != null && virtualUser.getLiveness() > newLivensss) {
+            return;
+        }
+
+        virtualUser.setLiveness(newLivensss);
+        HibernateUtils.update(virtualUser);
+    }
 
     public int countInactive() {
         return new HibernateListBuilder().addEqualFilter("active", false).count(getPersistClass());
