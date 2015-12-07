@@ -5,15 +5,17 @@ import com.qinyuan15.lottery.mvc.dao.LotteryLot;
 
 import java.util.List;
 
-class ActiveTrackerFactory {
+class TrackerFactory {
     private final static int PAGE_SIZE = 100;
-    private int activityId;
+    private final int activityId;
+    private final boolean active;
     private int pageNumber = 1;
     private int pointer = 0;
     private List<LotteryLot> lots;
 
-    ActiveTrackerFactory(int activityId) {
+    TrackerFactory(int activityId, boolean active) {
         this.activityId = activityId;
+        this.active = active;
         initLots();
     }
 
@@ -30,7 +32,7 @@ class ActiveTrackerFactory {
     }
 
     private Tracker createTrackerAndIncreasePointer() {
-        Tracker tracker = new Tracker(lots.get(pointer - getFirstResultIndex()), true);
+        Tracker tracker = new Tracker(lots.get(pointer - getFirstResultIndex()), active);
         pointer++;
         return tracker;
     }
@@ -38,7 +40,8 @@ class ActiveTrackerFactory {
 
     private synchronized void initLots() {
         lots = new HibernateListBuilder().addEqualFilter("activityId", activityId)
-                .addFilter("virtual=true").addFilter("userId IN (SELECT id FROM VirtualUser WHERE active=true)")
+                .addFilter("virtual=true").addFilter("userId IN (SELECT id FROM VirtualUser WHERE active=:active)")
+                .addArgument("active", active)
                 .limit(getFirstResultIndex(), PAGE_SIZE).build(LotteryLot.class);
     }
 

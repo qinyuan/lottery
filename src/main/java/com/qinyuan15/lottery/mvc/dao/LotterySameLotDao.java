@@ -14,7 +14,6 @@ import java.util.List;
 public class LotterySameLotDao {
     private final static Logger LOGGER = LoggerFactory.getLogger(LotterySameLotDao.class);
 
-
     public int getMaxLiveness(int activityId, int serialNumber) {
         User user = getMaxLivenessUser(activityId, serialNumber);
         return user == null ? 0 : user.liveness;
