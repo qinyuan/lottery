@@ -12,6 +12,7 @@ class Tracker {
     private final static int MAX_LIVENESS_OF_INACTIVE_TRACKER = 10;
     private LotteryLot lot;
     private final boolean active;
+    private VirtualUserDao virtualUserDao = new VirtualUserDao();
 
     Tracker(LotteryLot lot, boolean active) {
         this.lot = lot;
@@ -29,8 +30,7 @@ class Tracker {
             return;
         }
 
-        VirtualUserDao virtualUserDao = new VirtualUserDao();
-        VirtualUser virtualUser = virtualUserDao.getInstance(lot.getUserId());
+        VirtualUser virtualUser = getVirtualUser();
         if (active) {
             // only max liveness virtual user follow real lot
             LotterySameLotDao.User maxLivenessVirtualUser = sameLotDao.getMaxLivenessVirtualUser(users);
@@ -39,7 +39,7 @@ class Tracker {
                 return;
             }
 
-            int upperBound = (int) (maxLivenessUser.liveness * 0.8);
+            int upperBound = (int) (maxLivenessUser.liveness * 0.9);
             int lowerBound = (int) (maxLivenessUser.liveness * 0.6);
             if (upperBound > 0) {
                 virtualUserDao.changeLiveness(virtualUser, RandomUtils.nextInt(lowerBound, upperBound));
@@ -53,7 +53,29 @@ class Tracker {
     }
 
     void exceed() {
+        if (!active) {
+            return;
+        }
 
+        LotterySameLotDao sameLotDao = new LotterySameLotDao();
+        LotterySameLotDao.User maxLivenessRealUser = sameLotDao.getMaxLivenessRealUser(
+                lot.getActivityId(), lot.getSerialNumber());
+
+        if (maxLivenessRealUser == null || maxLivenessRealUser.virtual) {
+            return;
+        }
+
+        VirtualUser virtualUser = getVirtualUser();
+        if (virtualUser.getLiveness() != null && virtualUser.getLiveness() > maxLivenessRealUser.liveness) {
+            return;
+        }
+
+        int liveness = RandomUtils.nextInt(maxLivenessRealUser.liveness + 1, maxLivenessRealUser.liveness + 4);
+        virtualUserDao.changeLiveness(virtualUser, liveness);
+    }
+
+    private VirtualUser getVirtualUser() {
+        return virtualUserDao.getInstance(lot.getUserId());
     }
 
     @Override

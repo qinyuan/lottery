@@ -20,6 +20,23 @@ public class LotterySameLotDao {
         return user == null ? 0 : user.liveness;
     }
 
+    public User getMaxLivenessRealUser(List<User> users) {
+        User maxLivenessRealUser = null;
+        for (User user : users) {
+            if (user.virtual) {
+                continue;
+            }
+            if (maxLivenessRealUser == null || user.liveness > maxLivenessRealUser.liveness) {
+                maxLivenessRealUser = user;
+            }
+        }
+        return maxLivenessRealUser;
+    }
+
+    public User getMaxLivenessRealUser(int activityId, int serialNumber) {
+        return getMaxLivenessRealUser(getUsers(activityId, serialNumber));
+    }
+
     public User getMaxLivenessVirtualUser(List<User> users) {
         User maxLivenessVirtualUser = null;
         for (User user : users) {
