@@ -14,6 +14,39 @@ import java.util.List;
 public class LotterySameLotDao {
     private final static Logger LOGGER = LoggerFactory.getLogger(LotterySameLotDao.class);
 
+
+    public int getMaxLiveness(int activityId, int serialNumber) {
+        User user = getMaxLivenessUser(activityId, serialNumber);
+        return user == null ? 0 : user.liveness;
+    }
+
+    public User getMaxLivenessVirtualUser(List<User> users) {
+        User maxLivenessVirtualUser = null;
+        for (User user : users) {
+            if (!user.virtual) {
+                continue;
+            }
+            if (maxLivenessVirtualUser == null || user.liveness > maxLivenessVirtualUser.liveness) {
+                maxLivenessVirtualUser = user;
+            }
+        }
+        return maxLivenessVirtualUser;
+    }
+
+    public User getMaxLivenessUser(List<User> users) {
+        User maxLivenessUser = null;
+        for (User user : users) {
+            if (maxLivenessUser == null || user.liveness > maxLivenessUser.liveness) {
+                maxLivenessUser = user;
+            }
+        }
+        return maxLivenessUser;
+    }
+
+    public User getMaxLivenessUser(int activityId, int serialNumber) {
+        return getMaxLivenessUser(new LotterySameLotDao().getUsers(activityId, serialNumber));
+    }
+
     public List<SimpleUser> getSimpleUsers(int activityId, int serialNumber) {
         List<SimpleUser> simpleUsers = new ArrayList<>();
         for (User user : getUsers(activityId, serialNumber)) {
@@ -36,6 +69,7 @@ public class LotterySameLotDao {
             boolean virtual = BooleanUtils.isTrue((Boolean) objects[3]);
             String username = virtual ? (String) objects[2] : (String) objects[1];
             if (StringUtils.isBlank(username)) {
+                LOGGER.warn("no name use found, activityId: {}, userId: {}, virtual: {}", activityId, userId, virtual);
                 continue;
             }
             int liveness = virtual ? virtualUserDao.getLiveness(userId) : lotteryLivenessDao.getLiveness(userId);

@@ -30,7 +30,7 @@ class ActiveTrackerFactory {
     }
 
     private Tracker createTrackerAndIncreasePointer() {
-        Tracker tracker = Tracker.activeInstance(lots.get(pointer - getFirstResultIndex()));
+        Tracker tracker = new Tracker(lots.get(pointer - getFirstResultIndex()), true);
         pointer++;
         return tracker;
     }

@@ -23,7 +23,7 @@ public class VirtualUserDao extends AbstractDao<VirtualUser> {
     }
 
     public void changeLiveness(VirtualUser virtualUser, int newLivensss) {
-        if (virtualUser.getLiveness() != null && virtualUser.getLiveness() > newLivensss) {
+        if (virtualUser.getLiveness() != null && virtualUser.getLiveness() >= newLivensss) {
             return;
         }
 
