@@ -154,12 +154,12 @@ public class LotController extends ImageController {
         }
     }
 
-    private void putLotteryLivenessParameters(Map<String, Object> result, User user, LotteryActivity activity) {
+    /*private void putLotteryLivenessParameters(Map<String, Object> result, User user, LotteryActivity activity) {
         result.put("tel", user.getTel());
         result.put("noTelInvalidLot", InvalidLotteryLotUtils.isNoTelInvalidLot(user, activity));
         result.put("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
         result.put("minLivenessToParticipate", activity.getMinLivenessToParticipate());
-    }
+    }*/
 
     @RequestMapping("/take-seckill.json")
     @ResponseBody

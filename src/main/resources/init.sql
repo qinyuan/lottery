@@ -61,7 +61,8 @@ create table virtual_user (
   tel_suffix int not null,
   mail_prefix char(10) not null,
   mail_suffix char(50) not null,
-  active boolean
+  active boolean,
+  liveness int
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table pre_user (

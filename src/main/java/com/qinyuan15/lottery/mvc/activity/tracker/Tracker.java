@@ -14,10 +14,10 @@ class Tracker {
     }
 
     void follow() {
+
     }
 
     void exceed() {
-
     }
 
     @Override

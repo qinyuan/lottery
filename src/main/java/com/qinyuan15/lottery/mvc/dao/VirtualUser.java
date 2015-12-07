@@ -9,6 +9,7 @@ public class VirtualUser extends PersistObject {
     private String mailPrefix;
     private String mailSuffix;
     private Boolean active;
+    private Integer liveness;
 
     public String getUsername() {
         return username;
@@ -56,6 +57,14 @@ public class VirtualUser extends PersistObject {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public Integer getLiveness() {
+        return liveness;
+    }
+
+    public void setLiveness(Integer liveness) {
+        this.liveness = liveness;
     }
 
     // derivative fields

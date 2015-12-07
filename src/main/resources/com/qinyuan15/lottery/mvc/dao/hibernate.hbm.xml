@@ -179,6 +179,7 @@
         <property name="mailPrefix" column="mail_prefix"/>
         <property name="mailSuffix" column="mail_suffix"/>
         <property name="active"/>
+        <property name="liveness"/>
     </class>
     <class name="PreUser" table="pre_user">
         <id name="id" column="id">
