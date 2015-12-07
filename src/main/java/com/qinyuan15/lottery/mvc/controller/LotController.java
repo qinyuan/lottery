@@ -84,7 +84,6 @@ public class LotController extends ImageController {
                         lotNumberFormat);
                 result.put("serialNumbers", serialNumbers);
                 result.put("sameLotUsers", new LotteryLotDao().getUsers(activity.getId(), serialNumbers.get(0)));
-                //putLotteryLivenessParameters(result, user, activity);
                 result.put(SUCCESS, false);
                 result.put(DETAIL, "alreadyAttended");
             }
@@ -99,14 +98,6 @@ public class LotController extends ImageController {
 
         // activity
         result.put("activityDescription", activity.getDescription());
-
-        // share urls
-        /*new UserDao().updateSerialKeyIfNecessary(user);
-        LotteryShareUrlBuilder lotteryShareUrlBuilder = new LotteryShareUrlBuilder(
-                user.getSerialKey(), AppConfig.getAppHost(), commodity);
-        result.put("sinaWeiboShareUrl", lotteryShareUrlBuilder.getSinaShareUrl());
-        result.put("qqShareUrl", lotteryShareUrlBuilder.getQQShareUrl());
-        result.put("qzoneShareUrl", lotteryShareUrlBuilder.getQzoneShareUrl());*/
 
         // participants data
         result.put("participantCount", new LotteryLotCounter().count(activity));
@@ -145,7 +136,6 @@ public class LotController extends ImageController {
             Map<String, Object> result = new HashMap<>();
             result.put("serialNumbers", serialNumbers);
             result.put("sameLotUsers", new LotteryLotDao().getUsers(activity.getId(), serialNumbers.get(0)));
-            //putLotteryLivenessParameters(result, user, activity);
             result.put(SUCCESS, true);
             return toJson(result);
         } catch (Exception e) {
@@ -153,13 +143,6 @@ public class LotController extends ImageController {
             return failByDatabaseError();
         }
     }
-
-    /*private void putLotteryLivenessParameters(Map<String, Object> result, User user, LotteryActivity activity) {
-        result.put("tel", user.getTel());
-        result.put("noTelInvalidLot", InvalidLotteryLotUtils.isNoTelInvalidLot(user, activity));
-        result.put("liveness", new LotteryLivenessDao().getLiveness(user.getId()));
-        result.put("minLivenessToParticipate", activity.getMinLivenessToParticipate());
-    }*/
 
     @RequestMapping("/take-seckill.json")
     @ResponseBody
@@ -195,14 +178,6 @@ public class LotController extends ImageController {
 
         // activity
         result.put("activityDescription", activity.getDescription());
-
-        // share urls
-        /*new UserDao().updateSerialKeyIfNecessary(user);
-        SeckillShareUrlBuilder seckillShareUrlBuilder = new SeckillShareUrlBuilder(
-                user.getSerialKey(), AppConfig.getAppHost(), commodity);
-        result.put("sinaWeiboShareUrl", seckillShareUrlBuilder.getSinaShareUrl());
-        result.put("qqShareUrl", seckillShareUrlBuilder.getQQShareUrl());
-        result.put("qzoneShareUrl", seckillShareUrlBuilder.getQzoneShareUrl());*/
 
         return toJson(result);
     }
