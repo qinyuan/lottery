@@ -31,4 +31,14 @@
         <!-- run in 22 o'clock of each day -->
         <task:scheduled ref="dualColoredBallResultDownloader" method="download" cron="0 0 22 * * ?"/>
     </task:scheduled-tasks>
+
+    <bean id="lotteryTrackerManager" class="com.qinyuan15.lottery.mvc.activity.tracker.TrackerManager">
+        <constructor-arg ref="lotteryLotNumberValidator"/>
+        <constructor-arg ref="serialGenerator"/>
+    </bean>
+
+    <task:scheduled-tasks>
+        <!-- run each minute -->
+        <task:scheduled ref="lotteryTrackerManager" method="run" cron="0 * * * * ?"/>
+    </task:scheduled-tasks>
 </beans>
