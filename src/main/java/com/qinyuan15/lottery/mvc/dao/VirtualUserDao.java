@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.hibernate.*;
+import com.qinyuan.lib.lang.IntegerUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.util.StringUtils;
 
@@ -8,6 +9,19 @@ import java.util.List;
 import java.util.Random;
 
 public class VirtualUserDao extends AbstractDao<VirtualUser> {
+    public int getLiveness(Integer virtualUserId) {
+        if (!IntegerUtils.isPositive(virtualUserId)) {
+            return 0;
+        }
+
+        VirtualUser virtualUser = new VirtualUserDao().getInstance(virtualUserId);
+        if (virtualUser == null) {
+            return 0;
+        }
+
+        return virtualUser.getLiveness() == null ? 0 : virtualUser.getLiveness();
+    }
+
     public void changeLiveness(VirtualUser virtualUser, int newLivensss) {
         if (virtualUser.getLiveness() != null && virtualUser.getLiveness() > newLivensss) {
             return;

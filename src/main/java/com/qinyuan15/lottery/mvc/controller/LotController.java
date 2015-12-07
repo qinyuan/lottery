@@ -8,7 +8,10 @@ import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.account.UserTelUtils;
-import com.qinyuan15.lottery.mvc.activity.*;
+import com.qinyuan15.lottery.mvc.activity.DualColoredBallLotteryLotSerialGenerator;
+import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
+import com.qinyuan15.lottery.mvc.activity.LotteryLotCreator;
+import com.qinyuan15.lottery.mvc.activity.LotteryLotNumberValidator;
 import com.qinyuan15.lottery.mvc.dao.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -83,7 +86,7 @@ public class LotController extends ImageController {
                 List<String> serialNumbers = new LotteryLotDao().getSerialNumbers(activity.getId(), user.getId(),
                         lotNumberFormat);
                 result.put("serialNumbers", serialNumbers);
-                result.put("sameLotUsers", new LotteryLotDao().getUsers(activity.getId(), serialNumbers.get(0)));
+                result.put("sameLotUsers", new LotterySameLotDao().getSimpleUsers(activity.getId(), serialNumbers.get(0)));
                 result.put(SUCCESS, false);
                 result.put(DETAIL, "alreadyAttended");
             }
@@ -135,7 +138,7 @@ public class LotController extends ImageController {
 
             Map<String, Object> result = new HashMap<>();
             result.put("serialNumbers", serialNumbers);
-            result.put("sameLotUsers", new LotteryLotDao().getUsers(activity.getId(), serialNumbers.get(0)));
+            result.put("sameLotUsers", new LotterySameLotDao().getSimpleUsers(activity.getId(), serialNumbers.get(0)));
             result.put(SUCCESS, true);
             return toJson(result);
         } catch (Exception e) {
