@@ -22,6 +22,7 @@ public class TrackerManager {
 
     public void run() {
         if (running) {
+            LOGGER.warn("there are more than one tracker manager instance running, just skip");
             return; // if there is another instance running, just skip
         }
 
@@ -30,6 +31,7 @@ public class TrackerManager {
         try {
             List<LotteryActivity> activities = LotteryActivityDao.factory().setExpire(false).getInstances();
             for (LotteryActivity activity : activities) {
+                serialGenerator.setActivity(activity);
                 allocateActiveTrackers(activity);
                 allocateInactiveTrackers(activity);
                 runActiveTrackers(activity);

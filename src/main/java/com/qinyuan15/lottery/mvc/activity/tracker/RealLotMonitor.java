@@ -13,7 +13,10 @@ class RealLotMonitor {
     }
 
     List<LotteryLot> getNoTrackLots() {
-        String oneLotSerial = "(SELECT serialNumber FROM LotteryLot GROUP BY serialNumber HAVING COUNT(*)=1)";
+        String oneLotSerial = "(SELECT serialNumber FROM LotteryLot" +
+                " WHERE activityId=" + activityId +
+                " AND NOT (virtual=true AND userId IN (SELECT id FROM VirtualUser WHERE active=false OR active IS NULL))" +
+                " GROUP BY serialNumber HAVING COUNT(*)=1)";
         return new HibernateListBuilder().addFilter("virtual=false OR virtual IS NULL")
                 .addEqualFilter("activityId", activityId)
                 .addFilter("serialNumber IN " + oneLotSerial)
