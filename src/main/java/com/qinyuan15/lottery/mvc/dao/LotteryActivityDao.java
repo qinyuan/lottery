@@ -128,10 +128,19 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         return factory().setClosed(false).getInstances();
     }
 
+    private final static String RESULT_QUERY = "(SELECT CONCAT(year,LPAD(term,3,0)) FROM DualColoredBallRecord " +
+            "WHERE result IS NOT NULL OR result<>'')";
+
     public List<LotteryActivity> getNoResultInstances() {
-        String resultTerm = "(SELECT CONCAT(year,LPAD(term,3,0)) FROM DualColoredBallRecord " +
-                "WHERE result IS NOT NULL OR result<>'')";
         return new HibernateListBuilder()
-                .addFilter("dualColoredBallTerm NOT IN " + resultTerm).build(LotteryActivity.class);
+                .addFilter("dualColoredBallTerm NOT IN " + RESULT_QUERY).build(LotteryActivity.class);
+    }
+
+    /**
+     * @return instances that are not expired but have result
+     */
+    public List<LotteryActivity> getUnexpiredWithResultInstances() {
+        return new HibernateListBuilder().addFilter("expire=false")
+                .addFilter("dualColoredBallTerm IN " + RESULT_QUERY).build(LotteryActivity.class);
     }
 }

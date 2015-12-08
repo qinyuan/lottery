@@ -60,7 +60,7 @@ public class LotteryActivityTerminator {
     }
 
     private class ResultThreadScheduler extends Thread {
-        final static int INTERVAL = 60; // reload each minute
+        final static int INTERVAL = 60; // sleep each minute
 
         @Override
         public void run() {
@@ -78,6 +78,17 @@ public class LotteryActivityTerminator {
                     }
                 }
                 ThreadUtils.sleep(INTERVAL);
+            }
+        }
+    }
+
+    private class WinnerThreadScheduler extends Thread {
+        final static int INTERVAL = 60; // sleep each minute
+
+        @Override
+        public void run() {
+            while (true) {
+
             }
         }
     }

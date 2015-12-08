@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.dao;
 
+import com.qinyuan.lib.database.hibernate.HibernateUpdater;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.database.test.DatabaseTestCase;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -64,5 +65,14 @@ public class LotteryActivityDaoTest extends DatabaseTestCase {
         assertThat(dao.getNoResultInstances()).hasSize(2);
         new DualColoredBallRecordDao().add(2015, 81, "20151212", "080808080808");
         assertThat(dao.getNoResultInstances()).hasSize(1);
+    }
+
+    @Test
+    public void testGetUnexpiredWithResultInstances() {
+        assertThat(dao.getUnexpiredWithResultInstances()).isEmpty();
+        new DualColoredBallRecordDao().add(2015, 81, "20151212", "080808080808");
+        assertThat(dao.getUnexpiredWithResultInstances()).hasSize(1);
+        new HibernateUpdater().addEqualFilter("id", 1).update(LotteryActivity.class, "expire=true");
+        assertThat(dao.getUnexpiredWithResultInstances()).isEmpty();
     }
 }
