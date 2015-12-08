@@ -10,25 +10,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Date;
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class LotteryActivityTerminator {
     private final static Logger LOGGER = LoggerFactory.getLogger(LotteryActivityTerminator.class);
-    private Map<Integer, LotteryEndThread> endThreads = new HashMap<>();
+    private Map<Integer, LotteryResultThread> resultThreads = new HashMap<>();
     private Map<Integer, LotteryCloseThread> closeThreads = new HashMap<>();
     private List<DualColoredBallCrawler> crawlers;
-    private final DecimalFormat lotNumberFormat;
+    //private final DecimalFormat lotNumberFormat;
 
-    public LotteryActivityTerminator(DecimalFormat lotNumberFormat) {
+    /*public LotteryActivityTerminator(DecimalFormat lotNumberFormat) {
         this.lotNumberFormat = lotNumberFormat;
-    }
+    }*/
 
     public void init() {
-        new EndThreadScheduler().start();
         new CloseThreadScheduler().start();
+        new ResultThreadScheduler().start();
     }
 
     public void setCrawlers(List<DualColoredBallCrawler> crawlers) {
@@ -60,21 +59,18 @@ public class LotteryActivityTerminator {
         }
     }
 
-    private class EndThreadScheduler extends Thread {
+    private class ResultThreadScheduler extends Thread {
         final static int INTERVAL = 60; // reload each minute
 
         @Override
         public void run() {
             while (true) {
-                // build crawl thread for each active lottery activity
-                List<LotteryActivity> activities = LotteryActivityDao.factory().setExpire(false).getInstances();
-                for (LotteryActivity activity : activities) {
-                    LotteryEndThread thread = endThreads.get(activity.getId());
-
+                for (LotteryActivity activity : new LotteryActivityDao().getNoResultInstances()) {
+                    LotteryResultThread thread = resultThreads.get(activity.getId());
                     if (thread == null) {
                         // if related thread not exists, create and run it
-                        thread = new LotteryEndThread(activity);
-                        endThreads.put(activity.getId(), thread);
+                        thread = new LotteryResultThread(activity);
+                        resultThreads.put(activity.getId(), thread);
                         thread.start();
                     } else {
                         // if related thread already exists, just update activity data of it
@@ -121,10 +117,10 @@ public class LotteryActivityTerminator {
         }
     }
 
-    private class LotteryEndThread extends Thread {
+    private class LotteryResultThread extends Thread {
         LotteryActivity activity;
 
-        LotteryEndThread(LotteryActivity activity) {
+        LotteryResultThread(LotteryActivity activity) {
             this.activity = activity;
         }
 
@@ -138,14 +134,12 @@ public class LotteryActivityTerminator {
                 try {
                     DualColoredBallCrawler.Result result = getResult();
                     if (result != null) {
-                        new LotteryActivityDao().end(activity.getId());
-                        //new VirtualParticipantAdjuster().adjustByDecrement(activity.getId(), Long.parseLong(result.result));
+                        //new LotteryActivityDao().end(activity.getId());
                         new DualColoredBallRecordDao().add(activity.getDualColoredBallTerm(),
                                 result.drawTime, result.result);
-                        new LotteryResultUpdater(lotNumberFormat).update(activity.getId(), result.result);
 
                         // remove related thread after success
-                        endThreads.remove(activity.getId());
+                        resultThreads.remove(activity.getId());
                         break;
                     }
                 } catch (Throwable e) {

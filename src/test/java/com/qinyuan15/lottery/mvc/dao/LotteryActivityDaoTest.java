@@ -58,4 +58,11 @@ public class LotteryActivityDaoTest extends DatabaseTestCase {
     public void testGetLatestMinLivenessToParticipate() {
         assertThat(dao.getLatestMinLivenessToParticipate()).isEqualTo(4);
     }
+
+    @Test
+    public void testGetNoResultInstances() {
+        assertThat(dao.getNoResultInstances()).hasSize(2);
+        new DualColoredBallRecordDao().add(2015, 81, "20151212", "080808080808");
+        assertThat(dao.getNoResultInstances()).hasSize(1);
+    }
 }

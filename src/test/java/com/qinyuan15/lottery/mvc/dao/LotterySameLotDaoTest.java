@@ -17,6 +17,7 @@ public class LotterySameLotDaoTest extends DatabaseTestCase {
         assertThat(users.get(0).username).isEqualTo("normal-user1");
         assertThat(users.get(0).liveness).isEqualTo(25);
         assertThat(users.get(0).virtual).isFalse();
+        assertThat(users.get(0).lotId).isEqualTo(1);
 
         // add a virtual lot
         new LotteryLotDao().add(2, 1, 10257, true);
@@ -26,9 +27,11 @@ public class LotterySameLotDaoTest extends DatabaseTestCase {
         assertThat(users.get(0).username).isEqualTo("normal-user1");
         assertThat(users.get(0).liveness).isEqualTo(25);
         assertThat(users.get(0).virtual).isFalse();
+        assertThat(users.get(0).lotId).isEqualTo(1);
         assertThat(users.get(1).username).isEqualTo("virtual_user1");
         assertThat(users.get(1).liveness).isEqualTo(0);
         assertThat(users.get(1).virtual).isTrue();
+        assertThat(users.get(1).lotId).isEqualTo(3);
 
         // change liveness of virtual user
         VirtualUserDao virtualUserDao = new VirtualUserDao();

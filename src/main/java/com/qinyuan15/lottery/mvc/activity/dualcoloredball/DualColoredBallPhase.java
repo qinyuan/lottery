@@ -1,4 +1,4 @@
-package com.qinyuan15.lottery.mvc.activity;
+package com.qinyuan15.lottery.mvc.activity.dualcoloredball;
 
 public class DualColoredBallPhase {
     public final int year;

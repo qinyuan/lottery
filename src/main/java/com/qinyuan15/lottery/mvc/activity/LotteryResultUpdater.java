@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity;
 
-import com.qinyuan15.lottery.mvc.AppConfig;
+/*import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import org.slf4j.Logger;
@@ -13,7 +13,7 @@ import java.text.DecimalFormat;
  * Class to update result of lottery automatically
  * Created by qinyuan on 15-8-5.
  */
-public class LotteryResultUpdater {
+/*public class LotteryResultUpdater {
     private final static Logger LOGGER = LoggerFactory.getLogger(LotteryResultUpdater.class);
     private DecimalFormat lotNumberFormat;
 
@@ -45,4 +45,4 @@ public class LotteryResultUpdater {
                 phase, dualColoredBallResult, winnerString, participantCount).convert(announcementTemplate);
         new LotteryActivityDao().updateResult(activityId, winnerString, announcement);
     }
-}
+}*/

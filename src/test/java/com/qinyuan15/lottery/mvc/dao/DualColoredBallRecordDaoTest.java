@@ -9,6 +9,21 @@ public class DualColoredBallRecordDaoTest extends DatabaseTestCase {
     private DualColoredBallRecordDao dao = new DualColoredBallRecordDao();
 
     @Test
+    public void testGetResult() {
+        assertThat(dao.getResult(2015, 80)).isEqualTo("141725272830");
+        assertThat(dao.getResult(2015, 81)).isNull();
+    }
+
+    @Test
+    public void testGetInstance() {
+        DualColoredBallRecord record = dao.getInstance(2015, 80);
+        assertThat(record.getId()).isEqualTo(1);
+        assertThat(record.getResult()).isEqualTo("141725272830");
+
+        assertThat(dao.getInstance(2015, 81)).isNull();
+    }
+
+    @Test
     public void testCount() {
         assertThat(dao.count()).isEqualTo(2);
     }

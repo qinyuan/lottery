@@ -10,7 +10,7 @@ import java.util.List;
 public class LotteryActivityTerminatorTest {
     @Test
     public void testInit() throws Exception {
-        LotteryActivityTerminator crawlers = new LotteryActivityTerminator(new DecimalFormat("000000"));
+        LotteryActivityTerminator crawlers = new LotteryActivityTerminator(/*new DecimalFormat("000000")*/);
 
         List<DualColoredBallCrawler> crawlerList = new ArrayList<>();
         crawlerList.add(new BaiduLecaiCrawler());

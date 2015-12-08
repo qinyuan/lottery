@@ -83,13 +83,14 @@ public class LotterySameLotDao {
         for (Object[] objects : queryLots(activityId, serialNumber)) {
             int userId = (Integer) objects[0];
             boolean virtual = BooleanUtils.isTrue((Boolean) objects[3]);
+            int lotId = (Integer) objects[4];
             String username = virtual ? (String) objects[2] : (String) objects[1];
             if (StringUtils.isBlank(username)) {
                 LOGGER.warn("no name use found, activityId: {}, userId: {}, virtual: {}", activityId, userId, virtual);
                 continue;
             }
             int liveness = virtual ? virtualUserDao.getLiveness(userId) : lotteryLivenessDao.getLiveness(userId);
-            users.add(new User(username, liveness, virtual));
+            users.add(new User(username, liveness, virtual, lotId));
         }
 
         return sort(users);
@@ -112,7 +113,7 @@ public class LotterySameLotDao {
 
     private List<Object[]> queryLots(int activityId, int serialNumber) {
         // query data from database
-        String sql = "SELECT l.user_id,u.username AS u_name,vu.username AS vu_name,virtual FROM lottery_lot AS l " +
+        String sql = "SELECT l.user_id,u.username AS u_name,vu.username AS vu_name,virtual,l.id FROM lottery_lot AS l " +
                 "LEFT JOIN user AS u ON (l.user_id=u.id AND (l.virtual IS NULL or l.virtual=false)) " +
                 "LEFT JOIN virtual_user AS vu ON (l.user_id=vu.id AND (l.virtual=true))";
         return new HibernateListBuilder().addEqualFilter("activity_id", activityId)
@@ -131,11 +132,13 @@ public class LotterySameLotDao {
     }
 
     public static class User extends SimpleUser {
+        public final int lotId;
         public final boolean virtual;
 
-        private User(String username, int liveness, boolean virtual) {
+        private User(String username, int liveness, boolean virtual, int lotId) {
             super(username, liveness);
             this.virtual = virtual;
+            this.lotId = lotId;
         }
     }
 }

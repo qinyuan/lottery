@@ -2,6 +2,7 @@ package com.qinyuan15.lottery.mvc.activity;
 
 import com.qinyuan.lib.lang.file.ClasspathFileUtils;
 import com.qinyuan.lib.lang.time.DateUtils;
+import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallPhase;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecord;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
 import org.slf4j.Logger;

@@ -3,11 +3,25 @@ package com.qinyuan15.lottery.mvc.dao;
 import com.qinyuan.lib.database.hibernate.AbstractDao;
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
-import com.qinyuan15.lottery.mvc.activity.DualColoredBallPhase;
+import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallPhase;
 
 import java.util.List;
 
 public class DualColoredBallRecordDao extends AbstractDao<DualColoredBallRecord> {
+    public String getResult(int year, int phase) {
+        if (!(IntegerUtils.isPositive(year) && IntegerUtils.isPositive(phase))) {
+            return null;
+        }
+        DualColoredBallRecord record = getInstance(year, phase);
+        return record == null ? null : record.getResult();
+    }
+
+    public DualColoredBallRecord getInstance(int year, int phase) {
+        return new HibernateListBuilder().addEqualFilter("year", year).addEqualFilter("term", phase)
+                .getFirstItem(DualColoredBallRecord.class);
+    }
+
     public Integer add(int fullTerm, String publishDate, String result) {
         DualColoredBallPhase term = new DualColoredBallPhase(fullTerm);
         return add(term.year, term.term, publishDate, result);

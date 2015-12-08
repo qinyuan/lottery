@@ -127,4 +127,11 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
     public List<LotteryActivity> getUnclosedInstances() {
         return factory().setClosed(false).getInstances();
     }
+
+    public List<LotteryActivity> getNoResultInstances() {
+        String resultTerm = "(SELECT CONCAT(year,LPAD(term,3,0)) FROM DualColoredBallRecord " +
+                "WHERE result IS NOT NULL OR result<>'')";
+        return new HibernateListBuilder()
+                .addFilter("dualColoredBallTerm NOT IN " + resultTerm).build(LotteryActivity.class);
+    }
 }
