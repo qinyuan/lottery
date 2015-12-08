@@ -39,8 +39,11 @@ class TrackerFactory {
 
 
     private synchronized void initLots() {
-        lots = new HibernateListBuilder().addEqualFilter("activityId", activityId)
+        String realLotSerialNumber = "(SELECT serialNumber FROM LotteryLot " +
+                "WHERE activityId=" + activityId + " AND (virtual IS NULL OR virtual=false))";
+        lots = new HibernateListBuilder().addFilter("activityId=" + activityId)
                 .addFilter("virtual=true").addFilter("userId IN (SELECT id FROM VirtualUser WHERE active=:active)")
+                .addFilter("serialNumber IN " + realLotSerialNumber)
                 .addArgument("active", active)
                 .limit(getFirstResultIndex(), PAGE_SIZE).build(LotteryLot.class);
     }

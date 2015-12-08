@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity;
 
-import com.qinyuan.lib.lang.IntegerUtils;
+/*import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan15.lottery.mvc.dao.InvalidLotteryLotDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
@@ -17,7 +17,7 @@ import java.util.Set;
  * Class to change virtual participants to make sure that
  * no real participant win the lottery
  */
-public class VirtualParticipantAdjuster {
+/*public class VirtualParticipantAdjuster {
     private final static Logger LOGGER = LoggerFactory.getLogger(VirtualParticipantAdjuster.class);
 
     private void adjust(int activityId, long result, int step) {
@@ -71,4 +71,4 @@ public class VirtualParticipantAdjuster {
         Integer virtualParticipantCount = activity.getVirtualParticipants();
         return IntegerUtils.isPositive(virtualParticipantCount) ? virtualParticipantCount : 0;
     }
-}
+}*/

@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity;
 
-import org.junit.Test;
+/*import org.junit.Test;
 
 public class VirtualParticipantAdjusterTest {
     @Test
@@ -8,4 +8,4 @@ public class VirtualParticipantAdjusterTest {
         long testResult = 132022262831L;
         new VirtualParticipantAdjuster().adjustByDecrement(15, testResult);
     }
-}
+}*/
