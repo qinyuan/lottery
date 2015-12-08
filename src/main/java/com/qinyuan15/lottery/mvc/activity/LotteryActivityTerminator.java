@@ -3,6 +3,7 @@ package com.qinyuan15.lottery.mvc.activity;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.concurrent.ThreadUtils;
 import com.qinyuan.lib.lang.time.DateUtils;
+import com.qinyuan15.lottery.mvc.activity.tracker.WinnerManager;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
@@ -28,6 +29,7 @@ public class LotteryActivityTerminator {
     public void init() {
         new CloseThreadScheduler().start();
         new ResultThreadScheduler().start();
+        new WinnerThreadScheduler().start();
     }
 
     public void setCrawlers(List<DualColoredBallCrawler> crawlers) {
@@ -87,8 +89,12 @@ public class LotteryActivityTerminator {
 
         @Override
         public void run() {
+            WinnerManager winnerManager = new WinnerManager();
             while (true) {
-
+                for (LotteryActivity activity : new LotteryActivityDao().getUnexpiredWithResultInstances()) {
+                    winnerManager.setWinner(activity);
+                }
+                ThreadUtils.sleep(INTERVAL);
             }
         }
     }

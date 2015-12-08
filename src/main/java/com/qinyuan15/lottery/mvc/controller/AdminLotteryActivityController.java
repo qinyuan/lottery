@@ -3,6 +3,7 @@ package com.qinyuan15.lottery.mvc.controller;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan15.lottery.mvc.activity.DualColoredBallPhaseValidator;
+import com.qinyuan15.lottery.mvc.activity.tracker.WinnerManager;
 import com.qinyuan15.lottery.mvc.dao.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,6 +112,10 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
     @RequestMapping("/admin-lottery-activity-stop.json")
     @ResponseBody
     public String stop(@RequestParam("id") Integer id) {
+        if (!IntegerUtils.isPositive(id)) {
+            return failByInvalidParam();
+        }
+        new WinnerManager().setWinner(new LotteryActivityDao().getInstance(id));
         return super.stop(id);
     }
 

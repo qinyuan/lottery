@@ -15,6 +15,9 @@ public class WinnerManager {
         if (activity == null) {
             LOGGER.error("activity is null");
             return;
+        } else if (activity.getExpire()) {
+            LOGGER.warn("activity is expired");
+            return;
         }
 
         DualColoredBallPhase phase = new DualColoredBallPhase(activity.getDualColoredBallTerm());
