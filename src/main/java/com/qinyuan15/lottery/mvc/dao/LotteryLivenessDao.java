@@ -72,6 +72,10 @@ public class LotteryLivenessDao {
     }
 
     public boolean hasInstance(Integer spreadUserId, Integer receiveUserId) {
+        if (!(IntegerUtils.isPositive(spreadUserId) && IntegerUtils.isPositive(receiveUserId))) {
+            return false;
+        }
+
         return new HibernateListBuilder().addEqualFilter("spreadUserId", spreadUserId)
                 .addEqualFilter("receiveUserId", receiveUserId)
                 .count(LotteryLiveness.class) > 0;

@@ -11,11 +11,19 @@
         }, function (data) {
             if (data.success) {
                 showAddLivenessSuccessInfo(e, data['livenessToAdd']);
+                redirect();
             } else {
                 alert(data.detail);
             }
         });
     });
+
+    function redirect() {
+        var redirectUrl = $.url.param('redirectUrl');
+        if (redirectUrl) {
+            location.href = decodeURIComponent(redirectUrl);
+        }
+    }
 
     function showAddLivenessSuccessInfo(event, liveness) {
         $supportDiv.find('div.text').hide();

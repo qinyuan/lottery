@@ -39,48 +39,66 @@ public class LivenessAdder {
         }
     }
 
-    void addLiveness(boolean alreadyRegistered) {
+    /**
+     * add liveness
+     *
+     * @param alreadyRegistered whether user alreadyRegistered
+     * @return liveness record id
+     */
+    Integer addLiveness(boolean alreadyRegistered) {
         Integer userId = new UserDao().getIdByName(SecurityUtils.getUsername());
-        addLiveness(userId, alreadyRegistered);
+        return addLiveness(userId, alreadyRegistered);
     }
 
-    void addLiveness(Integer receiveUserId, boolean alreadyRegistered) {
-        addLiveness(receiveUserId, alreadyRegistered, getSpreadUserId(), getSpreadWay(), getActivityId());
+    /**
+     * add liveness to certain user
+     *
+     * @param receiveUserId     id of user receiving spread url
+     * @param alreadyRegistered whether user alreadyRegistered
+     * @return liveness record id
+     */
+    Integer addLiveness(Integer receiveUserId, boolean alreadyRegistered) {
+        return addLiveness(receiveUserId, alreadyRegistered, getSpreadUserId(), getSpreadWay(), getActivityId());
     }
 
-    static void addLiveness(Integer receiveUserId, boolean alreadyRegistered, Integer spreadUserId, String spreadWay, Integer activityId) {
+    boolean canAddLiveness() {
+        Integer userId = new UserDao().getIdByName(SecurityUtils.getUsername());
+        return !(new LotteryLivenessDao().hasInstance(getSpreadUserId(), userId));
+    }
+
+    static Integer addLiveness(Integer receiveUserId, boolean alreadyRegistered, Integer spreadUserId, String spreadWay, Integer activityId) {
         if (!IntegerUtils.isPositive(receiveUserId)) {
             LOGGER.info("invalid receiveUserId: {}", receiveUserId);
-            return;
+            return null;
         }
 
         if (!IntegerUtils.isPositive(spreadUserId)) {
             LOGGER.info("invalid spreadUserId: {}", spreadUserId);
-            return;
+            return null;
         }
 
         if (receiveUserId.equals(spreadUserId)) {
             LOGGER.warn("spreadUserId and receiveUserId are all {}", spreadUserId);
-            return;
+            return null;
         }
 
         if (!StringUtils.hasText(spreadWay)) {
             LOGGER.error("invalid spreadWay: {}", spreadWay);
-            return;
+            return null;
         }
 
         Integer liveness = AppConfig.getShareSucceedLiveness();
         if (!IntegerUtils.isPositive(liveness)) {
             LOGGER.warn("invalid share succeed liveness: {}", liveness);
-            return;
+            return null;
         }
 
         LotteryLivenessDao dao = new LotteryLivenessDao();
         if (IntegerUtils.isPositive(activityId)) {
-            dao.add(spreadUserId, receiveUserId, liveness, spreadWay, alreadyRegistered, activityId);
+            return dao.add(spreadUserId, receiveUserId, liveness, spreadWay, alreadyRegistered, activityId);
         } else {
             LOGGER.warn("add liveness without activityId");
-            dao.add(spreadUserId, receiveUserId, liveness, spreadWay, alreadyRegistered);
+            return dao.add(spreadUserId, receiveUserId, liveness, spreadWay, alreadyRegistered);
         }
     }
 

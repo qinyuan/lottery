@@ -5,6 +5,7 @@ import com.qinyuan.lib.image.ImageMapDao;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan.lib.mvc.security.UserRole;
+import com.qinyuan.lib.network.url.UrlUtils;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.ImageMapType;
 import com.qinyuan15.lottery.mvc.activity.ShareMedium;
@@ -39,11 +40,6 @@ public class CommodityController extends ImageController {
             setTitle("未找到相关商品");
         } else {
             livenessAdder.recordSpreader(userSerialKey, medium, commodity.getId());
-            /*if (DoubleUtils.isPositive(commodity.getPrice())) {
-                setTitle("商品详细信息");
-            } else {
-                setTitle("参与抽奖");
-            }*/
             setAttribute("seoKeyword", "抽奖,免费," + commodity.getName());
             String title = null, description = null;
             if (StringUtils.isNotBlank(medium)) {
@@ -67,12 +63,14 @@ public class CommodityController extends ImageController {
             setAttribute("seoDescription", description);
 
             addJavaScriptData("selectedCommodityId", commodity.getId());
-            //addJavaScriptData("commodityMaps", mapDao.getInstancesByRelateId(commodity.getId()));
         }
 
         if (StringUtils.isNotBlank(userSerialKey) && StringUtils.isNotBlank(medium)
                 && StringUtils.isNotBlank(SecurityUtils.getUsername())) {
-            livenessAdder.addLiveness(true);
+            if (livenessAdder.canAddLiveness()) {
+                return redirect("support.html?serial=" + userSerialKey + "&redirectUrl=" +
+                        UrlUtils.encode(getFullRequestURI()));
+            }
         }
 
         // seckill poker

@@ -20,11 +20,6 @@ public class LotteryActivityTerminator {
     private Map<Integer, LotteryResultThread> resultThreads = new HashMap<>();
     private Map<Integer, LotteryCloseThread> closeThreads = new HashMap<>();
     private List<DualColoredBallCrawler> crawlers;
-    //private final DecimalFormat lotNumberFormat;
-
-    /*public LotteryActivityTerminator(DecimalFormat lotNumberFormat) {
-        this.lotNumberFormat = lotNumberFormat;
-    }*/
 
     public void init() {
         new CloseThreadScheduler().start();
@@ -151,7 +146,6 @@ public class LotteryActivityTerminator {
                 try {
                     DualColoredBallCrawler.Result result = getResult();
                     if (result != null) {
-                        //new LotteryActivityDao().end(activity.getId());
                         new DualColoredBallRecordDao().add(activity.getDualColoredBallTerm(),
                                 result.drawTime, result.result);
 
