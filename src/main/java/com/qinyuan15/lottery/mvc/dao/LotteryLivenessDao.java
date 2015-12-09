@@ -72,13 +72,9 @@ public class LotteryLivenessDao {
     }
 
     public boolean hasInstance(Integer spreadUserId, Integer receiveUserId) {
-        if (!(IntegerUtils.isPositive(spreadUserId) && IntegerUtils.isPositive(receiveUserId))) {
-            return false;
-        }
-
-        return new HibernateListBuilder().addEqualFilter("spreadUserId", spreadUserId)
-                .addEqualFilter("receiveUserId", receiveUserId)
-                .count(LotteryLiveness.class) > 0;
+        return IntegerUtils.isPositive(spreadUserId) && IntegerUtils.isPositive(receiveUserId)
+                && new HibernateListBuilder().addEqualFilter("spreadUserId", spreadUserId)
+                .addEqualFilter("receiveUserId", receiveUserId).count(LotteryLiveness.class) > 0;
     }
 
     public Integer add(Integer spreadUserId, Integer receiveUserId, int liveness, String spreadWay,

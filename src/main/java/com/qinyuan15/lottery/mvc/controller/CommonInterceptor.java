@@ -2,6 +2,7 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.config.ImageConfig;
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.mvc.controller.AbstractInterceptor;
 import com.qinyuan.lib.mvc.controller.ImageUrlAdapter;
 import com.qinyuan.lib.mvc.controller.RequestUtils;
 import com.qinyuan.lib.mvc.controller.UserAgentUtils;
@@ -14,7 +15,6 @@ import com.qinyuan15.lottery.mvc.dao.SeckillActivityDao;
 import com.qinyuan15.lottery.mvc.dao.SystemInfoSendRecordDao;
 import com.qinyuan15.lottery.mvc.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,19 +24,9 @@ import javax.servlet.http.HttpServletResponse;
  * Global Interceptor
  * Created by qinyuan on 15-6-21.
  */
-public class CommonInterceptor implements HandlerInterceptor {
+public class CommonInterceptor extends AbstractInterceptor {
     @Autowired
     private ImageConfig imageConfig;
-
-    @Override
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        return true;
-    }
-
-    private boolean isRequestToResources(HttpServletRequest request) {
-        String uri = request.getRequestURI();
-        return uri.contains("/resources/css/") || uri.contains("/resources/js/");
-    }
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
@@ -70,9 +60,5 @@ public class CommonInterceptor implements HandlerInterceptor {
         int lotteryActivityCount = LotteryActivityDao.factory().setUserId(userId).getCount();
         int seckillActivityCount = SeckillActivityDao.factory().setUserId(userId).getCount();
         return lotteryActivityCount + seckillActivityCount;
-    }
-
-    @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
     }
 }
