@@ -61,8 +61,17 @@ public class VirtualUserDaoTest extends DatabaseTestCase {
     }
 
     @Test
-    public void getInstanceByUsername() {
+    public void testGetInstanceByUsername() {
         assertThat(dao.getInstanceByUsername("test")).isNull();
         assertThat(dao.getInstanceByUsername("virtual_user1").getId()).isEqualTo(1);
+    }
+
+    @Test
+    public void testIsUsed() {
+        assertThat(dao.isUsed(1)).isFalse();
+        new LotteryLotDao().add(1, 1, 1, false);
+        assertThat(dao.isUsed(1)).isFalse();
+        new LotteryLotDao().add(1, 1, 1, true);
+        assertThat(dao.isUsed(1)).isTrue();
     }
 }

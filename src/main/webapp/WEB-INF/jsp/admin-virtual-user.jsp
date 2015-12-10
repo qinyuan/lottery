@@ -2,7 +2,11 @@
 <%@include file="inc-header.jsp" %>
 <%@include file="index-header.jsp" %>
 <div class="page-width form">
-    <div style="padding:12px 20px;">
+    <div>
+        <div class="add">
+            <button class="button button-primary button-tiny button-circle" id="addVirtualUser"
+                    title="添加用户"><i class="fa fa-plus"></i></button>
+        </div>
         <div class="users">
             <c:forEach var="user" items="${users}">
                 <div class="user" data-options="id:${user.id}">
@@ -18,10 +22,7 @@
                 </div>
             </c:forEach>
         </div>
-        <div>
-            <button class="button button-primary button-tiny button-circle" id="addVirtualUser"
-                    title="添加用户"><i class="fa fa-plus"></i></button>
-        </div>
+        <%@include file="widget-pagination.jsp" %>
     </div>
 </div>
 <form id="addEditForm" class="float-panel shadow">

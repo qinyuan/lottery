@@ -1,3 +1,11 @@
+div.form > div {
+    padding: 12px 20px;
+}
+
+div.form > div > div.add {
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
 
 #addEditForm {
     margin-left: -224px;
@@ -47,4 +55,12 @@ div.users div.user > div.edit, div.users div.user > div.delete {
 
 div.users div.user > div.edit:hover, div.users div.user > div.delete:hover {
     background-color: #999999;
+}
+
+div.users div.user.disabled > div.delete {
+    cursor: default;
+}
+
+div.users div.user.disabled > div.delete:hover {
+    background-color: transparent;
 }

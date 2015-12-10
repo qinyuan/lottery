@@ -133,7 +133,22 @@
         addEditForm.show(id, username, tel, mail);
     });
     $('div.users div.user > div.delete').click(function () {
-        var id = $(this).getParentByTagNameAndClass('div', 'user').dataOptions('id');
-        $.post('admin-virtual-user-delete.json', {'id': id}, JSUtils.normalAjaxCallback);
+        var $user = $(this).getParentByTagNameAndClass('div', 'user');
+        if (!$user.hasClass('disabled')) {
+            var id = $user.dataOptions('id');
+            $.post('admin-virtual-user-delete.json', {'id': id}, JSUtils.normalAjaxCallback);
+        }
     });
+
+    var usedStatuses = window['usedStatuses'];
+    if (usedStatuses) {
+        var $users = $('div.users div.user');
+        for (var i = 0, len = usedStatuses.length; i < len; i++) {
+            var status = usedStatuses[i];
+            if (status) {
+                $users.eq(i).addClass('disabled').find('div.delete').attr('title', '用户已参加活动，不能删除')
+                    .find('img.delete').addClass('lightTransparent');
+            }
+        }
+    }
 })();

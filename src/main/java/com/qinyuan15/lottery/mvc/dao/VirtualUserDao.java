@@ -2,6 +2,7 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.hibernate.*;
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.mvc.controller.AbstractPaginationItemFactory;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.util.StringUtils;
 
@@ -9,6 +10,17 @@ import java.util.List;
 import java.util.Random;
 
 public class VirtualUserDao extends AbstractDao<VirtualUser> {
+    public static class Factory extends AbstractPaginationItemFactory<VirtualUser> {
+        @Override
+        protected HibernateListBuilder getListBuilder() {
+            return super.getListBuilder().addOrder("id", false);
+        }
+    }
+
+    public static Factory factory() {
+        return new Factory();
+    }
+
     public int getLiveness(Integer virtualUserId) {
         if (!IntegerUtils.isPositive(virtualUserId)) {
             return 0;
@@ -71,6 +83,11 @@ public class VirtualUserDao extends AbstractDao<VirtualUser> {
     public void activate(VirtualUser virtualUser) {
         virtualUser.setActive(true);
         HibernateUtils.update(virtualUser);
+    }
+
+    public boolean isUsed(int id) {
+        return new HibernateListBuilder().addEqualFilter("userId", id).addFilter("virtual=true")
+                .count(LotteryLot.class) > 0;
     }
 
     public Integer add(String username) {
