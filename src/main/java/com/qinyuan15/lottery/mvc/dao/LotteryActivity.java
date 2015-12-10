@@ -3,6 +3,8 @@ package com.qinyuan15.lottery.mvc.dao;
 import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan15.lottery.mvc.activity.LotCounter;
 import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
+import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallPhase;
+import org.apache.commons.lang3.StringUtils;
 
 public class LotteryActivity extends AbstractActivity {
     private String expectEndTime;
@@ -79,5 +81,11 @@ public class LotteryActivity extends AbstractActivity {
     @Override
     protected LotCounter getLotCounter() {
         return new LotteryLotCounter();
+    }
+
+    public String getWinningNumber() {
+        DualColoredBallPhase phase = new DualColoredBallPhase(dualColoredBallTerm);
+        String result = new DualColoredBallRecordDao().getResult(phase.year, phase.term);
+        return StringUtils.isBlank(result) ? null : StringUtils.right(result, 6);
     }
 }

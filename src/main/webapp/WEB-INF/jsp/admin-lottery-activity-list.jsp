@@ -12,8 +12,9 @@
         <col class="expect-participant-count"/>
         <col class="participant-count"/>
         <col class="real-participant-count"/>
+        <col class="winners"/>
         <c:if test="${listExpire}">
-            <col class="winners"/>
+            <%--<col class="winners"/>--%>
             <col class="announcement"/>
         </c:if>
         <col class="action"/>
@@ -30,8 +31,8 @@
     <th>预计参与人数</th>
     <th>总参与人数<br/><span style="font-size: 9pt;">(包含虚拟)</span></th>
     <th>真实参与人数</th>
+    <th>中奖号</th>
     <c:if test="${listExpire}">
-        <th>中奖号</th>
         <th>中奖公告</th>
     </c:if>
     <th></th>
@@ -52,9 +53,33 @@
             <td class="expect-participant-count">${activity.expectParticipantCount}</td>
             <td>${activity.participantCount}</td>
             <td>${activity.realParticipantCount}</td>
+            <td class="winner"><span class="number">${activity.winningNumber}</span>
+                <c:if test="${activity.winningNumber != null}">
+                    <a href="javascript:void(0)" class="winner-ranking">排名</a>
+
+                    <div class="winner-ranking shadow">
+                        <div class="no-user">无人抽中此号码</div>
+                        <table>
+                            <colgroup>
+                                <col class="username"/>
+                                <col class="liveness"/>
+                                <col class="virtual"/>
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <td>昵称</td>
+                                <td>支持数</td>
+                                <td>类型</td>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </c:if>
+            </td>
             <c:choose>
                 <c:when test="${listExpire}">
-                    <td class="winners">${activity.winners}</td>
+                    <%--<td class="winners">${activity.winners}</td>--%>
                     <td class="announcement">${activity.announcement}</td>
                     <td>
                         <img class="link announce" title="编辑公告" src="resources/css/images/announcement.png"/>

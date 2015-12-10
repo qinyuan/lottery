@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -132,5 +133,14 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
             }
         }
         return super.updateAnnouncement(id, winners, announcement);
+    }
+
+    @RequestMapping(value = "/admin-lottery-activity-winners.json", method = RequestMethod.GET)
+    @ResponseBody
+    public String getWinners(@RequestParam("id") Integer id, @RequestParam("number") Integer number) {
+        if (!IntegerUtils.isPositive(id) && IntegerUtils.isPositive(number)) {
+            return failByInvalidParam();
+        }
+        return toJson(new LotterySameLotDao().getUsers(id, number));
     }
 }

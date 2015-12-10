@@ -49,7 +49,7 @@
     });
 
     $('table.normal img.stop').click(function () {
-        if (confirm('确定强行结束该秒杀活动？')) {
+        if (confirm('确定强行结束该活动？')) {
             var activityId = $(this).getParentByTagName('tr').dataOptions('id');
             $.post(stopUrl, {'id': activityId}, JSUtils.normalAjaxCallback);
         }

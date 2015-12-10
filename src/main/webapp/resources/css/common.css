@@ -52,9 +52,9 @@ table.normal thead th {
     background-color: #F3F3F3;
 }
 
-table.normal tbody tr {
+/*table.normal tbody tr {
     border-bottom: 1px dashed #cccccc;
-}
+}*/
 
 table.normal th, table.normal td {
     padding: 5px;

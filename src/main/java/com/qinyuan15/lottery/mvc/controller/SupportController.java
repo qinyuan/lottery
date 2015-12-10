@@ -93,12 +93,4 @@ public class SupportController extends ImageController {
             return failByDatabaseError();
         }
     }
-
-    /*
-    @RequestMapping("/hello-world.json")
-    @ResponseBody
-    public String json(){
-        return success();
-    }
-    */
 }

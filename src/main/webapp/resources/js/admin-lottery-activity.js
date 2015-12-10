@@ -57,56 +57,56 @@
             return true;
         },
         /*validateContinuousSerialLimit: function () {
-            var continuousSerialLimit = this.get$ContinuousSerialLimit().val();
-            if (continuousSerialLimit != '' && !JSUtils.isNumberString(continuousSerialLimit)) {
-                alert('抽奖号最大连接个数只能为数字格式！');
-                this.get$ContinuousSerialLimit().focusOrSelect();
-                return false;
-            }
-            return true;
-        },*/
+         var continuousSerialLimit = this.get$ContinuousSerialLimit().val();
+         if (continuousSerialLimit != '' && !JSUtils.isNumberString(continuousSerialLimit)) {
+         alert('抽奖号最大连接个数只能为数字格式！');
+         this.get$ContinuousSerialLimit().focusOrSelect();
+         return false;
+         }
+         return true;
+         },*/
         /*validateLiveness: function () {
-            if (this.get$LivenessRow().css('display') != 'none') {
-                var virtualLiveness = this.get$VirtualLiveness().val();
-                if (virtualLiveness != '') {
-                    if (!JSUtils.isNumberString(virtualLiveness)) {
-                        alert('最大爱心数只能为数字格式！');
-                        this.get$VirtualLiveness().focusOrSelect();
-                        return false;
-                    }
-                    var virtualLivenessUsers = this.get$VirtualLivenessUsers().trimVal();
-                    if (virtualLivenessUsers == '') {
-                        alert('如果填写了最大爱心，则最大爱心用户必须填写！');
-                        this.get$VirtualLivenessUsers().focusOrSelect();
-                        return false;
-                    }
-                }
-            }
-            return true;
-        },*/
+         if (this.get$LivenessRow().css('display') != 'none') {
+         var virtualLiveness = this.get$VirtualLiveness().val();
+         if (virtualLiveness != '') {
+         if (!JSUtils.isNumberString(virtualLiveness)) {
+         alert('最大爱心数只能为数字格式！');
+         this.get$VirtualLiveness().focusOrSelect();
+         return false;
+         }
+         var virtualLivenessUsers = this.get$VirtualLivenessUsers().trimVal();
+         if (virtualLivenessUsers == '') {
+         alert('如果填写了最大爱心，则最大爱心用户必须填写！');
+         this.get$VirtualLivenessUsers().focusOrSelect();
+         return false;
+         }
+         }
+         }
+         return true;
+         },*/
         /*validateMinLivenessToParticipate: function () {
-            var minLivenessToParticipate = this.get$MinLivenessToParticipate().val();
-            if (minLivenessToParticipate != '' && !JSUtils.isNumberString(minLivenessToParticipate)) {
-                alert('最少需要的爱心数只能为数字格式！');
-                this.get$MinLivenessToParticipate().focusOrSelect();
-                return false;
-            }
-            return true;
-        },*/
+         var minLivenessToParticipate = this.get$MinLivenessToParticipate().val();
+         if (minLivenessToParticipate != '' && !JSUtils.isNumberString(minLivenessToParticipate)) {
+         alert('最少需要的爱心数只能为数字格式！');
+         this.get$MinLivenessToParticipate().focusOrSelect();
+         return false;
+         }
+         return true;
+         },*/
         /*validateSerialNumberRange: function () {
-            var serialNumberRange = this.get$SerialNumberRange().val();
-            if ($.trim(serialNumberRange) == '') {
-                alert('抽奖号取值范围未填写！');
-                this.get$SerialNumberRange().focusOrSelect();
-                return false;
-            }
-            if (!serialNumberRange.match(/^\d+~\d+$/)) {
-                alert('抽奖号取值范围格式错误，正确格式如"10~100000"');
-                this.get$SerialNumberRange().focusOrSelect();
-                return false;
-            }
-            return true;
-        },*/
+         var serialNumberRange = this.get$SerialNumberRange().val();
+         if ($.trim(serialNumberRange) == '') {
+         alert('抽奖号取值范围未填写！');
+         this.get$SerialNumberRange().focusOrSelect();
+         return false;
+         }
+         if (!serialNumberRange.match(/^\d+~\d+$/)) {
+         alert('抽奖号取值范围格式错误，正确格式如"10~100000"');
+         this.get$SerialNumberRange().focusOrSelect();
+         return false;
+         }
+         return true;
+         },*/
         updateExpectEndDateByDualColoredBallTerm: function () {
             var self = this;
             $.post('dual-colored-ball-query-date.json', {
@@ -173,6 +173,40 @@
 
         JSUtils.loadSelectFormValue(lotteryActivity.get$CommoditySelect(), $tr.find('td.commodity')
             .dataOptions('commodityId'));
+    });
+    $('table.normal td.winner a.winner-ranking').click(function () {
+        var $div = $(this).parent().find('div.winner-ranking');
+        var activityId = $div.getParentByTagName('tr').dataOptions('id');
+        var number = $div.getParentByTagName('td').find('span.number').text();
+        if ($div.css('display') == 'none') {
+            $.get('admin-lottery-activity-winners.json', {
+                id: activityId,
+                number: number
+            }, function (data) {
+                var len = data.length;
+                var $noUser = $div.find('no-user');
+                var $table = $div.find('table');
+                if (len == 0) {
+                    $noUser.show();
+                    $table.hide();
+                } else {
+                    $noUser.hide();
+                    var $tbody = $table.find('tbody').empty();
+                    for (var i = 0; i < len; i++) {
+                        var user = data[i];
+                        var html = '<tr>';
+                        html += '<td>' + user['username'] + '</td>';
+                        html += '<td>' + user['liveness'] + '</td>';
+                        html += '<td>' + (user['virtual'] ? '虚拟' : '真实' ) + '</td>';
+                        html += '</tr>';
+                        $tbody.append(html);
+                    }
+                }
+                $div.show();
+            });
+        } else {
+            $div.hide();
+        }
     });
 })();
 var stopUrl = 'admin-lottery-activity-stop.json';

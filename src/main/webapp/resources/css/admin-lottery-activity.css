@@ -24,7 +24,7 @@ div.form table.normal col.commodity {
 }
 
 div.form table.normal col.winners {
-    width: 70px;
+    width: 80px;
 }
 
 div.form table.normal col.virtual-liveness {
@@ -37,6 +37,34 @@ div.form table.normal col.virtual-liveness-users {
 
 div.form table.normal col.announcement {
     width: 200px;
+}
+
+div.form table.normal td {
+    position: relative;
+}
+
+div.form table.normal td.winner {
+    overflow: visible;
+}
+
+div.form table.normal td.winner table thead {
+    border-bottom: none;
+}
+
+div.form table.normal a.winner-ranking {
+    font-size: 8pt;
+    font-style: italic;
+}
+
+div.form table.normal div.winner-ranking {
+    position: absolute;
+    padding: 6px 4px;
+    right: 0;
+    width: 200px;
+    display: none;
+    background-color: #ffffff;
+    border: 1px solid #999999;
+    z-index: 2;
 }
 
 /*********************** lottery list table end *********************/
