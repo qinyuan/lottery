@@ -1,9 +1,7 @@
 package com.qinyuan15.lottery.mvc.activity.tracker;
 
-import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
-import com.qinyuan15.lottery.mvc.dao.LotteryLot;
-import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
-import com.qinyuan15.lottery.mvc.dao.LotterySameLotDao;
+import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallPhase;
+import com.qinyuan15.lottery.mvc.dao.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +20,7 @@ public class WinnerManager {
             return;
         }
 
-        String winningNumber = activity.getWinningNumber();
+        String winningNumber = getWinnerNumber(activity);
         if (StringUtils.isBlank(winningNumber)) {
             return;
         }
@@ -50,5 +48,15 @@ public class WinnerManager {
 
         LotteryLot lot = new LotteryLotDao().getInstance(maxLivenessVirtualUser.lotId);
         new Tracker(lot, true).exceed();
+    }
+
+    private String getWinnerNumber(LotteryActivity activity) {
+        DualColoredBallPhase phase = new DualColoredBallPhase(activity.getDualColoredBallTerm());
+        String result = new DualColoredBallRecordDao().getResult(phase.year, phase.term);
+        return getWinnerNumber(result);
+    }
+
+    public static String getWinnerNumber(String result) {
+        return StringUtils.isBlank(result) ? null : StringUtils.right(result, 6);
     }
 }

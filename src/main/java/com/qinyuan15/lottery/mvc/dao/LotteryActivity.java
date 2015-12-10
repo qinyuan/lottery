@@ -83,9 +83,9 @@ public class LotteryActivity extends AbstractActivity {
         return new LotteryLotCounter();
     }
 
-    public String getWinningNumber() {
+    /*public String getWinningNumber() {
         DualColoredBallPhase phase = new DualColoredBallPhase(dualColoredBallTerm);
         String result = new DualColoredBallRecordDao().getResult(phase.year, phase.term);
         return StringUtils.isBlank(result) ? null : StringUtils.right(result, 6);
-    }
+    }*/
 }

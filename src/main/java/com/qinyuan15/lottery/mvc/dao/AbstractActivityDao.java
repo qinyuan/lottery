@@ -46,6 +46,12 @@ public abstract class AbstractActivityDao<T extends AbstractActivity> extends Ab
         HibernateUtils.update(activity);
     }
 
+    public void updateResult(Integer id, String winners) {
+        AbstractActivity activity = getInstance(id);
+        activity.setWinners(winners);
+        HibernateUtils.update(activity);
+    }
+
     /**
      * validate if activity is expired
      *

@@ -47,8 +47,24 @@ div.form table.normal td.winner {
     overflow: visible;
 }
 
+div.form table.normal td.winner table td {
+    font-size: 9pt;
+}
+
 div.form table.normal td.winner table thead {
-    border-bottom: none;
+    border-bottom: 1px solid #dddddd;
+}
+
+div.form table.normal td.winner table col.username {
+    width: 100px;
+}
+
+div.form table.normal td.winner table col.liveness {
+    width: 60px;
+}
+
+div.form table.normal td.winner table col.virtual {
+    width: 50px;
 }
 
 div.form table.normal a.winner-ranking {

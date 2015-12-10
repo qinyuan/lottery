@@ -18,11 +18,11 @@
 
         $announceImages.click(function () {
             var $tr = $(this).getParentByTagName('tr');
-            showAnnounceEditForm(
-                $tr.dataOptions('id'),
-                $tr.find('td.winners').trimText(),
-                $.trim($tr.find('td.announcement').html())
-            );
+            var id = $tr.dataOptions('id');
+            var winners = $tr.find('td.winner').size() > 0 ? $tr.find('td.winner span.number').text() :
+                $tr.find('td.winners').trimText();
+            var announcement = $.trim($tr.find('td.announcement').html());
+            showAnnounceEditForm(id, winners, announcement);
         });
         $announceCancelButton.click(function () {
             $announceEditForm.fadeOut(300, function () {

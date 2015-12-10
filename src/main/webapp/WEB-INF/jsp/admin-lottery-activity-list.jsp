@@ -53,8 +53,8 @@
             <td class="expect-participant-count">${activity.expectParticipantCount}</td>
             <td>${activity.participantCount}</td>
             <td>${activity.realParticipantCount}</td>
-            <td class="winner"><span class="number">${activity.winningNumber}</span>
-                <c:if test="${activity.winningNumber != null}">
+            <td class="winner"><span class="number">${activity.winners}</span>
+                <c:if test="${activity.winners != null}">
                     <a href="javascript:void(0)" class="winner-ranking">排名</a>
 
                     <div class="winner-ranking shadow">

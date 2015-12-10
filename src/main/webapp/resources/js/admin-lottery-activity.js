@@ -162,7 +162,7 @@
         var $expectEndTimeTd = $tr.find('td.expect-end-time');
         lotteryActivity.get$ExpectEndTime().val($expectEndTimeTd.text());
         lotteryActivity.get$DualColoredBallTerm().val($expectEndTimeTd.dataOptions('dualColoredBallTerm'));
-        lotteryActivity.get$CloseTime().val($tr.find('input.close-time').val());
+        lotteryActivity.get$CloseTime().val($tr.find('td.close-time').text());
         lotteryActivity.get$VirtualLiveness().val($tr.find('td.virtual-liveness').text());
         lotteryActivity.get$VirtualLivenessUsers().val($tr.find('td.virtual-liveness-users').text());
         lotteryActivity.get$ContinuousSerialLimit().val($tr.find('td.continuous-serial-limit').text());
@@ -184,7 +184,7 @@
                 number: number
             }, function (data) {
                 var len = data.length;
-                var $noUser = $div.find('no-user');
+                var $noUser = $div.find('div.no-user');
                 var $table = $div.find('table');
                 if (len == 0) {
                     $noUser.show();

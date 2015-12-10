@@ -47,7 +47,7 @@ public class SeckillActivityDao extends AbstractActivityDao<SeckillActivity> {
         HibernateUtils.update(activity);
     }
 
-    @Override
+    /*@Override
     public void updateResult(Integer id, String winners, String announcement) {
         if (StringUtils.isNotBlank(winners)) {
             String[] winnerArray = winners.split(",");
@@ -55,5 +55,5 @@ public class SeckillActivityDao extends AbstractActivityDao<SeckillActivity> {
         }
 
         super.updateResult(id, winners, announcement);
-    }
+    }*/
 }

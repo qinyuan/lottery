@@ -104,7 +104,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         new CommodityDao().updateVisible(activity.getCommodityId(), false);
     }
 
-    @Override
+    /*@Override
     public void updateResult(Integer id, String winners, String announcement) {
         List<Integer> serialNumbers = new ArrayList<>();
         if (StringUtils.hasText(winners)) {
@@ -117,7 +117,7 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
         new LotteryLotDao().updateWinnerBySerialNumbers(id, serialNumbers);
 
         super.updateResult(id, winners, announcement);
-    }
+    }*/
 
     public Integer getLatestMinLivenessToParticipate() {
         return (Integer) new HibernateListBuilder().addOrder("id", false)

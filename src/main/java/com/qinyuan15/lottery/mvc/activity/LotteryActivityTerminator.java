@@ -148,6 +148,8 @@ public class LotteryActivityTerminator {
                     if (result != null) {
                         new DualColoredBallRecordDao().add(activity.getDualColoredBallTerm(),
                                 result.drawTime, result.result);
+                        new LotteryActivityDao().updateResult(activity.getId(),
+                                WinnerManager.getWinnerNumber(result.result));
 
                         // remove related thread after success
                         resultThreads.remove(activity.getId());
