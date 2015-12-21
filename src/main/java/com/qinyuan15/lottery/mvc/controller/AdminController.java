@@ -56,7 +56,7 @@ public class AdminController extends ImageController {
 
         setTitle("系统设置");
         addCss("admin-form");
-        addJs(CDNSource.HANDLEBARS, false);
+        addJs(CDNSource.HANDLEBARS_JS, false);
         addJs("lib/ckeditor/ckeditor", false);
         addJs(CDNSource.BOOTSTRAP_JS, false);
         addHeadJs("lib/image-adjust.js");

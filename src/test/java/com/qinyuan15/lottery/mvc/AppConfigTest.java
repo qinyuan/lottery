@@ -19,6 +19,11 @@ public class AppConfigTest extends DatabaseTestCase {
     }
 
     @Test
+    public void testGetIsOffline() {
+        System.out.println(AppConfig.isOffline());
+    }
+
+    @Test
     public void testGetQQConnectAppId() {
         assertThat(AppConfig.getQQConnectAppId()).isEqualTo("101264653");
     }

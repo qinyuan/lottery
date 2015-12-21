@@ -2,7 +2,7 @@
 <div id="liveness">
     <div class="text">
         <span class="liveness-icon lightTransparent"></span>： ${liveness}
-        <span class="share"><img src="resources/css/images/help.png"/>通过转发增加爱心数</span>
+        <span class="share"><img src="resources/css/images/help.png"/>通过转发增加支持数</span>
 
         <div class="share-panel">
             <div class="list">

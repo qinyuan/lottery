@@ -163,6 +163,10 @@ div.main-body div.right div.body table tbody tr.hover td.liveness {
     background-color: #43CEFC;
 }
 
+div.main-body div.right div.body table tbody tr.hover td.action {
+    display: inline-block;
+}
+
 div.main-body div.right div.body table tbody tr.selected td.nickname,
 div.main-body div.right div.body table tbody tr.selected td.liveness {
     background-color: #3C96D6;
@@ -175,4 +179,9 @@ div.main-body div.right div.body table td.action {
 
 div.main-body div.right div.body table tbody tr.selected td.action {
     display: inline-block;
+}
+
+div.main-body div.right div.body {
+    max-height: 350px;
+    overflow: auto;
 }

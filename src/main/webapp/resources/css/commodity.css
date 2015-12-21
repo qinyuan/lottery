@@ -283,11 +283,15 @@ div.activity-result div.body div.same-lot-users div.left col.liveness {
     width: 50px;
 }
 
+div.activity-result div.body div.same-lot-users div.left td.liveness {
+    text-align: center;
+}
+
 div.activity-result div.body div.same-lot-users div.left div.data {
     height: 125px;
     border-right: 1px solid #B7B7B7;
     margin-top: 8px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 div.activity-result div.body div.same-lot-users div.left div.data tr.current td {

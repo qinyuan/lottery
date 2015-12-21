@@ -3,6 +3,7 @@ package com.qinyuan15.lottery.mvc.activity;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.concurrent.ThreadUtils;
 import com.qinyuan.lib.lang.time.DateUtils;
+import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.activity.tracker.WinnerManager;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
@@ -113,7 +114,7 @@ public class LotteryActivityTerminator {
                 try {
                     if (timeDiff <= 0) {
                         new LotteryActivityDao().close(activity);
-                        new InvalidLotteryLotSystemInfoSender().send(activity);
+                        //new InvalidLotteryLotSystemInfoSender().send(activity);
 
                         closeThreads.remove(activity.getId());
                         break;
@@ -143,21 +144,23 @@ public class LotteryActivityTerminator {
                     break;
                 }
 
-                try {
-                    DualColoredBallCrawler.Result result = getResult();
-                    if (result != null) {
-                        new DualColoredBallRecordDao().add(activity.getDualColoredBallTerm(),
-                                result.drawTime, result.result);
-                        new LotteryActivityDao().updateResult(activity.getId(),
-                                WinnerManager.getWinnerNumber(result.result));
+                if (!AppConfig.isOffline()) {
+                    try {
+                        DualColoredBallCrawler.Result result = getResult();
+                        if (result != null) {
+                            new DualColoredBallRecordDao().add(activity.getDualColoredBallTerm(),
+                                    result.drawTime, result.result);
+                            new LotteryActivityDao().updateResult(activity.getId(),
+                                    WinnerManager.getWinnerNumber(result.result));
 
-                        // remove related thread after success
-                        resultThreads.remove(activity.getId());
-                        break;
+                            // remove related thread after success
+                            resultThreads.remove(activity.getId());
+                            break;
+                        }
+                    } catch (Throwable e) {
+                        e.printStackTrace();
+                        LOGGER.error("Fail to crawl activity whose id is {}, info: {}", activity.getId(), e);
                     }
-                } catch (Throwable e) {
-                    e.printStackTrace();
-                    LOGGER.error("Fail to crawl activity whose id is {}, info: {}", activity.getId(), e);
                 }
 
                 // sleep time becomes less and less on coming of expect end time

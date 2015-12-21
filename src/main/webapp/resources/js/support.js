@@ -1,6 +1,7 @@
 (function () {
     var $supportDiv = $('div.main-body div.support-button');
     $supportDiv.find('button').click(function (e) {
+        e.preventDefault();
         var activityId = $.url.param('activityId');
         var serial = $.url.param('serial');
         var medium = $.url.param('medium');
@@ -11,7 +12,7 @@
         }, function (data) {
             if (data.success) {
                 showAddLivenessSuccessInfo(e, data['livenessToAdd']);
-                redirect();
+                //redirect();
             } else {
                 alert(data.detail);
             }
@@ -28,7 +29,9 @@
     function showAddLivenessSuccessInfo(event, liveness) {
         $supportDiv.find('div.text').hide();
         $supportDiv.find('div.text.success').show();
-        $supportDiv.find('button').attr('disabled', true).addClass('mediumTransparent');
+        var $button = $supportDiv.find('button');
+        $button.after('<a href="index.html" class="blue">返回首页</a>');
+        $button.remove();
         JSUtils.createBubble(event, '+' + liveness, '#ff0000');
     }
 })();

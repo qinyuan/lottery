@@ -28,6 +28,11 @@ public class AppConfig {
         return appHost;
     }
 
+    public static boolean isOffline() {
+        String offline = GLOBAL_CONFIG.getProperty("offline");
+        return offline != null && offline.toLowerCase().trim().equals("true");
+    }
+
     public static String getQQConnectAppId() {
         return QQ_CONNECT_CONFIG.getProperty("app_ID").trim();
     }

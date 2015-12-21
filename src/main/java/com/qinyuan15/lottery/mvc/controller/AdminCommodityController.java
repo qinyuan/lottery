@@ -42,7 +42,7 @@ public class AdminCommodityController extends ImageController {
         addCss("resources/js/lib/bootstrap/css/bootstrap-switch.min", false);
         addJs("lib/bootstrap/js/bootstrap-switch.min", false);
 
-        addJs(CDNSource.HANDLEBARS);
+        addJs(CDNSource.HANDLEBARS_JS);
         addHeadJs("lib/image-adjust.js");
         addCss("admin-form");
         addCssAndJs("admin-commodity");

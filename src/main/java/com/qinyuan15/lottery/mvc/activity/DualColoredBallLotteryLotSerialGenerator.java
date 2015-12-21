@@ -3,6 +3,10 @@ package com.qinyuan15.lottery.mvc.activity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import org.apache.commons.lang3.RandomUtils;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Generate serial number by three dualColoredBall number
  * Created by qinyuan on 15-11-23.
@@ -10,18 +14,27 @@ import org.apache.commons.lang3.RandomUtils;
 public class DualColoredBallLotteryLotSerialGenerator implements LotteryLotSerialGenerator {
     private final static int MIN_DUAL_COLORED_BALL_NUMBER = 1;
     private final static int MAX_DUAL_COLORED_BALL_NUMBER = 33;
-    private final static int DUAL_COLORED_BALL_NUMBER_LENGTH = String.valueOf(MAX_DUAL_COLORED_BALL_NUMBER).length();
 
     @Override
     public int next() {
-        // DecimalFormat  format = new DecimalFormat("00");
-        int serialNumber = 0;
-        int multiplier = (int) Math.pow(10, DUAL_COLORED_BALL_NUMBER_LENGTH);
-        for (int i = 0; i < 3; i++) {
-            serialNumber = serialNumber * multiplier + RandomUtils.nextInt(MIN_DUAL_COLORED_BALL_NUMBER,
-                    MAX_DUAL_COLORED_BALL_NUMBER + 1);
+        List<Integer> numbers = new ArrayList<>();
+        while (numbers.size() < 3) {
+            int singleBall = nextSingleBall();
+            if (!numbers.contains(singleBall)) {
+                numbers.add(singleBall);
+            }
         }
-        return serialNumber;
+        Collections.sort(numbers);
+
+        int result = 0;
+        for (int number : numbers) {
+            result = result * 100 + number;
+        }
+        return result;
+    }
+
+    public int nextSingleBall() {
+        return RandomUtils.nextInt(MIN_DUAL_COLORED_BALL_NUMBER, MAX_DUAL_COLORED_BALL_NUMBER + 1);
     }
 
     @Override

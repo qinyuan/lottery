@@ -31,14 +31,21 @@ div.main-body div.support-button div.text.success {
     display: none;
 }
 
-div.main-body div.support-button button {
-    margin-left: 35px;
-}
-
-button.blue {
+div.main-body div.support-button .blue {
+    margin: 0 0 0 35px;
     background: url("images/blue-button-back.png") repeat-x center center;
     border-radius: 5px;
     padding: 8px 20px;
     color: #ffffff;
-    min-width: 95px;
+    width: 95px;
+    border: none;
+}
+
+div.main-body div.support-button a.blue {
+    display: block;
+}
+
+div.main-body div.support-button .blue:hover,
+div.main-body div.support-button .blue:active {
+    color: #ffffff;
 }

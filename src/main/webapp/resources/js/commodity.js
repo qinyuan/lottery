@@ -384,18 +384,18 @@
             var self = this;
             setTimeout(function () {
                 self.showSameLotUsers(serialNumber, data['sameLotUsers']);
-            }, 3000);
+            }, 1000);
         },
         showSameLotUsers: function (serialNumber, sameLotUsers) {
             this.hideConcealDivs();
             var currentUser = $('body div.header div.right-navigation a.username').html();
-            var $tbody = this.$sameLotUsers.find('div.data tbody');
+            var $tbody = this.$sameLotUsers.find('div.data tbody').empty();
             for (var i = 0; i < sameLotUsers.length; i++) {
                 var user = sameLotUsers[i];
                 var html = user.username == currentUser ? '<tr class="current">' : '<tr>';
                 html += '<td>' + user.username + '</td>';
                 html += '<td>' + serialNumber + '</td>';
-                html += '<td>' + user['liveness'] + '</td>';
+                html += '<td class="liveness">' + user['liveness'] + '</td>';
                 html += '</tr>';
                 $tbody.append(html);
             }

@@ -10,11 +10,15 @@
         <div class="support-button">
             <c:choose><c:when test="${alreadySupported}">
                 <div class="text">你已经支持过${username}</div>
-                <button class="blue mediumTransparent" disabled>支持一下</button>
+                <a href="index.html" class="blue">返回首页</a>
             </c:when><c:otherwise>
                 <div class="text">支持你的朋友${username}</div>
                 <div class="text success">成功支持朋友${username}！</div>
-                <button class="blue">支持一下</button>
+                <c:choose><c:when test="${selfSupport}">
+                    <button type="button" class="blue mediumTransparent" disabled>支持一下</button>
+                </c:when><c:otherwise>
+                    <button type="button" class="blue">支持一下</button>
+                </c:otherwise></c:choose>
             </c:otherwise></c:choose>
         </div>
     </div>

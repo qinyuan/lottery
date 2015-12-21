@@ -32,7 +32,8 @@ import java.util.List;
 @Controller
 public class SettingController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(SettingController.class);
-    private final static List<String> titles = Lists.newArrayList("个人资料", "通知", "安全", "绑定手机", "更改邮箱", "增加爱心");
+    private final static List<String> titles = Lists.newArrayList(
+            "个人资料", "通知", "安全", "绑定手机", "更改邮箱", "增加支持");
     private final static int LOGIN_RECORD_SIZE = 20;
 
     @RequestMapping("/setting")

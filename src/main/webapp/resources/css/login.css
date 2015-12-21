@@ -15,6 +15,7 @@ div.login > div.title {
     text-align: center;
     background-color: #E5F6FB;
     color: #676767;
+    font-size: 11pt;
 }
 
 div.login > form {
@@ -61,7 +62,7 @@ div.login > form div.error-info {
 
 div.login > form div.forget-password {
     position: absolute;
-    top: 130px;
+    bottom: 22px;
     right: 92px;
 }
 

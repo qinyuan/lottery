@@ -9,16 +9,16 @@
 </div>
 <%@include file="inc-register-login-panel.jsp" %>
 </body>
-<q:js src="http://libs.baidu.com/jquery/1.10.0/jquery.min.js"/>
+<c:choose><c:when test="<%=AppConfig.isOffline()%>">
+    <q:js src="resources/js/lib/jquery-1.11.3.min"/>
+</c:when><c:otherwise>
+    <q:js src="<%=CDNSource.JQUERY_JS%>"/>
+</c:otherwise></c:choose>
 <q:js src="lib/jquery.url"/>
 <q:js src="lib/jquery.cookie"/>
 <q:js src="lib/jquery-form-3.51.0"/>
 <q:js src="lib/underscore-min"/>
 <q:js src="lib/jsutils/jsutils" version="true"/>
-<%--<script type="text/javascript"
-        src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101264653"
-        data-redirecturi="http://www.bud-vip.com/register-by-qq.html"
-        charset="utf-8"></script>--%>
 <q:js src="common" version="true"/>
 <%---
 <!--[if IE]>

@@ -2,6 +2,7 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.image.ImageMap;
 import com.qinyuan.lib.image.ImageMapDao;
+import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan.lib.mvc.security.UserRole;
@@ -31,10 +32,21 @@ public class CommodityController extends ImageController {
                         @RequestParam(value = "fromUser", required = false) String userSerialKey,
                         @RequestParam(value = "medium", required = false) String medium) {
 
+        LivenessAdder livenessAdder = new LivenessAdder(session);
+        if (StringUtils.isNotBlank(userSerialKey) && StringUtils.isNotBlank(medium)
+                /*&& livenessAdder.canAddLiveness()*/) {
+            String redirectUrl = "commodity.html";
+            if (IntegerUtils.isPositive(id)) {
+                redirectUrl += "?id=" + id;
+            }
+            return redirect("support.html?serial=" + userSerialKey + "&redirectUrl=" +
+                    UrlUtils.encode(redirectUrl));
+        }
+
+
         CommodityHeaderUtils.setHeaderParameters(this);
         Commodity commodity = getCommodity(id);
 
-        LivenessAdder livenessAdder = new LivenessAdder(session);
         if (commodity == null) {
             livenessAdder.recordSpreader(userSerialKey, medium, null);
             setTitle("未找到相关商品");
@@ -65,13 +77,6 @@ public class CommodityController extends ImageController {
             addJavaScriptData("selectedCommodityId", commodity.getId());
         }
 
-        if (StringUtils.isNotBlank(userSerialKey) && StringUtils.isNotBlank(medium)
-                && StringUtils.isNotBlank(SecurityUtils.getUsername())) {
-            if (livenessAdder.canAddLiveness()) {
-                return redirect("support.html?serial=" + userSerialKey + "&redirectUrl=" +
-                        UrlUtils.encode(getFullRequestURI()));
-            }
-        }
 
         // seckill poker
         setAttribute("pokerFrontSide", pathToUrl(AppConfig.getSeckillPokerFrontSide()));

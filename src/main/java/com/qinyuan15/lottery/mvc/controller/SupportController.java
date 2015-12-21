@@ -2,6 +2,7 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
+import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.activity.ShareMedium;
 import com.qinyuan15.lottery.mvc.dao.*;
@@ -28,6 +29,10 @@ public class SupportController extends ImageController {
             String username = spreadUser.getUsername();
             setAttribute("username", username);
             setTitle("支持一下-" + username);
+
+            if (username != null && username.equals(SecurityUtils.getUsername())) {
+                setAttribute("selfSupport", true);
+            }
 
             User receiveUser = (User) securitySearcher.getUser();
             if (new LotteryLivenessDao().hasInstance(spreadUser.getId(), receiveUser.getId())) {
