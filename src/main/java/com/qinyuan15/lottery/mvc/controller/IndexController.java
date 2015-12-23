@@ -19,7 +19,7 @@ public class IndexController extends ImageController {
         setAttribute("indexImageMaps", dao.getInstancesAndGroupByRelateId());
         addJavaScriptData("cycleInterval", AppConfig.getIndexImageCycleInterval());
 
-        setTitle("首页");
+        setTitle(AppConfig.getIndexPageTitle());
         addCssAndJs("index");
         return "index";
     }

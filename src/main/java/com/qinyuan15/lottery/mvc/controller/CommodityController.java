@@ -49,7 +49,7 @@ public class CommodityController extends ImageController {
 
         if (commodity == null) {
             livenessAdder.recordSpreader(userSerialKey, medium, null);
-            setTitle("未找到相关商品");
+            setTitle(AppConfig.getCommodityPageTitle());
         } else {
             livenessAdder.recordSpreader(userSerialKey, medium, commodity.getId());
             setAttribute("seoKeyword", "抽奖,免费," + commodity.getName());

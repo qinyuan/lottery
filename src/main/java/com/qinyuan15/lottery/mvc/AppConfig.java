@@ -5,6 +5,7 @@ import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.file.ClasspathFileUtils;
 import com.qinyuan.lib.network.url.UrlUtils;
 
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -14,22 +15,30 @@ import java.util.Properties;
 public class AppConfig {
     public final static String GLOBAL_CONFIG_PROPS_FILE = "global-config.properties";
     public final static String QQ_CONNECT_CONFIG_PROPS_FILE = "qqconnectconfig.properties";
-    private final static Properties GLOBAL_CONFIG = ClasspathFileUtils.getProperties(GLOBAL_CONFIG_PROPS_FILE);
+    private final static Map<String, String> GLOBAL_CONFIG = ClasspathFileUtils.getPropertyMap(GLOBAL_CONFIG_PROPS_FILE);
     private final static Properties QQ_CONNECT_CONFIG = ClasspathFileUtils.getProperties(QQ_CONNECT_CONFIG_PROPS_FILE);
 
     /**
      * @return url such as http://192.168.8.1:8080/lotery/, which must end with '/'
      */
     public static String getAppHost() {
-        String appHost = GLOBAL_CONFIG.getProperty("appHost");
+        String appHost = GLOBAL_CONFIG.get("appHost");
         if (!appHost.endsWith("/")) {
             appHost += "/";
         }
         return appHost;
     }
 
+    public static String getIndexPageTitle() {
+        return GLOBAL_CONFIG.get("indexPageTitle");
+    }
+
+    public static String getCommodityPageTitle() {
+        return GLOBAL_CONFIG.get("commodityPageTitle");
+    }
+
     public static boolean isOffline() {
-        String offline = GLOBAL_CONFIG.getProperty("offline");
+        String offline = GLOBAL_CONFIG.get("offline");
         return offline != null && offline.toLowerCase().trim().equals("true");
     }
 

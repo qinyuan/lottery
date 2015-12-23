@@ -14,6 +14,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AppConfigTest extends DatabaseTestCase {
 
     @Test
+    public void testGetIndexPageTitle() {
+        assertThat(AppConfig.getIndexPageTitle()).isEqualTo("布迪网-满足烟瘾，拒绝伤害");
+    }
+
+    @Test
+    public void testGetCommodityPageTitle() {
+        assertThat(AppConfig.getCommodityPageTitle()).isEqualTo("布迪网-商品及活动");
+    }
+
+    @Test
     public void testGetAppHost() {
         assertThat(AppConfig.getAppHost()).isEqualTo("http://qinyuan:8080/lottery/");
     }

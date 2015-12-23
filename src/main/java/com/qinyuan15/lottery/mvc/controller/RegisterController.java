@@ -65,12 +65,12 @@ public class RegisterController extends ImageController {
         return "register";
     }
 
-    @RequestMapping("/register-by-qq")
+    /*@RequestMapping("/register-by-qq")
     public String registerByQQ() {
         setAttributeAndJavaScriptData("byQQ", true);
         setAttributeAndJavaScriptData("numberMode", true);
         return index(null);
-    }
+    }*/
 
     @RequestMapping("/register-complete-user-info.json")
     @ResponseBody
