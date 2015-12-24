@@ -1,5 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="inc-header.jsp" %>
+<c:if test="${redirectUrl != null}">
+    <style>
+        body > div {
+            display: none;
+        }
+    </style>
+    <script>
+        if (window['redirectUrl']){
+            location.href = window['redirectUrl'];
+        }
+    </script>
+</c:if>
 <%@include file="commodity-header.jsp" %>
 <div class="main-body page-width">
     <div class="snapshots">

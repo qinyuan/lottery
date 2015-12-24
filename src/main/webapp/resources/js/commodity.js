@@ -1,5 +1,10 @@
 ;
 (function () {
+    if (window['redirectUrl']) {
+        location.href = window['redirectUrl'];
+        return;
+    }
+
     var participantCount = ({
         update: function () {
             var commodity = getSelectedCommodity();
