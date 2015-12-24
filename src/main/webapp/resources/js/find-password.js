@@ -40,7 +40,10 @@
 
     var resetPasswordResult = ({
         $div: $('div.main-body div.reset-password-result'),
+        email: null,
         show: function (email) {
+            this.email = email;
+            email = JSUtils.makeEmailSecret(email);
             this.$div.find('span.mail').text(email);
             this.$div.find('a.toLoginPage').attr('href', JSUtils.getEmailLoginPage(email));
             this.$div.fadeIn(300);
@@ -51,8 +54,8 @@
         init: function () {
             var self = this;
             this.$div.find('a.resend').click(function () {
-                var email = self.$div.find('span.mail:first').text();
-                $.post('resend-reset-password-mail.json', {'email': email}, function (data) {
+                //var email = self.$div.find('span.mail:first').text();
+                $.post('resend-reset-password-mail.json', {'email': self.email}, function (data) {
                     if (data.success) {
                         self.$div.find('span.resend-success').showForAWhile(1500);
                     } else {

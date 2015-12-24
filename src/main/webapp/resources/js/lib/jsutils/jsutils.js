@@ -933,6 +933,14 @@ var JSUtils = {
         $tip.animate({ "opacity": "hide", "top": top - 30 }, 1500, function () {
             $(this).remove();
         });
+    },
+    makeEmailSecret: function(email) {
+        var index = email.indexOf('@');
+        if (index <2){
+            return email.substring(0, index) + '**' + email.substring(index);
+        } else {
+            return email.substring(0, 2) + '**' + email.substring(index);
+        }
     }
 };
 

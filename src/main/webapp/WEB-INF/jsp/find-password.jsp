@@ -35,8 +35,8 @@
             </table>
         </form>
         <div class="reset-password-result">
-            <div>您正在找回密码的帐号为：<span class="mail">qinyuan15@sina.com</span></div>
-            <div>设置新密码的链接已经发送至您的邮箱：<span class="mail" style="font-size: 16pt;">qinyuan15@qq.com</span></div>
+            <div>您正在找回密码的帐号为：<span class="mail"></span></div>
+            <div>设置新密码的链接已经发送至您的邮箱：<span class="mail" style="font-size: 16pt;"></span></div>
             <div style="color: #999;">请您在24小时内登录邮箱，点击邮件内链接为帐号设置新密码</div>
             <div>
                 <a href="javascript:void(0)" target="_blank" class="btn btn-success btn-lg toLoginPage">去邮箱收信</a>
