@@ -9,7 +9,7 @@
 <div class="user-list">
     <div class="title">
         用户列表
-        <span class="comment">列表格式：用户名 爱心数 最后登录时间</span>
+        <span class="comment">列表格式：用户名 支持数 最后登录时间</span>
     </div>
     <form class="search">
         <input type="text" class="form-control" name="keyword" placeholder="输入需要搜索的用户名、邮箱或密码" value="${keyword}"/>
@@ -30,7 +30,7 @@
                     <button class="button button-primary button-circle" title="添加活动"><i class="fa fa-plus"></i></button>
                 </div>
                 <div class="liveness">
-                    爱心值 ≥ <input type="text" class="form-control min-liveness" value="${minLiveness}"/>
+                    支持值 ≥ <input type="text" class="form-control min-liveness" value="${minLiveness}"/>
                     <button id="livenessFilterSubmit" class="btn btn-success">确定</button>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                 <div class="user">
                     <div class="id"><input type="checkbox" class="select-user list-mode" value="${user[0]}"></div>
                     <div class="username" title="姓名">${user[1]}</div>
-                    <div class="liveness" title="爱心">${user[2] == null ? 0 : user[2]}</div>
+                    <div class="liveness" title="支持">${user[2] == null ? 0 : user[2]}</div>
                     <div class="login-time" title="最后一次登录时间">${user[3]}</div>
                     <div class="edit">
                         <a href="admin-personal-center.html?id=${user[0]}" target="_blank" title="编辑">

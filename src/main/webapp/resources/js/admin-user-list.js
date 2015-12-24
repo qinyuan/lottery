@@ -314,7 +314,7 @@
         if (JSUtils.isNumberString(minLiveness)) {
             location.href = JSUtils.updateUrlParam('minLiveness', minLiveness);
         } else {
-            alert('最小爱心值必须为数字格式');
+            alert('最小支持值必须为数字格式');
         }
     });
     var $livenessFilterInput = $livenessFilter.find('input[type=text]').focus(function () {

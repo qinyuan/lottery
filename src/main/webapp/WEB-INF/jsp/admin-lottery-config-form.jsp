@@ -91,7 +91,7 @@
     </div>
 </div>
 <div class="edit-unit">
-    <div class="title">用户爱心增加后的通知设置</div>
+    <div class="title">用户支持增加后的通知设置</div>
     <div class="content">
         <table>
             <tbody>
@@ -109,8 +109,8 @@
                         注：<br/>
                         {{user}}指代用户名；<br/>
                         {{invitee}}指代被邀请者；<br/>
-                        {{add_l}}指代增加的爱心；<br/>
-                        {{liveness}}指代总爱心；<br/>
+                        {{add_l}}指代增加的支持；<br/>
+                        {{liveness}}指代总支持；<br/>
                         {{url}}指代抽奖链接。
                     </div>
                 </td>
@@ -206,12 +206,12 @@
                 </td>
             </tr>
             <tr>
-                <td class="title">爱心不足提醒
+                <td class="title">支持不足提醒
                     <div class="comment">
                         注：<br/>
                         <%=InvalidLotteryLotPlaceholderConverter.PHASE_PLACEHOLDER%>指代抽奖的期数<br/>
-                        <%=InvalidLotteryLotPlaceholderConverter.LIVENESS_PLACEHOLDER%>指代用户的爱心数<br/>
-                        <%=InvalidLotteryLotPlaceholderConverter.MIN_LIVENESS_PLACEHOLDER%>指代抽奖要求的最少爱心数
+                        <%=InvalidLotteryLotPlaceholderConverter.LIVENESS_PLACEHOLDER%>指代用户的支持数<br/>
+                        <%=InvalidLotteryLotPlaceholderConverter.MIN_LIVENESS_PLACEHOLDER%>指代抽奖要求的最少支持数
                     </div>
                 </td>
                 <td class="input">
@@ -290,10 +290,10 @@
         <table>
             <tbody>
             <tr>
-                <td class="wide title">分享给好友且好友注册或登录后增加的爱心</td>
+                <td class="wide title">分享给好友且好友注册或登录后增加的支持</td>
                 <td class="input narrow">
                     <input type="text" class="form-control" name="shareSucceedLiveness"
-                           value="${shareSucceedLiveness}" placeholder="在此输入分享成功增加的爱心数"/>
+                           value="${shareSucceedLiveness}" placeholder="在此输入分享成功增加的支持数"/>
                 </td>
             </tr>
             <tr>

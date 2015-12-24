@@ -30,8 +30,8 @@
             <input type="password" class="form-control" placeholder="确认密码" name="password2" maxlength="20"/>
         </div>
     </c:if>
-    <div class="subscribe">
-        <input type="checkbox" name="subscribe"/>
+    <div class="subscribe" style="display:none;">
+        <input type="checkbox" name="subscribe" checked/>
         已经认真阅读并同意订阅 <a target="_blank" href="${websiteIntroductionLink}">《布迪网》</a>
     </div>
     <div class="submit">

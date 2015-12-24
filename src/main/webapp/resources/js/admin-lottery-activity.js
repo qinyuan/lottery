@@ -70,13 +70,13 @@
          var virtualLiveness = this.get$VirtualLiveness().val();
          if (virtualLiveness != '') {
          if (!JSUtils.isNumberString(virtualLiveness)) {
-         alert('最大爱心数只能为数字格式！');
+         alert('最大支持数只能为数字格式！');
          this.get$VirtualLiveness().focusOrSelect();
          return false;
          }
          var virtualLivenessUsers = this.get$VirtualLivenessUsers().trimVal();
          if (virtualLivenessUsers == '') {
-         alert('如果填写了最大爱心，则最大爱心用户必须填写！');
+         alert('如果填写了最大支持，则最大支持用户必须填写！');
          this.get$VirtualLivenessUsers().focusOrSelect();
          return false;
          }
@@ -87,7 +87,7 @@
         /*validateMinLivenessToParticipate: function () {
          var minLivenessToParticipate = this.get$MinLivenessToParticipate().val();
          if (minLivenessToParticipate != '' && !JSUtils.isNumberString(minLivenessToParticipate)) {
-         alert('最少需要的爱心数只能为数字格式！');
+         alert('最少需要的支持数只能为数字格式！');
          this.get$MinLivenessToParticipate().focusOrSelect();
          return false;
          }

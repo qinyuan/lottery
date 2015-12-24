@@ -30,11 +30,11 @@
             <%@include file="widget-pagination.jsp"%>
             <%--
         <div>
-            <h4 style="font-size:13pt;">您目前的爱心(活跃度)：${livenessCount}</h4>
+            <h4 style="font-size:13pt;">您目前的支持(活跃度)：${livenessCount}</h4>
             <c:choose>
                 <c:when test="${livenessCount>0}">
                     <div style="font-size: 10pt;color:#999;">
-                        以下是您提升个人爱心(活跃度)的历程
+                        以下是您提升个人支持(活跃度)的历程
                     </div>
                     <table class="normal liveness">
                         <thead>
@@ -43,7 +43,7 @@
                             <th>您的好友</th>
                             <th>传播途径</th>
                             <th>传播效果</th>
-                            <th>增加的爱心数</th>
+                            <th>增加的支持数</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -61,7 +61,7 @@
                 </c:when>
                 <c:otherwise>
                     <div style="font-size: 12pt;color:#999;">
-                        您还需要通过努力传播来提高自己的爱心(活跃度)
+                        您还需要通过努力传播来提高自己的支持(活跃度)
                     </div>
                 </c:otherwise>
             </c:choose>

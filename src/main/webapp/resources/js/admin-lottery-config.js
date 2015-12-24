@@ -12,13 +12,13 @@
 
         if (shareSucceedLiveness == '') {
             focus($shareSucceedLiveness);
-            alert('分享成功增加的爱心数不能为空');
+            alert('分享成功增加的支持数不能为空');
             return false;
         }
 
         if (!JSUtils.isNumberString(shareSucceedLiveness)) {
             focus($shareSucceedLiveness);
-            alert('分享成功增加的爱心数必须为数字格式');
+            alert('分享成功增加的支持数必须为数字格式');
             return false;
         }
 

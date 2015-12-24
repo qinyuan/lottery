@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<security:authorize ifNotGranted="ROLE_NORMAL,ROLE_ADMIN">
+<%--<security:authorize ifNotGranted="ROLE_NORMAL,ROLE_ADMIN">--%>
     <div class="shadow float-panel" id="springLoginForm">
         <div class="title">
             <div class="text">欢迎登录</div>
@@ -138,4 +138,4 @@
             </div>
         </div>
     </div>
-</security:authorize>
+<%--</security:authorize>--%>
