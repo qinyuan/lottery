@@ -169,7 +169,7 @@
             var params = {
                 qqOpenId: $form.getInputByName('qqOpenId').val(),
                 username: $username.val()/*,
-                password: $password.val()*/
+                 password: $password.val()*/
             };
             if (window['numberMode']) {
                 params.qqNumber = $qqNumber.val();
@@ -202,7 +202,7 @@
         }
 
         var $fetchQQInfo = $('div.main-body div.fetch-qq-info');
-        var waiting = JSUtils.buildWaitingText('fetchInfoWaiting');
+        var waiting = $('#fetchInfoWaiting').text('').buildWaitingText();
 
         if (!JSUtils.getUrlHash('access_token')) {
             setTimeout(function () {

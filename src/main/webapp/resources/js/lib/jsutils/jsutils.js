@@ -464,15 +464,6 @@ var JSUtils = {
         this.loadSelectFormValue($div, initValue);
     },
     loadSelectFormEvents: function ($div) {
-        /*$div.find('ul.dropdown-menu a').click(function () {
-         console.log('click');
-         var $this = $(this);
-         var id = $this.dataOptions('id');
-         var text = $this.text();
-         var $parent = $this.getParentByTagNameAndClass('div', 'dropdown');
-         $parent.find('button').html(text + ' <span class="caret"></span>');
-         $parent.find('input[type=hidden]:first').val(id);
-         });*/
         $div.find('ul.dropdown-menu a').click(this._selectItemClickEvent);
     },
     _selectItemClickEvent: function () {
@@ -895,24 +886,6 @@ var JSUtils = {
             $this.attr('src', src).show();
         });
     },
-    buildWaitingText: function (elementId) {
-        var $element = $('#' + elementId);
-        $element.text('.');
-        var timer = setInterval(function () {
-            var text = $element.text();
-            if (text.length == 6) {
-                $element.text('.');
-            } else {
-                $element.text(text + '.');
-            }
-        }, 750);
-        return {
-            stop: function () {
-                clearInterval(timer);
-                $element.text('');
-            }
-        }
-    },
     createBubble: function (event, text, color) {
         var left = event.pageX;
         var top = event.pageY - 30;
@@ -934,9 +907,9 @@ var JSUtils = {
             $(this).remove();
         });
     },
-    makeEmailSecret: function(email) {
+    makeEmailSecret: function (email) {
         var index = email.indexOf('@');
-        if (index <2){
+        if (index < 2) {
             return email.substring(0, index) + '**' + email.substring(index);
         } else {
             return email.substring(0, 2) + '**' + email.substring(index);
@@ -1242,4 +1215,24 @@ jQuery.fn.adjustMinHeightToHeight = function () {
         this.css('min-height', height);
     }
     return this;
+};
+
+jQuery.fn.buildWaitingText = function () {
+    var $element = this;
+    var originalText = $element.text();
+    $element.text(originalText + '.');
+    var timer = setInterval(function () {
+        var text = $element.text();
+        if ((text.length - originalText.length) == 6) {
+            $element.text(originalText + '.');
+        } else {
+            $element.text(text + '.');
+        }
+    }, 750);
+    return {
+        stop: function () {
+            clearInterval(timer);
+            $element.text('');
+        }
+    }
 };

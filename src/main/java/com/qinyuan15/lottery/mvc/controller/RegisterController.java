@@ -3,6 +3,7 @@ package com.qinyuan15.lottery.mvc.controller;
 import com.qinyuan.lib.contact.mail.MailAddressValidator;
 import com.qinyuan.lib.contact.qq.QQValidator;
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan.lib.lang.concurrent.ThreadUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.PasswordValidator;
 import com.qinyuan15.lottery.mvc.AppConfig;
@@ -64,13 +65,6 @@ public class RegisterController extends ImageController {
         addCssAndJs("register");
         return "register";
     }
-
-    /*@RequestMapping("/register-by-qq")
-    public String registerByQQ() {
-        setAttributeAndJavaScriptData("byQQ", true);
-        setAttributeAndJavaScriptData("numberMode", true);
-        return index(null);
-    }*/
 
     @RequestMapping("/register-complete-user-info.json")
     @ResponseBody
@@ -184,6 +178,7 @@ public class RegisterController extends ImageController {
                          @RequestParam(value = "email", required = false) String email,
                          @RequestParam(value = "qq", required = false) String qq) {
 
+        ThreadUtils.sleep(10);
         if (!validateIdentityCode(identityCode)) {
             return fail("验证码输入错误！");
         } else if (StringUtils.isBlank(registerType)) {

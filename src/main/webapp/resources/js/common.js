@@ -144,7 +144,7 @@ var angularUtils = {
             this.$resendResult.text('');
             this.$result.find('div.text span.email').text(email);
             var loginPage = JSUtils.getEmailLoginPage(email);
-            this.$result.find('div.result div.text a').attr('href', loginPage);
+            this.$result.find('div.text a').attr('href', loginPage);
         },
         setTitle: function (title) {
             this.$div.find('div.title div.text').text(title);
@@ -353,19 +353,16 @@ var angularUtils = {
 
                 function registerSubmit(registerType) {
                     self.$div.setInputValue('registerType', registerType);
-                    self.$registerSubmit.text('正在处理...');
-                    self.$div.find('form').ajaxSubmit({
-                        success: function (data) {
-                            self.$registerSubmit.text('立即注册');
-                            if (data['success']) {
-                                self.showResult();
-                            } else {
-                                alert(data['detail']);
-                                self.$div.find('div.body div.right div.input.identity-code img').trigger('click');
-                            }
-                        },
-                        resetForm: false,
-                        dataType: 'json'
+                    var waiting = self.$registerSubmit.text('正在处理').buildWaitingText();
+                    $.post('register-submit.json', self.$div.find('form').serialize(), function (data) {
+                        waiting.stop();
+                        self.$registerSubmit.text('立即注册');
+                        if (data['success']) {
+                            self.showResult();
+                        } else {
+                            alert(data['detail']);
+                            self.$div.find('div.body div.right div.input.identity-code img').trigger('click');
+                        }
                     });
                 }
             });
