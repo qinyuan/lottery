@@ -2,7 +2,7 @@ package com.qinyuan15.lottery.mvc.activity.tracker;
 
 import com.qinyuan.lib.database.test.DatabaseTestCase;
 import com.qinyuan15.lottery.mvc.activity.DualColoredBallLotteryLotSerialGenerator;
-import com.qinyuan15.lottery.mvc.activity.LotteryLotNumberTrueValidator;
+import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotNumberTrueValidator;
 import org.junit.Test;
 
 public class TrackerManagerTest extends DatabaseTestCase {

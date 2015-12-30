@@ -48,11 +48,11 @@ public class RegisterController extends ImageController {
             setAttribute("preUser", preUser);
             addJavaScriptData("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
 
-            String websiteintroductionlink = AppConfig.getWebsiteIntroductionLink();
-            if (StringUtils.isBlank(websiteintroductionlink)) {
-                websiteintroductionlink = "javascript:void(0)";
+            String websiteIntroductionLink = AppConfig.getWebsiteIntroductionLink();
+            if (StringUtils.isBlank(websiteIntroductionLink)) {
+                websiteIntroductionLink = "javascript:void(0)";
             }
-            setAttribute("websiteIntroductionLink", websiteintroductionlink);
+            setAttribute("websiteIntroductionLink", websiteIntroductionLink);
 
             if (preUser != null && new UserDao().hasEmail(preUser.getEmail())) {
                 setAttribute("userInfoCompleted", true);
@@ -178,7 +178,6 @@ public class RegisterController extends ImageController {
                          @RequestParam(value = "email", required = false) String email,
                          @RequestParam(value = "qq", required = false) String qq) {
 
-        ThreadUtils.sleep(10);
         if (!validateIdentityCode(identityCode)) {
             return fail("验证码输入错误！");
         } else if (StringUtils.isBlank(registerType)) {

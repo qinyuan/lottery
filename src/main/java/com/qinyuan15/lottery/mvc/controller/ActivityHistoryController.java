@@ -4,7 +4,7 @@ import com.google.common.base.Joiner;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
-import com.qinyuan15.lottery.mvc.activity.InvalidLotteryLotUtils;
+import com.qinyuan15.lottery.mvc.activity.lot.InvalidLotteryLotUtils;
 import com.qinyuan15.lottery.mvc.dao.*;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

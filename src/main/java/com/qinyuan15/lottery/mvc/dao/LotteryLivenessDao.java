@@ -6,7 +6,7 @@ import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.activity.LivenessIncreaseSystemInfoSender;
-import com.qinyuan15.lottery.mvc.activity.LotteryLotCounter;
+import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotCounter;
 import com.qinyuan15.lottery.mvc.activity.NewLotteryChanceSystemInfoSender;
 import com.qinyuan15.lottery.mvc.mail.NewLotteryChanceMailSender;
 import org.apache.commons.lang3.BooleanUtils;

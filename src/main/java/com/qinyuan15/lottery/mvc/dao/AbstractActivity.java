@@ -2,7 +2,7 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.hibernate.PersistObject;
 import com.qinyuan.lib.lang.time.DateUtils;
-import com.qinyuan15.lottery.mvc.activity.LotCounter;
+import com.qinyuan15.lottery.mvc.activity.lot.LotCounter;
 
 abstract class AbstractActivity extends PersistObject {
     private Integer commodityId;

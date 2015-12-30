@@ -1,5 +1,6 @@
-package com.qinyuan15.lottery.mvc.activity;
+package com.qinyuan15.lottery.mvc.activity.lot;
 
+import com.qinyuan15.lottery.mvc.activity.lot.LotCounter;
 import com.qinyuan15.lottery.mvc.dao.SeckillActivity;
 import com.qinyuan15.lottery.mvc.dao.SeckillLotDao;
 

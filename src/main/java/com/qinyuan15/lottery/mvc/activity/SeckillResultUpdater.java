@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.activity;
 
 import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.activity.lot.SeckillLotCounter;
 import com.qinyuan15.lottery.mvc.dao.SeckillActivity;
 import com.qinyuan15.lottery.mvc.dao.SeckillActivityDao;
 import org.slf4j.Logger;

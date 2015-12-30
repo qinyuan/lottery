@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.activity;
 
 import com.qinyuan.lib.database.test.DatabaseTestCase;
+import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotCounter;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

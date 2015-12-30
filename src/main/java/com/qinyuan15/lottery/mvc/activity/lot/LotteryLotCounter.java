@@ -1,7 +1,10 @@
-package com.qinyuan15.lottery.mvc.activity;
+package com.qinyuan15.lottery.mvc.activity.lot;
 
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.activity.ExpectParticipantsDivider;
+import com.qinyuan15.lottery.mvc.activity.VirtualParticipantCreator;
+import com.qinyuan15.lottery.mvc.activity.lot.LotCounter;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;

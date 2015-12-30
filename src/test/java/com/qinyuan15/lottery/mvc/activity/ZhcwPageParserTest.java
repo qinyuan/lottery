@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.activity;
 
 import com.qinyuan.lib.lang.test.TestFileUtils;
+import com.qinyuan15.lottery.mvc.activity.dualcoloredball.ZhcwPageParser;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,7 +1,8 @@
-package com.qinyuan15.lottery.mvc.activity;
+package com.qinyuan15.lottery.mvc.activity.dualcoloredball;
 
 import com.google.common.base.Joiner;
 import com.qinyuan.lib.network.html.JavaScriptExecutor;
+import com.qinyuan15.lottery.mvc.activity.DualColoredBallPageParser;
 import org.mozilla.javascript.NativeObject;
 
 import java.text.DecimalFormat;

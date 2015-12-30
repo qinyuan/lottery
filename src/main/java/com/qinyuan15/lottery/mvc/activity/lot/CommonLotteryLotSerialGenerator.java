@@ -1,5 +1,7 @@
-package com.qinyuan15.lottery.mvc.activity;
+package com.qinyuan15.lottery.mvc.activity.lot;
 
+import com.qinyuan15.lottery.mvc.activity.LotteryLotSerialGenerator;
+import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotNumberValidator;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 
 public class CommonLotteryLotSerialGenerator implements LotteryLotSerialGenerator {

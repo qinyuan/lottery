@@ -7,7 +7,7 @@
             http://www.springframework.org/schema/task
             http://www.springframework.org/schema/task/spring-task.xsd">
 
-    <bean id="lotteryLotNumberValidator" class="com.qinyuan15.lottery.mvc.activity.LotteryLotNumberTrueValidator"/>
+    <bean id="lotteryLotNumberValidator" class="com.qinyuan15.lottery.mvc.activity.lot.LotteryLotNumberTrueValidator"/>
     <bean id="serialGenerator" class="com.qinyuan15.lottery.mvc.activity.DualColoredBallLotteryLotSerialGenerator"/>
     <bean id="lotNumberFormat" class="java.text.DecimalFormat">
         <constructor-arg value="000000"/>
@@ -16,7 +16,7 @@
         <property name="crawlers">
             <list>
                 <bean class="com.qinyuan15.lottery.mvc.activity.BaiduLecaiCrawler"/>
-                <bean class="com.qinyuan15.lottery.mvc.activity.ZhcwCrawler"/>
+                <bean class="com.qinyuan15.lottery.mvc.activity.dualcoloredball.ZhcwCrawler"/>
             </list>
         </property>
     </bean>
