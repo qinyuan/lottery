@@ -2,7 +2,7 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.time.DateUtils;
-import com.qinyuan15.lottery.mvc.activity.DualColoredBallPhaseValidator;
+import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallPhaseValidator;
 import com.qinyuan15.lottery.mvc.activity.tracker.WinnerManager;
 import com.qinyuan15.lottery.mvc.dao.*;
 import org.slf4j.Logger;

@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity;
 
+import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallCrawler;
 import com.qinyuan15.lottery.mvc.activity.dualcoloredball.ZhcwCrawler;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.qinyuan15.lottery.mvc.activity;
+package com.qinyuan15.lottery.mvc.activity.lot;
 
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotSerialGenerator;

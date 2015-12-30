@@ -1,4 +1,4 @@
-package com.qinyuan15.lottery.mvc.activity;
+package com.qinyuan15.lottery.mvc.activity.dualcoloredball;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;

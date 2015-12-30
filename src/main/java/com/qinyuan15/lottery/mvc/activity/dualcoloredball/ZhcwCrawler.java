@@ -1,8 +1,5 @@
 package com.qinyuan15.lottery.mvc.activity.dualcoloredball;
 
-import com.qinyuan15.lottery.mvc.activity.AbstractDualColoredBallCrawler;
-import com.qinyuan15.lottery.mvc.activity.DualColoredBallPageParser;
-
 public class ZhcwCrawler extends AbstractDualColoredBallCrawler {
     @Override
     protected String getPageUrl(int fullPhase) {

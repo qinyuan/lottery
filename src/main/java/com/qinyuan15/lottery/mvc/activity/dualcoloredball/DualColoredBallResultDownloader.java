@@ -1,7 +1,6 @@
-package com.qinyuan15.lottery.mvc.activity;
+package com.qinyuan15.lottery.mvc.activity.dualcoloredball;
 
 import com.qinyuan.lib.lang.time.DateUtils;
-import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallPhase;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
 
 public class DualColoredBallResultDownloader {

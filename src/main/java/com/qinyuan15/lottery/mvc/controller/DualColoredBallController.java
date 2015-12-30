@@ -2,8 +2,8 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.mvc.controller.BaseController;
-import com.qinyuan15.lottery.mvc.activity.DualColoredBallCalculator;
-import com.qinyuan15.lottery.mvc.activity.DualColoredBallResultDownloader;
+import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallCalculator;
+import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallResultDownloader;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecord;
 import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
 import org.springframework.stereotype.Controller;

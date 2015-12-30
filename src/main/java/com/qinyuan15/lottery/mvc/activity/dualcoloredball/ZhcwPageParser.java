@@ -2,13 +2,12 @@ package com.qinyuan15.lottery.mvc.activity.dualcoloredball;
 
 import com.google.common.base.Joiner;
 import com.qinyuan.lib.network.html.JavaScriptExecutor;
-import com.qinyuan15.lottery.mvc.activity.DualColoredBallPageParser;
 import org.mozilla.javascript.NativeObject;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
-import static com.qinyuan15.lottery.mvc.activity.DualColoredBallCalculator.*;
+import static com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallCalculator.*;
 
 public class ZhcwPageParser implements DualColoredBallPageParser {
     private NativeObject data;

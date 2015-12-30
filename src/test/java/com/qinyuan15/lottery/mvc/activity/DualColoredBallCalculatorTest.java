@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.activity;
 
 import com.qinyuan.lib.lang.time.DateUtils;
+import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallCalculator;
 import org.junit.Test;
 
 import java.sql.Date;

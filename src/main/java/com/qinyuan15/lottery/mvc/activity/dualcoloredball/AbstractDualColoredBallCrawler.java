@@ -1,6 +1,8 @@
-package com.qinyuan15.lottery.mvc.activity;
+package com.qinyuan15.lottery.mvc.activity.dualcoloredball;
 
 import com.qinyuan.lib.network.http.HttpClient;
+import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallCrawler;
+import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallPageParser;
 
 abstract public class AbstractDualColoredBallCrawler implements DualColoredBallCrawler {
     @Override

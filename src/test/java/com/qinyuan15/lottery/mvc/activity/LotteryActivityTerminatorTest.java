@@ -1,9 +1,10 @@
 package com.qinyuan15.lottery.mvc.activity;
 
 import com.qinyuan.lib.lang.concurrent.ThreadUtils;
+import com.qinyuan15.lottery.mvc.activity.dualcoloredball.BaiduLecaiCrawler;
+import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallCrawler;
 import org.junit.Test;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 

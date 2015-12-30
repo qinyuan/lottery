@@ -15,7 +15,7 @@
     <bean class="com.qinyuan15.lottery.mvc.activity.LotteryActivityTerminator" init-method="init">
         <property name="crawlers">
             <list>
-                <bean class="com.qinyuan15.lottery.mvc.activity.BaiduLecaiCrawler"/>
+                <bean class="com.qinyuan15.lottery.mvc.activity.dualcoloredball.BaiduLecaiCrawler"/>
                 <bean class="com.qinyuan15.lottery.mvc.activity.dualcoloredball.ZhcwCrawler"/>
             </list>
         </property>
@@ -24,7 +24,7 @@
     <bean class="com.qinyuan15.lottery.mvc.activity.SeckillActivityTerminator" init-method="init"/>
 
     <bean id="dualColoredBallResultDownloader"
-          class="com.qinyuan15.lottery.mvc.activity.DualColoredBallResultDownloader"/>
+          class="com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallResultDownloader"/>
 
     <task:scheduled-tasks>
         <!-- run in 22 o'clock of each day -->
