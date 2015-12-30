@@ -14,7 +14,7 @@ import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.account.DatabaseTelValidator;
 import com.qinyuan15.lottery.mvc.account.NewUserValidator;
 import com.qinyuan15.lottery.mvc.account.RemainingTelChangeTimesCalculator;
-import com.qinyuan15.lottery.mvc.activity.LotteryShareUrlBuilder;
+import com.qinyuan15.lottery.mvc.activity.share.LotteryShareUrlBuilder;
 import com.qinyuan15.lottery.mvc.dao.*;
 import com.qinyuan15.lottery.mvc.mail.ResetEmailMailSender;
 import org.apache.commons.lang3.StringUtils;

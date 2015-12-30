@@ -4,7 +4,7 @@ import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.lottery.mvc.activity.ShareMedium;
+import com.qinyuan15.lottery.mvc.activity.share.ShareMedium;
 import com.qinyuan15.lottery.mvc.dao.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

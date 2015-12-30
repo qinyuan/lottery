@@ -1,35 +1,35 @@
-package com.qinyuan15.lottery.mvc.activity;
+package com.qinyuan15.lottery.mvc.activity.share;
 
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 
-public class LotteryShareUrlBuilder extends AbstractShareUrlBuilder {
-    public LotteryShareUrlBuilder(String userSerialKey, String host, Commodity commodity) {
+public class SeckillShareUrlBuilder extends AbstractShareUrlBuilder {
+    public SeckillShareUrlBuilder(String userSerialKey, String host, Commodity commodity) {
         super(userSerialKey, host, commodity);
     }
 
     @Override
     protected String getSinaWeiboTitleTemplate() {
-        return AppConfig.getLotterySinaWeiboTitle();
+        return AppConfig.getSeckillSinaWeiboTitle();
     }
 
     @Override
     protected String getQQTitleTemplate() {
-        return AppConfig.getLotteryQQTitle();
+        return AppConfig.getSeckillQQTitle();
     }
 
     @Override
     protected String getQQSummaryTemplate() {
-        return AppConfig.getLotteryQQSummary();
+        return AppConfig.getSeckillQQSummary();
     }
 
     @Override
     protected String getQzoneTitleTemplate() {
-        return AppConfig.getLotteryQzoneTitle();
+        return AppConfig.getSeckillQzoneTitle();
     }
 
     @Override
     protected String getQzoneSummaryTemplate() {
-        return AppConfig.getLotteryQzoneSummary();
+        return AppConfig.getSeckillQzoneSummary();
     }
 }

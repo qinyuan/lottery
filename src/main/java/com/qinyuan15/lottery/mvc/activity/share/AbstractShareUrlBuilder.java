@@ -1,4 +1,4 @@
-package com.qinyuan15.lottery.mvc.activity;
+package com.qinyuan15.lottery.mvc.activity.share;
 
 import com.qinyuan.lib.sns.QQShareUrlBuilder;
 import com.qinyuan.lib.sns.QzoneShareUrlBuilder;

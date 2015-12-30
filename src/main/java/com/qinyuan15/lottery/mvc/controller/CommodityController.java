@@ -9,7 +9,7 @@ import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan.lib.network.url.UrlUtils;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.ImageMapType;
-import com.qinyuan15.lottery.mvc.activity.ShareMedium;
+import com.qinyuan15.lottery.mvc.activity.share.ShareMedium;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
 import com.qinyuan15.lottery.mvc.dao.CommodityImage;

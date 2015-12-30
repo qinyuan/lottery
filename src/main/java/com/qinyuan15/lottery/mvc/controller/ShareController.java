@@ -2,8 +2,8 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.lottery.mvc.activity.LotteryShareUrlBuilder;
-import com.qinyuan15.lottery.mvc.activity.ShareMedium;
+import com.qinyuan15.lottery.mvc.activity.share.LotteryShareUrlBuilder;
+import com.qinyuan15.lottery.mvc.activity.share.ShareMedium;
 import com.qinyuan15.lottery.mvc.dao.*;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Controller;
