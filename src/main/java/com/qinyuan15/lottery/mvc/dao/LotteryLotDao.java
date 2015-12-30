@@ -7,7 +7,7 @@ import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.mvc.controller.AbstractPaginationItemFactory;
-import com.qinyuan15.lottery.mvc.activity.LotteryLotSerialGenerator;
+import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotSerialGenerator;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

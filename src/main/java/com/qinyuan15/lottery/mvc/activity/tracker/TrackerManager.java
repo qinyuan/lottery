@@ -2,7 +2,7 @@ package com.qinyuan15.lottery.mvc.activity.tracker;
 
 import com.qinyuan15.lottery.mvc.activity.lot.CommonLotteryLotSerialGenerator;
 import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotNumberValidator;
-import com.qinyuan15.lottery.mvc.activity.LotteryLotSerialGenerator;
+import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotSerialGenerator;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import org.slf4j.Logger;

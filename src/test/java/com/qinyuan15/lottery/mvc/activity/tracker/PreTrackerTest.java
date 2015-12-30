@@ -2,7 +2,7 @@ package com.qinyuan15.lottery.mvc.activity.tracker;
 
 import com.google.common.collect.Lists;
 import com.qinyuan.lib.database.test.DatabaseTestCase;
-import com.qinyuan15.lottery.mvc.activity.DualColoredBallLotteryLotSerialGenerator;
+import com.qinyuan15.lottery.mvc.activity.lot.DualColoredBallLotteryLotSerialGenerator;
 import com.qinyuan15.lottery.mvc.dao.LotteryLot;
 import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
 import com.qinyuan15.lottery.mvc.dao.VirtualUser;

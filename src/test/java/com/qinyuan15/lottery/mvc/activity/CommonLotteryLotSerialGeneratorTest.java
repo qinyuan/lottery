@@ -1,7 +1,9 @@
 package com.qinyuan15.lottery.mvc.activity;
 
 import com.qinyuan15.lottery.mvc.activity.lot.CommonLotteryLotSerialGenerator;
+import com.qinyuan15.lottery.mvc.activity.lot.DualColoredBallLotteryLotSerialGenerator;
 import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotNumberTrueValidator;
+import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotSerialGenerator;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import org.junit.Test;
 

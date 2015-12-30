@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.activity;
 
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotSerialGenerator;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import org.apache.commons.lang3.RandomUtils;
 

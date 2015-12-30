@@ -2,7 +2,7 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.test.DatabaseTestCase;
 import com.qinyuan15.lottery.mvc.activity.CommonLotteryLotSerialGeneratorTest;
-import com.qinyuan15.lottery.mvc.activity.LotteryLotSerialGenerator;
+import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotSerialGenerator;
 import org.junit.Test;
 
 import java.text.DecimalFormat;

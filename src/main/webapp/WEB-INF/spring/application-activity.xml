@@ -8,7 +8,7 @@
             http://www.springframework.org/schema/task/spring-task.xsd">
 
     <bean id="lotteryLotNumberValidator" class="com.qinyuan15.lottery.mvc.activity.lot.LotteryLotNumberTrueValidator"/>
-    <bean id="serialGenerator" class="com.qinyuan15.lottery.mvc.activity.DualColoredBallLotteryLotSerialGenerator"/>
+    <bean id="serialGenerator" class="com.qinyuan15.lottery.mvc.activity.lot.DualColoredBallLotteryLotSerialGenerator"/>
     <bean id="lotNumberFormat" class="java.text.DecimalFormat">
         <constructor-arg value="000000"/>
     </bean>

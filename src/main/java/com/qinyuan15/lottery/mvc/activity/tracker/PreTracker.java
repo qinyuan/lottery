@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.activity.tracker;
 
 import com.qinyuan.lib.lang.RandomUtils;
-import com.qinyuan15.lottery.mvc.activity.LotteryLotSerialGenerator;
+import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotSerialGenerator;
 import com.qinyuan15.lottery.mvc.dao.LotteryLot;
 import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
 import com.qinyuan15.lottery.mvc.dao.VirtualUser;

@@ -8,7 +8,7 @@ import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.account.UserTelUtils;
-import com.qinyuan15.lottery.mvc.activity.DualColoredBallLotteryLotSerialGenerator;
+import com.qinyuan15.lottery.mvc.activity.lot.DualColoredBallLotteryLotSerialGenerator;
 import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotCounter;
 import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotCreator;
 import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotNumberValidator;

@@ -2,7 +2,7 @@ package com.qinyuan15.lottery.mvc.activity.tracker;
 
 import com.qinyuan.lib.database.hibernate.HibernateUpdater;
 import com.qinyuan.lib.database.test.DatabaseTestCase;
-import com.qinyuan15.lottery.mvc.activity.DualColoredBallLotteryLotSerialGenerator;
+import com.qinyuan15.lottery.mvc.activity.lot.DualColoredBallLotteryLotSerialGenerator;
 import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
 import com.qinyuan15.lottery.mvc.dao.VirtualUser;
 import com.qinyuan15.lottery.mvc.dao.VirtualUserDao;
