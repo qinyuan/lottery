@@ -1,4 +1,5 @@
 <%@ page import="com.qinyuan15.lottery.mvc.AppConfig" %>
+<%@ page import="com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallUtils" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="inc-taglib.jsp" %>
 <div class="float-panel shadow activity-result" id="lotteryResult">
@@ -18,7 +19,7 @@
             <c:forEach var="i" begin="1" end="3">
                 <select name="numberPart${i}">
                     <%
-                        for (int j = 1; j <= 33; j++) {
+                        for (int j = DualColoredBallUtils.MIN_NUMBER; j <= DualColoredBallUtils.MAX_NUMBER; j++) {
                             String optionValue = j < 10 ? "0" + j : "" + j;
                     %>
                     <option value="<%=optionValue%>"><%=optionValue%>
