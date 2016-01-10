@@ -3,6 +3,8 @@ package com.qinyuan15.lottery.mvc.activity.tracker;
 import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotSerialGenerator;
 import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
 import com.qinyuan15.lottery.mvc.dao.VirtualUser;
+import com.qinyuan15.lottery.mvc.dao.VirtualUserDao;
+import org.apache.commons.lang3.RandomUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,19 +23,6 @@ class PreTracker {
     }
 
     Integer takeLot() {
-        /*
-        if (active) {
-            List<LotteryLot> noTrackLots = new RealLotMonitor(activityId).getNoTrackLots();
-            if (noTrackLots.size() > 0) {
-                LotteryLot lot = RandomUtils.getOne(noTrackLots);
-                return takeLot(lot.getSerialNumber());
-            } else {
-                return takeLot(serialGenerator.next());
-            }
-        } else {
-            return takeLot(serialGenerator.next());
-        }
-        */
         return takeLot(serialGenerator.next());
     }
 
@@ -45,9 +34,22 @@ class PreTracker {
                                   LotteryLotSerialGenerator serialGenerator) {
         List<PreTracker> preTrackers = new ArrayList<>();
         for (VirtualUser virtualUser : virtualUsers) {
+            initLivenessIfNecessary(virtualUser);
             preTrackers.add(new PreTracker(activityId, virtualUser.getId(), virtualUser.getActive(), serialGenerator));
         }
         return preTrackers;
+    }
+
+    private final static int MAX_INIT_LIVENESS = 10;
+    private final static int MIN_INIT_LIVENESS = 0;
+
+    private static void initLivenessIfNecessary(VirtualUser virtualUser) {
+        if (virtualUser.getLiveness() != null) {
+            return;
+        }
+
+        int liveness = RandomUtils.nextInt(MIN_INIT_LIVENESS, MAX_INIT_LIVENESS + 1);
+        new VirtualUserDao().changeLiveness(virtualUser, liveness);
     }
 
     @Override
