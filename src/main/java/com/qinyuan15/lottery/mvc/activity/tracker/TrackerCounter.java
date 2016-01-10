@@ -10,17 +10,18 @@ class TrackerCounter {
         this.activityId = activityId;
     }
 
-    int countActive() {
-        return count(true);
+    int count() {
+        return count(null);
     }
 
-    int countInactive() {
-        return count(false);
-    }
+    private int count(Boolean active) {
+        HibernateListBuilder listBuilder = new HibernateListBuilder().addEqualFilter("activityId", activityId)
+                .addFilter("virtual=true");
+        if (active != null) {
+            listBuilder.addFilter("userId IN (SELECT id FROM VirtualUser WHERE active=:active)")
+                    .addArgument("active", active);
+        }
 
-    private int count(boolean active) {
-        return new HibernateListBuilder().addEqualFilter("activityId", activityId).addFilter("virtual=true")
-                .addFilter("userId IN (SELECT id FROM VirtualUser WHERE active=:active)")
-                .addArgument("active", active).count(LotteryLot.class);
+        return listBuilder.count(LotteryLot.class);
     }
 }

@@ -51,7 +51,7 @@ public class TrackerManager {
     }
 
     private void allocateTrackers(LotteryActivity activity) {
-        int trackerSize = new TrackerCounter(activity.getId()).countActive();
+        int trackerSize = new TrackerCounter(activity.getId()).count();
         int expectedTrackerSize = new ExpectedTrackerCalculator(activity).getExpectedTrackerSize();
         if (trackerSize < expectedTrackerSize) {
             List<PreTracker> preTrackers = new PreTrackerFactory(activity.getId(), serialGenerator)
