@@ -68,7 +68,7 @@ public class LotController extends ImageController {
         if (activity == null) {
             result.put(DETAIL, "activityExpire");
             activity = new LotteryActivityDao().getInstanceByCommodityId(commodityId);
-        } else if (activity.getClosed()) {
+        } else if (activity.getExpire()) {
             result.put(DETAIL, "activityExpire");
         }
 
@@ -81,7 +81,12 @@ public class LotController extends ImageController {
                 result.put("noTelLiveness", AppConfig.getNoTelLiveness());
                 result.put("maxTelModificationTimes", AppConfig.getMaxTelModificationTimes());
             } else if (new LotteryLotCounter().countReal(activity.getId(), user.getId()) == 0) {
-                result.put(SUCCESS, true);
+                if (activity.getClosed()) {
+                    result.put(SUCCESS, false);
+                    result.put(DETAIL, "activityClosed");
+                } else {
+                    result.put(SUCCESS, true);
+                }
             } else {
                 List<String> serialNumbers = new LotteryLotDao().getSerialNumbers(activity.getId(), user.getId(),
                         lotNumberFormat);
@@ -127,6 +132,7 @@ public class LotController extends ImageController {
                     return fail(validation.getRight());
                 }
                 serialNumbers = Lists.newArrayList(lotNumberFormat.format(serialNumber));
+                new LotteryLotDao().add(activity.getId(), user.getId(), serialNumber);
             } else {
                 LotteryLotCreator.CreateResult lotteryLotCreateResult =
                         new LotteryLotCreator(activity, securitySearcher.getUserId())

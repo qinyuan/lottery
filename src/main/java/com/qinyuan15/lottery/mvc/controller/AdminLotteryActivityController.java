@@ -87,7 +87,9 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
                 dao.update(id, term, commodityId, startTime, expectEndTime, closeTime, expectParticipantCount,
                         dualColoredBallTerm, description, minLivenessToParticipate);
                 LotteryActivity activity = dao.getInstance(id);
-                if (!LotteryActivityUtils.shouldBeClosed(activity)) {
+                if (LotteryActivityUtils.shouldBeClosed(activity)) {
+                    dao.close(activity);
+                } else {
                     dao.disclose(activity);
                 }
             } else {

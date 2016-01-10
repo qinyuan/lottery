@@ -64,7 +64,6 @@
 </q:handlebars-template>
 <%@include file="commodity-lottery-result-float-panel.jsp" %>
 <%@include file="subscribe-float-panel.jsp" %>
-<%--<%@include file="commodity-seckill-result-float-panel.jsp" %>--%>
 <div class="float-panel shadow" id="exceptionPrompt">
     <jsp:include page="commodity-float-panel-title.jsp">
         <jsp:param name="title" value="消息提示"/>

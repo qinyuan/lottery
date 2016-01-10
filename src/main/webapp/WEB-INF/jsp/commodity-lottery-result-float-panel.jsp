@@ -16,19 +16,19 @@
             <button class="auto blue" type="button">自动选号</button>
         </div>
         <div class="manual-number-creator conceal">
-            <c:forEach var="i" begin="1" end="3">
-                <select name="numberPart${i}">
-                    <%
-                        for (int j = DualColoredBallUtils.MIN_NUMBER; j <= DualColoredBallUtils.MAX_NUMBER; j++) {
-                            String optionValue = j < 10 ? "0" + j : "" + j;
-                    %>
-                    <option value="<%=optionValue%>"><%=optionValue%>
-                    </option>
-                    <%
-                        }
-                    %>
-                </select>
-            </c:forEach>
+            <%for (int i = 1; i <= 3; i++) {%>
+            <select name="numberPart${i}">
+                <%
+                    for (int j = DualColoredBallUtils.MIN_NUMBER; j <= DualColoredBallUtils.MAX_NUMBER; j++) {
+                        String optionValue = j < 10 ? "0" + j : "" + j;
+                %>
+                <option value="<%=optionValue%>"<%=(i == j) ? " selected" : ""%>><%=optionValue%>
+                </option>
+                <%
+                    }
+                %>
+            </select>
+            <%}%>
             <div class="submit">
                 <button class="blue" type="button">确定</button>
             </div>
@@ -77,6 +77,9 @@
         </div>
         <div class="activity-expire conceal">
             活动已结束，敬请留意下次活动开始时间
+        </div>
+        <div class="activity-closed conceal">
+            活动已关闭，敬请留意下次活动时间
         </div>
     </div>
 </div>

@@ -31,7 +31,6 @@ public class CommodityController extends ImageController {
     public String index(@RequestParam(value = "id", required = false) Integer id,
                         @RequestParam(value = "fromUser", required = false) String userSerialKey,
                         @RequestParam(value = "medium", required = false) String medium) {
-
         LivenessAdder livenessAdder = new LivenessAdder(session);
         if (StringUtils.isNotBlank(userSerialKey) && StringUtils.isNotBlank(medium)) {
             String redirectUrl = "commodity.html";
@@ -40,10 +39,7 @@ public class CommodityController extends ImageController {
             }
             setAttributeAndJavaScriptData("redirectUrl", "support.html?serial=" + userSerialKey + "&redirectUrl=" +
                     UrlUtils.encode(redirectUrl));
-            /*return redirect("support.html?serial=" + userSerialKey + "&redirectUrl=" +
-                    UrlUtils.encode(redirectUrl));*/
         }
-
 
         CommodityHeaderUtils.setHeaderParameters(this);
         Commodity commodity = getCommodity(id);
@@ -74,14 +70,8 @@ public class CommodityController extends ImageController {
             }
             setTitle(title);
             setAttribute("seoDescription", description);
-
             addJavaScriptData("selectedCommodityId", commodity.getId());
         }
-
-
-        // seckill poker
-        //setAttribute("pokerFrontSide", pathToUrl(AppConfig.getSeckillPokerFrontSide()));
-        //setAttribute("pokerBackSide", pathToUrl(AppConfig.getSeckillPokerBackSide()));
 
         setAttribute("snapshots", buildSnapshots());
         setAttribute("lotteryRuleLink", AppConfig.getLotteryRuleLink());

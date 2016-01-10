@@ -360,11 +360,19 @@
             this.$manualSerialNumberCreator.fadeIn(250);
         },
         getManualSerialNumber: function () {
-            var serialNumber = "";
+            var serialNumbers = [];
             this.$manualSerialNumberCreator.find('select').each(function () {
-                serialNumber += $(this).val();
+                serialNumbers.push($(this).val());
             });
-            return parseInt(serialNumber);
+            for (var i = 0, len = serialNumbers.length; i < len - 1; i++) {
+                for (var j = i + 1; j < len; j++) {
+                    if (serialNumbers[i] == serialNumbers[j]) {
+                        alert('选取的多不抽奖必须各不相同');
+                        return null;
+                    }
+                }
+            }
+            return parseInt(serialNumbers.join(''));
         },
         hideConcealDivs: function () {
             this.$div.find('div.conceal').hide();
@@ -409,6 +417,7 @@
             this.$sameLotUsers.show();
         },
         show: function (options) {
+            console.log(options);
             // title
             this.$div.find('div.title div.text span.text').text('抽奖详情：0元抽 ' + options['commodity']['name']);
 
@@ -421,6 +430,8 @@
             this.hideConcealDivs();
             if (options['detail'] == 'activityExpire') {
                 this.$activityExpire.show();
+            } else if (options['detail'] == 'activityClosed') {
+                this.$activityClosed.show();
             } else {
                 if (options['success']) {
                     this.$createNumber.show();
@@ -442,6 +453,7 @@
         init: function () {
             this.$lot = this.$div.find('div.body div.lot');
             this.$activityExpire = this.$div.find('div.body div.activity-expire');
+            this.$activityClosed = this.$div.find('div.body div.activity-closed');
             var self = this;
             setCloseIconEvent(this.$div, function () {
                 self.$div.fadeOut(300, function () {
@@ -461,16 +473,19 @@
             });
             this.$manualSerialNumberCreator = this.$div.find('div.body div.manual-number-creator');
             this.$manualSerialNumberCreator.find('button').click(function () {
-                $.post('do-lottery-action.json', {
-                    commodityId: getSelectedCommodityId(),
-                    serialNumber: self.getManualSerialNumber()
-                }, function (data) {
-                    if (data.success) {
-                        self.showSerialNumber(data);
-                    } else {
-                        alert(data.detail);
-                    }
-                });
+                var serialNumber = self.getManualSerialNumber();
+                if (serialNumber) {
+                    $.post('do-lottery-action.json', {
+                        commodityId: getSelectedCommodityId(),
+                        serialNumber: self.getManualSerialNumber()
+                    }, function (data) {
+                        if (data.success) {
+                            self.showSerialNumber(data);
+                        } else {
+                            alert(data.detail);
+                        }
+                    });
+                }
             });
             this.$createNumber.find('button.manual').click(function () {
                 self.showManualSerialNumberCreator();
@@ -488,7 +503,8 @@
         $.post('take-lottery.json', {
             'commodityId': getSelectedCommodityId()
         }, function (data) {
-            if (data.success || data.detail == 'activityExpire' || data.detail == 'alreadyAttended') {
+            if (data.success || data.detail == 'activityClosed' || data.detail == 'activityExpire'
+                || data.detail == 'alreadyAttended') {
                 lotteryResult.show(data);
             } else if (data.detail == 'noTel') {
                 noTelPrompt.show(data);
