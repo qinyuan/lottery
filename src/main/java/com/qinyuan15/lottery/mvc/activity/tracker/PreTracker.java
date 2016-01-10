@@ -1,8 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity.tracker;
 
-import com.qinyuan.lib.lang.RandomUtils;
 import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotSerialGenerator;
-import com.qinyuan15.lottery.mvc.dao.LotteryLot;
 import com.qinyuan15.lottery.mvc.dao.LotteryLotDao;
 import com.qinyuan15.lottery.mvc.dao.VirtualUser;
 
@@ -23,6 +21,7 @@ class PreTracker {
     }
 
     Integer takeLot() {
+        /*
         if (active) {
             List<LotteryLot> noTrackLots = new RealLotMonitor(activityId).getNoTrackLots();
             if (noTrackLots.size() > 0) {
@@ -34,6 +33,8 @@ class PreTracker {
         } else {
             return takeLot(serialGenerator.next());
         }
+        */
+        return takeLot(serialGenerator.next());
     }
 
     private Integer takeLot(int serialNumber) {

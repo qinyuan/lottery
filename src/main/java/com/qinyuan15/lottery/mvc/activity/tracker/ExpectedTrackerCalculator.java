@@ -12,17 +12,19 @@ class ExpectedTrackerCalculator {
         if (expectedParticipantCount == null) {
             expectedParticipantCount = 0;
         }
-
-        int virtualUserCount = new VirtualUserDao().count();
-        int availableVirtualUserCount = (int) (virtualUserCount * 0.8); // keep 20% as reserve virtual users
-        expectedParticipantCount = Math.min(expectedParticipantCount, availableVirtualUserCount);
+        expectedParticipantCount = Math.min(expectedParticipantCount, countAvailableVirtualUser());
 
         this.expectedTrackerSize = new ExpectParticipantsDivider(
                 activity.getStartTime(), activity.getCloseTime(), expectedParticipantCount)
                 .getCurrentExpectValue();
     }
 
-    public int getExpectedTrackerSize() {
+    int countAvailableVirtualUser() {
+        int virtualUserCount = new VirtualUserDao().count();
+        return (int) (virtualUserCount * 0.8); // keep 20% as reserve virtual users
+    }
+
+    int getExpectedTrackerSize() {
         return expectedTrackerSize;
     }
 }

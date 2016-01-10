@@ -36,33 +36,4 @@ class PreTrackerFactory {
 
         return PreTracker.build(activeVirtualUsers, activityId, serialGenerator);
     }
-
-/*
-    List<PreTracker> createActivePreTrackers(int size) {
-        List<VirtualUser> activeVirtualUsers = getPreTrackerListBuilder().addEqualFilter("active", true)
-                .limit(0, size).build(VirtualUser.class);
-
-        if (activeVirtualUsers.size() < size) {
-            List<VirtualUser> ambiguousVirtualUsers = getPreTrackerListBuilder().addFilter("active IS NULL")
-                    .limit(0, size - activeVirtualUsers.size()).build(VirtualUser.class);
-            new VirtualUserDao().activate(ambiguousVirtualUsers);
-            activeVirtualUsers.addAll(ambiguousVirtualUsers);
-        }
-
-        return PreTracker.build(activeVirtualUsers, activityId, serialGenerator);
-    }
-
-    List<PreTracker> createInactivePreTrackers(int size) {
-        List<VirtualUser> inactiveVirtualUsers = getPreTrackerListBuilder().addEqualFilter("active", false)
-                .limit(0, size).build(VirtualUser.class);
-
-        if (inactiveVirtualUsers.size() < size) {
-            List<VirtualUser> ambiguousVirtualUsers = getPreTrackerListBuilder().addFilter("active IS NULL")
-                    .limit(0, size - inactiveVirtualUsers.size()).build(VirtualUser.class);
-            new VirtualUserDao().deactivate(ambiguousVirtualUsers);
-            inactiveVirtualUsers.addAll(ambiguousVirtualUsers);
-        }
-
-        return PreTracker.build(inactiveVirtualUsers, activityId, serialGenerator);
-    }*/
 }
