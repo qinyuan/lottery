@@ -2,11 +2,8 @@ package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
-import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.time.DateUtils;
-import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
@@ -101,23 +98,12 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
     public void close(LotteryActivity activity) {
         activity.setClosed(true);
         HibernateUtils.update(activity);
-        new CommodityDao().updateVisible(activity.getCommodityId(), false);
     }
 
-    /*@Override
-    public void updateResult(Integer id, String winners, String announcement) {
-        List<Integer> serialNumbers = new ArrayList<>();
-        if (StringUtils.hasText(winners)) {
-            for (String winner : winners.split(",")) {
-                if (IntegerUtils.isPositive(winner)) {
-                    serialNumbers.add(Integer.parseInt(winner));
-                }
-            }
-        }
-        new LotteryLotDao().updateWinnerBySerialNumbers(id, serialNumbers);
-
-        super.updateResult(id, winners, announcement);
-    }*/
+    public void disclose(LotteryActivity activity) {
+        activity.setClosed(false);
+        HibernateUtils.update(activity);
+    }
 
     public Integer getLatestMinLivenessToParticipate() {
         return (Integer) new HibernateListBuilder().addOrder("id", false)

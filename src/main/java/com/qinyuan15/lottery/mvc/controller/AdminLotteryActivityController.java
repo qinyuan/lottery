@@ -2,6 +2,7 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.time.DateUtils;
+import com.qinyuan15.lottery.mvc.activity.LotteryActivityUtils;
 import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallPhaseValidator;
 import com.qinyuan15.lottery.mvc.activity.tracker.WinnerManager;
 import com.qinyuan15.lottery.mvc.dao.*;
@@ -85,6 +86,10 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
             if (IntegerUtils.isPositive(id)) {
                 dao.update(id, term, commodityId, startTime, expectEndTime, closeTime, expectParticipantCount,
                         dualColoredBallTerm, description, minLivenessToParticipate);
+                LotteryActivity activity = dao.getInstance(id);
+                if (!LotteryActivityUtils.shouldBeClosed(activity)) {
+                    dao.disclose(activity);
+                }
             } else {
                 CommodityDao commodityDao = new CommodityDao();
                 if (commodityDao.hasActiveSeckill(commodityId)) {

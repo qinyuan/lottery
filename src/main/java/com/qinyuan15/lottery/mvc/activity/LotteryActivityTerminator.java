@@ -112,13 +112,9 @@ public class LotteryActivityTerminator {
                     break;
                 }
 
-                Date closeTime = DateUtils.newDate(activity.getCloseTime());
-                long timeDiff = closeTime.getTime() - System.currentTimeMillis();
                 try {
-                    if (timeDiff <= 0) {
+                    if (LotteryActivityUtils.shouldBeClosed(activity)) {
                         new LotteryActivityDao().close(activity);
-                        //new InvalidLotteryLotSystemInfoSender().send(activity);
-
                         closeThreads.remove(activity.getId());
                         break;
                     }
@@ -128,7 +124,7 @@ public class LotteryActivityTerminator {
                     LOGGER.error("Fail to crawl activity whose id is {}, info: {}", activity.getId(), e);
                 }
 
-                ActivityTerminatorUtils.sleep(timeDiff);
+                ActivityTerminatorUtils.sleep(LotteryActivityUtils.getRemainingTimeToClose(activity));
             }
         }
     }
