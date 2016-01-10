@@ -417,7 +417,6 @@
             this.$sameLotUsers.show();
         },
         show: function (options) {
-            console.log(options);
             // title
             this.$div.find('div.title div.text span.text').text('抽奖详情：0元抽 ' + options['commodity']['name']);
 

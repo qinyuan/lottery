@@ -15,13 +15,13 @@ public class PreTrackerFactoryTest extends DatabaseTestCase {
 
     @Test
     public void testCreateActivePreTrackers() throws Exception {
-        assertThat(factory.createActivePreTrackers(2)).hasSize(2);
+        assertThat(factory.create(2)).hasSize(2);
 
         setUp();
 
-        assertThat(factory.createActivePreTrackers(1)).hasSize(1);
-        assertThat(factory.createActivePreTrackers(2)).hasSize(2);
-        assertThat(factory.createActivePreTrackers(3)).hasSize(2);
+        assertThat(factory.create(1)).hasSize(1);
+        assertThat(factory.create(2)).hasSize(2);
+        assertThat(factory.create(3)).hasSize(2);
 
         /*
          * virtual user 1 and virtual user 2 have be used as pre tracker,
@@ -29,7 +29,7 @@ public class PreTrackerFactoryTest extends DatabaseTestCase {
          */
         new VirtualUserDao().add("virtual_user3");
         for (int i = 0; i < 10; i++) {
-            assertThat(factory.createActivePreTrackers(2).toString())
+            assertThat(factory.create(2).toString())
                     .contains("userId:1").contains("userId:2").doesNotContain("userId:3");
         }
 
@@ -41,7 +41,7 @@ public class PreTrackerFactoryTest extends DatabaseTestCase {
         boolean trackerOfVirtualUser3Created = false;
         for (int i = 0; i < 10; i++) {
             new HibernateUpdater().update(VirtualUser.class, "active=null");
-            String trackerString = factory.createActivePreTrackers(2).toString();
+            String trackerString = factory.create(2).toString();
             if (trackerString.contains("userId:1")) {
                 trackerOfVirtualUser1Created = true;
             }
@@ -62,19 +62,19 @@ public class PreTrackerFactoryTest extends DatabaseTestCase {
         new LotteryLotDao().add(1, 3, 1, true);
         for (int i = 0; i < 10; i++) {
             new HibernateUpdater().update(VirtualUser.class, "active=null");
-            assertThat(factory.createActivePreTrackers(2).toString()).doesNotContain("userId:3");
+            assertThat(factory.create(2).toString()).doesNotContain("userId:3");
         }
     }
 
     @Test
     public void testCreateInactivePreTrackers() throws Exception {
-        assertThat(factory.createInactivePreTrackers(2)).hasSize(2);
+        assertThat(factory.create(2)).hasSize(2);
 
         setUp();
 
-        assertThat(factory.createInactivePreTrackers(1)).hasSize(1);
-        assertThat(factory.createInactivePreTrackers(2)).hasSize(2);
-        assertThat(factory.createInactivePreTrackers(3)).hasSize(2);
+        assertThat(factory.create(1)).hasSize(1);
+        assertThat(factory.create(2)).hasSize(2);
+        assertThat(factory.create(3)).hasSize(2);
 
         /*
          * virtual user 1 and virtual user 2 have be used as pre tracker,
@@ -82,7 +82,7 @@ public class PreTrackerFactoryTest extends DatabaseTestCase {
          */
         new VirtualUserDao().add("virtual_user3");
         for (int i = 0; i < 10; i++) {
-            assertThat(factory.createInactivePreTrackers(2).toString())
+            assertThat(factory.create(2).toString())
                     .contains("userId:1").contains("userId:2").doesNotContain("userId:3");
         }
 
@@ -94,7 +94,7 @@ public class PreTrackerFactoryTest extends DatabaseTestCase {
         boolean trackerOfVirtualUser3Created = false;
         for (int i = 0; i < 10; i++) {
             new HibernateUpdater().update(VirtualUser.class, "active=null");
-            String trackerString = factory.createActivePreTrackers(2).toString();
+            String trackerString = factory.create(2).toString();
             if (trackerString.contains("userId:1")) {
                 trackerOfVirtualUser1Created = true;
             }
@@ -115,7 +115,7 @@ public class PreTrackerFactoryTest extends DatabaseTestCase {
         new LotteryLotDao().add(1, 3, 1, true);
         for (int i = 0; i < 10; i++) {
             new HibernateUpdater().update(VirtualUser.class, "active=null");
-            assertThat(factory.createInactivePreTrackers(2).toString()).doesNotContain("userId:3");
+            assertThat(factory.create(2).toString()).doesNotContain("userId:3");
         }
     }
 }

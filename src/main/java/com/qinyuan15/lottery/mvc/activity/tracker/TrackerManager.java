@@ -33,8 +33,7 @@ public class TrackerManager {
             for (LotteryActivity activity : activities) {
                 if (isNotExpire(activity)) {
                     serialGenerator.setActivity(activity);
-                    allocateActiveTrackers(activity);
-                    allocateInactiveTrackers(activity);
+                    allocateTrackers(activity);
                     runActiveTrackers(activity);
                     runInactiveTrackers(activity);
                 }
@@ -51,22 +50,12 @@ public class TrackerManager {
         return activity != null && !activity.getExpire();
     }
 
-    private void allocateActiveTrackers(LotteryActivity activity) {
+    private void allocateTrackers(LotteryActivity activity) {
         int trackerSize = new TrackerCounter(activity.getId()).countActive();
-        int expectedTrackerSize = new ExpectedTrackerCalculator(activity).getExpectedActiveTrackerSize();
+        int expectedTrackerSize = new ExpectedTrackerCalculator(activity).getExpectedTrackerSize();
         if (trackerSize < expectedTrackerSize) {
             List<PreTracker> preTrackers = new PreTrackerFactory(activity.getId(), serialGenerator)
-                    .createActivePreTrackers(expectedTrackerSize - trackerSize);
-            takeLot(preTrackers);
-        }
-    }
-
-    private void allocateInactiveTrackers(LotteryActivity activity) {
-        int trackerSize = new TrackerCounter(activity.getId()).countInactive();
-        int expectedTrackerSize = new ExpectedTrackerCalculator(activity).getExpectedInactiveTrackerSize();
-        if (trackerSize < expectedTrackerSize) {
-            List<PreTracker> preTrackers = new PreTrackerFactory(activity.getId(), serialGenerator)
-                    .createInactivePreTrackers(expectedTrackerSize - trackerSize);
+                    .create(expectedTrackerSize - trackerSize);
             takeLot(preTrackers);
         }
     }

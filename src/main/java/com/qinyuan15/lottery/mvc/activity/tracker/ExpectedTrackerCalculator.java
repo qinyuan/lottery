@@ -5,8 +5,7 @@ import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.VirtualUserDao;
 
 class ExpectedTrackerCalculator {
-    private final int expectedActiveTrackerSize;
-    private final int expectedInactiveTrackerSize;
+    private final int expectedTrackerSize;
 
     ExpectedTrackerCalculator(LotteryActivity activity) {
         Integer expectedParticipantCount = activity.getExpectParticipantCount();
@@ -18,19 +17,12 @@ class ExpectedTrackerCalculator {
         int availableVirtualUserCount = (int) (virtualUserCount * 0.8); // keep 20% as reserve virtual users
         expectedParticipantCount = Math.min(expectedParticipantCount, availableVirtualUserCount);
 
-        int currentExpectedParticipantCount = new ExpectParticipantsDivider(
+        this.expectedTrackerSize = new ExpectParticipantsDivider(
                 activity.getStartTime(), activity.getCloseTime(), expectedParticipantCount)
                 .getCurrentExpectValue();
-
-        expectedActiveTrackerSize = currentExpectedParticipantCount / 2;
-        expectedInactiveTrackerSize = currentExpectedParticipantCount / 2;
     }
 
-    public int getExpectedActiveTrackerSize() {
-        return expectedActiveTrackerSize;
-    }
-
-    public int getExpectedInactiveTrackerSize() {
-        return expectedInactiveTrackerSize;
+    public int getExpectedTrackerSize() {
+        return expectedTrackerSize;
     }
 }

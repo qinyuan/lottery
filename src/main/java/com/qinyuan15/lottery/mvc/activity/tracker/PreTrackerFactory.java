@@ -17,10 +17,27 @@ class PreTrackerFactory {
     }
 
     private HibernateListBuilder getPreTrackerListBuilder() {
+        // this filter excludes users already taken activity
         String filter = "id NOT IN (SELECT userId FROM LotteryLot WHERE activityId=" + activityId + " AND virtual=True)";
+
         return new HibernateListBuilder().addFilter(filter).addOrder("rand()", true);
     }
 
+    List<PreTracker> create(int size) {
+        List<VirtualUser> activeVirtualUsers = getPreTrackerListBuilder().addFilter("active IS NOT NULL")
+                .limit(0, size).build(VirtualUser.class);
+
+        if (activeVirtualUsers.size() < size) {
+            List<VirtualUser> ambiguousVirtualUsers = getPreTrackerListBuilder().addFilter("active IS NULL")
+                    .limit(0, size - activeVirtualUsers.size()).build(VirtualUser.class);
+            new VirtualUserDao().activate(ambiguousVirtualUsers);
+            activeVirtualUsers.addAll(ambiguousVirtualUsers);
+        }
+
+        return PreTracker.build(activeVirtualUsers, activityId, serialGenerator);
+    }
+
+/*
     List<PreTracker> createActivePreTrackers(int size) {
         List<VirtualUser> activeVirtualUsers = getPreTrackerListBuilder().addEqualFilter("active", true)
                 .limit(0, size).build(VirtualUser.class);
@@ -47,5 +64,5 @@ class PreTrackerFactory {
         }
 
         return PreTracker.build(inactiveVirtualUsers, activityId, serialGenerator);
-    }
+    }*/
 }

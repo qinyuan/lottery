@@ -28,25 +28,25 @@ public class ExpectedTrackerCalculatorTest extends DatabaseTestCase {
                 expectParticipantCount, 2015103, "", 0);
         activity = new LotteryActivityDao().getInstance(activityId);
 
-        assertThat(getCalculator().getExpectedActiveTrackerSize()).isZero();
-        assertThat(getCalculator().getExpectedInactiveTrackerSize()).isZero();
+        // there is 2 virtual users at first
+
+        assertThat(getCalculator().getExpectedTrackerSize()).isZero();
 
         for (int i = 0; i < 10; i++) {
             new VirtualUserDao().add(RandomStringUtils.randomAlphanumeric(12));
         }
+        // there is 12 virtual users now
 
-        assertThat(getCalculator().getExpectedActiveTrackerSize()).isEqualTo(2);
-        assertThat(getCalculator().getExpectedInactiveTrackerSize()).isEqualTo(2);
+        assertThat(getCalculator().getExpectedTrackerSize()).isEqualTo(4);
 
         activity.setCloseTime(now);
-        assertThat(getCalculator().getExpectedActiveTrackerSize()).isEqualTo(4);
-        assertThat(getCalculator().getExpectedActiveTrackerSize()).isEqualTo(4);
+        assertThat(getCalculator().getExpectedTrackerSize()).isEqualTo(9);
 
         for (int i = 0; i < 20; i++) {
             new VirtualUserDao().add(RandomStringUtils.randomAlphanumeric(12));
         }
+        // there is 32 virtual users now
 
-        assertThat(getCalculator().getExpectedActiveTrackerSize()).isEqualTo(12);
-        assertThat(getCalculator().getExpectedInactiveTrackerSize()).isEqualTo(12);
+        assertThat(getCalculator().getExpectedTrackerSize()).isEqualTo(25);
     }
 }
