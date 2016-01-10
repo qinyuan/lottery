@@ -20,9 +20,9 @@ public class TrackerTest extends DatabaseTestCase {
         /*
          * if there is no real lot, liveness stay unchanged
          */
-        new Tracker(lot, true).follow();
+        new Tracker(lot).follow();
         assertThat(virtualUserDao.getInstance(1).getLiveness()).isNull();
-        new Tracker(lot, false).follow();
+        new Tracker(lot).follow();
         assertThat(virtualUserDao.getInstance(1).getLiveness()).isNull();
 
         /*
@@ -31,9 +31,9 @@ public class TrackerTest extends DatabaseTestCase {
         lotId = new LotteryLotDao().add(2, 1, 10257, true);
         lot = new LotteryLotDao().getInstance(lotId);
         assertThat(virtualUserDao.getInstance(1).getLiveness()).isNull();
-        new Tracker(lot, false).follow();
+        new Tracker(lot).follow();
         assertThat(virtualUserDao.getInstance(1).getLiveness()).isNotNull().isGreaterThanOrEqualTo(0).isLessThan(10);
-        new Tracker(lot, true).follow();
+        new Tracker(lot).follow();
         assertThat(virtualUserDao.getInstance(1).getLiveness()).isGreaterThanOrEqualTo(15).isLessThan(22);
 
         /*
@@ -42,7 +42,7 @@ public class TrackerTest extends DatabaseTestCase {
         lotId = new LotteryLotDao().add(2, 2, 10257, true);
         lot = new LotteryLotDao().getInstance(lotId);
         assertThat(virtualUserDao.getInstance(2).getLiveness()).isNull();
-        new Tracker(lot, true).follow();
+        new Tracker(lot).follow();
         assertThat(virtualUserDao.getInstance(2).getLiveness()).isNull();
     }
 
@@ -54,13 +54,13 @@ public class TrackerTest extends DatabaseTestCase {
         int lotId = new LotteryLotDao().add(2, 1, 10257, true);
         LotteryLot lot = new LotteryLotDao().getInstance(lotId);
         assertThat(virtualUserDao.getInstance(1).getLiveness()).isNull();
-        new Tracker(lot, false).exceed();
+        new Tracker(lot).exceed();
         assertThat(virtualUserDao.getInstance(1).getLiveness()).isNull();
 
         /*
          * active virtual user can exceed real user
          */
-        new Tracker(lot, true).exceed();
+        new Tracker(lot).exceed();
         assertThat(virtualUserDao.getInstance(1).getLiveness()).isGreaterThan(25).isLessThan(29);
     }
 }

@@ -47,7 +47,7 @@ public class WinnerManager {
         }
 
         LotteryLot lot = new LotteryLotDao().getInstance(maxLivenessVirtualUser.lotId);
-        new Tracker(lot, true).exceed();
+        new Tracker(lot).exceed();
     }
 
     private String getWinnerNumber(LotteryActivity activity) {

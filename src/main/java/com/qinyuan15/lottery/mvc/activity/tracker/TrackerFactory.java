@@ -8,12 +8,12 @@ import java.util.List;
 class TrackerFactory {
     private final static int PAGE_SIZE = 100;
     private final int activityId;
-    private final boolean active;
+    private final Boolean active;
     private int pageNumber = 1;
     private int pointer = 0;
     private List<LotteryLot> lots;
 
-    TrackerFactory(int activityId, boolean active) {
+    TrackerFactory(int activityId, Boolean active) {
         this.activityId = activityId;
         this.active = active;
         initLots();
@@ -32,20 +32,24 @@ class TrackerFactory {
     }
 
     private Tracker createTrackerAndIncreasePointer() {
-        Tracker tracker = new Tracker(lots.get(pointer - getFirstResultIndex()), active);
+        Tracker tracker = new Tracker(lots.get(pointer - getFirstResultIndex()));
         pointer++;
         return tracker;
     }
 
-
     private synchronized void initLots() {
         String realLotSerialNumber = "(SELECT serialNumber FROM LotteryLot " +
                 "WHERE activityId=" + activityId + " AND (virtual IS NULL OR virtual=false))";
-        lots = new HibernateListBuilder().addFilter("activityId=" + activityId)
-                .addFilter("virtual=true").addFilter("userId IN (SELECT id FROM VirtualUser WHERE active=:active)")
-                .addFilter("serialNumber IN " + realLotSerialNumber)
-                .addArgument("active", active)
-                .limit(getFirstResultIndex(), PAGE_SIZE).build(LotteryLot.class);
+        HibernateListBuilder listBuilder = new HibernateListBuilder().addFilter("activityId=" + activityId)
+                .addFilter("virtual=true").addFilter("serialNumber IN " + realLotSerialNumber)
+                .limit(getFirstResultIndex(), PAGE_SIZE);
+
+        if (active != null) {
+            listBuilder.addFilter("userId IN (SELECT id FROM VirtualUser WHERE active=:active)")
+                    .addArgument("active", active);
+        }
+
+        lots = listBuilder.build(LotteryLot.class);
     }
 
     private int getFirstResultIndex() {
