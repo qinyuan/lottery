@@ -34,8 +34,7 @@ public class TrackerManager {
                 if (isNotExpire(activity)) {
                     serialGenerator.setActivity(activity);
                     allocateTrackers(activity);
-                    runActiveTrackers(activity);
-                    runInactiveTrackers(activity);
+                    runTrackers(activity);
                 }
             }
         } catch (Throwable e) {
@@ -66,16 +65,8 @@ public class TrackerManager {
         }
     }
 
-    private void runActiveTrackers(LotteryActivity activity) {
-        TrackerFactory trackerFactory = new TrackerFactory(activity.getId(), true);
-        Tracker tracker;
-        while ((tracker = trackerFactory.next()) != null) {
-            tracker.follow();
-        }
-    }
-
-    private void runInactiveTrackers(LotteryActivity activity) {
-        TrackerFactory trackerFactory = new TrackerFactory(activity.getId(), false);
+    private void runTrackers(LotteryActivity activity) {
+        TrackerFactory trackerFactory = new TrackerFactory(activity.getId());
         Tracker tracker;
         while ((tracker = trackerFactory.next()) != null) {
             tracker.follow();

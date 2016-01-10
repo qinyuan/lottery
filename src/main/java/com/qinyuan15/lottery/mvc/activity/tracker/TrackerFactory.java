@@ -19,6 +19,10 @@ class TrackerFactory {
         initLots();
     }
 
+    TrackerFactory(int activityId) {
+        this(activityId, null);
+    }
+
     Tracker next() {
         if (pointer - getFirstResultIndex() < lots.size()) {
             return createTrackerAndIncreasePointer();
