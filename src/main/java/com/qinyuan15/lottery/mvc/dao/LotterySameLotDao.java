@@ -125,7 +125,7 @@ public class LotterySameLotDao {
         public final String username;
         public final int liveness;
 
-        private SimpleUser(String username, int liveness) {
+        public SimpleUser(String username, int liveness) {
             this.username = username;
             this.liveness = liveness;
         }
@@ -135,7 +135,7 @@ public class LotterySameLotDao {
         public final int lotId;
         public final boolean virtual;
 
-        private User(String username, int liveness, boolean virtual, int lotId) {
+        public User(String username, int liveness, boolean virtual, int lotId) {
             super(username, liveness);
             this.virtual = virtual;
             this.lotId = lotId;

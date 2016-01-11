@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class AdminLotteryActivityController extends AbstractActivityAdminController {
@@ -148,6 +150,10 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
         if (!IntegerUtils.isPositive(id) && IntegerUtils.isPositive(number)) {
             return failByInvalidParam();
         }
-        return toJson(new LotterySameLotDao().getUsers(id, number));
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("users", new LotterySameLotDao().getUsers(id, number));
+        map.put("time", DateUtils.nowString());
+        return toJson(map);
     }
 }

@@ -183,7 +183,12 @@
                 id: activityId,
                 number: number
             }, function (data) {
-                var len = data.length;
+                if (!data || data['users'] == null) {
+                    return;
+                }
+
+                var users = data['users'];
+                var len = users.length;
                 var $noUser = $div.find('div.no-user');
                 var $table = $div.find('table');
                 if (len == 0) {
@@ -193,7 +198,7 @@
                     $noUser.hide();
                     var $tbody = $table.find('tbody').empty();
                     for (var i = 0; i < len; i++) {
-                        var user = data[i];
+                        var user = users[i];
                         var html = '<tr>';
                         html += '<td>' + user['username'] + '</td>';
                         html += '<td>' + user['liveness'] + '</td>';
@@ -202,6 +207,7 @@
                         $tbody.append(html);
                     }
                 }
+                $div.find('div.time span.time').text(data['time']);
                 $div.show();
             });
         } else {

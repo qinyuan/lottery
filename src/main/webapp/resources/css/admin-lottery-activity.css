@@ -83,4 +83,10 @@ div.form table.normal div.winner-ranking {
     z-index: 2;
 }
 
+div.form table.normal div.winner-ranking div.time {
+    border-top: 1px solid #999999;
+    margin-top: 5px;
+    padding-top: 5px;
+}
+
 /*********************** lottery list table end *********************/

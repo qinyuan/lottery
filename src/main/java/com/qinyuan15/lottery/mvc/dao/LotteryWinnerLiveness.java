@@ -1,6 +1,7 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.hibernate.PersistObject;
+import com.qinyuan.lib.lang.time.DateUtils;
 
 public class LotteryWinnerLiveness extends PersistObject {
     private Integer activityId;
@@ -42,7 +43,7 @@ public class LotteryWinnerLiveness extends PersistObject {
     }
 
     public String getRecordTime() {
-        return recordTime;
+        return DateUtils.trimMilliSecond(recordTime);
     }
 
     public void setRecordTime(String recordTime) {

@@ -74,6 +74,7 @@
                             </thead>
                             <tbody></tbody>
                         </table>
+                        <div class="time">截止时间：<span class="time"></span></div>
                     </div>
                 </c:if>
             </td>
