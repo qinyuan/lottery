@@ -3,6 +3,7 @@ package com.qinyuan15.lottery.mvc.activity.tracker;
 import com.qinyuan15.lottery.mvc.activity.lot.CommonLotteryLotSerialGenerator;
 import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotNumberValidator;
 import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotSerialGenerator;
+import com.qinyuan15.lottery.mvc.activity.lot.NoRepeatLotteryLotSerialGenerator;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import org.slf4j.Logger;
@@ -17,7 +18,8 @@ public class TrackerManager {
 
     public TrackerManager(LotteryLotNumberValidator lotteryLotNumberValidator,
                           LotteryLotSerialGenerator lotteryLotSerialGenerator) {
-        serialGenerator = new CommonLotteryLotSerialGenerator(lotteryLotNumberValidator, lotteryLotSerialGenerator);
+        //serialGenerator = new CommonLotteryLotSerialGenerator(lotteryLotNumberValidator, lotteryLotSerialGenerator);
+        serialGenerator = new NoRepeatLotteryLotSerialGenerator(lotteryLotNumberValidator, lotteryLotSerialGenerator);
     }
 
     public void run() {

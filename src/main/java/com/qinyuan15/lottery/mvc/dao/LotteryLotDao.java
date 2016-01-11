@@ -120,11 +120,17 @@ public class LotteryLotDao extends AbstractDao<LotteryLot> {
                 .build("SELECT serialNumber FROM " + LotteryLot.class.getSimpleName());
     }
 
+    @SuppressWarnings("unchecked")
     public List<Integer> getSerialNumbers(Integer activityId) {
-        @SuppressWarnings("unchecked")
-        List<Integer> serialNumbers = (List) new HibernateListBuilder().addEqualFilter("activityId", activityId)
+        return (List) new HibernateListBuilder().addEqualFilter("activityId", activityId)
                 .build("SELECT serialNumber FROM LotteryLot");
-        return serialNumbers;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Integer> getVirtualSerialNumbers(Integer activityId) {
+        return (List) new HibernateListBuilder().addEqualFilter("activityId", activityId)
+                .addFilter("virtual=true")
+                .build("SELECT serialNumber FROM LotteryLot");
     }
 
     public List<String> getSerialNumbers(int activityId, int userId, DecimalFormat format) {
