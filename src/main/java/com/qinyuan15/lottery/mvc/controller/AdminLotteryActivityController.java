@@ -6,6 +6,7 @@ import com.qinyuan15.lottery.mvc.activity.LotteryActivityUtils;
 import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallPhaseValidator;
 import com.qinyuan15.lottery.mvc.activity.tracker.WinnerManager;
 import com.qinyuan15.lottery.mvc.dao.*;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -152,8 +154,16 @@ public class AdminLotteryActivityController extends AbstractActivityAdminControl
         }
 
         Map<String, Object> map = new HashMap<>();
-        map.put("users", new LotterySameLotDao().getUsers(id, number));
-        map.put("time", DateUtils.nowString());
+
+        Pair<String, List<LotterySameLotDao.SimpleUser>> result = new LotteryWinnerLivenessDao().query(id);
+        if (result.getValue().isEmpty()) {
+            map.put("users", new LotterySameLotDao().getUsers(id, number));
+            map.put("time", DateUtils.nowString());
+        } else {
+            map.put("users", result.getValue());
+            map.put("time", result.getKey());
+        }
+
         return toJson(map);
     }
 }
