@@ -50,7 +50,7 @@ public class WinnerManager {
         new Tracker(lot).exceed();
     }
 
-    private String getWinnerNumber(LotteryActivity activity) {
+    public String getWinnerNumber(LotteryActivity activity) {
         DualColoredBallPhase phase = new DualColoredBallPhase(activity.getDualColoredBallTerm());
         String result = new DualColoredBallRecordDao().getResult(phase.year, phase.term);
         return getWinnerNumber(result);

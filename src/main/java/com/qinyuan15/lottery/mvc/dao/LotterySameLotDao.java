@@ -90,7 +90,7 @@ public class LotterySameLotDao {
                 continue;
             }
             int liveness = virtual ? virtualUserDao.getLiveness(userId) : lotteryLivenessDao.getLiveness(userId);
-            users.add(new User(username, liveness, virtual, lotId));
+            users.add(new User(userId, username, liveness, virtual, lotId));
         }
 
         return sort(users);
@@ -132,11 +132,13 @@ public class LotterySameLotDao {
     }
 
     public static class User extends SimpleUser {
+        public final int userId;
         public final int lotId;
         public final boolean virtual;
 
-        public User(String username, int liveness, boolean virtual, int lotId) {
+        public User(int userId, String username, int liveness, boolean virtual, int lotId) {
             super(username, liveness);
+            this.userId = userId;
             this.virtual = virtual;
             this.lotId = lotId;
         }

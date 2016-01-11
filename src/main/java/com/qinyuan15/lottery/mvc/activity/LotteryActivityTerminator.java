@@ -8,9 +8,7 @@ import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallCrawler
 import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallPhaseValidator;
 import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotCounter;
 import com.qinyuan15.lottery.mvc.activity.tracker.WinnerManager;
-import com.qinyuan15.lottery.mvc.dao.DualColoredBallRecordDao;
-import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
-import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
+import com.qinyuan15.lottery.mvc.dao.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,6 +74,31 @@ public class LotteryActivityTerminator {
                     } else {
                         // if related thread already exists, just update activity data of it
                         thread.activity = activity;
+                    }
+                }
+                ThreadUtils.sleep(INTERVAL);
+            }
+        }
+    }
+
+    private class WinnerLivenessThreadScheduler extends Thread {
+        final static int INTERVAL = 30; // sleep each 0.5 minute
+
+        @Override
+        public void run() {
+            while (true) {
+                for (LotteryActivity activity : new LotteryActivityDao().getNoWinnerResultInstances()) {
+                    if (activity.getExpectEndTime().compareTo(DateUtils.nowString()) < 0) {
+                        continue;
+                    }
+
+                    String winnerNumber = new WinnerManager().getWinnerNumber(activity);
+                    if (winnerNumber == null) {
+                        continue;
+                    }
+
+                    for (LotterySameLotDao.User user : new LotterySameLotDao().getUsers(activity.getId(), winnerNumber)) {
+                        new LotteryWinnerLivenessDao().add(activity.getId(), user.userId, user.virtual, user.liveness);
                     }
                 }
                 ThreadUtils.sleep(INTERVAL);

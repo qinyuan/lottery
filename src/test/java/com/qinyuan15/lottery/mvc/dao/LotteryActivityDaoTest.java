@@ -68,6 +68,18 @@ public class LotteryActivityDaoTest extends DatabaseTestCase {
     }
 
     @Test
+    public void testGetNoWinnerRecordInstances() {
+        assertThat(dao.getNoWinnerResultInstances()).hasSize(2);
+        assertThat(dao.getNoWinnerResultInstances().get(0).getId()).isEqualTo(1);
+        assertThat(dao.getNoWinnerResultInstances().get(1).getId()).isEqualTo(2);
+
+        new LotteryWinnerLivenessDao().add(2, 2, true, 2, "2010-12-12 15:15:15");
+
+        assertThat(dao.getNoWinnerResultInstances()).hasSize(1);
+        assertThat(dao.getNoWinnerResultInstances().get(0).getId()).isEqualTo(1);
+    }
+
+    @Test
     public void testGetUnexpiredWithResultInstances() {
         assertThat(dao.getUnexpiredWithResultInstances()).isEmpty();
         new DualColoredBallRecordDao().add(2015, 81, "20151212", "080808080808");

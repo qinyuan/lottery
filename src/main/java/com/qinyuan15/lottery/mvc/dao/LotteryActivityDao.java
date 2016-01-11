@@ -122,6 +122,12 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
                 .addFilter("dualColoredBallTerm NOT IN " + RESULT_QUERY).build(LotteryActivity.class);
     }
 
+    public List<LotteryActivity> getNoWinnerResultInstances() {
+        return new HibernateListBuilder().addFilter("dualColoredBallTerm NOT IN " + RESULT_QUERY)
+                .addFilter("id NOT IN (SELECT activityId FROM LotteryWinnerLiveness)")
+                .build(LotteryActivity.class);
+    }
+
     /**
      * @return instances that are not expired but have result
      */

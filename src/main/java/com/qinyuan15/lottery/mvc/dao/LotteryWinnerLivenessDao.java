@@ -23,6 +23,10 @@ public class LotteryWinnerLivenessDao extends AbstractDao<LotteryWinnerLiveness>
         return HibernateUtils.save(l);
     }
 
+    public Integer add(Integer activityId, Integer userId, Boolean virtual, Integer liveness) {
+        return add(activityId, userId, virtual, liveness, DateUtils.nowString());
+    }
+
     public Pair<String, List<LotterySameLotDao.SimpleUser>> query(Integer activityId) {
         String sql = "SELECT u.username AS u_name,vu.username AS vu_name,virtual,l.liveness,l.record_time " +
                 "FROM lottery_winner_liveness AS l " +
