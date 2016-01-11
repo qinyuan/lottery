@@ -241,6 +241,14 @@ create table tel_change_log (
     change_time datetime
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+create table lottery_winner_liveness (
+    id int primary key auto_increment,
+    activity_id int not null,
+    user_id int not null,
+    virtual boolean not null,
+    liveness int not null,
+    record_time datetime
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 
 /************** test data *******************/
