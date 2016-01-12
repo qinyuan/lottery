@@ -27,6 +27,9 @@ import java.util.List;
 public class CommodityController extends ImageController {
     private ImageMapDao mapDao = new ImageMapDao(ImageMapType.COMMODITY);
 
+    private final static String DEFAULT_TITLE = "布迪网，商品及活动";
+    private final static String DEFAULT_DESCRIPTION = "这里有一个免费的商品抽奖活动，赶快来参加吧！！！";
+
     @RequestMapping("/commodity")
     public String index(@RequestParam(value = "id", required = false) Integer id,
                         @RequestParam(value = "fromUser", required = false) String userSerialKey,
@@ -50,7 +53,7 @@ public class CommodityController extends ImageController {
         } else {
             livenessAdder.recordSpreader(userSerialKey, medium, commodity.getId());
             setAttribute("seoKeyword", "抽奖,免费," + commodity.getName());
-            String title = null, description = null;
+            String title = DEFAULT_TITLE, description = DEFAULT_DESCRIPTION;
             if (StringUtils.isNotBlank(medium)) {
                 if (medium.equals(ShareMedium.QQ.en)) {
                     title = AppConfig.getLotteryQQTitle();
@@ -61,12 +64,6 @@ public class CommodityController extends ImageController {
                 } else if (medium.equals(ShareMedium.SINA_WEIBO.en)) {
                     title = AppConfig.getLotterySinaWeiboTitle();
                 }
-            }
-            if (StringUtils.isBlank(title)) {
-                title = "商品详细信息";
-            }
-            if (StringUtils.isBlank(description)) {
-                description = "这里有一个免费的商品抽奖活动，赶快来参加吧！！！";
             }
             setTitle(title);
             setAttribute("seoDescription", description);

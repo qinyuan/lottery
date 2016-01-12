@@ -22,7 +22,7 @@ public class DualColoredBallLotteryLotSerialGenerator implements LotteryLotSeria
                 numbers.add(singleBall);
             }
         }
-        Collections.sort(numbers);
+        //Collections.sort(numbers);
 
         int result = 0;
         for (int number : numbers) {
