@@ -182,6 +182,10 @@ div.main-body > div.right div.body div.history td {
     color: #999999;
 }
 
+#liveness span.share a {
+    color: #999999;
+}
+
 #liveness span.share img {
     padding-bottom: 3px;
 }
