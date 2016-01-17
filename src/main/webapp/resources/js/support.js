@@ -5,6 +5,7 @@
         var activityId = $.url.param('activityId');
         var serial = $.url.param('serial');
         var medium = $.url.param('medium');
+        var $self = $(this);
         $.post('add-liveness.json', {
             activityId: activityId,
             serial: serial,
@@ -13,6 +14,12 @@
             if (data.success) {
                 showAddLivenessSuccessInfo(e, data['livenessToAdd']);
                 //redirect();
+            } else if (data.detail == 'noLogin') {
+                showLoginForm(function () {
+                    hideLoginForm();
+                    JSUtils.hideTransparentBackground();
+                    $self.trigger('click');
+                });
             } else {
                 alert(data.detail);
             }

@@ -2,10 +2,13 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
+import com.qinyuan.lib.mvc.controller.JsonResult;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.activity.share.ShareMedium;
-import com.qinyuan15.lottery.mvc.dao.*;
+import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
+import com.qinyuan15.lottery.mvc.dao.User;
+import com.qinyuan15.lottery.mvc.dao.UserDao;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,12 +38,12 @@ public class SupportController extends ImageController {
             }
 
             User receiveUser = (User) securitySearcher.getUser();
-            if (new LotteryLivenessDao().hasInstance(spreadUser.getId(), receiveUser.getId())) {
+            if (receiveUser != null && new LotteryLivenessDao().hasInstance(spreadUser.getId(), receiveUser.getId())) {
                 setAttribute("alreadySupported", true);
             }
         } else {
             setAttribute("invalidUser", true);
-            setTitle("用户不存在");
+            setTitle("您要支持的用户不存在");
         }
 
         setAttribute("supportImage", pathToUrl(AppConfig.getSupportPageImage()));
@@ -60,25 +63,16 @@ public class SupportController extends ImageController {
 
         Integer userId = new UserDao().getIdBySerialKey(serial);
         if (!IntegerUtils.isPositive(userId)) {
-            return fail("用户不存在");
+            return fail("您要支持的用户不存在");
         }
 
         Map<String, Object> result = new HashMap<>();
         try {
             Integer receiveUserId = securitySearcher.getUserId();
             if (!IntegerUtils.isPositive(receiveUserId)) {
-                return fail("请重新登录");
-            }
-
-            result.put("success", true);
-
-            // set default activityId
-            if (!IntegerUtils.isPositive(activityId)) {
-                LotteryActivity activity = new LotteryActivityDao().getFirstInstance();
-                if (activity == null) {
-                    result.put(livenessToAddKey, 0);
-                    return toJson(result);
-                }
+                return fail("noLogin");
+            } else if (receiveUserId.equals(userId)) {
+                return fail("您不能自己支持自己");
             }
 
             if (StringUtils.isBlank(medium)) {
@@ -87,10 +81,16 @@ public class SupportController extends ImageController {
 
             if (new LotteryLivenessDao().hasInstance(userId, receiveUserId)) {
                 result.put(livenessToAddKey, 0);
+                result.put(JsonResult.SUCCESS, false);
+                result.put(JsonResult.DETAIL, "您已经支持过该好友");
                 return toJson(result);
             } else {
+                if (activityId == null) {
+                    activityId = -1;
+                }
                 LivenessAdder.addLiveness(receiveUserId, false, userId, medium, activityId);
                 result.put(livenessToAddKey, AppConfig.getShareSucceedLiveness());
+                result.put(JsonResult.SUCCESS, true);
                 return toJson(result);
             }
         } catch (Exception e) {
