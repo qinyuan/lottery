@@ -4,7 +4,7 @@
         <span class="liveness-icon lightTransparent"></span>： ${liveness}
         <span class="share">
             <img src="resources/css/images/help.png"/>
-            <a target="_blank" href="http://localhost:8080/lottery/share.html">通过转发增加支持数</a>
+            <a target="_blank" href="share.html">通过转发增加支持数</a>
         </span>
         <%--
         <span class="share"><img src="resources/css/images/help.png"/>通过转发增加支持数</span>
