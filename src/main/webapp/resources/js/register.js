@@ -21,11 +21,12 @@
     var $form = $('div.main-body div.form').focusFirstTextInput();
     $form.setDefaultButtonByClass('ok');
     var $submit = $form.find('div.submit button.ok').click(function (e) {
+        e.preventDefault();
         if (updateSubmitStatus()) {
             submitUserInfo();
             return true;
         } else {
-            e.preventDefault();
+            //e.preventDefault();
             return false;
         }
     });
@@ -37,15 +38,17 @@
     });
     var $username = $form.getInputByName('username').blur(function () {
         validateUsername();
+    }).keyup(function () {
+        validateUsername();
     });
     var $password = $form.getInputByName('password').blur(function () {
-        validatePassword(function () {
-            if ($password2.val() != '') {
-                validatePassword2();
-            }
-        });
+        validateAllPassword();
+    }).keyup(function () {
+        validateAllPassword();
     });
     var $password2 = $form.getInputByName('password2').blur(function () {
+        validatePassword2();
+    }).keyup(function () {
         validatePassword2();
     });
     var $checkbox = $form.find('div.subscribe input[type=checkbox]').click(function () {
@@ -107,6 +110,14 @@
             JSUtils.invokeIfIsFunction(callback);
         }
         updateSubmitStatus();
+    }
+
+    function validateAllPassword() {
+        validatePassword(function () {
+            if ($password2.val() != '') {
+                validatePassword2();
+            }
+        });
     }
 
     function validateEmail(callback) {

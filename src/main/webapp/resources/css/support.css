@@ -37,8 +37,9 @@ div.main-body div.support-button .blue {
     border-radius: 5px;
     padding: 8px 20px;
     color: #ffffff;
-    width: 95px;
+    width: 100px;
     border: none;
+    text-align: center;
 }
 
 div.main-body div.support-button a.blue {

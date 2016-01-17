@@ -82,7 +82,7 @@
             </div>
             <div class="register-type">
                 <div class="by-email selected"><span class="icon"></span>邮箱注册</div>
-                <div class="by-qq"><span class="icon"></span>QQ号注册</div>
+                <%--<div class="by-qq"><span class="icon"></span>QQ号注册</div>--%>
             </div>
             <div class="switch-login">已有帐号，<a id="switchToLogin" href="javascript:void(0)">立即登录</a></div>
         </form>
