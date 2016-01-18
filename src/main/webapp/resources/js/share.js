@@ -31,4 +31,5 @@
             $parent.addClass('selected');
         }
     });
-})();
+})
+();
