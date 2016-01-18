@@ -520,4 +520,9 @@ div.activity-result div.activity-expire, div.activity-result div.activity-closed
     font-size: 12pt;
 }
 
+#loading {
+    background-color: transparent;
+    margin-left: -62px;
+}
+
 /************************************ lottery result end *******************************/

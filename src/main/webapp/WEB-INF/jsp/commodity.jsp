@@ -76,6 +76,9 @@
         </div>
     </div>
 </div>
+<div class="float-panel" id="loading">
+   <img src="resources/css/images/loading.gif"/>
+</div>
 <div class="float-panel shadow" id="noTelPrompt">
     <jsp:include page="commodity-float-panel-title.jsp">
         <jsp:param name="title" value="消息提示"/>

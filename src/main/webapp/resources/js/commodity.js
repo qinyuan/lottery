@@ -494,7 +494,21 @@
         }
     }).init();
 
+    var loadingStatus = {
+        $div: $('#loading'),
+        show: function () {
+            JSUtils.showTransparentBackground(1);
+            JSUtils.scrollToVerticalCenter(this.$div);
+            this.$div.show();
+        },
+        hide: function () {
+            this.$div.hide();
+        }
+    };
+
+
     getLotteryLot = function () {
+        loadingStatus.show();
         var toLoginCallback = function () {
             hideLoginForm();
             getLotteryLot();
@@ -502,6 +516,7 @@
         $.post('take-lottery.json', {
             'commodityId': getSelectedCommodityId()
         }, function (data) {
+            loadingStatus.hide();
             if (data.success || data.detail == 'activityClosed' || data.detail == 'activityExpire'
                 || data.detail == 'alreadyAttended') {
                 lotteryResult.show(data);
