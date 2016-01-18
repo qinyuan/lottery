@@ -13,7 +13,7 @@
     <import resource="application-image.xml"/>
     <import resource="application-activity.xml"/>
     <bean class="com.qinyuan.lib.network.http.TimingVisitor">
-        <property name="pages" value="http://localhost/commodity.html,http://localhost/index.html"/>
+        <property name="pages" value="http://localhost/commodity.html,http://localhost/index.html,http://localhost/take-lottery.json?commodityId=1"/>
     </bean>
 
 </beans>
