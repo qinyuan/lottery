@@ -74,7 +74,11 @@ var angularUtils = {
                 }
 
                 var formData = self.$div.find('form').serialize();
+                var oldText = self.$submitButton.text();
+                var waiting = self.$submitButton.text('正在处理').enable(false).buildWaitingText();
                 $.post('j_spring_security_ajax_check', formData, function (data) {
+                    waiting.stop();
+                    self.$submitButton.enable().text(oldText);
                     if (data.success) {
                         if (self.loginSuccessCallback && typeof(self.loginSuccessCallback) == 'function') {
                             $.get('navigation', function (data) {
@@ -353,10 +357,11 @@ var angularUtils = {
 
                 function registerSubmit(registerType) {
                     self.$div.setInputValue('registerType', registerType);
-                    var waiting = self.$registerSubmit.text('正在处理').buildWaitingText();
+                    var oldText = self.$registerSubmit.text();
+                    var waiting = self.$registerSubmit.text('正在处理').enable(false).buildWaitingText();
                     $.post('register-submit.json', self.$div.find('form').serialize(), function (data) {
                         waiting.stop();
-                        self.$registerSubmit.text('立即注册');
+                        self.$registerSubmit.enable().text(oldText);
                         if (data['success']) {
                             self.showResult();
                         } else {
