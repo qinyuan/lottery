@@ -3,7 +3,7 @@
 <c:if test="${redirectUrl != null}">
     <style>
         body > div {
-            /*display: none;*/
+            display: none;
         }
     </style>
     <script>

@@ -1,9 +1,9 @@
 ;
 (function () {
-    if (window['redirectUrl']) {
+    /*if (window['redirectUrl']) {
         location.href = window['redirectUrl'];
         return;
-    }
+    }*/
 
     var participantCount = ({
         update: function () {
