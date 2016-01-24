@@ -8,13 +8,11 @@ import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-
 public class LotteryCloseThread extends LotteryHandlerThread {
     private final static Logger LOGGER = LoggerFactory.getLogger(LotteryResultThread.class);
 
-    public LotteryCloseThread(LotteryActivity activity, Map<Integer, ? extends Thread> threads) {
-        super(activity, threads);
+    public LotteryCloseThread(LotteryActivity activity) {
+        super(activity);
     }
 
     @Override

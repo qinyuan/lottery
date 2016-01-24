@@ -8,17 +8,10 @@ import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.LotterySameLotDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryWinnerLivenessDao;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class LotteryActivityTerminator {
-    private final static Logger LOGGER = LoggerFactory.getLogger(LotteryActivityTerminator.class);
-    private final Map<Integer, LotteryResultThread> resultThreads = new HashMap<>();
-    private final Map<Integer, LotteryCloseThread> closeThreads = new HashMap<>();
     private List<DualColoredBallCrawler> crawlers;
 
     public void init() {
@@ -34,7 +27,18 @@ public class LotteryActivityTerminator {
     /**
      * Scheduler to close activities in suitable time
      */
-    private class CloseThreadScheduler extends Thread {
+    private class CloseThreadScheduler extends LotteryHandlerScheduler {
+        @Override
+        protected LotteryHandlerThread buildLotteryHandlerThread(LotteryActivity activity) {
+            return new LotteryCloseThread(activity);
+        }
+
+        @Override
+        protected List<LotteryActivity> getActivities() {
+            return new LotteryActivityDao().getUnclosedInstances();
+        }
+    }
+    /*private class CloseThreadScheduler extends Thread {
         final static int INTERVAL = 60; // reload each minute
 
         @Override
@@ -60,9 +64,21 @@ public class LotteryActivityTerminator {
                 }
             }
         }
+    }*/
+
+    private class ResultThreadScheduler extends LotteryHandlerScheduler {
+        @Override
+        protected LotteryHandlerThread buildLotteryHandlerThread(LotteryActivity activity) {
+            return new LotteryResultThread(activity, crawlers);
+        }
+
+        @Override
+        protected List<LotteryActivity> getActivities() {
+            return new LotteryActivityDao().getNoResultInstances();
+        }
     }
 
-    private class ResultThreadScheduler extends Thread {
+    /*private class ResultThreadScheduler extends Thread {
         final static int INTERVAL = 60; // sleep each minute
 
         @Override
@@ -87,7 +103,7 @@ public class LotteryActivityTerminator {
                 }
             }
         }
-    }
+    }*/
 
     private class WinnerLivenessThreadScheduler extends Thread {
         final static int INTERVAL = 30; // sleep each 0.5 minute
@@ -128,35 +144,4 @@ public class LotteryActivityTerminator {
             }
         }
     }
-
-    /*private class LotteryCloseThread extends LotteryHandlerThread {
-        LotteryCloseThread(LotteryActivity activity) {
-            super(activity, closeThreads);
-        }
-
-        @Override
-        protected boolean doLoop() {
-            if (!DateUtils.isDateOrDateTime(activity.getCloseTime())) {
-                return false;
-            }
-
-            try {
-                if (LotteryActivityUtils.shouldBeClosed(activity)) {
-                    new LotteryActivityDao().close(activity);
-                    closeThreads.remove(activity.getId());
-                    return false;
-                }
-                new LotteryLotCounter().count(activity);    // force program to update virtual participants
-            } catch (Throwable e) {
-                e.printStackTrace();
-                LOGGER.error("Fail to close activity whose id is {}, info: {}", activity.getId(), e);
-            }
-            return true;
-        }
-
-        @Override
-        protected long getSleepTime() {
-            return LotteryActivityUtils.getRemainingTimeToClose(activity);
-        }
-    }*/
 }

@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Thread to crawl lottery result
@@ -24,9 +23,8 @@ public class LotteryResultThread extends LotteryHandlerThread {
     private final static Logger LOGGER = LoggerFactory.getLogger(LotteryResultThread.class);
     private List<DualColoredBallCrawler> crawlers;
 
-    LotteryResultThread(LotteryActivity activity, Map<Integer, ? extends Thread> threads,
-                        List<DualColoredBallCrawler> crawlers) {
-        super(activity, threads);
+    LotteryResultThread(LotteryActivity activity, List<DualColoredBallCrawler> crawlers) {
+        super(activity);
         this.crawlers = crawlers;
     }
 
