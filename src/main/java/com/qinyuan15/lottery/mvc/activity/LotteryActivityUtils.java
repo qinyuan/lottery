@@ -14,4 +14,9 @@ public class LotteryActivityUtils {
         Date closeTime = DateUtils.newDate(activity.getCloseTime());
         return closeTime.getTime() - System.currentTimeMillis();
     }
+
+    public static long getRemainingTimeToEnd(LotteryActivity activity) {
+        Date expectEndTime = DateUtils.newDate(activity.getExpectEndTime());
+        return expectEndTime.getTime() - System.currentTimeMillis();
+    }
 }

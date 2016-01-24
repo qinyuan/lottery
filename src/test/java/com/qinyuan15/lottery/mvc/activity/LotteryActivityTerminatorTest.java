@@ -3,6 +3,7 @@ package com.qinyuan15.lottery.mvc.activity;
 import com.qinyuan.lib.lang.concurrent.ThreadUtils;
 import com.qinyuan15.lottery.mvc.activity.dualcoloredball.BaiduLecaiCrawler;
 import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallCrawler;
+import com.qinyuan15.lottery.mvc.activity.terminator.LotteryActivityTerminator;
 import org.junit.Test;
 
 import java.util.ArrayList;

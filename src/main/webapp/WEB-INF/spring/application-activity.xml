@@ -12,7 +12,7 @@
     <bean id="lotNumberFormat" class="java.text.DecimalFormat">
         <constructor-arg value="000000"/>
     </bean>
-    <bean class="com.qinyuan15.lottery.mvc.activity.LotteryActivityTerminator" init-method="init">
+    <bean class="com.qinyuan15.lottery.mvc.activity.terminator.LotteryActivityTerminator" init-method="init">
         <property name="crawlers">
             <list>
                 <bean class="com.qinyuan15.lottery.mvc.activity.dualcoloredball.BaiduLecaiCrawler"/>
@@ -21,7 +21,7 @@
         </property>
     </bean>
 
-    <bean class="com.qinyuan15.lottery.mvc.activity.SeckillActivityTerminator" init-method="init"/>
+    <!--<bean class="com.qinyuan15.lottery.mvc.activity.terminator.SeckillActivityTerminator" init-method="init"/>-->
 
     <bean id="dualColoredBallResultDownloader"
           class="com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallResultDownloader"/>

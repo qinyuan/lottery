@@ -1,7 +1,8 @@
-package com.qinyuan15.lottery.mvc.activity;
+package com.qinyuan15.lottery.mvc.activity.terminator;
 
 import com.qinyuan.lib.lang.concurrent.ThreadUtils;
 import com.qinyuan.lib.lang.time.DateUtils;
+import com.qinyuan15.lottery.mvc.activity.SeckillResultUpdater;
 import com.qinyuan15.lottery.mvc.dao.SeckillActivity;
 import com.qinyuan15.lottery.mvc.dao.SeckillActivityDao;
 import org.slf4j.Logger;
