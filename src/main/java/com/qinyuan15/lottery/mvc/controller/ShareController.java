@@ -28,6 +28,7 @@ public class ShareController extends ImageController {
         if (activity != null) {
             setAttribute("activityId", activity.getId());
         }
+        new CommodityUrlAdapter(this).adapt(commodity);
 
         User user = (User) securitySearcher.getUser();
         new UserDao().updateSerialKeyIfNecessary(user);
