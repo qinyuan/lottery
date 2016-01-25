@@ -18,6 +18,7 @@ public class LotteryActivityTerminator {
         new CloseThreadScheduler().start();
         new ResultThreadScheduler().start();
         new WinnerThreadScheduler().start();
+        new WinnerLivenessThreadScheduler().start();
     }
 
     public void setCrawlers(List<DualColoredBallCrawler> crawlers) {
@@ -38,33 +39,6 @@ public class LotteryActivityTerminator {
             return new LotteryActivityDao().getUnclosedInstances();
         }
     }
-    /*private class CloseThreadScheduler extends Thread {
-        final static int INTERVAL = 60; // reload each minute
-
-        @Override
-        public void run() {
-            while (true) {
-                ThreadUtils.sleep(INTERVAL);
-                try {
-                    // build crawl thread for each unclosed lottery activity
-                    for (LotteryActivity activity : new LotteryActivityDao().getUnclosedInstances()) {
-                        LotteryCloseThread thread = closeThreads.get(activity.getId());
-                        if (thread == null) {
-                            // if related thread not close, create and run it
-                            thread = new LotteryCloseThread(activity, closeThreads);
-                            closeThreads.put(activity.getId(), thread);
-                            thread.start();
-                        } else {
-                            // if related thread already exists, just update activity data of it
-                            thread.activity = activity;
-                        }
-                    }
-                } catch (Throwable e) {
-                    LOGGER.error("error in running CloseThreadScheduler: {}", e);
-                }
-            }
-        }
-    }*/
 
     private class ResultThreadScheduler extends LotteryHandlerScheduler {
         @Override
@@ -78,40 +52,13 @@ public class LotteryActivityTerminator {
         }
     }
 
-    /*private class ResultThreadScheduler extends Thread {
-        final static int INTERVAL = 60; // sleep each minute
-
-        @Override
-        public void run() {
-            while (true) {
-                ThreadUtils.sleep(INTERVAL);
-                try {
-                    for (LotteryActivity activity : new LotteryActivityDao().getNoResultInstances()) {
-                        LotteryResultThread thread = resultThreads.get(activity.getId());
-                        if (thread == null) {
-                            // if related thread not exists, create and run it
-                            thread = new LotteryResultThread(activity, resultThreads, crawlers);
-                            resultThreads.put(activity.getId(), thread);
-                            thread.start();
-                        } else {
-                            // if related thread already exists, just update activity data of it
-                            thread.activity = activity;
-                        }
-                    }
-                } catch (Throwable e) {
-                    LOGGER.error("error in running ResultThreadScheduler: {}", e);
-                }
-            }
-        }
-    }*/
-
     private class WinnerLivenessThreadScheduler extends Thread {
         final static int INTERVAL = 30; // sleep each 0.5 minute
 
         @Override
         public void run() {
             while (true) {
-                for (LotteryActivity activity : new LotteryActivityDao().getNoWinnerResultInstances()) {
+                for (LotteryActivity activity : new LotteryActivityDao().getNoWinnerRecordInstances()) {
                     if (activity.getExpectEndTime().compareTo(DateUtils.nowString()) < 0) {
                         continue;
                     }
@@ -137,6 +84,7 @@ public class LotteryActivityTerminator {
         public void run() {
             WinnerManager winnerManager = new WinnerManager();
             while (true) {
+                // make sure that winner of each unexpired activity with result is virtual user
                 for (LotteryActivity activity : new LotteryActivityDao().getUnexpiredWithResultInstances()) {
                     winnerManager.setWinner(activity);
                 }

@@ -11,6 +11,12 @@ import java.util.List;
 public class WinnerManager {
     private final static Logger LOGGER = LoggerFactory.getLogger(WinnerManager.class);
 
+    /**
+     * validate winner of certain activity, if winner is real user, adjust liveness of one virtual user to
+     * exceed real user
+     *
+     * @param activity lottery activity instance
+     */
     public void setWinner(LotteryActivity activity) {
         if (activity == null) {
             LOGGER.error("activity is null");

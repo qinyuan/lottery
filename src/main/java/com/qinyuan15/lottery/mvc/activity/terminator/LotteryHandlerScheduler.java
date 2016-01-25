@@ -29,15 +29,16 @@ abstract class LotteryHandlerScheduler extends Thread implements LotteryHandlerT
         while (true) {
             ThreadUtils.sleep(interval);
             try {
-                // build crawl thread for each unclosed lottery activity
+                // build crawl thread for each lottery activity
                 for (LotteryActivity activity : getActivities()) {
                     LotteryHandlerThread thread = threads.get(activity.getId());
                     if (thread == null) {
                         // if related thread not close, create and run it
                         thread = buildLotteryHandlerThread(activity);
                         thread.addObserver(this);
-                        threads.put(activity.getId(), thread);
                         thread.start();
+
+                        threads.put(activity.getId(), thread);
                     } else {
                         // if related thread already exists, just update activity data of it
                         thread.activity = activity;

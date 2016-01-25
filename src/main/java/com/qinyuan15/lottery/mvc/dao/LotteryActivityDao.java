@@ -122,8 +122,13 @@ public class LotteryActivityDao extends AbstractActivityDao<LotteryActivity> {
                 .addFilter("dualColoredBallTerm NOT IN " + RESULT_QUERY).build(LotteryActivity.class);
     }
 
-    public List<LotteryActivity> getNoWinnerResultInstances() {
+    /*public List<LotteryActivity> getNoWinnerResultInstances() {
         return new HibernateListBuilder().addFilter("dualColoredBallTerm NOT IN " + RESULT_QUERY)
+                .addFilter("id NOT IN (SELECT activityId FROM LotteryWinnerLiveness)")
+                .build(LotteryActivity.class);
+    }*/
+    public List<LotteryActivity> getNoWinnerRecordInstances() {
+        return new HibernateListBuilder().addFilter("dualColoredBallTerm IN " + RESULT_QUERY)
                 .addFilter("id NOT IN (SELECT activityId FROM LotteryWinnerLiveness)")
                 .build(LotteryActivity.class);
     }
