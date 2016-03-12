@@ -36,7 +36,15 @@
             <mvc:mapping path="/*"/>
             <bean class="com.qinyuan15.lottery.mvc.controller.CommonInterceptor"/>
         </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>
+            <bean class="com.qinyuan.lib.mvc.interceptor.VisitRecordInterceptor">
+                <constructor-arg ref="visitorRecorder"/>
+            </bean>
+        </mvc:interceptor>
     </mvc:interceptors>
+
+    <bean id="visitorRecorder" class="com.qinyuan.lib.mvc.visitor.VisitorRecorder"/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/>
@@ -53,6 +61,11 @@
             <map>
                 <entry key="/identity-code">
                     <bean class="com.qinyuan.lib.mvc.controller.IdentityCodeController"/>
+                </entry>
+                <entry key="/visit-record.json">
+                    <bean class="com.qinyuan.lib.mvc.controller.VisitRecordController">
+                        <constructor-arg ref="visitorRecorder"/>
+                    </bean>
                 </entry>
             </map>
         </property>

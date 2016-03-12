@@ -395,12 +395,12 @@ input.form-control {
 }
 
 #registerForm {
-    margin-left: -265px;
+    margin-left: -267px;
     margin-top: -128px;
 }
 
 #registerForm div.body {
-    width: 530px;
+    width: 534px;
     position: relative;
 }
 
@@ -413,7 +413,7 @@ input.form-control {
 #registerForm div.body div.right {
     padding-top: 34px;
     border-left: 1px solid #E5E5E5;
-    width: 386px;
+    width: 390px;
     float: right;
 }
 

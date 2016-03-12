@@ -46,7 +46,7 @@
                     </div>
                     <div class="comment">
                             <span class="info">
-                                请输入您的常用邮箱， <a href="http://reg.email.163.com/unireg/call.do?cmd=register.entrance"
+                                请输入您的常用邮箱， <a href="http://zc.qq.com/chs/index.html?type=1"
                                               target="_blank">没有邮箱？</a>
                             </span>
                         <span class="error"></span>

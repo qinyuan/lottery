@@ -2,10 +2,10 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.config.ImageConfig;
 import com.qinyuan.lib.lang.IntegerUtils;
-import com.qinyuan.lib.mvc.controller.AbstractInterceptor;
 import com.qinyuan.lib.mvc.controller.ImageUrlAdapter;
 import com.qinyuan.lib.mvc.controller.RequestUtils;
 import com.qinyuan.lib.mvc.controller.UserAgentUtils;
+import com.qinyuan.lib.mvc.interceptor.AbstractInterceptor;
 import com.qinyuan.lib.mvc.security.SecuritySearcher;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan.lib.mvc.security.UserRole;

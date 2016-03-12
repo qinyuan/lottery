@@ -42,6 +42,6 @@
 </div>
 <div class="register-success">
     <div class="title">邮箱 <span class="email">${preUser.email}</span> 已经注册成功！</div>
-    <div class="skip">邮件订阅已发送，请到邮箱内确认</div>
+    <%--<div class="skip">邮件订阅已发送，请到邮箱内确认</div>--%>
     <div class="to-index"><a href="index.html">进入主页</a></div>
 </div>
