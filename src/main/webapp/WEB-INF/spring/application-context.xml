@@ -12,8 +12,10 @@
     <import resource="application-security.xml"/>
     <import resource="application-image.xml"/>
     <import resource="application-activity.xml"/>
-    <bean class="com.qinyuan.lib.network.http.TimingVisitor">
-        <property name="pages" value="http://localhost/commodity.html,http://localhost/index.html,http://localhost/take-lottery.json?commodityId=1"/>
+    <bean class="com.qinyuan.lib.network.http.TimingVisitor" init-method="init">
+        <property name="pages" value="commodity.html,index.html,take-lottery.json?commodityId=1"/>
+        <property name="interval" value="300"/>
+        <!-- 300 means three minutes -->
     </bean>
 
 </beans>
