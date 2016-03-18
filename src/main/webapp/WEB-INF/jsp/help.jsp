@@ -4,7 +4,7 @@
 <div class="main-body">
     <div class="page-width">
         <div class="left shadow">
-            <div class="title">帮助中心</div>
+            <div class="title">订阅活动及帮助中心</div>
             <c:if test="${editMode}"><div class="action-prompt">注：将鼠标移动到对应项目即出现编辑按钮</div></c:if>
             <c:forEach var="helpGroup" items="${helpGroups}">
                 <%@include file="help-group-title.jsp" %>

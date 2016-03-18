@@ -13,7 +13,7 @@ public class HelpController extends ImageController {
 
     @RequestMapping("/help")
     public String index() {
-        setTitle("帮助中心");
+        setTitle("订阅活动及帮助中心");
         return getHelpView();
     }
 

@@ -47,5 +47,4 @@
         <li><a class="text emphasize" id="loginNavigationLink" href="javascript:void(0)">登录</a></li>
         <li><a class="text" id="registerNavigationLink" href="javascript:void(0)">注册</a></li>
     </security:authorize>
-    <%--<li><a class="text" id="helpNavigationLink" href="help.html">帮助中心</a></li>--%>
 </ul>
