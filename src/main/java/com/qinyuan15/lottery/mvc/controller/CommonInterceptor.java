@@ -9,7 +9,7 @@ import com.qinyuan.lib.mvc.interceptor.AbstractInterceptor;
 import com.qinyuan.lib.mvc.security.SecuritySearcher;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan.lib.mvc.security.UserRole;
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.SeckillActivityDao;
 import com.qinyuan15.lottery.mvc.dao.SystemInfoSendRecordDao;

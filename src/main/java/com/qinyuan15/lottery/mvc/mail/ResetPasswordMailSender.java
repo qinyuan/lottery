@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.mail;
 
 import com.qinyuan.lib.contact.mail.MailSerialKeyDao;
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.ResetPasswordRequestDao;
 
 /**
@@ -9,7 +9,7 @@ import com.qinyuan15.lottery.mvc.dao.ResetPasswordRequestDao;
  * Created by qinyuan on 15-7-1.
  */
 public class ResetPasswordMailSender extends SerialKeyMailSender {
-    private final static String SERIAL_KEY_URL = AppConfig.getAppHost() + "reset-password.html";
+    private final static String SERIAL_KEY_URL = AppConfig.properties.getAppHost() + "reset-password.html";
 
     public ResetPasswordMailSender() {
         super(SERIAL_KEY_URL);

@@ -5,7 +5,7 @@ import com.qinyuan.lib.contact.qq.QQValidator;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.PasswordValidator;
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.account.NewUserValidator;
 import com.qinyuan15.lottery.mvc.account.PreUserSerialKeyBuilder;
 import com.qinyuan15.lottery.mvc.dao.PreUser;

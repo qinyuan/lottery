@@ -2,12 +2,11 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.google.common.collect.Lists;
 import com.qinyuan.lib.lang.IntegerUtils;
-import com.qinyuan.lib.lang.concurrent.ThreadUtils;
 import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan.lib.mvc.security.UserRole;
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.account.UserTelUtils;
 import com.qinyuan15.lottery.mvc.activity.lot.DualColoredBallLotteryLotSerialGenerator;
 import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotCounter;

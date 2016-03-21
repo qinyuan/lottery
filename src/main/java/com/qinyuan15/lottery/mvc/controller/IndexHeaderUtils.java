@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.mvc.controller.ImageController;
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.IndexImageGroup;
 import com.qinyuan15.lottery.mvc.dao.IndexImage;
 import com.qinyuan15.lottery.mvc.dao.NavigationLinkDao;

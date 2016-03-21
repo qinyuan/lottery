@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity;
 
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

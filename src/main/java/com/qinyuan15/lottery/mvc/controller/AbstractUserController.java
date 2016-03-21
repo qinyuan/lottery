@@ -6,7 +6,7 @@ import com.qinyuan.lib.lang.time.DateUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.LoginRecord;
 import com.qinyuan.lib.mvc.security.LoginRecordDao;
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;

@@ -5,7 +5,7 @@ import com.qinyuan.lib.contact.mail.*;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.CDNSource;
 import com.qinyuan.lib.mvc.controller.ImageController;
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.MailAccountReferenceValidator;
 import com.qinyuan15.lottery.mvc.dao.NavigationLink;
 import com.qinyuan15.lottery.mvc.dao.NavigationLinkDao;

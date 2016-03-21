@@ -10,11 +10,11 @@ import com.qinyuan.lib.mvc.controller.PaginationItemFactory;
 import com.qinyuan.lib.mvc.security.LoginRecord;
 import com.qinyuan.lib.mvc.security.LoginRecordDao;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
-import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.account.DatabaseTelValidator;
 import com.qinyuan15.lottery.mvc.account.NewUserValidator;
 import com.qinyuan15.lottery.mvc.account.RemainingTelChangeTimesCalculator;
 import com.qinyuan15.lottery.mvc.activity.share.LotteryShareUrlBuilder;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.*;
 import com.qinyuan15.lottery.mvc.mail.ResetEmailMailSender;
 import org.apache.commons.lang3.StringUtils;
@@ -91,7 +91,7 @@ public class SettingController extends ImageController {
             new CommodityUrlAdapter(this).adapt(commodity);
 
             LotteryShareUrlBuilder lotteryShareUrlBuilder = new LotteryShareUrlBuilder(
-                    user.getSerialKey(), AppConfig.getAppHost(), commodity);
+                    user.getSerialKey(), AppConfig.properties.getAppHost(), commodity);
             setAttribute("sinaWeiboShareUrl", lotteryShareUrlBuilder.getSinaShareUrl());
             setAttribute("qqShareUrl", lotteryShareUrlBuilder.getQQShareUrl());
             setAttribute("qzoneShareUrl", lotteryShareUrlBuilder.getQzoneShareUrl());

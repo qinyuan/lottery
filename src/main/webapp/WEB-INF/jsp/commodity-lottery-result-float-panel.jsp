@@ -1,4 +1,4 @@
-<%@ page import="com.qinyuan15.lottery.mvc.AppConfig" %>
+<%@ page import="com.qinyuan15.lottery.mvc.config.AppConfig" %>
 <%@ page import="com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallUtils" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="inc-taglib.jsp" %>

@@ -1,4 +1,4 @@
-<%@ page import="com.qinyuan15.lottery.mvc.AppConfig" %>
+<%@ page import="com.qinyuan15.lottery.mvc.config.AppConfig" %>
 <%@ page import="com.qinyuan.lib.mvc.controller.CDNSource" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="inc-taglib.jsp" %>
@@ -21,7 +21,7 @@
         <link rel="icon" href="${favicon}" type="image/x-icon"/>
         <link rel="shortcut icon" href="${favicon}" type="image/x-icon"/>
     </c:if>
-    <c:choose><c:when test="<%=AppConfig.isOffline()%>">
+    <c:choose><c:when test="<%=AppConfig.properties.isOffline()%>">
         <q:css href="resources/js/lib/bootstrap/css/bootstrap.min"/>
     </c:when><c:otherwise>
         <q:css href="<%=CDNSource.BOOTSTRAP_CSS%>"/>

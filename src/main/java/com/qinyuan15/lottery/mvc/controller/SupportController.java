@@ -4,7 +4,7 @@ import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.controller.JsonResult;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.activity.share.ShareMedium;
 import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
 import com.qinyuan15.lottery.mvc.dao.User;

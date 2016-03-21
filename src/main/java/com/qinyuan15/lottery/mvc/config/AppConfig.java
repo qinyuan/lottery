@@ -1,11 +1,10 @@
-package com.qinyuan15.lottery.mvc;
+package com.qinyuan15.lottery.mvc.config;
 
 import com.qinyuan.lib.config.AppConfigDao;
+import com.qinyuan.lib.lang.Cache;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.file.ClasspathFileUtils;
-import com.qinyuan.lib.network.url.UrlUtils;
 
-import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -13,55 +12,10 @@ import java.util.Properties;
  * Created by qinyuan on 15-6-16.
  */
 public class AppConfig {
-    public final static String GLOBAL_CONFIG_PROPS_FILE = "global-config.properties";
-    public final static String QQ_CONNECT_CONFIG_PROPS_FILE = "qqconnectconfig.properties";
-    private final static Map<String, String> GLOBAL_CONFIG = ClasspathFileUtils.getPropertyMap(GLOBAL_CONFIG_PROPS_FILE);
-    private final static Properties QQ_CONNECT_CONFIG = ClasspathFileUtils.getProperties(QQ_CONNECT_CONFIG_PROPS_FILE);
+    private final static Cache cache = new Cache();
 
-    /**
-     * @return url such as http://192.168.8.1:8080/lotery/, which must end with '/'
-     */
-    public static String getAppHost() {
-        String appHost = GLOBAL_CONFIG.get("appHost");
-        if (!appHost.endsWith("/")) {
-            appHost += "/";
-        }
-        return appHost;
-    }
+    public final static PropertiesConfig properties = new PropertiesConfig();
 
-    public static String getIndexPageTitle() {
-        return GLOBAL_CONFIG.get("indexPageTitle");
-    }
-
-    public static String getCommodityPageTitle() {
-        return GLOBAL_CONFIG.get("commodityPageTitle");
-    }
-
-    public static boolean isOffline() {
-        String offline = GLOBAL_CONFIG.get("offline");
-        return offline != null && offline.toLowerCase().trim().equals("true");
-    }
-
-    public static String getQQConnectAppId() {
-        return QQ_CONNECT_CONFIG.getProperty("app_ID").trim();
-    }
-
-    public static String getQQConnectAppKey() {
-        return QQ_CONNECT_CONFIG.getProperty("app_KEY").trim();
-    }
-
-    public static String getQQConnectRedirectURI() {
-        return UrlUtils.encode(QQ_CONNECT_CONFIG.getProperty("redirect_URI").trim());
-    }
-
-    public static String getQQConnectScope() {
-        return QQ_CONNECT_CONFIG.getProperty("scope").trim();
-    }
-
-    public static String getQQConnectAuthenticateUrl() {
-        return "https://graph.qq.com/oauth2.0/authorize?response_type=token&client_id=" + getQQConnectAppId()
-                + "&redirect_uri=" + getQQConnectRedirectURI() + "&scope=" + UrlUtils.encode(getQQConnectScope());
-    }
 
     private final static AppConfigDao dao = new AppConfigDao();
 
@@ -69,24 +23,35 @@ public class AppConfig {
     private final static String WEBSITE_INTRODUCTION_LINK_KEY = "websiteIntroductionLink";
 
     public static String getWebsiteIntroductionLink() {
-        return dao.get(WEBSITE_INTRODUCTION_LINK_KEY);
+        return (String) cache.getValue(WEBSITE_INTRODUCTION_LINK_KEY, new Cache.Source() {
+            @Override
+            public Object getValue() {
+                return dao.get(WEBSITE_INTRODUCTION_LINK_KEY);
+            }
+        });
     }
 
     public static void updateWebsiteIntroductionLink(String websiteIntroductionLink) {
         dao.save(WEBSITE_INTRODUCTION_LINK_KEY, websiteIntroductionLink);
+        cache.addValue(WEBSITE_INTRODUCTION_LINK_KEY, websiteIntroductionLink);
     }
-
     //////////////////////// website introduction link end /////////////////////////////
 
     /////////////////////// index header left logo start //////////////////////////
     private final static String INDEX_HEADER_LEFT_LOGO_KEY = "indexHeaderLeftLogo";
 
     public static String getIndexHeaderLeftLogo() {
-        return dao.get(INDEX_HEADER_LEFT_LOGO_KEY);
+        return (String) cache.getValue(INDEX_HEADER_LEFT_LOGO_KEY, new Cache.Source() {
+            @Override
+            public Object getValue() {
+                return dao.get(INDEX_HEADER_LEFT_LOGO_KEY);
+            }
+        });
     }
 
     public static void updateIndexHeaderLeftLogo(String indexHeaderLeftLogo) {
         dao.save(INDEX_HEADER_LEFT_LOGO_KEY, indexHeaderLeftLogo);
+        cache.addValue(INDEX_HEADER_LEFT_LOGO_KEY, indexHeaderLeftLogo);
     }
     /////////////////////// index header left logo end //////////////////////////
 
@@ -94,11 +59,17 @@ public class AppConfig {
     private final static String INDEX_HEADER_SLOGAN_KEY = "indexHeaderSlogan";
 
     public static String getIndexHeaderSlogan() {
-        return dao.get(INDEX_HEADER_SLOGAN_KEY);
+        return (String) cache.getValue(INDEX_HEADER_SLOGAN_KEY, new Cache.Source() {
+            @Override
+            public Object getValue() {
+                return dao.get(INDEX_HEADER_SLOGAN_KEY);
+            }
+        });
     }
 
     public static void updateIndexHeaderSlogan(String indexHeaderSlogan) {
         dao.save(INDEX_HEADER_SLOGAN_KEY, indexHeaderSlogan);
+        cache.addValue(INDEX_HEADER_SLOGAN_KEY, indexHeaderSlogan);
     }
     /////////////////////// index header slogan end ////////////////////////////
 

@@ -1,4 +1,4 @@
-<%@ page import="com.qinyuan15.lottery.mvc.AppConfig" %>
+<%@ page import="com.qinyuan15.lottery.mvc.config.AppConfig" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div class="form">
     <div class="title">创建帐号</div>

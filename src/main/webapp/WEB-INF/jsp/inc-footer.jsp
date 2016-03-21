@@ -1,3 +1,4 @@
+<%@ page import="com.qinyuan15.lottery.mvc.config.AppConfig" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <c:if test="${!noFooter}">
     <div class="footer-poster">
@@ -9,7 +10,7 @@
 </div>
 <%@include file="inc-register-login-panel.jsp" %>
 </body>
-<c:choose><c:when test="<%=AppConfig.isOffline()%>">
+<c:choose><c:when test="<%=AppConfig.properties.isOffline()%>">
     <q:js src="resources/js/lib/jquery-1.11.3.min"/>
 </c:when><c:otherwise>
     <q:js src="<%=CDNSource.JQUERY_JS%>"/>

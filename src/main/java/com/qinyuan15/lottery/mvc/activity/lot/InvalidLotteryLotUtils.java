@@ -1,7 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity.lot;
 
-import com.qinyuan15.lottery.mvc.AppConfig;
-import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotCounter;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.User;
 import org.apache.commons.lang3.StringUtils;

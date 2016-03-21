@@ -4,7 +4,7 @@ import com.google.common.base.Joiner;
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.activity.LivenessIncreaseSystemInfoSender;
 import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotCounter;
 import com.qinyuan15.lottery.mvc.activity.NewLotteryChanceSystemInfoSender;

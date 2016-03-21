@@ -2,7 +2,7 @@ package com.qinyuan15.lottery.mvc.activity.terminator;
 
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.time.DateUtils;
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.activity.LotteryActivityUtils;
 import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallCrawler;
 import com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallPhaseValidator;
@@ -34,7 +34,7 @@ public class LotteryResultThread extends LotteryHandlerThread {
             return true;
         }
 
-        if (!AppConfig.isOffline()) {
+        if (!AppConfig.properties.isOffline()) {
             try {
                 DualColoredBallCrawler.Result result = getResult();
                 if (result != null) {

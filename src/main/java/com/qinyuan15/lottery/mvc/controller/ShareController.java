@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.mvc.controller.ImageController;
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.activity.share.LotteryShareUrlBuilder;
 import com.qinyuan15.lottery.mvc.activity.share.ShareMedium;
 import com.qinyuan15.lottery.mvc.dao.*;
@@ -33,7 +33,7 @@ public class ShareController extends ImageController {
         User user = (User) securitySearcher.getUser();
         new UserDao().updateSerialKeyIfNecessary(user);
         LotteryShareUrlBuilder lotteryShareUrlBuilder = new LotteryShareUrlBuilder(
-                user.getSerialKey(), AppConfig.getAppHost(), commodity);
+                user.getSerialKey(), AppConfig.properties.getAppHost(), commodity);
         setAttribute("sinaWeiboShareUrl", lotteryShareUrlBuilder.getSinaShareUrl());
         setAttribute("qqShareUrl", lotteryShareUrlBuilder.getQQShareUrl());
         setAttribute("qzoneShareUrl", lotteryShareUrlBuilder.getQzoneShareUrl());

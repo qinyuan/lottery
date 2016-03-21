@@ -2,7 +2,7 @@ package com.qinyuan15.lottery.mvc.mail;
 
 import com.qinyuan.lib.contact.mail.MailSerialKeyDao;
 import com.qinyuan.lib.network.url.UrlUtils;
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.ResetEmailRequestDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class ResetEmailMailSender extends SerialKeyMailSender {
     public final static String PREFIX_END = ",,,";
-    private final static String SERIAL_KEY_URL = AppConfig.getAppHost() + "reset-email.html";
+    private final static String SERIAL_KEY_URL = AppConfig.properties.getAppHost() + "reset-email.html";
     private final String newEmail;
 
     public ResetEmailMailSender(String newEmail) {

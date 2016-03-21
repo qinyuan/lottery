@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity;
 
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.User;
@@ -53,7 +53,7 @@ public abstract class NewLotteryChanceInfoSender {
 
             content = content.replace("{{user}}", username);
 
-            String url = AppConfig.getAppHost() + "commodity.html?id=" + commodityId;
+            String url = AppConfig.properties.getAppHost() + "commodity.html?id=" + commodityId;
             content = content.replace("{{url}}", url);
 
             return content;

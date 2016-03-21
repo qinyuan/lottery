@@ -2,7 +2,7 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivityDao;
 import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;

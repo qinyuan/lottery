@@ -3,7 +3,7 @@ package com.qinyuan15.lottery.mvc.activity.share;
 import com.qinyuan.lib.sns.QQShareUrlBuilder;
 import com.qinyuan.lib.sns.QzoneShareUrlBuilder;
 import com.qinyuan.lib.sns.SinaWeiboShareUrlBuilder;
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 
 import java.util.ArrayList;

@@ -7,9 +7,9 @@ import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.SecurityUtils;
 import com.qinyuan.lib.mvc.security.UserRole;
 import com.qinyuan.lib.network.url.UrlUtils;
-import com.qinyuan15.lottery.mvc.AppConfig;
 import com.qinyuan15.lottery.mvc.ImageMapType;
 import com.qinyuan15.lottery.mvc.activity.share.ShareMedium;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 import com.qinyuan15.lottery.mvc.dao.CommodityDao;
 import com.qinyuan15.lottery.mvc.dao.CommodityImage;
@@ -56,7 +56,7 @@ public class CommodityController extends ImageController {
 
         if (commodity == null) {
             livenessAdder.recordSpreader(userSerialKey, medium, null);
-            setTitle(AppConfig.getCommodityPageTitle());
+            setTitle(AppConfig.properties.getCommodityPageTitle());
         } else {
             livenessAdder.recordSpreader(userSerialKey, medium, commodity.getId());
             setAttribute("seoKeyword", "抽奖,免费," + commodity.getName());

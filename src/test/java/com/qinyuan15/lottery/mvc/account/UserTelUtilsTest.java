@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.account;
 
 import com.qinyuan.lib.database.test.DatabaseTestCase;
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryLivenessDao;
 import com.qinyuan15.lottery.mvc.dao.User;
 import com.qinyuan15.lottery.mvc.dao.UserDao;

@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity;
 
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.LotteryLiveness;
 import com.qinyuan15.lottery.mvc.dao.SystemInfoSendRecordDao;

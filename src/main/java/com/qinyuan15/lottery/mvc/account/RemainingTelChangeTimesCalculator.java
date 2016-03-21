@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.account;
 
 import com.qinyuan.lib.lang.IntegerUtils;
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.TelChangeLogDao;
 
 public class RemainingTelChangeTimesCalculator {

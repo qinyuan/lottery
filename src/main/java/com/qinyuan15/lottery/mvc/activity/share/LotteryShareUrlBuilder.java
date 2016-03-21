@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.activity.share;
 
-import com.qinyuan15.lottery.mvc.AppConfig;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.Commodity;
 
 public class LotteryShareUrlBuilder extends AbstractShareUrlBuilder {
