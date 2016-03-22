@@ -4,10 +4,10 @@ import com.google.common.base.Joiner;
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.lang.IntegerUtils;
-import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.activity.LivenessIncreaseSystemInfoSender;
-import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotCounter;
 import com.qinyuan15.lottery.mvc.activity.NewLotteryChanceSystemInfoSender;
+import com.qinyuan15.lottery.mvc.activity.lot.LotteryLotCounter;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.mail.NewLotteryChanceMailSender;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -113,7 +113,7 @@ public class LotteryLivenessDao {
         }
 
         if (new LotteryLotCounter().getAvailableLotCount(activityId, spreadUserId) > 0) {
-            Boolean remindNewLotteryChanceByMail = AppConfig.getRemindNewLotteryChanceByMail();
+            Boolean remindNewLotteryChanceByMail = AppConfig.lottery.getRemindNewChanceByMail();
             if (BooleanUtils.toBoolean(remindNewLotteryChanceByMail)) {
                 try {
                     new NewLotteryChanceMailSender().send(spreadUserId, activityId);
@@ -123,7 +123,7 @@ public class LotteryLivenessDao {
                 }
             }
 
-            Boolean remindNewLotteryChanceBySystemInfo = AppConfig.getRemindNewLotteryChanceBySystemInfo();
+            Boolean remindNewLotteryChanceBySystemInfo = AppConfig.lottery.getRemindNewChanceBySystemInfo();
             if (BooleanUtils.toBoolean(remindNewLotteryChanceBySystemInfo)) {
                 try {
                     new NewLotteryChanceSystemInfoSender().send(spreadUserId, activityId);

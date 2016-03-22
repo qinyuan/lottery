@@ -13,7 +13,7 @@ public class NewLotteryChanceSystemInfoSender extends NewLotteryChanceInfoSender
 
     @Override
     protected void doSend(User user, LotteryActivity activity, PlaceholderConverter placeholderConverter) {
-        String content = AppConfig.getNewLotteryChanceSystemInfoTemplate();
+        String content = AppConfig.lottery.getNewChanceSystemInfoTemplate();
         if (StringUtils.hasText(content)) {
             new SystemInfoSendRecordDao().add(user.getId(), placeholderConverter.convert(content));
         } else {

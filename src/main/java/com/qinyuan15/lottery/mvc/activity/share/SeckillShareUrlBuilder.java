@@ -10,26 +10,26 @@ public class SeckillShareUrlBuilder extends AbstractShareUrlBuilder {
 
     @Override
     protected String getSinaWeiboTitleTemplate() {
-        return AppConfig.getSeckillSinaWeiboTitle();
+        return AppConfig.seckill.getSinaWeiboTitle();
     }
 
     @Override
     protected String getQQTitleTemplate() {
-        return AppConfig.getSeckillQQTitle();
+        return AppConfig.seckill.getQQTitle();
     }
 
     @Override
     protected String getQQSummaryTemplate() {
-        return AppConfig.getSeckillQQSummary();
+        return AppConfig.seckill.getQQSummary();
     }
 
     @Override
     protected String getQzoneTitleTemplate() {
-        return AppConfig.getSeckillQzoneTitle();
+        return AppConfig.seckill.getQzoneTitle();
     }
 
     @Override
     protected String getQzoneSummaryTemplate() {
-        return AppConfig.getSeckillQzoneSummary();
+        return AppConfig.seckill.getQzoneSummary();
     }
 }

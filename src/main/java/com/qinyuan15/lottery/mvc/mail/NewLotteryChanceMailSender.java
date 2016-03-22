@@ -2,8 +2,8 @@ package com.qinyuan15.lottery.mvc.mail;
 
 import com.qinyuan.lib.contact.mail.MailSenderBuilder;
 import com.qinyuan.lib.lang.IntegerUtils;
-import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.activity.NewLotteryChanceInfoSender;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.LotteryActivity;
 import com.qinyuan15.lottery.mvc.dao.User;
 import org.apache.commons.lang3.StringUtils;
@@ -19,17 +19,17 @@ public class NewLotteryChanceMailSender extends NewLotteryChanceInfoSender {
 
     @Override
     protected void doSend(User user, LotteryActivity activity, PlaceholderConverter placeholderConverter) {
-        Integer mailAccountId = AppConfig.getNewLotteryChanceMailAccountId();
+        Integer mailAccountId = AppConfig.lottery.getNewChanceMailAccountId();
         if (!IntegerUtils.isPositive(mailAccountId)) {
             LOGGER.error("Invalid mailAccountId: {}", mailAccountId);
             return;
         }
-        String subject = AppConfig.getNewLotteryChanceMailSubjectTemplate();
+        String subject = AppConfig.lottery.getNewChanceMailSubjectTemplate();
         if (StringUtils.isBlank(subject)) {
             LOGGER.error("Subject is empty");
             return;
         }
-        String content = AppConfig.getNewLotteryChanceMailContentTemplate();
+        String content = AppConfig.lottery.getNewChanceMailContentTemplate();
         if (StringUtils.isBlank(content)) {
             LOGGER.error("Content is empty");
             return;

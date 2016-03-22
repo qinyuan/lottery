@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MailConfigTest extends DatabaseTestCase {
+public class InfoConfigTest extends DatabaseTestCase {
     @Test
     public void testActivateMailSubjectTemplate() {
         assertThat(AppConfig.mail.getActivateMailSubjectTemplate()).isNull();

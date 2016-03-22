@@ -10,26 +10,26 @@ public class LotteryShareUrlBuilder extends AbstractShareUrlBuilder {
 
     @Override
     protected String getSinaWeiboTitleTemplate() {
-        return AppConfig.getLotterySinaWeiboTitle();
+        return AppConfig.lottery.getSinaWeiboTitle();
     }
 
     @Override
     protected String getQQTitleTemplate() {
-        return AppConfig.getLotteryQQTitle();
+        return AppConfig.lottery.getQQTitle();
     }
 
     @Override
     protected String getQQSummaryTemplate() {
-        return AppConfig.getLotteryQQSummary();
+        return AppConfig.lottery.getQQSummary();
     }
 
     @Override
     protected String getQzoneTitleTemplate() {
-        return AppConfig.getLotteryQzoneTitle();
+        return AppConfig.lottery.getQzoneTitle();
     }
 
     @Override
     protected String getQzoneSummaryTemplate() {
-        return AppConfig.getLotteryQzoneSummary();
+        return AppConfig.lottery.getQzoneSummary();
     }
 }

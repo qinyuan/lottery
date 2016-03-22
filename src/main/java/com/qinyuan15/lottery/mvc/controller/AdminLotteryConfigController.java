@@ -20,26 +20,26 @@ public class AdminLotteryConfigController extends ImageController {
         IndexHeaderUtils.setHeaderParameters(this);
 
         // data about sina weibo
-        setAttribute("sinaWeiboTitle", AppConfig.getLotterySinaWeiboTitle());
-        setAttribute("sinaWeiboIncludePicture", AppConfig.getLotterySinaWeiboIncludePicture());
+        setAttribute("sinaWeiboTitle", AppConfig.lottery.getSinaWeiboTitle());
+        setAttribute("sinaWeiboIncludePicture", AppConfig.lottery.getSinaWeiboIncludePicture());
 
         // data about qq
-        setAttribute("qqTitle", AppConfig.getLotteryQQTitle());
-        setAttribute("qqSummary", AppConfig.getLotteryQQSummary());
-        setAttribute("qqIncludePicture", AppConfig.getLotteryQQIncludePicture());
+        setAttribute("qqTitle", AppConfig.lottery.getQQTitle());
+        setAttribute("qqSummary", AppConfig.lottery.getQQSummary());
+        setAttribute("qqIncludePicture", AppConfig.lottery.getQQIncludePicture());
 
         // data about qzone
-        setAttribute("qzoneTitle", AppConfig.getLotteryQzoneTitle());
-        setAttribute("qzoneSummary", AppConfig.getLotteryQzoneSummary());
-        setAttribute("qzoneIncludePicture", AppConfig.getLotteryQzoneIncludePicture());
+        setAttribute("qzoneTitle", AppConfig.lottery.getQzoneTitle());
+        setAttribute("qzoneSummary", AppConfig.lottery.getQzoneSummary());
+        setAttribute("qzoneIncludePicture", AppConfig.lottery.getQzoneIncludePicture());
 
         // data about new lottery chance
-        setAttribute("remindNewLotteryChanceByMail", AppConfig.getRemindNewLotteryChanceByMail());
-        setAttribute("newLotteryChanceMailSubjectTemplate", AppConfig.getNewLotteryChanceMailSubjectTemplate());
-        setAttribute("newLotteryChanceMailContentTemplate", AppConfig.getNewLotteryChanceMailContentTemplate());
-        addJavaScriptData("currentNewLotteryChanceMailAccountId", AppConfig.getNewLotteryChanceMailAccountId());
-        setAttribute("remindNewLotteryChanceBySystemInfo", AppConfig.getRemindNewLotteryChanceBySystemInfo());
-        setAttribute("newLotteryChanceSystemInfoTemplate", AppConfig.getNewLotteryChanceSystemInfoTemplate());
+        setAttribute("remindNewLotteryChanceByMail", AppConfig.lottery.getRemindNewChanceByMail());
+        setAttribute("newLotteryChanceMailSubjectTemplate", AppConfig.lottery.getNewChanceMailSubjectTemplate());
+        setAttribute("newLotteryChanceMailContentTemplate", AppConfig.lottery.getNewChanceMailContentTemplate());
+        addJavaScriptData("currentNewLotteryChanceMailAccountId", AppConfig.lottery.getNewChanceMailAccountId());
+        setAttribute("remindNewLotteryChanceBySystemInfo", AppConfig.lottery.getRemindNewChanceBySystemInfo());
+        setAttribute("newLotteryChanceSystemInfoTemplate", AppConfig.lottery.getNewChanceSystemInfoTemplate());
 
         // data about liveness
         //setAttribute("newLotLiveness", AppConfig.getNewLotLiveness());
@@ -121,14 +121,14 @@ public class AdminLotteryConfigController extends ImageController {
             redirect(index, "主页页头左图标处理失败！");
         }
 
-        AppConfig.updateLotterySinaWeiboTitle(sinaWeiboTitle);
-        AppConfig.updateLotterySinaWeiboIncludePicture(sinaWeiboIncludePicture);
-        AppConfig.updateLotteryQQTitle(qqTitle);
-        AppConfig.updateLotteryQQSummary(qqSummary);
-        AppConfig.updateLotteryQQIncludePicture(qqIncludePicture);
-        AppConfig.updateLotteryQzoneTitle(qzoneTitle);
-        AppConfig.updateLotteryQzoneSummary(qzoneSummary);
-        AppConfig.updateLotteryQzoneIncludePicture(qzoneIncludePicture);
+        AppConfig.lottery.updateSinaWeiboTitle(sinaWeiboTitle);
+        AppConfig.lottery.updateSinaWeiboIncludePicture(sinaWeiboIncludePicture);
+        AppConfig.lottery.updateQQTitle(qqTitle);
+        AppConfig.lottery.updateQQSummary(qqSummary);
+        AppConfig.lottery.updateQQIncludePicture(qqIncludePicture);
+        AppConfig.lottery.updateQzoneTitle(qzoneTitle);
+        AppConfig.lottery.updateQzoneSummary(qzoneSummary);
+        AppConfig.lottery.updateQzoneIncludePicture(qzoneIncludePicture);
         //AppConfig.updateNewLotLiveness(newLotLiveness);
         AppConfig.updateShareSucceedLiveness(shareSucceedLiveness);
         AppConfig.updateLotteryRuleLink(lotteryRuleLink);
@@ -143,19 +143,19 @@ public class AdminLotteryConfigController extends ImageController {
         AppConfig.updateSupportPageText(supportPageText);
 
         if (remindNewLotteryChanceByMail != null) {
-            AppConfig.updateRemindNewLotteryChanceByMail(true);
-            AppConfig.updateNewLotteryChanceMailAccountId(newLotteryChanceMailAccountId);
-            AppConfig.updateNewLotteryChanceMailSubjectTemplate(newLotteryChanceMailSubjectTemplate);
-            AppConfig.updateNewLotteryChanceMailContentTemplate(newLotteryChanceMailContentTemplate);
+            AppConfig.lottery.updateRemindNewChanceByMail(true);
+            AppConfig.lottery.updateNewChanceMailAccountId(newLotteryChanceMailAccountId);
+            AppConfig.lottery.updateNewChanceMailSubjectTemplate(newLotteryChanceMailSubjectTemplate);
+            AppConfig.lottery.updateNewChanceMailContentTemplate(newLotteryChanceMailContentTemplate);
         } else {
-            AppConfig.updateRemindNewLotteryChanceByMail(false);
+            AppConfig.lottery.updateRemindNewChanceByMail(false);
         }
 
         if (remindNewLotteryChanceBySystemInfo != null) {
-            AppConfig.updateRemindNewLotteryChanceBySystemInfo(true);
-            AppConfig.updateNewLotteryChanceSystemInfoTemplate(newLotteryChanceSystemInfoTemplate);
+            AppConfig.lottery.updateRemindNewChanceBySystemInfo(true);
+            AppConfig.lottery.updateNewChanceSystemInfoTemplate(newLotteryChanceSystemInfoTemplate);
         } else {
-            AppConfig.updateRemindNewLotteryChanceBySystemInfo(false);
+            AppConfig.lottery.updateRemindNewChanceBySystemInfo(false);
         }
 
         if (remindLivenessIncreaseBySystemInfo != null) {

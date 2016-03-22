@@ -18,22 +18,22 @@ public class AdminSeckillConfigController extends ImageController {
         IndexHeaderUtils.setHeaderParameters(this);
 
         // data about sina weibo
-        setAttribute("sinaWeiboTitle", AppConfig.getSeckillSinaWeiboTitle());
-        setAttribute("sinaWeiboIncludePicture", AppConfig.getSeckillSinaWeiboIncludePicture());
+        setAttribute("sinaWeiboTitle", AppConfig.seckill.getSinaWeiboTitle());
+        setAttribute("sinaWeiboIncludePicture", AppConfig.seckill.getSinaWeiboIncludePicture());
 
         // data about qq
-        setAttribute("qqTitle", AppConfig.getSeckillQQTitle());
-        setAttribute("qqSummary", AppConfig.getSeckillQQSummary());
-        setAttribute("qqIncludePicture", AppConfig.getSeckillQQIncludePicture());
+        setAttribute("qqTitle", AppConfig.seckill.getQQTitle());
+        setAttribute("qqSummary", AppConfig.seckill.getQQSummary());
+        setAttribute("qqIncludePicture", AppConfig.seckill.getQQIncludePicture());
 
         // data about qzone
-        setAttribute("qzoneTitle", AppConfig.getSeckillQzoneTitle());
-        setAttribute("qzoneSummary", AppConfig.getSeckillQzoneSummary());
-        setAttribute("qzoneIncludePicture", AppConfig.getSeckillQzoneIncludePicture());
+        setAttribute("qzoneTitle", AppConfig.seckill.getQzoneTitle());
+        setAttribute("qzoneSummary", AppConfig.seckill.getQzoneSummary());
+        setAttribute("qzoneIncludePicture", AppConfig.seckill.getQzoneIncludePicture());
 
         // data about poker
-        setAttribute("pokerFrontSide", pathToUrl(AppConfig.getSeckillPokerFrontSide()));
-        setAttribute("pokerBackSide", pathToUrl(AppConfig.getSeckillPokerBackSide()));
+        setAttribute("pokerFrontSide", pathToUrl(AppConfig.seckill.getPokerFrontSide()));
+        setAttribute("pokerBackSide", pathToUrl(AppConfig.seckill.getPokerBackSide()));
 
         // announcement template
         setAttribute("seckillAnnouncementTemplate", AppConfig.getSeckillAnnouncementTemplate());
@@ -78,16 +78,16 @@ public class AdminSeckillConfigController extends ImageController {
             redirect(redirectPage, "扑克牌背景图2处理失败！");
         }
 
-        AppConfig.updateSeckillSinaWeiboTitle(sinaWeiboTitle);
-        AppConfig.updateSeckillSinaWeiboIncludePicture(sinaWeiboIncludePicture);
-        AppConfig.updateSeckillQQTitle(qqTitle);
-        AppConfig.updateSeckillQQSummary(qqSummary);
-        AppConfig.updateSeckillQQIncludePicture(qqIncludePicture);
-        AppConfig.updateSeckillQzoneTitle(qzoneTitle);
-        AppConfig.updateSeckillQzoneSummary(qzoneSummary);
-        AppConfig.updateSeckillQzoneIncludePicture(qzoneIncludePicture);
-        AppConfig.updateSeckillPokerFrontSide(pokerFrontSidePath);
-        AppConfig.updateSeckillPokerBackSide(pokerBackSidePath);
+        AppConfig.seckill.updateSinaWeiboTitle(sinaWeiboTitle);
+        AppConfig.seckill.updateSinaWeiboIncludePicture(sinaWeiboIncludePicture);
+        AppConfig.seckill.updateQQTitle(qqTitle);
+        AppConfig.seckill.updateQQSummary(qqSummary);
+        AppConfig.seckill.updateQQIncludePicture(qqIncludePicture);
+        AppConfig.seckill.updateQzoneTitle(qzoneTitle);
+        AppConfig.seckill.updateQzoneSummary(qzoneSummary);
+        AppConfig.seckill.updateQzoneIncludePicture(qzoneIncludePicture);
+        AppConfig.seckill.updatePokerFrontSide(pokerFrontSidePath);
+        AppConfig.seckill.updatePokerBackSide(pokerBackSidePath);
         AppConfig.updateSeckillAnnouncementTemplate(seckillAnnouncementTemplate);
 
         return redirect(redirectPage);

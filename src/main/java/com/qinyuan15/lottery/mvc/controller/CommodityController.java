@@ -63,13 +63,13 @@ public class CommodityController extends ImageController {
             String title = DEFAULT_TITLE, description = DEFAULT_DESCRIPTION;
             if (StringUtils.isNotBlank(medium)) {
                 if (medium.equals(ShareMedium.QQ.en)) {
-                    title = AppConfig.getLotteryQQTitle();
-                    description = AppConfig.getLotteryQQSummary();
+                    title = AppConfig.lottery.getQQTitle();
+                    description = AppConfig.lottery.getQQSummary();
                 } else if (medium.equals(ShareMedium.QZONE.en)) {
-                    title = AppConfig.getLotteryQzoneTitle();
-                    description = AppConfig.getLotteryQzoneSummary();
+                    title = AppConfig.lottery.getQzoneTitle();
+                    description = AppConfig.lottery.getQzoneSummary();
                 } else if (medium.equals(ShareMedium.SINA_WEIBO.en)) {
-                    title = AppConfig.getLotterySinaWeiboTitle();
+                    title = AppConfig.lottery.getSinaWeiboTitle();
                 }
             }
             setTitle(title);

@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.config;
 
-public class MailConfig extends DatabaseConfig {
+public class InfoConfig extends DatabaseConfig {
     ///////////////////////////////////// activate mail start ///////////////////////////////////
     private final static String ACTIVATE_MAIL_SUBJECT_TEMPLATE_KEY = "activateMailSubjectTemplate";
 

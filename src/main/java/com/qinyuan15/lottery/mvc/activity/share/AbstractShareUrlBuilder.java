@@ -28,7 +28,7 @@ abstract class AbstractShareUrlBuilder {
     public String getSinaShareUrl() {
         String title = getSinaWeiboTitleTemplate();
         return new SinaWeiboShareUrlBuilder(getFinalTargetUrl(ShareMedium.SINA_WEIBO.en), title,
-                getPictures(AppConfig.getLotterySinaWeiboIncludePicture())).build();
+                getPictures(AppConfig.lottery.getSinaWeiboIncludePicture())).build();
     }
 
     protected abstract String getSinaWeiboTitleTemplate();
@@ -38,7 +38,7 @@ abstract class AbstractShareUrlBuilder {
         String summary = getQQSummaryTemplate();
         String url = getFinalTargetUrl(ShareMedium.QQ.en);
         return new QQShareUrlBuilder(url, title, summary,
-                getPictures(AppConfig.getLotteryQQIncludePicture())).build();
+                getPictures(AppConfig.lottery.getQQIncludePicture())).build();
     }
 
     protected abstract String getQQTitleTemplate();
@@ -48,7 +48,7 @@ abstract class AbstractShareUrlBuilder {
     public String getQzoneShareUrl() {
         String title = getQzoneTitleTemplate();
         String summary = getQzoneSummaryTemplate();
-        Boolean includePicture = AppConfig.getLotteryQzoneIncludePicture();
+        Boolean includePicture = AppConfig.lottery.getQzoneIncludePicture();
         String picture = (includePicture != null && includePicture) ? pictureUrl : null;
         return new QzoneShareUrlBuilder(getFinalTargetUrl(ShareMedium.QZONE.en), title, summary, picture).build();
     }
