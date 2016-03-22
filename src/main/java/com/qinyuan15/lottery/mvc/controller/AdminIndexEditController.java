@@ -22,7 +22,7 @@ public class AdminIndexEditController extends ImageController {
         IndexHeaderUtils.setHeaderParameters(this);
         IndexHeaderUtils.setIndexImageGroups(this);
 
-        setAttribute("cycleInterval", AppConfig.getIndexImageCycleInterval());
+        setAttribute("cycleInterval", AppConfig.index.getIndexImageCycleInterval());
 
         setTitle("主页设置");
         addCss("admin-form");
@@ -81,7 +81,7 @@ public class AdminIndexEditController extends ImageController {
             return fail("必须输入一个整数");
         }
         try {
-            AppConfig.updateIndexImageCycleInterval(cycleInterval);
+            AppConfig.index.updateIndexImageCycleInterval(cycleInterval);
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to update image cycle interval, info: {}", e);

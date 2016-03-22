@@ -1,7 +1,6 @@
 package com.qinyuan15.lottery.mvc.config;
 
 import com.qinyuan.lib.config.AppConfigDao;
-import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.file.ClasspathFileUtils;
 
 import java.util.Properties;
@@ -14,23 +13,9 @@ public class AppConfig {
     public final static PropertiesConfig props = new PropertiesConfig();
     public final static SystemConfig sys = new SystemConfig();
     public final static MailConfig mail = new MailConfig();
+    public final static IndexConfig index = new IndexConfig();
 
     private final static AppConfigDao dao = new AppConfigDao();
-
-    /////////////////////// index image cycle interval start ///////////////////
-    private final static String INDEX_IMAGE_CYCLE_INTERVAL_KEY = "indexImageCycleInterval";
-    private final static int DEFAULT_INDEX_IMAGE_CYCLE_INTERVAL = 10;
-
-    public static int getIndexImageCycleInterval() {
-        String string = dao.get(INDEX_IMAGE_CYCLE_INTERVAL_KEY);
-        return IntegerUtils.isPositive(string) ? Integer.parseInt(string) : DEFAULT_INDEX_IMAGE_CYCLE_INTERVAL;
-    }
-
-    public static void updateIndexImageCycleInterval(int indexImageCycleInterval) {
-        dao.save(INDEX_IMAGE_CYCLE_INTERVAL_KEY, String.valueOf(indexImageCycleInterval));
-    }
-    ////////////////////// index image cycle interval end ///////////////////////
-
 
     ////////////////////////////// lottery sina weibo share link start /////////////////////////////
     private final static String LOTTERY_SINA_WEIBO_TITLE_KEY = "lotterySinaWeiboTitle";
@@ -237,7 +222,6 @@ public class AppConfig {
         dao.save(SECKILL_POKER_BACK_SIDE_KEY, path);
     }
     ///////////////////////// seckill poker site end ////////////////////////////////
-
 
 
     ///////////////////////////// new lottery chance start //////////////////////////////
