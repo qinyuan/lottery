@@ -12,7 +12,7 @@ public class ForumController extends ImageController {
     public String index() {
         CommodityHeaderUtils.setHeaderParameters(this);
 
-        setAttribute("forumImage", pathToUrl(AppConfig.getForumImage()));
+        setAttribute("forumImage", pathToUrl(AppConfig.sys.getForumImage()));
         setAttribute("noFooter", true);
         setAttribute("whiteFooter", true);
         setTitle("论坛");

@@ -36,9 +36,9 @@ public class CommonInterceptor extends AbstractInterceptor {
 
         ImageUrlAdapter imageUrlAdapter = new ImageUrlAdapter(imageConfig, httpServletRequest.getServerName());
 
-        httpServletRequest.setAttribute("footerPoster", imageUrlAdapter.pathToUrl(AppConfig.getFooterPoster()));
-        httpServletRequest.setAttribute("footerText", AppConfig.getFooterText());
-        httpServletRequest.setAttribute("favicon", imageUrlAdapter.pathToUrl(AppConfig.getFavicon()));
+        httpServletRequest.setAttribute("footerPoster", imageUrlAdapter.pathToUrl(AppConfig.sys.getFooterPoster()));
+        httpServletRequest.setAttribute("footerText", AppConfig.sys.getFooterText());
+        httpServletRequest.setAttribute("favicon", imageUrlAdapter.pathToUrl(AppConfig.sys.getFavicon()));
 
         RequestUtils.addAttributeAndJavaScriptData(httpServletRequest,
                 "isMobileUserAgent", UserAgentUtils.isMobileUserAgent(httpServletRequest));

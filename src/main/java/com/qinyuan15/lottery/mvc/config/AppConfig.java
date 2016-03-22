@@ -1,7 +1,6 @@
 package com.qinyuan15.lottery.mvc.config;
 
 import com.qinyuan.lib.config.AppConfigDao;
-import com.qinyuan.lib.lang.Cache;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.lang.file.ClasspathFileUtils;
 
@@ -12,66 +11,10 @@ import java.util.Properties;
  * Created by qinyuan on 15-6-16.
  */
 public class AppConfig {
-    private final static Cache cache = new Cache();
-
-    public final static PropertiesConfig properties = new PropertiesConfig();
-
+    public final static PropertiesConfig props = new PropertiesConfig();
+    public final static SystemConfig sys = new SystemConfig();
 
     private final static AppConfigDao dao = new AppConfigDao();
-
-    //////////////////////// website introduction link start ///////////////////////////
-    private final static String WEBSITE_INTRODUCTION_LINK_KEY = "websiteIntroductionLink";
-
-    public static String getWebsiteIntroductionLink() {
-        return (String) cache.getValue(WEBSITE_INTRODUCTION_LINK_KEY, new Cache.Source() {
-            @Override
-            public Object getValue() {
-                return dao.get(WEBSITE_INTRODUCTION_LINK_KEY);
-            }
-        });
-    }
-
-    public static void updateWebsiteIntroductionLink(String websiteIntroductionLink) {
-        dao.save(WEBSITE_INTRODUCTION_LINK_KEY, websiteIntroductionLink);
-        cache.addValue(WEBSITE_INTRODUCTION_LINK_KEY, websiteIntroductionLink);
-    }
-    //////////////////////// website introduction link end /////////////////////////////
-
-    /////////////////////// index header left logo start //////////////////////////
-    private final static String INDEX_HEADER_LEFT_LOGO_KEY = "indexHeaderLeftLogo";
-
-    public static String getIndexHeaderLeftLogo() {
-        return (String) cache.getValue(INDEX_HEADER_LEFT_LOGO_KEY, new Cache.Source() {
-            @Override
-            public Object getValue() {
-                return dao.get(INDEX_HEADER_LEFT_LOGO_KEY);
-            }
-        });
-    }
-
-    public static void updateIndexHeaderLeftLogo(String indexHeaderLeftLogo) {
-        dao.save(INDEX_HEADER_LEFT_LOGO_KEY, indexHeaderLeftLogo);
-        cache.addValue(INDEX_HEADER_LEFT_LOGO_KEY, indexHeaderLeftLogo);
-    }
-    /////////////////////// index header left logo end //////////////////////////
-
-    /////////////////////// index header slogan start ////////////////////////////
-    private final static String INDEX_HEADER_SLOGAN_KEY = "indexHeaderSlogan";
-
-    public static String getIndexHeaderSlogan() {
-        return (String) cache.getValue(INDEX_HEADER_SLOGAN_KEY, new Cache.Source() {
-            @Override
-            public Object getValue() {
-                return dao.get(INDEX_HEADER_SLOGAN_KEY);
-            }
-        });
-    }
-
-    public static void updateIndexHeaderSlogan(String indexHeaderSlogan) {
-        dao.save(INDEX_HEADER_SLOGAN_KEY, indexHeaderSlogan);
-        cache.addValue(INDEX_HEADER_SLOGAN_KEY, indexHeaderSlogan);
-    }
-    /////////////////////// index header slogan end ////////////////////////////
 
     /////////////////////// index image cycle interval start ///////////////////
     private final static String INDEX_IMAGE_CYCLE_INTERVAL_KEY = "indexImageCycleInterval";
@@ -87,53 +30,6 @@ public class AppConfig {
     }
     ////////////////////// index image cycle interval end ///////////////////////
 
-    ////////////////////// footer poster start //////////////////////////////
-    private final static String FOOTER_POSTER_KEY = "footerPoster";
-
-    public static String getFooterPoster() {
-        return dao.get(FOOTER_POSTER_KEY);
-    }
-
-    public static void updateFooterPoster(String footerPoster) {
-        dao.save(FOOTER_POSTER_KEY, footerPoster);
-    }
-    ////////////////////// footer poster end ///////////////////////////////
-
-    ////////////////////// footer text start /////////////////////////////////
-    private final static String FOOTER_TEXT_KEY = "footerText";
-
-    public static String getFooterText() {
-        return dao.get(FOOTER_TEXT_KEY);
-    }
-
-    public static void updateFooterText(String footerText) {
-        dao.save(FOOTER_TEXT_KEY, footerText);
-    }
-    ////////////////////// footer text end /////////////////////////////////
-
-    ////////////////////// commodity header left logo start ///////////////////////////
-    private final static String COMMODITY_HEADER_LEFT_LOGO_KEY = "commodityHeaderLeftLogo";
-
-    public static String getCommodityHeaderLeftLogo() {
-        return dao.get(COMMODITY_HEADER_LEFT_LOGO_KEY);
-    }
-
-    public static void updateCommodityHeaderLeftLogo(String commodityHeaderLeftLogo) {
-        dao.save(COMMODITY_HEADER_LEFT_LOGO_KEY, commodityHeaderLeftLogo);
-    }
-    ////////////////////// commodity header left logo end ///////////////////////////
-
-    /////////////////////////////// favicon start ////////////////////////////////////
-    private final static String FAVICON_KEY = "favicon";
-
-    public static String getFavicon() {
-        return dao.get(FAVICON_KEY);
-    }
-
-    public static void updateFavicon(String favicon) {
-        dao.save(FAVICON_KEY, favicon);
-    }
-    ////////////////////////////// favicon end /////////////////////////////////////
 
     ////////////////////////////// lottery sina weibo share link start /////////////////////////////
     private final static String LOTTERY_SINA_WEIBO_TITLE_KEY = "lotterySinaWeiboTitle";
@@ -634,18 +530,6 @@ public class AppConfig {
     }
     ////////////////////////////// qqlist end //////////////////////////////////////
 
-    ///////////////////////////// tel validate description page start //////////////////////////
-    private final static String TEL_VALIDATE_DESCRIPTION_PAGE_KEY = "telValidateDescriptionPage";
-
-    public static String getTelValidateDescriptionPage() {
-        return dao.get(TEL_VALIDATE_DESCRIPTION_PAGE_KEY);
-    }
-
-    public static void updateTelValidateDescriptionPage(String telValidateDescriptionPage) {
-        dao.save(TEL_VALIDATE_DESCRIPTION_PAGE_KEY, telValidateDescriptionPage);
-    }
-    ///////////////////////////// tel validate description page end //////////////////////////
-
     ////////////////////////////// allocate lottery serial number ////////////////////////////////
     public static boolean allocateLotterySerialInAdvance() {
         Properties props = ClasspathFileUtils.getProperties("global-config.properties");
@@ -731,17 +615,7 @@ public class AppConfig {
         dao.saveInteger(MAX_TEL_MODIFICATION_TIMES_KEY, maxTelModificationTimes);
     }
 
-    //////////////////////////////////// forum image start ///////////////////////////////////////
-    private final static String FORUM_IMAGE_KEY = "forumImage";
 
-    public static String getForumImage() {
-        return dao.get(FORUM_IMAGE_KEY);
-    }
-
-    public static void updateForumImage(String forumImage) {
-        dao.save(FORUM_IMAGE_KEY, forumImage);
-    }
-    //////////////////////////////////// forum image end /////////////////////////////////////////
 
     //////////////////////////////////// support page start /////////////////////////////////
     private final static String SUPPORT_PAGE_IMAGE_KEY = "supportPageImage";

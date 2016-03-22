@@ -19,7 +19,7 @@ public class IndexController extends ImageController {
         setAttribute("indexImageMaps", dao.getInstancesAndGroupByRelateId());
         addJavaScriptData("cycleInterval", AppConfig.getIndexImageCycleInterval());
 
-        setTitle(AppConfig.properties.getIndexPageTitle());
+        setTitle(AppConfig.props.getIndexPageTitle());
         addCssAndJs("index");
         return "index";
     }

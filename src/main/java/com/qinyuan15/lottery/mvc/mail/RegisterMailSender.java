@@ -4,7 +4,7 @@ import com.qinyuan.lib.contact.mail.MailSenderBuilder;
 import com.qinyuan15.lottery.mvc.config.AppConfig;
 
 public class RegisterMailSender {
-    private final static String SERIAL_KEY_URL = AppConfig.properties.getAppHost() + "register.html?";
+    private final static String SERIAL_KEY_URL = AppConfig.props.getAppHost() + "register.html?";
 
     public void send(String email, String serialKey) {
         SerialKeyMailPlaceholderConverter placeholderConverter = new SerialKeyMailPlaceholderConverter(

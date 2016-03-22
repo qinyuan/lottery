@@ -53,7 +53,7 @@ public abstract class NewLotteryChanceInfoSender {
 
             content = content.replace("{{user}}", username);
 
-            String url = AppConfig.properties.getAppHost() + "commodity.html?id=" + commodityId;
+            String url = AppConfig.props.getAppHost() + "commodity.html?id=" + commodityId;
             content = content.replace("{{url}}", url);
 
             return content;

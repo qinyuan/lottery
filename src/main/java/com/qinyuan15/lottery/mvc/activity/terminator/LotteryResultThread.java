@@ -34,7 +34,7 @@ public class LotteryResultThread extends LotteryHandlerThread {
             return true;
         }
 
-        if (!AppConfig.properties.isOffline()) {
+        if (!AppConfig.props.isOffline()) {
             try {
                 DualColoredBallCrawler.Result result = getResult();
                 if (result != null) {

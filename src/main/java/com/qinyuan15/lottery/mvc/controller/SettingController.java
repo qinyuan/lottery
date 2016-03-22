@@ -91,7 +91,7 @@ public class SettingController extends ImageController {
             new CommodityUrlAdapter(this).adapt(commodity);
 
             LotteryShareUrlBuilder lotteryShareUrlBuilder = new LotteryShareUrlBuilder(
-                    user.getSerialKey(), AppConfig.properties.getAppHost(), commodity);
+                    user.getSerialKey(), AppConfig.props.getAppHost(), commodity);
             setAttribute("sinaWeiboShareUrl", lotteryShareUrlBuilder.getSinaShareUrl());
             setAttribute("qqShareUrl", lotteryShareUrlBuilder.getQQShareUrl());
             setAttribute("qzoneShareUrl", lotteryShareUrlBuilder.getQzoneShareUrl());

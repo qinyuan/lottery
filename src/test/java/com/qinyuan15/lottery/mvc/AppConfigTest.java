@@ -2,7 +2,6 @@ package com.qinyuan15.lottery.mvc;
 
 import com.qinyuan.lib.database.test.DatabaseTestCase;
 import com.qinyuan15.lottery.mvc.config.AppConfig;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 
@@ -13,15 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Created by qinyuan on 15-6-16.
  */
 public class AppConfigTest extends DatabaseTestCase {
-    @Test
-    public void testIndexHeaderLeftLogo() {
-        assertThat(AppConfig.getIndexHeaderLeftLogo()).isNull();
-
-        String string = RandomStringUtils.randomAlphanumeric(20);
-        AppConfig.updateIndexHeaderLeftLogo(string);
-        assertThat(AppConfig.getIndexHeaderLeftLogo()).isEqualTo(string);
-    }
-
     @Test
     public void testRegisterMailAccountId() {
         assertThat(AppConfig.getRegisterMailAccountId()).isNull();

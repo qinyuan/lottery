@@ -38,7 +38,7 @@ public class AbstractUserController extends ImageController {
         }
         setAttribute("loginRecords", loginRecords);
 
-        addJavaScriptData("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
+        addJavaScriptData("telValidateDescriptionPage", AppConfig.sys.getTelValidateDescriptionPage());
 
         setTitle(title);
         addJs("lib/handlebars.min-v1.3.0");

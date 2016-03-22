@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class ResetEmailMailSender extends SerialKeyMailSender {
     public final static String PREFIX_END = ",,,";
-    private final static String SERIAL_KEY_URL = AppConfig.properties.getAppHost() + "reset-email.html";
+    private final static String SERIAL_KEY_URL = AppConfig.props.getAppHost() + "reset-email.html";
     private final String newEmail;
 
     public ResetEmailMailSender(String newEmail) {

@@ -45,10 +45,10 @@ public class AdminController extends ImageController {
         setAttribute("resetEmailMailContentTemplate", AppConfig.getResetEmailMailContentTemplate());
         addJavaScriptData("currentResetEmailMailAccountId", AppConfig.getResetEmailMailAccountId());
 
-        setAttribute("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
-        setAttribute("websiteIntroductionLink", AppConfig.getWebsiteIntroductionLink());
+        setAttribute("telValidateDescriptionPage", AppConfig.sys.getTelValidateDescriptionPage());
+        setAttribute("websiteIntroductionLink", AppConfig.sys.getWebsiteIntroductionLink());
 
-        setAttribute("forumImage", pathToUrl(AppConfig.getForumImage()));
+        setAttribute("forumImage", pathToUrl(AppConfig.sys.getForumImage()));
 
         List<MailAccount> accounts = new MailAccountDao().getInstances();
         setAttribute("mails", accounts);
@@ -266,12 +266,17 @@ public class AdminController extends ImageController {
             redirect(redirectPage, "论坛页图片处理失败！");
         }
 
-        AppConfig.updateIndexHeaderLeftLogo(indexHeaderLeftLogoPath);
-        AppConfig.updateIndexHeaderSlogan(indexHeaderSloganPath);
-        AppConfig.updateFooterPoster(footerPosterPath);
-        AppConfig.updateFooterText(footerText);
-        AppConfig.updateCommodityHeaderLeftLogo(commodityHeaderLeftLogoPath);
-        AppConfig.updateFavicon(faviconPath);
+        AppConfig.sys.updateIndexHeaderLeftLogo(indexHeaderLeftLogoPath);
+        AppConfig.sys.updateIndexHeaderSlogan(indexHeaderSloganPath);
+        AppConfig.sys.updateFooterPoster(footerPosterPath);
+        AppConfig.sys.updateFooterText(footerText);
+        AppConfig.sys.updateCommodityHeaderLeftLogo(commodityHeaderLeftLogoPath);
+        AppConfig.sys.updateFavicon(faviconPath);
+
+        AppConfig.sys.updateWebsiteIntroductionLink(websiteIntroductionLink);
+        AppConfig.sys.updateTelValidateDescriptionPage(telValidateDescriptionPage);
+
+        AppConfig.sys.updateForumImage(forumImagePath);
 
         AppConfig.updateRegisterMailAccountId(registerMailAccountId);
         AppConfig.updateRegisterMailSubjectTemplate(registerMailSubjectTemplate);
@@ -286,11 +291,6 @@ public class AdminController extends ImageController {
         AppConfig.updateResetEmailMailAccountId(resetEmailMailAccountId);
         AppConfig.updateResetEmailMailSubjectTemplate(resetEmailMailSubjectTemplate);
         AppConfig.updateResetEmailMailContentTemplate(resetEmailMailContentTemplate);
-
-        AppConfig.updateTelValidateDescriptionPage(telValidateDescriptionPage);
-        AppConfig.updateWebsiteIntroductionLink(websiteIntroductionLink);
-
-        AppConfig.updateForumImage(forumImagePath);
 
         new NavigationLinkDao().clearAndSave(buildNavigationLinks(headerLinkTitles, headerLinkHrefs));
 

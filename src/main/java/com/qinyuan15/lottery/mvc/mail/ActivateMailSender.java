@@ -9,7 +9,7 @@ import com.qinyuan15.lottery.mvc.dao.ActivateRequestDao;
  * Created by qinyuan on 15-7-1.
  */
 public class ActivateMailSender extends SerialKeyMailSender {
-    private final static String SERIAL_KEY_URL = AppConfig.properties.getAppHost() + "activate-account.html";
+    private final static String SERIAL_KEY_URL = AppConfig.props.getAppHost() + "activate-account.html";
 
     public ActivateMailSender() {
         super(SERIAL_KEY_URL);

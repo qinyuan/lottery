@@ -5,9 +5,9 @@ import com.qinyuan.lib.contact.qq.QQValidator;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan.lib.mvc.security.PasswordValidator;
-import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.account.NewUserValidator;
 import com.qinyuan15.lottery.mvc.account.PreUserSerialKeyBuilder;
+import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.PreUser;
 import com.qinyuan15.lottery.mvc.dao.PreUserDao;
 import com.qinyuan15.lottery.mvc.dao.User;
@@ -45,9 +45,9 @@ public class RegisterController extends ImageController {
         if (StringUtils.isNotBlank(serial)) {
             PreUser preUser = new PreUserDao().getInstanceBySerialKey(serial);
             setAttribute("preUser", preUser);
-            addJavaScriptData("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
+            addJavaScriptData("telValidateDescriptionPage", AppConfig.sys.getTelValidateDescriptionPage());
 
-            String websiteIntroductionLink = AppConfig.getWebsiteIntroductionLink();
+            String websiteIntroductionLink = AppConfig.sys.getWebsiteIntroductionLink();
             if (StringUtils.isBlank(websiteIntroductionLink)) {
                 websiteIntroductionLink = "javascript:void(0)";
             }

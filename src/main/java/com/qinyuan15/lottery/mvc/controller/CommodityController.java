@@ -56,7 +56,7 @@ public class CommodityController extends ImageController {
 
         if (commodity == null) {
             livenessAdder.recordSpreader(userSerialKey, medium, null);
-            setTitle(AppConfig.properties.getCommodityPageTitle());
+            setTitle(AppConfig.props.getCommodityPageTitle());
         } else {
             livenessAdder.recordSpreader(userSerialKey, medium, commodity.getId());
             setAttribute("seoKeyword", "抽奖,免费," + commodity.getName());
@@ -79,7 +79,7 @@ public class CommodityController extends ImageController {
 
         setAttribute("snapshots", buildSnapshots());
         setAttribute("lotteryRuleLink", AppConfig.getLotteryRuleLink());
-        setAttribute("telValidateDescriptionPage", AppConfig.getTelValidateDescriptionPage());
+        setAttribute("telValidateDescriptionPage", AppConfig.sys.getTelValidateDescriptionPage());
 
         SubscribeHeaderUtils.setHeaderParameters(this);
 

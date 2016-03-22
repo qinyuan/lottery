@@ -9,6 +9,6 @@ import com.qinyuan15.lottery.mvc.config.AppConfig;
  */
 public class CommodityHeaderUtils {
     static void setHeaderParameters(ImageController controller) {
-        controller.setAttribute("commodityHeaderLeftLogo", controller.pathToUrl(AppConfig.getCommodityHeaderLeftLogo()));
+        controller.setAttribute("commodityHeaderLeftLogo", controller.pathToUrl(AppConfig.sys.getCommodityHeaderLeftLogo()));
     }
 }

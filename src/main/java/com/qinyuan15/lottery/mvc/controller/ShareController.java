@@ -33,7 +33,7 @@ public class ShareController extends ImageController {
         User user = (User) securitySearcher.getUser();
         new UserDao().updateSerialKeyIfNecessary(user);
         LotteryShareUrlBuilder lotteryShareUrlBuilder = new LotteryShareUrlBuilder(
-                user.getSerialKey(), AppConfig.properties.getAppHost(), commodity);
+                user.getSerialKey(), AppConfig.props.getAppHost(), commodity);
         setAttribute("sinaWeiboShareUrl", lotteryShareUrlBuilder.getSinaShareUrl());
         setAttribute("qqShareUrl", lotteryShareUrlBuilder.getQQShareUrl());
         setAttribute("qzoneShareUrl", lotteryShareUrlBuilder.getQzoneShareUrl());
