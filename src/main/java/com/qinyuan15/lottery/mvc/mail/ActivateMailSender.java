@@ -17,7 +17,7 @@ public class ActivateMailSender extends SerialKeyMailSender {
 
     @Override
     protected int getMailAccountId() {
-        return AppConfig.getActivateMailAccountId();
+        return AppConfig.mail.getActivateMailAccountId();
     }
 
     @Override
@@ -27,11 +27,11 @@ public class ActivateMailSender extends SerialKeyMailSender {
 
     @Override
     protected String getSubjectTemplate() {
-        return AppConfig.getActivateMailSubjectTemplate();
+        return AppConfig.mail.getActivateMailSubjectTemplate();
     }
 
     @Override
     protected String getContentTemplate() {
-        return AppConfig.getActivateMailContentTemplate();
+        return AppConfig.mail.getActivateMailContentTemplate();
     }
 }

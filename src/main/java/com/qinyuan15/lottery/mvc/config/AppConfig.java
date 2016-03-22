@@ -13,6 +13,7 @@ import java.util.Properties;
 public class AppConfig {
     public final static PropertiesConfig props = new PropertiesConfig();
     public final static SystemConfig sys = new SystemConfig();
+    public final static MailConfig mail = new MailConfig();
 
     private final static AppConfigDao dao = new AppConfigDao();
 
@@ -237,156 +238,7 @@ public class AppConfig {
     }
     ///////////////////////// seckill poker site end ////////////////////////////////
 
-    ///////////////////////////////////// activate mail start ///////////////////////////////////
-    private final static String ACTIVATE_MAIL_SUBJECT_TEMPLATE_KEY = "activateMailSubjectTemplate";
 
-    public static String getActivateMailSubjectTemplate() {
-        return dao.get(ACTIVATE_MAIL_SUBJECT_TEMPLATE_KEY);
-    }
-
-    public static void updateActivateMailSubjectTemplate(String template) {
-        dao.save(ACTIVATE_MAIL_SUBJECT_TEMPLATE_KEY, template);
-    }
-
-    private final static String ACTIVATE_MAIL_CONTENT_TEMPLATE_KEY = "activateMailContentTemplate";
-
-    public static String getActivateMailContentTemplate() {
-        return dao.get(ACTIVATE_MAIL_CONTENT_TEMPLATE_KEY);
-    }
-
-    public static void updateActivateMailContentTemplate(String template) {
-        dao.save(ACTIVATE_MAIL_CONTENT_TEMPLATE_KEY, template);
-    }
-
-    private final static String ACTIVATE_MAIL_ACCOUNT_ID_KEY = "activateMailAccountId";
-
-    public static Integer getActivateMailAccountId() {
-        return dao.getPositiveInteger(ACTIVATE_MAIL_ACCOUNT_ID_KEY);
-    }
-
-    public static void updateActivateMailAccountId(Integer mailAccountId) {
-        dao.saveInteger(ACTIVATE_MAIL_ACCOUNT_ID_KEY, mailAccountId);
-    }
-    ///////////////////////////////////// activate mail end /////////////////////////////////////
-
-    ///////////////////////////////////// register mail start ////////////////////////////////////
-    private final static String REGISTER_MAIL_SUBJECT_TEMPLATE_KEY = "registerMailSubjectTemplate";
-
-    public static String getRegisterMailSubjectTemplate() {
-        return dao.get(REGISTER_MAIL_SUBJECT_TEMPLATE_KEY);
-    }
-
-    public static void updateRegisterMailSubjectTemplate(String template) {
-        dao.save(REGISTER_MAIL_SUBJECT_TEMPLATE_KEY, template);
-    }
-
-    private final static String REGISTER_MAIL_CONTENT_TEMPLATE_KEY = "registerMailContentTemplate";
-
-    public static String getRegisterMailContentTemplate() {
-        return dao.get(REGISTER_MAIL_CONTENT_TEMPLATE_KEY);
-    }
-
-    public static void updateRegisterMailContentTemplate(String template) {
-        dao.save(REGISTER_MAIL_CONTENT_TEMPLATE_KEY, template);
-    }
-
-    private final static String REGISTER_MAIL_ACCOUNT_ID_KEY = "registerMailAccountId";
-
-    public static Integer getRegisterMailAccountId() {
-        return dao.getPositiveInteger(REGISTER_MAIL_ACCOUNT_ID_KEY);
-    }
-
-    public static void updateRegisterMailAccountId(Integer mailAccountId) {
-        dao.saveInteger(REGISTER_MAIL_ACCOUNT_ID_KEY, mailAccountId);
-    }
-    ///////////////////////////////////// register mail end //////////////////////////////////////
-
-    ////////////////////////////////// register logo start ///////////////////////////////////
-    private final static String REGISTER_HEADER_LEFT_LOGO_KEY = "registerHeaderLeftLogo";
-
-    public static String getRegisterHeaderLeftLogo() {
-        return dao.get(REGISTER_HEADER_LEFT_LOGO_KEY);
-    }
-
-    public static void updateRegisterHeaderLeftLogo(String registerHeaderLeftLogo) {
-        dao.save(REGISTER_HEADER_LEFT_LOGO_KEY, registerHeaderLeftLogo);
-    }
-
-    private final static String REGISTER_HEADER_RIGHT_LOGO_KEY = "registerHeaderRightLogo";
-
-    public static String getRegisterHeaderRightLogo() {
-        return dao.get(REGISTER_HEADER_RIGHT_LOGO_KEY);
-    }
-
-    public static void updateRegisterHeaderRightLogo(String registerHeaderRightLogo) {
-        dao.save(REGISTER_HEADER_RIGHT_LOGO_KEY, registerHeaderRightLogo);
-    }
-
-    ////////////////////////////////// register logo end /////////////////////////////////////
-
-    //////////////////////////////// reset password mail start //////////////////////////
-    private final static String RESET_PASSWORD_MAIL_SUBJECT_TEMPLATE_KEY = "resetPasswordMailSubjectTemplate";
-
-    public static String getResetPasswordMailSubjectTemplate() {
-        return dao.get(RESET_PASSWORD_MAIL_SUBJECT_TEMPLATE_KEY);
-    }
-
-    public static void updateResetPasswordMailSubjectTemplate(String template) {
-        dao.save(RESET_PASSWORD_MAIL_SUBJECT_TEMPLATE_KEY, template);
-    }
-
-    private final static String RESET_PASSWORD_MAIL_CONTENT_TEMPLATE_KEY = "resetPasswordMailContentTemplate";
-
-    public static String getResetPasswordMailContentTemplate() {
-        return dao.get(RESET_PASSWORD_MAIL_CONTENT_TEMPLATE_KEY);
-    }
-
-    public static void updateResetPasswordMailContentTemplate(String template) {
-        dao.save(RESET_PASSWORD_MAIL_CONTENT_TEMPLATE_KEY, template);
-    }
-
-    private final static String RESET_PASSWORD_MAIL_ACCOUNT_ID_KEY = "resetPasswordMailAccountId";
-
-    public static Integer getResetPasswordMailAccountId() {
-        return dao.getPositiveInteger(RESET_PASSWORD_MAIL_ACCOUNT_ID_KEY);
-    }
-
-    public static void updateResetPasswordMailAccountId(Integer mailAccountId) {
-        dao.saveInteger(RESET_PASSWORD_MAIL_ACCOUNT_ID_KEY, mailAccountId);
-    }
-    //////////////////////////////// reset password mail end /////////////////////////////
-
-    //////////////////////////////// reset email mail start /////////////////////////////
-    private final static String RESET_EMAIL_MAIL_SUBJECT_TEMPLATE_KEY = "resetEmailMailSubjectTemplate";
-
-    public static String getResetEmailMailSubjectTemplate() {
-        return dao.get(RESET_EMAIL_MAIL_SUBJECT_TEMPLATE_KEY);
-    }
-
-    public static void updateResetEmailMailSubjectTemplate(String template) {
-        dao.save(RESET_EMAIL_MAIL_SUBJECT_TEMPLATE_KEY, template);
-    }
-
-    private final static String RESET_EMAIL_MAIL_CONTENT_TEMPLATE_KEY = "resetEmailMailContentTemplate";
-
-    public static String getResetEmailMailContentTemplate() {
-        return dao.get(RESET_EMAIL_MAIL_CONTENT_TEMPLATE_KEY);
-    }
-
-    public static void updateResetEmailMailContentTemplate(String template) {
-        dao.save(RESET_EMAIL_MAIL_CONTENT_TEMPLATE_KEY, template);
-    }
-
-    private final static String RESET_EMAIL_MAIL_ACCOUNT_ID_KEY = "resetEmailMailAccountId";
-
-    public static Integer getResetEmailMailAccountId() {
-        return dao.getPositiveInteger(RESET_EMAIL_MAIL_ACCOUNT_ID_KEY);
-    }
-
-    public static void updateResetEmailMailAccountId(Integer mailAccountId) {
-        dao.saveInteger(RESET_EMAIL_MAIL_ACCOUNT_ID_KEY, mailAccountId);
-    }
-    ///////////////////////////// reset email mail end /////////////////////////////
 
     ///////////////////////////// new lottery chance start //////////////////////////////
     private final static String REMIND_NEW_LOTTERY_CHANCE_BY_MAIL_KEY = "remindNewLotteryChanceByMail";
@@ -614,8 +466,6 @@ public class AppConfig {
     public static void updateMaxTelModificationTimes(Integer maxTelModificationTimes) {
         dao.saveInteger(MAX_TEL_MODIFICATION_TIMES_KEY, maxTelModificationTimes);
     }
-
-
 
     //////////////////////////////////// support page start /////////////////////////////////
     private final static String SUPPORT_PAGE_IMAGE_KEY = "supportPageImage";

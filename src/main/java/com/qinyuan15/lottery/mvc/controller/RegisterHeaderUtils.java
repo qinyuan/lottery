@@ -7,8 +7,8 @@ public class RegisterHeaderUtils {
     public static void setParameters(ImageController controller) {
         controller.setAttribute("noFooter", true);
         controller.setAttribute("whiteFooter", true);
-        controller.setAttribute("registerHeaderLeftLogo", controller.pathToUrl(AppConfig.getRegisterHeaderLeftLogo()));
-        controller.setAttribute("registerHeaderRightLogo", controller.pathToUrl(AppConfig.getRegisterHeaderRightLogo()));
+        controller.setAttribute("registerHeaderLeftLogo", controller.pathToUrl(AppConfig.sys.getRegisterHeaderLeftLogo()));
+        controller.setAttribute("registerHeaderRightLogo", controller.pathToUrl(AppConfig.sys.getRegisterHeaderRightLogo()));
         controller.addCss("register-header");
     }
 }

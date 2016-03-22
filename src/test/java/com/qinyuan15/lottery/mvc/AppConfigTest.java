@@ -13,15 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class AppConfigTest extends DatabaseTestCase {
     @Test
-    public void testRegisterMailAccountId() {
-        assertThat(AppConfig.getRegisterMailAccountId()).isNull();
-
-        int id = RandomUtils.nextInt(1, 1000);
-        AppConfig.updateRegisterMailAccountId(id);
-        assertThat(AppConfig.getRegisterMailAccountId()).isEqualTo(id);
-    }
-
-    @Test
     public void testAllocateLotterySerialNumberInAdvance() {
         assertThat(AppConfig.allocateLotterySerialInAdvance()).isTrue();
     }

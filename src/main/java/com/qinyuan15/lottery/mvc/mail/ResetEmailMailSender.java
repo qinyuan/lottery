@@ -28,7 +28,7 @@ public class ResetEmailMailSender extends SerialKeyMailSender {
 
     @Override
     protected int getMailAccountId() {
-        return AppConfig.getResetEmailMailAccountId();
+        return AppConfig.mail.getResetEmailMailAccountId();
     }
 
     @Override
@@ -38,12 +38,12 @@ public class ResetEmailMailSender extends SerialKeyMailSender {
 
     @Override
     protected String getSubjectTemplate() {
-        return AppConfig.getResetEmailMailSubjectTemplate();
+        return AppConfig.mail.getResetEmailMailSubjectTemplate();
     }
 
     @Override
     protected String getContentTemplate() {
-        return AppConfig.getResetEmailMailContentTemplate();
+        return AppConfig.mail.getResetEmailMailContentTemplate();
     }
 
     /**

@@ -17,7 +17,7 @@ public class ResetPasswordMailSender extends SerialKeyMailSender {
 
     @Override
     protected int getMailAccountId() {
-        return AppConfig.getResetPasswordMailAccountId();
+        return AppConfig.mail.getResetPasswordMailAccountId();
     }
 
     @Override
@@ -27,11 +27,11 @@ public class ResetPasswordMailSender extends SerialKeyMailSender {
 
     @Override
     protected String getSubjectTemplate() {
-        return AppConfig.getResetPasswordMailSubjectTemplate();
+        return AppConfig.mail.getResetPasswordMailSubjectTemplate();
     }
 
     @Override
     protected String getContentTemplate() {
-        return AppConfig.getResetPasswordMailContentTemplate();
+        return AppConfig.mail.getResetPasswordMailContentTemplate();
     }
 }

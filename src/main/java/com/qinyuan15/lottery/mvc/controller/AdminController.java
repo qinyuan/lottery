@@ -31,19 +31,19 @@ public class AdminController extends ImageController {
         IndexHeaderUtils.setHeaderParameters(this);
         CommodityHeaderUtils.setHeaderParameters(this);
 
-        setAttribute("registerMailSubjectTemplate", AppConfig.getRegisterMailSubjectTemplate());
-        setAttribute("registerMailContentTemplate", AppConfig.getRegisterMailContentTemplate());
-        addJavaScriptData("currentRegisterMailAccountId", AppConfig.getRegisterMailAccountId());
-        setAttribute("registerHeaderLeftLogo", pathToUrl(AppConfig.getRegisterHeaderLeftLogo()));
-        setAttribute("registerHeaderRightLogo", pathToUrl(AppConfig.getRegisterHeaderRightLogo()));
+        setAttribute("registerMailSubjectTemplate", AppConfig.mail.getRegisterMailSubjectTemplate());
+        setAttribute("registerMailContentTemplate", AppConfig.mail.getRegisterMailContentTemplate());
+        addJavaScriptData("currentRegisterMailAccountId", AppConfig.mail.getRegisterMailAccountId());
+        setAttribute("registerHeaderLeftLogo", pathToUrl(AppConfig.sys.getRegisterHeaderLeftLogo()));
+        setAttribute("registerHeaderRightLogo", pathToUrl(AppConfig.sys.getRegisterHeaderRightLogo()));
 
-        setAttribute("resetPasswordMailSubjectTemplate", AppConfig.getResetPasswordMailSubjectTemplate());
-        setAttribute("resetPasswordMailContentTemplate", AppConfig.getResetPasswordMailContentTemplate());
-        addJavaScriptData("currentResetPasswordMailAccountId", AppConfig.getResetPasswordMailAccountId());
+        setAttribute("resetPasswordMailSubjectTemplate", AppConfig.mail.getResetPasswordMailSubjectTemplate());
+        setAttribute("resetPasswordMailContentTemplate", AppConfig.mail.getResetPasswordMailContentTemplate());
+        addJavaScriptData("currentResetPasswordMailAccountId", AppConfig.mail.getResetPasswordMailAccountId());
 
-        setAttribute("resetEmailMailSubjectTemplate", AppConfig.getResetEmailMailSubjectTemplate());
-        setAttribute("resetEmailMailContentTemplate", AppConfig.getResetEmailMailContentTemplate());
-        addJavaScriptData("currentResetEmailMailAccountId", AppConfig.getResetEmailMailAccountId());
+        setAttribute("resetEmailMailSubjectTemplate", AppConfig.mail.getResetEmailMailSubjectTemplate());
+        setAttribute("resetEmailMailContentTemplate", AppConfig.mail.getResetEmailMailContentTemplate());
+        addJavaScriptData("currentResetEmailMailAccountId", AppConfig.mail.getResetEmailMailAccountId());
 
         setAttribute("telValidateDescriptionPage", AppConfig.sys.getTelValidateDescriptionPage());
         setAttribute("websiteIntroductionLink", AppConfig.sys.getWebsiteIntroductionLink());
@@ -278,19 +278,20 @@ public class AdminController extends ImageController {
 
         AppConfig.sys.updateForumImage(forumImagePath);
 
-        AppConfig.updateRegisterMailAccountId(registerMailAccountId);
-        AppConfig.updateRegisterMailSubjectTemplate(registerMailSubjectTemplate);
-        AppConfig.updateRegisterMailContentTemplate(registerMailContentTemplate);
-        AppConfig.updateRegisterHeaderLeftLogo(registerHeaderLeftLogoPath);
-        AppConfig.updateRegisterHeaderRightLogo(registerHeaderRightLogoPath);
+        AppConfig.sys.updateRegisterHeaderLeftLogo(registerHeaderLeftLogoPath);
+        AppConfig.sys.updateRegisterHeaderRightLogo(registerHeaderRightLogoPath);
 
-        AppConfig.updateResetPasswordMailAccountId(resetPasswordMailAccountId);
-        AppConfig.updateResetPasswordMailSubjectTemplate(resetPasswordMailSubjectTemplate);
-        AppConfig.updateResetPasswordMailContentTemplate(resetPasswordMailContentTemplate);
+        AppConfig.mail.updateRegisterMailAccountId(registerMailAccountId);
+        AppConfig.mail.updateRegisterMailSubjectTemplate(registerMailSubjectTemplate);
+        AppConfig.mail.updateRegisterMailContentTemplate(registerMailContentTemplate);
 
-        AppConfig.updateResetEmailMailAccountId(resetEmailMailAccountId);
-        AppConfig.updateResetEmailMailSubjectTemplate(resetEmailMailSubjectTemplate);
-        AppConfig.updateResetEmailMailContentTemplate(resetEmailMailContentTemplate);
+        AppConfig.mail.updateResetPasswordMailAccountId(resetPasswordMailAccountId);
+        AppConfig.mail.updateResetPasswordMailSubjectTemplate(resetPasswordMailSubjectTemplate);
+        AppConfig.mail.updateResetPasswordMailContentTemplate(resetPasswordMailContentTemplate);
+
+        AppConfig.mail.updateResetEmailMailAccountId(resetEmailMailAccountId);
+        AppConfig.mail.updateResetEmailMailSubjectTemplate(resetEmailMailSubjectTemplate);
+        AppConfig.mail.updateResetEmailMailContentTemplate(resetEmailMailContentTemplate);
 
         new NavigationLinkDao().clearAndSave(buildNavigationLinks(headerLinkTitles, headerLinkHrefs));
 
