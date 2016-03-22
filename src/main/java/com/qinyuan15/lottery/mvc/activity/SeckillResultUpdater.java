@@ -23,7 +23,7 @@ public class SeckillResultUpdater {
 
         int participantCount = new SeckillLotCounter().count(activity);
         String winners = activity.getWinners();
-        String announcementTemplate = AppConfig.getSeckillAnnouncementTemplate();
+        String announcementTemplate = AppConfig.seckill.getAnnouncementTemplate();
         String announcement = new SeckillAnnouncementPlaceholderConverter(
                 winners, participantCount).convert(announcementTemplate);
         new SeckillActivityDao().updateResult(activityId, winners, announcement);

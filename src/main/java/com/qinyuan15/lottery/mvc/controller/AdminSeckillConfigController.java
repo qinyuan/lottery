@@ -36,7 +36,7 @@ public class AdminSeckillConfigController extends ImageController {
         setAttribute("pokerBackSide", pathToUrl(AppConfig.seckill.getPokerBackSide()));
 
         // announcement template
-        setAttribute("seckillAnnouncementTemplate", AppConfig.getSeckillAnnouncementTemplate());
+        setAttribute("seckillAnnouncementTemplate", AppConfig.seckill.getAnnouncementTemplate());
 
         setTitle("秒杀配置");
         addJs("lib/ckeditor/ckeditor", false);
@@ -88,7 +88,7 @@ public class AdminSeckillConfigController extends ImageController {
         AppConfig.seckill.updateQzoneIncludePicture(qzoneIncludePicture);
         AppConfig.seckill.updatePokerFrontSide(pokerFrontSidePath);
         AppConfig.seckill.updatePokerBackSide(pokerBackSidePath);
-        AppConfig.updateSeckillAnnouncementTemplate(seckillAnnouncementTemplate);
+        AppConfig.seckill.updateAnnouncementTemplate(seckillAnnouncementTemplate);
 
         return redirect(redirectPage);
     }

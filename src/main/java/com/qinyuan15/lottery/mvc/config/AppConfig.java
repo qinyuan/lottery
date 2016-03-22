@@ -1,9 +1,6 @@
 package com.qinyuan15.lottery.mvc.config;
 
 import com.qinyuan.lib.config.AppConfigDao;
-import com.qinyuan.lib.lang.file.ClasspathFileUtils;
-
-import java.util.Properties;
 
 /**
  * Application Configuration
@@ -53,42 +50,6 @@ public class AppConfig {
     }
     ////////////////////////////// liveness increase end /////////////////////////////////
 
-    ///////////////////////////// lottery announcement template start ////////////////////////////
-    private final static String LOTTERY_ANNOUNCEMENT_TEMPLATE_KEY = "lotteryAnnouncementTemplate";
-
-    public static String getLotteryAnnouncementTemplate() {
-        return dao.get(LOTTERY_ANNOUNCEMENT_TEMPLATE_KEY);
-    }
-
-    public static void updateLotteryAnnouncementTemplate(String template) {
-        dao.save(LOTTERY_ANNOUNCEMENT_TEMPLATE_KEY, template);
-    }
-    ///////////////////////////// lottery announcement template end //////////////////////////////
-
-    //////////////////////////// seckill announcement template start ////////////////////////////
-    private final static String SECKILL_ANNOUNCEMENT_TEMPLATE_KEY = "seckillAnnouncementTemplate";
-
-    public static String getSeckillAnnouncementTemplate() {
-        return dao.get(SECKILL_ANNOUNCEMENT_TEMPLATE_KEY);
-    }
-
-    public static void updateSeckillAnnouncementTemplate(String template) {
-        dao.save(SECKILL_ANNOUNCEMENT_TEMPLATE_KEY, template);
-    }
-    //////////////////////////// seckill announcement template end //////////////////////////////
-
-    ///////////////////////////// lottery rule start ///////////////////////////////
-    private final static String LOTTERY_RULE_LINK = "lotteryRuleLink";
-
-    public static String getLotteryRuleLink() {
-        return dao.get(LOTTERY_RULE_LINK);
-    }
-
-    public static void updateLotteryRuleLink(String lotteryRuleLink) {
-        dao.save(LOTTERY_RULE_LINK, lotteryRuleLink);
-    }
-    ///////////////////////////// lottery rule end ///////////////////////////////
-
     ////////////////////////////// qqlist start ////////////////////////////////////
     private final static String QQ_LIST_ID_KEY = "qqlistId";
 
@@ -110,14 +71,6 @@ public class AppConfig {
         dao.save(QQ_LIST_DESCRIPTION_KEY, qqlistDescription);
     }
     ////////////////////////////// qqlist end //////////////////////////////////////
-
-    ////////////////////////////// allocate lottery serial number ////////////////////////////////
-    public static boolean allocateLotterySerialInAdvance() {
-        Properties props = ClasspathFileUtils.getProperties("global-config.properties");
-        String value = props.getProperty("allocateLotterySerialInAdvance");
-        return value != null && (value.trim().equals("1") || value.trim().toLowerCase().equals("true"));
-    }
-    //////////////////////////////////////////////////////////////////////////////////////////////
 
     //////////////////////////// invalid lot system info template ////////////////////////////
     private final static String NO_TEL_INVALID_LOT_SYSTEM_INFO_TEMPLATE_KEY = "noTelInvalidLotSystemInfoTemplate";

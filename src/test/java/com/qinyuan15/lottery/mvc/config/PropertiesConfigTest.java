@@ -44,4 +44,9 @@ public class PropertiesConfigTest {
     public void testGetQQConnectScope() {
         assertThat(AppConfig.props.getQQConnectScope()).startsWith("get_user_info,");
     }
+
+    @Test
+    public void testAllocateLotterySerialInAdvance() {
+        assertThat(AppConfig.props.allocateLotterySerialInAdvance()).isTrue();
+    }
 }

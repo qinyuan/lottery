@@ -56,4 +56,11 @@ public class PropertiesConfig {
         return "https://graph.qq.com/oauth2.0/authorize?response_type=token&client_id=" + getQQConnectAppId()
                 + "&redirect_uri=" + getQQConnectRedirectURI() + "&scope=" + UrlUtils.encode(getQQConnectScope());
     }
+
+    ////////////////////////////// allocate lottery serial number ////////////////////////////////
+    public boolean allocateLotterySerialInAdvance() {
+        String value = GLOBAL_CONFIG.get("allocateLotterySerialInAdvance");
+        return value != null && (value.trim().equals("1") || value.trim().toLowerCase().equals("true"));
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////
 }

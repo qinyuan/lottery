@@ -78,7 +78,7 @@ public class CommodityController extends ImageController {
         }
 
         setAttribute("snapshots", buildSnapshots());
-        setAttribute("lotteryRuleLink", AppConfig.getLotteryRuleLink());
+        setAttribute("lotteryRuleLink", AppConfig.lottery.getRuleLink());
         setAttribute("telValidateDescriptionPage", AppConfig.sys.getTelValidateDescriptionPage());
 
         SubscribeHeaderUtils.setHeaderParameters(this);

@@ -106,7 +106,7 @@ public class LotteryLotCounter implements LotCounter {
             return 0;
         }
 
-        if (AppConfig.allocateLotterySerialInAdvance()) {
+        if (AppConfig.props.allocateLotterySerialInAdvance()) {
             return 1;
         } else {
             Integer minLivenessToParticipate = activity.getMinLivenessToParticipate();

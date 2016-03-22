@@ -59,9 +59,9 @@ public class AdminLotteryConfigController extends ImageController {
         setAttribute("maxTelModificationTimes", AppConfig.getMaxTelModificationTimes());
 
         // other data
-        setAttribute("lotteryAnnouncementTemplate", AppConfig.getLotteryAnnouncementTemplate());
+        setAttribute("lotteryAnnouncementTemplate", AppConfig.lottery.getAnnouncementTemplate());
         //setAttribute("lotteryRule", AppConfig.getLotteryRule());
-        setAttribute("lotteryRuleLink", AppConfig.getLotteryRuleLink());
+        setAttribute("lotteryRuleLink", AppConfig.lottery.getRuleLink());
         setAttribute("noTelInvalidLotSystemInfoTemplate", AppConfig.getNoTelInvalidLotSystemInfoTemplate());
         setAttribute("insufficientLivenessInvalidLotSystemInfoTemplate", AppConfig.getInsufficientLivenessInvalidLotSystemInfoTemplate());
 
@@ -131,8 +131,8 @@ public class AdminLotteryConfigController extends ImageController {
         AppConfig.lottery.updateQzoneIncludePicture(qzoneIncludePicture);
         //AppConfig.updateNewLotLiveness(newLotLiveness);
         AppConfig.updateShareSucceedLiveness(shareSucceedLiveness);
-        AppConfig.updateLotteryRuleLink(lotteryRuleLink);
-        AppConfig.updateLotteryAnnouncementTemplate(lotteryAnnouncementTemplate);
+        AppConfig.lottery.updateRuleLink(lotteryRuleLink);
+        AppConfig.lottery.updateAnnouncementTemplate(lotteryAnnouncementTemplate);
         AppConfig.updateNoTelInvalidLotSystemInfoTemplate(noTelInvalidLotSystemInfoTemplate);
         AppConfig.updateInsufficientLivenessInvalidLotSystemInfoTemplate(insufficientLivenessInvalidLotSystemInfoTemplate);
         /*AppConfig.updateNoTelLotteryLotCount(noTelLotteryLotCount);
