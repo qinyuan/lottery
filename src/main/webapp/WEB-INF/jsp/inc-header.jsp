@@ -21,7 +21,7 @@
         <link rel="icon" href="${favicon}" type="image/x-icon"/>
         <link rel="shortcut icon" href="${favicon}" type="image/x-icon"/>
     </c:if>
-    <c:choose><c:when test="<%=AppConfig.properties.isOffline()%>">
+    <c:choose><c:when test="<%=AppConfig.props.isOffline()%>">
         <q:css href="resources/js/lib/bootstrap/css/bootstrap.min"/>
     </c:when><c:otherwise>
         <q:css href="<%=CDNSource.BOOTSTRAP_CSS%>"/>

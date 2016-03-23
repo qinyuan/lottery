@@ -10,7 +10,7 @@
 </div>
 <%@include file="inc-register-login-panel.jsp" %>
 </body>
-<c:choose><c:when test="<%=AppConfig.properties.isOffline()%>">
+<c:choose><c:when test="<%=AppConfig.props.isOffline()%>">
     <q:js src="resources/js/lib/jquery-1.11.3.min"/>
 </c:when><c:otherwise>
     <q:js src="<%=CDNSource.JQUERY_JS%>"/>

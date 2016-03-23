@@ -1,5 +1,5 @@
-<%@ page import="com.qinyuan15.lottery.mvc.config.AppConfig" %>
 <%@ page import="com.qinyuan15.lottery.mvc.activity.dualcoloredball.DualColoredBallUtils" %>
+<%@ page import="com.qinyuan15.lottery.mvc.config.AppConfig" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="inc-taglib.jsp" %>
 <div class="float-panel shadow activity-result" id="lotteryResult">
@@ -71,7 +71,7 @@
                 </div>
                 <div class="lottery-rule">
                     中奖号码若为该号码，中奖者为支持数最高的用户，详见
-                    <a target="_blank" href="<%=AppConfig.getLotteryRuleLink()%>">抽奖规则</a>
+                    <a target="_blank" href="<%=AppConfig.lottery.getRuleLink()%>">抽奖规则</a>
                 </div>
             </div>
         </div>

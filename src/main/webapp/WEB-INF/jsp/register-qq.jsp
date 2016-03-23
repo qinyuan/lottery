@@ -11,5 +11,6 @@
     <%@include file="register-form.jsp" %>
 </div>
 <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js"
-        data-appid="<%=AppConfig.getQQConnectAppId()%>" data-redirecturi="<%=AppConfig.getQQConnectRedirectURI()%>"
+        data-appid="<%=AppConfig.props.getQQConnectAppId()%>"
+        data-redirecturi="<%=AppConfig.props.getQQConnectRedirectURI()%>"
         charset="utf-8"></script>
