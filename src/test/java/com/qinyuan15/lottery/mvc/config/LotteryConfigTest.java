@@ -2,6 +2,7 @@ package com.qinyuan15.lottery.mvc.config;
 
 import com.qinyuan.lib.database.test.DatabaseTestCase;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -149,6 +150,55 @@ public class LotteryConfigTest extends DatabaseTestCase {
         String string = nextString();
         config.updateRuleLink(string);
         assertThat(config.getRuleLink()).isEqualTo(string);
+    }
+
+    @Test
+    public void testNoTelInvalidLotSystemInfoTemplate() {
+        assertThat(config.getNoTelInvalidLotSystemInfoTemplate()).isNull();
+
+        String string = nextString();
+        config.updateNoTelInvalidLotSystemInfoTemplate(string);
+        assertThat(config.getNoTelInvalidLotSystemInfoTemplate()).isEqualTo(string);
+    }
+
+    @Test
+    public void testInsufficientLivenessInvalidLotSystemInfoTemplate() {
+        assertThat(config.getInsufficientLivenessInvalidLotSystemInfoTemplate()).isNull();
+
+        String string = nextString();
+        config.updateInsufficientLivenessInvalidLotSystemInfoTemplate(string);
+        assertThat(config.getInsufficientLivenessInvalidLotSystemInfoTemplate()).isEqualTo(string);
+    }
+
+    @Test
+    public void testNoTelLotteryCount() {
+        assertThat(config.getNoTelLotCount()).isEqualTo(null);
+        assertThat(config.getNoTelLotCountValue()).isZero();
+
+        int number = RandomUtils.nextInt(0, 10000);
+        config.updateNoTelLotCount(number);
+        assertThat(config.getNoTelLotCount()).isEqualTo(number);
+        assertThat(config.getNoTelLotCountValue()).isEqualTo(number);
+    }
+
+    @Test
+    public void testNoTelLotPrice() {
+        assertThat(config.getNoTelLotPrice()).isNull();
+        assertThat(config.getNoTelLotPriceValue()).isZero();
+
+        double number = RandomUtils.nextDouble(0, 10000);
+        config.updateNoTelLotPrice(number);
+        assertThat(config.getNoTelLotPrice()).isEqualTo(number);
+        assertThat(config.getNoTelLotPriceValue()).isEqualTo(number);
+    }
+
+    @Test
+    public void testNoTelLiveness() {
+        assertThat(config.getNoTelLiveness()).isNull();
+
+        int number = RandomUtils.nextInt(0, 10000);
+        config.updateNoTelLiveness(number);
+        assertThat(config.getNoTelLiveness()).isEqualTo(number);
     }
 
     private String nextString() {

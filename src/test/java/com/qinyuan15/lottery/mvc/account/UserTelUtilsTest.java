@@ -15,18 +15,18 @@ public class UserTelUtilsTest extends DatabaseTestCase {
         User user = new UserDao().getInstance(4);
 
         assertThat(new LotteryLivenessDao().getLiveness(user.getId())).isEqualTo(13);
-        assertThat(AppConfig.getNoTelLiveness()).isNull();
+        assertThat(AppConfig.lottery.getNoTelLiveness()).isNull();
         assertThat(user.getTel()).isNull();
         assertThat(UserTelUtils.hasHighLivenessButNoTel(user)).isFalse();
 
-        AppConfig.updateNoTelLiveness(10);      // user's liveness is greater than 10
+        AppConfig.lottery.updateNoTelLiveness(10);      // user's liveness is greater than 10
         assertThat(UserTelUtils.hasHighLivenessButNoTel(user)).isTrue();
 
         user.setTel("13000000000");
         assertThat(UserTelUtils.hasHighLivenessButNoTel(user)).isFalse();
 
         user.setTel(null);
-        AppConfig.updateNoTelLiveness(15);      // user's liveness is less than 15
+        AppConfig.lottery.updateNoTelLiveness(15);      // user's liveness is less than 15
         assertThat(UserTelUtils.hasHighLivenessButNoTel(user)).isFalse();
 
         user = new UserDao().getInstance(3);

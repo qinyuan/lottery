@@ -51,9 +51,9 @@ public class AdminLotteryConfigController extends ImageController {
         setAttribute("mailSelectFormItems", new MailSelectFormItemBuilder().build());
 
         // no tel lot
-        setAttribute("noTelLotteryLotCount", AppConfig.getNoTelLotteryLotCount());
-        setAttribute("noTelLotteryLotPrice", AppConfig.getNoTelLotteryLotPrice());
-        setAttribute("noTelLiveness", AppConfig.getNoTelLiveness());
+        setAttribute("noTelLotteryLotCount", AppConfig.lottery.getNoTelLotCount());
+        setAttribute("noTelLotteryLotPrice", AppConfig.lottery.getNoTelLotPrice());
+        setAttribute("noTelLiveness", AppConfig.lottery.getNoTelLiveness());
 
         // tel modification
         setAttribute("maxTelModificationTimes", AppConfig.getMaxTelModificationTimes());
@@ -62,8 +62,9 @@ public class AdminLotteryConfigController extends ImageController {
         setAttribute("lotteryAnnouncementTemplate", AppConfig.lottery.getAnnouncementTemplate());
         //setAttribute("lotteryRule", AppConfig.getLotteryRule());
         setAttribute("lotteryRuleLink", AppConfig.lottery.getRuleLink());
-        setAttribute("noTelInvalidLotSystemInfoTemplate", AppConfig.getNoTelInvalidLotSystemInfoTemplate());
-        setAttribute("insufficientLivenessInvalidLotSystemInfoTemplate", AppConfig.getInsufficientLivenessInvalidLotSystemInfoTemplate());
+        setAttribute("noTelInvalidLotSystemInfoTemplate", AppConfig.lottery.getNoTelInvalidLotSystemInfoTemplate());
+        setAttribute("insufficientLivenessInvalidLotSystemInfoTemplate",
+                AppConfig.lottery.getInsufficientLivenessInvalidLotSystemInfoTemplate());
 
         setAttribute("supportPageImage", pathToUrl(AppConfig.getSupportPageImage()));
         setAttribute("supportPageText", AppConfig.getSupportPageText());
@@ -134,11 +135,12 @@ public class AdminLotteryConfigController extends ImageController {
         AppConfig.lottery.updateAnnouncementTemplate(lotteryAnnouncementTemplate);
 
         AppConfig.liveness.updateShareSucceedLiveness(shareSucceedLiveness);
-        AppConfig.updateNoTelInvalidLotSystemInfoTemplate(noTelInvalidLotSystemInfoTemplate);
-        AppConfig.updateInsufficientLivenessInvalidLotSystemInfoTemplate(insufficientLivenessInvalidLotSystemInfoTemplate);
+        AppConfig.lottery.updateNoTelInvalidLotSystemInfoTemplate(noTelInvalidLotSystemInfoTemplate);
+        AppConfig.lottery.updateInsufficientLivenessInvalidLotSystemInfoTemplate(
+                insufficientLivenessInvalidLotSystemInfoTemplate);
         /*AppConfig.updateNoTelLotteryLotCount(noTelLotteryLotCount);
         AppConfig.updateNoTelLotteryLotPrice(noTelLotteryLotPrice);*/
-        AppConfig.updateNoTelLiveness(noTelLiveness);
+        AppConfig.lottery.updateNoTelLiveness(noTelLiveness);
         AppConfig.updateMaxTelModificationTimes(maxTelModificationTimes);
         AppConfig.updateSupportPageImage(supportPageImagePath);
         AppConfig.updateSupportPageText(supportPageText);

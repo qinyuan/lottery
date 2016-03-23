@@ -29,7 +29,7 @@ public class InvalidLotteryLotSystemInfoSender {
     }
 
     private void sendNoTelUsers(List<Integer> userIds, Integer phase) {
-        String template = AppConfig.getNoTelInvalidLotSystemInfoTemplate();
+        String template = AppConfig.lottery.getNoTelInvalidLotSystemInfoTemplate();
         if (StringUtils.isNotBlank(template)) {
             String content = new InvalidLotteryLotPlaceholderConverter(phase, 0, 0).convert(template);
             for (Integer userId : userIds) {
@@ -41,7 +41,7 @@ public class InvalidLotteryLotSystemInfoSender {
     }
 
     private void sendInsufficientLivenessUsers(List<Integer> userIds, Integer phase, Integer minLiveness) {
-        String template = AppConfig.getInsufficientLivenessInvalidLotSystemInfoTemplate();
+        String template = AppConfig.lottery.getInsufficientLivenessInvalidLotSystemInfoTemplate();
         if (StringUtils.isNotBlank(template)) {
             for (Integer userId : userIds) {
                 int liveness = new LotteryLivenessDao().getLiveness(userId);

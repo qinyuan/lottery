@@ -14,8 +14,8 @@ public class InvalidLotteryLotUtils {
             return false;
         }
 
-        int noTelLotteryLotCount = AppConfig.getNoTelLotteryLotCountValue();
-        double noTelLotteryLotPrice = AppConfig.getNoTelLotteryLotPriceValue();
+        int noTelLotteryLotCount = AppConfig.lottery.getNoTelLotCountValue();
+        double noTelLotteryLotPrice = AppConfig.lottery.getNoTelLotPriceValue();
 
         return new LotteryLotCounter().countByUser(user.getId()) > noTelLotteryLotCount ||
                 activity.getCommodity().getPrice() > noTelLotteryLotPrice;

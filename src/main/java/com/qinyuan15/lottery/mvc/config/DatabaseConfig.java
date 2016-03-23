@@ -27,11 +27,11 @@ abstract class DatabaseConfig {
     }
 
     protected Integer parseInteger(String value) {
-        if (value != null && NumberUtils.isNumber(value)) {
-            return Integer.parseInt(value);
-        } else {
-            return null;
-        }
+        return NumberUtils.isNumber(value) ? Integer.parseInt(value) : null;
+    }
+
+    protected Double parseDouble(String value) {
+        return NumberUtils.isNumber(value) ? Double.parseDouble(value) : null;
     }
 
     public Boolean parseBoolean(String value) {
@@ -53,7 +53,7 @@ abstract class DatabaseConfig {
         cache.addValue(key, value);
     }
 
-    protected void saveToDatabase(String key, Integer value) {
+    protected void saveToDatabase(String key, Number value) {
         if (value == null) {
             saveToDatabase(key, (String) null);
         } else {

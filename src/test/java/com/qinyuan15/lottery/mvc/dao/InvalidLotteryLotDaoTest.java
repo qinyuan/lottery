@@ -36,16 +36,16 @@ public class InvalidLotteryLotDaoTest extends DatabaseTestCase {
         LotteryActivity activity = new LotteryActivityDao().getInstance(2);
         assertThat(dao.getNoTelUserIds(activity)).containsExactly(3, 4);
 
-        AppConfig.updateNoTelLotteryLotCount(2);
+        AppConfig.lottery.updateNoTelLotCount(2);
         assertThat(dao.getNoTelUserIds(activity)).containsExactly(3, 4);
 
         double commodityPrice = activity.getCommodity().getPrice();
-        AppConfig.updateNoTelLotteryLotPrice(commodityPrice - 0.01);
+        AppConfig.lottery.updateNoTelLotPrice(commodityPrice - 0.01);
         assertThat(dao.getNoTelUserIds(activity)).containsExactly(3, 4);
-        AppConfig.updateNoTelLotteryLotPrice(commodityPrice);
+        AppConfig.lottery.updateNoTelLotPrice(commodityPrice);
         assertThat(dao.getNoTelUserIds(activity)).isEmpty();
 
-        AppConfig.updateNoTelLotteryLotCount(0);
+        AppConfig.lottery.updateNoTelLotCount(0);
         assertThat(dao.getNoTelUserIds(activity)).containsExactly(3, 4);
 
         // give user 3 a tel

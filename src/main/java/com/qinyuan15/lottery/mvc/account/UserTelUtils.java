@@ -15,7 +15,7 @@ public class UserTelUtils {
             return false;
         }
 
-        Integer noTelLiveness = AppConfig.getNoTelLiveness();
+        Integer noTelLiveness = AppConfig.lottery.getNoTelLiveness();
         if (!IntegerUtils.isPositive(noTelLiveness)) {
             return false;
         }
