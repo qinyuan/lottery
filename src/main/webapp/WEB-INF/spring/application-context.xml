@@ -14,8 +14,8 @@
     <import resource="application-activity.xml"/>
     <bean class="com.qinyuan.lib.network.http.TimingVisitor" init-method="init">
         <property name="pages" value="commodity.html,index.html,take-lottery.json?commodityId=1"/>
-        <property name="interval" value="300"/>
-        <!-- 300 means 5 minutes -->
+        <property name="interval" value="180"/>
+        <!-- 180 means 3 minutes -->
     </bean>
 
 </beans>

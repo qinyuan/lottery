@@ -46,5 +46,8 @@ public class NavigationLinkDaoTest extends DatabaseTestCase {
         assertThat(dao.count()).isEqualTo(2);
         assertThat(dao.getInstance(4)).isNotNull();
         assertThat(dao.getInstance(5)).isNotNull();
+
+        dao.clearAndSave(new ArrayList<NavigationLink>());
+        assertThat(dao.count()).isZero();
     }
 }
