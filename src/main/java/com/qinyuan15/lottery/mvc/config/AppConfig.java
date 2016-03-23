@@ -13,31 +13,10 @@ public class AppConfig {
     public final static IndexConfig index = new IndexConfig();
     public final static LotteryConfig lottery = new LotteryConfig();
     public final static SeckillConfig seckill = new SeckillConfig();
-    public final static LivenessConfig liveness =  new LivenessConfig();
+    public final static LivenessConfig liveness = new LivenessConfig();
+    public final static QQListConfig qqlist = new QQListConfig();
 
     private final static AppConfigDao dao = new AppConfigDao();
-
-    ////////////////////////////// qqlist start ////////////////////////////////////
-    private final static String QQ_LIST_ID_KEY = "qqlistId";
-
-    public static String getQQListId() {
-        return dao.get(QQ_LIST_ID_KEY);
-    }
-
-    public static void updateQQListId(String qqlistId) {
-        dao.save(QQ_LIST_ID_KEY, qqlistId);
-    }
-
-    private final static String QQ_LIST_DESCRIPTION_KEY = "qqlistDescription";
-
-    public static String getQQListDescription() {
-        return dao.get(QQ_LIST_DESCRIPTION_KEY);
-    }
-
-    public static void updateQQListDescription(String qqlistDescription) {
-        dao.save(QQ_LIST_DESCRIPTION_KEY, qqlistDescription);
-    }
-    ////////////////////////////// qqlist end //////////////////////////////////////
 
     //////////////////////////// invalid lot system info template ////////////////////////////
     private final static String NO_TEL_INVALID_LOT_SYSTEM_INFO_TEMPLATE_KEY = "noTelInvalidLotSystemInfoTemplate";

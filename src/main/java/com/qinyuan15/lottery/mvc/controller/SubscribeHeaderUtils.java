@@ -5,7 +5,7 @@ import com.qinyuan15.lottery.mvc.config.AppConfig;
 
 public class SubscribeHeaderUtils {
     static void setHeaderParameters(ImageController controller) {
-        controller.setAttribute("qqlistId", AppConfig.getQQListId());
-        controller.setAttribute("qqlistDescription", AppConfig.getQQListDescription());
+        controller.setAttribute("qqlistId", AppConfig.qqlist.getId());
+        controller.setAttribute("qqlistDescription", AppConfig.qqlist.getDescription());
     }
 }

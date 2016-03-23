@@ -36,8 +36,8 @@ public class AdminSubscribeConfigController extends ImageController {
         }
 
         try {
-            AppConfig.updateQQListId(qqlistId);
-            AppConfig.updateQQListDescription(qqlistDescription);
+            AppConfig.qqlist.updateId(qqlistId);
+            AppConfig.qqlist.updateDescription(qqlistDescription);
             return success();
         } catch (Exception e) {
             LOGGER.error("fail to update subscribe config, id: {}, description: {}, info: {}"
