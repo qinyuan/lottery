@@ -7,6 +7,7 @@ import com.qinyuan.lib.lang.Cache;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan15.lottery.mvc.CacheFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,13 +21,25 @@ public class IndexImageDao extends AbstractDao<IndexImage> {
     @SuppressWarnings("unchecked")
     @Override
     public List<IndexImage> getInstances() {
-        return (List) CACHE.getValue(CACHE_KEY, new Cache.Source() {
+        List<IndexImage> list = (List) CACHE.getValue(CACHE_KEY, new Cache.Source() {
             @Override
             public Object getValue() {
                 return new HibernateListBuilder().addOrder("rowIndex", true).addOrder("id", true)
                         .build(IndexImage.class);
             }
         });
+
+        List<IndexImage> copyList = new ArrayList<>();
+        for (IndexImage image : list) {
+            IndexImage newImage = new IndexImage();
+            newImage.setId(image.getId());
+            newImage.setBackPath(image.getBackPath());
+            newImage.setPath(image.getPath());
+            newImage.setRowIndex(image.getRowIndex());
+            copyList.add(newImage);
+        }
+
+        return copyList;
     }
 
     public synchronized Integer add(String path, String backPath) {
