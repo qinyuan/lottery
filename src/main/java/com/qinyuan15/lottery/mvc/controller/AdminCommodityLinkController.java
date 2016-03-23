@@ -1,6 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
-import com.qinyuan.lib.image.ImageMapDao;
+import com.qinyuan.lib.image.CachedImageMapDao;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import com.qinyuan15.lottery.mvc.ImageMapType;
@@ -28,7 +28,7 @@ public class AdminCommodityLinkController extends ImageController {
         new CommodityImageUrlAdapter(this).adapt(commodityImage);
 
         setAttribute("image", commodityImage.getPath());
-        setAttributeAndJavaScriptData("imageMaps", new ImageMapDao(ImageMapType.COMMODITY)
+        setAttributeAndJavaScriptData("imageMaps", new CachedImageMapDao(ImageMapType.COMMODITY)
                 .getInstancesByRelateId(commodityImageId));
         addJavaScriptData("relateType", ImageMapType.COMMODITY);
         setAttribute("buildInHrefs", new AdminImageMapController.BuildInHrefBuilder()

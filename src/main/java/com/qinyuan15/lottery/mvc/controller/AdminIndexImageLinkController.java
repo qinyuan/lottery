@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan.lib.image.CachedImageMapDao;
 import com.qinyuan.lib.image.ImageMapDao;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
@@ -27,7 +28,7 @@ public class AdminIndexImageLinkController extends ImageController {
         IndexHeaderUtils.adapt(this, indexImage);
 
         setAttribute("image", indexImage.getPath());
-        setAttributeAndJavaScriptData("imageMaps", new ImageMapDao(ImageMapType.INDEX)
+        setAttributeAndJavaScriptData("imageMaps", new CachedImageMapDao(ImageMapType.INDEX)
                 .getInstancesByRelateId(imageId));
         addJavaScriptData("relateType", ImageMapType.INDEX);
 

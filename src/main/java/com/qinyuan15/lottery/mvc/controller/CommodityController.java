@@ -1,5 +1,6 @@
 package com.qinyuan15.lottery.mvc.controller;
 
+import com.qinyuan.lib.image.CachedImageMapDao;
 import com.qinyuan.lib.image.ImageMap;
 import com.qinyuan.lib.image.ImageMapDao;
 import com.qinyuan.lib.lang.IntegerUtils;
@@ -25,7 +26,7 @@ import java.util.List;
 
 @Controller
 public class CommodityController extends ImageController {
-    private ImageMapDao mapDao = new ImageMapDao(ImageMapType.COMMODITY);
+    private ImageMapDao mapDao = new CachedImageMapDao(ImageMapType.COMMODITY);
 
     private final static String DEFAULT_TITLE = "布迪网-商品及活动";
     private final static String DEFAULT_DESCRIPTION = "这里有一个免费的商品抽奖活动，赶快来参加吧！！！";

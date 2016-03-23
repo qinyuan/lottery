@@ -91,7 +91,7 @@ public class AdminIndexEditController extends ImageController {
 
     @RequestMapping("/admin-index-delete-image.json")
     @ResponseBody
-    public String json(@RequestParam(value = "id", required = true) Integer id) {
+    public String deleteImage(@RequestParam(value = "id", required = true) Integer id) {
         if (!IntegerUtils.isPositive(id)) {
             return failByInvalidParam();
         }

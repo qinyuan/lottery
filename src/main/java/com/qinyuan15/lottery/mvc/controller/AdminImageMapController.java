@@ -1,7 +1,7 @@
 package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.config.LinkAdapter;
-import com.qinyuan.lib.image.ImageMapDao;
+import com.qinyuan.lib.image.CachedImageMapDao;
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ public class AdminImageMapController extends ImageController {
         }
 
         try {
-            new ImageMapDao(relateType).update(id, href, comment);
+            new CachedImageMapDao(relateType).update(id, href, comment);
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to edit image map, info: {}", e);
@@ -73,7 +73,7 @@ public class AdminImageMapController extends ImageController {
         }
 
         try {
-            new ImageMapDao(relateType).add(relateId, xStart, yStart, xEnd, yEnd, href, comment);
+            new CachedImageMapDao(relateType).add(relateId, xStart, yStart, xEnd, yEnd, href, comment);
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to add image map, info: {}", e);
@@ -86,7 +86,7 @@ public class AdminImageMapController extends ImageController {
     public String delete(@RequestParam(value = "relateType", required = true) String relateType,
                          @RequestParam(value = "id", required = true) Integer id) {
         try {
-            new ImageMapDao(relateType).delete(id);
+            new CachedImageMapDao(relateType).delete(id);
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to delete image map, info: {}", e);
