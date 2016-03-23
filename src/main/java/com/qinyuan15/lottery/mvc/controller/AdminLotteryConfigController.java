@@ -43,9 +43,9 @@ public class AdminLotteryConfigController extends ImageController {
 
         // data about liveness
         //setAttribute("newLotLiveness", AppConfig.getNewLotLiveness());
-        setAttribute("shareSucceedLiveness", AppConfig.getShareSucceedLiveness());
-        setAttribute("remindLivenessIncreaseBySystemInfo", AppConfig.getRemindLivenessIncreaseBySystemInfo());
-        setAttribute("livenessIncreaseSystemInfoTemplate", AppConfig.getLivenessIncreaseSystemInfoTemplate());
+        setAttribute("shareSucceedLiveness", AppConfig.liveness.getShareSucceedLiveness());
+        setAttribute("remindLivenessIncreaseBySystemInfo", AppConfig.liveness.getRemindIncreaseBySystemInfo());
+        setAttribute("livenessIncreaseSystemInfoTemplate", AppConfig.liveness.getIncreaseSystemInfoTemplate());
 
         // data about mail account
         setAttribute("mailSelectFormItems", new MailSelectFormItemBuilder().build());
@@ -130,9 +130,10 @@ public class AdminLotteryConfigController extends ImageController {
         AppConfig.lottery.updateQzoneSummary(qzoneSummary);
         AppConfig.lottery.updateQzoneIncludePicture(qzoneIncludePicture);
         //AppConfig.updateNewLotLiveness(newLotLiveness);
-        AppConfig.updateShareSucceedLiveness(shareSucceedLiveness);
         AppConfig.lottery.updateRuleLink(lotteryRuleLink);
         AppConfig.lottery.updateAnnouncementTemplate(lotteryAnnouncementTemplate);
+
+        AppConfig.liveness.updateShareSucceedLiveness(shareSucceedLiveness);
         AppConfig.updateNoTelInvalidLotSystemInfoTemplate(noTelInvalidLotSystemInfoTemplate);
         AppConfig.updateInsufficientLivenessInvalidLotSystemInfoTemplate(insufficientLivenessInvalidLotSystemInfoTemplate);
         /*AppConfig.updateNoTelLotteryLotCount(noTelLotteryLotCount);
@@ -159,10 +160,10 @@ public class AdminLotteryConfigController extends ImageController {
         }
 
         if (remindLivenessIncreaseBySystemInfo != null) {
-            AppConfig.updateRemindLivenessIncreaseBySystemInfo(true);
-            AppConfig.updateLivenessIncreaseSystemInfoTemplate(livenessIncreaseSystemInfoTemplate);
+            AppConfig.liveness.updateRemindIncreaseBySystemInfo(true);
+            AppConfig.liveness.updateIncreaseSystemInfoTemplate(livenessIncreaseSystemInfoTemplate);
         } else {
-            AppConfig.updateRemindLivenessIncreaseBySystemInfo(false);
+            AppConfig.liveness.updateRemindIncreaseBySystemInfo(false);
         }
 
         return redirect(index);

@@ -87,7 +87,7 @@ public class LivenessAdder {
             return null;
         }
 
-        Integer liveness = AppConfig.getShareSucceedLiveness();
+        Integer liveness = AppConfig.liveness.getShareSucceedLiveness();
         if (!IntegerUtils.isPositive(liveness)) {
             LOGGER.warn("invalid share succeed liveness: {}", liveness);
             return null;

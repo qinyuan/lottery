@@ -13,42 +13,9 @@ public class AppConfig {
     public final static IndexConfig index = new IndexConfig();
     public final static LotteryConfig lottery = new LotteryConfig();
     public final static SeckillConfig seckill = new SeckillConfig();
+    public final static LivenessConfig liveness =  new LivenessConfig();
 
     private final static AppConfigDao dao = new AppConfigDao();
-
-    ///////////////////////// share succeed liveness start /////////////////////
-    private final static String SHARE_SUCCEED_LIVENESS_KEY = "shareSucceedLiveness";
-
-    public static Integer getShareSucceedLiveness() {
-        return dao.getInteger(SHARE_SUCCEED_LIVENESS_KEY);
-    }
-
-    public static void updateShareSucceedLiveness(Integer shareSucceedLiveness) {
-        dao.saveInteger(SHARE_SUCCEED_LIVENESS_KEY, shareSucceedLiveness);
-    }
-    ///////////////////////// share succeed liveness end /////////////////////
-
-    ////////////////////////////// liveness increase start ////////////////////////////////
-    private final static String REMIND_LIVENESS_INCREASE_BY_SYSTEM_INFO_KEY = "remindLivenessIncreaseBySystemInfo";
-
-    public static Boolean getRemindLivenessIncreaseBySystemInfo() {
-        return dao.getBoolean(REMIND_LIVENESS_INCREASE_BY_SYSTEM_INFO_KEY);
-    }
-
-    public static void updateRemindLivenessIncreaseBySystemInfo(Boolean remindLivenessIncreaseBySystemInfo) {
-        dao.saveBoolean(REMIND_LIVENESS_INCREASE_BY_SYSTEM_INFO_KEY, remindLivenessIncreaseBySystemInfo);
-    }
-
-    private final static String LIVENESS_INCREASE_SYSTEM_INFO_TEMPLATE_KEY = "livenessIncreaseSystemInfoTemplate";
-
-    public static String getLivenessIncreaseSystemInfoTemplate() {
-        return dao.get(LIVENESS_INCREASE_SYSTEM_INFO_TEMPLATE_KEY);
-    }
-
-    public static void updateLivenessIncreaseSystemInfoTemplate(String template) {
-        dao.save(LIVENESS_INCREASE_SYSTEM_INFO_TEMPLATE_KEY, template);
-    }
-    ////////////////////////////// liveness increase end /////////////////////////////////
 
     ////////////////////////////// qqlist start ////////////////////////////////////
     private final static String QQ_LIST_ID_KEY = "qqlistId";

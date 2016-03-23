@@ -89,7 +89,7 @@ public class SupportController extends ImageController {
                     activityId = -1;
                 }
                 LivenessAdder.addLiveness(receiveUserId, false, userId, medium, activityId);
-                result.put(livenessToAddKey, AppConfig.getShareSucceedLiveness());
+                result.put(livenessToAddKey, AppConfig.liveness.getShareSucceedLiveness());
                 result.put(JsonResult.SUCCESS, true);
                 return toJson(result);
             }

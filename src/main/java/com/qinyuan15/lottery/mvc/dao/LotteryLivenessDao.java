@@ -102,7 +102,7 @@ public class LotteryLivenessDao {
         Integer id = HibernateUtils.save(ll);
 
         // send email or system information to user
-        Boolean remindLivenessIncreaseBySystemInfo = AppConfig.getRemindLivenessIncreaseBySystemInfo();
+        Boolean remindLivenessIncreaseBySystemInfo = AppConfig.liveness.getRemindIncreaseBySystemInfo();
         if (BooleanUtils.toBoolean(remindLivenessIncreaseBySystemInfo)) {
             try {
                 new LivenessIncreaseSystemInfoSender().send(ll);

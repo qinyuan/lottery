@@ -14,7 +14,7 @@ public class LivenessIncreaseSystemInfoSender extends LivenessIncreaseInfoSender
 
     @Override
     protected void doSend(User user, LotteryActivity activity, LotteryLiveness liveness, PlaceholderConverter placeholderConverter) {
-        String content = AppConfig.getLivenessIncreaseSystemInfoTemplate();
+        String content = AppConfig.liveness.getIncreaseSystemInfoTemplate();
         if (StringUtils.hasText(content)) {
             new SystemInfoSendRecordDao().add(user.getId(), placeholderConverter.convert(content));
         } else {
