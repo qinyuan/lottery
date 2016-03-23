@@ -3,6 +3,7 @@ package com.qinyuan15.lottery.mvc.config;
 import com.qinyuan.lib.config.AppConfigDao;
 import com.qinyuan.lib.lang.Cache;
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan15.lottery.mvc.CacheFactory;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,14 +15,14 @@ import org.slf4j.LoggerFactory;
 abstract class DatabaseConfig {
     private final static Logger LOGGER = LoggerFactory.getLogger(DatabaseConfig.class);
 
-    protected final static AppConfigDao dao = new AppConfigDao();
-    protected final static Cache cache = new Cache();
+    private final static AppConfigDao DAO = new AppConfigDao();
+    private final static Cache CACHE = CacheFactory.getInstance();
 
     protected static String getValue(final String key) {
-        return (String) cache.getValue(key, new Cache.Source() {
+        return (String) CACHE.getValue(key, new Cache.Source() {
             @Override
             public Object getValue() {
-                return dao.get(key);
+                return DAO.get(key);
             }
         });
     }
@@ -49,8 +50,8 @@ abstract class DatabaseConfig {
             value = "";
         }
 
-        dao.save(key, value);
-        cache.addValue(key, value);
+        DAO.save(key, value);
+        CACHE.addValue(key, value);
     }
 
     protected static void saveToDatabase(String key, Number value) {

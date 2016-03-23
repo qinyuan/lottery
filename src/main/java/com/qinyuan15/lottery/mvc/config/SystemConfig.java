@@ -113,21 +113,21 @@ public class SystemConfig extends DatabaseConfig {
     private final static String REGISTER_HEADER_LEFT_LOGO_KEY = "registerHeaderLeftLogo";
 
     public String getRegisterHeaderLeftLogo() {
-        return dao.get(REGISTER_HEADER_LEFT_LOGO_KEY);
+        return getValue(REGISTER_HEADER_LEFT_LOGO_KEY);
     }
 
     public void updateRegisterHeaderLeftLogo(String registerHeaderLeftLogo) {
-        dao.save(REGISTER_HEADER_LEFT_LOGO_KEY, registerHeaderLeftLogo);
+        saveToDatabase(REGISTER_HEADER_LEFT_LOGO_KEY, registerHeaderLeftLogo);
     }
 
     private final static String REGISTER_HEADER_RIGHT_LOGO_KEY = "registerHeaderRightLogo";
 
     public String getRegisterHeaderRightLogo() {
-        return dao.get(REGISTER_HEADER_RIGHT_LOGO_KEY);
+        return getValue(REGISTER_HEADER_RIGHT_LOGO_KEY);
     }
 
     public void updateRegisterHeaderRightLogo(String registerHeaderRightLogo) {
-        dao.save(REGISTER_HEADER_RIGHT_LOGO_KEY, registerHeaderRightLogo);
+        saveToDatabase(REGISTER_HEADER_RIGHT_LOGO_KEY, registerHeaderRightLogo);
     }
     ////////////////////////////////// register logo end /////////////////////////////////////
 }

@@ -5,6 +5,7 @@ import com.qinyuan.lib.database.hibernate.HibernateDeleter;
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
 import com.qinyuan.lib.lang.Cache;
+import com.qinyuan15.lottery.mvc.CacheFactory;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public class NavigationLinkDao extends AbstractDao<NavigationLink> {
 
-    private final static Cache cache = new Cache();
+    private final static Cache cache = CacheFactory.getInstance();
     private final static String NAVIGATION_LINK_CACHE_KEY = "navigationLink";
 
     @SuppressWarnings("unchecked")
