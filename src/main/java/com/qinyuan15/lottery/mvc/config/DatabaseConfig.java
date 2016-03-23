@@ -17,7 +17,7 @@ abstract class DatabaseConfig {
     protected final static AppConfigDao dao = new AppConfigDao();
     protected final static Cache cache = new Cache();
 
-    protected String getValue(final String key) {
+    protected static String getValue(final String key) {
         return (String) cache.getValue(key, new Cache.Source() {
             @Override
             public Object getValue() {
@@ -26,24 +26,24 @@ abstract class DatabaseConfig {
         });
     }
 
-    protected Integer parseInteger(String value) {
+    protected static Integer parseInteger(String value) {
         return NumberUtils.isNumber(value) ? Integer.parseInt(value) : null;
     }
 
-    protected Double parseDouble(String value) {
+    protected static Double parseDouble(String value) {
         return NumberUtils.isNumber(value) ? Double.parseDouble(value) : null;
     }
 
-    public Boolean parseBoolean(String value) {
+    public static Boolean parseBoolean(String value) {
         return value == null ? null : Boolean.parseBoolean(value);
     }
 
-    protected Integer parsePositiveInteger(String value) {
+    protected static Integer parsePositiveInteger(String value) {
         Integer integer = parseInteger(value);
         return IntegerUtils.isPositive(integer) ? integer : null;
     }
 
-    protected void saveToDatabase(String key, String value) {
+    protected static void saveToDatabase(String key, String value) {
         if (value == null) {
             LOGGER.warn("value is null");
             value = "";
@@ -53,7 +53,7 @@ abstract class DatabaseConfig {
         cache.addValue(key, value);
     }
 
-    protected void saveToDatabase(String key, Number value) {
+    protected static void saveToDatabase(String key, Number value) {
         if (value == null) {
             saveToDatabase(key, (String) null);
         } else {
@@ -61,7 +61,7 @@ abstract class DatabaseConfig {
         }
     }
 
-    public void saveToDatabase(String key, Boolean value) {
+    public static void saveToDatabase(String key, Boolean value) {
         if (value == null) {
             saveToDatabase(key, (String) null);
         } else if (value) {

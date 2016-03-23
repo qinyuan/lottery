@@ -14,17 +14,15 @@ public class AppConfig extends DatabaseConfig {
     public final static LivenessConfig liveness = new LivenessConfig();
     public final static QQListConfig qqlist = new QQListConfig();
 
-    //private final static AppConfigDao dao = new AppConfigDao();
-
     //////////////////////////////////// tel modification limit start ////////////////////////////
     private final static String MAX_TEL_MODIFICATION_TIMES_KEY = "maxTelModificationTimes";
 
     public static Integer getMaxTelModificationTimes() {
-        return dao.getInteger(MAX_TEL_MODIFICATION_TIMES_KEY);
+        return parseInteger(getValue(MAX_TEL_MODIFICATION_TIMES_KEY));
     }
 
     public static void updateMaxTelModificationTimes(Integer maxTelModificationTimes) {
-        dao.saveInteger(MAX_TEL_MODIFICATION_TIMES_KEY, maxTelModificationTimes);
+        saveToDatabase(MAX_TEL_MODIFICATION_TIMES_KEY, maxTelModificationTimes);
     }
     //////////////////////////////////// tel modification limit end //////////////////////////////
 
@@ -32,21 +30,21 @@ public class AppConfig extends DatabaseConfig {
     private final static String SUPPORT_PAGE_IMAGE_KEY = "supportPageImage";
 
     public static String getSupportPageImage() {
-        return dao.get(SUPPORT_PAGE_IMAGE_KEY);
+        return getValue(SUPPORT_PAGE_IMAGE_KEY);
     }
 
     public static void updateSupportPageImage(String supportPageImage) {
-        dao.save(SUPPORT_PAGE_IMAGE_KEY, supportPageImage);
+        saveToDatabase(SUPPORT_PAGE_IMAGE_KEY, supportPageImage);
     }
 
     private final static String SUPPORT_PAGE_TEXT_KEY = "supportPageText";
 
     public static String getSupportPageText() {
-        return dao.get(SUPPORT_PAGE_TEXT_KEY);
+        return getValue(SUPPORT_PAGE_TEXT_KEY);
     }
 
     public static void updateSupportPageText(String supportPageText) {
-        dao.save(SUPPORT_PAGE_TEXT_KEY, supportPageText);
+        saveToDatabase(SUPPORT_PAGE_TEXT_KEY, supportPageText);
     }
     //////////////////////////////////// support page end ///////////////////////////////////
 }
