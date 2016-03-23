@@ -3,7 +3,9 @@ package com.qinyuan15.lottery.mvc.dao;
 import com.qinyuan.lib.database.hibernate.AbstractDao;
 import com.qinyuan.lib.database.hibernate.HibernateListBuilder;
 import com.qinyuan.lib.database.hibernate.HibernateUtils;
+import com.qinyuan.lib.lang.Cache;
 import com.qinyuan.lib.lang.IntegerUtils;
+import com.qinyuan15.lottery.mvc.CacheFactory;
 
 import java.util.List;
 
@@ -12,11 +14,19 @@ import java.util.List;
  * Created by qinyuan on 15-6-18.
  */
 public class IndexImageDao extends AbstractDao<IndexImage> {
+    private final static Cache CACHE = CacheFactory.getInstance();
+    private final static String CACHE_KEY = "indexImages";
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<IndexImage> getInstances() {
-        return new HibernateListBuilder().addOrder("rowIndex", true).addOrder("id", true)
-                .build(IndexImage.class);
+        return (List) CACHE.getValue(CACHE_KEY, new Cache.Source() {
+            @Override
+            public Object getValue() {
+                return new HibernateListBuilder().addOrder("rowIndex", true).addOrder("id", true)
+                        .build(IndexImage.class);
+            }
+        });
     }
 
     public synchronized Integer add(String path, String backPath) {
@@ -32,6 +42,7 @@ public class IndexImageDao extends AbstractDao<IndexImage> {
     }
 
     public Integer add(String path, String backPath, int rowIndex) {
+        CACHE.deleteValue(CACHE_KEY);
         IndexImage indexImage = new IndexImage();
         indexImage.setPath(path);
         indexImage.setBackPath(backPath);
@@ -40,6 +51,7 @@ public class IndexImageDao extends AbstractDao<IndexImage> {
     }
 
     public void update(int id, String path, String backPath) {
+        CACHE.deleteValue(CACHE_KEY);
         IndexImage indexImage = getInstance(id);
         if (indexImage != null) {
             indexImage.setPath(path);

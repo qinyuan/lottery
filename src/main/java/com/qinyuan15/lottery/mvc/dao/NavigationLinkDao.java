@@ -15,12 +15,12 @@ import java.util.List;
  */
 public class NavigationLinkDao extends AbstractDao<NavigationLink> {
 
-    private final static Cache cache = CacheFactory.getInstance();
-    private final static String NAVIGATION_LINK_CACHE_KEY = "navigationLink";
+    private final static Cache CACHE = CacheFactory.getInstance();
+    private final static String NAVIGATION_LINK_CACHE_KEY = "navigationLinks";
 
     @SuppressWarnings("unchecked")
     public List<NavigationLink> getInstances() {
-        return (List) cache.getValue(NAVIGATION_LINK_CACHE_KEY, new Cache.Source() {
+        return (List) CACHE.getValue(NAVIGATION_LINK_CACHE_KEY, new Cache.Source() {
             @Override
             public Object getValue() {
                 return new HibernateListBuilder().build(NavigationLink.class);
@@ -29,7 +29,7 @@ public class NavigationLinkDao extends AbstractDao<NavigationLink> {
     }
 
     public void clearAndSave(List<NavigationLink> links) {
-        cache.deleteValue(NAVIGATION_LINK_CACHE_KEY);
+        CACHE.deleteValue(NAVIGATION_LINK_CACHE_KEY);
         HibernateDeleter.deleteAll(NavigationLink.class);
         HibernateUtils.batchSave(links);
     }
