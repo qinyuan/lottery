@@ -35,4 +35,13 @@ public class IndexImage extends PersistObject {
     public void setRowIndex(Integer rowIndex) {
         this.rowIndex = rowIndex;
     }
+
+    public IndexImage copy() {
+        IndexImage image = new IndexImage();
+        image.setId(getId());
+        image.setPath(path);
+        image.setBackPath(backPath);
+        image.setRowIndex(rowIndex);
+        return image;
+    }
 }

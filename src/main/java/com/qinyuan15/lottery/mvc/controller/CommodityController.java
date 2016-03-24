@@ -31,13 +31,6 @@ public class CommodityController extends ImageController {
     private final static String DEFAULT_TITLE = "布迪网-商品及活动";
     private final static String DEFAULT_DESCRIPTION = "这里有一个免费的商品抽奖活动，赶快来参加吧！！！";
 
-    /*@RequestMapping("/commodity-test")
-    public String test(@RequestParam(value = "id", required = false) Integer id,
-                       @RequestParam(value = "fromUser", required = false) String userSerialKey,
-                       @RequestParam(value = "medium", required = false) String medium) {
-        return index(id, userSerialKey, medium);
-    }*/
-
     @RequestMapping("/commodity")
     public String index(@RequestParam(value = "id", required = false) Integer id,
                         @RequestParam(value = "fromUser", required = false) String userSerialKey,

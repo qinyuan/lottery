@@ -31,12 +31,7 @@ public class IndexImageDao extends AbstractDao<IndexImage> {
 
         List<IndexImage> copyList = new ArrayList<>();
         for (IndexImage image : list) {
-            IndexImage newImage = new IndexImage();
-            newImage.setId(image.getId());
-            newImage.setBackPath(image.getBackPath());
-            newImage.setPath(image.getPath());
-            newImage.setRowIndex(image.getRowIndex());
-            copyList.add(newImage);
+            copyList.add(image.copy());
         }
 
         return copyList;

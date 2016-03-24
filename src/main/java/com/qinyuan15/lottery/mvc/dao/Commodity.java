@@ -14,8 +14,6 @@ public class Commodity extends AbstractRanking {
     private String name;
     private Boolean own;
     private String snapshot;
-    /*private String detailImage;
-    private String backImage;*/
     private Boolean visible;
 
     public Double getPrice() {
@@ -33,14 +31,6 @@ public class Commodity extends AbstractRanking {
     public String getSnapshot() {
         return snapshot;
     }
-
-    /*public String getDetailImage() {
-        return detailImage;
-    }
-
-    public String getBackImage() {
-        return backImage;
-    }*/
 
     public Boolean getVisible() {
         return visible;
@@ -62,14 +52,6 @@ public class Commodity extends AbstractRanking {
         this.snapshot = snapshot;
     }
 
-    /*public void setDetailImage(String detailImage) {
-        this.detailImage = detailImage;
-    }
-
-    public void setBackImage(String backImage) {
-        this.backImage = backImage;
-    }*/
-
     public void setVisible(Boolean visible) {
         this.visible = visible;
     }
@@ -79,12 +61,27 @@ public class Commodity extends AbstractRanking {
         return this.price == null ? null : CurrencyUtils.trimUselessDecimal(this.price);
     }
 
-    private List<CommodityImage> imagesCache;
+    //private List<CommodityImage> imagesCache;
 
-    public synchronized List<CommodityImage> getImages() {
-        if (imagesCache == null) {
+    public /*synchronized*/ List<CommodityImage> getImages() {
+        /*if (imagesCache == null) {
             imagesCache = new CommodityImageDao().getInstancesByCommodityId(getId());
         }
-        return imagesCache;
+        return imagesCache;*/
+        return new CommodityImageDao().getInstancesByCommodityId(getId());
+    }
+
+    public Commodity copy() {
+        Commodity commodity = new Commodity();
+
+        commodity.setId(getId());
+        commodity.setPrice(price);
+        commodity.setName(name);
+        commodity.setOwn(own);
+        commodity.setSnapshot(snapshot);
+        commodity.setVisible(visible);
+        commodity.setRanking(getRanking());
+
+        return commodity;
     }
 }

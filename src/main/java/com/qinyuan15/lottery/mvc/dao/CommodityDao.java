@@ -1,8 +1,11 @@
 package com.qinyuan15.lottery.mvc.dao;
 
 import com.qinyuan.lib.database.hibernate.*;
+import com.qinyuan.lib.lang.Cache;
 import com.qinyuan.lib.mvc.controller.RankingPaginationItemFactory;
+import com.qinyuan15.lottery.mvc.CacheFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,6 +13,8 @@ import java.util.List;
  * Created by qinyuan on 15-6-22.
  */
 public class CommodityDao extends AbstractRankingDao<Commodity> {
+    private final static Cache CACHE = CacheFactory.getInstance();
+    private final static String CACHE_KEY = "commodities";
 
     public static class Factory extends RankingPaginationItemFactory<Commodity> {
         @Override
@@ -22,19 +27,41 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
         return new Factory();
     }
 
-    public Integer add(String name, Double price, String snapshot/*, String detailImage, String backImage*/) {
+    private void clearCache() {
+        CACHE.deleteValue(CACHE_KEY);
+    }
+
+    public Integer add(String name, Double price, String snapshot) {
+        clearCache();
+
         Commodity commodity = new Commodity();
         commodity.setPrice(price);
         commodity.setName(name);
         commodity.setSnapshot(snapshot);
-        /*commodity.setDetailImage(detailImage);
-        commodity.setBackImage(backImage);*/
 
         // set default field
         commodity.setVisible(false);
         commodity.setOwn(true);
 
         return new RankingDao().add(commodity);
+    }
+
+    @Override
+    public void rankUp(int id) {
+        clearCache();
+        super.rankUp(id);
+    }
+
+    @Override
+    public void rankDown(int id) {
+        clearCache();
+        super.rankDown(id);
+    }
+
+    @Override
+    public void rankTo(int id, int index) {
+        clearCache();
+        super.rankTo(id, index);
     }
 
     public boolean isUsed(Integer id) {
@@ -44,6 +71,7 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
     @Override
     public void delete(Integer id) {
         if (!isUsed(id)) {
+            clearCache();
             super.delete(id);
         }
     }
@@ -51,33 +79,64 @@ public class CommodityDao extends AbstractRankingDao<Commodity> {
     public void updateVisible(Integer id, boolean visible) {
         Commodity commodity = getInstance(id);
         if (commodity != null) {
+            clearCache();
             commodity.setVisible(visible);
             HibernateUtils.update(commodity);
         }
     }
 
-    public void update(Integer id, String name, Double price/*, Boolean own*/, String snapshot/*, String detailImage, String backImage*/) {
+    public void update(Integer id, String name, Double price, String snapshot) {
         Commodity commodity = getInstance(id);
         if (commodity != null) {
+            clearCache();
             commodity.setPrice(price);
             commodity.setName(name);
             commodity.setSnapshot(snapshot);
-            /*commodity.setDetailImage(detailImage);
-            commodity.setBackImage(backImage);*/
             HibernateUtils.update(commodity);
         }
     }
 
+    private List<Commodity> oldGetInstances() {
+        return super.getInstances();
+    }
+
+    @Override
+    public List<Commodity> getInstances() {
+        @SuppressWarnings("unchecked")
+        List<Commodity> commodities = (List) CACHE.getValue(CACHE_KEY, new Cache.Source() {
+            @Override
+            public Object getValue() {
+                return oldGetInstances();
+            }
+        });
+
+        List<Commodity> result = new ArrayList<>();
+        for (Commodity commodity : commodities) {
+            result.add(commodity.copy());
+        }
+
+        return result;
+    }
+
+    @Override
+    public Commodity getFirstInstance() {
+        List<Commodity> list = getInstances();
+        return list.isEmpty() ? null : list.get(0);
+    }
+
     public Commodity getFirstVisibleInstance() {
-        return getVisibleListBuilder().getFirstItem(Commodity.class);
+        List<Commodity> list = getVisibleInstances();
+        return list.isEmpty() ? null : list.get(0);
     }
 
     public List<Commodity> getVisibleInstances() {
-        return getVisibleListBuilder().build(Commodity.class);
-    }
-
-    private HibernateListBuilder getVisibleListBuilder() {
-        return new HibernateListBuilder().addEqualFilter("visible", true).addOrder("ranking", true);
+        List<Commodity> result = new ArrayList<>();
+        for (Commodity commodity : getInstances()) {
+            if (commodity.getVisible()) {
+                result.add(commodity);
+            }
+        }
+        return result;
     }
 
     /**

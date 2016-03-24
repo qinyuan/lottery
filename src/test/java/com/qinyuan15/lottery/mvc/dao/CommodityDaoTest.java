@@ -26,6 +26,11 @@ public class CommodityDaoTest extends DatabaseTestCase {
     }
 
     @Test
+    public void testGetInstances() {
+        assertThat(dao.getInstances()).hasSize(4);
+    }
+
+    @Test
     public void testGetFirstInstance() {
         assertThat(dao.getFirstInstance().getId()).isEqualTo(4);
     }
