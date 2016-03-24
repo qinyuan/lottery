@@ -7,7 +7,7 @@
         }
     </style>
     <script>
-        if (window['redirectUrl']){
+        if (window['redirectUrl']) {
             location.href = window['redirectUrl'];
         }
     </script>
@@ -38,6 +38,7 @@
                 </c:if>
             </div>
         </c:forEach>
+
         <div class="next lightTransparent"></div>
     </div>
 </div>
@@ -77,7 +78,7 @@
     </div>
 </div>
 <div class="float-panel" id="loading">
-   <img src="resources/css/images/loading.gif"/>
+    <img src="resources/css/images/loading.gif"/>
 </div>
 <div class="float-panel shadow" id="noTelPrompt">
     <jsp:include page="commodity-float-panel-title.jsp">

@@ -32,12 +32,23 @@ public class CommodityImage extends AbstractRanking {
     }
 
     ///////////////// derive fields /////////////////////
-    private Commodity commodityCache;
+    /*private Commodity commodityCache;*/
 
-    public synchronized Commodity getCommodity() {
-        if (commodityCache == null) {
+    public /*synchronized*/ Commodity getCommodity() {
+        /*if (commodityCache == null) {
             commodityCache = new CommodityDao().getInstance(commodityId);
         }
-        return commodityCache;
+        return commodityCache;*/
+        return new CommodityDao().getInstance(commodityId);
+    }
+
+    public CommodityImage copy() {
+        CommodityImage image = new CommodityImage();
+        image.setId(getId());
+        image.setCommodityId(commodityId);
+        image.setPath(path);
+        image.setBackPath(backPath);
+        image.setRanking(getRanking());
+        return image;
     }
 }

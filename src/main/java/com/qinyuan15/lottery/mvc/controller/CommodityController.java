@@ -166,7 +166,7 @@ public class CommodityController extends ImageController {
 
     @RequestMapping("/commodity-images.json")
     @ResponseBody
-    public String json(@RequestParam(value = "id", required = true) Integer id) {
+    public String getImages(@RequestParam(value = "id", required = true) Integer id) {
         List<CommodityImage> images = new CommodityImageDao().getInstancesByCommodityId(id);
         List<CommodityImageWrapper> wrappers = new ArrayList<>();
         for (CommodityImage image : images) {

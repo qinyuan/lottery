@@ -21,6 +21,8 @@ public class CommodityImageDaoTest extends DatabaseTestCase {
         assertThat(image.getPath()).isEqualTo("path_new");
         assertThat(image.getBackPath()).isEqualTo("back_path_new");
         assertThat(image.getRanking()).isEqualTo(4);
+
+        dao.clearCache();
     }
 
     @Test
@@ -30,6 +32,8 @@ public class CommodityImageDaoTest extends DatabaseTestCase {
         assertThat(image.getCommodityId()).isEqualTo(1);
         assertThat(image.getPath()).isEqualTo("path11");
         assertThat(image.getBackPath()).isEqualTo("backPath11");
+
+        dao.clearCache();
     }
 
     @Test
@@ -44,5 +48,17 @@ public class CommodityImageDaoTest extends DatabaseTestCase {
         assertThat(images.get(0).getId()).isEqualTo(3);
 
         assertThat(dao.getInstancesByCommodityId(333)).isEmpty();
+    }
+
+    @Test
+    public void testGetInstances() {
+        assertThat(dao.getInstances()).hasSize(3);
+    }
+
+    @Test
+    public void testGetInstance() {
+        assertThat(dao.getInstance(1).getId()).isEqualTo(1);
+
+        assertThat(dao.getInstance(4)).isNull();
     }
 }
