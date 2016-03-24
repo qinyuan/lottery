@@ -33,8 +33,15 @@ public abstract class AbstractActivityPaginationItemFactory<T extends AbstractAc
             listBuilder.addEqualFilter("expire", expire);
         }
         if (IntegerUtils.isPositive(userId)) {
-            listBuilder.addFilter("id IN (SELECT activityId FROM " + getLotClass().getSimpleName()
-                    + " WHERE userId=" + userId + ")");
+            String filter = "id IN (SELECT activityId FROM " + getLotClass().getSimpleName()
+                    + " WHERE userId=" + userId;
+            if (getLotClass().getSimpleName().contains("Lottery")) {
+                filter += " AND virtual=false";
+            }
+            filter += ")";
+            listBuilder.addFilter(filter);
+            /*listBuilder.addFilter("id IN (SELECT activityId FROM " + getLotClass().getSimpleName()
+                    + " WHERE userId=" + userId + ")");*/
         }
     }
 

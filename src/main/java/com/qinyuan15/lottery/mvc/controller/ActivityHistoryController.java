@@ -30,16 +30,8 @@ public class ActivityHistoryController extends ImageController {
         if (activityType == null) {
             activityType = DEFAULT_ACTIVITY_TYPE;
         }
-        /*DatabaseTable table = getTable();
-        setAttribute("lotteryHistoryTable", table);
-        new PaginationAttributeAdder(table, request).setRowItemsName("lotteryHistories").setPageSize(10).add();*/
         setAttribute("activityType", activityType);
 
-        /*if (activityType.equals(DEFAULT_ACTIVITY_TYPE)) {
-            setAttribute("activities", new LotteryActivityDao().getInstances());
-        } else {
-            setAttribute("activities", new SeckillActivityDao().getInstances());
-        }*/
         setAttribute("activities", getActivities());
 
         User user = new UserDao().getInstanceByName(SecurityUtils.getUsername());
@@ -50,8 +42,6 @@ public class ActivityHistoryController extends ImageController {
         }
 
         setTitle("活动历史");
-        //addCss("resources/js/lib/bootstrap/css/bootstrap-switch.min");
-        //addJs("lib/bootstrap/js/bootstrap-switch.min");
         addCss("resources/js/lib/icheck/skins/all", false);
         addJs("lib/icheck/icheck.min", false);
 
@@ -207,34 +197,4 @@ public class ActivityHistoryController extends ImageController {
             return invalid;
         }
     }
-/*
-    private DatabaseTable getTable() {
-        String tableName = "lottery_lot AS ll LEFT JOIN lottery_activity AS la ON ll.activity_id=la.id";
-        tableName += " LEFT JOIN commodity AS c ON la.commodity_id=c.id";
-
-        DatabaseTable table = new DatabaseTable(tableName, "ll.id", DatabaseTable.QueryType.SQL);
-        table.addField("奖品", "c.name", "prize");
-        table.addField("抽奖时间", "DATE_FORMAT(ll.lot_time,'%Y-%m-%d %T')", "lot_time");
-
-        String serialNumberField = "ll.serial_number";
-        table.addField("抽奖号", serialNumberField, "serial_number", new DatabaseTableColumnPostHandler() {
-            @Override
-            public Object handle(Object targetValue) {
-                if (targetValue == null || lotNumberFormat == null) {
-                    return targetValue;
-                } else {
-                    return lotNumberFormat.format(targetValue);
-                }
-            }
-        });
-
-        table.addField("开奖时间", "DATE_FORMAT(la.end_time,'%Y-%m-%d %T')", "end_time");
-        table.addField("中奖号", "la.winners", "winners");
-        table.addField("中奖公告", "la.announcement", "announcement");
-        table.addField("状态", "CASE WHEN la.expire=TRUE THEN '已结束' ELSE '进行中' END", "status");
-
-        table.addOrder("ll.id", false);
-
-        return table;
-    }*/
 }
