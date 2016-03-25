@@ -40,8 +40,6 @@ public abstract class AbstractActivityPaginationItemFactory<T extends AbstractAc
             }
             filter += ")";
             listBuilder.addFilter(filter);
-            /*listBuilder.addFilter("id IN (SELECT activityId FROM " + getLotClass().getSimpleName()
-                    + " WHERE userId=" + userId + ")");*/
         }
     }
 

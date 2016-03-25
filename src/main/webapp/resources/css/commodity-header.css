@@ -1,6 +1,7 @@
 div.header > div.back {
     background-color: #E0E0E0;
     width: 100%;
+    min-width: 1000px;
     position: absolute;
 }
 

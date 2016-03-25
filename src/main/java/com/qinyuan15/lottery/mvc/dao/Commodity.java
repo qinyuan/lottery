@@ -61,8 +61,13 @@ public class Commodity extends AbstractRanking {
         return this.price == null ? null : CurrencyUtils.trimUselessDecimal(this.price);
     }
 
-    public List<CommodityImage> getImages() {
-        return new CommodityImageDao().getInstancesByCommodityId(getId());
+    private List<CommodityImage> imagesCache;
+
+    public synchronized List<CommodityImage> getImages() {
+        if (imagesCache == null) {
+            imagesCache = new CommodityImageDao().getInstancesByCommodityId(getId());
+        }
+        return imagesCache;
     }
 
     public Commodity copy() {
