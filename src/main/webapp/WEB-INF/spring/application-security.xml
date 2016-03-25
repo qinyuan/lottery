@@ -22,9 +22,6 @@
         <security:intercept-url pattern="/activity-history*" access="ROLE_NORMAL"/>
         <security:intercept-url pattern="/setting*" access="ROLE_NORMAL"/>
         <security:intercept-url pattern="/share*" access="ROLE_NORMAL"/>
-        <!--<security:intercept-url pattern="/support*" access="ROLE_NORMAL"/>
-        <security:intercept-url pattern="/personal-center*" access="ROLE_NORMAL"/>
-        <security:intercept-url pattern="/system-info*" access="ROLE_NORMAL"/>-->
         <security:intercept-url pattern="/update-tel*" access="ROLE_NORMAL,ROLE_ADMIN"/>
         <security:custom-filter before="FORM_LOGIN_FILTER" ref="loginFilter"/>
         <security:custom-filter position="FORM_LOGIN_FILTER" ref="ajaxLoginFilter"/>
