@@ -6,6 +6,7 @@ public class SubIndexImage extends AbstractRanking {
     private Integer pageIndex;
     private String path;
     private String backPath;
+
     public Integer getPageIndex() {
         return pageIndex;
     }
@@ -28,5 +29,15 @@ public class SubIndexImage extends AbstractRanking {
 
     public void setBackPath(String backPath) {
         this.backPath = backPath;
+    }
+
+    public SubIndexImage copy() {
+        SubIndexImage image = new SubIndexImage();
+        image.setId(getId());
+        image.setPageIndex(pageIndex);
+        image.setPath(path);
+        image.setBackPath(backPath);
+        image.setRanking(getRanking());
+        return image;
     }
 }

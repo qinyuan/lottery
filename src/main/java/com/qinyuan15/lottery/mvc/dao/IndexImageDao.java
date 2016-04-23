@@ -50,7 +50,7 @@ public class IndexImageDao extends AbstractDao<IndexImage> {
     }
 
     public Integer add(String path, String backPath, int rowIndex) {
-        CACHE.deleteValue(CACHE_KEY);
+        clearCache();
         IndexImage indexImage = new IndexImage();
         indexImage.setPath(path);
         indexImage.setBackPath(backPath);
@@ -59,12 +59,16 @@ public class IndexImageDao extends AbstractDao<IndexImage> {
     }
 
     public void update(int id, String path, String backPath) {
-        CACHE.deleteValue(CACHE_KEY);
+        clearCache();
         IndexImage indexImage = getInstance(id);
         if (indexImage != null) {
             indexImage.setPath(path);
             indexImage.setBackPath(backPath);
             HibernateUtils.update(indexImage);
         }
+    }
+
+    protected void clearCache() {
+        CACHE.deleteValue(CACHE_KEY);
     }
 }

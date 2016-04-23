@@ -34,16 +34,23 @@ public class SubIndexController extends ImageController {
         List<SubIndexImageGroup> groups = SubIndexHeaderUtils.adapt(this, SubIndexImageGroup.build());
         SubIndexImageGroup group = SubIndexHeaderUtils.getGroupByPageIndex(groups, pageIndex);
         setAttribute("subIndexImageGroup", group);
-
-        List<List<ImageMap>> maps = new ArrayList<>();
-        for (SubIndexImage image : group.getSubIndexImages()) {
-            maps.add(mapDao.getInstancesByRelateId(image.getId()));
-        }
-        setAttribute("maps", maps);
+        setAttribute("maps", getImageMaps(group));
 
         setTitle(title);
         addJs("lib/handlebars.min-v1.3.0", false);
         addCssAndJs("sub-index");
         return "sub-index";
+    }
+
+    private List<List<ImageMap>> getImageMaps(SubIndexImageGroup group) {
+        if (group == null) {
+            return new ArrayList<>();
+        }
+
+        List<List<ImageMap>> maps = new ArrayList<>();
+        for (SubIndexImage image : group.getSubIndexImages()) {
+            maps.add(mapDao.getInstancesByRelateId(image.getId()));
+        }
+        return maps;
     }
 }

@@ -70,7 +70,7 @@ public class AdminSubIndexController extends ImageController {
         return redirect(page);
     }
 
-    @RequestMapping("/admin-sub-index-delete-image.json")
+    @RequestMapping("/admin-sub-index-image-delete.json")
     @ResponseBody
     public String deleteImage(@RequestParam(value = "id", required = true) Integer id) {
         if (!IntegerUtils.isPositive(id)) {
@@ -80,7 +80,7 @@ public class AdminSubIndexController extends ImageController {
             dao.delete(id);
             return success();
         } catch (Exception e) {
-            LOGGER.error("Fail to delete index image: {}", e);
+            LOGGER.error("Fail to delete sub index image: {}", e);
             return failByDatabaseError();
         }
     }

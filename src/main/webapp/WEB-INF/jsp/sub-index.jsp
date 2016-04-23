@@ -3,12 +3,14 @@
 <%@include file="register-header.jsp" %>
 <div class="main-body page-width">
     <div class="images">
-        <c:forEach var="image" items="${subIndexImageGroup.subIndexImages}" varStatus="status">
-            <div class="image"<c:if
-                    test="${image.backPath != null}"> style="background-image:url('${image.backPath}')"</c:if>>
-                <img src="${image.path}" usemap="#imageMap${status.index}"/>
-            </div>
-        </c:forEach>
+        <c:if test="${subIndexImageGroup != null}">
+            <c:forEach var="image" items="${subIndexImageGroup.subIndexImages}" varStatus="status">
+                <div class="image"<c:if
+                        test="${image.backPath != null}"> style="background-image:url('${image.backPath}')"</c:if>>
+                    <img src="${image.path}" usemap="#imageMap${status.index}"/>
+                </div>
+            </c:forEach>
+        </c:if>
     </div>
 </div>
 <div id="imageMaps">

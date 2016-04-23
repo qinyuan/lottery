@@ -38,6 +38,13 @@
         imageForm.setValues(null, pageIndex, null, null).show(pageIndex);
     });
 
+    $('table td.action img.delete').click(function () {
+        var $tr = $(this).getParentByTagName('tr');
+        var id = $tr.data('id');
+        if (confirm('确定删除？')) {
+            $.post('admin-sub-index-image-delete.json', {id: id}, JSUtils.normalAjaxCallback);
+        }
+    });
     $('table td.action img.rank-up').click(function () {
         var $tr = $(this).getParentByTagName('tr');
         if (!$tr.prev().is('tr')) {
