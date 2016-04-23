@@ -219,4 +219,13 @@
         <property name="liveness" column="liveness"/>
         <property name="recordTime" column="record_time"/>
     </class>
+    <class name="SubIndexImage" table="sub_index_image">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="pageIndex" column="page_index"/>
+        <property name="path" column="path"/>
+        <property name="backPath" column="back_path"/>
+        <property name="ranking"/>
+    </class>
 </hibernate-mapping>

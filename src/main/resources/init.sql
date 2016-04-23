@@ -31,6 +31,14 @@ create table commodity_image (
     ranking int unique not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+create table sub_index_image (
+    id int primary key auto_increment,
+    page_index int not null,
+    path varchar(800) not null,
+    back_path varchar(800) not null,
+    ranking int unique not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 CREATE TABLE `user` (
     `id` int(11) NOT NULL primary key AUTO_INCREMENT,
     `username` char(50) UNIQUE NOT NULL,

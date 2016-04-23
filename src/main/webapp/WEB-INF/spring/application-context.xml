@@ -13,9 +13,12 @@
     <import resource="application-image.xml"/>
     <import resource="application-activity.xml"/>
     <bean class="com.qinyuan.lib.network.http.TimingVisitor" init-method="init">
-        <property name="pages" value="commodity.html,index.html,take-lottery.json?commodityId=1"/>
-        <property name="interval" value="180"/>
-        <!-- 180 means 3 minutes -->
+        <!--<property name="port" value="8080"/>
+        <property name="context" value="lottery"/>-->
+        <property name="postUrls" value="j_spring_security_ajax_check?j_username=qinyuan&amp;j_password=qinyuan"/>
+        <property name="getUrls" value="commodity.html,index.html,take-lottery.json?commodityId=1"/>
+        <property name="interval" value="12"/>
+        <!-- 120 means 2 minutes -->
     </bean>
 
 </beans>
