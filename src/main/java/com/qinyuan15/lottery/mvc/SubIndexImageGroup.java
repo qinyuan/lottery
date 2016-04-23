@@ -48,7 +48,7 @@ public class SubIndexImageGroup {
         return map;
     }
 
-    public static List<SubIndexImageGroup> build(List<SubIndexImage> subIndexImages) {
+    private static List<SubIndexImageGroup> build(List<SubIndexImage> subIndexImages) {
         List<SubIndexImageGroup> subIndexImageGroups = new ArrayList<>();
 
         for (Map.Entry<Integer, List<SubIndexImage>> entry : buildMap(subIndexImages).entrySet()) {

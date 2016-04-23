@@ -1,0 +1,48 @@
+div.sub-index {
+    padding: 20px 0;
+    border-bottom: 1px solid #525252;
+}
+
+div.sub-index > div.title {
+    font-size: 12pt;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+div.sub-index > table {
+    margin-bottom: 10px;
+}
+
+div.sub-index > table td {
+    border-bottom: 1px dotted #bbbbbb;
+}
+
+div.sub-index > table td.image, div.sub-index > table th.image,
+div.sub-index > table td.back-image, div.sub-index > table th.back-image {
+    width: 220px;
+    text-align: center;
+}
+
+div.sub-index > table td.index, div.sub-index > table th.index {
+    min-width: 40px;
+}
+
+div.sub-index > table td.action, div.sub-index > table th.action {
+    width: 105px;
+}
+
+.float-panel {
+    width: 554px;
+    margin-left: -277px;
+    padding: 20px;
+}
+
+.float-panel > div {
+    clear: both;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.float-panel > div.buttons button {
+    margin-right: 20px;
+}

@@ -12,7 +12,18 @@ import java.util.List;
  */
 public class SubIndexHeaderUtils {
     static void setSubIndexImageGroups(ImageController controller) {
-        controller.setAttribute("subIndexImageGroups", adapt(controller, SubIndexImageGroup.build()));
+        List<SubIndexImageGroup> groups = adapt(controller, SubIndexImageGroup.build());
+        controller.setAttribute("subIndexImageGroup1", getGroupByPageIndex(groups, 1));
+        controller.setAttribute("subIndexImageGroup2", getGroupByPageIndex(groups, 2));
+    }
+
+    static SubIndexImageGroup getGroupByPageIndex(List<SubIndexImageGroup> groups, int pageIndex) {
+        for (SubIndexImageGroup group : groups) {
+            if (pageIndex == group.getPageIndex()) {
+                return group;
+            }
+        }
+        return null;
     }
 
     static List<SubIndexImageGroup> adapt(ImageController controller, List<SubIndexImageGroup> subIndexImageGroups) {

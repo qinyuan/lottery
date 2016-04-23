@@ -25,6 +25,8 @@
                 <value>HelpItem.icon</value>
                 <value>IndexImage.path</value>
                 <value>IndexImage.backPath</value>
+                <value>SubIndexImage.path</value>
+                <value>SubIndexImage.backPath</value>
             </list>
         </property>
     </bean>

@@ -2,7 +2,6 @@ package com.qinyuan15.lottery.mvc.controller;
 
 import com.qinyuan.lib.lang.IntegerUtils;
 import com.qinyuan.lib.mvc.controller.ImageController;
-import com.qinyuan15.lottery.mvc.config.AppConfig;
 import com.qinyuan15.lottery.mvc.dao.SubIndexImageDao;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -16,18 +15,16 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class AdminSubIndexController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminSubIndexController.class);
+    private SubIndexImageDao dao = new SubIndexImageDao();
 
     @RequestMapping("/admin-sub-index")
     public String index() {
         IndexHeaderUtils.setHeaderParameters(this);
-
         SubIndexHeaderUtils.setSubIndexImageGroups(this);
-
-        //setAttribute("cycleInterval", AppConfig.index.getIndexImageCycleInterval());
         addCss("admin-form");
         addHeadJs("lib/image-adjust.js");
 
-        setTitle("图片页设置");
+        setTitle("其他设置");
         addCssAndJs("admin-sub-index");
         return "admin-sub-index";
     }
@@ -62,7 +59,6 @@ public class AdminSubIndexController extends ImageController {
             }
         }
 
-        SubIndexImageDao dao = new SubIndexImageDao();
         if (IntegerUtils.isPositive(id)) {
             dao.update(id, imagePath, backImagePath);
         } else if (IntegerUtils.isPositive(pageIndex)) {
@@ -81,10 +77,40 @@ public class AdminSubIndexController extends ImageController {
             return failByInvalidParam();
         }
         try {
-            new SubIndexImageDao().delete(id);
+            dao.delete(id);
             return success();
         } catch (Exception e) {
             LOGGER.error("Fail to delete index image: {}", e);
+            return failByDatabaseError();
+        }
+    }
+
+    @RequestMapping("/admin-sub-index-image-rank-up.json")
+    @ResponseBody
+    public String rankUpImage(@RequestParam(value = "id", required = true) Integer id) {
+        if (!IntegerUtils.isPositive(id)) {
+            return failByInvalidParam();
+        }
+        try {
+            dao.rankUp(id);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("Fail to rank up sub index image, id: {}, info: {}", id, e);
+            return failByDatabaseError();
+        }
+    }
+
+    @RequestMapping("/admin-sub-index-image-rank-down.json")
+    @ResponseBody
+    public String rankDownImage(@RequestParam("id") Integer id) {
+        if (!IntegerUtils.isPositive(id)) {
+            return failByInvalidParam();
+        }
+        try {
+            dao.rankDown(id);
+            return success();
+        } catch (Exception e) {
+            LOGGER.error("Fail to rank down sub index image, id: {}, info: {}", id, e);
             return failByDatabaseError();
         }
     }
