@@ -16,7 +16,7 @@
         <!--<property name="port" value="8080"/>
         <property name="context" value="lottery"/>-->
         <property name="postUrls" value="j_spring_security_ajax_check?j_username=qinyuan&amp;j_password=qinyuan"/>
-        <property name="getUrls" value="commodity.html,index.html,take-lottery.json?commodityId=1"/>
+        <property name="getUrls" value="commodity.html,index.html,affiliate.html,join.html,take-lottery.json?commodityId=1"/>
         <property name="interval" value="12"/>
         <!-- 120 means 2 minutes -->
     </bean>
