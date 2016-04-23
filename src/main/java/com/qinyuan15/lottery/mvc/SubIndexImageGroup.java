@@ -1,5 +1,7 @@
 package com.qinyuan15.lottery.mvc;
 
+import com.qinyuan.lib.image.CachedImageMapDao;
+import com.qinyuan.lib.image.ImageMapDao;
 import com.qinyuan15.lottery.mvc.dao.SubIndexImage;
 import com.qinyuan15.lottery.mvc.dao.SubIndexImageDao;
 
