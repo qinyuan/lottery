@@ -52,7 +52,7 @@
                         <span class="error"></span>
                     </div>
                 </div>
-                <div class="qq-input">
+                <%--<div class="qq-input">
                     <div class="input">
                         <label>QQ号</label>
                         <input type="text" class="form-control" name="qq" tabindex="1"/>
@@ -64,7 +64,7 @@
                             </span>
                         <span class="error"></span>
                     </div>
-                </div>
+                </div>--%>
                 <div class="input identity-code">
                     <label>验证码</label>
                     <jsp:include page="widget-identity-code.jsp">

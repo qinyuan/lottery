@@ -10,6 +10,8 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta property="qc:admins" content="0176267377625456106375"/>
+    <meta http-equiv="Cache-Control" content="no-transform"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <title>${title}</title>
     <c:if test="${seoKeyword != null}">
         <meta name="keywords" content="${seoKeyword}">

@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="inc-header.jsp" %>
 <%@include file="register-header.jsp" %>
-<div class="main-body page-width">
+<div class="main-body">
     <div class="images">
         <c:if test="${subIndexImageGroup != null}">
             <c:forEach var="image" items="${subIndexImageGroup.subIndexImages}" varStatus="status">
                 <div class="image"<c:if
                         test="${image.backPath != null}"> style="background-image:url('${image.backPath}')"</c:if>>
-                    <img src="${image.path}" usemap="#imageMap${status.index}"/>
+                    <div class="page-width">
+                        <img src="${image.path}" usemap="#imageMap${status.index}"/>
+                    </div>
                 </div>
             </c:forEach>
         </c:if>
